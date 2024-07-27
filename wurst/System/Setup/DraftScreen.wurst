@@ -422,9 +422,6 @@ public function draftTimeSetup ()
     for i = 0 to 12
         if Player(i).getController() == MAP_CONTROL_USER and Player(i).getSlotState() == PLAYER_SLOT_STATE_PLAYING
             playerCount++
-    if playerCount == 1
-        draftTime = 7
-        delayAfterCountdown = 0.5
 
     draftCountdown = CreateTimer()..start(draftTime, function draftTime_End)
     draftTime_dialog = CreateTimerDialog(draftCountdown)..setTitle("|cffffd700Countdown|r")..display(true)
