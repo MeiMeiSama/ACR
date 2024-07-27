@@ -5,14 +5,12 @@ import SoundUtils
 import HashSet
 import LinkedList
 import TimerUtils
-import ACR_TagSystem
 import InitializeFunctions
 import ClosureTimers
 import MusicPlaylist
 import GoldIncome
 
 int playerCount = 0
-int playersPicked = 0
 unit array pickDummyUnit
 unit OK_BUTTON_UNIT
 unit RANDOM_BUTTON_UNIT
@@ -28,6 +26,8 @@ bool array canDoubleClick
 timer array canDoubleClick_Timer
 framehandle selected_icon
 framehandle selected_icon1
+int playingPlayers = 0
+int playerPickCount = 0
 
 SoundDefinition chooseOK = new SoundDefinition("war3mapImported\\ChooseOK.mp3")
 SoundDefinition chooseUNIT = new SoundDefinition("war3mapImported\\ChooseUnit.mp3")
@@ -59,6 +59,9 @@ timerdialog draftTime_dialog
 @configurable var draftTime             = 60.0 // The time you have to select a hero
 
 init
+    for i = 0 to 12
+        if Player(i).getSlotState() == PLAYER_SLOT_STATE_PLAYING and Player(i).getController() == MAP_CONTROL_USER
+            playingPlayers++
     dataList()
     confirmIcon()
     doubleClick_Confirm()
@@ -271,6 +274,7 @@ function doubleClick_Confirm ()
     ..registerAnyUnitEvent(EVENT_PLAYER_UNIT_SELECTED)
     ..addCondition(Condition(function doubleClick_Cond))
     ..addAction() ->
+        playerPickCount++
         playerPicked[GetTriggerPlayer().getId()] = true
         chooseOK.playForPlayer(GetTriggerPlayer())
         let p = GetTriggerPlayer()
@@ -292,6 +296,7 @@ function confirmIcon ()
     ..registerAnyUnitEvent(EVENT_PLAYER_UNIT_SELECTED)
     ..addCondition(Condition(function confirm_Cond))
     ..addAction() ->
+        playerPickCount++
         playerPicked[GetTriggerPlayer().getId()] = true
         chooseOK.playForPlayer(GetTriggerPlayer())
         let p = GetTriggerPlayer()
@@ -320,6 +325,7 @@ function randomIcon ()
         var randomID = GetRandomInt(0, heroTotalList.size())
         while pickDummyUnit[randomID].hasAbility('Aloc') or pickDummyUnit[randomID] == null
             randomID = GetRandomInt(0, heroTotalList.size())
+        playerPickCount++
         playerPicked[p.getId()] = true
         selectedUnit[p.getId()] = pickDummyUnit[randomID]
         chooseOK.playForPlayer(GetTriggerPlayer())
@@ -406,22 +412,10 @@ function draftTime_End ()
         initFunctions()
             
 function allPlayersPicked()
-    playersPicked = 0
-    var count = 0
-    doPeriodically(0.1) (CallbackPeriodic cb) ->
-        count++
-        for i = 0 to 12
-            if Player(i).getController() == MAP_CONTROL_USER and Player(i).getSlotState() == PLAYER_SLOT_STATE_PLAYING
-                let pid = Player(i).getId()
-                if playerPicked[pid] == true and Player(i).hasTagPicked() == false
-                    Player(i).addTagPicked()
-                    playersPicked++    
-        if playersPicked == playerCount
-            draftTime_End()   
+    doPeriodicallyTimed(0.06, draftTime) (CallbackCounted cb) ->
+        if playerPickCount == playingPlayers
+            draftTime_End()
             destroy cb
-        if count >= 590
-            destroy cb    
-
 
 public function draftTimeSetup ()
     playerCount = 0
@@ -429,7 +423,7 @@ public function draftTimeSetup ()
         if Player(i).getController() == MAP_CONTROL_USER and Player(i).getSlotState() == PLAYER_SLOT_STATE_PLAYING
             playerCount++
     if playerCount == 1
-        draftTime = 5 // was 5
+        draftTime = 7
         delayAfterCountdown = 0.5
 
     draftCountdown = CreateTimer()..start(draftTime, function draftTime_End)
