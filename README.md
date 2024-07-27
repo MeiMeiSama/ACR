@@ -10,5 +10,5 @@ A thrilling W3 map featuring **anime-inspired battles**, intricate strategies, a
 
 **Join the action and immerse yourself in a unique anime world!**
 ```
-Discord: https://discord.gg/cm2RkbSSCD
+https://discord.gg/cm2RkbSSCD
 ```
