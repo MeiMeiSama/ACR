@@ -1,0 +1,20 @@
+package HasteBoot
+
+import ObjectDefinitions
+import DummyCaster
+import OrderIds
+// import ObjectIds
+
+init
+    hasteBootUse()
+function hasteBootUse ()
+    CreateTrigger()
+    ..registerAnyUnitEvent(EVENT_PLAYER_UNIT_SPELL_EFFECT)
+    ..addAction() ->
+        if GetSpellAbilityId() == HASTEBOOT_EMPTY_ABILITY
+            let caster = GetTriggerUnit()
+            new DummyCaster()
+            ..owner(caster.getOwner())
+            ..origin(caster.getPos())
+            ..castTarget(HASTE_DUMMY_ABILITY, 1, OrderIds.bloodlust, caster) 
+                

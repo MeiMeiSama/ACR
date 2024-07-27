@@ -1,0 +1,43 @@
+package Touma
+
+
+init
+    initTrig_Touma()
+
+function trig_ToumaConditions() returns boolean
+    return IsUnitType(GetTriggerUnit(), UNIT_TYPE_HERO) == true
+function trig_ToumaActions()
+    integer trigger_ID = LoadInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 865)
+    trigger_ID += 3
+    SaveInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 865, trigger_ID)
+    SaveInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 1045, trigger_ID)
+    if GetItemTypeId(GetManipulatedItem()) == 'I050' and GetUnitTypeId(GetTriggerUnit()) == 'H028'
+        PlaySoundBJ(gg_snd_10K)
+        SetItemDroppable(GetManipulatedItem(), false)
+        SaveLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1108, GetUnitLoc(GetTriggerUnit()))
+        SaveUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 36, CreateUnitAtLoc(GetOwningPlayer(GetTriggerUnit()), 'e03X', LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1108), GetRandomDirectionDeg()))
+        UnitApplyTimedLifeBJ(2.00, 'BHwe', LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 36))
+        SaveUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 929, CreateUnitAtLoc(GetOwningPlayer(GetTriggerUnit()), 'e0CI', LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1108), GetRandomDirectionDeg()))
+        UnitApplyTimedLifeBJ(2.50, 'BHwe', LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 929))
+        RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1108))
+        UnitAddAbility(GetTriggerUnit(), 'A0M0')
+        UnitMakeAbilityPermanent(GetTriggerUnit(), true, 'A0M0')
+    if GetItemTypeId(GetManipulatedItem()) == 'I00M' or GetItemTypeId(GetManipulatedItem()) == 'I00Z' or GetItemTypeId(GetManipulatedItem()) == 'I015' or GetItemTypeId(GetManipulatedItem()) == 'I01C' or GetItemTypeId(GetManipulatedItem()) == 'I01L' or GetItemTypeId(GetManipulatedItem()) == 'I041' or GetItemTypeId(GetManipulatedItem()) == 'I025' or GetItemTypeId(GetManipulatedItem()) == 'I06L'
+        bj_forLoopAIndex = 1
+        bj_forLoopAIndexEnd = 6
+        while true
+            if bj_forLoopAIndex > bj_forLoopAIndexEnd
+                break
+            if GetItemTypeId(GetManipulatedItem()) == GetItemTypeId(UnitItemInSlotBJ(GetTriggerUnit(), bj_forLoopAIndex)) and GetManipulatedItem() != UnitItemInSlotBJ(GetTriggerUnit(), bj_forLoopAIndex)
+                SaveLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1108, GetUnitLoc(GetTriggerUnit()))
+                CreateItemLoc(GetItemTypeId(GetManipulatedItem()), LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1108))
+                RemoveItem(GetManipulatedItem())
+                RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1108))
+                DisplayTextToPlayer(GetOwningPlayer(GetTriggerUnit()), 0, 0, "You already own an identical item!")
+            bj_forLoopAIndex++
+    FlushChildHashtable(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID)
+function initTrig_Touma()
+    gg_trg_Touma = CreateTrigger()
+    TriggerRegisterAnyUnitEventBJ(gg_trg_Touma, EVENT_PLAYER_UNIT_PICKUP_ITEM)
+    TriggerAddCondition(gg_trg_Touma, Condition(function trig_ToumaConditions))
+    TriggerAddAction(gg_trg_Touma, function trig_ToumaActions)

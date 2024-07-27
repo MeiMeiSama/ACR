@@ -1,0 +1,49 @@
+package GilgameshE_Orig
+import GoldIncome
+import main
+init
+    initTrig_GilgameshE_Orig()
+
+function trig_GilgameshEConditions() returns boolean
+    return GetSpellAbilityId() == 'A0NI'
+function trig_GilgameshEFunc014Func001Func001Func001Func001Func004T()
+    UnitRemoveAbility(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), 'A0NJ')
+    FlushChildHashtable(YDLOC, GetHandleId(GetExpiredTimer()))
+    DestroyTimer(GetExpiredTimer())
+function trig_GilgameshEFunc014Func004T()
+    UnitRemoveAbility(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), 'A0OU')
+    FlushChildHashtable(YDLOC, GetHandleId(GetExpiredTimer()))
+    DestroyTimer(GetExpiredTimer())
+function trig_GilgameshEActions()
+    integer trigger_ID = LoadInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 865)
+    trigger_ID += 3
+    SaveInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 865, trigger_ID)
+    SaveInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 1045, trigger_ID)
+    soundPlay("war3mapImported\\Gilgamesh3.mp3", GetUnitX(udg_Unitsound), GetUnitY(udg_Unitsound))
+    SaveUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594, GetSpellAbilityUnit())
+    SavePlayerHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 603, GetOwningPlayer(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594)))
+    SaveReal(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 92975974, AngleBetweenPoints(LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1108), LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 683)))
+    SaveInteger(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 280, GetRandomInt(1, 6))
+    SaveLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 48, GetUnitLoc(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594)))
+    SaveUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 36, CreateUnitAtLoc(LoadPlayerHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 603), 'e0LM', LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 48), GetRandomDirectionDeg()))
+    UnitApplyTimedLife(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 36), 'BHwe', 1.00)
+    SaveUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 929, CreateUnitAtLoc(LoadPlayerHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 603), 'e08Q', LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 48), GetRandomDirectionDeg()))
+    UnitApplyTimedLife(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 929), 'BHwe', 2.00)
+    SaveUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 843, CreateUnitAtLoc(LoadPlayerHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 603), 'e08T', LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 48), GetRandomDirectionDeg()))
+    UnitApplyTimedLife(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 843), 'BHwe', 1.00)
+    RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 48))
+    let gilgamesh = LoadPlayerHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 603)
+    // let gold = (GetPlayerState(gilgamesh, PLAYER_STATE_RESOURCE_GOLD) *1.15).toInt()
+    let gold = 50 * GetUnitAbilityLevel(GetTriggerUnit(), GetSpellAbilityId())
+    for i = 0 to 12
+        if udg_PlayHero[i] != null and udg_PlayHero[i].isAllyOf(gilgamesh)
+            udg_PlayHero[i].getOwner().addGold(gold)
+            totalGoldEarnt[udg_PlayHero[i].getOwner().getId()] += gold
+
+    // SetPlayerStateBJ(gilgamesh, PLAYER_STATE_RESOURCE_GOLD, gold)
+    FlushChildHashtable(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID)
+function initTrig_GilgameshE_Orig()
+    gg_trg_GilgameshE = CreateTrigger()
+    TriggerRegisterAnyUnitEventBJ(gg_trg_GilgameshE, EVENT_PLAYER_UNIT_SPELL_EFFECT)
+    TriggerAddCondition(gg_trg_GilgameshE, Condition(function trig_GilgameshEConditions))
+    TriggerAddAction(gg_trg_GilgameshE, function trig_GilgameshEActions)

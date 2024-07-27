@@ -1,0 +1,134 @@
+package Law_T
+init
+    initTrig_LawRoomRelease()
+
+function trig_LawRoomReleaseConditions() returns boolean
+    return GetSpellAbilityId() == 'A0LV'
+
+function trig_LawRoomReleaseFunc004Func016Func001Func002003003() returns boolean
+    return IsUnitType(GetFilterUnit(), UNIT_TYPE_STRUCTURE) == false and IsUnitEnemy(GetFilterUnit(), LoadPlayerHandle(YDLOC, GetHandleId(GetExpiredTimer()), 603)) == true and GetUnitAbilityLevel(GetFilterUnit(), 'Avul') != 1 and IsUnitDeadBJ(GetFilterUnit()) == false
+
+function trig_LawRoomReleaseFunc004Func016Func001Func003A()
+    
+    SaveLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 1166, GetUnitLoc(GetEnumUnit()))
+
+    RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 1166))
+
+function trig_LawRoomReleaseFunc004Func016Func001Func010Func014T()
+    if LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 280) >= 40 or IsUnitDeadBJ(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594)) == true or LoadReal(YDLOC, GetHandleId(GetExpiredTimer()), 252) >= 4000.00
+        DisableTrigger(gg_trg_LawTE)
+        DisableTrigger(gg_trg_LawTR)
+        let caster = LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594)
+        caster.startAbilityCooldown('A0LV')
+        UnitRemoveAbility(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), 'A0LX')
+        UnitRemoveAbility(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), 'A0LZ')
+        UnitRemoveAbility(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), 'A0LW')
+        UnitRemoveAbility(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), 'A0LY')
+        SetPlayerAbilityAvailable(LoadPlayerHandle(YDLOC, GetHandleId(GetExpiredTimer()), 603), 'A0LV', true)
+        SetPlayerAbilityAvailable(LoadPlayerHandle(YDLOC, GetHandleId(GetExpiredTimer()), 603), 'A0LR', true)
+        SetPlayerAbilityAvailable(LoadPlayerHandle(YDLOC, GetHandleId(GetExpiredTimer()), 603), 'A0LS', true)
+        SetPlayerAbilityAvailable(LoadPlayerHandle(YDLOC, GetHandleId(GetExpiredTimer()), 603), 'A0LT', true)
+//        SetPlayerAbilityAvailable(LoadPlayerHandle(YDLOC, GetHandleId(GetExpiredTimer()), 603), 'A0M0', true)
+        SetPlayerAbilityAvailable(LoadPlayerHandle(YDLOC, GetHandleId(GetExpiredTimer()), 603), 'A0M2', true)
+        RemoveUnit(udg_soundplayunit[31])
+        udg_soundplayunit[31] = null
+        FlushChildHashtable(YDLOC, GetHandleId(GetExpiredTimer()))
+        DestroyTimer(GetExpiredTimer())
+    else
+        SaveInteger(YDLOC, GetHandleId(GetExpiredTimer()), 280, LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 280) + 1)
+        if LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 280) == 35
+            DisplayTextToPlayer(LoadPlayerHandle(YDLOC, GetHandleId(GetExpiredTimer()), 603), 0, 0, "Room will end in 5 seconds.")
+        else
+            DoNothing()
+        SaveLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 1108, GetUnitLoc(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594)))
+        SaveLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 683, GetUnitLoc(udg_soundplayunit[31]))
+        SaveReal(YDLOC, GetHandleId(GetExpiredTimer()), 252, DistanceBetweenPoints(LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 1108), LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 683)))
+        RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 1108))
+        RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 683))
+
+function trig_LawRoomReleaseFunc004Func016T()
+    timer ydl_timer
+    if LoadReal(YDLOC, GetHandleId(GetExpiredTimer()), 689) >= 1.40
+        SaveLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 1108, GetUnitLoc(udg_soundplayunit[31]))
+        SaveGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 361, yDWEGetUnitsInRangeOfLocMatchingNull(3000.00, LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 1108), Condition(function trig_LawRoomReleaseFunc004Func016Func001Func002003003)))
+        ForGroupBJ(LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 361), function trig_LawRoomReleaseFunc004Func016Func001Func003A)
+        GroupClear(LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 361))
+        DestroyGroup(LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 361))
+        RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 1108))
+        SaveInteger(YDLOC, GetHandleId(GetExpiredTimer()), 280, 0)
+        PauseUnit(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), false)
+        SetUnitInvulnerable(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), false)
+        if IsUnitAliveBJ(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594)) == true
+            EnableTrigger(gg_trg_LawTE)
+            EnableTrigger(gg_trg_LawTR)
+            SetPlayerAbilityAvailable(LoadPlayerHandle(YDLOC, GetHandleId(GetExpiredTimer()), 603), 'A0LV', false)
+            SetPlayerAbilityAvailable(LoadPlayerHandle(YDLOC, GetHandleId(GetExpiredTimer()), 603), 'A0LR', false)
+            SetPlayerAbilityAvailable(LoadPlayerHandle(YDLOC, GetHandleId(GetExpiredTimer()), 603), 'A0LS', false)
+            SetPlayerAbilityAvailable(LoadPlayerHandle(YDLOC, GetHandleId(GetExpiredTimer()), 603), 'A0LT', false)
+//            SetPlayerAbilityAvailable(LoadPlayerHandle(YDLOC, GetHandleId(GetExpiredTimer()), 603), 'A0M0', false)
+            SetPlayerAbilityAvailable(LoadPlayerHandle(YDLOC, GetHandleId(GetExpiredTimer()), 603), 'A0M2', false)
+            UnitAddAbility(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), 'A0LW')
+            UnitAddAbility(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), 'A0LX')
+            UnitAddAbility(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), 'A0LZ')
+            UnitAddAbility(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), 'A0LY')
+            ydl_timer = CreateTimer()
+            SaveUnitHandle(YDLOC, GetHandleId(ydl_timer), 594, LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594))
+            SavePlayerHandle(YDLOC, GetHandleId(ydl_timer), 603, LoadPlayerHandle(YDLOC, GetHandleId(GetExpiredTimer()), 603))
+            SaveLocationHandle(YDLOC, GetHandleId(ydl_timer), 1108, LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 1108))
+            SaveLocationHandle(YDLOC, GetHandleId(ydl_timer), 683, LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 683))
+            SaveReal(YDLOC, GetHandleId(ydl_timer), 252, LoadReal(YDLOC, GetHandleId(GetExpiredTimer()), 252))
+            SaveInteger(YDLOC, GetHandleId(ydl_timer), 280, LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 280))
+            TimerStart(ydl_timer, 1.00, true, function trig_LawRoomReleaseFunc004Func016Func001Func010Func014T)
+        FlushChildHashtable(YDLOC, GetHandleId(GetExpiredTimer()))
+        DestroyTimer(GetExpiredTimer())
+    else
+        SaveReal(YDLOC, GetHandleId(GetExpiredTimer()), 689, LoadReal(YDLOC, GetHandleId(GetExpiredTimer()), 689) + 0.10)
+        SetUnitScale(udg_soundplayunit[31], LoadReal(YDLOC, GetHandleId(GetExpiredTimer()), 689), LoadReal(YDLOC, GetHandleId(GetExpiredTimer()), 689), LoadReal(YDLOC, GetHandleId(GetExpiredTimer()), 689))
+        PauseUnit(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), true)
+        SetUnitInvulnerable(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), true)
+
+function trig_LawRoomReleaseActions()
+    timer ydl_timer
+    integer trigger_ID = LoadInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 865)
+    let u = GetTriggerUnit()
+    let p = GetTriggerUnit().getOwner()
+    trigger_ID += 3
+    SaveInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 865, trigger_ID)
+    SaveInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 1045, trigger_ID)
+    SaveUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594, GetSpellAbilityUnit())
+    SavePlayerHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 603, GetOwningPlayer(u))
+    SaveLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1108, GetSpellTargetLoc())
+    if IsTerrainPathableBJ(LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1108), PATHING_TYPE_WALKABILITY) == false and IsTerrainPathableBJ(LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1108), PATHING_TYPE_FLYABILITY) == false
+        PlaySoundBJ(gg_snd_LawRoom)
+        SaveInteger(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 280, 0)
+        SaveReal(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 689, 0.10)
+        PauseUnit(u, true)
+        SetUnitInvulnerable(u, true)
+        SetUnitAnimationByIndex(u, 4)
+        udg_soundplayunit[31] = CreateUnitAtLoc(p, 'e0S0', LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1108), GetRandomDirectionDeg())
+        SetUnitScale(udg_soundplayunit[31], LoadReal(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 689), LoadReal(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 689), LoadReal(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 689))
+        SetUnitVertexColorBJ(udg_soundplayunit[31], 100, 100, 100, 45.00)
+        SetUnitTimeScalePercent(udg_soundplayunit[31], 0.00)
+        RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1108))
+        ydl_timer = CreateTimer()
+        SaveUnitHandle(YDLOC, GetHandleId(ydl_timer), 594, u)
+        SavePlayerHandle(YDLOC, GetHandleId(ydl_timer), 603, p)
+        SaveLocationHandle(YDLOC, GetHandleId(ydl_timer), 1108, LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1108))
+        SaveLocationHandle(YDLOC, GetHandleId(ydl_timer), 683, LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 683))
+        SaveGroupHandle(YDLOC, GetHandleId(ydl_timer), 361, LoadGroupHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 361))
+        SaveReal(YDLOC, GetHandleId(ydl_timer), 689, LoadReal(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 689))
+        SaveReal(YDLOC, GetHandleId(ydl_timer), 252, LoadReal(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 252))
+        SaveLocationHandle(YDLOC, GetHandleId(ydl_timer), 1166, LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1166))
+        SaveUnitHandle(YDLOC, GetHandleId(ydl_timer), 404, LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 404))
+        SaveInteger(YDLOC, GetHandleId(ydl_timer), 280, LoadInteger(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 280))
+        TimerStart(ydl_timer, 0.06, true, function trig_LawRoomReleaseFunc004Func016T)
+    else
+        IssueImmediateOrder(u, "stop")
+        RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1108))
+    FlushChildHashtable(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID)
+
+function initTrig_LawRoomRelease()
+    CreateTrigger()
+    ..registerAnyUnitEvent(EVENT_PLAYER_UNIT_SPELL_EFFECT)
+    ..addCondition(Condition(function trig_LawRoomReleaseConditions))
+    ..addAction(function trig_LawRoomReleaseActions)

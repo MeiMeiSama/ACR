@@ -1,0 +1,74 @@
+package GilgameshW_Orig
+import DamageEvent
+import AbilityGlobals
+import main
+import ACR_Library
+init
+    initTrig_GilgameshW_Orig()
+
+function trig_GilgameshWConditions() returns boolean
+    return GetSpellAbilityId() == 'A0ND'
+function trig_GilgameshWFunc026T()
+    if LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 280) >= 67        
+        FlushChildHashtable(YDLOC, GetHandleId(GetExpiredTimer()))
+        DestroyTimer(GetExpiredTimer())
+    else
+        SaveInteger(YDLOC, GetHandleId(GetExpiredTimer()), 280, LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 280) + 1)
+        if LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 280) == 2
+            PauseUnit(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), false)
+            SetUnitInvulnerable(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), false)        
+        if LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 280) == 30
+            PauseUnit(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 549), false)
+            SetUnitInvulnerable(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 549), false)
+
+            DamageEvent.setNextDamageId(DAMAGE_ABILITY_W)
+            DamageEvent.setNextDamageFromCode()
+            UnitDamageTargetBJ(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 549), (I2R(GetUnitAbilityLevel(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), 'A0ND')) + 1.00) * I2R(GetHeroInt(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), true)), ATTACK_TYPE_MAGIC, DAMAGE_TYPE_MAGIC)
+            let caster = LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594)
+            let victim = LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 549)
+            acrStun(caster, victim, 0.7)
+function trig_GilgameshWActions()
+    timer _ydl_timer
+    integer trigger_ID = LoadInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 865)
+    trigger_ID += 3
+    SaveInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 865, trigger_ID)
+    SaveInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 1045, trigger_ID)
+    soundPlay("war3mapImported\\Gilgamesh2.mp3", GetUnitX(udg_Unitsound), GetUnitY(udg_Unitsound))
+    soundPlay("war3mapImported\\GilgameshEffect2.mp3", GetUnitX(udg_Unitsound), GetUnitY(udg_Unitsound))
+    SaveUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594, GetSpellAbilityUnit())
+    SaveUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 549, GetSpellTargetUnit())
+    SavePlayerHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 603, GetOwningPlayer(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594)))
+    SaveLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 683, GetUnitLoc(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 549)))
+    SaveReal(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 92975974, AngleBetweenPoints(LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1108), LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 683)))
+    SaveInteger(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 280, 0)
+    PauseUnit(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594), true)
+    PauseUnit(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 549), true)
+    SetUnitInvulnerable(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594), true)
+    SetUnitInvulnerable(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 549), true)
+    SetUnitAnimationByIndex(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594), 3)
+    SaveUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 449, CreateUnitAtLoc(LoadPlayerHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 603), 'e0TG', LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 683), 90.00))
+    SetUnitScale(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 449), 0.65, 0.65, 0.65)
+    SetUnitAnimation(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 449), "birth")
+    UnitApplyTimedLife(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 449), 'BHwe', 1.50)
+    SaveUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 94460517, CreateUnitAtLoc(LoadPlayerHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 603), 'e0LM', LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 683), GetRandomDirectionDeg()))
+    SetUnitTimeScalePercent(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 94460517), 50.00)
+    SetUnitScale(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 94460517), 1.55, 1.55, 1.55)
+    UnitApplyTimedLife(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 94460517), 'BHwe', 1.50)
+    SaveUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 'MUFV', CreateUnitAtLoc(LoadPlayerHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 603), 'e0TB', LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 683), GetRandomDirectionDeg()))
+    SetUnitScale(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 'MUFV'), 1.55, 1.55, 1.55)
+    SetUnitTimeScalePercent(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 'MUFV'), 50.00)
+    UnitApplyTimedLife(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 'MUFV'), 'BHwe', 1.50)
+    RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 683))
+    _ydl_timer = CreateTimer()
+    SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 594, LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594))
+    SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 549, LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 549))
+    SavePlayerHandle(YDLOC, GetHandleId(_ydl_timer), 603, LoadPlayerHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 603))
+    SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 1166, LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1166))
+    SaveInteger(YDLOC, GetHandleId(_ydl_timer), 280, LoadInteger(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 280))
+    TimerStart(_ydl_timer, 0.03, true, function trig_GilgameshWFunc026T)
+    FlushChildHashtable(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID)
+function initTrig_GilgameshW_Orig()
+    gg_trg_GilgameshW = CreateTrigger()
+    TriggerRegisterAnyUnitEventBJ(gg_trg_GilgameshW, EVENT_PLAYER_UNIT_SPELL_EFFECT)
+    TriggerAddCondition(gg_trg_GilgameshW, Condition(function trig_GilgameshWConditions))
+    TriggerAddAction(gg_trg_GilgameshW, function trig_GilgameshWActions)

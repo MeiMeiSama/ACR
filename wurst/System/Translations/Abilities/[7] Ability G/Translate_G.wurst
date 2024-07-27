@@ -1,0 +1,499 @@
+package Translate_G
+
+import AbilityClassifications
+import AbilityGlobals
+import ObjectDefinitions
+import ACR_StatColors
+
+public function tooltip_G (int pid)
+    let id = pid
+    let hero = udg_PlayHero[id]
+    int duration
+    int stat = 0
+    int mana
+    int dmg
+    int cd
+    int range
+    let skill = SPELL_G[id]
+    int spellLvl = skill.getSkillLvl(id)
+    let originalDescription = BlzGetAbilityExtendedTooltip(skill, spellLvl)
+    if BlzGetUnitIntegerField(hero, UNIT_IF_PRIMARY_ATTRIBUTE) == 1 // Strength
+        stat = hero.getStr(true)
+    else if BlzGetUnitIntegerField(hero, UNIT_IF_PRIMARY_ATTRIBUTE) == 2 // Intellect
+        stat = hero.getInt(true)
+    else if BlzGetUnitIntegerField(hero, UNIT_IF_PRIMARY_ATTRIBUTE) == 3 // Agility
+        stat = hero.getAgi(true)
+
+    if skill == 'A0MN' or skill == 'A180' or skill == 'A182'   // ━━━━━━━━━━━━ [Yamamoto, Gray, Old Kirito] ━━━━━━━━━━━━
+        spellLvl = hero.getAbilityLvlG()
+        dmg = ((8 * spellLvl) + (stat * 0.05 * spellLvl)).toInt()
+
+        skill..setTitle(id, BLUE+"Resolute Attacks"+LEVEL_TOOLTIP+spellLvl.toString()+CR+"]")
+        ..setDescription(id,
+        GOLD+
+        "Basic attacks deal bonus damage and slow the opponent's movement speed for 1 second."+
+        "\n\nBonus Damage: "+hero.getStatColor()+dmg.toString()+GOLD+
+        "\nSlow: "+PINK+"15%"+GOLD)
+        // "\n\nFormula: "+PINK+"(8 + (stat * 0.05 * herolvl))"+GOLD+
+        // "\n\nThis formula caps out at spellLvl 9"+GOLD)
+
+    else if skill == 'A17B' or skill == 'A17X' or skill == 'A17W' or skill == 'A17Z' or skill == 'A17Y' or skill == 'A178' // ━━━━━━━━━━━━ [Neptune, Noire, Himeragi, Hibari, New Kirito, Nura] ━━━━━━━━━━━━
+        spellLvl = hero.getAbilityLvlG()
+        dmg = ((8 * spellLvl) + (stat * 0.05 * spellLvl)).toInt()
+
+        skill..setTitle(id, BLUE+"Melee Combat Mastery"+LEVEL_TOOLTIP+spellLvl.toString()+CR+"]")
+        ..setDescription(id,
+        GOLD+
+        "Basic attacks deal bonus damage."+
+        "\n\nBonus Damage: "+hero.getStatColor()+dmg.toString()+GOLD)
+        // "\n\nFormula: "+PINK+"(8 + (stat * 0.05 * herolvl))"+GOLD+
+        // "\n\nThis formula caps out at spellLvl 9"+GOLD)
+
+    else if skill == 'A15Q' or skill == 'A18N' or skill == 'A18O' or skill == 'A18K' or skill == 'A18M' or skill == 'A18L'  //  ━━━━━━━━━━━━ [Shikis] ━━━━━━━━━━━━
+        spellLvl = skill.getSkillLvl(id)
+
+        skill..setTitle(id, BLUE+"Counter-Attack"+LEVEL_TOOLTIP+spellLvl.toString()+CR+"]")
+        ..setDescription(id,
+        GOLD+
+        "Whenever Shiki takes damage from a basic attack, the attacker takes a portion of that damage as well."+
+        "\n\nHero Damage Reflect: "+PINK+"35%"+GOLD+ 
+        "\n\nMob Damage Reflect: "+PINK+"150%"+GOLD)        
+
+    else if skill == MADARA_EDO_ABILITY_G or skill == MADARA_NORMAL_ABILITY_G or skill == NAGATO_ABILITY_G or skill == SASUKE_YOUNG_ABILITY_G_RINNEGAN  // ━━━ [Rinnegan] 
+        spellLvl = skill.getSkillLvl(id)
+        duration = 4
+        cd = 60
+        mana = 50
+
+        skill..setTitle(id, BLUE+"Rinnegan"+LEVEL_TOOLTIP+spellLvl.toString()+CR+"]")
+        ..setDescription(id,
+        GOLD+
+        "While active, the next instance of damage the user receives that's equal or higher than 20% of their maximum health is reduced by 50%."+
+        "\n\nDuration: "+PINK+duration.toString()+GOLD+                        
+        "\nCooldown: "+PINK+cd.toString()+GOLD)
+        hero.getAbility(skill)
+
+        ..setField(ABILITY_ILF_MANA_COST, hero.getAbilityLevel(skill) - 1, mana)
+        ..setField(ABILITY_RLF_COOLDOWN, hero.getAbilityLevel(skill) - 1, cd.toReal())
+
+
+
+    else if skill == RORONOA_ZORO_ABILITY_G or skill == OKITA_STRENGTH_ABILITY_G or skill == ICHIGO_STRENGTH_ABILITY_G //  ━━━━━━━━━━━━ [Sword Block] 
+        spellLvl = skill.getSkillLvl(id)
+        duration = 4
+        cd = 60
+        mana = 50
+
+        skill..setTitle(id, BLUE+"Sword Block"+LEVEL_TOOLTIP+spellLvl.toString()+CR+"]")
+        ..setDescription(id,
+        GOLD+
+        "While active, the next instance of damage the user receives that's equal or higher than 20% of their maximum health is reduced by 50%."+
+        "\n\nDuration: "+PINK+duration.toString()+GOLD+                        
+        "\nCooldown: "+PINK+cd.toString()+GOLD)
+        hero.getAbility(skill)
+
+        ..setField(ABILITY_ILF_MANA_COST, hero.getAbilityLevel(skill) - 1, mana)
+        ..setField(ABILITY_RLF_COOLDOWN, hero.getAbilityLevel(skill) - 1, cd.toReal())
+
+
+    else if skill == KAMIJOU_TOUMA_ABILITY_G //  ━━━━━━━━━━━━ [Imagine Breaker] 
+        spellLvl = skill.getSkillLvl(id)
+        duration = 4
+        cd = 60
+        mana = 50
+
+        skill..setTitle(id, BLUE+"Imagine Breaker"+LEVEL_TOOLTIP+spellLvl.toString()+CR+"]")
+        ..setDescription(id,
+        GOLD+
+        "While active, the next instance of damage the user receives that's equal or higher than 20% of their maximum health is reduced by 50%."+
+        "\n\nDuration: "+PINK+duration.toString()+GOLD+                        
+        "\nCooldown: "+PINK+cd.toString()+GOLD)
+        hero.getAbility(skill)
+
+        ..setField(ABILITY_ILF_MANA_COST, hero.getAbilityLevel(skill) - 1, mana)
+        ..setField(ABILITY_RLF_COOLDOWN, hero.getAbilityLevel(skill) - 1, cd.toReal())
+
+
+    else if skill == 'A0DG' // ━━━━━━━━━━━━ [Shelia] ━━━━━━━━━━━━
+        spellLvl = hero.getAbilityLvlG() 
+        dmg = (((8 * spellLvl) + (stat * 0.05 * spellLvl)) * 5).toInt() 
+
+        skill..setTitle(id, BLUE+"Celestial Magic"+LEVEL_TOOLTIP+spellLvl.toString()+CR+"]")
+        ..setDescription(id,
+        GOLD+
+        "Shelia's basic attacks have a 20% chance to deal bonus damage and knock back her target."+
+        "\n\nBonus Damage: "+hero.getStatColor()+dmg.toString()
+        )
+
+    else if skill == ITACHI_EDO_ABILITY_G//  ━━━━━━━━━━━━ [Izanami] ━━━━━━━━━━━━
+        spellLvl = skill.getSkillLvl(id)
+        duration = 4
+        cd = 60
+        mana = 50
+
+        skill..setTitle(id, BLUE+"Izanami"+LEVEL_TOOLTIP+spellLvl.toString()+CR+"]")
+        ..setDescription(id,
+        GOLD+
+        "While active, the next instance of damage the user receives that's equal or higher than 20% of their maximum health is reduced by 50%."+
+        "\n\nDuration: "+PINK+duration.toString()+GOLD+                        
+        "\nCooldown: "+PINK+cd.toString()+GOLD)
+        hero.getAbility(skill)
+
+        ..setField(ABILITY_ILF_MANA_COST, hero.getAbilityLevel(skill) - 1, mana)
+        ..setField(ABILITY_RLF_COOLDOWN, hero.getAbilityLevel(skill) - 1, cd.toReal())
+
+
+
+    else if skill == SASUKE_YOUNG_ABILITY_G_SHARINGAN // ━━━━━━━━━━━━ [Young Sasuke Sharingan] ━━━━━━━━━━━━
+        spellLvl = skill.getSkillLvl(id)
+        duration = 4
+        cd = 40
+        mana = 50
+
+        skill..setTitle(id, BLUE+"Sharingan"+LEVEL_TOOLTIP+spellLvl.toString()+CR+"]")
+        ..setDescription(id,
+        GOLD+
+        "While active, the user evades all incoming basic attacks."+
+        "\n\nDuration: "+PINK+duration.toString()+GOLD+                        
+        "\nCooldown: "+PINK+cd.toString()+GOLD)
+        hero.getAbility(skill)
+
+        ..setField(ABILITY_ILF_MANA_COST, hero.getAbilityLevel(skill) - 1, mana)
+        ..setField(ABILITY_RLF_COOLDOWN, hero.getAbilityLevel(skill) - 1, cd.toReal())
+
+
+    else if (skill == SASUKE_ADULT_ABILITY_G)// ━━━━━━━━━━━━ [Adult Sasuke Sharinnegan] ━━━━━━━━━━━━
+        spellLvl = skill.getSkillLvl(id)
+        cd = 60
+        mana = 50
+
+        skill..setTitle(id, BLUE+"Sharingan and Rinnegan"+LEVEL_TOOLTIP+spellLvl.toString()+CR+"]")
+        ..setDescription(id,
+        GOLD+
+        "When activated, the user gains the effects of both sharingan and rinnegan."+
+        "\n\nSharingan: While active, the user evades all incoming basic attacks."+
+        "\n\nRinnegan: While active, the next instance of damage the user receives that's equal or higher than 20% of their maximum health is reduced by 50%."+
+        "\n\nDuration: "+PINK+"4"+GOLD+                                               
+        "\nCooldown: "+PINK+cd.toString()+GOLD)
+        hero.getAbility(skill)
+
+        ..setField(ABILITY_ILF_MANA_COST, hero.getAbilityLevel(skill) - 1, mana)
+        ..setField(ABILITY_RLF_COOLDOWN, hero.getAbilityLevel(skill) - 1, cd.toReal())
+
+
+    else if (skill == 'A106')// ━━━━━━━━━━━━ [Sistine] ━━━━━━━━━━━━
+        spellLvl = skill.getSkillLvl(id)
+        cd = 60
+        mana = 50
+        dmg = (stat * 3.0).toInt() 
+
+        skill..setTitle(id, BLUE+"Heal"+LEVEL_TOOLTIP+spellLvl.toString()+CR+"]")
+        ..setDescription(id,
+        GOLD+
+        "Sistine heals herself or an ally hero."+                                               
+        "\n\nCooldown: "+PINK+cd.toString()+GOLD+
+        "\nHeal Amount: "+BLUE+dmg.toString()+GOLD)
+        hero.getAbility(skill)
+
+        ..setField(ABILITY_ILF_MANA_COST, hero.getAbilityLevel(skill) - 1, mana)
+        ..setField(ABILITY_RLF_COOLDOWN, hero.getAbilityLevel(skill) - 1, cd.toReal())
+
+
+    else if (skill == BURNDOT_SABO)// ━━━━━━━━━━━━ [Sabo] ━━━━━━━━━━━━
+        spellLvl = skill.getSkillLvl(id)
+
+        skill..setTitle(id, BLUE+"Mera Mera No Mi"+LEVEL_TOOLTIP+spellLvl.toString()+CR+"]")
+        ..setDescription(id,
+        GOLD+
+        "Sabo's basic attacks and abilities set enemies on fire, dealing damage to them repeatedly over a short duration."+
+        "\n\nDuration: "+PINK+"3.0"+GOLD+
+        "\nHero Damage: "+PINK+"3% of opponent's max health"+GOLD+
+        "\nMob Damage: "+PINK+"30% of opponent's max health"+GOLD)
+
+    else if (skill == BURNDOT_PORTGASD_ACE)// ━━━━━━━━━━━━ [Ace] ━━━━━━━━━━━━
+        spellLvl = skill.getSkillLvl(id)
+
+        skill..setTitle(id, BLUE+"Mera Mera No Mi"+LEVEL_TOOLTIP+spellLvl.toString()+CR+"]")
+        ..setDescription(id,
+        GOLD+
+        "Ace's basic attacks and abilities set enemies on fire, dealing damage to them repeatedly over a short duration."+
+        "\n\nDuration: "+PINK+"3.0"+GOLD+
+        "\nHero Damage: "+PINK+"3% of opponent's max health"+GOLD+
+        "\nMob Damage: "+PINK+"30% of opponent's max health"+GOLD)
+
+    else if (skill == 'A184')// ━━━━━━━━━━━━ [Natsu Shikkoku] ━━━━━━━━━━━━
+        spellLvl = skill.getSkillLvl(id)
+
+        skill..setTitle(id, BLUE+"Fire Dragon Slayer Magic"+LEVEL_TOOLTIP+spellLvl.toString()+CR+"]")
+        ..setDescription(id,
+        GOLD+
+        "Natsu's basic attacks and abilities set enemies on fire, dealing damage to them repeatedly over a short duration."+
+        "\n\nDuration: "+PINK+"3.0"+GOLD+
+        "\nHero Damage: "+PINK+"3% of opponent's max health"+GOLD+
+        "\nMob Damage: "+PINK+"30% of opponent's max health"+GOLD)
+
+    else if (skill == BURNDOT_ITSUKA_KOTORI)// ━━━━━━━━━━━━ [Kotori] ━━━━━━━━━━━━
+        spellLvl = skill.getSkillLvl(id)
+
+        skill..setTitle(id, BLUE+"Fire Control"+LEVEL_TOOLTIP+spellLvl.toString()+CR+"]")
+        ..setDescription(id,
+        GOLD+
+        "Kotori's basic attacks and abilities set enemies on fire, dealing damage to them repeatedly over a short duration."+
+        "\n\nDuration: "+PINK+"3.0"+GOLD+
+        "\nHero Damage: "+PINK+"3% of opponent's max health"+GOLD+
+        "\nMob Damage: "+PINK+"30% of opponent's max health"+GOLD)        
+
+    else if (skill == POISONDOT_COBRA)// ━━━━━━━━━━━━ [Cobra] ━━━━━━━━━━━━
+        spellLvl = skill.getSkillLvl(id)
+
+        skill..setTitle(id, BLUE+"Fire Control"+LEVEL_TOOLTIP+spellLvl.toString()+CR+"]")
+        ..setDescription(id,
+        GOLD+
+        "Cobra's basic attacks and abilities poison enemies, dealing damage to them repeatedly over a short duration."+
+        "\n\nDuration: "+PINK+"3.0"+GOLD+
+        "\nHero Damage: "+PINK+"3% of opponent's max health"+GOLD+
+        "\nMob Damage: "+PINK+"30% of opponent's max health"+GOLD) 
+
+    else if skill == GAJEEL_REDFOX_ABILITY_G  //  ━━━━━━━━━━━━ [Basic Attack Reduction] ━━━━━━━━━━━━
+        spellLvl = skill.getSkillLvl(id)
+
+        skill..setTitle(id, BLUE+"Iron Dragon Slayer"+LEVEL_TOOLTIP+spellLvl.toString()+CR+"]")
+        ..setDescription(id,
+        GOLD+
+        "Gajeel passively takes less damage from incoming basic attacks."+
+        "\n\nDamage reduction: "+PINK+"35%"+GOLD)
+
+    else if skill == MASHU_KYRIELIGHT_ABILITY_G  //  ━━━━━━━━━━━━ [Basic Attack Reduction] ━━━━━━━━━━━━
+        spellLvl = skill.getSkillLvl(id)
+
+        skill..setTitle(id, BLUE+"Shielder"+LEVEL_TOOLTIP+spellLvl.toString()+CR+"]")
+        ..setDescription(id,
+        GOLD+
+        "Mashu passively takes less damage from incoming basic attacks."+
+        "\n\nDamage reduction: "+PINK+"35%"+GOLD)
+
+    else if skill == MONKEYD_LUFFY_ABILITY_G  //  ━━━━━━━━━━━━ [Basic Attack Reduction] ━━━━━━━━━━━━
+        spellLvl = skill.getSkillLvl(id)
+
+        skill..setTitle(id, BLUE+"Gomu Gomu No Mi"+LEVEL_TOOLTIP+spellLvl.toString()+CR+"]")
+        ..setDescription(id,
+        GOLD+
+        "Luffy passively takes less damage from incoming basic attacks."+
+        "\n\nDamage reduction: "+PINK+"35%"+GOLD)
+
+    else if skill == AKAME_MURASAME_ABILITY_G  //  ━━━━━━━━━━━━ [Akame] ━━━━━━━━━━━━
+        spellLvl = skill.getSkillLvl(id)
+
+        skill..setTitle(id, BLUE+"Murasame"+LEVEL_TOOLTIP+spellLvl.toString()+CR+"]")
+        ..setDescription(id,
+        GOLD+
+        "Whenever Akame uses a basic attack, her next basic attack deals additional damage. This effect stacks and ends when Akame doesn't use a basic attack for 3 consecutive seconds."+
+        "\n\nDamage Bonus: "+PINK+"15%"+GOLD)
+
+    else if skill == 'A0Y1' // ━━━━━━━━━━━━ [Edo Minato's Kunai Throw] ━━━━━━━━━━━━
+        cd = (45)
+        mana = (50)
+        range = (3000)
+
+        skill
+        ..setDescription(id,
+        GOLD+
+        "Minato Throws his kunai to the targeted location. For the next 10 seconds, Minato can reuse this ability to teleport to the location of his kunai."+
+        "\n\nCast Range: "+PINK+range.toString()+GOLD+
+        "\nCooldown: "+PINK+cd.toString()+GOLD)
+        
+        hero.getAbility(skill)
+
+        ..setField(ABILITY_ILF_MANA_COST, hero.getAbilityLevel(skill) - 1, mana)
+        ..setField(ABILITY_RLF_CAST_RANGE, hero.getAbilityLevel(skill) - 1, range.toReal())
+        ..setField(ABILITY_RLF_COOLDOWN, hero.getAbilityLevel(skill) - 1, cd.toReal())
+
+
+    else if skill == 'A0NB' // ━━━━━━━━━━━━ [Normal Minato's Kunai Teleport] ━━━━━━━━━━━━
+        cd = (6)
+        mana = (15)
+
+        skill
+        ..setDescription(id,
+        GOLD+
+        "Minato teleports to the location of his kunai. This ability is only usable while his kunai is flying."+
+        "\n\nCooldown: "+PINK+cd.toString()+GOLD)
+        
+        hero.getAbility(skill)
+
+        ..setField(ABILITY_ILF_MANA_COST, hero.getAbilityLevel(skill) - 1, mana)
+        ..setField(ABILITY_RLF_COOLDOWN, hero.getAbilityLevel(skill) - 1, cd.toReal())
+
+
+    else if skill == KILLUA_ZOLDYCK_ABILITY_G // ━━━━━━━━━━━━ [Killua] ━━━━━━━━━━━━
+        cd = (45)
+        mana = (50)
+        duration = (10)
+
+        skill
+        ..setDescription(id,
+        GOLD+
+        "While this ability is active, if killua's issued a move command to less than 800 range from his current location, he'll instantly teleport there instead. This skill ends if killua uses any of his other abilities."+
+        "\n\nDuration: "+PINK+duration.toString()+GOLD+
+        "\nCooldown: "+PINK+cd.toString()+GOLD)
+        
+        hero.getAbility(skill)
+
+        ..setField(ABILITY_ILF_MANA_COST, hero.getAbilityLevel(skill) - 1, mana)
+        ..setField(ABILITY_RLF_COOLDOWN, hero.getAbilityLevel(skill) - 1, cd.toReal())
+
+
+    else if skill == LEVI_ACKERMAN_ABILITY_G  //  ━━━━━━━━━━━━ [Akame] ━━━━━━━━━━━━
+        spellLvl = skill.getSkillLvl(id)
+
+        skill..setTitle(id, BLUE+"Murasame"+LEVEL_TOOLTIP+spellLvl.toString()+CR+"]")
+        ..setDescription(id,
+        GOLD+
+        "Whenever Levy uses a basic attack, his next basic attack deals additional damage. This effect stacks and ends when Levy doesn't use a basic attack for 3 consecutive seconds."+
+        "\n\nDamage Bonus: "+PINK+"15%"+GOLD)        
+    else
+        skill
+        ..setDescription(id, originalDescription)
+
+public function tooltip_G2 (int pid)
+    let id = pid
+    let hero = udg_PlayHero[id]
+    int spellLvl
+    int range
+    int mana
+    int duration
+    int cd
+    let skill = SPELL_G2[id]
+
+    if skill == 'A00L' // ━━━━━━━━━━━━ [Edo Minato's Kunai Teleport] ━━━━━━━━━━━━
+
+        cd = (5)
+        mana = (15)
+        range = (5000)
+
+        skill
+        ..setDescription(id,
+        GOLD+
+        "Minato teleports to the location of his kunai. This ability doesn't work if Minato's kunai is further away from him than the cast range of this ability."+
+        "\n\nCast Range: "+PINK+range.toString()+GOLD+
+        "\nCooldown: "+PINK+cd.toString()+GOLD)
+        
+        hero.getAbility(skill)
+
+        ..setField(ABILITY_ILF_MANA_COST, hero.getAbilityLevel(skill) - 1, mana)
+        ..setField(ABILITY_RLF_CAST_RANGE, hero.getAbilityLevel(skill) - 1, range.toReal())
+        ..setField(ABILITY_RLF_COOLDOWN, hero.getAbilityLevel(skill) - 1, cd.toReal())
+
+    else if skill == SASUKE_YOUNG_ABILITY_G_RINNEGAN 
+        spellLvl = skill.getSkillLvl(id)
+        duration = 4
+        cd = 60
+        mana = 50
+
+        skill..setTitle(id, BLUE+"Rinnegan"+LEVEL_TOOLTIP+spellLvl.toString()+CR+"]")
+        ..setDescription(id,
+        GOLD+
+        "While active, the next instance of damage the user receives that's equal or higher than 20% of their maximum health is reduced by 50%."+
+        "\n\nDuration: "+PINK+duration.toString()+GOLD+                        
+        "\nCooldown: "+PINK+cd.toString()+GOLD)
+        hero.getAbility(skill)
+
+        ..setField(ABILITY_ILF_MANA_COST, hero.getAbilityLevel(skill) - 1, mana)
+        ..setField(ABILITY_RLF_COOLDOWN, hero.getAbilityLevel(skill) - 1, cd.toReal())
+
+
+    else
+        spellLvl = skill.getSkillLvl(id)
+        duration = 4
+        cd = 60
+        mana = 50
+
+        skill..setTitle(id, BLUE+"Bullshit"+LEVEL_TOOLTIP+spellLvl.toString()+CR+"]")
+        ..setDescription(id,
+        GOLD+
+        "This G2 ability shouldn't exist."+
+        "\n\nDuration: "+PINK+duration.toString()+GOLD+                        
+        "\nCooldown: "+PINK+cd.toString()+GOLD)
+        hero.getAbility(skill)
+
+        ..setField(ABILITY_ILF_MANA_COST, hero.getAbilityLevel(skill) - 1, mana)
+        ..setField(ABILITY_RLF_COOLDOWN, hero.getAbilityLevel(skill) - 1, cd.toReal())
+
+
+public function tooltip_Blink_G (int pid)
+    let id = pid
+    let hero = udg_PlayHero[id]
+    int range
+    int mana
+    int cd
+    int effectRange
+    let skill = SPELL_G[id]
+
+    cd = (40)
+    mana = (50)
+    range = (5000)
+    effectRange = (750)
+
+    skill..setTitle(id, BLUE+"Blink|r")
+    ..setDescription(id,
+    GOLD+
+    "Teleports the user a short distance towards the targeted location."+
+    "\n\nCast Range: "+PINK+range.toString()+GOLD+
+    "\nTeleport Distance: "+PINK+effectRange.toString()+GOLD+
+    "\nCooldown: "+PINK+cd.toString()+GOLD
+    )
+
+    hero.getAbility(skill)
+    
+    ..setField(ABILITY_ILF_MANA_COST, hero.getAbilityLevel(skill) - 1, mana)
+    ..setField(ABILITY_RLF_COOLDOWN, hero.getAbilityLevel(skill) - 1, cd.toReal())
+    ..setField(ABILITY_RLF_CAST_RANGE, hero.getAbilityLevel(skill) - 1, range.toReal())
+
+
+public function tooltip_Mode_G (int pid)
+    let id = pid
+    let hero = udg_PlayHero[id]
+    int range
+    int mana
+    int cd
+    int castrange
+    let skill = SPELL_MODO_G[id]
+
+    if skill == 'A0ED'    //Wendy
+        mana = (50)
+        cd = (30)
+        castrange = (5000)
+        range = (1500)
+
+        skill
+        ..setDescription(id,
+        GOLD+
+        "Wendy dashes towards the targeted location"+
+        "\n\nCast Range: "+PINK+castrange.toString()+GOLD+
+        "\nDash Range: "+PINK+range.toString()+GOLD+
+        "\nCooldown: "+PINK+cd.toString()+GOLD)
+        hero.getAbility(skill)
+
+        ..setField(ABILITY_ILF_MANA_COST, hero.getAbilityLevel(skill) - 1, mana)
+        ..setField(ABILITY_RLF_COOLDOWN, hero.getAbilityLevel(skill) - 1, cd.toReal())
+        ..setField(ABILITY_RLF_CAST_RANGE, hero.getAbilityLevel(skill) - 1, castrange.toReal())
+
+
+    else if skill.isModeBlink()   // Mode Blinks 
+        mana = (50)
+        cd = (30)
+        castrange = (5000)
+        range = (750)
+
+        skill
+        ..setDescription(id,
+        GOLD+
+        "Teleports the user a short distance towards the targeted location."+
+        "\n\nCast Range: "+PINK+castrange.toString()+GOLD+
+        "\nTeleport Distance: "+PINK+range.toString()+GOLD+
+        "\nCooldown: "+PINK+cd.toString()+GOLD)
+        hero.getAbility(skill)
+
+        ..setField(ABILITY_ILF_MANA_COST, hero.getAbilityLevel(skill) - 1, mana)
+        ..setField(ABILITY_RLF_COOLDOWN, hero.getAbilityLevel(skill) - 1, cd.toReal())
+        ..setField(ABILITY_RLF_CAST_RANGE, hero.getAbilityLevel(skill) - 1, castrange.toReal())

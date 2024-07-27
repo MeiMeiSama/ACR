@@ -1,0 +1,23 @@
+package damagesys_Orig
+import ObjectDefinitions
+
+init
+    initTrig_damagesys_Orig()
+
+function trig_damagesysConditions() returns boolean
+    return GetUnitTypeId(GetTriggerUnit()) == KILLUA_ZOLDYCK and IsUnitAliveBJ(GetTriggerUnit()) == true and GetEventDamage() >= 500.00 and GetUnitAbilityLevel(GetTriggerUnit(), 'Amim') != 1
+function trig_damagesysActions()
+    integer trigger_ID = LoadInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 865)
+    trigger_ID += 3
+    SaveInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 865, trigger_ID)
+    SaveInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 1045, trigger_ID)
+    SaveInteger(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 280, GetRandomInt(1, 100))
+    SaveUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594, GetTriggerUnit())
+    if LoadInteger(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 280) >= 95
+        yDWESetEventDamage(GetEventDamageSource(), LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594), 0.00)
+    FlushChildHashtable(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID)
+function initTrig_damagesys_Orig()
+    gg_trg_damagesys = CreateTrigger()
+    yDWESyStemAnyUnitDamagedRegistTrigger(gg_trg_damagesys)
+    TriggerAddCondition(gg_trg_damagesys, Condition(function trig_damagesysConditions))
+    TriggerAddAction(gg_trg_damagesys, function trig_damagesysActions)

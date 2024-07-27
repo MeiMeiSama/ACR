@@ -1,0 +1,232 @@
+package HSaberQ_Orig
+import DamageEvent
+import AbilityGlobals
+import main
+// import ClosureTimers
+init
+    initTrig_HSaberQ_Orig()
+
+function trig_HSaberQConditions() returns boolean
+    return GetSpellAbilityId() == 'A0RP' or GetSpellAbilityId() == 'A0RQ' or GetSpellAbilityId() == 'A0RT'
+function trig_HSaberQFunc003Func001Func002Func006T()
+    if UnitHasBuffBJ(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 151), 'B04P') == false or IsUnitDeadBJ(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 151)) == true
+        let target = LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 151)
+        if target.getField(UNIT_IF_PRIMARY_ATTRIBUTE) == 1
+            target.addStr(-25)
+        else if target.getField(UNIT_IF_PRIMARY_ATTRIBUTE) == 2
+            target.addInt(-25)
+        else if target.getField(UNIT_IF_PRIMARY_ATTRIBUTE) == 3
+            target.addAgi(-25)
+        // DisableTrigger(gg_trg_HSaberF)
+        FlushChildHashtable(YDLOC, GetHandleId(GetExpiredTimer()))
+        DestroyTimer(GetExpiredTimer())
+function trig_HSaberQFunc003Func001Func011003003() returns boolean
+    return IsUnitType(GetFilterUnit(), UNIT_TYPE_STRUCTURE) == false and IsUnitEnemy(GetFilterUnit(), LoadPlayerHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * LoadInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 1045), 603)) == true and IsUnitDeadBJ(GetFilterUnit()) == false and GetUnitAbilityLevel(GetFilterUnit(), 'Avul') != 1
+function trig_HSaberQFunc003Func001Func012A()
+    DamageEvent.setNextDamageId(DAMAGE_ABILITY_Q)
+    DamageEvent.setNextDamageFromCode()
+    UnitDamageTargetBJ(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * LoadInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 1045), 594), GetEnumUnit(), 50.00, ATTACK_TYPE_MAGIC, DAMAGE_TYPE_MAGIC)
+function trig_HSaberQFunc003Func017Func001Func003T()
+    // CameraClearNoiseForPlayer(LoadPlayerHandle(YDLOC, GetHandleId(GetExpiredTimer()), 603))
+    FlushChildHashtable(YDLOC, GetHandleId(GetExpiredTimer()))
+    DestroyTimer(GetExpiredTimer())
+function trig_HSaberQFunc003Func017Func001Func005003003() returns boolean
+    return IsUnitType(GetFilterUnit(), UNIT_TYPE_STRUCTURE) == false and IsUnitEnemy(GetFilterUnit(), LoadPlayerHandle(YDLOC, GetHandleId(GetExpiredTimer()), 603)) == true and I2R(GetUnitAbilityLevelSwapped('Avul', GetFilterUnit())) != 1.00 and IsUnitDeadBJ(GetFilterUnit()) == false
+function trig_HSaberQFunc003Func017Func001Func006A()
+    DamageEvent.setNextDamageId(DAMAGE_ABILITY_Q)
+    DamageEvent.setNextDamageFromCode()
+    UnitDamageTargetBJ(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), GetEnumUnit(), I2R(GetUnitAbilityLevel(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), 'A0RP')) * 100.00, ATTACK_TYPE_MAGIC, DAMAGE_TYPE_MAGIC)
+function trig_HSaberQFunc003Func017Func001Func017T()
+    let caster = LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594)
+    if caster.hasAbility('A0RQ')
+        UnitRemoveAbility(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), 'A0RQ')
+        SetPlayerAbilityAvailable(LoadPlayerHandle(YDLOC, GetHandleId(GetExpiredTimer()), 603), 'A0RP', true)
+    RemoveSavedHandle(YDHT, 11, 668)
+    RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 668))
+    FlushChildHashtable(YDLOC, GetHandleId(GetExpiredTimer()))
+    DestroyTimer(GetExpiredTimer())
+function trig_HSaberQFunc003Func017Func001Func029T()
+    RemoveUnit(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 843857024))
+    FlushChildHashtable(YDLOC, GetHandleId(GetExpiredTimer()))
+    DestroyTimer(GetExpiredTimer())
+function trig_HSaberQFunc003Func017T()
+    timer _ydl_timer
+    //group _ydl_group
+    //unit _ydl_unit
+    if LoadReal(YDLOC, GetHandleId(GetExpiredTimer()), 689) <= 150.00 or IsUnitDeadBJ(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594)) == true or (IsTerrainPathableBJ(LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 48), PATHING_TYPE_WALKABILITY) == true and IsTerrainPathableBJ(LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 48), PATHING_TYPE_FLYABILITY) == true)
+        UnitRemoveAbility(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), 'A0OA')
+        // CameraSetEQNoiseForPlayer(LoadPlayerHandle(YDLOC, GetHandleId(GetExpiredTimer()), 603), 10.00)
+        _ydl_timer = CreateTimer()
+        SavePlayerHandle(YDLOC, GetHandleId(_ydl_timer), 603, LoadPlayerHandle(YDLOC, GetHandleId(GetExpiredTimer()), 603))
+        TimerStart(_ydl_timer, 0.50, false, function trig_HSaberQFunc003Func017Func001Func003T)
+        SaveLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 1108, GetUnitLoc(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594)))
+        SaveGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 361, yDWEGetUnitsInRangeOfLocMatchingNull(650.00, LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 1108), Condition(function trig_HSaberQFunc003Func017Func001Func005003003)))
+        ForGroupBJ(LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 361), function trig_HSaberQFunc003Func017Func001Func006A)
+        GroupClear(LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 361))
+        DestroyGroup(LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 361))
+        RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 1108))
+        RemoveUnit(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 449))
+        SetUnitTimeScalePercent(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), 100.00)
+        SetUnitPathing(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), true)
+        SetPlayerAbilityAvailable(LoadPlayerHandle(YDLOC, GetHandleId(GetExpiredTimer()), 603), 'A0RP', false)
+        UnitAddAbility(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), 'A0RQ')
+        _ydl_timer = CreateTimer()
+        SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 594, LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594))
+        SavePlayerHandle(YDLOC, GetHandleId(_ydl_timer), 603, LoadPlayerHandle(YDLOC, GetHandleId(GetExpiredTimer()), 603))
+        SaveLocationHandle(YDLOC, GetHandleId(_ydl_timer), 668, LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 668))
+        TimerStart(_ydl_timer, 2.00, false, function trig_HSaberQFunc003Func017Func001Func017T)
+        FlushChildHashtable(YDLOC, GetHandleId(GetExpiredTimer()))
+        DestroyTimer(GetExpiredTimer())
+    else
+        SaveLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 1108, GetUnitLoc(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594)))
+        SaveLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 683, GetUnitLoc(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 449)))
+        SaveLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 48, PolarProjectionBJ(LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 1108), 50.00, AngleBetweenPoints(LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 1108), LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 683))))
+        SaveReal(YDLOC, GetHandleId(GetExpiredTimer()), 689, DistanceBetweenPoints(LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 1108), LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 683)))
+        SetUnitPositionLoc(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 48))
+        SaveUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 843857024, CreateUnitAtLoc(LoadPlayerHandle(YDLOC, GetHandleId(GetExpiredTimer()), 603), 'e0WC', LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 1108), GetUnitFacing(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594))))
+        SetUnitTimeScalePercent(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 843857024), 1000.00)
+        SetUnitAnimationByIndex(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 843857024), 5)
+        SetUnitVertexColorBJ(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 843857024), 100, 100, 100, 75.00)
+        _ydl_timer = CreateTimer()
+        SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 843857024, LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 843857024))
+        TimerStart(_ydl_timer, 0.05, false, function trig_HSaberQFunc003Func017Func001Func029T)
+        RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 1108))
+        RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 683))
+        RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 48))
+function trig_HSaberQActions()
+    timer _ydl_timer
+    //group _ydl_group
+    //unit _ydl_unit
+    integer trigger_ID = LoadInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 865)
+    trigger_ID += 3
+    SaveInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 865, trigger_ID)
+    SaveInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 1045, trigger_ID)
+    SaveUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594, GetSpellAbilityUnit())
+    SavePlayerHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 603, GetOwningPlayer(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594)))
+    if GetSpellAbilityId() == 'A0RP'
+        let loc = vec2(GetSpellTargetX(), GetSpellTargetY())
+        let caster = GetTriggerUnit()
+        let casterloc = caster.getPos()
+        
+        if gg_rct_BossArea.contains(loc) == false and gg_rct_BossArea.contains(casterloc) == true
+            caster.getOwner().print("Can't teleport out/in of arena", 2)
+            caster.issueImmediateOrder("stop")
+        else if gg_rct_BossArea.contains(loc) == true and gg_rct_BossArea.contains(casterloc) == false
+            caster.getOwner().print("Can't teleport out/in of arena", 2)
+            caster.issueImmediateOrder("stop")        
+        else if gg_rct_1v1v1Area.contains(loc) == false and gg_rct_1v1v1Area.contains(casterloc) == true
+            caster.getOwner().print("Can't teleport out/in of arena", 2)
+            caster.issueImmediateOrder("stop") 
+        else if gg_rct_1v1v1Area.contains(loc) == true and gg_rct_1v1v1Area.contains(casterloc) == false
+            caster.getOwner().print("Can't teleport out/in of arena", 2)
+            caster.issueImmediateOrder("stop")   
+        else if gg_rct_2v2v2Area.contains(loc) == false and gg_rct_2v2v2Area.contains(casterloc) == true
+            caster.getOwner().print("Can't teleport out/in of arena", 2)
+            caster.issueImmediateOrder("stop")     
+        else if gg_rct_2v2v2Area.contains(loc) == true and gg_rct_2v2v2Area.contains(casterloc) == false
+            caster.getOwner().print("Can't teleport out/in of arena", 2)
+            caster.issueImmediateOrder("stop") 
+        else if gg_rct_FreeForAllArea.contains(loc) == false and gg_rct_FreeForAllArea.contains(casterloc) == true
+            caster.getOwner().print("Can't teleport out/in of arena", 2)
+            caster.issueImmediateOrder("stop")               
+        else if gg_rct_FreeForAllArea.contains(loc) == true and gg_rct_FreeForAllArea.contains(casterloc) == false
+            caster.getOwner().print("Can't teleport out/in of arena", 2)
+            caster.issueImmediateOrder("stop")  
+        else if gg_rct_TeamBattleArea.contains(loc) == false and gg_rct_TeamBattleArea.contains(casterloc) == true
+            caster.getOwner().print("Can't teleport out/in of arena", 2)
+            caster.issueImmediateOrder("stop")         
+        else if gg_rct_TeamBattleArea.contains(loc) == true and gg_rct_TeamBattleArea.contains(casterloc) == false
+            caster.getOwner().print("Can't teleport out/in of arena", 2)
+            caster.issueImmediateOrder("stop")                              
+        else  
+            soundPlay("war3mapImported\\HSabe1.mp3", GetUnitX(udg_Unitsound), GetUnitY(udg_Unitsound))
+            SaveLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1108, GetUnitLoc(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594)))
+            SaveLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 549, GetSpellTargetLoc())
+            SaveLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 668, GetUnitLoc(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594)))
+            SaveLocationHandle(YDHT, 11, 'k9gQ', LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 668))
+            SaveReal(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 689, DistanceBetweenPoints(LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1108), LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 549)))
+            SetUnitPathing(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594), false)
+            SetUnitTimeScalePercent(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594), 1000.00)
+            SetUnitAnimationByIndex(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594), 5)
+            SaveUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 449, CreateUnitAtLoc(LoadPlayerHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 603), 'e028', LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 549), AngleBetweenPoints(LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 668), LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 549))))
+            UnitAddAbility(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594), 'A0OA')
+            RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 549))
+            RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1108))
+            _ydl_timer = CreateTimer()
+            SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 594, LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594))
+            SavePlayerHandle(YDLOC, GetHandleId(_ydl_timer), 603, LoadPlayerHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 603))
+            SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 843857024, LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 843857024))
+            SaveLocationHandle(YDLOC, GetHandleId(_ydl_timer), 1108, LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1108))
+            SaveLocationHandle(YDLOC, GetHandleId(_ydl_timer), 683, LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 683))
+            SaveLocationHandle(YDLOC, GetHandleId(_ydl_timer), 48, LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 48))
+            SaveGroupHandle(YDLOC, GetHandleId(_ydl_timer), 361, LoadGroupHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 361))
+            SaveReal(YDLOC, GetHandleId(_ydl_timer), 689, LoadReal(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 689))
+            SaveLocationHandle(YDLOC, GetHandleId(_ydl_timer), 668, LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 668))
+            SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 449, LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 449))
+            TimerStart(_ydl_timer, 0.005, true, function trig_HSaberQFunc003Func017T)
+    else if GetSpellAbilityId() == 'A0RQ'
+        let caster = GetTriggerUnit()
+        if caster.hasAbility('A0RQ')
+            UnitRemoveAbility(caster, 'A0RQ')
+            SetPlayerAbilityAvailable(caster.getOwner(), 'A0RP', true)
+        SaveLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 801, GetUnitLoc(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594)))
+        SaveUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 714, CreateUnitAtLoc(LoadPlayerHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 603), 'e0JQ', LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 801), GetUnitFacing(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594))))
+        SetUnitScale(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 714), 1.00, 1.00, 1.00)
+        UnitApplyTimedLife(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 714), 'BHwe', 2.00)
+        RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 801))
+        SetUnitPositionLoc(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594), LoadLocationHandle(YDHT, 11, 'k9gQ'))
+        SaveLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1108, GetUnitLoc(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594)))
+        SaveGroupHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 361, yDWEGetUnitsInRangeOfLocMatchingNull(400.00, LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1108), Condition(function trig_HSaberQFunc003Func001Func011003003)))
+        ForGroupBJ(LoadGroupHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 361), function trig_HSaberQFunc003Func001Func012A)
+        GroupClear(LoadGroupHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 361))
+        DestroyGroup(LoadGroupHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 361))
+        RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1108))
+    else
+        SaveUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 151, GetSpellTargetUnit())
+
+        // flashEffect("war3mapImported\\mlimly jianqiao.mdl", GetSpellTargetUnit().getPos()) // this
+        // flashEffect("war3mapImported\\GlowLineYellow.mdl", GetSpellTargetUnit().getPos())
+        // flashEffect("war3mapImported\\mx121.mdl", GetSpellTargetUnit().getPos())
+        // flashEffect("war3mapImported\\GlowSpread.mdl", GetSpellTargetUnit().getPos())
+        // flashEffect("war3mapImported\\WRing.mdl", GetSpellTargetUnit().getPos())
+        // flashEffect("war3mapImported\\starcycle.mdl", GetSpellTargetUnit().getPos()) // to here, creates effect at loc, but wont follow unit
+        // flashEffect("war3mapImported\\mlimly jianqiao.mdl", GetSpellTargetUnit(), "origin") // will create effect on the units "origin", which will follow if they move
+        // flasheffect = creates effect, and immediately plays its death animation, so if u want an effect that is like looping or last longer, do not use flasheffect, use
+        // let sfx1 = addEffect("war3mapImported\\mlimly jianqiao.mdl", GetSpellTargetUnit().getPos())
+        // let sfx1 = addEffect("war3mapImported\\mlimly jianqiao.mdl", GetSpellTargetUnit(), "chest")
+        // let sfx2 = addEffect("war3mapImported\\GlowLineYellow.mdl", GetSpellTargetUnit(), "chest")
+        // let sfx3 = addEffect("war3mapImported\\mx121.mdl", GetSpellTargetUnit(), "chest")
+        // let sfx4 = addEffect("war3mapImported\\GlowSpread.mdl", GetSpellTargetUnit(), "chest")
+        // let sfx5 = addEffect("war3mapImported\\WRing.mdl", GetSpellTargetUnit(), "chest")
+        // let sfx6 = addEffect("war3mapImported\\starcycle.mdl", GetSpellTargetUnit(), "chest")
+        // // let sfx7 = addEffect("war3mapImported\\mlimly jianqiao.mdl", GetSpellTargetUnit(), "chest")
+        // //add effect wont play its death animation, but we need to delete these or they will leak after used
+        // // flash effect does not need to be manually destroyed, as flasheffect immediately plays its death animation once created
+        // doAfter(10) ->
+        //     // sfx1.destr()
+        //     // sfx2.destr()
+        //     // sfx3.destr()
+        //     // sfx4.destr()           
+        //     // sfx5.destr()
+        //     sfx6.destr()
+        if IsUnitAlly(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 151), LoadPlayerHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 603)) == true
+            soundPlay("war3mapImported\\Saber6.mp3", GetUnitX(udg_Unitsound), GetUnitY(udg_Unitsound))
+            // EnableTrigger(gg_trg_HSaberF)
+            let target = LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 151)
+            if target.getField(UNIT_IF_PRIMARY_ATTRIBUTE) == 1
+                target.addStr(25)
+            else if target.getField(UNIT_IF_PRIMARY_ATTRIBUTE) == 2
+                target.addInt(25)
+            else if target.getField(UNIT_IF_PRIMARY_ATTRIBUTE) == 3
+                target.addAgi(25)
+            _ydl_timer = CreateTimer()
+            SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 151, LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 151))
+            TimerStart(_ydl_timer, 0.02, true, function trig_HSaberQFunc003Func001Func002Func006T)
+        else
+            IssueImmediateOrder(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594), "stop")
+    FlushChildHashtable(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID)
+function initTrig_HSaberQ_Orig()
+    gg_trg_HSaberQ = CreateTrigger()
+    TriggerRegisterAnyUnitEventBJ(gg_trg_HSaberQ, EVENT_PLAYER_UNIT_SPELL_EFFECT)
+    TriggerAddCondition(gg_trg_HSaberQ, Condition(function trig_HSaberQConditions))
+    TriggerAddAction(gg_trg_HSaberQ, function trig_HSaberQActions)

@@ -1,0 +1,19 @@
+package ExperienceDistribution
+
+import ClosureTimers
+import ClosureEvents
+
+function unit.increaseXP ()
+    doPeriodically(5) (CallbackPeriodic cb) ->
+        this.addXp(80, true)        
+
+public function expDistr ()
+    for i = 0 to 12
+        if udg_PlayHero[i] != null
+            udg_PlayHero[i].increaseXP()
+
+    EventListener.add(EVENT_PLAYER_UNIT_DEATH) -> 
+        if not GetDyingUnit().isType(UNIT_TYPE_HERO)
+            GetKillingUnit().addXp(5, true)
+        if GetDyingUnit().isType(UNIT_TYPE_HERO) and GetKillingUnit().isType(UNIT_TYPE_HERO)
+            GetKillingUnit().addXp(150, true)    

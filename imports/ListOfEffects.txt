@@ -1,0 +1,158 @@
+COUNT    | LINE
+-----------------------------------------------------
+       1 | .mdl
+       1 | [AWF]Nanaya.mdl
+       1 | [AWF]Nanaya2.mdl
+       1 | [spell]hakkestartorigin.mdl
+       1 | afb214zj.mdl
+       1 | afbxnnpink.mdl
+       1 | AizenJHSY.mdl
+       1 | akiha claw_Pink.mdl
+       1 | arc-drive-white.mdl
+       1 | Atomic_kdls.mdl
+       1 | AZ_BNPF_V_fense.mdl
+       1 | AZ_BNPF_V.mdl
+       1 | AZ_BNPF_White.mdl
+       1 | AZ_D066.mdl
+       1 | AZ_EVEMD.mdl
+       1 | AZ_Goods_Lvlup(3).mdl
+       1 | AZ_H004.mdl
+       1 | az_jingzi_jiansheng01_e1_l.mdl
+       1 | AZ_PotMpink_R1_Misslie.mdl
+       1 | AZ_SIWENPF1_W1_red.mdl
+       1 | AZ_SIWENPF1_W1.mdl
+       1 | az-slash-blue.mdl
+       1 | baozha_95_fen1.mdl
+       1 | BBBB_100.mdl
+       1 | blood-wu.mdl
+       1 | blue--zhendi3.mdl
+       1 | blueyumao.mdl
+       1 | BOLAT_BOLATOV_OT_XESHTEGA.mdl
+       1 | BY_Wood_BaShenAn_JuQi_2_2.mdl
+       1 | by_wood_dange_zhanji_daoguang_2_1.mdl
+       1 | BY_Wood_Eff_Ord_DanGe_Dus_Kuosan_1_1_2.mdl
+       1 | BY_Wood_Eff_Ord_DanGe_Wid_ChongFengQiLiu.mdl
+       1 | BY_Wood_Eff_Ord_NiYa_Bh3_XuanFeng Pink.mdl
+       1 | BY_Wood_Eff_Ord_YeYe_Hit_DaJi.mdl
+       1 | BY_Wood_Eff_Ord_YeYe_Wid_KuoSan_3.mdl
+       1 | BY_Wood_Effect_Order_DanGe_Stf_DaJi_1_2_lan-god.mdl
+       1 | BY_Wood_Effect_Order_DanGe_Stf_DaJi_1_3.mdl
+       1 | BY_Wood_Effect_Order_MoBai_Dev_BianShen_KuoSan3.mdl
+       1 | BY_Wood_Effect_Order_MoBai_Dev_BianShen_KuoSan5.mdl
+       1 | BY_Wood_Effect_Order_MoBai_Dev_BianShen_KuoSan6.mdl
+       1 | catch flash.mdl
+       1 | ChongFeng2.mdl
+       1 | coarse slash purple.mdl
+       1 | Cyan-215.mdl
+       1 | CYZ_Hit.mdl
+       1 | devilslam.mdl
+       1 | Dimension_Slash blue light.mdl
+       1 | DustWindFaster4.mdl
+       1 | Effect AZ_Shockwave Light.mdl
+       1 | Effect AZ_Yishan.mdl
+       1 | Effect BY_Wood_Effect_Order_DanGe_LiangYiShi_ZhiSiZhiMoYanZhanJi Blue.mdl
+       1 | Effect BY_Wood_Effect_Order_DanGe_LiangYiShi_ZhiSiZhiMoYanZhanJiRyo.mdl
+       1 | Effect Flash Antimagic Zone.mdl
+       1 | Effect Ground Shadow.mdl
+       1 | Effect Pieces.mdl
+       1 | effect_by_wood_slamred.mdl
+       1 | EnergyBurstBlue.mdl
+       1 | Ephemeral Cut Red.mdl
+       1 | Evolt-2.mdl
+       1 | fense_21.mdl
+       1 | fense_41.mdl
+       1 | GlowLine.mdl
+       1 | HakenSaber2.mdl
+       1 | hero_juggernaut_n4s_e_line.mdl
+       1 | hero_skeletonking_n2s_e_star.mdl
+       1 | HitHY.mdl
+       1 | hsbzqctx_x4white.mdl
+       1 | impact1-white-x2.mdl
+       1 | jingliu-1.mdl
+       1 | jingliu-18.mdl
+       1 | jxlsxf.mdl
+       1 | k2.mdl
+       1 | Kamijo-11.mdl
+       1 | kdls1.mdl
+       1 | Kirito-4.mdl
+       1 | M4 (745)1.mdl
+       1 | mh_Tx_yln_fstx1-2.mdl
+       1 | mh-117-white3.mdl
+       1 | Minato-37.mdl
+       1 | moon_texiao_yanxindaji_01b.mdl
+       1 | Nanaya-11.mdl
+       1 | Nanaya-12.mdl
+       1 | Nanaya-2.mdl
+       1 | Nanaya-22.mdl
+       1 | Nanaya-222.mdl
+       1 | Nanaya-3.mdl
+       1 | Nanaya-5.mdl
+       1 | Nanaya-7.mdl
+       1 | Nanaya-8.mdl
+       1 | Nanaya-sllhh-c.dg2.mdl
+       1 | Nanaya-sllhh-dg.hz.mdl
+       1 | Nanaya2Skill06D.mdl
+       1 | petalsss.mdl
+       1 | punchshot.mdl
+       1 | PunchWindEff.mdl
+       1 | rasengan_eff4.mdl
+       1 | re1.mdl
+       1 | RimuruSlamPurpleDark.mdl
+       1 | Ryougi-ZJ.mdl
+       1 | RyougiLS.mdl
+       1 | sakura round.mdl
+       1 | sakura-feiwu.mdl
+       1 | Sazaku-1-x3.mdl
+       1 | SBXZAFB2.mdl
+       1 | SCskill06D.mdl
+       1 | Shadow_Tx_Sg.mdl
+       1 | Shadow-10.mdl
+       1 | Shadow-11.mdl
+       1 | Shadow-6.mdl
+       1 | Shadow-7.mdl
+       1 | shanguangbiubiu.mdl
+       1 | shiki-bahuajing.mdl
+       1 | Shiki-x3-215.mdl
+       1 | shikiwhite.mdl
+       1 | ShockWaveBlack.mdl
+       1 | slash-pink-215.mdl
+       1 | slash3-215.mdl
+       1 | slashblue-nny.mdl
+       1 | slashpink-215.mdl
+       1 | Spark215.mdl
+       1 | srwo163.mdl
+       1 | TX_White2.mdl
+       1 | tx-302.mdl
+       1 | tx-bluehecheng_fx.mdl
+       1 | tx-fghsjtx-385.mdl
+       1 | tx-ha_nitu.mdl
+       1 | tx-ha-chongfeng2.mdl
+       1 | tx-ym-e_impact.mdl
+       1 | tx-ym-n8s_f_source1.mdl
+       1 | tx-ym-v_boom.mdl
+       1 | TX012.mdl
+       1 | uissb.mdl
+       1 | uuz_sakuraexplosion.mdl
+       1 | Vergil-12red.mdl
+       1 | war3mapImported\dummy2.mdl
+       1 | white-qiquan-special.mdl
+       1 | wind2.mdl
+       1 | wind3.mdl
+       1 | wind4.mdl
+       1 | WindCirclefaster.mdl
+       1 | WindNewFaw3.mdl
+       1 | WindNewFaw4.mdl
+       1 | wzcfql.mdl
+       1 | xjbz.mdl
+       1 | xjbz2.mdl
+       1 | xn-11.mdl
+       1 | xn-11purple.mdl
+       1 | yumeslash.mdl
+       1 | zgym.mdl
+       1 | zhendi-yinghua.mdl
+       1 | zhhy.mdl
+       1 | zxd3.mdl
+       1 | zywhiteyg.mdl
+-----------------------------------------------------
+     153 | TOTAL LINES
+     153 | DISTINCT LINES

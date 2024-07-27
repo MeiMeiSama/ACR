@@ -1,0 +1,176 @@
+package AkuyaF
+import DamageEvent
+import AbilityGlobals
+import main
+import ACR_Library
+
+vec2 aquaF1TargetPoint
+
+init
+    initTrig_AkuyaF()
+
+function trig_AkuyaFConditions() returns boolean
+    return GetSpellAbilityId() == 'A0RD' or GetSpellAbilityId() == 'A0S5'
+function trig_AkuyaFFunc003Func011Func002Func016Func001Func005003003() returns boolean
+    return IsUnitType(GetFilterUnit(), UNIT_TYPE_STRUCTURE) == false and IsUnitInGroup(GetFilterUnit(), LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 744928215)) == false and IsUnitEnemy(GetFilterUnit(), LoadPlayerHandle(YDLOC, GetHandleId(GetExpiredTimer()), 603)) == true and IsUnitAliveBJ(GetFilterUnit()) == true
+function trig_AkuyaFFunc003Func011Func002Func016Func001Func006A()
+    DamageEvent.setNextDamageId(DAMAGE_ABILITY_AQUA_F2)
+    DamageEvent.setNextDamageFromCode()
+    UnitDamageTargetBJ(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), GetEnumUnit(), 6.50 * I2R(GetHeroAgi(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), true)), ATTACK_TYPE_MAGIC, DAMAGE_TYPE_DIVINE)
+    SaveLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 552, GetUnitLoc(GetEnumUnit()))
+
+    RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 552))
+    GroupAddUnit(LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 744928215), GetEnumUnit())
+function trig_AkuyaFFunc003Func011Func003Func005A()
+function trig_AkuyaFFunc003Func011T()
+    //group _ydl_group
+    //unit _ydl_unit
+    SaveInteger(YDLOC, GetHandleId(GetExpiredTimer()), 943, LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 943) + 1)
+    if LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 943) >= 5 and LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 943) <= 15
+        SaveLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 1108, GetUnitLoc(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594)))
+        SaveLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 683, PolarProjectionBJ(LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 1108), 120.00, LoadReal(YDLOC, GetHandleId(GetExpiredTimer()), 758404681)))
+        SaveLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 48, PolarProjectionBJ(LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 1108), 75.00, LoadReal(YDLOC, GetHandleId(GetExpiredTimer()), 758404681)))
+        SaveUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 74, CreateUnitAtLoc(LoadPlayerHandle(YDLOC, GetHandleId(GetExpiredTimer()), 603), 'e0WM', LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 683), GetUnitFacing(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594))))
+        SetUnitScale(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 74), GetRandomReal(0.65, 1.50), GetRandomReal(0.65, 1.50), GetRandomReal(0.65, 1.50))
+        SetUnitTimeScalePercent(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 74), GetRandomReal(75.00, 200.00))
+        SetUnitVertexColorBJ(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 74), 100, 100, 100, GetRandomReal(25.00, 55.00))
+        UnitApplyTimedLife(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 74), 'BHwe', 2.00)
+        SaveUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 535, CreateUnitAtLoc(LoadPlayerHandle(YDLOC, GetHandleId(GetExpiredTimer()), 603), 'e0CP', LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 48), GetUnitFacing(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594))))
+        SetUnitScale(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 535), GetRandomReal(1.00, 2.00), GetRandomReal(1.00, 2.00), GetRandomReal(1.00, 2.00))
+        SetUnitTimeScalePercent(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 535), GetRandomReal(75.00, 150.00))
+        SetUnitVertexColorBJ(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 535), 100, 100, 100, GetRandomReal(25.00, 65.00))
+        UnitApplyTimedLife(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 535), 'BHwe', 2.00)
+        bj_forLoopBIndex = 1
+        bj_forLoopBIndexEnd = 12
+        while true
+            if bj_forLoopBIndex > bj_forLoopBIndexEnd
+                break
+            if LoadReal(YDLOC, GetHandleId(GetExpiredTimer()), 689) >= 1200.00
+                DoNothing()
+            else
+                SaveReal(YDLOC, GetHandleId(GetExpiredTimer()), 689, LoadReal(YDLOC, GetHandleId(GetExpiredTimer()), 689) + 100.00)
+                SaveLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 775, PolarProjectionBJ(LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 694), LoadReal(YDLOC, GetHandleId(GetExpiredTimer()), 689), GetUnitFacing(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594))))
+                SaveGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 339273988, yDWEGetUnitsInRangeOfLocMatchingNull(400.00, LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 775), Condition(function trig_AkuyaFFunc003Func011Func002Func016Func001Func005003003)))
+                ForGroupBJ(LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 339273988), function trig_AkuyaFFunc003Func011Func002Func016Func001Func006A)
+                GroupClear(LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 339273988))
+                DestroyGroup(LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 339273988))
+                RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 775))
+            bj_forLoopBIndex++
+        RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 1108))
+        RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 683))
+        RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 48))
+    if LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 943) >= 12
+        RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 632))
+        RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 694))
+        let caster = LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594)
+        caster.removeAbility('A0S5')
+        SetPlayerAbilityAvailable(LoadPlayerHandle(YDLOC, GetHandleId(GetExpiredTimer()), 603), 'A0RD', true)
+        caster.startAbilityCooldown('A0RD')
+        PauseUnitBJ(false, LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594))
+        SetUnitInvulnerable(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), false)
+        ForGroupBJ(LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 744928215), function trig_AkuyaFFunc003Func011Func003Func005A)
+        DestroyGroup(LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 744928215))
+        FlushChildHashtable(YDLOC, GetHandleId(GetExpiredTimer()))
+        DestroyTimer(GetExpiredTimer())
+function trig_AkuyaFFunc003Func021Func003Func001003003() returns boolean
+    return IsUnitType(GetFilterUnit(), UNIT_TYPE_STRUCTURE) == false and IsUnitType(GetFilterUnit(), UNIT_TYPE_HERO) == true and IsUnitEnemy(GetFilterUnit(), LoadPlayerHandle(YDLOC, GetHandleId(GetExpiredTimer()), 603)) == true and GetUnitAbilityLevel(GetFilterUnit(), 'Avul') != 1 and IsUnitDeadBJ(GetFilterUnit()) == false
+function trig_AkuyaFFunc003Func021Func003Func002A()
+    SaveLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 711, GetUnitLoc(GetEnumUnit()))
+
+    DamageEvent.setNextDamageId(DAMAGE_ABILITY_AQUA_F)
+    DamageEvent.setNextDamageFromCode()
+    UnitDamageTargetBJ(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), GetEnumUnit(), 0.30 * I2R(GetHeroAgi(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), true)), ATTACK_TYPE_MAGIC, DAMAGE_TYPE_MAGIC)
+    RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 711))
+function trig_AkuyaFFunc003Func021T()
+    //group _ydl_group
+    //unit _ydl_unit
+    SaveInteger(YDLOC, GetHandleId(GetExpiredTimer()), 280, LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 280) + 1)
+    if LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 280) == 30
+        KillUnit(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 36))
+        RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 549))
+    if LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 280) <= 30
+        SaveGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 752, yDWEGetUnitsInRangeOfLocMatchingNull(600.00, LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 549), Condition(function trig_AkuyaFFunc003Func021Func003Func001003003)))
+        ForGroupBJ(LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 752), function trig_AkuyaFFunc003Func021Func003Func002A)
+        GroupClear(LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 752))
+        DestroyGroup(LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 752))
+        SaveUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 'MUFV', CreateUnitAtLoc(LoadPlayerHandle(YDLOC, GetHandleId(GetExpiredTimer()), 603), 'e01T', LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 549), GetRandomDirectionDeg()))
+        SetUnitScale(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 'MUFV'), GetRandomReal(1.50, 2.40), GetRandomReal(1.50, 2.40), GetRandomReal(1.50, 2.40))
+        SetUnitTimeScalePercent(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 'MUFV'), 135.00)
+        SetUnitVertexColorBJ(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 'MUFV'), 100, 100, 100, 65.00)
+        UnitApplyTimedLife(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 'MUFV'), 'BHwe', 2.00)
+    if LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 280) >= 167
+        let caster = LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 51)
+        if caster.hasAbility('A0S5')
+            UnitRemoveAbility(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 51), 'A0S5')
+            SetPlayerAbilityAvailable(LoadPlayerHandle(YDLOC, GetHandleId(GetExpiredTimer()), 603), 'A0RD', true)
+            caster.startAbilityCooldown('A0RD')
+        FlushChildHashtable(YDLOC, GetHandleId(GetExpiredTimer()))
+        DestroyTimer(GetExpiredTimer())
+function trig_AkuyaFActions()
+    timer _ydl_timer
+    integer trigger_ID = LoadInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 865)
+    trigger_ID += 3
+    SaveInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 865, trigger_ID)
+    SaveInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 1045, trigger_ID)
+    SaveUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594, GetSpellAbilityUnit())
+    SavePlayerHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 603, GetOwningPlayer(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594)))
+    if GetSpellAbilityId() == 'A0RD'
+        aquaF1TargetPoint = vec2(GetSpellTargetX(), GetSpellTargetY())
+        soundPlay("war3mapImported\\Akuya6-1.mp3", GetUnitX(udg_Unitsound), GetUnitY(udg_Unitsound))
+        SaveLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 549, GetSpellTargetLoc())
+        SaveInteger(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 280, 0)
+        SaveUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 36, CreateUnitAtLoc(LoadPlayerHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 603), 'e0WG', LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 549), GetRandomDirectionDeg()))
+        SetUnitAnimation(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 36), "Birth")
+        UnitApplyTimedLife(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 36), 'BHwe', 3.00)
+        SetPlayerAbilityAvailable(LoadPlayerHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 603), 'A0RD', false)
+        UnitAddAbility(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594), 'A0S5')
+        _ydl_timer = CreateTimer()
+        SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 36, LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 36))
+        SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 623537919, LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 623537919))
+        SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 51, GetTriggerUnit())
+        SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 594, LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594))
+        SaveLocationHandle(YDLOC, GetHandleId(_ydl_timer), 549, LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 549))
+        SavePlayerHandle(YDLOC, GetHandleId(_ydl_timer), 603, LoadPlayerHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 603))
+        SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 'MUFV', LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 'MUFV'))
+        SaveGroupHandle(YDLOC, GetHandleId(_ydl_timer), 752, LoadGroupHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 752))
+        SaveLocationHandle(YDLOC, GetHandleId(_ydl_timer), 711, LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 711))
+        SaveInteger(YDLOC, GetHandleId(_ydl_timer), 280, LoadInteger(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 280))
+        let caster = LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594)
+        acrAoeSlow(caster, aquaF1TargetPoint, 600, 85, 0.9)
+        TimerStart(_ydl_timer, 0.03, true, function trig_AkuyaFFunc003Func021T)
+    else
+        soundPlay("war3mapImported\\Akuya6-2.mp3", GetUnitX(udg_Unitsound), GetUnitY(udg_Unitsound))
+        PauseUnitBJ(true, LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594))
+        SetUnitInvulnerable(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594), true)
+        SetUnitAnimationByIndex(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594), 15)
+        SaveLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 694, GetUnitLoc(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594)))
+        SaveLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 632, GetSpellTargetLoc())
+        SaveInteger(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 943, 0)
+        SaveReal(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 758404681, AngleBetweenPoints(LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1108), LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 632)))
+        SaveReal(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 689, 0.00)
+        SaveGroupHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 744928215, CreateGroup())
+        _ydl_timer = CreateTimer()
+        SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 1164, LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1164))
+        SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 594, LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594))
+        SavePlayerHandle(YDLOC, GetHandleId(_ydl_timer), 603, LoadPlayerHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 603))
+        SaveLocationHandle(YDLOC, GetHandleId(_ydl_timer), 1108, LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1108))
+        SaveLocationHandle(YDLOC, GetHandleId(_ydl_timer), 683, LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 683))
+        SaveLocationHandle(YDLOC, GetHandleId(_ydl_timer), 48, LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 48))
+        SaveLocationHandle(YDLOC, GetHandleId(_ydl_timer), 775, LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 775))
+        SaveLocationHandle(YDLOC, GetHandleId(_ydl_timer), 694, LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 694))
+        SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 535, LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 535))
+        SaveGroupHandle(YDLOC, GetHandleId(_ydl_timer), 339273988, LoadGroupHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 339273988))
+        SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 74, LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 74))
+        SaveReal(YDLOC, GetHandleId(_ydl_timer), 758404681, LoadReal(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 758404681))
+        SaveGroupHandle(YDLOC, GetHandleId(_ydl_timer), 744928215, LoadGroupHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 744928215))
+        SaveLocationHandle(YDLOC, GetHandleId(_ydl_timer), 552, LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 552))
+        SaveReal(YDLOC, GetHandleId(_ydl_timer), 689, LoadReal(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 689))
+        SaveLocationHandle(YDLOC, GetHandleId(_ydl_timer), 632, LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 632))
+        SaveInteger(YDLOC, GetHandleId(_ydl_timer), 943, LoadInteger(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 943))
+        TimerStart(_ydl_timer, 0.10, true, function trig_AkuyaFFunc003Func011T)
+    FlushChildHashtable(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID)
+function initTrig_AkuyaF()
+    gg_trg_AkuyaF = CreateTrigger()
+    TriggerRegisterAnyUnitEventBJ(gg_trg_AkuyaF, EVENT_PLAYER_UNIT_SPELL_EFFECT)
+    TriggerAddCondition(gg_trg_AkuyaF, Condition(function trig_AkuyaFConditions))
+    TriggerAddAction(gg_trg_AkuyaF, function trig_AkuyaFActions)

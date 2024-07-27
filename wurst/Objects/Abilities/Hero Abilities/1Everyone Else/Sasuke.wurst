@@ -1,0 +1,32 @@
+package Sasuke
+
+import main
+init
+    initTrig_Sasuke()
+
+function trig_SasukeConditions() returns boolean
+    return IsUnitType(GetTriggerUnit(), UNIT_TYPE_HERO) == true
+function trig_SasukeFunc002Func001Func001Func001Func002Func002Func001Func001Func002Func001Func001Func001Func001Func001Func002Func001Func001Func001Func001Func001Func001Func014T()
+    SaveInteger(YDLOC, GetHandleId(GetExpiredTimer()), 552, LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 552) + 1)
+    if LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 552) == 25
+        soundPlay("war3mapImported\\AbigailSP1-2.mp3", GetUnitX(udg_Unitsound), GetUnitY(udg_Unitsound))
+    if LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 552) == 100
+        soundPlay("war3mapImported\\AbigailSP1-3.mp3", GetUnitX(udg_Unitsound), GetUnitY(udg_Unitsound))
+    if LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 552) == 225
+        soundPlay("war3mapImported\\AbigailSP1-4.mp3", GetUnitX(udg_Unitsound), GetUnitY(udg_Unitsound))
+    if LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 552) == 300
+        soundPlay("war3mapImported\\AbigailSP1-5.mp3", GetUnitX(udg_Unitsound), GetUnitY(udg_Unitsound))
+        FlushChildHashtable(YDLOC, GetHandleId(GetExpiredTimer()))
+        DestroyTimer(GetExpiredTimer())
+function trig_SasukeActions()
+    // timer _ydl_timer
+    integer trigger_ID = LoadInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 865)
+    trigger_ID += 3
+    SaveInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 865, trigger_ID)
+    SaveInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 1045, trigger_ID)
+    FlushChildHashtable(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID)
+function initTrig_Sasuke()
+    gg_trg_Sasuke = CreateTrigger()
+    TriggerRegisterAnyUnitEventBJ(gg_trg_Sasuke, EVENT_PLAYER_UNIT_PICKUP_ITEM)
+    TriggerAddCondition(gg_trg_Sasuke, Condition(function trig_SasukeConditions))
+    TriggerAddAction(gg_trg_Sasuke, function trig_SasukeActions)

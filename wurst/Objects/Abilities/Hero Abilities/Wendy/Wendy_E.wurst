@@ -1,0 +1,43 @@
+package Wendy_E
+
+import ClosureEvents
+// import AbilityGlobals
+// import ClosureTimers
+// import ACR_TagSystem
+
+int wendyEDummyLvl
+
+init
+
+public function wendyE()
+
+    let wendyEDummy = 'A192'
+    let wendyE = 'A0XB'       
+
+    EventListener.add(EVENT_PLAYER_HERO_SKILL) ->
+        if GetLearnedSkill() == wendyEDummy
+            let abil = GetLearnedSkill()
+            let caster = GetTriggerUnit()
+            wendyEDummyLvl = GetUnitAbilityLevel(caster, abil)
+            if wendyEDummyLvl == 1
+                // let id = caster.getOwner().getId()
+                // doPeriodically(5) (CallbackPeriodic cb) ->                    
+                    // if caster.hasAbility(SPELL_F[id]) and SPELL_F[id].hasTagHidden()
+                    //     printTimedToPlayer("wendy has F and its hidden", 1, caster.getOwner())
+                    // if caster.hasAbility(SPELL_F[id]) and SPELL_F[id].hasTagHidden() == false
+                    //     printTimedToPlayer("wendy has F and its not hidden", 1, caster.getOwner()) 
+                    // if caster.hasAbility(SPELL_F[id]) == false
+                    //     printTimedToPlayer("wendy does not have F", 1, caster.getOwner())   
+                caster.addAbility(wendyE)
+                caster.setAbilityLevel(wendyE, wendyEDummyLvl)
+            else
+                caster.setAbilityLevel(wendyE, wendyEDummyLvl)
+                caster.removeAbility('B059')
+
+    EventListener.add(EVENT_PLAYER_HERO_REVIVE_FINISH) ->
+        if GetTriggerUnit().getTypeId() == 'H006'
+            let caster = GetTriggerUnit()
+            if caster.hasAbility(wendyEDummy) == true and caster.hasAbility(wendyE) == false 
+                caster.addAbility(wendyE)
+                caster.setAbilityLevel(wendyE, wendyEDummyLvl)
+                caster.removeAbility('B059')

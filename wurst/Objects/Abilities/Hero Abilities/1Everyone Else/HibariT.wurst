@@ -1,0 +1,255 @@
+package HibariT
+import ClosureTimers
+import main
+import MusicPlaylist
+
+vec2 hibariTLoc
+
+init
+    initTrig_HibariT()
+    initTrig_HibariF()
+
+function trig_HibariTConditions() returns boolean
+    return GetSpellAbilityId() == 'A0AU'
+function trig_HibariFConditions() returns boolean
+    return GetSpellAbilityId() == 'A0H3'
+function trig_HibariTFunc016Func001Func007Func001Func004A()
+    h__SetUnitMoveSpeed(GetEnumUnit(), GetUnitDefaultMoveSpeed(GetEnumUnit()))
+    SetUnitManaBJ(GetEnumUnit(), 350.00)
+    if GetUnitTypeId(GetEnumUnit()) == 'O005' or GetUnitTypeId(GetEnumUnit()) == 'O007'
+        UnitRemoveAbility(GetEnumUnit(), 'A0L4')
+function trig_HibariTFunc016Func001Func007Func001Func012003003() returns boolean
+    return IsUnitType(GetFilterUnit(), UNIT_TYPE_STRUCTURE) == false and IsUnitDeadBJ(GetFilterUnit()) == false and IsUnitType(GetFilterUnit(), UNIT_TYPE_HERO) == true
+function trig_HibariTFunc016Func001Func007Func001Func013A()
+    SetUnitManaBJ(GetEnumUnit(), 0.00)
+function trig_HibariTFunc016Func001Func007Func001Func015003003() returns boolean
+    return IsUnitType(GetFilterUnit(), UNIT_TYPE_STRUCTURE) == false and IsUnitDeadBJ(GetFilterUnit()) == false and IsUnitType(GetFilterUnit(), UNIT_TYPE_HERO) == true and GetUnitAbilityLevel(GetFilterUnit(), 'Avul') != 1 and IsUnitInGroup(GetFilterUnit(), LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 744928215)) == false
+function trig_HibariTFunc016Func001Func007Func001Func016A()
+    SaveLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 460, GetUnitLoc(GetEnumUnit()))
+    SaveUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 720, CreateUnitAtLoc(LoadPlayerHandle(YDLOC, GetHandleId(GetExpiredTimer()), 603), 'e028', LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 460), GetRandomDirectionDeg()))
+    UnitApplyTimedLife(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 720), 'BHwe', 2.00)
+
+    RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 460))
+    UnitRemoveBuffBJ('B01K', GetEnumUnit())
+    UnitRemoveBuffBJ('B020', GetEnumUnit())
+    if GetUnitTypeId(GetEnumUnit()) == 'O005' or GetUnitTypeId(GetEnumUnit()) == 'O007'
+        UnitAddAbility(GetEnumUnit(), 'A0L4')
+    GroupAddUnitSimple(GetEnumUnit(), LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 744928215))
+function trig_HibariTFunc016Func001Func007Func001Func018003003() returns boolean
+    return IsUnitType(GetFilterUnit(), UNIT_TYPE_STRUCTURE) == false and IsUnitDeadBJ(GetFilterUnit()) == false and IsUnitType(GetFilterUnit(), UNIT_TYPE_HERO) == true and IsUnitEnemy(GetFilterUnit(), LoadPlayerHandle(YDLOC, GetHandleId(GetExpiredTimer()), 603)) == true
+function trig_HibariTFunc016Func001Func007Func001Func019A()
+    if GetUnitStateSwap(UNIT_STATE_LIFE, GetEnumUnit()) > 10.00
+        SetUnitLifeBJ(GetEnumUnit(), GetUnitState(GetEnumUnit(), UNIT_STATE_LIFE) - 3.00)
+    h__SetUnitMoveSpeed(GetEnumUnit(), 65.00)
+function trig_HibariTFunc016Func001Func007Func001Func021003003() returns boolean
+    return IsUnitType(GetFilterUnit(), UNIT_TYPE_STRUCTURE) == false and GetUnitTypeId(GetFilterUnit()) != 'H01N' and IsUnitDeadBJ(GetFilterUnit()) == false and IsUnitInGroup(GetFilterUnit(), LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 744928215)) == false and IsUnitEnemy(GetFilterUnit(), LoadPlayerHandle(YDLOC, GetHandleId(GetExpiredTimer()), 603)) == true
+function trig_HibariTFunc016Func001Func007Func001Func022A()
+    GroupAddUnitSimple(GetEnumUnit(), LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 744928215))
+function trig_HibariTFunc016Func001Func007Func001Func024003003() returns boolean
+    return IsUnitType(GetFilterUnit(), UNIT_TYPE_STRUCTURE) == false and GetUnitTypeId(GetFilterUnit()) != 'h00T' and IsUnitDeadBJ(GetFilterUnit()) == false and IsUnitType(GetFilterUnit(), UNIT_TYPE_HERO) == false and GetUnitTypeId(GetFilterUnit()) != 'oeye'
+function trig_HibariTFunc016Func001Func007Func001Func025A()
+    SaveLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 419562682, GetUnitLoc(GetEnumUnit()))
+    SaveLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 864, PolarProjectionBJ(LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 419562682), 775.00, AngleBetweenPoints(LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 555), LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 419562682))))
+    SetUnitPositionLoc(GetEnumUnit(), LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 864))
+    RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 419562682))
+    RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 864))
+function trig_HibariTFunc016Func001Func007Func001Func027003002() returns boolean
+    return IsUnitType(GetFilterUnit(), UNIT_TYPE_HERO) == true and IsUnitAliveBJ(GetFilterUnit()) == true and UnitHasBuffBJ(GetFilterUnit(), 'B02V') == true
+function trig_HibariTFunc016Func001Func007Func001Func028A()
+    let victim = GetEnumUnit()
+    let victimloc = vec2(GetUnitX(victim), GetUnitY(victim))
+    if victimloc.distanceTo(hibariTLoc) > 775
+        victim.removeAbility('B02V')
+    SaveLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 881, GetUnitLoc(GetEnumUnit()))
+    SaveLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 572853567, GetUnitLoc(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 449)))
+    RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 881))
+    RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 572853567))
+function trig_HibariTFunc016Func001Func007Func001Func031Func001A()
+    UnitRemoveAbility(GetEnumUnit(), 'B02V')
+function trig_HibariTFunc016Func001Func007T()
+    //group _ydl_group
+    //unit _ydl_unit
+    if LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 280) >= 520
+        RemoveUnit(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 449))
+        UnitRemoveAbility(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), 'A0D8')
+        // let caster = LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594)
+        // caster.startAbilityCooldown('A0AU')     
+        bj_forLoopAIndex = 1
+        bj_forLoopAIndexEnd = 80
+        while true
+            if bj_forLoopAIndex > bj_forLoopAIndexEnd
+                break
+            RemoveDestructable(udg_Hibarizuduan[GetForLoopIndexA()])
+            bj_forLoopAIndex++
+        ForGroupBJ(LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 744928215), function trig_HibariTFunc016Func001Func007Func001Func004A)
+        GroupClear(LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 744928215))
+        DestroyGroup(LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 744928215))
+        SetUnitManaBJ(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), 350.00)
+        FlushChildHashtable(YDLOC, GetHandleId(GetExpiredTimer()))
+        DestroyTimer(GetExpiredTimer())
+    else
+        SaveInteger(YDLOC, GetHandleId(GetExpiredTimer()), 280, LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 280) + 1)
+        SaveLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 555, GetUnitLoc(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 449)))
+        SaveGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 361, yDWEGetUnitsInRangeOfLocMatchingNull(775.00, LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 555), Condition(function trig_HibariTFunc016Func001Func007Func001Func012003003)))
+        ForGroupBJ(LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 361), function trig_HibariTFunc016Func001Func007Func001Func013A)
+        DestroyGroup(LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 361))
+        SaveGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 339273988, yDWEGetUnitsInRangeOfLocMatchingNull(775.00, LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 555), Condition(function trig_HibariTFunc016Func001Func007Func001Func015003003)))
+        ForGroupBJ(LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 339273988), function trig_HibariTFunc016Func001Func007Func001Func016A)
+        DestroyGroup(LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 339273988))
+        SaveGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 752, yDWEGetUnitsInRangeOfLocMatchingNull(775.00, LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 555), Condition(function trig_HibariTFunc016Func001Func007Func001Func018003003)))
+        ForGroupBJ(LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 752), function trig_HibariTFunc016Func001Func007Func001Func019A)
+        DestroyGroup(LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 752))
+        SaveGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 165, yDWEGetUnitsInRangeOfLocMatchingNull(775.00, LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 555), Condition(function trig_HibariTFunc016Func001Func007Func001Func021003003)))
+        ForGroupBJ(LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 165), function trig_HibariTFunc016Func001Func007Func001Func022A)
+        DestroyGroup(LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 165))
+        SaveGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 821801127, yDWEGetUnitsInRangeOfLocMatchingNull(775.00, LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 555), Condition(function trig_HibariTFunc016Func001Func007Func001Func024003003)))
+        ForGroupBJ(LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 821801127), function trig_HibariTFunc016Func001Func007Func001Func025A)
+        DestroyGroup(LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 821801127))
+        SaveGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 592, yDWEGetUnitsInRectMatchingNull(GetPlayableMapRect(), Condition(function trig_HibariTFunc016Func001Func007Func001Func027003002)))
+        ForGroupBJ(LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 592), function trig_HibariTFunc016Func001Func007Func001Func028A)
+        DestroyGroup(LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 592))
+        RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 555))
+        if LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 280) == 518
+            ForGroupBJ(LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 744928215), function trig_HibariTFunc016Func001Func007Func001Func031Func001A)
+function trig_HibariTFunc016T()
+    timer _ydl_timer
+    if LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 280) >= 42
+        UnitAddAbility(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), 'A0D8')
+        UnitAddAbility(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 449), 'A0B7')
+        SaveInteger(YDLOC, GetHandleId(GetExpiredTimer()), 280, 0)
+        SetUnitInvulnerable(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), false)
+        PauseUnit(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), false)
+        bj_forLoopAIndex = 1
+        bj_forLoopAIndexEnd = 80
+        while true
+            if bj_forLoopAIndex > bj_forLoopAIndexEnd
+                break
+            SaveReal(YDLOC, GetHandleId(GetExpiredTimer()), 921, LoadReal(YDLOC, GetHandleId(GetExpiredTimer()), 921) + 5.00)
+            SaveLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 772, GetUnitLoc(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594)))
+            SaveLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 1116, PolarProjectionBJ(LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 772), 800.00, LoadReal(YDLOC, GetHandleId(GetExpiredTimer()), 921)))
+            CreateDestructableLoc('YTpb', LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 1116), GetRandomDirectionDeg(), 1, 0)
+            udg_Hibarizuduan[GetForLoopIndexA()] = GetLastCreatedDestructable()
+            RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 772))
+            RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 1116))
+            bj_forLoopAIndex++
+        _ydl_timer = CreateTimer()
+        SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 594, LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594))
+        SavePlayerHandle(YDLOC, GetHandleId(_ydl_timer), 603, LoadPlayerHandle(YDLOC, GetHandleId(GetExpiredTimer()), 603))
+        SaveLocationHandle(YDLOC, GetHandleId(_ydl_timer), 555, LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 555))
+        SaveLocationHandle(YDLOC, GetHandleId(_ydl_timer), 864, LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 864))
+        SaveGroupHandle(YDLOC, GetHandleId(_ydl_timer), 361, LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 361))
+        SaveGroupHandle(YDLOC, GetHandleId(_ydl_timer), 339273988, LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 339273988))
+        SaveGroupHandle(YDLOC, GetHandleId(_ydl_timer), 752, LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 752))
+        SaveGroupHandle(YDLOC, GetHandleId(_ydl_timer), 165, LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 165))
+        SaveGroupHandle(YDLOC, GetHandleId(_ydl_timer), 821801127, LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 821801127))
+        SaveGroupHandle(YDLOC, GetHandleId(_ydl_timer), 592, LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 592))
+        SaveGroupHandle(YDLOC, GetHandleId(_ydl_timer), 744928215, LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 744928215))
+        SaveLocationHandle(YDLOC, GetHandleId(_ydl_timer), 572853567, LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 572853567))
+        SaveLocationHandle(YDLOC, GetHandleId(_ydl_timer), 881, LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 881))
+        SaveLocationHandle(YDLOC, GetHandleId(_ydl_timer), 419562682, LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 419562682))
+        SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 720, LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 720))
+        SaveLocationHandle(YDLOC, GetHandleId(_ydl_timer), 460, LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 460))
+        SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 449, LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 449))
+        SaveInteger(YDLOC, GetHandleId(_ydl_timer), 280, LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 280))
+        TimerStart(_ydl_timer, 0.03, true, function trig_HibariTFunc016Func001Func007T)
+        FlushChildHashtable(YDLOC, GetHandleId(GetExpiredTimer()))
+        DestroyTimer(GetExpiredTimer())
+    else
+        SaveInteger(YDLOC, GetHandleId(GetExpiredTimer()), 280, LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 280) + 1)
+        SaveReal(YDLOC, GetHandleId(GetExpiredTimer()), 689, LoadReal(YDLOC, GetHandleId(GetExpiredTimer()), 689) + 0.65)
+        SetUnitScale(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 449), LoadReal(YDLOC, GetHandleId(GetExpiredTimer()), 689), LoadReal(YDLOC, GetHandleId(GetExpiredTimer()), 689), LoadReal(YDLOC, GetHandleId(GetExpiredTimer()), 689))
+function trig_HibariTActions()
+    stopBgm()
+    StopMusic(false)
+    timer _ydl_timer
+    integer trigger_ID = LoadInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 865)
+    let caster = GetTriggerUnit()
+    trigger_ID += 3
+    hibariTLoc = vec2(GetUnitX(caster), GetUnitY(caster)) 
+    SaveInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 865, trigger_ID)
+    SaveInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 1045, trigger_ID)
+    PlaySoundBJ(gg_snd_hibari5)
+    SaveUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594, GetSpellAbilityUnit())
+    SaveLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1108, GetUnitLoc(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594)))
+    SaveInteger(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 280, 0)
+    SaveGroupHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 744928215, CreateGroup())
+    SaveReal(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 689, 2.00)
+    SaveReal(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 921, 0.00)
+    SavePlayerHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 603, GetOwningPlayer(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594)))
+    SaveUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 449, CreateUnitAtLoc(LoadPlayerHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 603), 'e0ND', LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1108), GetRandomDirectionDeg()))
+    SetUnitVertexColorBJ(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 449), 100, 100, 100, 50.00)
+    SetUnitInvulnerable(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594), true)
+    PauseUnit(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594), true)
+    SetUnitAnimationByIndex(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594), 7)
+    RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1108))
+    _ydl_timer = CreateTimer()
+    SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 594, LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594))
+    SavePlayerHandle(YDLOC, GetHandleId(_ydl_timer), 603, LoadPlayerHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 603))
+    SaveLocationHandle(YDLOC, GetHandleId(_ydl_timer), 555, LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 555))
+    SaveLocationHandle(YDLOC, GetHandleId(_ydl_timer), 772, LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 772))
+    SaveLocationHandle(YDLOC, GetHandleId(_ydl_timer), 1116, LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1116))
+    SaveLocationHandle(YDLOC, GetHandleId(_ydl_timer), 864, LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 864))
+    SaveGroupHandle(YDLOC, GetHandleId(_ydl_timer), 361, LoadGroupHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 361))
+    SaveGroupHandle(YDLOC, GetHandleId(_ydl_timer), 339273988, LoadGroupHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 339273988))
+    SaveGroupHandle(YDLOC, GetHandleId(_ydl_timer), 752, LoadGroupHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 752))
+    SaveGroupHandle(YDLOC, GetHandleId(_ydl_timer), 165, LoadGroupHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 165))
+    SaveGroupHandle(YDLOC, GetHandleId(_ydl_timer), 821801127, LoadGroupHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 821801127))
+    SaveGroupHandle(YDLOC, GetHandleId(_ydl_timer), 592, LoadGroupHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 592))
+    SaveGroupHandle(YDLOC, GetHandleId(_ydl_timer), 744928215, LoadGroupHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 744928215))
+    SaveLocationHandle(YDLOC, GetHandleId(_ydl_timer), 572853567, LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 572853567))
+    SaveLocationHandle(YDLOC, GetHandleId(_ydl_timer), 881, LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 881))
+    SaveLocationHandle(YDLOC, GetHandleId(_ydl_timer), 419562682, LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 419562682))
+    SaveReal(YDLOC, GetHandleId(_ydl_timer), 689, LoadReal(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 689))
+    SaveReal(YDLOC, GetHandleId(_ydl_timer), 921, LoadReal(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 921))
+    SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 720, LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 720))
+    SaveLocationHandle(YDLOC, GetHandleId(_ydl_timer), 460, LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 460))
+    SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 449, LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 449))
+    SaveInteger(YDLOC, GetHandleId(_ydl_timer), 280, LoadInteger(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 280))
+    TimerStart(_ydl_timer, 0.02, true, function trig_HibariTFunc016T)
+    caster.addAbility('A19A')
+    doPeriodicallyCounted(0.1, 165) (CallbackCounted thisNameDontMatter) ->
+        if caster.isAlive() == false
+            GetOwningPlayer(caster)
+            ..setAbilityAvailable('A0H3', false)
+            ..setAbilityAvailable('A0AU', true)
+            caster.startAbilityCooldown('A0AU')
+            caster.removeAbility('A19A')
+            destroy thisNameDontMatter
+        else if thisNameDontMatter.getCount() == 1
+            GetOwningPlayer(caster)
+            ..setAbilityAvailable('A0H3', false)
+            ..setAbilityAvailable('A0AU', true)
+            caster.startAbilityCooldown('A0AU')
+            if caster.isInvulnerable() == false
+                caster.removeAbility('A19A')
+            else 
+                doPeriodically(0.03) (CallbackPeriodic cb) ->
+                    if caster.isInvulnerable() == false
+                        doAfter(0.02) ->
+                            caster.removeAbility('A19A')
+                            destroy cb 
+                         
+                    
+
+    SetPlayerAbilityAvailableBJ(false,'A0AU',GetOwningPlayer(caster))
+    if GetUnitAbilityLevel(caster, 'A0H3') != 0
+        SetPlayerAbilityAvailableBJ(true,'A0H3',GetOwningPlayer(caster)) 
+    else 
+        UnitAddAbility(caster,'A0H3')   
+    FlushChildHashtable(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID)
+
+function initTrig_HibariT()
+    gg_trg_HibariT = CreateTrigger()
+    TriggerRegisterAnyUnitEventBJ(gg_trg_HibariT, EVENT_PLAYER_UNIT_SPELL_EFFECT)
+    TriggerAddCondition(gg_trg_HibariT, Condition(function trig_HibariTConditions))
+    TriggerAddAction(gg_trg_HibariT, function trig_HibariTActions)
+    
+function trig_HibariFActions()
+    let caster = GetTriggerUnit()
+    soundPlay("war3mapImported\\Hibari7.mp3", GetUnitX(caster), GetUnitY(caster))
+
+function initTrig_HibariF()
+    gg_trg_HibariF = CreateTrigger()
+    TriggerRegisterAnyUnitEventBJ(gg_trg_HibariF, EVENT_PLAYER_UNIT_SPELL_EFFECT)
+    TriggerAddCondition(gg_trg_HibariF, Condition(function trig_HibariFConditions))
+    TriggerAddAction(gg_trg_HibariF, function trig_HibariFActions)    

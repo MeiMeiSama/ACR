@@ -1,0 +1,136 @@
+package N_Natsu_T
+
+import ClosureTimers
+import MusicPlaylist
+import ObjectDefinitions
+import AbilityGlobals
+// import ACR_TagSystem
+import ACR_Library
+
+int natsuEPassive = 'A187'
+int natsuEPassiveBuff = 'B01P'
+int natsuT = 'A19L'
+int natsuModoBuff = 'B00Y'
+int natsuModoGBuff = 'B00Z'
+int natsuModelEffectBuff = 'B001'
+
+init
+    normalNatsuModoT()
+
+function normalNatsuModoT()
+
+    CreateTrigger()
+    ..registerAnyUnitEvent(EVENT_PLAYER_UNIT_SPELL_EFFECT)
+    ..addAction() ->
+        if ((GetSpellAbilityId() == 'A19L')) 
+            let caster = GetTriggerUnit()
+            let pid = caster.getOwner().getId()
+            let natsuEPassiveLvl = GetUnitAbilityLevel(caster, natsuEPassive)
+            caster.removeAbility(FIRE_SURROUND_MODEL_EFFECT)
+            caster.removeAbility(natsuModelEffectBuff)
+            caster.removeAbility(SPELL_G[pid])
+            caster.removeAbility(natsuEPassive)
+            caster.removeAbility(natsuEPassiveBuff)     
+            BlzSetAbilityIcon(SPELL_Q[pid], "ReplaceableTextures\\CommandButtons\\BTNBreathOfFire.blp")
+            BlzSetAbilityIcon(SPELL_W[pid], "ReplaceableTextures\\CommandButtons\\BTNSearingArrows.blp")
+            BlzSetAbilityIcon(SPELL_E[pid], "ReplaceableTextures\\CommandButtons\\BTNDisenchant.blp")
+            BlzSetAbilityIcon(SPELL_R[pid], "ReplaceableTextures\\CommandButtons\\BTNDoom.blp")                   
+            stopBgm()
+            StopMusic(false)
+            PlaySoundBJ(gg_snd_Rnatsu5_1)                
+            acrTransformation(caster, 40, 'H001', 'H00S', 850, 4.0)
+            doPeriodically(0.01) (CallbackPeriodic cb) ->
+                if transformationActive[pid] == false
+                    caster.addAbility(SPELL_G[pid])
+                    caster.addAbility(natsuEPassive)
+                    caster.setAbilityLevel(natsuEPassive, natsuEPassiveLvl)
+                    caster.hideAbility(natsuEPassive, true) 
+                    if gg_snd_Rnatsu5_1.isPlaying()
+                        gg_snd_Rnatsu5_1.stop(false, false) 
+                    destroy cb
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    // CreateTrigger()
+    // ..registerAnyUnitEvent(EVENT_PLAYER_UNIT_SPELL_EFFECT)
+    // ..addAction() ->
+    //     if ((GetSpellAbilityId() == natsuT)) 
+    //         natsuTactive = true
+    //         let caster = GetTriggerUnit()
+    //         let pid = caster.getOwner().getId()
+    //         let natsuEPassiveLvl = GetUnitAbilityLevel(caster, natsuEPassive)
+    //         stopBgm()
+    //         StopMusic(false)
+    //         PlaySoundBJ(gg_snd_Rnatsu5_1)
+    //         caster.removeAbility(FIRE_SURROUND_MODEL_EFFECT)
+    //         caster.removeAbility(natsuModelEffectBuff)
+    //         caster.removeAbility(SPELL_G[pid])
+    //         caster.removeAbility(natsuEPassive)
+    //         caster.removeAbility(natsuEPassiveBuff)
+    //         BlzSetAbilityIcon(SPELL_Q[pid], "ReplaceableTextures\\CommandButtons\\BTNBreathOfFire.blp")
+    //         BlzSetAbilityIcon(SPELL_W[pid], "ReplaceableTextures\\CommandButtons\\BTNSearingArrows.blp")
+    //         BlzSetAbilityIcon(SPELL_E[pid], "ReplaceableTextures\\CommandButtons\\BTNDisenchant.blp")
+    //         BlzSetAbilityIcon(SPELL_R[pid], "ReplaceableTextures\\CommandButtons\\BTNDoom.blp")
+    //         caster.hideAbility(SPELL_Q[pid], true)
+    //         SPELL_Q[pid].addTagHidden()
+    //         caster.hideAbility(SPELL_W[pid], true)
+    //         SPELL_W[pid].addTagHidden()
+    //         caster.hideAbility(SPELL_E[pid], true)
+    //         SPELL_E[pid].addTagHidden()
+    //         caster.hideAbility(SPELL_R[pid], true)
+    //         SPELL_R[pid].addTagHidden() 
+    //         caster.hideAbility(SPELL_T[pid], true)
+    //         SPELL_T[pid].addTagHidden() 
+
+    //         doPeriodically(0.003) (CallbackPeriodic cb) ->
+    //             if natsuTactive == true
+    //                 if (((IsUnitDeadBJ(caster) == true) or (UnitHasBuffBJ(caster, natsuModoBuff) == false)))
+    //                     natsuTactive = false 
+    //                     caster.removeAbility(natsuModoGBuff)
+    //                     if gg_snd_Rnatsu5_1.isPlaying()
+    //                         gg_snd_Rnatsu5_1.stop(false, false)
+    //                     if IsUnitDeadBJ(caster) == false
+    //                         acrRevive(caster)     
+    //                     doAfter(0.003) -> 
+    //                         if SPELL_Q[pid].hasTagHidden()                        
+    //                             caster.hideAbility(SPELL_Q[pid], false)
+    //                             SPELL_Q[pid].removeTagHidden()
+    //                         if SPELL_W[pid].hasTagHidden()                        
+    //                             caster.hideAbility(SPELL_W[pid], false)
+    //                             SPELL_W[pid].removeTagHidden()
+    //                         if SPELL_E[pid].hasTagHidden()                        
+    //                             caster.hideAbility(SPELL_E[pid], false)
+    //                             SPELL_E[pid].removeTagHidden()
+    //                             caster.addAbility(SPELL_G[pid])
+    //                             caster.addAbility(natsuEPassive)
+    //                             caster.setAbilityLevel(natsuEPassive, natsuEPassiveLvl)
+    //                             caster.hideAbility(natsuEPassive, true)  
+    //                         if SPELL_R[pid].hasTagHidden()                        
+    //                             caster.hideAbility(SPELL_R[pid], false)
+    //                             SPELL_R[pid].removeTagHidden() 
+    //                         if SPELL_T[pid].hasTagHidden() 
+    //                             caster.hideAbility(SPELL_T[pid], false)
+    //                             SPELL_T[pid].removeTagHidden()
+    //                             caster.startAbilityCooldown(SPELL_T[pid])
+    //                             acrCooldownT[pid] = 60.00                                                           
+    //                     destroy cb

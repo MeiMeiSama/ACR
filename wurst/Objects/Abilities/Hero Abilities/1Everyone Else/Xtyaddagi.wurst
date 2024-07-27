@@ -1,0 +1,15 @@
+// package Xtyaddagi
+
+
+// init
+//     initTrig_Xtyaddagi()
+
+// function trig_XtyaddagiConditions() returns boolean
+//     return (IsUnitType(GetDyingUnit(), UNIT_TYPE_HERO) == true and IsUnitType(GetDyingUnit(), UNIT_TYPE_STRUCTURE) == false and IsUnitEnemy(GetDyingUnit(), GetOwningPlayer(GetKillingUnitBJ())) == true and GetUnitTypeId(GetKillingUnitBJ()) == 'H01B') or GetUnitTypeId(GetKillingUnitBJ()) == 'H00B'
+// function trig_XtyaddagiActions()
+//     ModifyHeroStat(bj_HEROSTAT_AGI, GetKillingUnitBJ(), bj_MODIFYMETHOD_ADD, 1)
+// function initTrig_Xtyaddagi()
+//     gg_trg_Xtyaddagi = CreateTrigger()
+//     TriggerRegisterAnyUnitEventBJ(gg_trg_Xtyaddagi, EVENT_PLAYER_UNIT_DEATH)
+//     TriggerAddCondition(gg_trg_Xtyaddagi, Condition(function trig_XtyaddagiConditions))
+//     TriggerAddAction(gg_trg_Xtyaddagi, function trig_XtyaddagiActions)

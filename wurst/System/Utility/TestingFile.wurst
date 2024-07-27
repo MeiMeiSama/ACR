@@ -1,0 +1,10 @@
+package TestingFile
+// import ClosureTimers
+@test function myTesting ()
+    // let myStr1 = "1.600"
+    var myStr2 = "0.04"
+    
+    myStr2 = myStr2.replace("00", "")
+    print(myStr2)
+
+@test function timerLoop ()

@@ -1,0 +1,11 @@
+// package Dante_T
+
+// import ClosureEvents
+// import ClosureTimers
+
+// init
+//     EventListener.onCast('A112') (unit caster) ->
+//         doAfter(55) -> 
+//             if GetSoundIsPlaying(gg_snd_DanteT)
+//                 StopSound(gg_snd_DanteT, false, true)
+//                 ResumeMusic()

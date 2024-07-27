@@ -1,0 +1,20 @@
+package Akame_G
+import ClosureEvents
+
+integer attackCount = 0
+timer attackTimer
+init
+
+function enhancedAttacksEnd ()
+    attackCount = 0
+
+public function enhancedAttacksAkame (unit akame)
+    EventListener.add(EVENT_PLAYER_UNIT_DAMAGING) -> 
+        let attacker = GetEventDamageSource()
+        let dmg = GetEventDamage()
+        if attacker == akame and BlzGetEventAttackType() == ATTACK_TYPE_HERO
+            if attackTimer != null
+                attackTimer.destr()
+            attackTimer = CreateTimer()..start(3, function enhancedAttacksEnd)
+            BlzSetEventDamage(dmg + (dmg * attackCount * 0.15))
+            attackCount++

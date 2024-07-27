@@ -1,0 +1,44 @@
+package JeanneAltF2
+
+
+init
+    initTrig_JeanneAltF2()
+
+function trig_JeanneAltF2Conditions() returns boolean
+    return GetSpellAbilityId() == 'A0Q4'
+function trig_JeanneAltF2Func005A()
+    RemoveUnit(GetEnumUnit())
+function trig_JeanneAltF2Func008A()
+    UnitRemoveBuffBJ('B04F', GetEnumUnit())
+function trig_JeanneAltF2Actions()
+    //group _ydl_group
+    //unit _ydl_unit
+    StopSoundBJ(gg_snd_JeanneAltFire, false)
+    SetUnitInvulnerable(LoadUnitHandle(YDHT, 6, 1070), false)
+    RemoveUnit(LoadUnitHandle(YDHT, 3, 444))
+    RemoveLocation(LoadLocationHandle(YDHT, 4, 533633606))
+    ForGroupBJ(LoadGroupHandle(YDHT, 1, 1001), function trig_JeanneAltF2Func005A)
+    GroupClear(LoadGroupHandle(YDHT, 1, 1001))
+    DestroyGroup(LoadGroupHandle(YDHT, 1, 1001))
+    ForGroupBJ(LoadGroupHandle(YDHT, 2, 647), function trig_JeanneAltF2Func008A)
+    GroupClear(LoadGroupHandle(YDHT, 2, 647))
+    DestroyGroup(LoadGroupHandle(YDHT, 2, 647))
+    bj_forLoopAIndex = 61
+    bj_forLoopAIndexEnd = 121
+    while true
+        if bj_forLoopAIndex > bj_forLoopAIndexEnd
+            break
+        RemoveDestructable(udg_ShirouUBW[GetForLoopIndexA()])
+        bj_forLoopAIndex++
+    RemoveSavedHandle(YDHT, 1, 1179)
+    RemoveSavedHandle(YDHT, 2, 440)
+    RemoveSavedHandle(YDHT, 3, 444)
+    RemoveSavedHandle(YDHT, 4, 533633606)
+    RemoveSavedHandle(YDHT, 6, 1070)
+    DisableTrigger(GetTriggeringTrigger())
+function initTrig_JeanneAltF2()
+    gg_trg_JeanneAltF2 = CreateTrigger()
+    DisableTrigger(gg_trg_JeanneAltF2)
+    TriggerRegisterAnyUnitEventBJ(gg_trg_JeanneAltF2, EVENT_PLAYER_UNIT_SPELL_ENDCAST)
+    TriggerAddCondition(gg_trg_JeanneAltF2, Condition(function trig_JeanneAltF2Conditions))
+    TriggerAddAction(gg_trg_JeanneAltF2, function trig_JeanneAltF2Actions)

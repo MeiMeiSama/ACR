@@ -1,0 +1,105 @@
+package JackF
+
+import main
+init
+    initTrig_JackF()
+
+function trig_JackFConditions() returns boolean
+    return GetSpellAbilityId() == 'A0P4' or GetSpellAbilityId() == 'A0QR'
+function trig_JackFFunc001Func008Func001Func002A()
+    UnitRemoveAbility(GetEnumUnit(), 'A0P2')
+function trig_JackFFunc001Func008Func001Func008003003() returns boolean
+    return IsUnitType(GetFilterUnit(), UNIT_TYPE_STRUCTURE) == false and IsUnitEnemy(GetFilterUnit(), LoadPlayerHandle(YDLOC, GetHandleId(GetExpiredTimer()), 603)) == true and IsUnitInGroup(GetFilterUnit(), LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 744928215)) == false and IsUnitDeadBJ(GetFilterUnit()) == false and IsUnitAliveBJ(GetFilterUnit()) == true
+// function trig_JackFFunc001Func008Func001Func009A()
+//     UnitAddAbility(GetEnumUnit(), 'A0P2')
+//     GroupAddUnitSimple(GetEnumUnit(), LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 744928215))
+// function trig_JackFFunc001Func008T()
+//     //group _ydl_group
+//     //unit _ydl_unit
+//     if LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 280) == 250
+//         UnitRemoveBuffBJ('B04C', LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594))
+//         ForGroupBJ(LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 744928215), function trig_JackFFunc001Func008Func001Func002A)
+//         GroupClear(LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 744928215))
+//         DestroyGroup(LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 744928215))
+//         FlushChildHashtable(YDLOC, GetHandleId(GetExpiredTimer()))
+//         DestroyTimer(GetExpiredTimer())
+//     else
+//         SaveInteger(YDLOC, GetHandleId(GetExpiredTimer()), 280, LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 280) + 1)
+//         SaveLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 1108, GetUnitLoc(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594)))
+//         if GetUnitAbilityLevel(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), 'Avul') == 1
+//             DoNothing()
+//         else
+//             SaveUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 498, CreateUnitAtLoc(LoadPlayerHandle(YDLOC, GetHandleId(GetExpiredTimer()), 603), 'e0UH', LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 1108), GetRandomDirectionDeg()))
+//             UnitApplyTimedLife(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 498), 'BHwe', 1.00)
+//         SaveGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 361, yDWEGetUnitsInRangeOfLocMatchingNull(3000.00, LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 1108), Condition(function trig_JackFFunc001Func008Func001Func008003003)))
+//         ForGroupBJ(LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 361), function trig_JackFFunc001Func008Func001Func009A)
+//         GroupClear(LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 361))
+//         DestroyGroup(LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 361))
+//         RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 1108))
+function trig_JackFActions()
+    // timer _ydl_timer
+    integer trigger_ID = LoadInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 865)
+    trigger_ID += 3
+    SaveInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 865, trigger_ID)
+    SaveInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 1045, trigger_ID)
+    // if GetSpellAbilityId() == 'A0P1'
+    //     soundPlay("war3mapImported\\Jack6.mp3", GetUnitX(udg_Unitsound), GetUnitY(udg_Unitsound))
+    //     SaveUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594, GetSpellAbilityUnit())
+    //     UnitRemoveBuffBJ('B04B', LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594))
+    //     SavePlayerHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 603, GetOwningPlayer(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594)))
+    //     SaveInteger(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 280, 0)
+    //     SaveGroupHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 744928215, CreateGroup())
+    //     _ydl_timer = CreateTimer()
+    //     SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 594, LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594))
+    //     SavePlayerHandle(YDLOC, GetHandleId(_ydl_timer), 603, LoadPlayerHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 603))
+    //     SaveLocationHandle(YDLOC, GetHandleId(_ydl_timer), 1108, LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1108))
+    //     SaveGroupHandle(YDLOC, GetHandleId(_ydl_timer), 361, LoadGroupHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 361))
+    //     SaveGroupHandle(YDLOC, GetHandleId(_ydl_timer), 744928215, LoadGroupHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 744928215))
+    //     SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 498, LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 498))
+    //     SaveInteger(YDLOC, GetHandleId(_ydl_timer), 280, LoadInteger(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 280))
+    //     TimerStart(_ydl_timer, 0.08, true, function trig_JackFFunc001Func008T)
+    if GetSpellAbilityId() == 'A0P4'
+        soundPlay("war3mapImported\\Jack3.mp3", GetUnitX(udg_Unitsound), GetUnitY(udg_Unitsound))
+        SaveUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594, GetSpellAbilityUnit())
+        UnitRemoveBuffBJ('B04B', LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594))
+        SavePlayerHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 603, GetOwningPlayer(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594)))
+        SaveLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1108, GetUnitLoc(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594)))
+        SaveUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 896, CreateUnitAtLoc(LoadPlayerHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 603), 'e0UI', LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1108), GetRandomDirectionDeg()))
+        UnitApplyTimedLife(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 896), 'BHwe', 2.00)
+        RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1108))
+        let caster = LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594)
+        if GetUnitAbilityLevel(caster, 'A0P4') == 1
+            SetUnitState(caster, UNIT_STATE_LIFE, GetUnitState(caster, UNIT_STATE_LIFE) + 25 + (caster.getAgi(true) * 0.5))
+        else if GetUnitAbilityLevel(caster, 'A0P4') == 2
+            SetUnitState(caster, UNIT_STATE_LIFE, GetUnitState(caster, UNIT_STATE_LIFE) + 50 + (caster.getAgi(true) * 1))    
+        else if GetUnitAbilityLevel(caster, 'A0P4') == 3
+            SetUnitState(caster, UNIT_STATE_LIFE, GetUnitState(caster, UNIT_STATE_LIFE) + 75 + (caster.getAgi(true) * 1.5))           
+        else if GetUnitAbilityLevel(caster, 'A0P4') == 4
+            SetUnitState(caster, UNIT_STATE_LIFE, GetUnitState(caster, UNIT_STATE_LIFE) + 100 + (caster.getAgi(true) * 2))           
+        else if GetUnitAbilityLevel(caster, 'A0P4') == 5
+            SetUnitState(caster, UNIT_STATE_LIFE, GetUnitState(caster, UNIT_STATE_LIFE) + 125 + (caster.getAgi(true) * 2.5))         
+    else
+        soundPlay("war3mapImported\\Illya3.mp3", GetUnitX(udg_Unitsound), GetUnitY(udg_Unitsound))
+        SaveUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594, GetSpellAbilityUnit())
+        SavePlayerHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 603, GetOwningPlayer(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594)))
+        SaveLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1108, GetUnitLoc(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594)))
+        SaveUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 896, CreateUnitAtLoc(LoadPlayerHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 603), 'e0KF', LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1108), GetRandomDirectionDeg()))
+        UnitApplyTimedLife(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 896), 'BHwe', 2.00)
+        RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1108))
+        let caster = LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594)
+        if GetUnitAbilityLevel(caster, 'A0QR') == 1
+            SetUnitState(caster, UNIT_STATE_LIFE, GetUnitState(caster, UNIT_STATE_LIFE) + 25 + (caster.getInt(true) * 0.5))
+        else if GetUnitAbilityLevel(caster, 'A0QR') == 2
+            SetUnitState(caster, UNIT_STATE_LIFE, GetUnitState(caster, UNIT_STATE_LIFE) + 50 + (caster.getInt(true) * 1))    
+        else if GetUnitAbilityLevel(caster, 'A0QR') == 3
+            SetUnitState(caster, UNIT_STATE_LIFE, GetUnitState(caster, UNIT_STATE_LIFE) + 75 + (caster.getInt(true) * 1.5))           
+        else if GetUnitAbilityLevel(caster, 'A0QR') == 4
+            SetUnitState(caster, UNIT_STATE_LIFE, GetUnitState(caster, UNIT_STATE_LIFE) + 100 + (caster.getInt(true) * 2))           
+        else if GetUnitAbilityLevel(caster, 'A0QR') == 5
+            SetUnitState(caster, UNIT_STATE_LIFE, GetUnitState(caster, UNIT_STATE_LIFE) + 125 + (caster.getInt(true) * 2.5))         
+    FlushChildHashtable(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID)
+function initTrig_JackF()
+    gg_trg_JackF = CreateTrigger()
+    TriggerRegisterAnyUnitEventBJ(gg_trg_JackF, EVENT_PLAYER_UNIT_SPELL_EFFECT)
+    TriggerAddCondition(gg_trg_JackF, Condition(function trig_JackFConditions))
+    TriggerAddAction(gg_trg_JackF, function trig_JackFActions)

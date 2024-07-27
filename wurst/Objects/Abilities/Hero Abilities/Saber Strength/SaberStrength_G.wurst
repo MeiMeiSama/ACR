@@ -1,0 +1,58 @@
+package SaberStrength_G
+
+import ClosureEvents
+import ClosureTimers
+import AbilityClassifications
+import AbilityGlobals
+import ObjectDefinitions
+
+int healing_amount
+real healing_HoT
+bool heal_active
+
+public function saberStrG()
+    EventListener.add(EVENT_PLAYER_UNIT_DAMAGED) -> 
+        if BlzGetEventDamageTarget().getTypeId() == ARTURIA_STRENGTH and BlzGetEventAttackType() == ATTACK_TYPE_HERO
+
+            // ━━━━━━━━━━━━ [Variables] ━━━━━━━━━━━━
+            
+            let hero = BlzGetEventDamageTarget()
+            var dmgAmount = GetEventDamage().floor()
+            if not dmgAmount.isEven()
+                dmgAmount++
+            dmgAmount = (dmgAmount / 2).floor()
+
+            healing_amount += dmgAmount
+            healing_HoT = (healing_amount / 2)
+
+            // ━━━━━━━━━━━━ [Translation] ━━━━━━━━━━━━
+
+            doPeriodicallyCounted(0.1, 40) (CallbackCounted cb) ->
+                if healing_amount > 0
+                    let skill = ARTURIA_STRENGTH_ABILITY_G
+                    skill..setDescription(skill,
+                    GOLD+
+                    "Whenever Lily receives damage from a basic attack, she heals back a portion of that damage over the next few seconds."+
+                    "\n\nDuration: "+PINK+"4"+GOLD+
+                    "\nDamage Healed: "+PINK+"50%"+GOLD+
+                    "\nCurrent Healing Stored: "+PINK+healing_amount.toString()+GOLD)
+                else 
+                    let skill = ARTURIA_STRENGTH_ABILITY_G
+                    skill..setDescription(skill,
+                    GOLD+
+                    "Whenever Lily receives damage from a basic attack, she heals back a portion of that damage over the next few seconds."+
+                    "\n\nDuration: "+PINK+"4"+GOLD+
+                    "\nDamage Healed: "+PINK+"50%"+GOLD+
+                    "\nCurrent Healing Stored: "+PINK+"0"+GOLD)    
+
+            // ━━━━━━━━━━━━ [Healing Part] ━━━━━━━━━━━━
+
+            if heal_active == false
+                heal_active = true
+                doPeriodically(1) (CallbackPeriodic cb) ->
+                    flashEffect("HealBuff.mdx", hero, "origin")
+                    if healing_amount <= 0 or not hero.isAlive()
+                        heal_active = false
+                        destroy cb
+                    hero.addHP(healing_HoT)
+                    healing_amount -= (healing_HoT).toInt()

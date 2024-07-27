@@ -1,0 +1,22 @@
+package Shalltear_G
+
+import ClosureEvents
+import AbilityClassifications
+import AbilityGlobals
+int agiCount = 0
+
+        
+
+public function shaltearG()
+
+    EventListener.add(EVENT_PLAYER_UNIT_DEATH) ->
+
+        if GetKillingUnit().getTypeId() == 'H01B' or GetKillingUnit().getTypeId() == 'H00B'
+            if GetDyingUnit().isType(UNIT_TYPE_HERO) 
+                GetKillingUnit().addAgi(1)
+                let skill = 'A05J'
+                agiCount++
+                skill..setDescription(skill,
+                GOLD+
+                "Shaltear gains increased vision range during night, furthermore, whenever she kills an enemy hero, she gains 1 agility point."+
+                "\n\nExtra Agility Gained: "+PINK+agiCount.toString()+GOLD)

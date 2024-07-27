@@ -1,0 +1,107 @@
+package Storm
+import ObjectDefinitions
+import ACR_Library
+import DamageEvent
+import AbilityGlobals
+
+init
+    initTrig_StormVG_Orig()
+function trig_StormVGConditions() returns boolean
+    return GetSpellAbilityId() == 'A07O'
+
+function trig_StormVGFunc015Func001Func020003003() returns boolean
+    return IsUnitType(GetFilterUnit(), UNIT_TYPE_STRUCTURE) == false and GetUnitAbilityLevelSwapped('Avul', GetFilterUnit()) != 1 and IsUnitEnemy(GetFilterUnit(), LoadPlayerHandle(YDLOC, GetHandleId(GetExpiredTimer()), 603)) == true and IsUnitInGroup(GetFilterUnit(), LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 744928215)) == false and IsUnitDeadBJ(GetFilterUnit()) == false and GetFilterUnit().isInvulnerable() == false
+
+function trig_StormVGFunc015Func001Func021A()
+    let dmg1 = (LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594).getInt(true) * 4) + (LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594).getMana() * 0.10)
+    let dmg2 = (LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594).getInt(true) * 2.5) + (LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594).getMana() * 0.05)
+    let caster = LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594)
+    let victim = GetEnumUnit()
+    SaveLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 772, GetUnitLoc(GetEnumUnit()))
+    if LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594).hasItemById(STORM_RING_ARCOBALENO)
+        acrStun(caster, victim, 1.0)
+        DamageEvent.setNextDamageId(DAMAGE_ABILITY_STORM_ARCO)
+        DamageEvent.setNextDamageFromCode()
+        UnitDamageTargetBJ(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), GetEnumUnit(), dmg1, ATTACK_TYPE_MAGIC, DAMAGE_TYPE_MAGIC)
+    else
+        acrStun(caster, victim, 0.7)
+        DamageEvent.setNextDamageId(DAMAGE_ABILITY_STORM_RING)
+        DamageEvent.setNextDamageFromCode()
+        UnitDamageTargetBJ(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), GetEnumUnit(), dmg2, ATTACK_TYPE_MAGIC, DAMAGE_TYPE_MAGIC)
+    GroupAddUnitSimple(GetEnumUnit(), LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 744928215))
+    RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 772))
+
+function trig_StormVGFunc015T()
+    //group _ydl_group
+    //unit _ydl_unit
+    if LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 858) >= 30
+        PlaySoundBJ(gg_snd_explode1)
+        SaveLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 688, GetUnitLoc(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 944545158)))
+        SaveUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 911, CreateUnitAtLoc(LoadPlayerHandle(YDLOC, GetHandleId(GetExpiredTimer()), 603), 'e0CH', LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 688), GetRandomDirectionDeg()))
+        SetUnitScalePercent(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 911), 255.00, 255.00, 255.00)
+        UnitApplyTimedLife(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 911), 'BHwe', 3.50)
+        SaveUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 803, CreateUnitAtLoc(LoadPlayerHandle(YDLOC, GetHandleId(GetExpiredTimer()), 603), 'e0C0', LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 688), GetRandomDirectionDeg()))
+        UnitApplyTimedLife(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 803), 'BHwe', 2.00)
+        RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 688))
+        RemoveUnit(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 944545158))
+        GroupClear(LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 744928215))
+        DestroyGroup(LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 744928215))
+        FlushChildHashtable(YDLOC, GetHandleId(GetExpiredTimer()))
+        DestroyTimer(GetExpiredTimer())
+    else
+        SaveInteger(YDLOC, GetHandleId(GetExpiredTimer()), 858, LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 858) + 1)
+        SaveLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 377, GetUnitLoc(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 944545158)))
+        SaveLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 688, PolarProjectionBJ(LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 377), 50.00, LoadReal(YDLOC, GetHandleId(GetExpiredTimer()), 92975974)))
+        SetUnitPositionLocFacingBJ(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 944545158), LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 688), LoadReal(YDLOC, GetHandleId(GetExpiredTimer()), 92975974))
+        SaveUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 187016335, CreateUnitAtLoc(LoadPlayerHandle(YDLOC, GetHandleId(GetExpiredTimer()), 603), 'e028', LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 377), GetRandomDirectionDeg()))
+        UnitApplyTimedLife(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 187016335), 'BHwe', 2.00)
+        SaveGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 361, yDWEGetUnitsInRangeOfLocMatchingNull(400.00, LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 377), Condition(function trig_StormVGFunc015Func001Func020003003)))
+        ForGroupBJ(LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 361), function trig_StormVGFunc015Func001Func021A)
+        GroupClear(LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 361))
+        DestroyGroup(LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 361))
+        RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 377))
+        RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 688))
+
+function trig_StormVGActions()
+    timer _ydl_timer
+    integer trigger_ID = LoadInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 865)
+    trigger_ID += 3
+    SaveInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 865, trigger_ID)
+    SaveInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 1045, trigger_ID)
+    PlaySoundBJ(gg_snd_gokugunsound)
+    SaveUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594, GetSpellAbilityUnit())
+    SaveLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1108, GetUnitLoc(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594)))
+    SaveLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 683, GetSpellTargetLoc())
+    SaveReal(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 92975974, AngleBetweenPoints(LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1108), LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 683)))
+    SaveInteger(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 858, 0)
+    SavePlayerHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 603, GetOwningPlayer(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594)))
+    SaveLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 48, PolarProjectionBJ(LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1108), 80.00, LoadReal(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 92975974)))
+    SaveGroupHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 744928215, CreateGroup())
+    SaveUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 944545158, CreateUnitAtLoc(LoadPlayerHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 603), 'e0DJ', LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 48), LoadReal(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 92975974)))
+    RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1108))
+    RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 683))
+    RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 48))
+    _ydl_timer = CreateTimer()
+    SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 911, LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 911))
+    SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 803, LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 803))
+    SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 51, GetTriggerUnit())
+    SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 594, LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594))
+    SavePlayerHandle(YDLOC, GetHandleId(_ydl_timer), 603, LoadPlayerHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 603))
+    SaveLocationHandle(YDLOC, GetHandleId(_ydl_timer), 377, LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 377))
+    SaveLocationHandle(YDLOC, GetHandleId(_ydl_timer), 688, LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 688))
+    SaveLocationHandle(YDLOC, GetHandleId(_ydl_timer), 772, LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 772))
+    SaveGroupHandle(YDLOC, GetHandleId(_ydl_timer), 361, LoadGroupHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 361))
+    SaveReal(YDLOC, GetHandleId(_ydl_timer), 92975974, LoadReal(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 92975974))
+    SaveGroupHandle(YDLOC, GetHandleId(_ydl_timer), 744928215, LoadGroupHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 744928215))
+    SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 944545158, LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 944545158))
+    SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 187016335, LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 187016335))
+    SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 256, LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 256))
+    SaveInteger(YDLOC, GetHandleId(_ydl_timer), 858, LoadInteger(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 858))
+    TimerStart(_ydl_timer, 0.02, true, function trig_StormVGFunc015T)
+    FlushChildHashtable(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID)
+
+function initTrig_StormVG_Orig()
+    gg_trg_StormVG = CreateTrigger()
+    TriggerRegisterAnyUnitEventBJ(gg_trg_StormVG, EVENT_PLAYER_UNIT_SPELL_EFFECT)
+    TriggerAddCondition(gg_trg_StormVG, Condition(function trig_StormVGConditions))
+    TriggerAddAction(gg_trg_StormVG, function trig_StormVGActions)

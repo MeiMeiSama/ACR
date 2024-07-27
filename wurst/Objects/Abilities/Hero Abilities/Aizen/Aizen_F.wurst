@@ -1,0 +1,86 @@
+package Aizen_F
+
+import ObjectDefinitions
+import DummyCaster
+import OrderIds
+import AbilityGlobals
+import AbilityClassifications
+import ClosureTimers
+
+unit aizenFMarkedUnit
+unit aizenFOwner
+bool aizenFBool
+
+function aizenFCond () returns boolean
+    if GetEventDamageSource().hasItemById('I04G') and BlzGetEventDamageTarget().isType(UNIT_TYPE_HERO) and BlzGetEventDamageTarget().isInvulnerable() == false and aizenFBool == true
+        return true
+    return false
+
+function aizenFDeathCond() returns boolean
+    if GetDyingUnit() == aizenFMarkedUnit
+        return true
+    return false
+
+function aizenFTranslation(unit aizenFOwner)
+    let dmg = (250 + (7 * aizenFOwner.getAgi(true)))
+    let aizenFOwnerrange = "Global"
+    let skill = 'A19E'
+    if aizenFMarkedUnit != null
+        skill..setDescription(skill, 
+        GOLD+
+        "Whenever Aizen deals damage to an enemy hero, he marks them until they die or until another hero is marked. Only one hero can be marked at any given time. Upon use, this skill deals damage to the marked enemy."+
+        "\n\nCast Range: "+PINK+aizenFOwnerrange+GOLD+
+        "\nCooldown: "+PINK+"50"+GOLD+
+        "\nDamage Output: "+GREEN+dmg.toString()+GOLD+
+        "\n\nCurrently Marked Hero: "+PINK+aizenFMarkedUnit.getName()+GOLD)
+    else
+        skill..setDescription(skill, 
+        GOLD+
+        "Whenever Aizen deals damage to an enemy hero, he marks them until they die or until another hero is marked. Only one hero can be marked at any given time. Upon use, this skill deals damage to the marked enemy."+
+        "\n\nCast Range: "+PINK+aizenFOwnerrange+GOLD+
+        "\nCooldown: "+PINK+"50"+GOLD+
+        "\nDamage Output: "+GREEN+dmg.toString()+GOLD+
+        "\n\nCurrently Marked Hero: "+PINK+"None"+GOLD)
+
+
+public function aizenFTranslationEvents(unit caster)
+    doAfter(0.1) ->
+        aizenFTranslation(aizenFOwner)
+    CreateTrigger()
+    ..registerUnitEvent(caster, EVENT_UNIT_HERO_LEVEL)
+    ..registerUnitEvent(caster, EVENT_UNIT_PICKUP_ITEM)
+    ..registerUnitEvent(caster, EVENT_UNIT_DROP_ITEM)
+    ..addAction() ->
+        doAfter(0.1) -> //idk how to explain but its whatever as long as u can reference aizen properly
+        // also, I deleted his F from here                
+            aizenFTranslation(aizenFOwner)
+
+public function aizenF ()
+    aizenFBool = true
+    for i = 0 to 12
+        if udg_PlayHero[i].getTypeId() == 'H01R'
+            aizenFOwner = udg_PlayHero[i]
+    CreateTrigger()
+    ..registerAnyUnitEvent(EVENT_PLAYER_UNIT_DAMAGED)
+    ..addCondition(Condition(function aizenFCond))
+    ..addAction() ->
+        aizenFBool = false
+        aizenFMarkedUnit.removeAbility(AIZEN_F_DEBUFF_ABILITY)
+        aizenFMarkedUnit.removeAbility('B06G')                    
+        aizenFMarkedUnit = BlzGetEventDamageTarget()
+        new DummyCaster()
+        ..owner(aizenFOwner.getOwner())
+        ..origin(aizenFMarkedUnit.getPos())
+        ..castTarget(AIZEN_F_DEBUFF_ABILITY, 1, OrderIds.slow, aizenFMarkedUnit)
+        aizenFTranslation(aizenFOwner)
+        doAfter(0.03) ->
+            aizenFBool = true 
+                
+
+    CreateTrigger()    
+    ..registerAnyUnitEvent(EVENT_PLAYER_UNIT_DEATH)
+    ..addCondition(Condition(function aizenFDeathCond))
+    ..addAction() ->
+        aizenFMarkedUnit = null
+        aizenFTranslation(aizenFOwner)       
+

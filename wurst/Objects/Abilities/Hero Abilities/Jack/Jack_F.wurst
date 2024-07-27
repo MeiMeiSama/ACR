@@ -1,0 +1,41 @@
+package Jack_F
+
+import ClosureEvents
+import DamageEvent
+import ObjectDefinitions
+import SoundUtils
+import ClosureTimers
+import ACR_Library
+
+constant jackFStart = new SoundDefinition("war3mapImported\\Jack6.mp3")
+constant jackFFinish = new SoundDefinition("war3mapImported\\JackEffect2.mp3")
+
+init
+
+
+
+public function jackF ()
+
+    EventListener.onCast('A18Q') (unit caster) ->
+        caster.addAbility(EMPTY_DUMMY_PASSIVE_ABILITY)
+        jackFStart.play()
+        var count = 0
+        doPeriodicallyCounted(0.05, 101) (CallbackCounted cb) ->
+            count++
+            if not caster.hasAbility('B06F')
+                caster.removeAbility(EMPTY_DUMMY_PASSIVE_ABILITY)
+                destroy cb
+            if count >= 100
+                caster.removeAbility('B06F')
+                caster.removeAbility(EMPTY_DUMMY_PASSIVE_ABILITY)
+                destroy cb    
+
+    EventListener.add(EVENT_PLAYER_UNIT_DAMAGED) ->
+        if DamageEvent.getSource().getTypeId() == 'H02K' and BlzGetEventAttackType() == ATTACK_TYPE_HERO and DamageEvent.getSource().hasAbility(EMPTY_DUMMY_PASSIVE_ABILITY)
+            let caster = DamageEvent.getSource()
+            let victim = DamageEvent.getTarget()
+            let dmg = (250.00 + (7 * caster.getAgi(true)))     
+            caster.damageTarget(victim, dmg, ATTACK_TYPE_MAGIC)
+            jackFFinish.play()
+            acrStun(caster, victim, 0.7)
+            caster.removeAbility(EMPTY_DUMMY_PASSIVE_ABILITY)

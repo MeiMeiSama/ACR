@@ -1,0 +1,72 @@
+package MukuroW
+import DamageEvent
+import AbilityGlobals
+import ACR_Library
+
+init
+    initTrig_MukuroW()
+
+function trig_MukuroWConditions() returns boolean
+    return GetSpellAbilityId() == 'A0GN'
+function trig_MukuroWFunc014Func003003003() returns boolean
+    return IsUnitType(GetFilterUnit(), UNIT_TYPE_STRUCTURE) == false and GetUnitAbilityLevel(GetFilterUnit(), 'Avul') != 1 and IsUnitDeadBJ(GetFilterUnit()) == false and IsUnitEnemy(GetFilterUnit(), LoadPlayerHandle(YDLOC, GetHandleId(GetExpiredTimer()), 603)) == true
+function trig_MukuroWFunc014Func004A()
+    SaveLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 1108, GetUnitLoc(GetEnumUnit()))
+    DamageEvent.setNextDamageId(DAMAGE_ABILITY_W)
+    DamageEvent.setNextDamageFromCode()
+    UnitDamageTargetBJ(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), GetEnumUnit(), (I2R(GetUnitAbilityLevel(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), 'A0GN')) + 1.00) * I2R(GetHeroInt(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), true)), ATTACK_TYPE_MAGIC, DAMAGE_TYPE_MAGIC)
+    let caster = LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594)
+    let victim = GetEnumUnit()
+    acrStun(caster, victim, 0.7)
+    SaveUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 929, CreateUnitAtLoc(LoadPlayerHandle(YDLOC, GetHandleId(GetExpiredTimer()), 603), 'e0NK', LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 1108), GetRandomDirectionDeg()))
+    UnitApplyTimedLife(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 929), 'BHwe', 2.00)
+    SaveUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 843, CreateUnitAtLoc(LoadPlayerHandle(YDLOC, GetHandleId(GetExpiredTimer()), 603), 'e053', LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 1108), GetRandomDirectionDeg()))
+    SetUnitScalePercent(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 843), 200.00, 200.00, 200.00)
+    UnitApplyTimedLife(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 843), 'BHwe', 1.50)
+    RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 1108))
+function trig_MukuroWFunc014T()
+    //group _ydl_group
+    //unit _ydl_unit
+    PauseUnit(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), false)
+    SetUnitInvulnerable(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), false)
+    SaveGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 339273988, yDWEGetUnitsInRangeOfLocMatchingNull(650.00, LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 549), Condition(function trig_MukuroWFunc014Func003003003)))
+    ForGroupBJ(LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 339273988), function trig_MukuroWFunc014Func004A)
+    DestroyGroup(LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 339273988))
+    RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 549))
+    FlushChildHashtable(YDLOC, GetHandleId(GetExpiredTimer()))
+    DestroyTimer(GetExpiredTimer())
+function trig_MukuroWActions()
+    timer _ydl_timer
+    integer trigger_ID = LoadInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 865)
+    trigger_ID += 3
+    SaveInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 865, trigger_ID)
+    SaveInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 1045, trigger_ID)
+    PlaySoundBJ(gg_snd_Mukuro2)
+    SaveUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594, GetSpellAbilityUnit())
+    SaveLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 549, GetSpellTargetLoc())
+    SavePlayerHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 603, GetOwningPlayer(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594)))
+    SaveReal(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 689, 0.00)
+    PauseUnit(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594), true)
+    SetUnitInvulnerable(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594), true)
+    SetUnitAnimationByIndex(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594), 9)
+    SaveLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1108, GetUnitLoc(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594)))
+    SaveUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 450813563, CreateUnitAtLoc(LoadPlayerHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 603), 'e0FI', LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1108), GetRandomDirectionDeg()))
+    UnitApplyTimedLife(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 450813563), 'BHwe', 2.00)
+    RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1108))
+    _ydl_timer = CreateTimer()
+    SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 36, LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 36))
+    SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 929, LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 929))
+    SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 1164, LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1164))
+    SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 843, LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 843))
+    SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 594, LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594))
+    SaveLocationHandle(YDLOC, GetHandleId(_ydl_timer), 549, LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 549))
+    SavePlayerHandle(YDLOC, GetHandleId(_ydl_timer), 603, LoadPlayerHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 603))
+    SaveLocationHandle(YDLOC, GetHandleId(_ydl_timer), 1108, LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1108))
+    SaveGroupHandle(YDLOC, GetHandleId(_ydl_timer), 339273988, LoadGroupHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 339273988))
+    TimerStart(_ydl_timer, 0.25, false, function trig_MukuroWFunc014T)
+    FlushChildHashtable(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID)
+function initTrig_MukuroW()
+    gg_trg_MukuroW = CreateTrigger()
+    TriggerRegisterAnyUnitEventBJ(gg_trg_MukuroW, EVENT_PLAYER_UNIT_SPELL_EFFECT)
+    TriggerAddCondition(gg_trg_MukuroW, Condition(function trig_MukuroWConditions))
+    TriggerAddAction(gg_trg_MukuroW, function trig_MukuroWActions)

@@ -1,0 +1,261 @@
+package NanayaSTR_F
+
+import main
+
+init
+    inittrig_NanayaSTR_F ()
+
+function trig_nanayar2()
+    SetUnitTimeScale(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 5052), 0.)
+    SetUnitX(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 5052), GetUnitX(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 5004)))
+    SetUnitY(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 5052), GetUnitY(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 5004)))
+    SetUnitFlyHeight(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 5052), GetUnitFlyHeight(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 5004)), 0.)
+    if LoadInteger(YDLOC, GetHandleId(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 5004)), 6969) < 1
+        invisible(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 5052), 20.00, 100.00, 1.00, 0.03)
+    else
+        invisible(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 5052), 0.00, 0.00, 0.00, 0.03)
+    FlushChildHashtable(YDLOC, GetHandleId(GetExpiredTimer()))
+    DestroyTimer(GetExpiredTimer())
+
+function trig_nanayar1()
+    timer _ydl_timer
+    group ydl_group
+    unit ydl_unit
+    if LoadInteger(YDHT, GetHandleId(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 5004)), 282426469) < 1
+        SaveReal(YDLOC, GetHandleId(GetExpiredTimer()), 5005, LoadReal(YDLOC, GetHandleId(GetExpiredTimer()), 5005) + .02)
+        if LoadReal(YDLOC, GetHandleId(GetExpiredTimer()), 5005) == .02 or LoadReal(YDLOC, GetHandleId(GetExpiredTimer()), 5005) == .50
+            SaveInteger(YDLOC, GetHandleId(GetExpiredTimer()), 5053, LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 5053) + 1)
+            if LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 5053) == 1
+                SaveInteger(YDLOC, GetHandleId(GetExpiredTimer()), 5054, 5)
+            else
+                SaveInteger(YDLOC, GetHandleId(GetExpiredTimer()), 5054, 15)
+            bj_forLoopAIndex = 1
+            bj_forLoopAIndexEnd = LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 5054)
+            while true
+                if bj_forLoopAIndex > bj_forLoopAIndexEnd
+                    break
+                SaveUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 5052, CreateUnit(GetOwningPlayer(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 5004)), 'r096', GetUnitX(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 5004)), GetUnitY(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 5004)), LoadReal(YDLOC, GetHandleId(GetExpiredTimer()), 5006)))
+                SetUnitVertexColor(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 5052), 255, 255, 255, 0)
+                if LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 5053) == 1
+                    SetUnitAnimationByIndex(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 5052), 20)
+                else
+                    SetUnitAnimationByIndex(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 5052), 21)
+                SetUnitTimeScale(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 5052), 1.8)
+                UnitApplyTimedLife(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 5052), 'BHwe', 3.)
+                _ydl_timer = CreateTimer()
+                SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 5052, LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 5052))
+                SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 5004, LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 5004))
+                TimerStart(_ydl_timer, LoadReal(YDLOC, GetHandleId(GetExpiredTimer()), 5055), false, function trig_nanayar2)
+                SaveReal(YDLOC, GetHandleId(GetExpiredTimer()), 5055, LoadReal(YDLOC, GetHandleId(GetExpiredTimer()), 5055) + .04)
+                bj_forLoopAIndex++
+        if LoadReal(YDLOC, GetHandleId(GetExpiredTimer()), 5005) == .02
+            SetUnitFacing(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 5004), LoadReal(YDLOC, GetHandleId(GetExpiredTimer()), 5006))
+            SetUnitTimeScale(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 5004), 1.8)
+            SetUnitAnimationByIndex(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 5004), 20)
+            dycpushback(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 5004), LoadReal(YDLOC, GetHandleId(GetExpiredTimer()), 5006) + 180., 400, .32, false)
+        if LoadReal(YDLOC, GetHandleId(GetExpiredTimer()), 5005) == .32
+            SaveUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 5007, CreateUnit(GetOwningPlayer(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 5004)), 'r124', GetUnitX(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 5004)), GetUnitY(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 5004)), LoadReal(YDLOC, GetHandleId(GetExpiredTimer()), 5006)))
+            SetUnitScale(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 5007), 1.1, 1.1, 1.1)
+            systemunitmove(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 5007), LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 5004), .5)
+            KillUnit(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 5007))
+            SaveUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 5007, CreateUnit(GetOwningPlayer(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 5004)), 'r125', GetUnitX(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 5004)), GetUnitY(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 5004)), LoadReal(YDLOC, GetHandleId(GetExpiredTimer()), 5006)))
+            SetUnitScale(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 5007), 2.5, 2.5, 2.5)
+            SetUnitFlyHeight(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 5007), 100., 0.)
+            systemunitmove(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 5007), LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 5004), .5)
+            KillUnit(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 5007))
+            SaveUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 5007, CreateUnit(GetOwningPlayer(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 5004)), 'r126', GetUnitX(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 5004)), GetUnitY(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 5004)), LoadReal(YDLOC, GetHandleId(GetExpiredTimer()), 5006)))
+            SetUnitScale(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 5007), 1.5, 1.5, 1.5)
+            SetUnitFlyHeight(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 5007), 20., 0.)
+            systemunitmove(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 5007), LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 5004), .5)
+            KillUnit(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 5007))
+            dycpushback(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 5004), LoadReal(YDLOC, GetHandleId(GetExpiredTimer()), 5006) + 180., 60, .4, false)
+        if LoadReal(YDLOC, GetHandleId(GetExpiredTimer()), 5005) == .62
+            SetUnitAnimationByIndex(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 5004), 21)
+            SaveReal(YDLOC, GetHandleId(GetExpiredTimer()), 5056, distancexy(LoadReal(YDLOC, GetHandleId(GetExpiredTimer()), 5015), LoadReal(YDLOC, GetHandleId(GetExpiredTimer()), 5016), GetUnitX(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 5004)), GetUnitY(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 5004))))
+            SaveReal(YDLOC, GetHandleId(GetExpiredTimer()), 5041, LoadReal(YDLOC, GetHandleId(GetExpiredTimer()), 5056) * .01)
+            jumpsys(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 5004), 50, 0.4, 0)
+        if LoadReal(YDLOC, GetHandleId(GetExpiredTimer()), 5005) >= .62 and LoadReal(YDLOC, GetHandleId(GetExpiredTimer()), 5005) < 1.22
+            dycpushback(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 5004), LoadReal(YDLOC, GetHandleId(GetExpiredTimer()), 5006), LoadReal(YDLOC, GetHandleId(GetExpiredTimer()), 5041), .02, false)
+            ydl_group = CreateGroup()
+            GroupEnumUnitsInRange(ydl_group, GetUnitX(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 5004)), GetUnitY(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 5004)), 225., null)
+            while true
+                ydl_unit = FirstOfGroup(ydl_group)
+                if ydl_unit == null
+                    break
+                GroupRemoveUnit(ydl_group, ydl_unit)
+                if IsUnitAliveBJ(ydl_unit) == true and IsUnitType(ydl_unit, UNIT_TYPE_MECHANICAL) == false and IsUnitEnemy(ydl_unit, GetOwningPlayer(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 5004))) == true
+                    GroupAddUnit(LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 5013), ydl_unit)
+                    SaveReal(YDLOC, GetHandleId(GetExpiredTimer()), 5005, 1.22)
+            DestroyGroup(ydl_group)
+        if LoadReal(YDLOC, GetHandleId(GetExpiredTimer()), 5005) == 1.22
+            SetUnitAnimationByIndex(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 5004), 22)
+            SaveReal(YDLOC, GetHandleId(GetExpiredTimer()), 5057, GetUnitX(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 5004)))
+            SaveReal(YDLOC, GetHandleId(GetExpiredTimer()), 5058, GetUnitY(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 5004)))
+            SaveReal(YDLOC, GetHandleId(GetExpiredTimer()), 22821633, 260.)
+            bj_forLoopAIndex = 1
+            bj_forLoopAIndexEnd = 10
+            while true
+                if bj_forLoopAIndex > bj_forLoopAIndexEnd
+                    break
+                SaveReal(YDLOC, GetHandleId(GetExpiredTimer()), 22821633, LoadReal(YDLOC, GetHandleId(GetExpiredTimer()), 22821633) - 30.)
+                SaveReal(YDLOC, GetHandleId(GetExpiredTimer()), 5059, LoadReal(YDLOC, GetHandleId(GetExpiredTimer()), 5057) + LoadReal(YDLOC, GetHandleId(GetExpiredTimer()), 22821633) * CosBJ(LoadReal(YDLOC, GetHandleId(GetExpiredTimer()), 5006)))
+                SaveReal(YDLOC, GetHandleId(GetExpiredTimer()), 5060, LoadReal(YDLOC, GetHandleId(GetExpiredTimer()), 5058) + LoadReal(YDLOC, GetHandleId(GetExpiredTimer()), 22821633) * SinBJ(LoadReal(YDLOC, GetHandleId(GetExpiredTimer()), 5006)))
+                if IsTerrainPathable(LoadReal(YDLOC, GetHandleId(GetExpiredTimer()), 5059), LoadReal(YDLOC, GetHandleId(GetExpiredTimer()), 5060), PATHING_TYPE_WALKABILITY) == false
+                    SetUnitX(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 5004), LoadReal(YDLOC, GetHandleId(GetExpiredTimer()), 5059))
+                    SetUnitY(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 5004), LoadReal(YDLOC, GetHandleId(GetExpiredTimer()), 5060))
+                    DoNothing()
+                    if true
+                        break
+                bj_forLoopAIndex++
+            SetUnitPosition(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 5061), GetUnitX(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 5004)), GetUnitY(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 5004)))
+            soundplay2("Nanaya-R-SE-2.mp3")
+            ShowUnit(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 5004), false)
+            SaveUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 5007, CreateUnit(GetOwningPlayer(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 5004)), 'r127', LoadReal(YDLOC, GetHandleId(GetExpiredTimer()), 5057), LoadReal(YDLOC, GetHandleId(GetExpiredTimer()), 5058), 180.))
+            SetUnitFlyHeight(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 5007), 30., 0.)
+            SetUnitScale(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 5007), 1.1, 1, 1)
+            SetUnitVertexColorBJ(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 5007), 0., 35., 100, 0.)
+            mysystemunitapplylife(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 5007), 1., .7, true)
+            SaveUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 5007, CreateUnit(GetOwningPlayer(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 5004)), 'r128', LoadReal(YDLOC, GetHandleId(GetExpiredTimer()), 5057), LoadReal(YDLOC, GetHandleId(GetExpiredTimer()), 5058), 180.))
+            SetUnitFlyHeight(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 5007), 20., 0.)
+            SetUnitScale(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 5007), 5.4, 1, 1)
+            mysystemunitapplylife(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 5007), 1., .7, true)
+            SaveInteger(YDLOC, GetHandleId(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 5004)), 6969, 1)
+            SetUnitFlyHeight(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 5004), 0., 0.)
+            SetUnitTimeScale(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 5004), 1)
+            vibration(GetOwningPlayer(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 5004)), 3.00, .68)
+        if LoadReal(YDLOC, GetHandleId(GetExpiredTimer()), 5005) == 1.92
+            RemoveSavedInteger(YDLOC, GetHandleId(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 5004)), 6969)
+            vibration(GetOwningPlayer(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 5004)), 80.00, 0.24)
+            soundplay2("Nanaya-R-SE-3.mp3")
+            soundplay2("Tohno-SE-5.mp3")
+            ShowUnit(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 5004), true)
+            SelectUnitForPlayerSingle(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 5004), GetOwningPlayer(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 5004)))
+            RemoveUnit(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 5061))
+            SaveUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 5007, CreateUnit(GetOwningPlayer(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 5004)), 'r129', LoadReal(YDLOC, GetHandleId(GetExpiredTimer()), 5057), LoadReal(YDLOC, GetHandleId(GetExpiredTimer()), 5058), LoadReal(YDLOC, GetHandleId(GetExpiredTimer()), 5006)))
+            SetUnitScale(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 5007), 2.1, 1, 1)
+            SetUnitFlyHeight(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 5007), 200., 0.)
+            KillUnit(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 5007))
+            SaveUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 5007, CreateUnit(GetOwningPlayer(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 5004)), 'r130', LoadReal(YDLOC, GetHandleId(GetExpiredTimer()), 5057), LoadReal(YDLOC, GetHandleId(GetExpiredTimer()), 5058), GetRandomDirectionDeg()))
+            SetUnitScale(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 5007), 3.25, 3.25, 3.25)
+            SetUnitFlyHeight(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 5007), 20., 0.)
+            SetUnitAnimation(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 5007), "birth dm")
+            mysystemunitapplylife(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 5007), 3., 1., true)
+            SaveUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 5007, CreateUnit(GetOwningPlayer(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 5004)), 'r068', LoadReal(YDLOC, GetHandleId(GetExpiredTimer()), 5057), LoadReal(YDLOC, GetHandleId(GetExpiredTimer()), 5058), GetRandomDirectionDeg()))
+            SetUnitFlyHeight(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 5007), 10., 0.)
+            SetUnitScale(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 5007), 2.5, 1, 1)
+            SetUnitTimeScale(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 5007), 1.2)
+            KillUnit(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 5007))
+            SaveUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 5007, CreateUnit(GetOwningPlayer(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 5004)), 'r131', LoadReal(YDLOC, GetHandleId(GetExpiredTimer()), 5057), LoadReal(YDLOC, GetHandleId(GetExpiredTimer()), 5058), LoadReal(YDLOC, GetHandleId(GetExpiredTimer()), 5006)))
+            SetUnitFlyHeight(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 5007), 20., 0.)
+            SetUnitScale(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 5007), 0.55, 1, 1)
+            SetUnitVertexColorBJ(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 5007), 0.00, 25.00, 100.00, 0.00)
+            KillUnit(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 5007))
+            SaveUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 5007, CreateUnit(GetOwningPlayer(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 5004)), 'r132', LoadReal(YDLOC, GetHandleId(GetExpiredTimer()), 5057), LoadReal(YDLOC, GetHandleId(GetExpiredTimer()), 5058), LoadReal(YDLOC, GetHandleId(GetExpiredTimer()), 5006)))
+            SetUnitFlyHeight(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 5007), 100., 0.)
+            SetUnitScale(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 5007), 3.5, 1, 1)
+            SetUnitTimeScale(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 5007), 0.8)
+            KillUnit(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 5007))
+            SaveUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 5007, CreateUnit(GetOwningPlayer(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 5004)), 'r133', LoadReal(YDLOC, GetHandleId(GetExpiredTimer()), 5057), LoadReal(YDLOC, GetHandleId(GetExpiredTimer()), 5058), LoadReal(YDLOC, GetHandleId(GetExpiredTimer()), 5006)))
+            SetUnitScale(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 5007), 3.2, 1, 1)
+            SetUnitFlyHeight(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 5007), 160., 0.)
+            KillUnit(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 5007))
+            SaveUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 5007, CreateUnit(GetOwningPlayer(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 5004)), 'r137', LoadReal(YDLOC, GetHandleId(GetExpiredTimer()), 5057), LoadReal(YDLOC, GetHandleId(GetExpiredTimer()), 5058), LoadReal(YDLOC, GetHandleId(GetExpiredTimer()), 5006)))
+            SetUnitScale(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 5007), 4.2, 4.2, 4.2)
+            SetUnitFlyHeight(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 5007), 20., 0.)
+            SetUnitTimeScale(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 5007), 0.7)
+            KillUnit(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 5007))
+            mysystemunitapplylife(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 5007), .7, 1.5, true)
+            SaveUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 5007, CreateUnit(GetOwningPlayer(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 5004)), 'r134', LoadReal(YDLOC, GetHandleId(GetExpiredTimer()), 5057), LoadReal(YDLOC, GetHandleId(GetExpiredTimer()), 5058), LoadReal(YDLOC, GetHandleId(GetExpiredTimer()), 5006)))
+            SetUnitScale(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 5007), 0.75, 1, 1)
+            SetUnitFlyHeight(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 5007), 150., 0.)
+            KillUnit(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 5007))
+            SaveUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 5007, CreateUnit(GetOwningPlayer(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 5004)), 'r134', LoadReal(YDLOC, GetHandleId(GetExpiredTimer()), 5057), LoadReal(YDLOC, GetHandleId(GetExpiredTimer()), 5058), LoadReal(YDLOC, GetHandleId(GetExpiredTimer()), 5006)))
+            SetUnitScale(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 5007), 1., 1, 1)
+            SetUnitFlyHeight(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 5007), 40., 0.)
+            KillUnit(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 5007))
+            SaveUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 5062, CreateUnit(GetOwningPlayer(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 5004)), 'r136', LoadReal(YDLOC, GetHandleId(GetExpiredTimer()), 5057), LoadReal(YDLOC, GetHandleId(GetExpiredTimer()), 5058), LoadReal(YDLOC, GetHandleId(GetExpiredTimer()), 5006)))
+            SetUnitScale(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 5062), 4.5, 4.5, 4.5)
+            SetUnitFlyHeight(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 5062), 600., 0.)
+            SetUnitTimeScalePercent(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 5062), 150.)
+            bj_forLoopAIndex = 1
+            bj_forLoopAIndexEnd = 12
+            while true
+                if bj_forLoopAIndex > bj_forLoopAIndexEnd
+                    break
+                SaveReal(YDLOC, GetHandleId(GetExpiredTimer()), 5063, LoadReal(YDLOC, GetHandleId(GetExpiredTimer()), 5057) + GetRandomReal(0., 400.) * CosBJ(GetRandomReal(0, 360)))
+                SaveReal(YDLOC, GetHandleId(GetExpiredTimer()), 5064, LoadReal(YDLOC, GetHandleId(GetExpiredTimer()), 5058) + GetRandomReal(0., 400.) * SinBJ(GetRandomReal(0, 360)))
+                SaveUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 5007, CreateUnit(GetOwningPlayer(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 5004)), 'e000', LoadReal(YDLOC, GetHandleId(GetExpiredTimer()), 5063), LoadReal(YDLOC, GetHandleId(GetExpiredTimer()), 5064), GetRandomDirectionDeg()))
+                SetUnitAnimationByIndex(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 5007), GetRandomInt(0, 180))
+                SetUnitVertexColorBJ(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 5007), 100, 100, 100, 50.00)
+                SetUnitBlendTime(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 5007), 0.)
+                SetUnitScale(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 5007), GetRandomReal(.4, .65), 1, 1)
+                SetUnitFlyHeight(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 5007), GetRandomReal(100.00, 200.00), 0.00)
+                DestroyEffect(AddSpecialEffectTarget("Effect AZ_Yishan.mdx", LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 5007), "origin"))
+                UnitApplyTimedLife(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 5007), 'BHwe', 1.)
+                SaveUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 5007, CreateUnit(GetOwningPlayer(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 5004)), 'e000', LoadReal(YDLOC, GetHandleId(GetExpiredTimer()), 5057), LoadReal(YDLOC, GetHandleId(GetExpiredTimer()), 5058), GetRandomDirectionDeg()))
+                SetUnitScale(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 5007), GetRandomReal(2.2, 2.9), 1, 1)
+                SetUnitFlyHeight(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 5007), GetRandomReal(120., 300.), 0.)
+                SetUnitBlendTime(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 5007), 0.)
+                SetUnitAnimationByIndex(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 5007), R2I(.69 * GetRandomReal(0, 360.)))
+                DestroyEffect(AddSpecialEffectTarget("zhanji-speciall.mdx", LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 5007), "origin"))
+                UnitApplyTimedLife(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 5007), 'BHwe', 1.)
+                bj_forLoopAIndex++
+            ydl_group = CreateGroup()
+            GroupEnumUnitsInRange(ydl_group, GetUnitX(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 5004)), GetUnitY(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 5004)), 300., null)
+            while true
+                ydl_unit = FirstOfGroup(ydl_group)
+                if ydl_unit == null
+                    break
+                GroupRemoveUnit(ydl_group, ydl_unit)
+            DestroyGroup(ydl_group)
+            stopunitoff(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 5004))
+        if LoadReal(YDLOC, GetHandleId(GetExpiredTimer()), 5005) == 2.14
+            SetUnitTimeScalePercent(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 5062), 0.)
+        if LoadReal(YDLOC, GetHandleId(GetExpiredTimer()), 5005) >= 2.14
+            SaveReal(YDLOC, GetHandleId(GetExpiredTimer()), 5065, LoadReal(YDLOC, GetHandleId(GetExpiredTimer()), 5065) + 3.)
+            SetUnitVertexColorBJ(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 5062), 100, 100, 100, LoadReal(YDLOC, GetHandleId(GetExpiredTimer()), 5065))
+            if LoadReal(YDLOC, GetHandleId(GetExpiredTimer()), 5065) >= 100.
+                RemoveUnit(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 5062))
+                FlushChildHashtable(YDLOC, GetHandleId(GetExpiredTimer()))
+                DestroyTimer(GetExpiredTimer())
+
+function condtrig_NanayaSTR_F () returns bool
+    if GetSpellAbilityId() == 'Nay7'
+        return true
+    return false
+
+function inittrig_NanayaSTR_F()
+    CreateTrigger()
+    ..registerAnyUnitEvent(EVENT_PLAYER_UNIT_SPELL_EFFECT)
+    ..addCondition(Condition(function condtrig_NanayaSTR_F))
+    ..addAction() ->
+        timer _ydl_timer
+        integer ydl_localvar_step = LoadInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 5036)
+        ydl_localvar_step += 3
+        SaveInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 5036, ydl_localvar_step)
+        SaveInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 5037, ydl_localvar_step)
+        SaveUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * ydl_localvar_step, 5004, GetTriggerUnit())
+        SaveUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * ydl_localvar_step, 5014, GetSpellTargetUnit())
+
+        if GetSpellAbilityId() == 'Nay7'
+            soundplay2("Nanaya-R.mp3")
+            soundplay2("Nanaya-R-SE-1.mp3")
+            soundplay2("Nanaya-SE-6.mp3")
+            SaveReal(YDLOC, GetHandleId(GetTriggeringTrigger()) * ydl_localvar_step, 5006, Atan2BJ(GetSpellTargetY() - GetUnitY(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * ydl_localvar_step, 5004)), GetSpellTargetX() - GetUnitX(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * ydl_localvar_step, 5004))))
+            SaveReal(YDLOC, GetHandleId(GetTriggeringTrigger()) * ydl_localvar_step, 5015, GetSpellTargetX())
+            SaveReal(YDLOC, GetHandleId(GetTriggeringTrigger()) * ydl_localvar_step, 5016, GetSpellTargetY())
+            stopuniton(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * ydl_localvar_step, 5004))
+            SaveUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * ydl_localvar_step, 5061, CreateUnit(GetOwningPlayer(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * ydl_localvar_step, 5004)), 'r036', LoadReal(YDLOC, GetHandleId(GetTriggeringTrigger()) * ydl_localvar_step, 5015), LoadReal(YDLOC, GetHandleId(GetTriggeringTrigger()) * ydl_localvar_step, 5016), GetRandomDirectionDeg()))
+            unitscale(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * ydl_localvar_step, 5061), .5, 1.5, 0.7)
+            SaveReal(YDLOC, GetHandleId(GetTriggeringTrigger()) * ydl_localvar_step, 5055, 0.08)
+            _ydl_timer = CreateTimer()
+            SaveReal(YDLOC, GetHandleId(_ydl_timer), 5055, LoadReal(YDLOC, GetHandleId(GetTriggeringTrigger()) * ydl_localvar_step, 5055))
+            SaveReal(YDLOC, GetHandleId(_ydl_timer), 5015, LoadReal(YDLOC, GetHandleId(GetTriggeringTrigger()) * ydl_localvar_step, 5015))
+            SaveReal(YDLOC, GetHandleId(_ydl_timer), 5016, LoadReal(YDLOC, GetHandleId(GetTriggeringTrigger()) * ydl_localvar_step, 5016))
+            SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 5061, LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * ydl_localvar_step, 5061))
+            SaveReal(YDLOC, GetHandleId(_ydl_timer), 5006, LoadReal(YDLOC, GetHandleId(GetTriggeringTrigger()) * ydl_localvar_step, 5006))
+            SaveReal(YDLOC, GetHandleId(_ydl_timer), 5005, 0.)
+            SaveReal(YDLOC, GetHandleId(_ydl_timer), 5083, 180.)
+            SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 5004, LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * ydl_localvar_step, 5004))
+            TimerStart(_ydl_timer, .02, true, function trig_nanayar1)
+        FlushChildHashtable(YDLOC, GetHandleId(GetTriggeringTrigger()) * ydl_localvar_step)

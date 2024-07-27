@@ -1,0 +1,303 @@
+package LancerKiyohimeR_Orig
+import DamageEvent
+import AbilityGlobals
+import main
+
+group kiyoRgroup
+
+init
+    initTrig_LancerKiyohimeR_Orig()
+
+function trig_LancerKiyohimeRConditions() returns boolean
+    return GetSpellAbilityId() == 'A0PG'
+function trig_LancerKiyohimeRFunc003Func010Func006Func025003003() returns boolean
+    return IsUnitType(GetFilterUnit(), UNIT_TYPE_STRUCTURE) == false and IsUnitEnemy(GetFilterUnit(), LoadPlayerHandle(YDLOC, GetHandleId(GetExpiredTimer()), 603)) == true and GetUnitAbilityLevel(GetFilterUnit(), 'Avul') != 1 and IsUnitDeadBJ(GetFilterUnit()) == false
+function trig_LancerKiyohimeRFunc003Func010Func006Func026A()
+    if kiyoRgroup.has(GetEnumUnit()) == false
+        kiyoRgroup.add(GetEnumUnit())
+    PauseUnit(GetEnumUnit(), true)
+    SetUnitPathing(GetEnumUnit(), false)
+    SetUnitPositionLoc(GetEnumUnit(), LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 549))
+    SetUnitVertexColor(GetEnumUnit(), 255, 255, 255, 0)
+    SetUnitInvulnerable(GetEnumUnit(), true)
+    GroupAddUnitSimple(GetEnumUnit(), LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 744928215))
+function trig_LancerKiyohimeRFunc003Func010Func007Func001003003() returns boolean
+    return IsUnitType(GetFilterUnit(), UNIT_TYPE_STRUCTURE) == false and IsUnitEnemy(GetFilterUnit(), LoadPlayerHandle(YDLOC, GetHandleId(GetExpiredTimer()), 603)) == true and GetUnitAbilityLevel(GetFilterUnit(), 'Avul') != 1 and IsUnitDeadBJ(GetFilterUnit()) == false
+function trig_LancerKiyohimeRFunc003Func010Func007Func002A()
+    if kiyoRgroup.has(GetEnumUnit()) == false
+        kiyoRgroup.add(GetEnumUnit())
+    PauseUnit(GetEnumUnit(), true)
+    SetUnitPathing(GetEnumUnit(), false)
+    SetUnitPositionLoc(GetEnumUnit(), LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 549))
+    SetUnitVertexColor(GetEnumUnit(), 255, 255, 255, 0)
+    SetUnitInvulnerable(GetEnumUnit(), true)
+    GroupAddUnitSimple(GetEnumUnit(), LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 744928215))
+function trig_LancerKiyohimeRFunc003Func010Func015Func002A()
+function trig_LancerKiyohimeRFunc003Func010Func015Func003Func001Func015Func007A()
+    SaveLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 450813563, GetUnitLoc(GetEnumUnit()))
+    kiyoRgroup.remove(GetEnumUnit())
+    RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 450813563))
+    PauseUnit(GetEnumUnit(), false)
+    SetUnitInvulnerable(GetEnumUnit(), false)
+    SetUnitPathing(GetEnumUnit(), true)
+    SetUnitVertexColor(GetEnumUnit(), 255, 255, 255, 255)
+function trig_LancerKiyohimeRFunc003Func010Func015Func003Func001Func015Func010A()
+    RemoveUnit(GetEnumUnit())
+function trig_LancerKiyohimeRFunc003Func010Func015Func003Func001Func015T()
+    //group _ydl_group
+    //unit _ydl_unit
+    // CameraClearNoiseForPlayer(LoadPlayerHandle(YDLOC, GetHandleId(GetExpiredTimer()), 603))
+    RemoveUnit(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 449))
+    RemoveUnit(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 253))
+    SetUnitPathing(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), true)
+    let caster = LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594)
+    caster.startAbilityCooldown('A0PG')
+    SetUnitInvulnerable(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), false)
+    PauseUnit(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), false)
+    ForGroupBJ(LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 744928215), function trig_LancerKiyohimeRFunc003Func010Func015Func003Func001Func015Func007A)
+    GroupClear(LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 744928215))
+    DestroyGroup(LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 744928215))
+    ForGroupBJ(LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 993), function trig_LancerKiyohimeRFunc003Func010Func015Func003Func001Func015Func010A)
+    GroupClear(LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 993))
+    DestroyGroup(LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 993))
+    RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 549))
+    FlushChildHashtable(YDLOC, GetHandleId(GetExpiredTimer()))
+    DestroyTimer(GetExpiredTimer())
+function trig_LancerKiyohimeRFunc003Func010Func015Func003Func001Func019003003() returns boolean
+    return IsUnitType(GetFilterUnit(), UNIT_TYPE_STRUCTURE) == false and IsUnitEnemy(GetFilterUnit(), LoadPlayerHandle(YDLOC, GetHandleId(GetExpiredTimer()), 603)) == true and kiyoRgroup.has(GetFilterUnit()) == true and IsUnitDeadBJ(GetFilterUnit()) == false
+function trig_LancerKiyohimeRFunc003Func010Func015Func003Func001Func020A()
+    SetUnitInvulnerable(GetEnumUnit(), false)
+    DamageEvent.setNextDamageId(DAMAGE_ABILITY_KIYOHIME_R)
+    DamageEvent.setNextDamageFromCode()
+    UnitDamageTargetBJ(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), GetEnumUnit(), 3.40 * I2R(GetHeroAgi(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), true)), ATTACK_TYPE_MAGIC, DAMAGE_TYPE_DIVINE)
+    PauseUnit(GetEnumUnit(), true)
+    SetUnitInvulnerable(GetEnumUnit(), true)
+function trig_LancerKiyohimeRFunc003Func010Func015Func003T()
+    timer _ydl_timer
+    //group _ydl_group
+    //unit _ydl_unit
+    if LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 280) >= 3
+        soundPlay("war3mapImported\\alibabareff.mp3", GetUnitX(udg_Unitsound), GetUnitY(udg_Unitsound))
+        // CameraSetEQNoiseForPlayer(LoadPlayerHandle(YDLOC, GetHandleId(GetExpiredTimer()), 603), 20.00)
+        SetUnitAnimationByIndex(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), 12)
+        SaveUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 939, CreateUnitAtLoc(LoadPlayerHandle(YDLOC, GetHandleId(GetExpiredTimer()), 603), 'e0K4', LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 549), GetRandomDirectionDeg()))
+        UnitApplyTimedLife(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 939), 'BHwe', 3.00)
+        SaveUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 465, CreateUnitAtLoc(LoadPlayerHandle(YDLOC, GetHandleId(GetExpiredTimer()), 603), 'e01T', LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 549), GetRandomDirectionDeg()))
+        SetUnitTimeScalePercent(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 465), 80.00)
+        SetUnitScale(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 465), 2.00, 2.00, 2.00)
+        SetUnitVertexColorBJ(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 465), 100, 100, 100, 65.00)
+        UnitApplyTimedLife(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 465), 'BHwe', 3.00)
+        SaveUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 94460517, CreateUnitAtLoc(LoadPlayerHandle(YDLOC, GetHandleId(GetExpiredTimer()), 603), 'e03D', LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 549), GetRandomDirectionDeg()))
+        SetUnitTimeScalePercent(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 94460517), 80.00)
+        SetUnitScale(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 94460517), 2.55, 2.55, 2.55)
+        UnitApplyTimedLife(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 94460517), 'BHwe', 3.00)
+        _ydl_timer = CreateTimer()
+        SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 1164, LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 1164))
+        SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 594, LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594))
+        SaveLocationHandle(YDLOC, GetHandleId(_ydl_timer), 549, LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 549))
+        SavePlayerHandle(YDLOC, GetHandleId(_ydl_timer), 603, LoadPlayerHandle(YDLOC, GetHandleId(GetExpiredTimer()), 603))
+        SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 253, LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 253))
+        SaveGroupHandle(YDLOC, GetHandleId(_ydl_timer), 744928215, LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 744928215))
+        SaveGroupHandle(YDLOC, GetHandleId(_ydl_timer), 993, LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 993))
+        SaveLocationHandle(YDLOC, GetHandleId(_ydl_timer), 450813563, LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 450813563))
+        SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 449, LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 449))
+        TimerStart(_ydl_timer, 1.00, false, function trig_LancerKiyohimeRFunc003Func010Func015Func003Func001Func015T)
+        FlushChildHashtable(YDLOC, GetHandleId(GetExpiredTimer()))
+        DestroyTimer(GetExpiredTimer())
+    else
+        SaveInteger(YDLOC, GetHandleId(GetExpiredTimer()), 280, LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 280) + 1)
+        SaveGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 339273988, yDWEGetUnitsInRangeOfLocMatchingNull(700.00, LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 549), Condition(function trig_LancerKiyohimeRFunc003Func010Func015Func003Func001Func019003003)))
+        ForGroupBJ(LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 339273988), function trig_LancerKiyohimeRFunc003Func010Func015Func003Func001Func020A)
+        GroupClear(LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 339273988))
+        DestroyGroup(LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 339273988))
+function trig_LancerKiyohimeRFunc003Func010T()
+    //group _ydl_group
+    //unit _ydl_unit
+    timer _ydl_timer
+    PauseUnit(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), true)
+    SetUnitInvulnerable(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), true)
+    SaveInteger(YDLOC, GetHandleId(GetExpiredTimer()), 280, LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 280) + 1)
+    if LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 280) < 15
+        SaveGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 1153, yDWEGetUnitsInRectMatchingNull(GetPlayableMapRect(), null))
+        GroupClear(LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 1153))
+        DestroyGroup(LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 1153))
+    else
+        SaveGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 1153, yDWEGetUnitsInRectMatchingNull(GetPlayableMapRect(), null))
+        GroupClear(LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 1153))
+        DestroyGroup(LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 1153))
+    if LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 280) == 5
+        SetUnitPathing(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), false)
+        SetUnitPositionLoc(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 549))
+        SetUnitAnimationByIndex(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), 10)
+    if LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 280) == 15
+        EnableTrigger(gg_trg_LancerKiyohimeDT)
+        SetUnitAnimationByIndex(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), 11)
+        // CameraSetEQNoiseForPlayer(LoadPlayerHandle(YDLOC, GetHandleId(GetExpiredTimer()), 603), 12.00)
+        soundPlay("war3mapImported\\LancerKiyohimeEffect1.mp3", GetUnitX(udg_Unitsound), GetUnitY(udg_Unitsound))
+        SaveUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 306, CreateUnitAtLoc(LoadPlayerHandle(YDLOC, GetHandleId(GetExpiredTimer()), 603), 'e00U', LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 549), GetRandomDirectionDeg()))
+        SetUnitVertexColor(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 306), 255, 255, 255, 220)
+        SetUnitScale(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 306), 2.50, 2.50, 2.50)
+        SetUnitTimeScalePercent(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 306), 175.00)
+        UnitApplyTimedLife(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 306), 'BHwe', 0.30)
+        GroupAddUnit(LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 993), LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 306))
+        SaveUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 874408969, CreateUnitAtLoc(LoadPlayerHandle(YDLOC, GetHandleId(GetExpiredTimer()), 603), 'e00U', LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 549), GetRandomDirectionDeg()))
+        SetUnitVertexColor(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 874408969), 255, 255, 255, 200)
+        SetUnitScale(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 874408969), 3.50, 3.50, 3.50)
+        SetUnitTimeScalePercent(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 874408969), 175.00)
+        UnitApplyTimedLife(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 874408969), 'BHwe', 0.30)
+        GroupAddUnit(LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 993), LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 874408969))
+        SaveUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 580, CreateUnitAtLoc(LoadPlayerHandle(YDLOC, GetHandleId(GetExpiredTimer()), 603), 'e0CI', LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 549), GetRandomDirectionDeg()))
+        SetUnitScale(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 580), 1.55, 1.55, 1.55)
+        SetUnitTimeScalePercent(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 580), 75.00)
+        UnitApplyTimedLife(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 580), 'BHwe', 3.00)
+        SaveUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 22, CreateUnitAtLoc(LoadPlayerHandle(YDLOC, GetHandleId(GetExpiredTimer()), 603), 'e0CJ', LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 549), GetRandomDirectionDeg()))
+        SetUnitScale(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 22), 3.25, 3.25, 3.25)
+        SetUnitTimeScalePercent(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 22), 85.00)
+        UnitApplyTimedLife(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 22), 'BHwe', 3.00)
+        SaveGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 339273988, yDWEGetUnitsInRangeOfLocMatchingNull(700.00, LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 549), Condition(function trig_LancerKiyohimeRFunc003Func010Func006Func025003003)))
+        ForGroupBJ(LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 339273988), function trig_LancerKiyohimeRFunc003Func010Func006Func026A)
+        GroupClear(LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 339273988))
+        DestroyGroup(LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 339273988))
+    if LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 280) >= 46 and LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 280) <= 154
+        SaveGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 339273988, yDWEGetUnitsInRangeOfLocMatchingNull(700.00, LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 549), Condition(function trig_LancerKiyohimeRFunc003Func010Func007Func001003003)))
+        ForGroupBJ(LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 339273988), function trig_LancerKiyohimeRFunc003Func010Func007Func002A)
+        GroupClear(LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 339273988))
+        DestroyGroup(LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 339273988))
+    SetUnitPathing(GetEnumUnit(), false)
+    SetUnitPositionLoc(GetEnumUnit(), LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 549))
+    SetUnitVertexColor(GetEnumUnit(), 255, 255, 255, 0)
+    GroupAddUnitSimple(GetEnumUnit(), LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 744928215))
+    if LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 280) == 70
+        DisableTrigger(gg_trg_LancerKiyohimeDT)
+        // CameraClearNoiseForPlayer(LoadPlayerHandle(YDLOC, GetHandleId(GetExpiredTimer()), 603))
+        soundPlay("war3mapImported\\LancerKiyohime4-3.mp3", GetUnitX(udg_Unitsound), GetUnitY(udg_Unitsound))
+        SaveLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 683, PolarProjectionBJ(LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 549), 800.00, GetUnitFacing(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594))))
+        SaveUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 963, CreateUnitAtLoc(LoadPlayerHandle(YDLOC, GetHandleId(GetExpiredTimer()), 603), 'e09I', LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 683), GetRandomDirectionDeg()))
+        UnitApplyTimedLife(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 963), 'BHwe', 2.00)
+        SaveUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 253, CreateUnitAtLoc(LoadPlayerHandle(YDLOC, GetHandleId(GetExpiredTimer()), 603), 'e0UV', LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 683), GetUnitFacing(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594)) + 180.00))
+        SetUnitAnimationByIndex(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 253), 6)
+        RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 683))
+    if LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 280) == 120
+        SetUnitAnimationByIndex(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 253), 5)
+        soundPlay("war3mapImported\\LancerKiyohime4-2.mp3", GetUnitX(udg_Unitsound), GetUnitY(udg_Unitsound))
+    if LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 280) == 135
+        SaveLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 1108, GetUnitLoc(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594)))
+        SaveUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 449, CreateUnitAtLoc(LoadPlayerHandle(YDLOC, GetHandleId(GetExpiredTimer()), 603), 'e0UU', LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 1108), GetUnitFacing(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 253))))
+        SetUnitTimeScalePercent(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 449), 75.00)
+        RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 1108))
+    if LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 280) == 155
+        SaveInteger(YDLOC, GetHandleId(GetExpiredTimer()), 280, 0)
+        ForGroupBJ(LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 744928215), function trig_LancerKiyohimeRFunc003Func010Func015Func002A)
+        _ydl_timer = CreateTimer()
+        SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 1164, LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 1164))
+        SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 594, LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594))
+        SaveLocationHandle(YDLOC, GetHandleId(_ydl_timer), 549, LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 549))
+        SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 939, LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 939))
+        SavePlayerHandle(YDLOC, GetHandleId(_ydl_timer), 603, LoadPlayerHandle(YDLOC, GetHandleId(GetExpiredTimer()), 603))
+        SaveGroupHandle(YDLOC, GetHandleId(_ydl_timer), 339273988, LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 339273988))
+        SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 253, LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 253))
+        SaveGroupHandle(YDLOC, GetHandleId(_ydl_timer), 744928215, LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 744928215))
+        SaveGroupHandle(YDLOC, GetHandleId(_ydl_timer), 993, LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 993))
+        SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 465, LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 465))
+        SaveLocationHandle(YDLOC, GetHandleId(_ydl_timer), 450813563, LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 450813563))
+        SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 449, LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 449))
+        SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 94460517, LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 94460517))
+        SaveInteger(YDLOC, GetHandleId(_ydl_timer), 280, LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 280))
+        TimerStart(_ydl_timer, 0.02, true, function trig_LancerKiyohimeRFunc003Func010Func015Func003T)
+        FlushChildHashtable(YDLOC, GetHandleId(GetExpiredTimer()))
+        DestroyTimer(GetExpiredTimer())
+function trig_LancerKiyohimeRActions()
+    let loc = vec2(GetSpellTargetX(), GetSpellTargetY())
+    let caster = GetTriggerUnit()
+    let casterloc = caster.getPos()
+    
+    if gg_rct_BossArea.contains(loc) == false and gg_rct_BossArea.contains(casterloc) == true
+        caster.getOwner().print("Can't teleport out/in of arena", 2)
+        caster.issueImmediateOrder("stop")
+    else if gg_rct_BossArea.contains(loc) == true and gg_rct_BossArea.contains(casterloc) == false
+        caster.getOwner().print("Can't teleport out/in of arena", 2)
+        caster.issueImmediateOrder("stop")        
+    else if gg_rct_1v1v1Area.contains(loc) == false and gg_rct_1v1v1Area.contains(casterloc) == true
+        caster.getOwner().print("Can't teleport out/in of arena", 2)
+        caster.issueImmediateOrder("stop") 
+    else if gg_rct_1v1v1Area.contains(loc) == true and gg_rct_1v1v1Area.contains(casterloc) == false
+        caster.getOwner().print("Can't teleport out/in of arena", 2)
+        caster.issueImmediateOrder("stop")   
+    else if gg_rct_2v2v2Area.contains(loc) == false and gg_rct_2v2v2Area.contains(casterloc) == true
+        caster.getOwner().print("Can't teleport out/in of arena", 2)
+        caster.issueImmediateOrder("stop")     
+    else if gg_rct_2v2v2Area.contains(loc) == true and gg_rct_2v2v2Area.contains(casterloc) == false
+        caster.getOwner().print("Can't teleport out/in of arena", 2)
+        caster.issueImmediateOrder("stop") 
+    else if gg_rct_FreeForAllArea.contains(loc) == false and gg_rct_FreeForAllArea.contains(casterloc) == true
+        caster.getOwner().print("Can't teleport out/in of arena", 2)
+        caster.issueImmediateOrder("stop")               
+    else if gg_rct_FreeForAllArea.contains(loc) == true and gg_rct_FreeForAllArea.contains(casterloc) == false
+        caster.getOwner().print("Can't teleport out/in of arena", 2)
+        caster.issueImmediateOrder("stop")  
+    else if gg_rct_TeamBattleArea.contains(loc) == false and gg_rct_TeamBattleArea.contains(casterloc) == true
+        caster.getOwner().print("Can't teleport out/in of arena", 2)
+        caster.issueImmediateOrder("stop")         
+    else if gg_rct_TeamBattleArea.contains(loc) == true and gg_rct_TeamBattleArea.contains(casterloc) == false
+        caster.getOwner().print("Can't teleport out/in of arena", 2)
+        caster.issueImmediateOrder("stop")                              
+    else        
+        timer _ydl_timer
+        integer trigger_ID = LoadInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 865)
+        trigger_ID += 3
+        if kiyoRgroup == null
+            kiyoRgroup = CreateGroup()
+        SaveInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 865, trigger_ID)
+        SaveInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 1045, trigger_ID)
+        SaveUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594, GetSpellAbilityUnit())
+        SaveLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 549, GetSpellTargetLoc())
+        if IsTerrainPathableBJ(LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 549), PATHING_TYPE_WALKABILITY) == true and IsTerrainPathableBJ(LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 549), PATHING_TYPE_FLYABILITY) == true
+            IssueImmediateOrder(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594), "stop")
+            RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 549))
+        else
+            soundPlay("war3mapImported\\LancerKiyohime4-1.mp3", GetUnitX(udg_Unitsound), GetUnitY(udg_Unitsound))
+            SaveInteger(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 280, 0)
+            SaveGroupHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 993, CreateGroup())
+            SaveGroupHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 744928215, CreateGroup())
+            SavePlayerHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 603, GetOwningPlayer(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594)))
+            SetUnitInvulnerable(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594), true)
+            PauseUnit(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594), true)
+            SetUnitAnimationByIndex(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594), 9)
+            bj_forLoopAIndex = 1
+            bj_forLoopAIndexEnd = 4
+            while true
+                if bj_forLoopAIndex > bj_forLoopAIndexEnd
+                    break
+                SaveUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 624725945, CreateUnitAtLoc(LoadPlayerHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 603), 'e0FL', LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 549), GetRandomDirectionDeg()))
+                GroupAddUnit(LoadGroupHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 993), LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 624725945))
+                bj_forLoopAIndex++
+            _ydl_timer = CreateTimer()
+            SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 1164, LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1164))
+            SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 594, LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594))
+            SaveLocationHandle(YDLOC, GetHandleId(_ydl_timer), 549, LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 549))
+            SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 939, LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 939))
+            SavePlayerHandle(YDLOC, GetHandleId(_ydl_timer), 603, LoadPlayerHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 603))
+            SaveLocationHandle(YDLOC, GetHandleId(_ydl_timer), 1108, LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1108))
+            SaveLocationHandle(YDLOC, GetHandleId(_ydl_timer), 683, LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 683))
+            SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 306, LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 306))
+            SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 874408969, LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 874408969))
+            SaveGroupHandle(YDLOC, GetHandleId(_ydl_timer), 339273988, LoadGroupHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 339273988))
+            SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 253, LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 253))
+            SaveGroupHandle(YDLOC, GetHandleId(_ydl_timer), 1153, LoadGroupHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1153))
+            SaveGroupHandle(YDLOC, GetHandleId(_ydl_timer), 744928215, LoadGroupHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 744928215))
+            SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 580, LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 580))
+            SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 22, LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 22))
+            SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 963, LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 963))
+            SaveGroupHandle(YDLOC, GetHandleId(_ydl_timer), 993, LoadGroupHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 993))
+            SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 465, LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 465))
+            SaveLocationHandle(YDLOC, GetHandleId(_ydl_timer), 450813563, LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 450813563))
+            SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 449, LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 449))
+            SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 94460517, LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 94460517))
+            SaveInteger(YDLOC, GetHandleId(_ydl_timer), 280, LoadInteger(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 280))
+            TimerStart(_ydl_timer, 0.02, true, function trig_LancerKiyohimeRFunc003Func010T)
+        FlushChildHashtable(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID)
+function initTrig_LancerKiyohimeR_Orig()
+    gg_trg_LancerKiyohimeR = CreateTrigger()
+    TriggerRegisterAnyUnitEventBJ(gg_trg_LancerKiyohimeR, EVENT_PLAYER_UNIT_SPELL_EFFECT)
+    TriggerAddCondition(gg_trg_LancerKiyohimeR, Condition(function trig_LancerKiyohimeRConditions))
+    TriggerAddAction(gg_trg_LancerKiyohimeR, function trig_LancerKiyohimeRActions)

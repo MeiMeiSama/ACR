@@ -1,0 +1,52 @@
+package Moroha_Something
+import main
+init
+
+// Fuck I know what htis is, didnt inspect it yet
+
+function trig_NewSPFunc001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func014Func001Func016T()
+    SetUnitInvulnerable(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), false)
+    FlushChildHashtable(YDLOC, GetHandleId(GetExpiredTimer()))
+    DestroyTimer(GetExpiredTimer())
+
+function trig_NewSPFunc001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func014Func001Func017T()
+    DisplayTextToPlayer(GetOwningPlayer(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594)), 0, 0, "The F skill has been used up!")
+    EnableTrigger(LoadTriggerHandle(YDLOC, GetHandleId(GetExpiredTimer()), 812432275))
+    FlushChildHashtable(YDLOC, GetHandleId(GetExpiredTimer()))
+    DestroyTimer(GetExpiredTimer())
+
+public function trig_NewSPFunc001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func014Conditions()
+    timer ydl_timer
+    if GetEventDamage() >= 500.00 and GetUnitTypeId(GetTriggerUnit()) == 'H044'
+        DisableTrigger(GetTriggeringTrigger())
+        SaveUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()), 594, GetTriggerUnit())
+        SaveInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 42, GetUnitAbilityLevel(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()), 594), 'A10F'))
+        SaveInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 344, GetUnitAbilityLevel(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()), 594), 'A10G'))
+        SaveInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 646, GetUnitAbilityLevel(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()), 594), 'A10H'))
+        SetUnitInvulnerable(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()), 594), true)
+        UnitRemoveAbility(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()), 594), 'A10F')
+        UnitAddAbility(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()), 594), 'A10F')
+        SetUnitAbilityLevel(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()), 594), 'A10F', LoadInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 42))
+        UnitRemoveAbility(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()), 594), 'A10G')
+        UnitAddAbility(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()), 594), 'A10G')
+        SetUnitAbilityLevel(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()), 594), 'A10G', LoadInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 344))
+        UnitRemoveAbility(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()), 594), 'A10H')
+        UnitAddAbility(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()), 594), 'A10H')
+        SetUnitAbilityLevel(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()), 594), 'A10H', LoadInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 646))
+        SaveLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()), 1108, GetUnitLoc(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()), 594)))
+        SaveLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()), 683, PolarProjectionBJ(LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()), 1108), 400.00, yDWEAngleBetweenUnits(GetEventDamageSource(), GetTriggerUnit())))
+        if IsTerrainPathableBJ(LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()), 683), PATHING_TYPE_WALKABILITY) == true and IsTerrainPathableBJ(LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()), 683), PATHING_TYPE_FLYABILITY) == true
+            DoNothing()
+        else
+            SetUnitPositionLoc(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()), 594), LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()), 683))
+        RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()), 1108))
+        RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()), 683))
+        SaveTriggerHandle(YDLOC, GetHandleId(GetTriggeringTrigger()), 812432275, GetTriggeringTrigger())
+        soundPlay("war3mapImported\\MwSE.mp3", GetUnitX(udg_soundplayunit[7]), GetUnitY(udg_soundplayunit[7]))
+        ydl_timer = CreateTimer()
+        SaveUnitHandle(YDLOC, GetHandleId(ydl_timer), 594, LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()), 594))
+        TimerStart(ydl_timer, 0.50, false, function trig_NewSPFunc001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func014Func001Func016T)
+        ydl_timer = CreateTimer()
+        SaveUnitHandle(YDLOC, GetHandleId(ydl_timer), 594, LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()), 594))
+        SaveTriggerHandle(YDLOC, GetHandleId(ydl_timer), 812432275, LoadTriggerHandle(YDLOC, GetHandleId(GetTriggeringTrigger()), 812432275))
+        TimerStart(ydl_timer, 75.00, false, function trig_NewSPFunc001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func001Func014Func001Func017T)

@@ -1,0 +1,42 @@
+package Akame_F
+
+import ClosureEvents
+import DamageEvent
+import ObjectDefinitions
+import SoundUtils
+import ClosureTimers
+import ACR_Library
+
+constant akameFSound = new SoundDefinition("war3mapImported\\Akameslash.mp3")
+
+init
+
+
+
+public function akameF ()
+
+    EventListener.onCast('A0IA') (unit caster) ->
+        caster.addAbility(EMPTY_DUMMY_PASSIVE_ABILITY)
+        var count = 0
+        doPeriodicallyCounted(0.05, 101) (CallbackCounted cb) ->
+            count++
+            if not caster.hasAbility('B033')
+                caster.removeAbility(EMPTY_DUMMY_PASSIVE_ABILITY)
+                destroy cb
+            if count >= 100
+                caster.removeAbility('B033')
+                caster.removeAbility(EMPTY_DUMMY_PASSIVE_ABILITY)
+                destroy cb            
+
+    EventListener.add(EVENT_PLAYER_UNIT_DAMAGED) ->
+        if DamageEvent.getSource().getTypeId() == AKAME_MURASAME and BlzGetEventAttackType() == ATTACK_TYPE_HERO and DamageEvent.getSource().hasAbility(EMPTY_DUMMY_PASSIVE_ABILITY)
+            let caster = DamageEvent.getSource()
+            let victim = DamageEvent.getTarget()
+            let dmg = (250.00 + (7 * caster.getAgi(true)))     
+            caster.damageTarget(victim, dmg, ATTACK_TYPE_MAGIC)
+            akameFSound.play()
+            acrStun(caster, victim, 0.7)
+            caster.removeAbility(EMPTY_DUMMY_PASSIVE_ABILITY)
+
+
+                    

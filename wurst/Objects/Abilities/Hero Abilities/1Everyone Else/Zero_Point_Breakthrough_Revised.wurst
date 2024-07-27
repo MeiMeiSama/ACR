@@ -1,0 +1,94 @@
+package Zero_Point_Breakthrough_Revised
+
+import main
+import ACR_TagSystem
+
+init
+    initTrig_Zero_Point_Breakthrough_Revised()
+
+function trig_Zero_Point_Breakthrough_RevisedConditions() returns boolean
+    return GetSpellAbilityId() == 'A109' or GetSpellAbilityId() == 'A11Z'
+function trig_Zero_Point_Breakthrough_RevisedFunc012Conditions()
+    SaveUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()), 867640480, GetTriggerUnit())
+    SaveReal(YDLOC, GetHandleId(GetTriggeringTrigger()), 248, GetEventDamage())
+    if EVENT_GAME_TIMER_EXPIRED == GetTriggerEventId() == true
+        DestroyTimer(LoadTimerHandle(YDLOC, GetHandleId(GetTriggeringTrigger()), 241459981))
+        FlushChildHashtable(YDLOC, GetHandleId(GetTriggeringTrigger()))
+        DestroyTrigger(GetTriggeringTrigger())
+function trig_Zero_Point_Breakthrough_RevisedFunc013T()
+    if LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 280) >= LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 678) or IsUnitDeadBJ(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594)) == true
+        if LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 634) == 'A109'
+            StopSoundBJ(gg_snd_Zero_Point_breakthough_revise, false)
+        UnitRemoveBuffBJ('B01T', LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594))
+        RemoveUnit(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 449))
+        FlushChildHashtable(YDLOC, GetHandleId(GetExpiredTimer()))
+        DestroyTimer(GetExpiredTimer())
+    else
+        IssueImmediateOrder(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), "stop")
+        let caster = LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594)
+        if caster.isPaused() == false and caster.hasTagPauseEX() == false
+            SaveInteger(YDLOC, GetHandleId(GetExpiredTimer()), 280, LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 280) + 1)
+        SaveInteger(YDLOC, GetHandleId(GetExpiredTimer()), 858, LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 858) + 1)
+        SetUnitPosition(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 449), GetUnitX(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594)), GetUnitY(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594)))
+        if LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 858) == 30
+            SaveInteger(YDLOC, GetHandleId(GetExpiredTimer()), 858, 0)
+            SaveLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 1108, GetUnitLoc(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 761)))
+            SaveUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 117, CreateUnitAtLoc(GetOwningPlayer(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594)), 'e0CI', LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 1108), GetRandomDirectionDeg()))
+            UnitApplyTimedLife(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 117), 'BHwe', 1.50)
+            SaveUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 903, CreateUnitAtLoc(GetOwningPlayer(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594)), 'e0KY', LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 1108), GetRandomDirectionDeg()))
+            SetUnitScalePercent(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 903), 175.00, 175.00, 175.00)
+            SetUnitFlyHeight(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 903), 0.00, 0.00)
+            UnitApplyTimedLife(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 903), 'BHwe', 1.50)
+            RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 1108))
+function trig_Zero_Point_Breakthrough_RevisedActions()
+    trigger ydl_trigger
+    timer _ydl_timer
+    integer trigger_ID = LoadInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 865)
+    trigger_ID += 3
+    SaveInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 865, trigger_ID)
+    SaveInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 1045, trigger_ID)
+    SaveUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594, GetSpellAbilityUnit())
+    if GetSpellAbilityId() == 'A109'
+        SetUnitAnimationByIndex(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594), 12)
+        SaveReal(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 609314311, 6.00)
+        PlaySoundBJ(gg_snd_Zero_Point_breakthough_revise)
+    else
+        soundPlay("war3mapImported\\NewTsunaG.mp3", GetUnitX(udg_Unitsound), GetUnitY(udg_Unitsound))
+        SetUnitAnimationByIndex(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594), 6)
+        SaveReal(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 609314311, 2.00)
+    SaveInteger(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 280, 0)
+    SaveInteger(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 858, 0)
+    if GetSpellAbilityId() == 'A109'
+        SaveInteger(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 678, 300)
+    else
+        SaveInteger(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 678, 100)
+    SaveLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1108, GetUnitLoc(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594)))
+    SaveUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 449, CreateUnitAtLoc(GetOwningPlayer(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594)), 'e05T', LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1108), GetRandomDirectionDeg()))
+    RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1108))
+    SaveTimerHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 241459981, CreateTimer())
+    StartTimerBJ(LoadTimerHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 241459981), false, LoadReal(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 609314311))
+    ydl_trigger = CreateTrigger()
+    SaveUnitHandle(YDLOC, GetHandleId(ydl_trigger), 867640480, LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 867640480))
+    SaveReal(YDLOC, GetHandleId(ydl_trigger), 248, LoadReal(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 248))
+    SaveTimerHandle(YDLOC, GetHandleId(ydl_trigger), 241459981, LoadTimerHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 241459981))
+    yDWESyStemAnyUnitDamagedRegistTrigger(ydl_trigger)
+    TriggerRegisterTimerExpireEvent(ydl_trigger, LoadTimerHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 241459981))
+    TriggerAddCondition(ydl_trigger, Condition(function trig_Zero_Point_Breakthrough_RevisedFunc012Conditions))
+    _ydl_timer = CreateTimer()
+    SaveInteger(YDLOC, GetHandleId(_ydl_timer), 634, GetSpellAbilityId())
+    SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 761, GetSpellAbilityUnit())
+    SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 594, LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594))
+    SaveInteger(YDLOC, GetHandleId(_ydl_timer), 678, LoadInteger(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 678))
+    SaveLocationHandle(YDLOC, GetHandleId(_ydl_timer), 1108, LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1108))
+    SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 117, LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 117))
+    SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 903, LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 903))
+    SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 449, LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 449))
+    SaveInteger(YDLOC, GetHandleId(_ydl_timer), 280, LoadInteger(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 280))
+    SaveInteger(YDLOC, GetHandleId(_ydl_timer), 858, LoadInteger(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 858))
+    TimerStart(_ydl_timer, 0.02, true, function trig_Zero_Point_Breakthrough_RevisedFunc013T)
+    FlushChildHashtable(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID)
+function initTrig_Zero_Point_Breakthrough_Revised()
+    gg_trg_Zero_Point_Breakthrough_Revised = CreateTrigger()
+    TriggerRegisterAnyUnitEventBJ(gg_trg_Zero_Point_Breakthrough_Revised, EVENT_PLAYER_UNIT_SPELL_EFFECT)
+    TriggerAddCondition(gg_trg_Zero_Point_Breakthrough_Revised, Condition(function trig_Zero_Point_Breakthrough_RevisedConditions))
+    TriggerAddAction(gg_trg_Zero_Point_Breakthrough_Revised, function trig_Zero_Point_Breakthrough_RevisedActions)

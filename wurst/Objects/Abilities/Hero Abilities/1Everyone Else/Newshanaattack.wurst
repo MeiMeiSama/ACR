@@ -1,0 +1,26 @@
+package Newshanaattack
+
+
+init
+    initTrig_Newshanaattack()
+
+function trig_NewshanaattackConditions() returns boolean
+    return GetUnitTypeId(GetAttacker()) == 'H020' and UnitHasBuffBJ(GetAttacker(), 'B03F') == true and IsUnitAlly(GetAttackedUnitBJ(), GetOwningPlayer(GetAttacker())) == false
+function trig_NewshanaattackActions()
+    integer trigger_ID = LoadInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 865)
+    trigger_ID += 3
+    SaveInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 865, trigger_ID)
+    SaveInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 1045, trigger_ID)
+    SaveUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594, GetAttacker())
+    SaveUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 549, GetAttackedUnitBJ())
+    SaveLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1108, GetUnitLoc(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 549)))
+    SaveEffectHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 223, AddSpecialEffectLoc("war3mapImported\\firenova.mdl", LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1108)))
+    DestroyEffect(LoadEffectHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 223))
+    RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1108))
+    FlushChildHashtable(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID)
+function initTrig_Newshanaattack()
+    gg_trg_Newshanaattack = CreateTrigger()
+    DisableTrigger(gg_trg_Newshanaattack)
+    TriggerRegisterAnyUnitEventBJ(gg_trg_Newshanaattack, EVENT_PLAYER_UNIT_ATTACKED)
+    TriggerAddCondition(gg_trg_Newshanaattack, Condition(function trig_NewshanaattackConditions))
+    TriggerAddAction(gg_trg_Newshanaattack, function trig_NewshanaattackActions)

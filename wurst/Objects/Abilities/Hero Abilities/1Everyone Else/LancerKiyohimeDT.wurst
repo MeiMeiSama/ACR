@@ -1,0 +1,16 @@
+package LancerKiyohimeDT
+
+
+init
+    initTrig_LancerKiyohimeDT()
+
+function trig_LancerKiyohimeDTConditions() returns boolean
+    return GetUnitTypeId(GetDyingUnit()) == 'e00U'
+function trig_LancerKiyohimeDTActions()
+    SetUnitTimeScalePercent(GetDyingUnit(), 0.00)
+function initTrig_LancerKiyohimeDT()
+    gg_trg_LancerKiyohimeDT = CreateTrigger()
+    DisableTrigger(gg_trg_LancerKiyohimeDT)
+    TriggerRegisterAnyUnitEventBJ(gg_trg_LancerKiyohimeDT, EVENT_PLAYER_UNIT_DEATH)
+    TriggerAddCondition(gg_trg_LancerKiyohimeDT, Condition(function trig_LancerKiyohimeDTConditions))
+    TriggerAddAction(gg_trg_LancerKiyohimeDT, function trig_LancerKiyohimeDTActions)

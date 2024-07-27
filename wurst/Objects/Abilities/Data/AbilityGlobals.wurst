@@ -1,0 +1,201 @@
+package AbilityGlobals
+
+public constant string LB = "|n"
+public constant string CR = "|r"
+public constant string RED = "|cffff3f3f"
+public constant string ORANGE = "|cffff9b49"
+public constant string BLUE = "|cff1e90ff"
+public constant string PINK = "|cffff8080"
+public constant string CYAN = "|cff78dfff"
+public constant string GREEN = "|cff33ff00"
+public constant string PURPLE = "|cffb97cff"
+public constant string GOLD = "|cffffd700"
+
+public constant string LEVEL_TOOLTIP = CR+" - ["+GOLD+"Level "
+
+public int array SPELL_Q
+public int array SPELL_W
+public int array SPELL_E
+public int array SPELL_R
+public int array SPELL_T
+public int array SPELL_F
+public int array SPELL_G
+
+public int array SPELL_Q2
+public int array SPELL_W2
+public int array SPELL_E2
+public int array SPELL_R2
+public int array SPELL_T2
+public int array SPELL_F2
+public int array SPELL_G2
+
+public int array SPELL_MODO_Q
+public int array SPELL_MODO_W
+public int array SPELL_MODO_E
+public int array SPELL_MODO_R
+public int array SPELL_MODO_T
+public int array SPELL_MODO_F
+public int array SPELL_MODO_G
+
+public int array SPELL_MODO_Q2
+public int array SPELL_MODO_W2
+public int array SPELL_MODO_E2
+public int array SPELL_MODO_R2
+public int array SPELL_MODO_T2
+public int array SPELL_MODO_F2
+public int array SPELL_MODO_G2
+
+
+public int array SPELL_R3
+public int array SPELL_F3
+
+public constant DAMAGE_ABILITY_Q = 100
+public constant DAMAGE_ABILITY_Q2 = 150
+public constant DAMAGE_ABILITY_W = 200
+public constant DAMAGE_ABILITY_W2 = 250
+public constant DAMAGE_ABILITY_E = 300
+public constant DAMAGE_ABILITY_E2 = 350
+public constant DAMAGE_ABILITY_R = 400
+public constant DAMAGE_ABILITY_R2 = 450
+public constant DAMAGE_ABILITY_R3 = 475
+public constant DAMAGE_ABILITY_T = 500
+public constant DAMAGE_ABILITY_F = 600
+public constant DAMAGE_ABILITY_F2 = 650
+public constant DAMAGE_ABILITY_G = 700
+public constant DAMAGE_ABILITY_MODE_Q = 800
+public constant DAMAGE_ABILITY_MODE_W = 900
+public constant DAMAGE_ABILITY_MODE_E = 1000
+public constant DAMAGE_ABILITY_MODE_R = 1100
+public constant DAMAGE_ABILITY_MODE_T = 1200
+
+// Special cases
+// public constant DAMAGE_ABILITY_TOHKA_R = 10000
+
+public constant DAMAGE_ABILITY_YAMI_F = 10100
+public constant DAMAGE_ABILITY_YAMAMOTO_R = 10200
+public constant DAMAGE_ABILITY_TSUNA_R = 10300
+public constant DAMAGE_ABILITY_TSUNA_F = 10400
+public constant DAMAGE_ABILITY_XANXUS_R = 10500
+public constant DAMAGE_ABILITY_XANXUS_T = 10600
+public constant DAMAGE_ABILITY_WENDY_R = 10700
+public constant DAMAGE_ABILITY_VERGIL_R = 10800
+public constant DAMAGE_ABILITY_VERGIL_F = 10900
+public constant DAMAGE_ABILITY_VERGIL_T = 11000
+public constant DAMAGE_ABILITY_ULQ_T = 11100
+public constant DAMAGE_ABILITY_SISTINA_Q = 11200
+public constant DAMAGE_ABILITY_SISTINA_R = 11300
+public constant DAMAGE_ABILITY_TATSUYA_R1 = 11400
+public constant DAMAGE_ABILITY_TATSUYA_R2 = 11500
+public constant DAMAGE_ABILITY_TATSUYA_R3 = 11600
+public constant DAMAGE_ABILITY_TATSUYA_F = 11700
+public constant DAMAGE_ABILITY_MIYUKI_F = 11800
+public constant DAMAGE_ABILITY_KIARA_R = 11900
+public constant DAMAGE_ABILITY_KIARA_Q_ITEM = 12000
+public constant DAMAGE_ABILITY_KIARA_T_ITEM = 12100
+public constant DAMAGE_ABILITY_SEMIRAMIS_R = 12200
+public constant DAMAGE_ABILITY_SAKUYA_R = 12300
+public constant DAMAGE_ABILITY_MHX_Q = 12400
+public constant DAMAGE_ABILITY_MHX_Q2 = 12450
+public constant DAMAGE_ABILITY_MHX_W = 12500
+public constant DAMAGE_ABILITY_MHX_R = 12600
+public constant DAMAGE_ABILITY_MHX_T = 12700
+public constant DAMAGE_ABILITY_SABER_ALTER_R1 = 12800
+public constant DAMAGE_ABILITY_SABER_ALTER_R2 = 12900
+public constant DAMAGE_ABILITY_ROGUE_T = 13000
+public constant DAMAGE_ABILITY_SHU_R = 13100
+public constant DAMAGE_ABILITY_OKITA_NEW_R = 13200
+public constant DAMAGE_ABILITY_SHANA_NEW_R = 13300
+public constant DAMAGE_ABILITY_ICHIGO_NEW_Q2 = 13400
+public constant DAMAGE_ABILITY_ICHIGO_NEW_W2 = 13500
+public constant DAMAGE_ABILITY_NANAYA_R = 13600
+public constant DAMAGE_ABILITY_MUSASHI_T = 13700
+public constant DAMAGE_ABILITY_MISAKA_NEW_G = 13800
+public constant DAMAGE_ABILITY_MADOKA_T = 13900
+public constant DAMAGE_ABILITY_MADOKA_R = 14000
+public constant DAMAGE_ABILITY_LAMBO_R = 14100
+public constant DAMAGE_ABILITY_LAMBO_T = 14200
+public constant DAMAGE_ABILITY_WAVER_T = 14300
+public constant DAMAGE_ABILITY_WAVER_R = 14400
+public constant DAMAGE_ABILITY_MISAKA_OLD_F = 14500
+public constant DAMAGE_ABILITY_KIZARU_T = 14600
+public constant DAMAGE_ABILITY_KIYOHIME_NEW_T = 14700
+public constant DAMAGE_ABILITY_JELLAL_F = 14800
+public constant DAMAGE_ABILITY_JEANNE_ALTER_F = 14900
+public constant DAMAGE_ABILITY_INUYASHA_R = 15000
+public constant DAMAGE_ABILITY_INUYASHA_F = 15100
+public constant DAMAGE_ABILITY_ILLYA_W = 15200
+public constant DAMAGE_ABILITY_ILLYA_F = 15300
+public constant DAMAGE_ABILITY_SABER_LILY_R = 15400
+public constant DAMAGE_ABILITY_HIBARI_R = 15500
+public constant DAMAGE_ABILITY_GRAY_T = 15600
+public constant DAMAGE_ABILITY_GILGAMESH_Q = 15700
+public constant DAMAGE_ABILITY_GILGAMESH_F = 15800
+public constant DAMAGE_ABILITY_FUTURE_ROGUE_MODE_R = 15900
+public constant DAMAGE_ABILITY_SHIRO_T = 16000
+public constant DAMAGE_ABILITY_EMILIA_R = 16100
+public constant DAMAGE_ABILITY_ELIZABETH_T = 16200
+public constant DAMAGE_ABILITY_EDO_MADARA_R = 16300
+public constant DAMAGE_ABILITY_EDO_MADARA_R_Q = 16350
+public constant DAMAGE_ABILITY_EDMOND_T = 16400
+public constant DAMAGE_ABILITY_DIO_F = 16500
+public constant DAMAGE_ABILITY_DANTE_T = 16600
+public constant DAMAGE_ABILITY_BYAKURAN_T = 16700
+public constant DAMAGE_ABILITY_BYAKURAN_Q = 16800
+public constant DAMAGE_ABILITY_ARCHER_T = 16900
+public constant DAMAGE_ABILITY_AIZEN_MODE_R = 17000
+public constant DAMAGE_ABILITY_AIZEN_MODE_E = 17100
+public constant DAMAGE_ABILITY_ACCEL_T = 17200
+public constant DAMAGE_ABILITY_ACCEL_F = 17300
+public constant DAMAGE_ABILITY_ABIGAIL_R = 17400
+public constant DAMAGE_ABILITY_LAW_Q2 = 17500
+public constant DAMAGE_ABILITY_LAW_W2 = 17600
+public constant DAMAGE_ABILITY_LAW_R2 = 17700
+public constant DAMAGE_ABILITY_LAW_R2_PROC = 17800
+public constant DAMAGE_ABILITY_DANTE_R = 17900
+public constant DAMAGE_ABILITY_YAMI_R = 18000
+public constant DAMAGE_ABILITY_SASUKE_MODE_Q = 18100
+public constant DAMAGE_ABILITY_ENMA_R = 18200
+public constant DAMAGE_ABILITY_NOBUNAGA_F = 18300
+public constant DAMAGE_ABILITY_NANOHA_T = 18400
+public constant DAMAGE_ABILITY_SHELIA_G = 18500
+public constant DAMAGE_ABILITY_STING_E = 18600
+public constant DAMAGE_ABILITY_MISAKA_E = 18700
+public constant DAMAGE_ABILITY_SABER_ALTER_T = 18800
+public constant DAMAGE_ABILITY_ICHIGO_E = 18900
+public constant DAMAGE_ABILITY_JELLAL_W = 19000
+public constant DAMAGE_ABILITY_INUYASHA_T = 19100
+public constant DAMAGE_ABILITY_EDO_MINATO_T = 19200
+public constant DAMAGE_ABILITY_SAKUYA_T = 19300
+public constant DAMAGE_ABILITY_KUROHIME_R = 19400
+public constant DAMAGE_ABILITY_DELAYED_W = 19500
+public constant DAMAGE_ABILITY_DELAYED_W2 = 19600
+public constant DAMAGE_ABILITY_DELAYED_E = 19700
+public constant DAMAGE_ABILITY_DELAYED_R = 19800
+public constant DAMAGE_ABILITY_DELAYED_T = 19900
+public constant DAMAGE_ABILITY_DELAYED_F = 20000
+public constant DAMAGE_ABILITY_DELAYED_MODE_Q = 20100
+public constant DAMAGE_ABILITY_DELAYED_MODE_W = 20200
+public constant DAMAGE_ABILITY_DELAYED_MODE_E = 20300
+public constant DAMAGE_ABILITY_DELAYED_MODE_R = 20400
+public constant DAMAGE_ABILITY_JEANNE_LILY_T = 20500
+public constant DAMAGE_ABILITY_KIYOHIME_R = 20600
+public constant DAMAGE_ABILITY_EMILIA_F = 20700
+public constant DAMAGE_ABILITY_AQUA_F = 20800
+public constant DAMAGE_ABILITY_AQUA_F2 = 20900
+public constant DAMAGE_ABILITY_ENMA_F = 21000
+public constant DAMAGE_ABILITY_SASUKE_KIRIN = 21100
+public constant DAMAGE_ABILITY_SASUKE_AMATERASU = 21200
+public constant DAMAGE_ABILITY_ICHIGO_MODE_E = 21300
+public constant DAMAGE_ABILITY_LUFFY_F = 21400
+public constant DAMAGE_ABILITY_BYAKURAN_F = 21500
+public constant DAMAGE_ABILITY_MELIODAS_F = 21600
+public constant DAMAGE_ABILITY_TSUNA_NATSU = 21700
+
+
+
+public constant DAMAGE_ABILITY_THUNDER_RING = 50000
+public constant DAMAGE_ABILITY_THUNDER_ARCO = 50100
+public constant DAMAGE_ABILITY_STORM_RING = 50200
+public constant DAMAGE_ABILITY_STORM_ARCO = 50300
+public constant DAMAGE_ABILITY_RAIN_RING = 50400
+public constant DAMAGE_ABILITY_RAIN_ARCO = 50500

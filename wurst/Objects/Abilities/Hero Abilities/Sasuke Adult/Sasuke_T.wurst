@@ -1,0 +1,130 @@
+package Sasuke_T
+
+import ClosureTimers
+import ObjectDefinitions
+import MusicPlaylist
+// import AbilityGlobals
+// import ACR_TagSystem
+import ACR_Library
+// import Translate_F
+
+boolean sasukeTactive = false
+CallbackPeriodic sasukeCB
+
+init
+    sasukeModoT()
+
+function sasukeModoT()
+    CreateTrigger()
+    ..registerAnyUnitEvent(EVENT_PLAYER_UNIT_SPELL_EFFECT)
+    ..addAction() ->
+        if ((GetSpellAbilityId() == SASUKE_ADULT_T)) 
+            let caster = GetTriggerUnit()
+            let pid = caster.getOwner().getId()
+            caster.addAbility('A02Q')
+            if caster.hasAbility('A0MR')
+                caster.removeAbility('A0MR')
+                SetPlayerAbilityAvailable(caster.getOwner(), 'A0MP', true)
+                caster.startAbilityCooldown('A0MP')
+            stopBgm()
+            StopMusic(false)
+            PlaySoundBJ(gg_snd_Lastsasuke5)                
+            acrTransformation(caster, 40, SASUKE_ADULT, SASUKE_ADULT_MODO, 850, 4.0)
+            doPeriodically(0.01) (CallbackPeriodic cb) ->
+                if transformationActive[pid] == false
+                    caster.removeAbility('A02Q')
+                    if gg_snd_Lastsasuke5.isPlaying()
+                        gg_snd_Lastsasuke5.stop(false, false) 
+                    destroy cb
+                
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        //     printTimedToPlayer("unit name is: "+caster.getName(), 2, caster.getOwner())
+        //     sasukeCB = doPeriodically(2) (CallbackPeriodic cb) ->                
+        //         if caster.hasAbility(SPELL_F[pid]) and SPELL_F[pid].hasTagHidden()
+        //             printTimedToPlayer(caster.getName()+" has F and its hidden", 2, caster.getOwner())
+        //         if caster.hasAbility(SPELL_F[pid]) and SPELL_F[pid].hasTagHidden() == false
+        //             printTimedToPlayer(caster.getName()+" has F and its NOT hidden", 2, caster.getOwner()) 
+        //         if caster.hasAbility(SPELL_F[pid]) == false and SPELL_F[pid].hasTagHidden() == false
+        //             printTimedToPlayer(caster.getName()+" DOES NOT HAVE F and its NOT hidden", 2, caster.getOwner())
+        //         if caster.hasAbility(SPELL_F[pid]) == false and SPELL_F[pid].hasTagHidden()
+        //             printTimedToPlayer(caster.getName()+" DOES NOT HAVE F and its hidden", 2, caster.getOwner())                                                
+        //     stopBgm()
+        //     StopMusic(false)
+        //     PlaySoundBJ(gg_snd_Lastsasuke5)
+        //     if caster.hasAbility('A0MR')
+        //         caster.removeAbility('A0MR')
+        //         SetPlayerAbilityAvailable(caster.getOwner(), 'A0MP', true)
+        //         caster.startAbilityCooldown('A0MP')
+        //     caster.hideAbility(SPELL_Q[pid], true)
+        //     SPELL_Q[pid].addTagHidden()
+        //     caster.hideAbility(SPELL_W[pid], true)
+        //     SPELL_W[pid].addTagHidden()
+        //     caster.hideAbility(SPELL_E[pid], true)
+        //     SPELL_E[pid].addTagHidden()
+        //     caster.hideAbility(SPELL_R[pid], true)
+        //     SPELL_R[pid].addTagHidden() 
+        //     caster.hideAbility(SPELL_T[pid], true)
+        //     SPELL_T[pid].addTagHidden()
+                        
+        //     doPeriodically(0.003) (CallbackPeriodic cb) ->
+        //         if sasukeTactive == true
+        //             if (((IsUnitDeadBJ(caster) == true) or (UnitHasBuffBJ(caster,'B03X') == false)))
+        //                 sasukeTactive = false 
+        //                 if gg_snd_Lastsasuke5.isPlaying()
+        //                     gg_snd_Lastsasuke5.stop(false, false)
+        //                 if caster.hasTagPauseEX() == false
+        //                     caster.issueImmediateOrder("stop")
+        //                     caster.pauseEx()
+        //                     caster.addTagPauseEX()     
+        //                 doAfter(0.003) -> 
+        //                     if SPELL_Q[pid].hasTagHidden()                        
+        //                         caster.hideAbility(SPELL_Q[pid], false)
+        //                         SPELL_Q[pid].removeTagHidden()
+        //                     if SPELL_W[pid].hasTagHidden()                        
+        //                         caster.hideAbility(SPELL_W[pid], false)
+        //                         SPELL_W[pid].removeTagHidden()
+        //                     if SPELL_E[pid].hasTagHidden()                        
+        //                         caster.hideAbility(SPELL_E[pid], false)
+        //                         SPELL_E[pid].removeTagHidden()
+        //                     if SPELL_R[pid].hasTagHidden()                        
+        //                         caster.hideAbility(SPELL_R[pid], false)
+        //                         SPELL_R[pid].removeTagHidden() 
+        //                     if SPELL_T[pid].hasTagHidden() 
+        //                         caster.hideAbility(SPELL_T[pid], false)
+        //                         SPELL_T[pid].removeTagHidden()
+        //                         caster.startAbilityCooldown(SPELL_T[pid])
+        //                         acrCooldownT[pid] = 60.00
+        //                     if caster.hasTagPauseEX()    
+        //                         caster.unpauseEx()
+        //                         caster.removeTagPauseEX()
+        //                     doAfter(30) ->
+        //                         destroy sasukeCB 
+                                                                                 
+        //                 destroy cb                    

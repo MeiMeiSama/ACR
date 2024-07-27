@@ -1,0 +1,164 @@
+package Misogi_Thai_Q
+import main
+import ObjectDefinitions
+import ChannelAbilityPreset
+import UnitIds
+import DamageEvent
+import AbilityGlobals
+
+unit misogiQCaster
+location misogiQLoc
+integer misogiQInt
+
+@compiletime function createAbility()
+    new ChannelAbilityPreset(MISOGI_THAI_Q, 5, true)
+        ..presetTargetTypes(Targettype.POINT)
+        ..setAnimationNames("11111111")
+        ..setButtonPositionNormalX(0)
+        ..setButtonPositionNormalY(2)
+        ..setButtonPositionResearchX(0)
+        ..setButtonPositionResearchY(0)
+        ..setIconNormal("ReplaceableTextures\\CommandButtons\\BTNStaffOfNegation.blp")
+        ..setIconResearch("ReplaceableTextures\\CommandButtons\\BTNStaffOfNegation.blp")
+        ..setMissileSpeed(99999)
+        ..setHeroAbility(true)
+        ..setHotkeyNormal("Q")
+        ..setHotkeyLearn("Q")
+        ..setLevels(5)
+        ..setLevelSkipRequirement(2)
+        ..presetArtDuration(lvl -> 0)
+        ..presetBaseOrderID(lvl -> "auravampiric")
+        ..presetDisableOtherAbilities(lvl -> false)
+        ..presetFollowThroughTime(lvl -> 0)
+        ..presetCastRange(lvl -> 2000)
+        ..presetCooldown(lvl -> 50)
+        ..presetManaCost(lvl -> 70)
+        ..presetTargetsAllowed(lvl -> "enemy,ground,air,neutral")
+        ..presetTooltipNormal(lvl -> "Misog Q Title|r")
+        ..presetTooltipNormalExtended(lvl -> "Misogi Q Desc|r")
+        ..setTooltipLearn("Learn Q|r")
+        ..setTooltipLearnExtended("Learning Q|r")
+    new UnitDefinition(MISOGI_THAI_Q_DUMMY_1, UnitIds.wisp)
+        ..setNormalAbilities(commaList('Avul', 'Aloc', 'Amrf'))
+        ..setAnimationCastBackswing(0)
+        ..setDeathTimeseconds(0.1)
+        ..setScalingValue(4)
+        ..setUnitClassification("_")
+        ..setArtSpecial("_")
+        ..setHasWaterShadow(false)
+        ..setMaximumPitchAngledegrees(0)
+        ..setMaximumRollAngledegrees(0)
+        ..setModelFile("war3mapImported\\MisogiQ2MDXReal.mdx")
+        ..setArtSpecial("_")
+        ..setArmorType(ArmorType.Unarmored)
+        ..setPlaceableInEditor(false)
+        ..setMovementHeight(20)
+        ..setSpeedBase(100)
+        ..setTurnRate(3)
+        ..setMovementType(MovementType.Fly)
+        ..setCollisionSize(0)
+        ..setUnitSoundSet("_")
+        ..setCanFlee(false)
+        ..setFoodCost(0)
+        ..setHideMinimapDisplay(true)
+        ..setHitPointsMaximumBase(60)
+        ..setHitPointsRegenerationRate(-1)
+        ..setHitPointsRegenerationType("Always")
+        ..setStockMaximum(1)
+        ..setStockReplenishInterval(1)
+        ..setStructuresBuilt("_")
+        ..setUpgradesUsed("_")
+        ..setHotkey("_")
+        ..setName("effect dummy")
+        ..setTooltipBasic("_")
+        ..setTooltipExtended("_")
+    new UnitDefinition(MISOGI_THAI_Q_DUMMY_2, UnitIds.wisp)
+        ..setNormalAbilities(commaList('Avul', 'Aloc', 'Amrf'))
+        ..setAnimationCastBackswing(0)
+        ..setDeathTimeseconds(0.1)
+        ..setScalingValue(4)
+        ..setUnitClassification("_")
+        ..setArtSpecial("_")
+        ..setHasWaterShadow(false)
+        ..setMaximumPitchAngledegrees(0)
+        ..setMaximumRollAngledegrees(0)
+        ..setModelFile("war3mapImported\\MisogiQMDXReal.mdx")
+        ..setArtSpecial("_")
+        ..setArmorType(ArmorType.Unarmored)
+        ..setPlaceableInEditor(false)
+        ..setMovementHeight(20)
+        ..setSpeedBase(100)
+        ..setTurnRate(3)
+        ..setMovementType(MovementType.Fly)
+        ..setCollisionSize(0)
+        ..setUnitSoundSet("_")
+        ..setCanFlee(false)
+        ..setFoodCost(0)
+        ..setHideMinimapDisplay(true)
+        ..setHitPointsMaximumBase(60)
+        ..setHitPointsRegenerationRate(-1)
+        ..setHitPointsRegenerationType("Always")
+        ..setStockMaximum(1)
+        ..setStockReplenishInterval(1)
+        ..setStructuresBuilt("_")
+        ..setUpgradesUsed("_")
+        ..setHotkey("_")
+        ..setName("effect dummy")
+        ..setTooltipBasic("_")
+        ..setTooltipExtended("_")
+
+function misogiQ6 () returns boolean
+    return IsUnitType(GetFilterUnit(),UNIT_TYPE_STRUCTURE)==false and IsUnitEnemy(GetFilterUnit(),GetOwningPlayer(misogiQCaster))==true and IsUnitDeadBJ(GetFilterUnit())==false
+
+function misogiQ5 ()
+    DamageEvent.setNextDamageId(DAMAGE_ABILITY_Q)
+    DamageEvent.setNextDamageFromCode()
+    UnitDamageTargetBJ(misogiQCaster,GetEnumUnit(),(100*GetUnitAbilityLevel(misogiQCaster,MISOGI_THAI_Q)).toReal(),ATTACK_TYPE_MAGIC,DAMAGE_TYPE_MAGIC)
+
+function misogiQ4 ()
+    unit u
+    misogiQInt=misogiQInt+1
+    PauseUnit(misogiQCaster,true)
+    if misogiQInt>12
+        DestroyTimer(GetExpiredTimer())
+        ForGroupBJ(GetUnitsInRangeOfLocMatching(650,misogiQLoc,Condition(function misogiQ6)),function misogiQ5)
+        PauseUnit(misogiQCaster,false)
+        SetUnitTimeScalePercent(misogiQCaster,100)
+        u=CreateUnitAtLoc(GetOwningPlayer(misogiQCaster),MISOGI_THAI_Q_DUMMY_1,misogiQLoc,GetRandomDirectionDeg())
+        SetUnitScale(u,2.5,2.5,2.5)
+        SetUnitTimeScalePercent(u,80)
+        UnitApplyTimedLife(u,'BHwe',3)
+        u=CreateUnitAtLoc(GetOwningPlayer(misogiQCaster),MISOGI_THAI_Q_DUMMY_2,misogiQLoc,GetRandomDirectionDeg())
+        SetUnitScale(u,6.5,6.5,6.5)
+        SetUnitTimeScalePercent(u,55)
+        UnitApplyTimedLife(u,'BHwe',3)
+        soundPlay("war3mapImported\\misogiQSEReal.mp3", 0, 0)
+        misogiQCaster=null
+        misogiQLoc=null
+        misogiQInt=0
+
+function misogiQ3 ()
+    let t=CreateTimer()
+    let i = GetRandomInt(1, 2)
+    if i == 1
+        soundPlay("war3mapImported\\misogiQReal.mp3", 0, 0)
+    else
+        soundPlay("war3mapImported\\misogiQ2Real.mp3", 0, 0)
+    misogiQCaster=GetSpellAbilityUnit()
+    misogiQLoc=GetSpellTargetLoc()
+    PauseUnit(misogiQCaster,true)
+    SetUnitAnimationByIndex(misogiQCaster,6)
+    SetUnitTimeScalePercent(misogiQCaster,350)
+    misogiQInt=0
+    TimerStart(t,.02,true,function misogiQ4)
+
+function misogiQ2 () returns boolean
+    return GetSpellAbilityId() == MISOGI_THAI_Q
+
+function misogiQ1 ()
+    let t=CreateTrigger()
+    TriggerRegisterAnyUnitEventBJ(t,EVENT_PLAYER_UNIT_SPELL_EFFECT)
+    TriggerAddCondition(t,Condition(function misogiQ2))
+    TriggerAddAction(t,function misogiQ3)
+init
+    misogiQ1()

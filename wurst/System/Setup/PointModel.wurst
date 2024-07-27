@@ -1,0 +1,80 @@
+package PointModel
+// import public SelectHero
+// // import Selection_End
+// import main
+// // import Selection_Start
+// // Not entirely sure what this is for, but this runs after you select / selection ends, I assume
+
+// init
+//     // initTrig_Pointmodel()
+//     uselessTrash()
+//     // uselessTrashAgain()
+
+// function trig_PointmodelFunc020003002() returns boolean
+//     return GetUnitTypeId(GetFilterUnit()) == 'h012'
+
+// function trig_PointmodelFunc021002()
+//     SetUnitVertexColorBJ(GetEnumUnit(), 100, 100, 100, 100.00)
+
+// function trig_PointmodelFunc026T()
+//     udg_EnmaiOpen = true
+//     udg_YatokamiOpen = true
+//     udg_Midoliya = true
+//     FlushChildHashtable(YDLOC, GetHandleId(GetExpiredTimer()))
+//     DestroyTimer(GetExpiredTimer())
+
+// function trig_PointmodelActions()
+//     timer ydl_timer
+//     integer ydl_localvar_step = LoadInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 865)
+//     ydl_localvar_step += 3
+//     SaveInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 865, ydl_localvar_step)
+//     SaveInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 1045, ydl_localvar_step)
+//     TriggerExecute(gg_trg_Seticon)
+//     TriggerExecute(gg_trg_Seticon2)
+//     EnableTrigger(gg_trg_OK_Button)
+//     // ExecuteFunc("initTrig_Select_Unit_Orig")
+//     EnableTrigger(gg_trg_Select_Unit)
+//     // ExecuteFunc("initTrig_Select_Unit2_Orig")
+//     EnableTrigger(gg_trg_Select_Unit2)
+//     // ExecuteFunc("initTrig_SecretChoose_Orig")
+//     EnableTrigger(gg_trg_SecretChoose)
+//     EnableTrigger(gg_trg_suo1)
+//     EnableTrigger(gg_trg_suo2)
+//     EnableTrigger(gg_trg_suo3)
+//     EnableTrigger(gg_trg_Random_Button)
+//     EnableTrigger(gg_trg_CountdownEnd)
+//     StartTimerBJ(udg_Jsq, false, udg_SeletionHeroTime)
+//     CreateTimerDialogBJ(udg_Jsq, "Countdown to selection")
+//     udg_Jsqwindow = GetLastCreatedTimerDialogBJ()
+//     // SaveGroupHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * ydl_localvar_step, 361, yDWEGetUnitsInRectMatchingNull(GetPlayableMapRect(), Condition(function trig_PointmodelFunc020003002)))
+//     // ForGroupBJ(LoadGroupHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * ydl_localvar_step, 361), function trig_PointmodelFunc021002)
+//     // DestroyGroup(LoadGroupHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * ydl_localvar_step, 361))
+//     bj_forLoopAIndex = 1
+//     bj_forLoopAIndexEnd = 12
+//     while true
+//         if bj_forLoopAIndex > bj_forLoopAIndexEnd
+//             break
+//         CreateFogModifierRectBJ(true, ConvertedPlayer(GetForLoopIndexA()), FOG_OF_WAR_VISIBLE, gg_rct______________028)
+//         bj_forLoopAIndex++
+//     bj_forLoopAIndex = 1
+//     bj_forLoopAIndexEnd = 12
+//     while true
+//         if bj_forLoopAIndex > bj_forLoopAIndexEnd
+//             break
+//         udg_SelectYet[GetForLoopIndexA()] = false
+//         udg_MenoHero[GetForLoopIndexA()] = 0
+//         bj_forLoopAIndex++
+//     bj_forLoopAIndex = 1
+//     bj_forLoopAIndexEnd = 9
+//     while true
+//         if bj_forLoopAIndex > bj_forLoopAIndexEnd
+//             break
+//         udg_HeroGone[GetForLoopIndexA()] = false
+//         bj_forLoopAIndex++
+//     ydl_timer = CreateTimer()
+//     TimerStart(ydl_timer, 5.00, false, function trig_PointmodelFunc026T)
+//     FlushChildHashtable(YDLOC, GetHandleId(GetTriggeringTrigger()) * ydl_localvar_step)
+
+// function initTrig_Pointmodel()
+//     gg_trg_Pointmodel = CreateTrigger()
+//     TriggerAddAction(gg_trg_Pointmodel, function trig_PointmodelActions)

@@ -1,0 +1,32 @@
+package Itachi_Edo_G
+
+import ClosureEvents
+import ObjectDefinitions
+import TimerUtils
+import SoundUtils
+
+constant izanamiSound_start = new SoundDefinition("war3mapImported\\Izanami_Start.mp3")
+timer izanamiTimer = null
+integer izanamiCount = 0
+init
+
+    EventListener.onCast(ITACHI_EDO_ABILITY_G) (unit caster) ->
+        izanamiSound_start.play()
+        caster
+        ..addAbility(ABILITY_SPELLBLOCK)
+        ..addAbility(IZANAMI_MODEL_EFFECT)
+        izanamiTimer = getTimer()..startPeriodic(0.1, function izanamiTimerFunction)..setData(caster.getOwner().getId())
+
+function izanamiTimerFunction ()
+    let pid = izanamiTimer.getData()
+    let caster = udg_PlayHero[pid]
+    if caster.isInvulnerable() == false
+        izanamiCount++
+    if izanamiCount == 40 // 0.1 * 40 = 4 seconds
+        if caster.hasAbility(ABILITY_SPELLBLOCK)
+            caster.removeAbility(ABILITY_SPELLBLOCK)
+        if caster.hasAbility(IZANAMI_MODEL_EFFECT)
+            caster.removeAbility(IZANAMI_MODEL_EFFECT)
+            caster.removeAbility(IZANAMI_BUFF)
+        izanamiCount = 0
+        izanamiTimer.release()

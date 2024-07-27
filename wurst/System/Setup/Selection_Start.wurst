@@ -1,0 +1,1333 @@
+package Selection_Start
+// import main
+// import ObjectDefinitions
+// init
+
+//     initTrig_SeletionHeroStart()
+//     initTrig_Seticon()
+//     initTrig_Seticon2()
+//     initTrig_OK_Button()
+//     initTrig_Random_Button()
+
+// public function uselessTrashAgain()
+//     skip
+
+// function trig_SeletionHeroStartConditions() returns boolean
+//     return GetClickedButtonBJ() == udg_Dialogbutton[10]
+
+// function trig_SeletionHeroStartFunc002T()
+//     soundPlay("war3mapImported\\link1-2.mp3", GetUnitX(udg_Unitsound), GetUnitY(udg_Unitsound))
+//     FlushChildHashtable(YDLOC, GetHandleId(GetExpiredTimer()))
+//     DestroyTimer(GetExpiredTimer())
+
+// function trig_SeletionHeroStartFunc003Func002002()
+//     ShowUnitShow(GetEnumUnit())
+
+// function trig_SeletionHeroStartFunc003T()
+//     SaveGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 361, yDWEGetUnitsOfTypeIdAllNull('h012'))
+//     ForGroupBJ(LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 361), function trig_SeletionHeroStartFunc003Func002002)
+//     DestroyGroup(LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 361))
+//     ShowDestructableBJ(true, gg_dest_B01G_0370)
+//     ShowDestructableBJ(true, gg_dest_B01F_0371)
+//     ShowDestructableBJ(true, gg_dest_B059_1437)
+//     ShowDestructableBJ(true, gg_dest_B065_0659)
+//     ShowDestructableBJ(true, gg_dest_B07I_0392)
+//     ShowDestructableBJ(true, gg_dest_B083_1263)
+//     ConditionalTriggerExecute(gg_trg_Pointmodel)
+//     FlushChildHashtable(YDLOC, GetHandleId(GetExpiredTimer()))
+//     DestroyTimer(GetExpiredTimer())
+
+// function trig_SeletionHeroStartActions()
+//     timer _ydl_timer
+//     BlzFrameAddText(textArea, "|cff00a9ff[Start] |cffffd700You can now Pick|r")
+//     soundPlay("war3mapImported\\link1-1.mp3", GetUnitX(udg_Unitsound), GetUnitY(udg_Unitsound))
+//     _ydl_timer = CreateTimer()
+//     TimerStart(_ydl_timer, 0.1, false, function trig_SeletionHeroStartFunc002T) // was 3
+//     _ydl_timer = CreateTimer()
+//     SaveGroupHandle(YDLOC, GetHandleId(_ydl_timer), 361, LoadGroupHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * LoadInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 1045), 361))
+//     TimerStart(_ydl_timer, 0.1, false, function trig_SeletionHeroStartFunc003T) // was 2
+
+// function initTrig_SeletionHeroStart()
+//     gg_trg_SeletionHeroStart = CreateTrigger()
+//     TriggerRegisterDialogEvent(gg_trg_SeletionHeroStart, udg_Dialog)
+//     TriggerAddCondition(gg_trg_SeletionHeroStart, Condition(function trig_SeletionHeroStartConditions))
+//     TriggerAddAction(gg_trg_SeletionHeroStart, function trig_SeletionHeroStartActions)
+
+// function trig_SeticonActions()
+//     integer trigger_ID = LoadInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 865)
+//     trigger_ID += 3
+//     SaveInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 865, trigger_ID)
+//     SaveInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 1045, trigger_ID)
+//     udg_Maxhero = 132
+//     if udg_OpenApi == 1
+//         udg_SeletionHeroTime = 30.00 // If singleplayer
+//     else
+//         udg_SeletionHeroTime = 30.00 // If 2 or more players
+//     udg_TeamGourp[1] = yDWEGetForceOfPlayerNull(Player(0))
+//     udg_TeamGourp[2] = yDWEGetForceOfPlayerNull(Player(1))
+//     udg_TeamGourp[3] = yDWEGetForceOfPlayerNull(Player(2))
+//     udg_TeamGourp[5] = yDWEGetForceOfPlayerNull(Player(4))
+//     udg_TeamGourp[6] = yDWEGetForceOfPlayerNull(Player(5))
+//     udg_TeamGourp[7] = yDWEGetForceOfPlayerNull(Player(6))
+//     udg_TeamGourp[9] = yDWEGetForceOfPlayerNull(Player(8))
+//     udg_TeamGourp[10] = yDWEGetForceOfPlayerNull(Player(9))
+//     udg_TeamGourp[11] = yDWEGetForceOfPlayerNull(Player(10))
+//     // udg_IconHero[1] = 'B01H'
+//     // udg_IconHero[2] = 'B00Y'
+//     // udg_IconHero[3] = 'B02C'
+//     // udg_IconHero[4] = 'B01J'
+//     // udg_IconHero[5] = 'B01K'
+//     // udg_IconHero[6] = 'B01L'
+//     // udg_IconHero[7] = 'B00A'
+//     // udg_IconHero[8] = 'B01N'
+//     // udg_IconHero[9] = 'B01O'
+//     // udg_IconHero[10] = 'B00S'
+//     // udg_IconHero[11] = 'B01Q'
+//     // udg_IconHero[12] = 'B00U'
+//     // udg_IconHero[13] = 'B013'
+//     // udg_IconHero[14] = 'B011'
+//     // udg_IconHero[15] = 'B00V'
+//     // udg_IconHero[16] = 'B01U'
+//     // udg_IconHero[17] = 'B01C'
+//     // udg_IconHero[18] = 'B00M'
+//     // udg_IconHero[19] = 'B00W'
+//     // udg_IconHero[20] = 'B02D'
+//     // udg_IconHero[21] = 'B01Y'
+//     // udg_IconHero[22] = 'B01Z'
+//     // udg_IconHero[23] = 'B020'
+//     // udg_IconHero[24] = 'B00Z'
+//     // udg_IconHero[25] = 'B010'
+//     // udg_IconHero[26] = 'B00P'
+//     // udg_IconHero[27] = 'B01D'
+//     // udg_IconHero[28] = 'B01E'
+//     // udg_IconHero[29] = 'B00T'
+//     // udg_IconHero[30] = 'B029'
+//     // udg_IconHero[31] = 'B048'
+//     // udg_IconHero[32] = 'B000'
+//     // udg_IconHero[33] = 'B03U'
+//     // udg_IconHero[34] = 'B02O'
+//     // udg_IconHero[35] = 'B03S'
+//     // udg_IconHero[36] = 'B02X'
+//     // udg_IconHero[37] = 'B02Z'
+//     // udg_IconHero[38] = 'B005'
+//     // udg_IconHero[39] = 'B03Q'
+//     // udg_IconHero[40] = 'B02Q'
+//     // udg_IconHero[41] = 'B038'
+//     // udg_IconHero[42] = 'B03A'
+//     // udg_IconHero[43] = 'B04A'
+//     // udg_IconHero[44] = 'B03E'
+//     // udg_IconHero[45] = 'B03I'
+//     // udg_IconHero[46] = 'B03K'
+//     // udg_IconHero[47] = 'B03M'
+//     // udg_IconHero[48] = 'B03O'
+//     // udg_IconHero[49] = 'B02I'
+//     // udg_IconHero[50] = 'B014'
+//     // udg_IconHero[51] = 'B03G'
+//     // udg_IconHero[52] = 'B03W'
+//     // udg_IconHero[53] = 'B03Y'
+//     // udg_IconHero[54] = 'B040'
+//     // udg_IconHero[55] = 'B042'
+//     // udg_IconHero[56] = 'B046'
+//     // udg_IconHero[57] = 'B044'
+//     // udg_IconHero[58] = 'B04C'
+//     // udg_IconHero[59] = 'B04H'
+//     // udg_IconHero[60] = 'B04J'
+//     // udg_IconHero[61] = 'B08L'
+//     // udg_IconHero[62] = 'B04N'
+//     // udg_IconHero[63] = 'B04P'
+//     // udg_IconHero[64] = 'B04R'
+//     // udg_IconHero[65] = 'B051'
+//     // udg_IconHero[66] = 'B053'
+//     // udg_IconHero[67] = 'B055'
+//     // udg_IconHero[68] = 'B057'
+//     // udg_IconHero[69] = 'B05M'
+//     // udg_IconHero[70] = 'B04T'
+//     // udg_IconHero[71] = 'B04X'
+//     // udg_IconHero[72] = 'B05O'
+//     // udg_IconHero[73] = 'B05Q'
+//     // udg_IconHero[74] = 'B05S'
+//     // udg_IconHero[75] = 'B05W'
+//     // udg_IconHero[76] = 'B05Y'
+//     // udg_IconHero[77] = 'B060'
+//     // udg_IconHero[78] = 'B062'
+//     // udg_IconHero[79] = 'B068'
+//     // udg_IconHero[80] = 'B05U'
+//     // udg_IconHero[81] = 'B04Z'
+//     // udg_IconHero[82] = 'B06C'
+//     // udg_IconHero[83] = 'B06G'
+//     // udg_IconHero[84] = 'B06I'
+//     // udg_IconHero[85] = 'B064'
+//     // udg_IconHero[86] = 'B06O'
+//     // udg_IconHero[87] = 'B06S'
+//     // udg_IconHero[88] = 'B06U'
+//     // udg_IconHero[89] = 'B04V'
+//     // udg_IconHero[90] = 'B06W'
+//     // udg_IconHero[91] = 'B06Y'
+//     // udg_IconHero[92] = 'B072'
+//     // udg_IconHero[93] = 'B074'
+//     // udg_IconHero[94] = 'B06M'
+//     // udg_IconHero[95] = 'B070'
+//     // udg_IconHero[96] = 'B076'
+//     // udg_IconHero[99] = 'B04E'
+//     // udg_IconHero[100] = 'B02L'
+//     // udg_IconHero[200] = 'B04L'
+//     udg_IconDisHero[1] = 'B00J'
+//     udg_IconDisHero[2] = 'B01I'
+//     udg_IconDisHero[3] = 'B024'
+//     udg_IconDisHero[4] = 'B016'
+//     udg_IconDisHero[5] = 'B00R'
+//     udg_IconDisHero[6] = 'B00O'
+//     udg_IconDisHero[7] = 'B01M'
+//     udg_IconDisHero[8] = 'B00Q'
+//     udg_IconDisHero[9] = 'B015'
+//     udg_IconDisHero[10] = 'B01P'
+//     udg_IconDisHero[11] = 'B00X'
+//     udg_IconDisHero[12] = 'B01R'
+//     udg_IconDisHero[13] = 'B01S'
+//     udg_IconDisHero[14] = 'B01T'
+//     udg_IconDisHero[15] = 'B02A'
+//     udg_IconDisHero[16] = 'B02B'
+//     udg_IconDisHero[17] = 'B01V'
+//     udg_IconDisHero[18] = 'B01W'
+//     udg_IconDisHero[19] = 'B01X'
+//     udg_IconDisHero[20] = 'B02E'
+//     udg_IconDisHero[21] = 'B00L'
+//     udg_IconDisHero[22] = 'B00N'
+//     udg_IconDisHero[23] = 'B00K'
+//     udg_IconDisHero[24] = 'B021'
+//     udg_IconDisHero[25] = 'B022'
+//     udg_IconDisHero[26] = 'B025'
+//     udg_IconDisHero[27] = 'B026'
+//     udg_IconDisHero[28] = 'B027'
+//     udg_IconDisHero[29] = 'B028'
+//     udg_IconDisHero[30] = 'B012'
+//     udg_IconDisHero[31] = 'B049'
+//     udg_IconDisHero[32] = 'B02N'
+//     udg_IconDisHero[33] = 'B03V'
+//     udg_IconDisHero[34] = 'B02P'
+//     udg_IconDisHero[35] = 'B03T'
+//     udg_IconDisHero[36] = 'B02Y'
+//     udg_IconDisHero[37] = 'B030'
+//     udg_IconDisHero[38] = 'B00F'
+//     udg_IconDisHero[39] = 'B03R'
+//     udg_IconDisHero[40] = 'B02R'
+//     udg_IconDisHero[41] = 'B039'
+//     udg_IconDisHero[42] = 'B03B'
+//     udg_IconDisHero[43] = 'B04B'
+//     udg_IconDisHero[44] = 'B03F'
+//     udg_IconDisHero[45] = 'B03J'
+//     udg_IconDisHero[46] = 'B03L'
+//     udg_IconDisHero[47] = 'B03N'
+//     udg_IconDisHero[48] = 'B03P'
+//     udg_IconDisHero[49] = 'B02J'
+//     udg_IconDisHero[50] = 'B023'
+//     udg_IconDisHero[51] = 'B03H'
+//     udg_IconDisHero[52] = 'B03X'
+//     udg_IconDisHero[53] = 'B03Z'
+//     udg_IconDisHero[54] = 'B041'
+//     udg_IconDisHero[55] = 'B043'
+//     udg_IconDisHero[56] = 'B047'
+//     udg_IconDisHero[57] = 'B045'
+//     udg_IconDisHero[58] = 'B04D'
+//     udg_IconDisHero[59] = 'B04I'
+//     udg_IconDisHero[60] = 'B04K'
+//     udg_IconDisHero[61] = 'B08M'
+//     udg_IconDisHero[62] = 'B04O'
+//     udg_IconDisHero[63] = 'B04Q'
+//     udg_IconDisHero[64] = 'B04S'
+//     udg_IconDisHero[65] = 'B052'
+//     udg_IconDisHero[66] = 'B054'
+//     udg_IconDisHero[67] = 'B056'
+//     udg_IconDisHero[68] = 'B058'
+//     udg_IconDisHero[69] = 'B05N'
+//     udg_IconDisHero[70] = 'B04U'
+//     udg_IconDisHero[71] = 'B04Y'
+//     udg_IconDisHero[72] = 'B05P'
+//     udg_IconDisHero[73] = 'B05R'
+//     udg_IconDisHero[74] = 'B05T'
+//     udg_IconDisHero[75] = 'B05X'
+//     udg_IconDisHero[76] = 'B05Z'
+//     udg_IconDisHero[77] = 'B061'
+//     udg_IconDisHero[78] = 'B063'
+//     udg_IconDisHero[79] = 'B069'
+//     udg_IconDisHero[80] = 'B05V'
+//     udg_IconDisHero[81] = 'B050'
+//     udg_IconDisHero[82] = 'B06D'
+//     udg_IconDisHero[83] = 'B06H'
+//     udg_IconDisHero[84] = 'B06J'
+//     udg_IconDisHero[85] = 'B066'
+//     udg_IconDisHero[86] = 'B06P'
+//     udg_IconDisHero[87] = 'B06T'
+//     udg_IconDisHero[88] = 'B06V'
+//     udg_IconDisHero[89] = 'B04W'
+//     udg_IconDisHero[90] = 'B06X'
+//     udg_IconDisHero[91] = 'B06Z'
+//     udg_IconDisHero[92] = 'B073'
+//     udg_IconDisHero[93] = 'B075'
+//     udg_IconDisHero[94] = 'B06N'
+//     udg_IconDisHero[95] = 'B071'
+//     udg_IconDisHero[96] = 'B077'
+//     udg_IconDisHero[99] = 'B04F'
+//     udg_IconDisHero[100] = 'B02M'
+//     udg_IconDisHero[200] = 'B04M'
+//     udg_PointSelectHero[1] = GetRectCenter(gg_rct______________029)
+//     udg_PointSelectHero[2] = GetRectCenter(gg_rct______________045)
+//     udg_PointSelectHero[3] = GetRectCenter(gg_rct______________046)
+//     udg_PointSelectHero[5] = GetRectCenter(gg_rct______________047)
+//     udg_PointSelectHero[6] = GetRectCenter(gg_rct______________048)
+//     udg_PointSelectHero[7] = GetRectCenter(gg_rct______________049)
+//     udg_PointSelectHero[9] = GetRectCenter(gg_rct______________051)
+//     udg_PointSelectHero[10] = GetRectCenter(gg_rct______________050)
+//     udg_PointSelectHero[11] = GetRectCenter(gg_rct______________052)
+//     udg_UnitIcon[1] = gg_unit_h012_0075
+//     udg_UnitIcon[2] = gg_unit_h012_0055
+//     udg_UnitIcon[3] = gg_unit_h012_0061
+//     udg_UnitIcon[4] = gg_unit_h012_0072
+//     udg_UnitIcon[5] = gg_unit_h012_0073
+//     udg_UnitIcon[6] = gg_unit_h012_0074
+//     udg_UnitIcon[7] = gg_unit_h012_0076
+//     udg_UnitIcon[8] = gg_unit_h012_0077
+//     udg_UnitIcon[9] = gg_unit_h012_0078
+//     udg_UnitIcon[10] = gg_unit_h012_0079
+//     udg_UnitIcon[11] = gg_unit_h012_0080
+//     udg_UnitIcon[12] = gg_unit_h012_0081
+//     udg_UnitIcon[13] = gg_unit_h012_0082
+//     udg_UnitIcon[14] = gg_unit_h012_0083
+//     udg_UnitIcon[15] = gg_unit_h012_0084
+//     udg_UnitIcon[16] = gg_unit_h012_0085
+//     udg_UnitIcon[17] = gg_unit_h012_0086
+//     udg_UnitIcon[18] = gg_unit_h012_0087
+//     udg_UnitIcon[19] = gg_unit_h012_0088
+//     udg_UnitIcon[20] = gg_unit_h012_0089
+//     udg_UnitIcon[21] = gg_unit_h012_0090
+//     udg_UnitIcon[22] = gg_unit_h012_0091
+//     udg_UnitIcon[23] = gg_unit_h012_0092
+//     udg_UnitIcon[24] = gg_unit_h012_0093
+//     udg_UnitIcon[25] = gg_unit_h012_0094
+//     udg_UnitIcon[26] = gg_unit_h012_0096
+//     udg_UnitIcon[27] = gg_unit_h012_0097
+//     udg_UnitIcon[28] = gg_unit_h012_0098
+//     udg_UnitIcon[29] = gg_unit_h012_0099
+//     udg_UnitIcon[30] = gg_unit_h012_0102
+//     udg_UnitIcon[31] = gg_unit_h012_0150
+//     udg_UnitIcon[32] = gg_unit_h012_0104
+//     udg_UnitIcon[33] = gg_unit_h012_0126
+//     udg_UnitIcon[34] = gg_unit_h012_0109
+//     udg_UnitIcon[35] = gg_unit_h012_0133
+//     udg_UnitIcon[36] = gg_unit_h012_0047
+//     udg_UnitIcon[37] = gg_unit_h012_0103
+//     udg_UnitIcon[38] = gg_unit_h012_0095
+//     udg_UnitIcon[39] = gg_unit_h012_0132
+//     udg_UnitIcon[40] = gg_unit_h012_0115
+//     udg_UnitIcon[41] = gg_unit_h012_0127
+//     udg_UnitIcon[42] = gg_unit_h012_0117
+//     udg_UnitIcon[43] = gg_unit_h012_0116
+//     udg_UnitIcon[44] = gg_unit_h012_0118
+//     udg_UnitIcon[45] = gg_unit_h012_0119
+//     udg_UnitIcon[46] = gg_unit_h012_0120
+//     udg_UnitIcon[47] = gg_unit_h012_0128
+//     udg_UnitIcon[48] = gg_unit_h012_0129
+//     udg_UnitIcon[49] = gg_unit_h012_0105
+//     udg_UnitIcon[50] = gg_unit_h012_0110
+//     udg_UnitIcon[51] = gg_unit_h012_0125
+//     udg_UnitIcon[52] = gg_unit_h012_0114
+//     udg_UnitIcon[53] = gg_unit_h012_0130
+//     udg_UnitIcon[54] = gg_unit_h012_0131
+//     udg_UnitIcon[55] = gg_unit_h012_0134
+//     udg_UnitIcon[56] = gg_unit_h012_0135
+//     udg_UnitIcon[57] = gg_unit_h012_0149
+//     udg_UnitIcon[58] = gg_unit_h012_0151
+//     udg_UnitIcon[59] = gg_unit_h012_0154
+//     udg_UnitIcon[60] = gg_unit_h012_0155
+//     udg_UnitIcon[61] = gg_unit_h012_0156
+//     udg_UnitIcon[62] = gg_unit_h012_0157
+//     udg_UnitIcon[63] = gg_unit_h012_0158
+//     udg_UnitIcon[64] = gg_unit_h012_0161
+//     udg_UnitIcon[65] = gg_unit_h012_0159
+//     udg_UnitIcon[66] = gg_unit_h012_0165
+//     udg_UnitIcon[67] = gg_unit_h012_0160
+//     udg_UnitIcon[68] = gg_unit_h012_0166
+//     udg_UnitIcon[69] = gg_unit_h012_0170
+//     udg_UnitIcon[70] = gg_unit_h012_0171
+//     udg_UnitIcon[71] = gg_unit_h012_0172
+//     udg_UnitIcon[72] = gg_unit_h012_0167
+//     udg_UnitIcon[73] = gg_unit_h012_0168
+//     udg_UnitIcon[74] = gg_unit_h012_0169
+//     udg_UnitIcon[75] = gg_unit_h012_0177
+//     udg_UnitIcon[76] = gg_unit_h012_0182
+//     udg_UnitIcon[77] = gg_unit_h012_0173
+//     udg_UnitIcon[78] = gg_unit_h012_0181
+//     udg_UnitIcon[79] = gg_unit_h012_0183
+//     udg_UnitIcon[80] = gg_unit_h012_0187
+//     udg_UnitIcon[81] = gg_unit_h012_0185
+//     udg_UnitIcon[82] = gg_unit_h012_0192
+//     udg_UnitIcon[83] = gg_unit_h012_0190
+//     udg_UnitIcon[84] = gg_unit_h012_0189
+//     udg_UnitIcon[85] = gg_unit_h012_0193
+//     udg_UnitIcon[86] = gg_unit_h012_0195
+//     udg_UnitIcon[87] = gg_unit_h012_0197
+//     udg_UnitIcon[88] = gg_unit_h012_0198
+//     udg_UnitIcon[89] = gg_unit_h012_0184
+//     udg_UnitIcon[90] = gg_unit_h012_0188
+//     udg_UnitIcon[91] = gg_unit_h012_0200
+//     udg_UnitIcon[92] = gg_unit_h012_0201
+//     udg_UnitIcon[93] = gg_unit_h012_0203
+//     udg_UnitIcon[94] = gg_unit_h012_0175
+//     udg_UnitIcon[95] = gg_unit_h012_0174
+//     udg_UnitIcon[96] = gg_unit_h012_0176
+//     udg_UnitIcon[99] = gg_unit_h012_0152
+//     udg_UnitIcon[100] = gg_unit_h012_0046
+//     udg_UnitIcon[200] = gg_unit_h012_0223
+//     udg_HeroType[1] = 'H000'
+//     udg_HeroType[2] = 'H009'
+//     udg_HeroType[3] = MADARA_NORMAL
+//     udg_HeroType[4] = KAMIJOU_TOUMA
+//     udg_HeroType[5] = COBRA
+//     udg_HeroType[6] = 'H00A'
+//     udg_HeroType[7] = 'H00J'
+//     udg_HeroType[8] = 'H00O'
+//     udg_HeroType[9] = 'H00D'
+//     udg_HeroType[10] = 'H00L'
+//     udg_HeroType[11] = 'H004'
+//     udg_HeroType[12] = MONKEYD_LUFFY
+//     udg_HeroType[13] = 'H008'
+//     udg_HeroType[14] = 'H00R'
+//     udg_HeroType[15] = 'H001'
+//     udg_HeroType[16] = 'H00Y'
+//     udg_HeroType[17] = ITSUKA_KOTORI
+//     udg_HeroType[18] = 'H00E'
+//     udg_HeroType[19] = 'H00F'
+//     udg_HeroType[20] = 'H010'
+//     udg_HeroType[21] = 'H00M'
+//     udg_HeroType[22] = GAJEEL_REDFOX
+//     udg_HeroType[23] = 'H005'
+//     udg_HeroType[24] = 'H006'
+//     udg_HeroType[25] = 'H007'
+//     udg_HeroType[26] = 'H003'
+//     udg_HeroType[27] = 'H00V'
+//     udg_HeroType[28] = 'H00W'
+//     udg_HeroType[29] = 'H00G'
+//     udg_HeroType[30] = SASUKE_YOUNG
+//     udg_HeroType[31] = 'H01Z'
+//     udg_HeroType[32] = 'H035'
+//     udg_HeroType[33] = 'H01N'
+//     udg_HeroType[34] = 'H015'
+//     udg_HeroType[35] = 'H01O'
+//     udg_HeroType[36] = 'H019'
+//     udg_HeroType[37] = 'H01A'
+//     udg_HeroType[38] = 'H018'
+//     udg_HeroType[39] = 'H01M'
+//     udg_HeroType[40] = 'H017'
+//     udg_HeroType[41] = 'H01C'
+//     udg_HeroType[42] = 'H01E'
+//     udg_HeroType[43] = 'H01Y'
+//     udg_HeroType[44] = KILLUA_ZOLDYCK
+//     udg_HeroType[45] = RORONOA_ZORO
+//     udg_HeroType[46] = ITACHI_EDO
+//     udg_HeroType[47] = SABO
+//     udg_HeroType[48] = PORTGASD_ACE
+//     udg_HeroType[49] = 'H014'
+//     udg_HeroType[50] = 'H01B'
+//     udg_HeroType[51] = 'H016'
+//     udg_HeroType[52] = 'H01Q'
+//     udg_HeroType[53] = 'H01R'
+//     udg_HeroType[54] = 'H01S'
+//     udg_HeroType[55] = 'H01U'
+//     udg_HeroType[56] = AKAME_MURASAME
+//     udg_HeroType[57] = 'H01T'
+//     udg_HeroType[58] = 'H00H'
+//     udg_HeroType[59] = 'H01X'
+//     udg_HeroType[60] = 'H022'
+//     udg_HeroType[61] = 'H03T'
+//     udg_HeroType[62] = 'H023'
+//     udg_HeroType[63] = 'H01F'
+//     udg_HeroType[64] = DIO_BRANDO
+//     udg_HeroType[65] = 'H025'
+//     udg_HeroType[66] = 'H026'
+//     udg_HeroType[67] = 'H027'
+//     udg_HeroType[68] = 'H028'
+//     udg_HeroType[69] = 'H02A'
+//     udg_HeroType[70] = 'H029'
+//     udg_HeroType[71] = 'H02D'
+//     udg_HeroType[72] = SASUKE_ADULT
+//     udg_HeroType[73] = 'H02E'
+//     udg_HeroType[74] = MASHU_KYRIELIGHT
+//     udg_HeroType[75] = 'H02I'
+//     udg_HeroType[76] = 'H02J'
+//     udg_HeroType[77] = 'H02K'
+//     udg_HeroType[78] = 'H02L'
+//     udg_HeroType[79] = 'H02N'
+//     udg_HeroType[80] = 'H02G'
+//     udg_HeroType[81] = 'H02P'
+//     udg_HeroType[82] = 'H02O'
+//     udg_HeroType[83] = 'H02S'
+//     udg_HeroType[84] = LEVI_ACKERMAN
+//     udg_HeroType[85] = 'H02V'
+//     udg_HeroType[86] = 'H02W'
+//     udg_HeroType[87] = 'H02Z'
+//     udg_HeroType[88] = 'H02Y'
+//     udg_HeroType[89] = 'H033'
+//     udg_HeroType[90] = ARTURIA_STRENGTH
+//     udg_HeroType[91] = 'H032'
+//     udg_HeroType[92] = 'H031'
+//     udg_HeroType[93] = 'H013'
+//     udg_HeroType[94] = 'H02M'
+//     udg_HeroType[95] = 'H037'
+//     udg_HeroType[96] = 'H030'
+//     udg_HeroType[99] = 'H020'
+//     udg_HeroType[100] = 'H00Z'
+//     udg_HeroType[200] = 'H021'
+//     bj_forLoopAIndex = 1
+//     bj_forLoopAIndexEnd = 3
+//     while true
+//         if bj_forLoopAIndex > bj_forLoopAIndexEnd
+//             break
+//         CreateDestructableLoc('B02F', udg_PointSelectHero[GetForLoopIndexA()], 90.00, 1, 0)
+//         udg_OldIcon[GetForLoopIndexA()] = GetLastCreatedDestructable()
+//         bj_forLoopAIndex++
+//     bj_forLoopAIndex = 5
+//     bj_forLoopAIndexEnd = 7
+//     while true
+//         if bj_forLoopAIndex > bj_forLoopAIndexEnd
+//             break
+//         CreateDestructableLoc('B02F', udg_PointSelectHero[GetForLoopIndexA()], 90.00, 1, 0)
+//         udg_OldIcon[GetForLoopIndexA()] = GetLastCreatedDestructable()
+//         bj_forLoopAIndex++
+//     bj_forLoopAIndex = 9
+//     bj_forLoopAIndexEnd = 11
+//     while true
+//         if bj_forLoopAIndex > bj_forLoopAIndexEnd
+//             break
+//         CreateDestructableLoc('B02F', udg_PointSelectHero[GetForLoopIndexA()], 90.00, 1, 0)
+//         udg_OldIcon[GetForLoopIndexA()] = GetLastCreatedDestructable()
+//         bj_forLoopAIndex++
+//     CreateDestructableLoc(udg_IconHero[1], GetUnitLoc(udg_UnitIcon[1]), 90.00, 1, 0)
+//     udg_EnableIcon[1] = GetLastCreatedDestructable()
+//     CreateDestructableLoc(udg_IconHero[2], GetUnitLoc(udg_UnitIcon[2]), 90.00, 1, 0)
+//     udg_EnableIcon[2] = GetLastCreatedDestructable()
+//     CreateDestructableLoc(udg_IconHero[3], GetUnitLoc(udg_UnitIcon[3]), 90.00, 1, 0)
+//     udg_EnableIcon[3] = GetLastCreatedDestructable()
+//     CreateDestructableLoc(udg_IconHero[4], GetUnitLoc(udg_UnitIcon[4]), 90.00, 1, 0)
+//     udg_EnableIcon[4] = GetLastCreatedDestructable()
+//     CreateDestructableLoc(udg_IconHero[5], GetUnitLoc(udg_UnitIcon[5]), 90.00, 1, 0)
+//     udg_EnableIcon[5] = GetLastCreatedDestructable()
+//     CreateDestructableLoc(udg_IconHero[6], GetUnitLoc(udg_UnitIcon[6]), 90.00, 1, 0)
+//     udg_EnableIcon[6] = GetLastCreatedDestructable()
+//     CreateDestructableLoc(udg_IconHero[7], GetUnitLoc(udg_UnitIcon[7]), 90.00, 1, 0)
+//     udg_EnableIcon[7] = GetLastCreatedDestructable()
+//     CreateDestructableLoc(udg_IconHero[8], GetUnitLoc(udg_UnitIcon[8]), 90.00, 1, 0)
+//     udg_EnableIcon[8] = GetLastCreatedDestructable()
+//     CreateDestructableLoc(udg_IconHero[9], GetUnitLoc(udg_UnitIcon[9]), 90.00, 1, 0)
+//     udg_EnableIcon[9] = GetLastCreatedDestructable()
+//     CreateDestructableLoc(udg_IconHero[10], GetUnitLoc(udg_UnitIcon[10]), 90.00, 1, 0)
+//     udg_EnableIcon[10] = GetLastCreatedDestructable()
+//     CreateDestructableLoc(udg_IconHero[11], GetUnitLoc(udg_UnitIcon[11]), 90.00, 1, 0)
+//     udg_EnableIcon[11] = GetLastCreatedDestructable()
+//     CreateDestructableLoc(udg_IconHero[12], GetUnitLoc(udg_UnitIcon[12]), 90.00, 1, 0)
+//     udg_EnableIcon[12] = GetLastCreatedDestructable()
+//     CreateDestructableLoc(udg_IconHero[13], GetUnitLoc(udg_UnitIcon[13]), 90.00, 1, 0)
+//     udg_EnableIcon[13] = GetLastCreatedDestructable()
+//     CreateDestructableLoc(udg_IconHero[14], GetUnitLoc(udg_UnitIcon[14]), 90.00, 1, 0)
+//     udg_EnableIcon[14] = GetLastCreatedDestructable()
+//     CreateDestructableLoc(udg_IconHero[15], GetUnitLoc(udg_UnitIcon[15]), 90.00, 1, 0)
+//     udg_EnableIcon[15] = GetLastCreatedDestructable()
+//     CreateDestructableLoc(udg_IconHero[16], GetUnitLoc(udg_UnitIcon[16]), 90.00, 1, 0)
+//     udg_EnableIcon[16] = GetLastCreatedDestructable()
+//     CreateDestructableLoc(udg_IconHero[17], GetUnitLoc(udg_UnitIcon[17]), 90.00, 1, 0)
+//     udg_EnableIcon[17] = GetLastCreatedDestructable()
+//     CreateDestructableLoc(udg_IconHero[18], GetUnitLoc(udg_UnitIcon[18]), 90.00, 1, 0)
+//     udg_EnableIcon[18] = GetLastCreatedDestructable()
+//     CreateDestructableLoc(udg_IconHero[19], GetUnitLoc(udg_UnitIcon[19]), 90.00, 1, 0)
+//     udg_EnableIcon[19] = GetLastCreatedDestructable()
+//     CreateDestructableLoc(udg_IconHero[20], GetUnitLoc(udg_UnitIcon[20]), 90.00, 1, 0)
+//     udg_EnableIcon[20] = GetLastCreatedDestructable()
+//     CreateDestructableLoc(udg_IconHero[21], GetUnitLoc(udg_UnitIcon[21]), 90.00, 1, 0)
+//     udg_EnableIcon[21] = GetLastCreatedDestructable()
+//     CreateDestructableLoc(udg_IconHero[22], GetUnitLoc(udg_UnitIcon[22]), 90.00, 1, 0)
+//     udg_EnableIcon[22] = GetLastCreatedDestructable()
+//     CreateDestructableLoc(udg_IconHero[23], GetUnitLoc(udg_UnitIcon[23]), 90.00, 1, 0)
+//     udg_EnableIcon[23] = GetLastCreatedDestructable()
+//     CreateDestructableLoc(udg_IconHero[24], GetUnitLoc(udg_UnitIcon[24]), 90.00, 1, 0)
+//     udg_EnableIcon[24] = GetLastCreatedDestructable()
+//     CreateDestructableLoc(udg_IconHero[25], GetUnitLoc(udg_UnitIcon[25]), 90.00, 1, 0)
+//     udg_EnableIcon[25] = GetLastCreatedDestructable()
+//     CreateDestructableLoc(udg_IconHero[26], GetUnitLoc(udg_UnitIcon[26]), 90.00, 1, 0)
+//     udg_EnableIcon[26] = GetLastCreatedDestructable()
+//     CreateDestructableLoc(udg_IconHero[27], GetUnitLoc(udg_UnitIcon[27]), 90.00, 1, 0)
+//     udg_EnableIcon[27] = GetLastCreatedDestructable()
+//     CreateDestructableLoc(udg_IconHero[28], GetUnitLoc(udg_UnitIcon[28]), 90.00, 1, 0)
+//     udg_EnableIcon[28] = GetLastCreatedDestructable()
+//     CreateDestructableLoc(udg_IconHero[29], GetUnitLoc(udg_UnitIcon[29]), 90.00, 1, 0)
+//     udg_EnableIcon[29] = GetLastCreatedDestructable()
+//     CreateDestructableLoc(udg_IconHero[30], GetUnitLoc(udg_UnitIcon[30]), 90.00, 1, 0)
+//     udg_EnableIcon[30] = GetLastCreatedDestructable()
+//     CreateDestructableLoc(udg_IconHero[31], GetUnitLoc(udg_UnitIcon[31]), 90.00, 1, 0)
+//     udg_EnableIcon[31] = GetLastCreatedDestructable()
+//     CreateDestructableLoc(udg_IconHero[32], GetUnitLoc(udg_UnitIcon[32]), 90.00, 1, 0)
+//     udg_EnableIcon[32] = GetLastCreatedDestructable()
+//     CreateDestructableLoc(udg_IconHero[33], GetUnitLoc(udg_UnitIcon[33]), 90.00, 1, 0)
+//     udg_EnableIcon[33] = GetLastCreatedDestructable()
+//     CreateDestructableLoc(udg_IconHero[34], GetUnitLoc(udg_UnitIcon[34]), 90.00, 1, 0)
+//     udg_EnableIcon[34] = GetLastCreatedDestructable()
+//     CreateDestructableLoc(udg_IconHero[35], GetUnitLoc(udg_UnitIcon[35]), 90.00, 1, 0)
+//     udg_EnableIcon[35] = GetLastCreatedDestructable()
+//     CreateDestructableLoc(udg_IconHero[36], GetUnitLoc(udg_UnitIcon[36]), 90.00, 1, 0)
+//     udg_EnableIcon[36] = GetLastCreatedDestructable()
+//     CreateDestructableLoc(udg_IconHero[37], GetUnitLoc(udg_UnitIcon[37]), 90.00, 1, 0)
+//     udg_EnableIcon[37] = GetLastCreatedDestructable()
+//     CreateDestructableLoc(udg_IconHero[38], GetUnitLoc(udg_UnitIcon[38]), 90.00, 1, 0)
+//     udg_EnableIcon[38] = GetLastCreatedDestructable()
+//     CreateDestructableLoc(udg_IconHero[39], GetUnitLoc(udg_UnitIcon[39]), 90.00, 1, 0)
+//     udg_EnableIcon[39] = GetLastCreatedDestructable()
+//     CreateDestructableLoc(udg_IconHero[40], GetUnitLoc(udg_UnitIcon[40]), 90.00, 1, 0)
+//     udg_EnableIcon[40] = GetLastCreatedDestructable()
+//     CreateDestructableLoc(udg_IconHero[41], GetUnitLoc(udg_UnitIcon[41]), 90.00, 1, 0)
+//     udg_EnableIcon[41] = GetLastCreatedDestructable()
+//     CreateDestructableLoc(udg_IconHero[42], GetUnitLoc(udg_UnitIcon[42]), 90.00, 1, 0)
+//     udg_EnableIcon[42] = GetLastCreatedDestructable()
+//     CreateDestructableLoc(udg_IconHero[43], GetUnitLoc(udg_UnitIcon[43]), 90.00, 1, 0)
+//     udg_EnableIcon[43] = GetLastCreatedDestructable()
+//     CreateDestructableLoc(udg_IconHero[44], GetUnitLoc(udg_UnitIcon[44]), 90.00, 1, 0)
+//     udg_EnableIcon[44] = GetLastCreatedDestructable()
+//     CreateDestructableLoc(udg_IconHero[45], GetUnitLoc(udg_UnitIcon[45]), 90.00, 1, 0)
+//     udg_EnableIcon[45] = GetLastCreatedDestructable()
+//     CreateDestructableLoc(udg_IconHero[46], GetUnitLoc(udg_UnitIcon[46]), 90.00, 1, 0)
+//     udg_EnableIcon[46] = GetLastCreatedDestructable()
+//     CreateDestructableLoc(udg_IconHero[47], GetUnitLoc(udg_UnitIcon[47]), 90.00, 1, 0)
+//     udg_EnableIcon[47] = GetLastCreatedDestructable()
+//     CreateDestructableLoc(udg_IconHero[48], GetUnitLoc(udg_UnitIcon[48]), 90.00, 1, 0)
+//     udg_EnableIcon[48] = GetLastCreatedDestructable()
+//     CreateDestructableLoc(udg_IconHero[49], GetUnitLoc(udg_UnitIcon[49]), 90.00, 1, 0)
+//     udg_EnableIcon[49] = GetLastCreatedDestructable()
+//     CreateDestructableLoc(udg_IconHero[50], GetUnitLoc(udg_UnitIcon[50]), 90.00, 1, 0)
+//     udg_EnableIcon[50] = GetLastCreatedDestructable()
+//     CreateDestructableLoc(udg_IconHero[51], GetUnitLoc(udg_UnitIcon[51]), 90.00, 1, 0)
+//     udg_EnableIcon[51] = GetLastCreatedDestructable()
+//     CreateDestructableLoc(udg_IconHero[52], GetUnitLoc(udg_UnitIcon[52]), 90.00, 1, 0)
+//     udg_EnableIcon[52] = GetLastCreatedDestructable()
+//     CreateDestructableLoc(udg_IconHero[53], GetUnitLoc(udg_UnitIcon[53]), 90.00, 1, 0)
+//     udg_EnableIcon[53] = GetLastCreatedDestructable()
+//     CreateDestructableLoc(udg_IconHero[54], GetUnitLoc(udg_UnitIcon[54]), 90.00, 1, 0)
+//     udg_EnableIcon[54] = GetLastCreatedDestructable()
+//     CreateDestructableLoc(udg_IconHero[55], GetUnitLoc(udg_UnitIcon[55]), 90.00, 1, 0)
+//     udg_EnableIcon[55] = GetLastCreatedDestructable()
+//     CreateDestructableLoc(udg_IconHero[56], GetUnitLoc(udg_UnitIcon[56]), 90.00, 1, 0)
+//     udg_EnableIcon[56] = GetLastCreatedDestructable()
+//     CreateDestructableLoc(udg_IconHero[57], GetUnitLoc(udg_UnitIcon[57]), 90.00, 1, 0)
+//     udg_EnableIcon[57] = GetLastCreatedDestructable()
+//     CreateDestructableLoc(udg_IconHero[58], GetUnitLoc(udg_UnitIcon[58]), 90.00, 1, 0)
+//     udg_EnableIcon[58] = GetLastCreatedDestructable()
+//     CreateDestructableLoc(udg_IconHero[59], GetUnitLoc(udg_UnitIcon[59]), 90.00, 1, 0)
+//     udg_EnableIcon[59] = GetLastCreatedDestructable()
+//     CreateDestructableLoc(udg_IconHero[60], GetUnitLoc(udg_UnitIcon[60]), 90.00, 1, 0)
+//     udg_EnableIcon[60] = GetLastCreatedDestructable()
+//     CreateDestructableLoc(udg_IconHero[61], GetUnitLoc(udg_UnitIcon[61]), 90.00, 1, 0)
+//     udg_EnableIcon[61] = GetLastCreatedDestructable()
+//     CreateDestructableLoc(udg_IconHero[62], GetUnitLoc(udg_UnitIcon[62]), 90.00, 1, 0)
+//     udg_EnableIcon[62] = GetLastCreatedDestructable()
+//     CreateDestructableLoc(udg_IconHero[63], GetUnitLoc(udg_UnitIcon[63]), 90.00, 1, 0)
+//     udg_EnableIcon[63] = GetLastCreatedDestructable()
+//     CreateDestructableLoc(udg_IconHero[64], GetUnitLoc(udg_UnitIcon[64]), 90.00, 1, 0)
+//     udg_EnableIcon[64] = GetLastCreatedDestructable()
+//     CreateDestructableLoc(udg_IconHero[65], GetUnitLoc(udg_UnitIcon[65]), 90.00, 1, 0)
+//     udg_EnableIcon[65] = GetLastCreatedDestructable()
+//     CreateDestructableLoc(udg_IconHero[66], GetUnitLoc(udg_UnitIcon[66]), 90.00, 1, 0)
+//     udg_EnableIcon[66] = GetLastCreatedDestructable()
+//     CreateDestructableLoc(udg_IconHero[67], GetUnitLoc(udg_UnitIcon[67]), 90.00, 1, 0)
+//     udg_EnableIcon[67] = GetLastCreatedDestructable()
+//     CreateDestructableLoc(udg_IconHero[68], GetUnitLoc(udg_UnitIcon[68]), 90.00, 1, 0)
+//     udg_EnableIcon[68] = GetLastCreatedDestructable()
+//     CreateDestructableLoc(udg_IconHero[69], GetUnitLoc(udg_UnitIcon[69]), 90.00, 1, 0)
+//     udg_EnableIcon[69] = GetLastCreatedDestructable()
+//     CreateDestructableLoc(udg_IconHero[70], GetUnitLoc(udg_UnitIcon[70]), 90.00, 1, 0)
+//     udg_EnableIcon[70] = GetLastCreatedDestructable()
+//     SaveLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 36, GetUnitLoc(udg_UnitIcon[71]))
+//     CreateDestructableLoc(udg_IconHero[71], LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 36), 90.00, 1, 0)
+//     udg_EnableIcon[71] = GetLastCreatedDestructable()
+//     SaveLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 929, GetUnitLoc(udg_UnitIcon[72]))
+//     CreateDestructableLoc(udg_IconHero[72], LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 929), 90.00, 1, 0)
+//     udg_EnableIcon[72] = GetLastCreatedDestructable()
+//     SaveLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 843, GetUnitLoc(udg_UnitIcon[73]))
+//     CreateDestructableLoc(udg_IconHero[73], LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 843), 90.00, 1, 0)
+//     udg_EnableIcon[73] = GetLastCreatedDestructable()
+//     SaveLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 911, GetUnitLoc(udg_UnitIcon[74]))
+//     CreateDestructableLoc(udg_IconHero[74], LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 911), 90.00, 1, 0)
+//     udg_EnableIcon[74] = GetLastCreatedDestructable()
+//     SaveLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 803, GetUnitLoc(udg_UnitIcon[75]))
+//     CreateDestructableLoc(udg_IconHero[75], LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 803), 90.00, 1, 0)
+//     udg_EnableIcon[75] = GetLastCreatedDestructable()
+//     SaveLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 915, GetUnitLoc(udg_UnitIcon[76]))
+//     CreateDestructableLoc(udg_IconHero[76], LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 915), 90.00, 1, 0)
+//     udg_EnableIcon[76] = GetLastCreatedDestructable()
+//     SaveLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 349230650, GetUnitLoc(udg_UnitIcon[77]))
+//     CreateDestructableLoc(udg_IconHero[77], LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 349230650), 90.00, 1, 0)
+//     udg_EnableIcon[77] = GetLastCreatedDestructable()
+//     SaveLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 479, GetUnitLoc(udg_UnitIcon[78]))
+//     CreateDestructableLoc(udg_IconHero[78], LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 479), 90.00, 1, 0)
+//     udg_EnableIcon[78] = GetLastCreatedDestructable()
+//     SaveLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 626, GetUnitLoc(udg_UnitIcon[79]))
+//     CreateDestructableLoc(udg_IconHero[79], LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 626), 90.00, 1, 0)
+//     udg_EnableIcon[79] = GetLastCreatedDestructable()
+//     SaveLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 743855946, GetUnitLoc(udg_UnitIcon[80]))
+//     CreateDestructableLoc(udg_IconHero[80], LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 743855946), 90.00, 1, 0)
+//     udg_EnableIcon[80] = GetLastCreatedDestructable()
+//     SaveLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 511036305, GetUnitLoc(udg_UnitIcon[81]))
+//     CreateDestructableLoc(udg_IconHero[81], LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 511036305), 90.00, 1, 0)
+//     udg_EnableIcon[81] = GetLastCreatedDestructable()
+//     SaveLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1138, GetUnitLoc(udg_UnitIcon[82]))
+//     CreateDestructableLoc(udg_IconHero[82], LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1138), 90.00, 1, 0)
+//     udg_EnableIcon[82] = GetLastCreatedDestructable()
+//     SaveLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 495, GetUnitLoc(udg_UnitIcon[83]))
+//     CreateDestructableLoc(udg_IconHero[83], LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 495), 90.00, 1, 0)
+//     udg_EnableIcon[83] = GetLastCreatedDestructable()
+//     SaveLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 740, GetUnitLoc(udg_UnitIcon[84]))
+//     CreateDestructableLoc(udg_IconHero[84], LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 740), 90.00, 1, 0)
+//     udg_EnableIcon[84] = GetLastCreatedDestructable()
+//     SaveLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 219343969, GetUnitLoc(udg_UnitIcon[85]))
+//     CreateDestructableLoc(udg_IconHero[85], LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 219343969), 90.00, 1, 0)
+//     udg_EnableIcon[85] = GetLastCreatedDestructable()
+//     SaveLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 509, GetUnitLoc(udg_UnitIcon[86]))
+//     CreateDestructableLoc(udg_IconHero[86], LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 509), 90.00, 1, 0)
+//     udg_EnableIcon[86] = GetLastCreatedDestructable()
+//     SaveLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 581, GetUnitLoc(udg_UnitIcon[87]))
+//     CreateDestructableLoc(udg_IconHero[87], LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 581), 90.00, 1, 0)
+//     udg_EnableIcon[87] = GetLastCreatedDestructable()
+//     SaveLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 741, GetUnitLoc(udg_UnitIcon[88]))
+//     CreateDestructableLoc(udg_IconHero[88], LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 741), 90.00, 1, 0)
+//     udg_EnableIcon[88] = GetLastCreatedDestructable()
+//     SaveLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 397, GetUnitLoc(udg_UnitIcon[89]))
+//     CreateDestructableLoc(udg_IconHero[89], LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 397), 90.00, 1, 0)
+//     udg_EnableIcon[89] = GetLastCreatedDestructable()
+//     SaveLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 534, GetUnitLoc(udg_UnitIcon[90]))
+//     CreateDestructableLoc(udg_IconHero[90], LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 534), 90.00, 1, 0)
+//     udg_EnableIcon[90] = GetLastCreatedDestructable()
+//     SaveLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1046, GetUnitLoc(udg_UnitIcon[91]))
+//     CreateDestructableLoc(udg_IconHero[91], LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1046), 90.00, 1, 0)
+//     udg_EnableIcon[91] = GetLastCreatedDestructable()
+//     SaveLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 476, GetUnitLoc(udg_UnitIcon[92]))
+//     CreateDestructableLoc(udg_IconHero[92], LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 476), 90.00, 1, 0)
+//     udg_EnableIcon[92] = GetLastCreatedDestructable()
+//     SaveLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 959, GetUnitLoc(udg_UnitIcon[93]))
+//     CreateDestructableLoc(udg_IconHero[93], LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 959), 90.00, 1, 0)
+//     udg_EnableIcon[93] = GetLastCreatedDestructable()
+//     SaveLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 379, GetUnitLoc(udg_UnitIcon[94]))
+//     CreateDestructableLoc(udg_IconHero[94], LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 379), 90.00, 1, 0)
+//     udg_EnableIcon[94] = GetLastCreatedDestructable()
+//     SaveLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 920, GetUnitLoc(udg_UnitIcon[95]))
+//     CreateDestructableLoc(udg_IconHero[95], LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 920), 90.00, 1, 0)
+//     udg_EnableIcon[95] = GetLastCreatedDestructable()
+//     SaveLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 774, GetUnitLoc(udg_UnitIcon[96]))
+//     CreateDestructableLoc(udg_IconHero[96], LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 774), 90.00, 1, 0)
+//     udg_EnableIcon[96] = GetLastCreatedDestructable()
+//     CreateDestructableLoc(udg_IconHero[99], GetUnitLoc(udg_UnitIcon[99]), 90.00, 1, 0)
+//     udg_EnableIcon[99] = GetLastCreatedDestructable()
+//     CreateDestructableLoc(udg_IconHero[100], GetUnitLoc(udg_UnitIcon[100]), 90.00, 1, 0)
+//     udg_EnableIcon[100] = GetLastCreatedDestructable()
+//     CreateDestructableLoc(udg_IconHero[200], GetUnitLoc(udg_UnitIcon[200]), 90.00, 1, 0)
+//     udg_EnableIcon[200] = GetLastCreatedDestructable()
+//     RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 36))
+//     RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 929))
+//     RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 843))
+//     RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 911))
+//     RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 803))
+//     RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 915))
+//     RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 349230650))
+//     RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 479))
+//     RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 626))
+//     RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 743855946))
+//     RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 511036305))
+//     RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1138))
+//     RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 495))
+//     RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 740))
+//     RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 219343969))
+//     RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 509))
+//     RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 581))
+//     RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 741))
+//     RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 397))
+//     RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 534))
+//     RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1046))
+//     RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 476))
+//     RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 959))
+//     RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 379))
+//     RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 920))
+//     RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 774))
+//     CreateTextTagLocBJ("Team 1", GetRectCenter(gg_rct______________053), 0, 12.00, 100, 30.00, 30.00, 0)
+//     udg_Text[1] = GetLastCreatedTextTag()
+//     CreateTextTagLocBJ("Team 2", GetRectCenter(gg_rct______________055), 0, 12.00, 100, 30.00, 30.00, 0)
+//     udg_Text[2] = GetLastCreatedTextTag()
+//     CreateTextTagLocBJ("Team 3", GetRectCenter(gg_rct______________054), 0, 12.00, 100, 30.00, 30.00, 0)
+//     udg_Text[3] = GetLastCreatedTextTag()
+//     CreateTextTagLocBJ("Random", GetRectCenter(gg_rct______________057), 0, 8.00, 100.00, 30.00, 30.00, 0)
+//     udg_Text[5] = GetLastCreatedTextTag()
+    // CreateTextTagLocBJ("Confirm", GetRectCenter(gg_rct______________058), 0, 8.00, 5.00, 100.00, 40.00, 0)
+//     udg_Text[6] = GetLastCreatedTextTag()
+//     FlushChildHashtable(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID)
+
+// function initTrig_Seticon()
+//     gg_trg_Seticon = CreateTrigger()
+//     TriggerAddAction(gg_trg_Seticon, function trig_SeticonActions)
+
+// function trig_Seticon2Actions()
+//     integer trigger_ID = LoadInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 865)
+//     trigger_ID += 3
+//     SaveInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 865, trigger_ID)
+//     SaveInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 1045, trigger_ID)
+//     // udg_IconHero[97] = 'B06E'
+//     udg_IconDisHero[97] = 'B06F'
+//     udg_UnitIcon[97] = gg_unit_h012_0196
+//     GroupAddUnit(udg_ChooseHeroNewGroup, udg_UnitIcon[97])
+//     udg_HeroType[97] = 'H02X'
+//     SaveLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 36, GetUnitLoc(udg_UnitIcon[97]))
+//     CreateDestructableLoc(udg_IconHero[97], LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 36), 90.00, 1, 0)
+//     udg_EnableIcon[97] = GetLastCreatedDestructable()
+//     RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 36))
+//     // udg_IconHero[98] = 'B078'
+//     udg_IconDisHero[98] = 'B079'
+//     udg_UnitIcon[98] = gg_unit_h012_0199
+//     GroupAddUnit(udg_ChooseHeroNewGroup, udg_UnitIcon[98])
+//     udg_HeroType[98] = 'H038'
+//     SaveLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 929, GetUnitLoc(udg_UnitIcon[98]))
+//     CreateDestructableLoc(udg_IconHero[98], LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 929), 90.00, 1, 0)
+//     udg_EnableIcon[98] = GetLastCreatedDestructable()
+//     RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 929))
+//     // udg_IconHero[101] = 'B06K'
+//     udg_IconDisHero[101] = 'B06L'
+//     udg_UnitIcon[101] = gg_unit_h012_0204
+//     GroupAddUnit(udg_ChooseHeroNewGroup, udg_UnitIcon[101])
+//     udg_HeroType[101] = 'H039'
+//     SaveLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 843, GetUnitLoc(udg_UnitIcon[101]))
+//     CreateDestructableLoc(udg_IconHero[101], LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 843), 90.00, 1, 0)
+//     udg_EnableIcon[101] = GetLastCreatedDestructable()
+//     RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 843))
+//     // udg_IconHero[102] = 'B07A'
+//     udg_IconDisHero[102] = 'B07B'
+//     udg_UnitIcon[102] = gg_unit_h012_0205
+//     GroupAddUnit(udg_ChooseHeroNewGroup, udg_UnitIcon[102])
+//     udg_HeroType[102] = 'H03A'
+//     SaveLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 911, GetUnitLoc(udg_UnitIcon[102]))
+//     CreateDestructableLoc(udg_IconHero[102], LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 911), 90.00, 1, 0)
+//     udg_EnableIcon[102] = GetLastCreatedDestructable()
+//     RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 911))
+//     // udg_IconHero[103] = 'B07C'
+//     udg_IconDisHero[103] = 'B07D'
+//     udg_UnitIcon[103] = gg_unit_h012_0202
+//     GroupAddUnit(udg_ChooseHeroNewGroup, udg_UnitIcon[103])
+//     udg_HeroType[103] = 'H02T'
+//     SaveLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 803, GetUnitLoc(udg_UnitIcon[103]))
+//     CreateDestructableLoc(udg_IconHero[103], LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 803), 90.00, 1, 0)
+//     udg_EnableIcon[103] = GetLastCreatedDestructable()
+//     RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 803))
+//     // udg_IconHero[104] = 'B07E'
+//     udg_IconDisHero[104] = 'B07F'
+//     udg_UnitIcon[104] = gg_unit_h012_0206
+//     GroupAddUnit(udg_ChooseHeroNewGroup, udg_UnitIcon[104])
+//     udg_HeroType[104] = 'H03B'
+//     SaveLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 915, GetUnitLoc(udg_UnitIcon[104]))
+//     CreateDestructableLoc(udg_IconHero[104], LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 915), 90.00, 1, 0)
+//     udg_EnableIcon[104] = GetLastCreatedDestructable()
+//     RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 915))
+//     // udg_IconHero[105] = 'B07G'
+//     udg_IconDisHero[105] = 'B07H'
+//     udg_UnitIcon[105] = gg_unit_h012_0208
+//     GroupAddUnit(udg_ChooseHeroNewGroup, udg_UnitIcon[105])
+//     udg_HeroType[105] = 'H03C'
+//     SaveLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 349230650, GetUnitLoc(udg_UnitIcon[105]))
+//     CreateDestructableLoc(udg_IconHero[105], LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 349230650), 90.00, 1, 0)
+//     udg_EnableIcon[105] = GetLastCreatedDestructable()
+//     RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 349230650))
+//     // udg_IconHero[106] = 'B07S'
+//     udg_IconDisHero[106] = 'B07T'
+//     udg_UnitIcon[106] = gg_unit_h012_0209
+//     GroupAddUnit(udg_ChooseHeroNewGroup, udg_UnitIcon[106])
+//     udg_HeroType[106] = 'H03D'
+//     SaveLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 479, GetUnitLoc(udg_UnitIcon[106]))
+//     CreateDestructableLoc(udg_IconHero[106], LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 479), 90.00, 1, 0)
+//     udg_EnableIcon[106] = GetLastCreatedDestructable()
+//     RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 479))
+//     // udg_IconHero[107] = 'B07U'
+//     udg_IconDisHero[107] = 'B07V'
+//     udg_UnitIcon[107] = gg_unit_h012_0207
+//     GroupAddUnit(udg_ChooseHeroNewGroup, udg_UnitIcon[107])
+//     udg_HeroType[107] = 'H03E'
+//     SaveLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 626, GetUnitLoc(udg_UnitIcon[107]))
+//     CreateDestructableLoc(udg_IconHero[107], LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 626), 90.00, 1, 0)
+//     udg_EnableIcon[107] = GetLastCreatedDestructable()
+//     RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 626))
+//     // udg_IconHero[108] = 'B07W'
+//     udg_IconDisHero[108] = 'B07X'
+//     udg_UnitIcon[108] = gg_unit_h012_0211
+//     GroupAddUnit(udg_ChooseHeroNewGroup, udg_UnitIcon[108])
+//     udg_HeroType[108] = 'H03F'
+//     SaveLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 743855946, GetUnitLoc(udg_UnitIcon[108]))
+//     CreateDestructableLoc(udg_IconHero[108], LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 743855946), 90.00, 1, 0)
+//     udg_EnableIcon[108] = GetLastCreatedDestructable()
+//     RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 743855946))
+//     // udg_IconHero[109] = 'B07Y'
+//     udg_IconDisHero[109] = 'B07Z'
+//     udg_UnitIcon[109] = gg_unit_h012_0214
+//     GroupAddUnit(udg_ChooseHeroNewGroup, udg_UnitIcon[109])
+//     udg_HeroType[109] = 'H03G'
+//     SaveLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 511036305, GetUnitLoc(udg_UnitIcon[109]))
+//     CreateDestructableLoc(udg_IconHero[109], LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 511036305), 90.00, 1, 0)
+//     udg_EnableIcon[109] = GetLastCreatedDestructable()
+//     RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 511036305))
+//     // udg_IconHero[110] = 'B080'
+//     udg_IconDisHero[110] = 'B081'
+//     udg_UnitIcon[110] = gg_unit_h012_0215
+//     GroupAddUnit(udg_ChooseHeroNewGroup, udg_UnitIcon[110])
+//     udg_HeroType[110] = 'H03H'
+//     SaveLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1138, GetUnitLoc(udg_UnitIcon[110]))
+//     CreateDestructableLoc(udg_IconHero[110], LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1138), 90.00, 1, 0)
+//     udg_EnableIcon[110] = GetLastCreatedDestructable()
+//     RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1138))
+//     // udg_IconHero[111] = 'B086'
+//     // udg_IconHero[112] = 'B084'
+//     // udg_IconHero[113] = 'B088'
+//     // udg_IconHero[114] = 'B08D'
+//     // udg_IconHero[115] = 'B08F'
+//     // udg_IconHero[116] = 'B08H'
+//     // udg_IconHero[117] = 'B08J'
+//     // udg_IconHero[118] = 'B08N'
+//     // udg_IconHero[119] = 'B08Q'
+//     // udg_IconHero[120] = 'B08S'
+//     // udg_IconHero[121] = 'B08T'
+//     // udg_IconHero[122] = 'B08V'
+//     // udg_IconHero[123] = 'B08X'
+//     // udg_IconHero[124] = 'B08Z'
+//     // udg_IconHero[125] = 'B092'
+//     // udg_IconHero[126] = 'B094'
+//     // udg_IconHero[127] = 'B096'
+//     // udg_IconHero[128] = 'B098'
+//     // udg_IconHero[129] = 'B06A'
+//     // udg_IconHero[130] = 'B099'
+//     // udg_IconHero[131] = 'B09B'
+//     // udg_IconHero[132] = 'B06Q'
+//     // udg_IconHero[133] = 'B09D'
+//     // udg_IconHero[201] = 'B08O'
+//     // udg_IconHero[202] = 'B091' // Moroha
+//     udg_IconDisHero[111] = 'B087'
+//     udg_IconDisHero[112] = 'B085'
+//     udg_IconDisHero[113] = 'B089'
+//     udg_IconDisHero[114] = 'B08E'
+//     udg_IconDisHero[115] = 'B08G'
+//     udg_IconDisHero[116] = 'B08I'
+//     udg_IconDisHero[117] = 'B08K'
+//     udg_IconDisHero[118] = 'B08C'
+//     udg_IconDisHero[119] = 'B08R'
+//     udg_IconDisHero[120] = 'B08B'
+//     udg_IconDisHero[121] = 'B08U'
+//     udg_IconDisHero[122] = 'B08W'
+//     udg_IconDisHero[123] = 'B08Y'
+//     udg_IconDisHero[124] = 'B090'
+//     udg_IconDisHero[125] = 'B093'
+//     udg_IconDisHero[126] = 'B095'
+//     udg_IconDisHero[127] = 'B097'
+//     udg_IconDisHero[128] = 'B08A'
+//     udg_IconDisHero[129] = 'B06B'
+//     udg_IconDisHero[130] = 'B09A'
+//     udg_IconDisHero[131] = 'B09C'
+//     udg_IconDisHero[132] = 'B06R'
+//     udg_IconDisHero[133] = 'B09E'
+//     udg_IconDisHero[201] = 'B08P'
+//     udg_UnitIcon[111] = gg_unit_h012_0220
+//     udg_UnitIcon[112] = gg_unit_h012_0219
+//     udg_UnitIcon[113] = gg_unit_h012_0218
+//     udg_UnitIcon[114] = gg_unit_h012_0216
+//     udg_UnitIcon[115] = gg_unit_h012_0221
+//     udg_UnitIcon[116] = gg_unit_h012_0217
+//     udg_UnitIcon[117] = gg_unit_h012_0222
+//     udg_UnitIcon[118] = gg_unit_h012_0224
+//     udg_UnitIcon[119] = gg_unit_h012_0226
+//     udg_UnitIcon[120] = gg_unit_h012_0227
+//     udg_UnitIcon[121] = gg_unit_h012_0228
+//     udg_UnitIcon[122] = gg_unit_h012_0229
+//     udg_UnitIcon[123] = gg_unit_h012_0231
+//     udg_UnitIcon[124] = gg_unit_h012_0124
+//     udg_UnitIcon[125] = gg_unit_h012_0232
+//     udg_UnitIcon[126] = gg_unit_h012_0233
+//     udg_UnitIcon[127] = gg_unit_h012_0235
+//     udg_UnitIcon[128] = gg_unit_h012_0234
+//     udg_UnitIcon[129] = gg_unit_h012_0236
+//     udg_UnitIcon[130] = gg_unit_h012_0237
+//     udg_UnitIcon[131] = gg_unit_h012_0238
+//     udg_UnitIcon[132] = gg_unit_h012_0240
+//     udg_UnitIcon[133] = gg_unit_h012_0239
+//     udg_UnitIcon[201] = gg_unit_h012_0225
+//     // udg_UnitIcon[202] = gg_unit_h012_0230 // Moroha most likely, not confirmed
+//     GroupAddUnit(udg_ChooseHeroNewGroup, udg_UnitIcon[111])
+//     GroupAddUnit(udg_ChooseHeroNewGroup, udg_UnitIcon[112])
+//     GroupAddUnit(udg_ChooseHeroNewGroup, udg_UnitIcon[113])
+//     GroupAddUnit(udg_ChooseHeroNewGroup, udg_UnitIcon[114])
+//     GroupAddUnit(udg_ChooseHeroNewGroup, udg_UnitIcon[115])
+//     GroupAddUnit(udg_ChooseHeroNewGroup, udg_UnitIcon[116])
+//     GroupAddUnit(udg_ChooseHeroNewGroup, udg_UnitIcon[117])
+//     GroupAddUnit(udg_ChooseHeroNewGroup, udg_UnitIcon[118])
+//     GroupAddUnit(udg_ChooseHeroNewGroup, udg_UnitIcon[119])
+//     GroupAddUnit(udg_ChooseHeroNewGroup, udg_UnitIcon[120])
+//     GroupAddUnit(udg_ChooseHeroNewGroup, udg_UnitIcon[121])
+//     GroupAddUnit(udg_ChooseHeroNewGroup, udg_UnitIcon[122])
+//     GroupAddUnit(udg_ChooseHeroNewGroup, udg_UnitIcon[123])
+//     GroupAddUnit(udg_ChooseHeroNewGroup, udg_UnitIcon[124])
+//     GroupAddUnit(udg_ChooseHeroNewGroup, udg_UnitIcon[125])
+//     GroupAddUnit(udg_ChooseHeroNewGroup, udg_UnitIcon[126])
+//     GroupAddUnit(udg_ChooseHeroNewGroup, udg_UnitIcon[127])
+//     GroupAddUnit(udg_ChooseHeroNewGroup, udg_UnitIcon[128])
+//     GroupAddUnit(udg_ChooseHeroNewGroup, udg_UnitIcon[129])
+//     GroupAddUnit(udg_ChooseHeroNewGroup, udg_UnitIcon[130])
+//     GroupAddUnit(udg_ChooseHeroNewGroup, udg_UnitIcon[131])
+//     GroupAddUnit(udg_ChooseHeroNewGroup, udg_UnitIcon[132])
+//     GroupAddUnit(udg_ChooseHeroNewGroup, udg_UnitIcon[133])
+//     udg_HeroType[111] = 'H03K'
+//     udg_HeroType[112] = 'H03J'
+//     udg_HeroType[113] = OKITA_STRENGTH
+//     udg_HeroType[114] = ICHIGO_STRENGTH
+//     udg_HeroType[115] = MADARA_EDO
+//     udg_HeroType[116] = 'H03R'
+//     udg_HeroType[117] = 'H03S'
+//     udg_HeroType[118] = 'H03U'
+//     udg_HeroType[119] = 'H03W'
+//     udg_HeroType[120] = 'H03X'
+//     udg_HeroType[121] = 'H03Z'
+//     udg_HeroType[122] = 'H043'
+//     udg_HeroType[123] = 'H040'
+//     udg_HeroType[124] = 'H042'
+//     udg_HeroType[125] = ENMA_AI
+//     udg_HeroType[126] = 'H046'
+//     udg_HeroType[127] = PAIN_NAGATO
+//     udg_HeroType[128] = 'H048'
+//     udg_HeroType[129] = 'H02Q'
+//     udg_HeroType[130] = 'H049'
+//     udg_HeroType[131] = 'H04A'
+//     udg_HeroType[132] = KIYOHIME_STRENGTH
+//     udg_HeroType[133] = 'H04B'
+//     udg_HeroType[201] = 'H03V'
+//     // udg_HeroType[202] = 'H044' // Moroha
+//     SaveLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 495, GetUnitLoc(udg_UnitIcon[111]))
+//     SaveLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 740, GetUnitLoc(udg_UnitIcon[112]))
+//     SaveLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 219343969, GetUnitLoc(udg_UnitIcon[113]))
+//     SaveLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 509, GetUnitLoc(udg_UnitIcon[114]))
+//     SaveLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 581, GetUnitLoc(udg_UnitIcon[115]))
+//     SaveLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 741, GetUnitLoc(udg_UnitIcon[116]))
+//     SaveLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 397, GetUnitLoc(udg_UnitIcon[117]))
+//     SaveLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 534, GetUnitLoc(udg_UnitIcon[118]))
+//     SaveLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1046, GetUnitLoc(udg_UnitIcon[201]))
+//     SaveLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 476, GetUnitLoc(udg_UnitIcon[119]))
+//     SaveLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 959, GetUnitLoc(udg_UnitIcon[120]))
+//     SaveLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 379, GetUnitLoc(udg_UnitIcon[121]))
+//     SaveLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 920, GetUnitLoc(udg_UnitIcon[122]))
+//     SaveLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 774, GetUnitLoc(udg_UnitIcon[123]))
+//     SaveLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 839815395, GetUnitLoc(udg_UnitIcon[124]))
+//     SaveLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1102, GetUnitLoc(udg_UnitIcon[125]))
+//     SaveLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 57, GetUnitLoc(udg_UnitIcon[126]))
+//     SaveLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 773, GetUnitLoc(udg_UnitIcon[127]))
+//     SaveLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 12, GetUnitLoc(udg_UnitIcon[128]))
+//     SaveLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 468, GetUnitLoc(udg_UnitIcon[129]))
+//     SaveLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 967, GetUnitLoc(udg_UnitIcon[130]))
+//     SaveLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 458, GetUnitLoc(udg_UnitIcon[131]))
+//     SaveLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1067, GetUnitLoc(udg_UnitIcon[132]))
+//     SaveLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 699, GetUnitLoc(udg_UnitIcon[133]))
+//     CreateDestructableLoc(udg_IconHero[111], LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 495), 90.00, 1, 0)
+//     udg_EnableIcon[111] = GetLastCreatedDestructable()
+//     CreateDestructableLoc(udg_IconHero[112], LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 740), 90.00, 1, 0)
+//     udg_EnableIcon[112] = GetLastCreatedDestructable()
+//     CreateDestructableLoc(udg_IconHero[113], LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 219343969), 90.00, 1, 0)
+//     udg_EnableIcon[113] = GetLastCreatedDestructable()
+//     CreateDestructableLoc(udg_IconHero[114], LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 509), 90.00, 1, 0)
+//     udg_EnableIcon[114] = GetLastCreatedDestructable()
+//     CreateDestructableLoc(udg_IconHero[115], LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 581), 90.00, 1, 0)
+//     udg_EnableIcon[115] = GetLastCreatedDestructable()
+//     CreateDestructableLoc(udg_IconHero[116], LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 741), 90.00, 1, 0)
+//     udg_EnableIcon[116] = GetLastCreatedDestructable()
+//     CreateDestructableLoc(udg_IconHero[117], LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 397), 90.00, 1, 0)
+//     udg_EnableIcon[117] = GetLastCreatedDestructable()
+//     CreateDestructableLoc(udg_IconHero[118], LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 534), 90.00, 1, 0)
+//     udg_EnableIcon[118] = GetLastCreatedDestructable()
+//     CreateDestructableLoc(udg_IconHero[119], LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 476), 90.00, 1, 0)
+//     udg_EnableIcon[119] = GetLastCreatedDestructable()
+//     CreateDestructableLoc(udg_IconHero[120], LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 959), 90.00, 1, 0)
+//     udg_EnableIcon[120] = GetLastCreatedDestructable()
+//     CreateDestructableLoc(udg_IconHero[121], LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 379), 90.00, 1, 0)
+//     udg_EnableIcon[121] = GetLastCreatedDestructable()
+//     CreateDestructableLoc(udg_IconHero[122], LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 920), 90.00, 1, 0)
+//     udg_EnableIcon[122] = GetLastCreatedDestructable()
+//     CreateDestructableLoc(udg_IconHero[123], LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 774), 90.00, 1, 0)
+//     udg_EnableIcon[123] = GetLastCreatedDestructable()
+//     CreateDestructableLoc(udg_IconHero[124], LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 839815395), 90.00, 1, 0)
+//     udg_EnableIcon[124] = GetLastCreatedDestructable()
+//     CreateDestructableLoc(udg_IconHero[125], LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1102), 90.00, 1, 0)
+//     udg_EnableIcon[125] = GetLastCreatedDestructable()
+//     CreateDestructableLoc(udg_IconHero[126], LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 57), 90.00, 1, 0)
+//     udg_EnableIcon[126] = GetLastCreatedDestructable()
+//     CreateDestructableLoc(udg_IconHero[127], LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 773), 90.00, 1, 0)
+//     udg_EnableIcon[127] = GetLastCreatedDestructable()
+//     CreateDestructableLoc(udg_IconHero[128], LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 12), 90.00, 1, 0)
+//     udg_EnableIcon[128] = GetLastCreatedDestructable()
+//     CreateDestructableLoc(udg_IconHero[129], LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 468), 90.00, 1, 0)
+//     udg_EnableIcon[129] = GetLastCreatedDestructable()
+//     CreateDestructableLoc(udg_IconHero[130], LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 967), 90.00, 1, 0)
+//     udg_EnableIcon[130] = GetLastCreatedDestructable()
+//     CreateDestructableLoc(udg_IconHero[131], LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 458), 90.00, 1, 0)
+//     udg_EnableIcon[131] = GetLastCreatedDestructable()
+//     CreateDestructableLoc(udg_IconHero[132], LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1067), 90.00, 1, 0)
+//     udg_EnableIcon[132] = GetLastCreatedDestructable()
+//     CreateDestructableLoc(udg_IconHero[133], LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 699), 90.00, 1, 0)
+//     udg_EnableIcon[133] = GetLastCreatedDestructable()
+//     CreateDestructableLoc(udg_IconHero[201], LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1046), 90.00, 1, 0)
+//     udg_EnableIcon[201] = GetLastCreatedDestructable()
+//     RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 495))
+//     RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 740))
+//     RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 219343969))
+//     RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 509))
+//     RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 581))
+//     RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 741))
+//     RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 397))
+//     RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 534))
+//     RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1046))
+//     RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 476))
+//     RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 959))
+//     RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 379))
+//     RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 920))
+//     RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 774))
+//     RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 839815395))
+//     RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1102))
+//     RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 57))
+//     RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 773))
+//     RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 12))
+//     RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 468))
+//     RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 967))
+//     RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 458))
+//     RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1067))
+//     RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 699))
+//     FlushChildHashtable(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID)
+
+// function initTrig_Seticon2()
+//     gg_trg_Seticon2 = CreateTrigger()
+//     TriggerAddAction(gg_trg_Seticon2, function trig_Seticon2Actions)
+
+// function trig_OK_ButtonConditions() returns boolean
+//     return GetTriggerUnit() == gg_unit_h012_0101 and udg_SelectYet[GetConvertedPlayerId(GetTriggerPlayer())] == false and udg_MenoHero[GetConvertedPlayerId(GetTriggerPlayer())] != 0
+
+// function trig_OK_ButtonActions()
+//     integer trigger_ID = LoadInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 865)
+//     trigger_ID += 3
+//     SaveInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 865, trigger_ID)
+//     SaveInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 1045, trigger_ID)
+//     udg_PlayerInter = GetConvertedPlayerId(GetTriggerPlayer())
+//     if udg_HeroGone[udg_MenoHero[udg_PlayerInter]] == false
+//         udg_soundplayunit[7] = gg_unit_h012_0101
+//         soundPlay("war3mapImported\\ChooseOK.mp3", GetUnitX(udg_soundplayunit[7]), GetUnitY(udg_soundplayunit[7]))
+//         udg_HeroGone[udg_MenoHero[udg_PlayerInter]] = true
+//         udg_SelectYet[udg_PlayerInter] = true
+//         RemoveDestructable(udg_EnableIcon[udg_MenoHero[udg_PlayerInter]])
+//         SaveLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1108, GetUnitLoc(udg_UnitIcon[udg_MenoHero[udg_PlayerInter]]))
+//         CreateDestructableLoc(udg_IconDisHero[udg_MenoHero[udg_PlayerInter]], LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1108), GetRandomDirectionDeg(), 1, 0)
+//         udg_EnableIcon[udg_MenoHero[udg_PlayerInter]] = GetLastCreatedDestructable()
+//         RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1108))
+//         RemoveUnit(udg_UnitIcon[udg_MenoHero[udg_PlayerInter]])
+//         SaveLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 683, udg_PointSelectHero[udg_PlayerInter])
+//         SaveEffectHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 223, AddSpecialEffectLoc("war3mapImported\\Rasengan6.mdl", LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 683)))
+//         DestroyEffect(LoadEffectHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 223))
+//         RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 683))
+//         if udg_MenoHero[udg_PlayerInter] == 42
+//             udg_YeshaOpen[udg_PlayerInter] = true
+//     FlushChildHashtable(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID)
+
+// function initTrig_OK_Button()
+//     gg_trg_OK_Button = CreateTrigger()
+//     DisableTrigger(gg_trg_OK_Button)
+//     TriggerRegisterPlayerSelectionEventBJ(gg_trg_OK_Button, Player(0), true)
+//     TriggerRegisterPlayerSelectionEventBJ(gg_trg_OK_Button, Player(1), true)
+//     TriggerRegisterPlayerSelectionEventBJ(gg_trg_OK_Button, Player(2), true)
+//     TriggerRegisterPlayerSelectionEventBJ(gg_trg_OK_Button, Player(3), true)
+//     TriggerRegisterPlayerSelectionEventBJ(gg_trg_OK_Button, Player(4), true)
+//     TriggerRegisterPlayerSelectionEventBJ(gg_trg_OK_Button, Player(5), true)
+//     TriggerRegisterPlayerSelectionEventBJ(gg_trg_OK_Button, Player(6), true)
+//     TriggerRegisterPlayerSelectionEventBJ(gg_trg_OK_Button, Player(7), true)
+//     TriggerRegisterPlayerSelectionEventBJ(gg_trg_OK_Button, Player(8), true)
+//     TriggerRegisterPlayerSelectionEventBJ(gg_trg_OK_Button, Player(9), true)
+//     TriggerRegisterPlayerSelectionEventBJ(gg_trg_OK_Button, Player(10), true)
+//     TriggerRegisterPlayerSelectionEventBJ(gg_trg_OK_Button, Player(11), true)
+//     TriggerRegisterPlayerSelectionEventBJ(gg_trg_OK_Button, Player(12), true)
+//     TriggerRegisterPlayerSelectionEventBJ(gg_trg_OK_Button, Player(13), true)
+//     TriggerRegisterPlayerSelectionEventBJ(gg_trg_OK_Button, Player(14), true)
+//     TriggerRegisterPlayerSelectionEventBJ(gg_trg_OK_Button, Player(15), true)
+//     TriggerAddCondition(gg_trg_OK_Button, Condition(function trig_OK_ButtonConditions))
+//     TriggerAddAction(gg_trg_OK_Button, function trig_OK_ButtonActions)
+
+// function trig_SecretChooseConditions() returns boolean
+//     return (GetUnitTypeId(GetTriggerUnit()) == 'h012' and GetTriggerUnit() == gg_unit_h012_0183) or GetTriggerUnit() == gg_unit_h012_0187 or GetTriggerUnit() == gg_unit_h012_0223 or GetTriggerUnit() == gg_unit_h012_0197 or GetTriggerUnit() == gg_unit_h012_0225 or (GetTriggerUnit() == gg_unit_h012_0230 and udg_SelectYet[GetConvertedPlayerId(GetTriggerPlayer())] == false)
+
+// function trig_SecretChooseActions()
+//     integer trigger_ID = LoadInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 865)
+//     trigger_ID += 3
+//     SaveInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 865, trigger_ID)
+//     SaveInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 1045, trigger_ID)
+//     soundPlay("war3mapImported\\ChooseUnit.mp3", GetUnitX(udg_Unitsound), GetUnitY(udg_Unitsound))
+//     udg_PlayerInter = GetConvertedPlayerId(GetTriggerPlayer())
+//     RemoveUnit(udg_choosehero[udg_PlayerInter])
+//     // if GetTriggerUnit() == udg_UnitIcon[202] // Moroha
+//     //     udg_MenoHero[udg_PlayerInter] = 202
+//     //     RemoveDestructable(udg_OldIcon[udg_PlayerInter])
+//     //     CreateDestructableLoc(udg_IconHero[202], udg_PointSelectHero[udg_PlayerInter], GetRandomDirectionDeg(), 1, 0)
+//     //     udg_OldIcon[udg_PlayerInter] = GetLastCreatedDestructable()
+//     //     SaveLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1108, GetRectCenter(gg_rct______________066))
+//     //     CreateNUnitsAtLoc(1, 'e117', GetTriggerPlayer(), LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1108), bj_UNIT_FACING)
+//     //     udg_choosehero[udg_PlayerInter] = GetLastCreatedUnit()
+//     //     SetUnitVertexColorBJ(udg_choosehero[udg_PlayerInter], 100, 100, 100, 100.00)
+//     //     SaveReal(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 921, 10000.00)
+//     //     if GetTriggerPlayer() == GetLocalPlayer()
+//     //         SaveReal(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 921, 150.00)
+//     //         SetUnitVertexColorBJ(udg_choosehero[udg_PlayerInter], 100, 100, 100, 0.00)
+//     //     SetUnitFlyHeight(udg_choosehero[udg_PlayerInter], LoadReal(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 921), 0.00)
+//     //     SetUnitAnimationByIndex(udg_choosehero[udg_PlayerInter], 0)
+//     //     RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1108))
+//     if GetTriggerUnit() == udg_UnitIcon[200]
+//         udg_MenoHero[udg_PlayerInter] = 200
+//         RemoveDestructable(udg_OldIcon[udg_PlayerInter])
+//         CreateDestructableLoc(udg_IconHero[200], udg_PointSelectHero[udg_PlayerInter], GetRandomDirectionDeg(), 1, 0)
+//         udg_OldIcon[udg_PlayerInter] = GetLastCreatedDestructable()
+//         SaveLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1108, GetRectCenter(gg_rct______________066))
+//         CreateNUnitsAtLoc(1, 'e0QM', GetTriggerPlayer(), LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1108), bj_UNIT_FACING)
+//         udg_choosehero[udg_PlayerInter] = GetLastCreatedUnit()
+//         SetUnitVertexColorBJ(udg_choosehero[udg_PlayerInter], 100, 100, 100, 100.00)
+//         if GetTriggerPlayer() == GetLocalPlayer()
+//             SetUnitVertexColorBJ(udg_choosehero[udg_PlayerInter], 100, 100, 100, 0)
+//         else
+//             DoNothing()
+//         SetUnitAnimation(udg_choosehero[udg_PlayerInter], "Stand")
+//         RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1108))
+//     if GetTriggerUnit() == udg_UnitIcon[79]
+//         udg_MenoHero[udg_PlayerInter] = 79
+//         RemoveDestructable(udg_OldIcon[udg_PlayerInter])
+//         CreateDestructableLoc(udg_IconHero[79], udg_PointSelectHero[udg_PlayerInter], GetRandomDirectionDeg(), 1, 0)
+//         udg_OldIcon[udg_PlayerInter] = GetLastCreatedDestructable()
+//         SaveLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1108, GetRectCenter(gg_rct______________066))
+//         CreateNUnitsAtLoc(1, 'e0U9', GetTriggerPlayer(), LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1108), bj_UNIT_FACING)
+//         udg_choosehero[udg_PlayerInter] = GetLastCreatedUnit()
+//         SetUnitVertexColorBJ(udg_choosehero[udg_PlayerInter], 100, 100, 100, 100.00)
+//         if GetTriggerPlayer() == GetLocalPlayer()
+//             SetUnitVertexColorBJ(udg_choosehero[udg_PlayerInter], 100, 100, 100, 0.00)
+//         SetUnitAnimation(udg_choosehero[udg_PlayerInter], "stand")
+//         RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1108))
+//     if GetTriggerUnit() == udg_UnitIcon[87]
+//         udg_MenoHero[udg_PlayerInter] = 87
+//         RemoveDestructable(udg_OldIcon[udg_PlayerInter])
+//         CreateDestructableLoc(udg_IconHero[87], udg_PointSelectHero[udg_PlayerInter], GetRandomDirectionDeg(), 1, 0)
+//         udg_OldIcon[udg_PlayerInter] = GetLastCreatedDestructable()
+//         SaveLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1108, GetRectCenter(gg_rct______________066))
+//         CreateNUnitsAtLoc(1, 'e0W5', GetTriggerPlayer(), LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1108), bj_UNIT_FACING)
+//         udg_choosehero[udg_PlayerInter] = GetLastCreatedUnit()
+//         SetUnitVertexColorBJ(udg_choosehero[udg_PlayerInter], 100, 100, 100, 100.00)
+//         if GetTriggerPlayer() == GetLocalPlayer()
+//             SetUnitVertexColorBJ(udg_choosehero[udg_PlayerInter], 100, 100, 100, 0)
+//         else
+//             DoNothing()
+//         SetUnitAnimation(udg_choosehero[udg_PlayerInter], "Stand")
+//         RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1108))
+//     if GetTriggerUnit() == udg_UnitIcon[80]
+//         udg_MenoHero[udg_PlayerInter] = 80
+//         RemoveDestructable(udg_OldIcon[udg_PlayerInter])
+//         CreateDestructableLoc(udg_IconHero[80], udg_PointSelectHero[udg_PlayerInter], GetRandomDirectionDeg(), 1, 0)
+//         udg_OldIcon[udg_PlayerInter] = GetLastCreatedDestructable()
+//         SaveLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1108, GetRectCenter(gg_rct______________066))
+//         CreateNUnitsAtLoc(1, 'e0UR', GetTriggerPlayer(), LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1108), bj_UNIT_FACING)
+//         udg_choosehero[udg_PlayerInter] = GetLastCreatedUnit()
+//         SetUnitVertexColorBJ(udg_choosehero[udg_PlayerInter], 100, 100, 100, 100.00)
+//         if GetTriggerPlayer() == GetLocalPlayer()
+//             SetUnitVertexColorBJ(udg_choosehero[udg_PlayerInter], 100, 100, 100, 0.00)
+//         SetUnitAnimation(udg_choosehero[udg_PlayerInter], "stand")
+//         RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1108))
+//     else if GetTriggerUnit() == udg_UnitIcon[201]
+//         udg_MenoHero[udg_PlayerInter] = 201
+//         RemoveDestructable(udg_OldIcon[udg_PlayerInter])
+//         CreateDestructableLoc(udg_IconHero[201], udg_PointSelectHero[udg_PlayerInter], GetRandomDirectionDeg(), 1, 0)
+//         udg_OldIcon[udg_PlayerInter] = GetLastCreatedDestructable()
+//         SaveLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1108, GetRectCenter(gg_rct______________066))
+//         CreateNUnitsAtLoc(1, 'e10M', GetTriggerPlayer(), LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1108), bj_UNIT_FACING)
+//         udg_choosehero[udg_PlayerInter] = GetLastCreatedUnit()
+//         SetUnitVertexColorBJ(udg_choosehero[udg_PlayerInter], 100, 100, 100, 100.00)
+//         SaveReal(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 921, 10000.00)
+//         if GetTriggerPlayer() == GetLocalPlayer()
+//             SaveReal(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 921, 150.00)
+//             SetUnitVertexColorBJ(udg_choosehero[udg_PlayerInter], 100, 100, 100, 0.00)
+//         SetUnitFlyHeight(udg_choosehero[udg_PlayerInter], LoadReal(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 921), 0.00)
+//         SetUnitAnimationByIndex(udg_choosehero[udg_PlayerInter], 6)
+//         RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1108))
+//     FlushChildHashtable(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID)
+
+// public function initTrig_SecretChoose_Orig()
+//     gg_trg_SecretChoose = CreateTrigger()
+//     DisableTrigger(gg_trg_SecretChoose)
+//     TriggerRegisterPlayerSelectionEventBJ(gg_trg_SecretChoose, Player(0), true)
+//     TriggerRegisterPlayerSelectionEventBJ(gg_trg_SecretChoose, Player(1), true)
+//     TriggerRegisterPlayerSelectionEventBJ(gg_trg_SecretChoose, Player(2), true)
+//     TriggerRegisterPlayerSelectionEventBJ(gg_trg_SecretChoose, Player(3), true)
+//     TriggerRegisterPlayerSelectionEventBJ(gg_trg_SecretChoose, Player(4), true)
+//     TriggerRegisterPlayerSelectionEventBJ(gg_trg_SecretChoose, Player(5), true)
+//     TriggerRegisterPlayerSelectionEventBJ(gg_trg_SecretChoose, Player(6), true)
+//     TriggerRegisterPlayerSelectionEventBJ(gg_trg_SecretChoose, Player(7), true)
+//     TriggerRegisterPlayerSelectionEventBJ(gg_trg_SecretChoose, Player(8), true)
+//     TriggerRegisterPlayerSelectionEventBJ(gg_trg_SecretChoose, Player(9), true)
+//     TriggerRegisterPlayerSelectionEventBJ(gg_trg_SecretChoose, Player(10), true)
+//     TriggerRegisterPlayerSelectionEventBJ(gg_trg_SecretChoose, Player(11), true)
+//     TriggerRegisterPlayerSelectionEventBJ(gg_trg_SecretChoose, Player(12), true)
+//     TriggerRegisterPlayerSelectionEventBJ(gg_trg_SecretChoose, Player(13), true)
+//     TriggerRegisterPlayerSelectionEventBJ(gg_trg_SecretChoose, Player(14), true)
+//     TriggerRegisterPlayerSelectionEventBJ(gg_trg_SecretChoose, Player(15), true)
+//     TriggerAddCondition(gg_trg_SecretChoose, Condition(function trig_SecretChooseConditions))
+//     TriggerAddAction(gg_trg_SecretChoose, function trig_SecretChooseActions)
+
+// function trig_Random_ButtonConditions() returns boolean
+//     return GetTriggerUnit() == gg_unit_h012_0100 and udg_SelectYet[GetConvertedPlayerId(GetTriggerPlayer())] == false
+
+// function trig_Random_ButtonActions()
+//     integer trigger_ID = LoadInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 865)
+//     trigger_ID += 3
+//     SaveInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 865, trigger_ID)
+//     SaveInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 1045, trigger_ID)
+//     udg_PlayerInter = GetConvertedPlayerId(GetTriggerPlayer())
+//     while true
+//         if udg_SelectYet[udg_PlayerInter] == true
+//             break
+//         udg_RandomHero = GetRandomInt(1, udg_Maxhero)
+//         if udg_HeroGone[udg_RandomHero] == false
+//             udg_MenoHero[udg_PlayerInter] = udg_RandomHero
+//             RemoveDestructable(udg_OldIcon[udg_PlayerInter])
+//             CreateDestructableLoc(udg_IconHero[udg_RandomHero], udg_PointSelectHero[udg_PlayerInter], GetRandomDirectionDeg(), 1, 0)
+//             udg_OldIcon[udg_PlayerInter] = GetLastCreatedDestructable()
+//             udg_HeroGone[udg_RandomHero] = true
+//             udg_SelectYet[udg_PlayerInter] = true
+//             RemoveDestructable(udg_EnableIcon[udg_RandomHero])
+//             SaveLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1108, GetUnitLoc(udg_UnitIcon[udg_RandomHero]))
+//             CreateDestructableLoc(udg_IconDisHero[udg_RandomHero], LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1108), GetRandomDirectionDeg(), 1, 0)
+//             udg_EnableIcon[udg_MenoHero[udg_PlayerInter]] = GetLastCreatedDestructable()
+//             RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1108))
+//             RemoveUnit(udg_UnitIcon[udg_RandomHero])
+//             SaveLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 683, udg_PointSelectHero[udg_PlayerInter])
+//             SaveEffectHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 223, AddSpecialEffectLoc("war3mapImported\\Rasengan6.mdl", LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 683)))
+//             DestroyEffect(LoadEffectHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 223))
+//             RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 683))
+//             AdjustPlayerStateBJ(520, GetTriggerPlayer(), PLAYER_STATE_RESOURCE_GOLD)
+//     FlushChildHashtable(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID)
+
+// function initTrig_Random_Button()
+//     gg_trg_Random_Button = CreateTrigger()
+//     DisableTrigger(gg_trg_Random_Button)
+//     TriggerRegisterPlayerSelectionEventBJ(gg_trg_Random_Button, Player(0), true)
+//     TriggerRegisterPlayerSelectionEventBJ(gg_trg_Random_Button, Player(1), true)
+//     TriggerRegisterPlayerSelectionEventBJ(gg_trg_Random_Button, Player(2), true)
+//     TriggerRegisterPlayerSelectionEventBJ(gg_trg_Random_Button, Player(3), true)
+//     TriggerRegisterPlayerSelectionEventBJ(gg_trg_Random_Button, Player(4), true)
+//     TriggerRegisterPlayerSelectionEventBJ(gg_trg_Random_Button, Player(5), true)
+//     TriggerRegisterPlayerSelectionEventBJ(gg_trg_Random_Button, Player(6), true)
+//     TriggerRegisterPlayerSelectionEventBJ(gg_trg_Random_Button, Player(7), true)
+//     TriggerRegisterPlayerSelectionEventBJ(gg_trg_Random_Button, Player(8), true)
+//     TriggerRegisterPlayerSelectionEventBJ(gg_trg_Random_Button, Player(9), true)
+//     TriggerRegisterPlayerSelectionEventBJ(gg_trg_Random_Button, Player(10), true)
+//     TriggerRegisterPlayerSelectionEventBJ(gg_trg_Random_Button, Player(11), true)
+//     TriggerRegisterPlayerSelectionEventBJ(gg_trg_Random_Button, Player(12), true)
+//     TriggerRegisterPlayerSelectionEventBJ(gg_trg_Random_Button, Player(13), true)
+//     TriggerRegisterPlayerSelectionEventBJ(gg_trg_Random_Button, Player(14), true)
+//     TriggerRegisterPlayerSelectionEventBJ(gg_trg_Random_Button, Player(15), true)
+//     TriggerAddCondition(gg_trg_Random_Button, Condition(function trig_Random_ButtonConditions))
+//     TriggerAddAction(gg_trg_Random_Button, function trig_Random_ButtonActions)

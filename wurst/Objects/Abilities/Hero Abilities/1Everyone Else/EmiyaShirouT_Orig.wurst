@@ -1,0 +1,273 @@
+package EmiyaShirouT_Orig
+import DamageEvent
+import AbilityGlobals
+import main
+import ClosureTimers
+import ACR_TagSystem
+
+int array shiroTCount
+unit shiroTTarget
+vec2 shiroTTargetPoint
+vec2 shiroCurrentPosition
+
+init
+    initTrig_EmiyaShirouT_Orig()
+
+function trig_EmiyaShirouTConditions() returns boolean
+    return GetSpellAbilityId() == 'A0PR'
+function trig_EmiyaShirouTFunc015Func001Func014Func001Func004A()
+    RemoveUnit(GetEnumUnit())
+function trig_EmiyaShirouTFunc015Func001Func014Func001Func020Func001Func003003003() returns boolean
+    return IsUnitType(GetFilterUnit(), UNIT_TYPE_STRUCTURE) == false and IsUnitDeadBJ(GetFilterUnit()) == false and IsUnitInGroup(GetFilterUnit(), LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 744928215)) == false and GetUnitAbilityLevel(GetFilterUnit(), 'Avul') != 1 and IsUnitEnemy(GetFilterUnit(), LoadPlayerHandle(YDLOC, GetHandleId(GetExpiredTimer()), 603)) == true
+function trig_EmiyaShirouTFunc015Func001Func014Func001Func020Func001Func004A()
+    let id = GetEnumUnit().getUserData()
+    if shiroTCount[id] == 0
+        doAfter(10) ->
+            shiroTCount[id] = 0                
+    if shiroTCount[id] < 3 and GetEnumUnit() != shiroTTarget    
+        DamageEvent.setNextDamageId(DAMAGE_ABILITY_SHIRO_T)
+        DamageEvent.setNextDamageFromCode()
+        UnitDamageTargetBJ(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), GetEnumUnit(), 0.75 * I2R(GetHeroAgi(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), true)), ATTACK_TYPE_MAGIC, DAMAGE_TYPE_MAGIC)
+        shiroTCount[id]++       
+    GroupAddUnit(LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 744928215), GetEnumUnit())
+function trig_EmiyaShirouTFunc015Func001Func014Func001Func020T()
+    //group _ydl_group
+    //unit _ydl_unit
+    if GetUnitFlyHeight(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 498)) <= GetRandomReal(60.00, 150.00)
+        SaveGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 744928215, CreateGroup())
+        SaveLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 583, GetUnitLoc(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 498)))
+        SaveGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 752, yDWEGetUnitsInRangeOfLocMatchingNull(400.00, LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 583), Condition(function trig_EmiyaShirouTFunc015Func001Func014Func001Func020Func001Func003003003)))
+        ForGroupBJ(LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 752), function trig_EmiyaShirouTFunc015Func001Func014Func001Func020Func001Func004A)
+        GroupClear(LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 752))
+        DestroyGroup(LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 752))
+        RemoveUnit(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 498))
+        RemoveUnit(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 933))
+        GroupClear(LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 744928215))
+        DestroyGroup(LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 744928215))
+        SaveUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 105, CreateUnitAtLoc(LoadPlayerHandle(YDLOC, GetHandleId(GetExpiredTimer()), 603), 'e0AT', LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 583), GetRandomDirectionDeg()))
+        SetUnitScale(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 105), 1, 1, 1)
+        UnitApplyTimedLife(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 105), 'BHwe', 1.20)
+        RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 583))
+        FlushChildHashtable(YDLOC, GetHandleId(GetExpiredTimer()))
+        DestroyTimer(GetExpiredTimer())
+    else
+        SaveLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 688, GetUnitLoc(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 498)))
+        SaveLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 526, PolarProjectionBJ(LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 688), GetRandomReal(55.00, 75.00), GetUnitFacing(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 498))))
+        SetUnitPositionLoc(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 498), LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 526))
+        SetUnitPositionLoc(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 933), LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 688))
+        SetUnitFlyHeight(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 498), GetUnitFlyHeight(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 498)) - GetRandomReal(35.00, 70.00), 0.00)
+        SetUnitFlyHeight(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 933), GetUnitFlyHeight(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 498)), 0.00)
+        RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 688))
+        RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 526))
+function trig_EmiyaShirouTFunc015Func001Func014T()
+    //group _ydl_group
+    //unit _ydl_unit
+    timer _ydl_timer
+    if LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 280) >= 200
+        // CameraClearNoiseForPlayer(LoadPlayerHandle(YDLOC, GetHandleId(GetExpiredTimer()), 603))
+        ForGroupBJ(LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 993), function trig_EmiyaShirouTFunc015Func001Func014Func001Func004A)
+        GroupClear(LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 993))
+        DestroyGroup(LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 993))
+        bj_forLoopAIndex = 1
+        bj_forLoopAIndexEnd = 60
+        while true
+            if bj_forLoopAIndex > bj_forLoopAIndexEnd
+                break
+            RemoveDestructable(udg_ShirouUBW[GetForLoopIndexA()])
+            bj_forLoopAIndex++
+        RemoveUnit(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 132))
+        RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 549))
+        SetUnitInvulnerable(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 552), false)
+        DamageEvent.setNextDamageId(DAMAGE_ABILITY_T)
+        DamageEvent.setNextDamageFromCode()
+        UnitDamageTargetBJ(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 552), 15.00 * I2R(GetHeroAgi(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), true)), ATTACK_TYPE_MAGIC, DAMAGE_TYPE_MAGIC)
+        PauseUnit(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 552), false)
+        FlushChildHashtable(YDLOC, GetHandleId(GetExpiredTimer()))
+        DestroyTimer(GetExpiredTimer())
+    else
+        SaveInteger(YDLOC, GetHandleId(GetExpiredTimer()), 280, LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 280) + 1)
+        SaveInteger(YDLOC, GetHandleId(GetExpiredTimer()), 5290936, GetRandomInt(1, 2))
+        SaveLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 856, GetUnitLoc(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 132)))
+        if LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 5290936) == 1
+            SaveLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 300, PolarProjectionBJ(LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 856), GetRandomReal(1500.00, 1800.00), GetRandomDirectionDeg()))
+            SaveUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 498, CreateUnitAtLoc(LoadPlayerHandle(YDLOC, GetHandleId(GetExpiredTimer()), 603), 'e0UX', LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 300), AngleBetweenPoints(LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 300), LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 856))))
+            SetUnitFlyHeight(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 498), GetRandomReal(700.00, 900.00), 0.00)
+            RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 300))
+        else
+            SaveLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 300, PolarProjectionBJ(LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 856), GetRandomReal(500.00, 1000.00), GetRandomDirectionDeg()))
+            SaveUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 498, CreateUnitAtLoc(LoadPlayerHandle(YDLOC, GetHandleId(GetExpiredTimer()), 603), 'e0UX', LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 300), AngleBetweenPoints(LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 300), LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 856))))
+            SetUnitFlyHeight(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 498), GetRandomReal(700.00, 900.00), 0.00)
+            RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 300))
+        RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 856))
+        _ydl_timer = CreateTimer()
+        SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 594, LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594))
+        SavePlayerHandle(YDLOC, GetHandleId(_ydl_timer), 603, LoadPlayerHandle(YDLOC, GetHandleId(GetExpiredTimer()), 603))
+        SaveLocationHandle(YDLOC, GetHandleId(_ydl_timer), 688, LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 688))
+        SaveLocationHandle(YDLOC, GetHandleId(_ydl_timer), 526, LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 526))
+        SaveLocationHandle(YDLOC, GetHandleId(_ydl_timer), 583, LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 583))
+        SaveGroupHandle(YDLOC, GetHandleId(_ydl_timer), 752, LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 752))
+        SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 105, LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 105))
+        SaveGroupHandle(YDLOC, GetHandleId(_ydl_timer), 744928215, LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 744928215))
+        SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 933, LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 933))
+        SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 498, LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 498))
+        TimerStart(_ydl_timer, 0.01, true, function trig_EmiyaShirouTFunc015Func001Func014Func001Func020T)
+function trig_EmiyaShirouTFunc015T()
+    //group _ydl_group
+    //unit _ydl_unit
+    timer _ydl_timer
+    if LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 280) >= 155
+        soundPlay("war3mapImported\\EmiyaShirou5-2.mp3", GetUnitX(udg_Unitsound), GetUnitY(udg_Unitsound))
+        SaveGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 1153, yDWEGetUnitsInRectMatchingNull(GetPlayableMapRect(), null))
+        GroupClear(LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 1153))
+        DestroyGroup(LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 1153))
+        // CameraSetEQNoiseForPlayer(LoadPlayerHandle(YDLOC, GetHandleId(GetExpiredTimer()), 603), 10.00)
+        bj_forLoopAIndex = 1
+        bj_forLoopAIndexEnd = 60
+        while true
+            if bj_forLoopAIndex > bj_forLoopAIndexEnd
+                break
+            SaveReal(YDLOC, GetHandleId(GetExpiredTimer()), 69, LoadReal(YDLOC, GetHandleId(GetExpiredTimer()), 69) + 6.00)
+            SaveLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 942927198, PolarProjectionBJ(LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 549), 1000.00, LoadReal(YDLOC, GetHandleId(GetExpiredTimer()), 69)))
+            CreateDestructableLoc('YTpc', LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 942927198), GetRandomDirectionDeg(), 1, 0)
+            udg_ShirouUBW[GetForLoopIndexA()] = GetLastCreatedDestructable()
+            SaveUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 121, CreateUnitAtLoc(LoadPlayerHandle(YDLOC, GetHandleId(GetExpiredTimer()), 603), 'e0V5', LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 942927198), GetRandomDirectionDeg()))
+            SetUnitScale(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 121), 2.00, 2.00, 2.00)
+            GroupAddUnit(LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 993), LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 121))
+            RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 942927198))
+            bj_forLoopAIndex++
+        bj_forLoopAIndex = 1
+        bj_forLoopAIndexEnd = 30
+        while true
+            if bj_forLoopAIndex > bj_forLoopAIndexEnd
+                break
+            SaveLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 468797320, GetUnitLoc(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 132)))
+            SaveLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 761129538, PolarProjectionBJ(LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 468797320), GetRandomReal(0, 1000.00), GetRandomDirectionDeg()))
+            SaveUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 512, CreateUnitAtLoc(LoadPlayerHandle(YDLOC, GetHandleId(GetExpiredTimer()), 603), 'e0O4', LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 761129538), GetRandomDirectionDeg()))
+            SetUnitScale(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 512), 2.00, 2.00, 2.00)
+            SetUnitFlyHeight(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 512), 80.00, 0.00)
+            GroupAddUnit(LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 993), LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 512))
+            RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 468797320))
+            RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 761129538))
+            bj_forLoopAIndex++
+        SaveInteger(YDLOC, GetHandleId(GetExpiredTimer()), 280, 0)
+        let caster = LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594)
+        caster.startAbilityCooldown('A0PR')
+        PauseUnit(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), false)
+        SetUnitInvulnerable(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), false)
+        var count = 0
+        var shiroInsideT = false
+        let pid = caster.getOwner().getId()
+        caster.hideAbility(SPELL_T[pid], true)
+        SPELL_T[pid].addTagHidden()
+        caster.addAbility('A0PS')
+        doPeriodically(0.01) (CallbackPeriodic cb) ->
+            count++
+            shiroCurrentPosition = vec2(GetUnitX(caster), GetUnitY(caster))
+            if shiroCurrentPosition.distanceTo(shiroTTargetPoint) <= 1000 
+                caster.setInvulnerable(true)
+                shiroInsideT = true
+            if shiroCurrentPosition.distanceTo(shiroTTargetPoint) > 1000 and shiroInsideT == true 
+                shiroInsideT = false
+                if caster.isPaused() == false
+                    caster.setInvulnerable(false)   
+            if shiroInsideT == false
+                DoNothing()         
+            if count >= 600
+                if caster.isPaused() == false
+                    caster.setInvulnerable(false)
+                else
+                    doPeriodically(0.01) (CallbackPeriodic cb) ->
+                        if caster.isPaused() == false
+                            caster.setInvulnerable(false)
+                            destroy cb                             
+                caster.removeAbility('A0PS')
+                if SPELL_T[pid].hasTagHidden() == true
+                    caster.hideAbility(SPELL_T[pid], false)
+                    SPELL_T[pid].removeTagHidden()
+                destroy cb 
+        _ydl_timer = CreateTimer()
+        SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 594, LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594))
+        SaveLocationHandle(YDLOC, GetHandleId(_ydl_timer), 549, LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 549))
+        SavePlayerHandle(YDLOC, GetHandleId(_ydl_timer), 603, LoadPlayerHandle(YDLOC, GetHandleId(GetExpiredTimer()), 603))
+        SaveLocationHandle(YDLOC, GetHandleId(_ydl_timer), 688, LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 688))
+        SaveLocationHandle(YDLOC, GetHandleId(_ydl_timer), 526, LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 526))
+        SaveLocationHandle(YDLOC, GetHandleId(_ydl_timer), 583, LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 583))
+        SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 132, LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 132))
+        SaveGroupHandle(YDLOC, GetHandleId(_ydl_timer), 752, LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 752))
+        SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 105, LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 105))
+        SaveGroupHandle(YDLOC, GetHandleId(_ydl_timer), 744928215, LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 744928215))
+        SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 933, LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 933))
+        SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 552, LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 552))
+        SaveGroupHandle(YDLOC, GetHandleId(_ydl_timer), 993, LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 993))
+        SaveInteger(YDLOC, GetHandleId(_ydl_timer), 5290936, LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 5290936))
+        SaveLocationHandle(YDLOC, GetHandleId(_ydl_timer), 856, LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 856))
+        SaveLocationHandle(YDLOC, GetHandleId(_ydl_timer), 300, LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 300))
+        SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 498, LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 498))
+        SaveInteger(YDLOC, GetHandleId(_ydl_timer), 280, LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 280))
+        TimerStart(_ydl_timer, 0.03, true, function trig_EmiyaShirouTFunc015Func001Func014T)
+        FlushChildHashtable(YDLOC, GetHandleId(GetExpiredTimer()))
+        DestroyTimer(GetExpiredTimer())
+    else
+        SaveInteger(YDLOC, GetHandleId(GetExpiredTimer()), 280, LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 280) + 1)
+        PauseUnit(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 552), true)
+        SetUnitInvulnerable(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 552), true)
+        PauseUnit(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), true)
+        SetUnitInvulnerable(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), true)
+        SaveGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 1153, yDWEGetUnitsInRectMatchingNull(GetPlayableMapRect(), null))
+        GroupClear(LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 1153))
+        DestroyGroup(LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 1153))
+function trig_EmiyaShirouTActions()
+    timer _ydl_timer
+    integer trigger_ID = LoadInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 865)
+    trigger_ID += 3
+    shiroTTargetPoint = vec2(GetSpellTargetX(), GetSpellTargetY()) 
+    SaveInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 865, trigger_ID)
+    SaveInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 1045, trigger_ID)
+    soundPlay("war3mapImported\\EmiyaShirou5-1.mp3", GetUnitX(udg_Unitsound), GetUnitY(udg_Unitsound))
+    SaveUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594, GetSpellAbilityUnit())
+    SaveUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 552, GetSpellTargetUnit())
+    SaveLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 549, GetUnitLoc(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 552)))
+    SaveInteger(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 280, 0)
+    SaveReal(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 69, 0.00)
+    SavePlayerHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 603, GetOwningPlayer(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594)))
+    SaveGroupHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 993, CreateGroup())
+    SaveUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 132, CreateUnitAtLoc(LoadPlayerHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 603), 'e028', LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 549), GetRandomDirectionDeg()))
+    PauseUnit(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594), true)
+    PauseUnit(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 552), true)
+    SetUnitInvulnerable(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594), true)
+    SetUnitInvulnerable(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 552), true)
+    shiroTTarget = LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 552)
+    SetUnitAnimationByIndex(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594), 13)
+    _ydl_timer = CreateTimer()
+    SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 594, LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594))
+    SaveLocationHandle(YDLOC, GetHandleId(_ydl_timer), 549, LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 549))
+    SavePlayerHandle(YDLOC, GetHandleId(_ydl_timer), 603, LoadPlayerHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 603))
+    SaveLocationHandle(YDLOC, GetHandleId(_ydl_timer), 688, LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 688))
+    SaveLocationHandle(YDLOC, GetHandleId(_ydl_timer), 526, LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 526))
+    SaveLocationHandle(YDLOC, GetHandleId(_ydl_timer), 583, LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 583))
+    SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 132, LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 132))
+    SaveGroupHandle(YDLOC, GetHandleId(_ydl_timer), 752, LoadGroupHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 752))
+    SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 121, LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 121))
+    SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 105, LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 105))
+    SaveGroupHandle(YDLOC, GetHandleId(_ydl_timer), 1153, LoadGroupHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1153))
+    SaveGroupHandle(YDLOC, GetHandleId(_ydl_timer), 744928215, LoadGroupHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 744928215))
+    SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 933, LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 933))
+    SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 552, LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 552))
+    SaveGroupHandle(YDLOC, GetHandleId(_ydl_timer), 993, LoadGroupHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 993))
+    SaveInteger(YDLOC, GetHandleId(_ydl_timer), 5290936, LoadInteger(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 5290936))
+    SaveReal(YDLOC, GetHandleId(_ydl_timer), 69, LoadReal(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 69))
+    SaveLocationHandle(YDLOC, GetHandleId(_ydl_timer), 468797320, LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 468797320))
+    SaveLocationHandle(YDLOC, GetHandleId(_ydl_timer), 761129538, LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 761129538))
+    SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 512, LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 512))
+    SaveLocationHandle(YDLOC, GetHandleId(_ydl_timer), 856, LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 856))
+    SaveLocationHandle(YDLOC, GetHandleId(_ydl_timer), 300, LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 300))
+    SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 498, LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 498))
+    SaveLocationHandle(YDLOC, GetHandleId(_ydl_timer), 942927198, LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 942927198))
+    SaveInteger(YDLOC, GetHandleId(_ydl_timer), 280, LoadInteger(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 280))
+    TimerStart(_ydl_timer, 0.02, true, function trig_EmiyaShirouTFunc015T)
+    FlushChildHashtable(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID)
+function initTrig_EmiyaShirouT_Orig()
+    gg_trg_EmiyaShirouT = CreateTrigger()
+    TriggerRegisterAnyUnitEventBJ(gg_trg_EmiyaShirouT, EVENT_PLAYER_UNIT_SPELL_EFFECT)
+    TriggerAddCondition(gg_trg_EmiyaShirouT, Condition(function trig_EmiyaShirouTConditions))
+    TriggerAddAction(gg_trg_EmiyaShirouT, function trig_EmiyaShirouTActions)

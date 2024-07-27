@@ -1,0 +1,16 @@
+package Debug_Commands
+
+import ClosureEvents
+import ACR_Library
+
+init
+    debugCommands()
+
+function debugCommands()
+
+    EventListener.add(EVENT_PLAYER_CHAT_FILTER) ->
+        let input = GetEventPlayerChatString()
+        let p = GetTriggerPlayer()
+        if input == "-debug"
+            acrAbilityReset(p)
+            printTimedToPlayer("abilities have been reset", 3, p)

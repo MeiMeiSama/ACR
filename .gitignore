@@ -1,0 +1,7 @@
+_build/
+temp/
+.vscode/
+
+wurst.dependencies
+compiled.j.txt
+.DS_Store

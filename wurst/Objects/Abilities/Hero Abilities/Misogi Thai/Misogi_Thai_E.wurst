@@ -1,0 +1,113 @@
+package Misogi_Thai_E
+
+import main
+import ObjectDefinitions
+import ChannelAbilityPreset
+import UnitIds
+
+int misogiGInt
+unit misogiECaster
+
+@compiletime function createAbility()
+    new ChannelAbilityPreset(MISOGI_THAI_E, 5, true)
+        ..presetTargetTypes(Targettype.NONE)
+        ..setAnimationNames("1111111")
+        ..setButtonPositionNormalX(2)
+        ..setButtonPositionNormalY(2)
+        ..setButtonPositionResearchX(2)
+        ..setButtonPositionResearchY(0)
+        ..setIconNormal("ReplaceableTextures\\CommandButtons\\MisogiReal.blp")
+        ..setIconResearch("ReplaceableTextures\\CommandButtons\\MisogiReal.blp")
+        ..setMissileSpeed(99999)
+        ..setHeroAbility(true)
+        ..setHotkeyNormal("E")
+        ..setHotkeyLearn("E")
+        ..setLevels(5)
+        ..setLevelSkipRequirement(2)
+        ..presetArtDuration(lvl -> 0)
+        ..presetBaseOrderID(lvl -> "acolyteharvest")
+        ..presetDisableOtherAbilities(lvl -> false)
+        ..presetFollowThroughTime(lvl -> 0)
+        ..presetCastRange(lvl -> 2000)
+        ..presetCooldown(lvl -> 50)
+        ..presetManaCost(lvl -> 70)
+        ..presetTargetsAllowed(lvl -> "enemy,ground,air,neutral")
+        ..presetTooltipNormal(lvl -> "Ability E|r")
+        ..presetTooltipNormalExtended(lvl -> "Misogi E Desc|r")
+        ..setTooltipLearn("Learn Ability E|r")
+        ..setTooltipLearnExtended("Learning Ability E|r")
+    new UnitDefinition(MISOGI_THAI_E_DUMMY_1, UnitIds.wisp)
+        ..setNormalAbilities(commaList('Avul', 'Aloc', 'Amrf'))
+        ..setAnimationCastBackswing(0)
+        ..setDeathTimeseconds(0.1)
+        ..setScalingValue(4)
+        ..setUnitClassification("_")
+        ..setArtSpecial("_")
+        ..setHasWaterShadow(false)
+        ..setMaximumPitchAngledegrees(0)
+        ..setMaximumRollAngledegrees(0)
+        ..setModelFile("war3mapImported\\MisogiQ2MDXReal.mdx")
+        ..setArtSpecial("_")
+        ..setArmorType(ArmorType.Unarmored)
+        ..setPlaceableInEditor(false)
+        ..setMovementHeight(20)
+        ..setSpeedBase(100)
+        ..setTurnRate(3)
+        ..setMovementType(MovementType.Fly)
+        ..setCollisionSize(0)
+        ..setUnitSoundSet("_")
+        ..setCanFlee(false)
+        ..setFoodCost(0)
+        ..setHideMinimapDisplay(true)
+        ..setHitPointsMaximumBase(60)
+        ..setHitPointsRegenerationRate(-1)
+        ..setHitPointsRegenerationType("Always")
+        ..setStockMaximum(1)
+        ..setStockReplenishInterval(1)
+        ..setStructuresBuilt("_")
+        ..setUpgradesUsed("_")
+        ..setHotkey("_")
+        ..setName("effect dummy")
+        ..setTooltipBasic("_")
+        ..setTooltipExtended("_")
+
+function misogiG4 ()
+    unit u
+    misogiGInt=misogiGInt+1
+    PauseUnit(misogiECaster,true)
+    SetUnitInvulnerable(misogiECaster,true)
+    if misogiGInt>55
+        DestroyTimer(GetExpiredTimer())
+        u=CreateUnitAtLoc(GetOwningPlayer(misogiECaster),MISOGI_THAI_E_DUMMY_1,GetUnitLoc(misogiECaster),GetRandomDirectionDeg())
+        SetUnitScale(u,2.5,2.5,2.5)
+        SetUnitTimeScalePercent(u,50)
+        UnitApplyTimedLife(u,'BHwe',3.5)
+        SetUnitState(misogiECaster, UNIT_STATE_LIFE, (GetUnitState(misogiECaster, UNIT_STATE_LIFE) + ((25 + (misogiECaster.getAgi(true) * 0.5)) * GetUnitAbilityLevel(misogiECaster, MISOGI_THAI_E))))
+        // SetUnitState(misogiECaster,UNIT_STATE_LIFE,(GetUnitState(misogiECaster,UNIT_STATE_LIFE))+(6*GetHeroAgi(misogiECaster,true)))
+        PauseUnit(misogiECaster,false)
+        SetUnitInvulnerable(misogiECaster,false)
+        soundPlay("war3mapImported\\misogiGSEReal.mp3", 0, 0)
+        misogiECaster=null
+        misogiGInt=0
+
+function misogiG3 ()
+    let t=CreateTimer()
+    soundPlay("war3mapImported\\misogiGReal.mp3", 0, 0)
+    misogiECaster=GetSpellAbilityUnit()
+    PauseUnit(misogiECaster,true)
+    SetUnitInvulnerable(misogiECaster,true)
+    SetUnitAnimation(misogiECaster,"Spell Slam")
+    misogiGInt=0
+    TimerStart(t,.02,true,function misogiG4)
+
+function misogiG2 () returns boolean
+    return GetSpellAbilityId()== MISOGI_THAI_E
+
+function misogiG1 ()
+    let t=CreateTrigger()
+    TriggerRegisterAnyUnitEventBJ(t,EVENT_PLAYER_UNIT_SPELL_EFFECT)
+    TriggerAddCondition(t,Condition(function misogiG2))
+    TriggerAddAction(t,function misogiG3)
+
+init
+    misogiG1()

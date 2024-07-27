@@ -1,0 +1,1180 @@
+package DamageEngine
+import ClosureEvents
+import DamageEvent
+import AbilityGlobals
+import ObjectDefinitions
+import AbilityClassifications
+import SoundUtils
+import ClosureTimers
+import main
+import Cloud
+constant izanamiSound_proc = new SoundDefinition("war3mapImported\\Izanami_proc.mp3")
+constant abigailSound_proc = new SoundDefinition("war3mapImported\\AbigailSE3.mp3")
+constant rinneganSound_proc = new SoundDefinition("war3mapImported\\Rinnegan_proc.mp3")
+constant zoroSound_proc = new SoundDefinition("war3mapImported\\ZoroG_proc.mp3")
+constant okitaSound_proc = new SoundDefinition("war3mapImported\\OkitaG_proc.mp3")
+constant toumaSound_proc = new SoundDefinition("war3mapImported\\ToumaG_proc.mp3")
+constant ichigoSound_proc = new SoundDefinition("war3mapImported\\IchigoG_proc.mp3")
+int instances = 0
+init
+
+    EventListener.add(EVENT_PLAYER_CHAT_FILTER) ->
+        let input = GetEventPlayerChatString()
+        // let plyer = GetTriggerPlayer()
+        if input == "reset"
+            instances = 0
+            //printTimedToPlayer("instances reset", 2, GetTriggerPlayer())
+
+    DamageEvent.addListener() ->
+        switch DamageEvent.getType()
+            case ATTACK
+                // if udg_PlayHero[DamageEvent.getSource().getOwner().getId()] == DamageEvent.getSource()
+                //     //printTimedToPlayer("Basic Attack")
+            case SPELL
+                // if udg_PlayHero[DamageEvent.getSource().getOwner().getId()] == DamageEvent.getSource() and DamageEvent.getTarget().isInvulnerable() == false
+                //     // //printTimedToPlayer("SPELL")
+                //     let caster = DamageEvent.getSource()
+                //     if caster.getTypeId() == 'H037'
+                //         let stat = caster.getAgi(true)
+                //         let lvl = caster.getAbilityLevel('A0SZ')                                         // Yami R
+                //         let dmg = (((100.00 * lvl) + (3+lvl) * stat) / 5)                                // 900 dmg in testing environment
+                //         DamageEvent.setAmount(dmg)
+
+                //         //printTimedToPlayer("Lv: "+lvl.toString(), 1, caster.getOwner())
+                //         //printTimedToPlayer("DMG: "+dmg.toString(), 1, caster.getOwner())
+                //         //printTimedToPlayer("Stat: "+stat.toString(), 1, caster.getOwner())
+
+                //         instances = instances + 1
+                //         //printTimedToPlayer (I2S(instances) , 1, caster.getOwner())           
+            case CODE
+                if DamageEvent.getSource().isType(UNIT_TYPE_HERO) == false and DamageEvent.getTarget().isInvulnerable() == false //NON-HERO UNITS CODE
+                    let id = DamageEvent.getId()
+                    real _dmg
+                    int stat = 0
+                    if DamageEvent.getSource().getUserData() == 999 //NA-TSU
+                        if id == DAMAGE_ABILITY_TSUNA_NATSU
+                            for i = 0 to 12
+                                if udg_PlayHero[i].getTypeId() == 'H049'
+                                    let caster = udg_PlayHero[i]
+                                    if BlzGetUnitIntegerField(caster, UNIT_IF_PRIMARY_ATTRIBUTE) == 1 // Strength
+                                        stat = caster.getStr(true)
+                                    else if BlzGetUnitIntegerField(caster, UNIT_IF_PRIMARY_ATTRIBUTE) == 2 // Intellect
+                                        stat = caster.getInt(true)
+                                    else if BlzGetUnitIntegerField(caster, UNIT_IF_PRIMARY_ATTRIBUTE) == 3 // Agility
+                                        stat = caster.getAgi(true)
+                                    _dmg = ((250.00 + (6 * stat)) /5)                                                  // 950 dmg in testing environment
+                                    DamageEvent.setAmount(_dmg)
+                                    //printTimedToPlayer("NA-TSU", 1, caster.getOwner())   
+                                    //printTimedToPlayer (R2S(_dmg) , 1, caster.getOwner())
+                                    instances = instances + 1
+                                    //printTimedToPlayer (I2S(instances) , 1, caster.getOwner()) 
+
+                if udg_PlayHero[DamageEvent.getSource().getOwner().getId()] == DamageEvent.getSource() and DamageEvent.getTarget().isInvulnerable() == false
+                    let pid = DamageEvent.getSource().getOwner().getId()
+                    let id = DamageEvent.getId()
+                    let caster = DamageEvent.getSource()
+                    let target = DamageEvent.getTarget()
+                    // let target = DamageEvent.getTarget()
+                    int stat = 0
+                    real _dmg
+                    int _lvl = 0
+                    // doAfter(10) -> 
+                    //     instances = 0
+                    //     //printTimedToPlayer("instances reset", 1, caster.getOwner())    
+                    if BlzGetUnitIntegerField(caster, UNIT_IF_PRIMARY_ATTRIBUTE) == 1 // Strength
+                        stat = caster.getStr(true)
+                    else if BlzGetUnitIntegerField(caster, UNIT_IF_PRIMARY_ATTRIBUTE) == 2 // Intellect
+                        stat = caster.getInt(true)
+                    else if BlzGetUnitIntegerField(caster, UNIT_IF_PRIMARY_ATTRIBUTE) == 3 // Agility
+                        stat = caster.getAgi(true)
+
+                    if id == DAMAGE_ABILITY_Q                                   // ━━━━━━━━━━━━━━━━━━━━━━ [TESTING ENVIRONMENT WITH 100 ALL STATS] ━━━━━━━━━━━━━━━━━━━━━━━━━ //
+                        _lvl = GetUnitAbilityLevel(caster, SPELL_Q[pid])
+                        _dmg = ((40.00 * _lvl) + (0.6 * stat * _lvl))                                   // 70/140/210/280/350 dmg in testing environment
+                        DamageEvent.setAmount(_dmg)
+                        //printTimedToPlayer (R2S(_dmg) , 1, caster.getOwner())
+                        //printTimedToPlayer("Q", 1, caster.getOwner())
+                    else if id == DAMAGE_ABILITY_Q2
+                        _lvl = GetUnitAbilityLevel(caster, SPELL_Q[pid])                
+                        _dmg = ((20.00 * _lvl) + (0.1 * stat * _lvl))                                   // 30/60/90/120/150 dmg in testing environment
+                        DamageEvent.setAmount(_dmg)
+                        //printTimedToPlayer (R2S(_dmg) , 1, caster.getOwner())
+                        //printTimedToPlayer("Q2", 1, caster.getOwner())                
+                    else if id == DAMAGE_ABILITY_W
+                        _lvl = GetUnitAbilityLevel(caster, SPELL_W[pid])              
+                        _dmg = ((30.00 * _lvl) + (0.8 * stat * _lvl))                                   // 80/160/240/320/400 dmg in testing environment 
+                        DamageEvent.setAmount(_dmg)
+                        caster.startAbilityCooldown(SPELL_W[pid])
+                        //printTimedToPlayer (R2S(_dmg) , 1, caster.getOwner()) 
+                        //printTimedToPlayer("W", 1, caster.getOwner())
+                    else if id == DAMAGE_ABILITY_W2
+                        _lvl = GetUnitAbilityLevel(caster, SPELL_W[pid])
+                        _dmg = ((20.00 * _lvl) + (0.1 * stat * _lvl))                                   // 30/60/90/120/150 dmg in testing environment
+                        DamageEvent.setAmount(_dmg)
+                        caster.startAbilityCooldown(SPELL_W2[pid])
+                        //printTimedToPlayer (R2S(_dmg) , 1, caster.getOwner())
+                        //printTimedToPlayer("W2", 1, caster.getOwner())                
+                    else if id == DAMAGE_ABILITY_E
+                        _lvl = GetUnitAbilityLevel(caster, SPELL_E[pid])
+                        _dmg = ((40.00 * _lvl) + (0.2 * stat * _lvl))                                   // 60/120/180/240/300 dmg in testing environment
+                        DamageEvent.setAmount(_dmg)
+                        caster.startAbilityCooldown(SPELL_E[pid])
+                        //printTimedToPlayer (R2S(_dmg) , 1, caster.getOwner())
+                        //printTimedToPlayer("E", 1, caster.getOwner())
+                    else if id == DAMAGE_ABILITY_E2
+                        _lvl = GetUnitAbilityLevel(caster, SPELL_E[pid])
+                        _dmg = ((25.00 * _lvl) + (0.05 * stat * _lvl))                                  // 30/60/90/120/150 dmg in testing environment    
+                        DamageEvent.setAmount(_dmg)
+                        caster.startAbilityCooldown(SPELL_E2[pid])
+                        //printTimedToPlayer (R2S(_dmg) , 1, caster.getOwner())
+                        //printTimedToPlayer("E2", 1, caster.getOwner())                
+                    else if id == DAMAGE_ABILITY_R
+                        _lvl = GetUnitAbilityLevel(caster, SPELL_R[pid])
+                        _dmg = ((70.00 * _lvl) + ((2 + _lvl) * stat))                                  // 500/700/900 dmg in testing environment  
+                        DamageEvent.setAmount(_dmg)
+                        caster.startAbilityCooldown(SPELL_R[pid])
+                        //printTimedToPlayer (R2S(_dmg) , 1, caster.getOwner())
+                        //printTimedToPlayer("R", 1, caster.getOwner())                             
+                    else if id == DAMAGE_ABILITY_T 
+                        _dmg = (300.00 + (7 * stat))                                                  // 1250 dmg in testing environment  
+                        DamageEvent.setAmount(_dmg)
+                        caster.startAbilityCooldown(SPELL_T[pid])
+                        //printTimedToPlayer (R2S(_dmg) , 1, caster.getOwner())                              
+                        //printTimedToPlayer("T", 1, caster.getOwner())
+                    else if id == DAMAGE_ABILITY_F
+                        _dmg = (250.00 + (6 * stat))                                                  // 950 dmg in testing environment
+                        DamageEvent.setAmount(_dmg)
+                        caster.startAbilityCooldown(SPELL_F[pid])
+                        //printTimedToPlayer (R2S(_dmg) , 1, caster.getOwner())                             
+                        //printTimedToPlayer("F", 1, caster.getOwner())              
+                    else if id == DAMAGE_ABILITY_G
+                        _dmg = (0)
+                        DamageEvent.setAmount(_dmg)
+                        //printTimedToPlayer (R2S(_dmg) , 1, caster.getOwner())
+                        //printTimedToPlayer("G", 1, caster.getOwner())
+
+
+                    // ━━━━━━━━━━━━━━━ [MODES] ━━━━━━━━━━━━━━━━━━ //
+
+
+                    else if id == DAMAGE_ABILITY_MODE_Q
+                        _dmg = (175.00 + (3.0 * stat))                                                  // 400 dmg in testing environment
+                        DamageEvent.setAmount(_dmg)
+                        //printTimedToPlayer (R2S(_dmg) , 1, caster.getOwner())
+                        //printTimedToPlayer("MQ", 1, caster.getOwner())                
+                    else if id == DAMAGE_ABILITY_MODE_W                           
+                        _dmg = (150.00 + (4.0 * stat))                                                  // 525 dmg in testing environment
+                        DamageEvent.setAmount(_dmg)
+                        caster.startAbilityCooldown(SPELL_MODO_W[pid])
+                        //printTimedToPlayer (R2S(_dmg) , 1, caster.getOwner())
+                        //printTimedToPlayer("MW", 1, caster.getOwner())                
+                    else if id == DAMAGE_ABILITY_MODE_E
+                        _dmg = (125.00 + (2.0 * stat))                                                   // 275 dmg in testing environment 
+                        DamageEvent.setAmount(_dmg)
+                        caster.startAbilityCooldown(SPELL_MODO_E[pid])
+                        //printTimedToPlayer (R2S(_dmg) , 1, caster.getOwner())
+                        //printTimedToPlayer("ME", 1, caster.getOwner())                
+                    else if id == DAMAGE_ABILITY_MODE_R
+                        _dmg = (200.00 + (5.0 * stat))                                                  // 675 dmg in testing environment
+                        DamageEvent.setAmount(_dmg)
+                        caster.startAbilityCooldown(SPELL_MODO_R[pid])
+                        //printTimedToPlayer (R2S(_dmg) , 1, caster.getOwner())
+                        //printTimedToPlayer("MR", 1, caster.getOwner())                                
+
+
+
+                    // ━━━━━━━━━━━━━━━ [SPECIAL CASES: G] ━━━━━━━━━━━━━━━━━━ //
+
+                    else if id == DAMAGE_ABILITY_MISAKA_NEW_G
+                        _dmg = (110.00 + (3.1 * stat))
+                        DamageEvent.setAmount(_dmg)
+                        //printTimedToPlayer (R2S(_dmg) , 1, caster.getOwner())
+                        //printTimedToPlayer("MISAKA G", 1, caster.getOwner())
+
+
+
+
+
+
+
+                    // ━━━━━━━━━━━━━━━ [SPECIAL CASES: Q] ━━━━━━━━━━━━━━━━━━ //
+
+
+
+                    else if id == DAMAGE_ABILITY_SISTINA_Q
+                        _lvl = GetUnitAbilityLevel(caster, SPELL_Q[pid])
+                        _dmg = (100 + (40.00 * _lvl)) + ((2 + (0.6 * _lvl)) * stat)                    // 420/490/560/630/700 dmg in testing environment
+                        DamageEvent.setAmount(_dmg)
+                        //printTimedToPlayer (R2S(_dmg) , 1, caster.getOwner())
+                        //printTimedToPlayer("SISTINA Q", 1, caster.getOwner())                                         
+                    else if id == DAMAGE_ABILITY_KIARA_Q_ITEM
+                        _lvl = GetUnitAbilityLevel(caster, SPELL_Q[pid])
+                        _dmg = (25 + (40.00 * _lvl)) + ((2 + (0.6 * _lvl)) * stat)                     // 470/540/610/680/750 dmg in testing environment
+                        DamageEvent.setAmount(_dmg)
+                        //printTimedToPlayer (R2S(_dmg) , 1, caster.getOwner())
+                        //printTimedToPlayer("KIARA Q ITEM", 1, caster.getOwner())      
+                    else if id == DAMAGE_ABILITY_MHX_Q                                                 
+                        _lvl = GetUnitAbilityLevel(caster, SPELL_Q[pid])
+                        _dmg = (((40.00 * _lvl) + (0.6 * stat * _lvl)) * 1.15)                           // 80/161/241/322/402 dmg in testing environment
+                        DamageEvent.setAmount(_dmg)
+                        //printTimedToPlayer (R2S(_dmg) , 1, caster.getOwner())
+                        //printTimedToPlayer("MHX Q", 1, caster.getOwner())      
+                    else if id == DAMAGE_ABILITY_MHX_Q2
+                        _lvl = GetUnitAbilityLevel(caster, SPELL_Q[pid])
+                        _dmg = (((20.00 * _lvl) + (0.1 * stat * _lvl)) * 1.15)                           // 34/69(nice)/103/138/172 dmg in testing environment
+                        DamageEvent.setAmount(_dmg)
+                        //printTimedToPlayer (R2S(_dmg) , 1, caster.getOwner())
+                        //printTimedToPlayer("MHX Q2", 1, caster.getOwner()) 
+                    else if id == DAMAGE_ABILITY_GILGAMESH_Q
+                        _lvl = GetUnitAbilityLevel(caster, SPELL_Q[pid])                             
+                        _dmg = ((40 * _lvl) + (0.6 * _lvl * stat)) / 5
+                        DamageEvent.setAmount(_dmg)                                                    // 70/140/210/280/350 dmg in testing environment
+                        //printTimedToPlayer (R2S(_dmg) , 1, caster.getOwner())
+                        //printTimedToPlayer("GILGAMESH Q", 1, caster.getOwner()) 
+                    else if id == DAMAGE_ABILITY_BYAKURAN_Q
+                        _lvl = GetUnitAbilityLevel(caster, SPELL_Q[pid])  
+                        _dmg = (100 + (40.00 * _lvl)) + ((2.0 + (0.6 * _lvl)) * stat)                         // 355/460/565/670/775 dmg in testing environment
+                        DamageEvent.setAmount(_dmg)
+                        //printTimedToPlayer (R2S(_dmg) , 1, caster.getOwner())
+                        //printTimedToPlayer("BYAKURAN Q", 1, caster.getOwner()) 
+                    else if id == DAMAGE_ABILITY_EDO_MADARA_R_Q
+                        _lvl = GetUnitAbilityLevel(caster, SPELL_Q[pid])
+                        _dmg = (((40.00 * _lvl) + (0.6 * stat * _lvl)) * 1.20)                           // 70/140/210/280/350 dmg in testing environment
+                        DamageEvent.setAmount(_dmg)
+                        //printTimedToPlayer("EDO MADARA R_Q", 1, caster.getOwner())     
+                        //printTimedToPlayer (R2S(_dmg) , 1, caster.getOwner())
+                        instances = instances + 1
+                        //printTimedToPlayer (I2S(instances) , 1, caster.getOwner())                 
+                    else if id == DAMAGE_ABILITY_LAW_Q2
+                        _dmg = (225.00 + (3.5 * stat))                                                 // 400 dmg in testing environment
+                        DamageEvent.setAmount(_dmg)
+                        //printTimedToPlayer("LAW Q2", 1, caster.getOwner())     
+                        //printTimedToPlayer (R2S(_dmg) , 1, caster.getOwner())
+                        instances = instances + 1
+                        //printTimedToPlayer (I2S(instances) , 1, caster.getOwner())                          
+                    else if id == DAMAGE_ABILITY_SASUKE_MODE_Q
+                        _dmg = ((175.00 + (3.0 * stat)) / 20)                                                 // 400 dmg in testing environment
+                        DamageEvent.setAmount(_dmg)
+                        //printTimedToPlayer("SASUKE MODE Q", 1, caster.getOwner())     
+                        //printTimedToPlayer (R2S(_dmg) , 1, caster.getOwner())
+                        instances = instances + 1
+                        //printTimedToPlayer (I2S(instances) , 1, caster.getOwner())                        
+            
+            
+            
+                    // ━━━━━━━━━━━━━━━ [SPECIAL CASES: W] ━━━━━━━━━━━━━━━━━━ //
+
+
+
+                    else if id == DAMAGE_ABILITY_MHX_W
+                        _lvl = GetUnitAbilityLevel(caster, SPELL_W[pid])
+                        _dmg = (((30.00 * _lvl) + (0.8 * stat * _lvl)) * 1.15)                            // 92/184/276/368/460 dmg in testing environment 
+                        DamageEvent.setAmount(_dmg)
+                        caster.startAbilityCooldown(SPELL_W[pid])
+                        //printTimedToPlayer (R2S(_dmg) , 1, caster.getOwner())
+                        //printTimedToPlayer("MHX W", 1, caster.getOwner())
+                    else if id == DAMAGE_ABILITY_ILLYA_W
+                        _lvl = GetUnitAbilityLevel(caster, SPELL_W[pid])
+                        _dmg = (((30.00 * _lvl) + (0.8 * stat * _lvl)) /6)                                        // 80/160/240/320/400 dmg in testing environment  
+                        DamageEvent.setAmount(_dmg)
+                        //printTimedToPlayer (R2S(_dmg) , 1, caster.getOwner())
+                        //printTimedToPlayer("ILLYA W", 1, caster.getOwner())
+                    else if id == DAMAGE_ABILITY_LAW_W2
+                        _dmg = (200.00 + (4.5 * stat))                                                     // 525 dmg in testing environment
+                        DamageEvent.setAmount(_dmg)
+                        caster.startAbilityCooldown(SPELL_W2[pid])
+                        //printTimedToPlayer (R2S(_dmg) , 1, caster.getOwner())
+                        //printTimedToPlayer("LAW W2", 1, caster.getOwner())
+                    else if id == DAMAGE_ABILITY_JELLAL_W
+                        _dmg = (30.00 * _lvl) + (0.8 * stat * _lvl)                                      // 525 dmg in testing environment
+                        DamageEvent.setAmount(_dmg)
+                        caster.startAbilityCooldown(SPELL_W2[pid])
+                        //printTimedToPlayer (R2S(_dmg) , 1, caster.getOwner())
+                        //printTimedToPlayer("JELLAL W", 1, caster.getOwner())                        
+
+                    // ━━━━━━━━━━━━━━━ [SPECIAL CASES: E] ━━━━━━━━━━━━━━━━━━ //
+
+
+                            
+                    else if id == DAMAGE_ABILITY_AIZEN_MODE_E
+                        _dmg = ((125.00 + (2.0 * stat)) /30)                                              //275 dmg in testing environment  
+                        DamageEvent.setAmount(_dmg)
+                        instances = instances + 1
+                        //printTimedToPlayer (I2S(instances) , 1, caster.getOwner())
+                        //printTimedToPlayer (R2S(_dmg) , 1, caster.getOwner())
+                        //printTimedToPlayer("AIZEN MODE E", 1, caster.getOwner())    
+                    else if id == DAMAGE_ABILITY_ICHIGO_MODE_E
+                        _dmg = ((125.00 + (2.0 * stat)) /6)                                              //275 dmg in testing environment  
+                        DamageEvent.setAmount(_dmg)
+                        //printTimedToPlayer (R2S(_dmg) , 1, caster.getOwner())
+                        instances = instances + 1
+                        //printTimedToPlayer (I2S(instances) , 1, caster.getOwner())
+                        //printTimedToPlayer("ICHIGO MODE E", 1, caster.getOwner())                            
+                    else if id == DAMAGE_ABILITY_MISAKA_E
+                        _dmg = (40.00 * GetUnitAbilityLevel(caster, 'A014')) 
+                         + (0.2 * stat * GetUnitAbilityLevel(caster, 'A014'))                             //275 dmg in testing environment  
+                        DamageEvent.setAmount(_dmg)
+                        //printTimedToPlayer (R2S(_dmg) , 1, caster.getOwner())
+                        //printTimedToPlayer("MISAKA E", 1, caster.getOwner())    
+                    else if id == DAMAGE_ABILITY_STING_E
+                        _dmg = (40.00 * GetUnitAbilityLevel(caster, 'A01E'))
+                         + (0.2 * stat * GetUnitAbilityLevel(caster, 'A01E'))                             //275 dmg in testing environment  
+                        DamageEvent.setAmount(_dmg)
+                        //printTimedToPlayer (R2S(_dmg) , 1, caster.getOwner())
+                        //printTimedToPlayer("STING E", 1, caster.getOwner())                            
+                    else if id == DAMAGE_ABILITY_ICHIGO_E
+                        _lvl = GetUnitAbilityLevel(caster, SPELL_E[pid])
+                        _dmg = (((40 * _lvl) + (0.2 * stat * _lvl)) /5)                                   // 80/160/240/320/400 dmg in testing environment  
+                        DamageEvent.setAmount(_dmg)
+                        //printTimedToPlayer (R2S(_dmg) , 1, caster.getOwner())
+                        //printTimedToPlayer("ICHIGO E", 1, caster.getOwner())
+
+
+
+
+
+                    // ━━━━━━━━━━━━━━━ [SPECIAL CASES: R] ━━━━━━━━━━━━━━━━━━ //
+
+                    else if id == DAMAGE_ABILITY_YAMAMOTO_R
+                        _lvl = GetUnitAbilityLevel(caster, SPELL_R[pid])
+                        _dmg = (((70.00 * _lvl) + ((2 + _lvl) * stat)) / 4)                             // 900 dmg in testing environment  
+                        DamageEvent.setAmount(_dmg)
+                        //printTimedToPlayer (R2S(_dmg) , 1, caster.getOwner())
+                        instances = instances + 1
+                        //printTimedToPlayer (I2S(instances) , 1, caster.getOwner())
+                        //printTimedToPlayer("YAMAMOTO R", 1, caster.getOwner())                                                                                       
+                    else if id == DAMAGE_ABILITY_TSUNA_R
+                        _lvl = GetUnitAbilityLevel(caster, SPELL_R[pid])
+                        _dmg = (((70.00 * _lvl) + ((2 + _lvl) * stat)) / 3)                              // 900 dmg in testing environment                              
+                        DamageEvent.setAmount(_dmg)
+                        //printTimedToPlayer (R2S(_dmg) , 1, caster.getOwner())
+                        instances++
+                        //printTimedToPlayer (I2S(instances) , 1, caster.getOwner())
+                    else if id == DAMAGE_ABILITY_XANXUS_R
+                        _lvl = GetUnitAbilityLevel(caster, SPELL_R[pid])
+                        _dmg = (((70.00 * _lvl) + ((2 + _lvl) * stat)) / 13)                              // 900 dmg in testing environment  
+                        DamageEvent.setAmount(_dmg)
+                        //printTimedToPlayer("XANXUS R", 1, caster.getOwner())
+                        //printTimedToPlayer (R2S(_dmg) , 1, caster.getOwner())
+                        instances = instances + 1
+                        //printTimedToPlayer (I2S(instances) , 1, caster.getOwner())  
+                    else if id == DAMAGE_ABILITY_WENDY_R
+                        _lvl = GetUnitAbilityLevel(caster, SPELL_R[pid])
+                        _dmg = (((70.00 * _lvl) + ((2 + _lvl) * stat)) / 24)                             // 900 dmg in testing environment  
+                        DamageEvent.setAmount(_dmg)
+                        //printTimedToPlayer("WENDY R", 1, caster.getOwner())         
+                        //printTimedToPlayer (R2S(_dmg) , 1, caster.getOwner())
+                        instances = instances + 1
+                        //printTimedToPlayer (I2S(instances) , 1, caster.getOwner())                                              
+                    else if id == DAMAGE_ABILITY_VERGIL_R
+                        _lvl = GetUnitAbilityLevel(caster, SPELL_R[pid])
+                        _dmg = (((70.00 * _lvl) + ((2 + _lvl) * stat)) / 8)                              // 900 dmg in testing environment    
+                        DamageEvent.setAmount(_dmg)
+                        //printTimedToPlayer("VERGIL R", 1, caster.getOwner()) 
+                        //printTimedToPlayer (R2S(_dmg) , 1, caster.getOwner())
+                        instances = instances + 1
+                        //printTimedToPlayer (I2S(instances) , 1, caster.getOwner())                           
+                    else if id == DAMAGE_ABILITY_SISTINA_R
+                        _lvl = GetUnitAbilityLevel(caster, SPELL_R[pid])
+                        _dmg = (((70.00 * _lvl) + ((2 + _lvl) * stat)) / 3)                              // 900 dmg in testing environment    
+                        DamageEvent.setAmount(_dmg)
+                        //printTimedToPlayer("SISTINA R", 1, caster.getOwner())            
+                        //printTimedToPlayer (R2S(_dmg) , 1, caster.getOwner())
+                        instances = instances + 1
+                        //printTimedToPlayer (I2S(instances) , 1, caster.getOwner())                                                                    
+                    else if id == DAMAGE_ABILITY_TATSUYA_R1
+                        _lvl = GetUnitAbilityLevel(caster, SPELL_R[pid])
+                        _dmg = (((70.00 * _lvl) + ((2 + _lvl) * stat)) / 2.625)                           // 345 dmg in testing environment  
+                        DamageEvent.setAmount(_dmg)
+                        //printTimedToPlayer("TATSUYA R1", 1, caster.getOwner())
+                        //printTimedToPlayer (R2S(_dmg) , 1, caster.getOwner())
+                        instances = instances + 1
+                        //printTimedToPlayer (I2S(instances) , 1, caster.getOwner())                                              
+                    else if id == DAMAGE_ABILITY_TATSUYA_R2
+                        _lvl = GetUnitAbilityLevel(caster, SPELL_R[pid])
+                        _dmg = (((70.00 * _lvl) + ((2 + _lvl) * stat)) / 2.625)                         // 345 dmg in testing environment  
+                        DamageEvent.setAmount(_dmg)
+                        //printTimedToPlayer("TATSUYA R2", 1, caster.getOwner()) 
+                        //printTimedToPlayer (R2S(_dmg) , 1, caster.getOwner())
+                        instances = instances + 1
+                        //printTimedToPlayer (I2S(instances) , 1, caster.getOwner())                                             
+                    else if id == DAMAGE_ABILITY_TATSUYA_R3
+                        _lvl = GetUnitAbilityLevel(caster, SPELL_R[pid])
+                        _dmg = (((70.00 * _lvl) + ((2 + _lvl) * stat)) / 2.625)                          // 345 dmg in testing environment  
+                        DamageEvent.setAmount(_dmg)
+                        //printTimedToPlayer("TATSUYA R3", 1, caster.getOwner()) 
+                        //printTimedToPlayer (R2S(_dmg) , 1, caster.getOwner())
+                        instances = instances + 1
+                        //printTimedToPlayer (I2S(instances) , 1, caster.getOwner())                                 
+                    else if id == DAMAGE_ABILITY_KIARA_R
+                        _lvl = GetUnitAbilityLevel(caster, SPELL_R[pid])
+                        _dmg = (((70.00 * _lvl) + ((2 + _lvl) * stat)) / 7)                              // 900 dmg in testing environment    
+                        DamageEvent.setAmount(_dmg)
+                        //printTimedToPlayer("KIARA R", 1, caster.getOwner())   
+                        //printTimedToPlayer (R2S(_dmg) , 1, caster.getOwner())
+                        instances = instances + 1
+                        //printTimedToPlayer (I2S(instances) , 1, caster.getOwner())                         
+                    else if id == DAMAGE_ABILITY_SAKUYA_R
+                        _lvl = GetUnitAbilityLevel(caster, SPELL_R[pid])
+                        _dmg = (((70.00 * _lvl) + ((2 + _lvl) * stat)) / 3)                              // 900 dmg in testing environment    
+                        DamageEvent.setAmount(_dmg)
+                        //printTimedToPlayer("SAKUYA R", 1, caster.getOwner())
+                        //printTimedToPlayer (R2S(_dmg) , 1, caster.getOwner())
+                        instances = instances + 1
+                        //printTimedToPlayer (I2S(instances) , 1, caster.getOwner())   
+                    else if id == DAMAGE_ABILITY_MHX_R
+                        _lvl = GetUnitAbilityLevel(caster, SPELL_R[pid])
+                        _dmg = (((70.00 * _lvl) + ((2 + _lvl) * stat)) * 1.15)                           // 1035 dmg in testing environment   
+                        DamageEvent.setAmount(_dmg)
+                        caster.startAbilityCooldown(SPELL_R[pid])
+                        //printTimedToPlayer("MHX R", 1, caster.getOwner())
+                        //printTimedToPlayer (R2S(_dmg) , 1, caster.getOwner())
+                        instances = instances + 1
+                        //printTimedToPlayer (I2S(instances) , 1, caster.getOwner())                                      
+                    else if id == DAMAGE_ABILITY_SABER_ALTER_R1
+                        _lvl = GetUnitAbilityLevel(caster, SPELL_R[pid])
+                        _dmg = (((70.00 * _lvl) + ((2 + _lvl) * stat)) / 1.74)                            // 465 dmg in testing environment   
+                        DamageEvent.setAmount(_dmg)
+                        //printTimedToPlayer("SABER ALTER R1", 1, caster.getOwner()) 
+                        //printTimedToPlayer (R2S(_dmg) , 1, caster.getOwner())
+                        instances = instances + 1
+                        //printTimedToPlayer (I2S(instances) , 1, caster.getOwner())                                          
+                    else if id == DAMAGE_ABILITY_SABER_ALTER_R2
+                        _lvl = GetUnitAbilityLevel(caster, SPELL_R[pid])
+                        _dmg = (((70.00 * _lvl) + ((2 + _lvl) * stat)) / 1.74)                              // 465 dmg in testing environment
+                        DamageEvent.setAmount(_dmg)
+                        caster.startAbilityCooldown(SPELL_R[pid])
+                        //printTimedToPlayer("SABER ALTER R2", 1, caster.getOwner())
+                        //printTimedToPlayer (R2S(_dmg) , 1, caster.getOwner())
+                        instances = instances + 1
+                        //printTimedToPlayer (I2S(instances) , 1, caster.getOwner())                                
+                    else if id == DAMAGE_ABILITY_SHU_R
+                        _lvl = GetUnitAbilityLevel(caster, SPELL_R[pid])
+                        _dmg = (((70.00 * _lvl) + ((2 + _lvl) * stat)) / 31)                             // 900 dmg in testing environment
+                        DamageEvent.setAmount(_dmg) 
+                        //printTimedToPlayer("SHU R", 1, caster.getOwner()) 
+                        //printTimedToPlayer (R2S(_dmg) , 1, caster.getOwner())
+                        instances = instances + 1
+                        //printTimedToPlayer (I2S(instances) , 1, caster.getOwner())                            
+                    else if id == DAMAGE_ABILITY_OKITA_NEW_R
+                        _lvl = GetUnitAbilityLevel(caster, SPELL_R[pid])
+                        _dmg = (((70.00 * _lvl) + ((2 + _lvl) * stat)) / 7)                             // 900 dmg in testing environment
+                        DamageEvent.setAmount(_dmg)
+                        //printTimedToPlayer("OKITA NEW R", 1, caster.getOwner())
+                        //printTimedToPlayer (R2S(_dmg) , 1, caster.getOwner())
+                        instances = instances + 1
+                        //printTimedToPlayer (I2S(instances) , 1, caster.getOwner())                            
+                    else if id == DAMAGE_ABILITY_SHANA_NEW_R
+                        _lvl = GetUnitAbilityLevel(caster, SPELL_R[pid])
+                        _dmg = (((70.00 * _lvl) + ((2 + _lvl) * stat)) / 9)                             // 900 dmg in testing environment
+                        DamageEvent.setAmount(_dmg)
+                        //printTimedToPlayer("SHANA NEW R", 1, caster.getOwner())
+                        //printTimedToPlayer (R2S(_dmg) , 1, caster.getOwner())
+                        instances = instances + 1
+                        //printTimedToPlayer (I2S(instances) , 1, caster.getOwner())                              
+                    else if id == DAMAGE_ABILITY_NANAYA_R
+                        _lvl = GetUnitAbilityLevel(caster, SPELL_R[pid])
+                        _dmg = (((70.00 * _lvl) + ((2 + _lvl) * stat)) / 30)                             // 900 dmg in testing environment
+                        DamageEvent.setAmount(_dmg)
+                        //printTimedToPlayer("NANAYA R", 1, caster.getOwner()) 
+                        //printTimedToPlayer (R2S(_dmg) , 1, caster.getOwner())
+                        instances = instances + 1
+                        //printTimedToPlayer (I2S(instances) , 1, caster.getOwner())                           
+                    else if id == DAMAGE_ABILITY_MADOKA_R
+                        _lvl = GetUnitAbilityLevel(caster, SPELL_R[pid])
+                        _dmg = (((70.00 * _lvl) + ((2 + _lvl) * stat)) / 35)                             // 900 dmg in testing environment
+                        DamageEvent.setAmount(_dmg)
+                        //printTimedToPlayer("MADOKA R", 1, caster.getOwner())
+                        //printTimedToPlayer (R2S(_dmg) , 1, caster.getOwner())
+                        instances = instances + 1
+                        //printTimedToPlayer (I2S(instances) , 1, caster.getOwner())                            
+                    else if id == DAMAGE_ABILITY_LAMBO_R
+                        _lvl = GetUnitAbilityLevel(caster, SPELL_R[pid])
+                        _dmg = (((70.00 * _lvl) + ((2 + _lvl) * stat)) / 3)                             // 900 dmg in testing environment
+                        DamageEvent.setAmount(_dmg)
+                        //printTimedToPlayer("LAMBO R", 1, caster.getOwner())
+                        //printTimedToPlayer (R2S(_dmg) , 1, caster.getOwner())
+                        instances = instances + 1
+                        //printTimedToPlayer (I2S(instances) , 1, caster.getOwner())                                                   
+                    else if id == DAMAGE_ABILITY_INUYASHA_R
+                        _lvl = GetUnitAbilityLevel(caster, SPELL_R[pid])
+                        _dmg = (((70.00 * _lvl) + ((2 + _lvl) * stat)) / 3)                             // 900 dmg in testing environment
+                        DamageEvent.setAmount(_dmg)
+                        //printTimedToPlayer("INUYASHA R", 1, caster.getOwner())  
+                        //printTimedToPlayer (R2S(_dmg) , 1, caster.getOwner())
+                        instances = instances + 1
+                        //printTimedToPlayer (I2S(instances) , 1, caster.getOwner())                                   
+                    else if id == DAMAGE_ABILITY_SABER_LILY_R
+                        _lvl = GetUnitAbilityLevel(caster, SPELL_R[pid])
+                        _dmg = (((70.00 * _lvl) + ((2 + _lvl) * stat)) / 29)                             // 900 dmg in testing environment
+                        DamageEvent.setAmount(_dmg)
+                        //printTimedToPlayer("SABER LILY R", 1, caster.getOwner())
+                        //printTimedToPlayer (R2S(_dmg) , 1, caster.getOwner())
+                        instances = instances + 1
+                        //printTimedToPlayer (I2S(instances) , 1, caster.getOwner())                                      
+                    else if id == DAMAGE_ABILITY_HIBARI_R
+                        _lvl = GetUnitAbilityLevel(caster, SPELL_R[pid])
+                        _dmg = (((70.00 * _lvl) + ((2 + _lvl) * stat)) / 3)                             // 900 dmg in testing environment
+                        DamageEvent.setAmount(_dmg)
+                        //printTimedToPlayer("HIBARI R", 1, caster.getOwner())     
+                        //printTimedToPlayer (R2S(_dmg) , 1, caster.getOwner())
+                        instances = instances + 1
+                        //printTimedToPlayer (I2S(instances) , 1, caster.getOwner())                              
+                    else if id == DAMAGE_ABILITY_EMILIA_R
+                        _lvl = GetUnitAbilityLevel(caster, SPELL_R[pid])
+                        _dmg = (((70.00 * _lvl) + ((2 + _lvl) * stat)) / 8)                             // 900 dmg in testing environment
+                        DamageEvent.setAmount(_dmg)
+                        //printTimedToPlayer("EMILIA R", 1, caster.getOwner())  
+                        //printTimedToPlayer (R2S(_dmg) , 1, caster.getOwner())
+                        instances = instances + 1
+                        //printTimedToPlayer (I2S(instances) , 1, caster.getOwner())                               
+                    else if id == DAMAGE_ABILITY_EDO_MADARA_R
+                        _lvl = GetUnitAbilityLevel(caster, SPELL_R[pid])
+                        _dmg = (((70.00 * _lvl) + ((2 + _lvl) * stat)) / 135)                             // 900 dmg in testing environment
+                        DamageEvent.setAmount(_dmg)
+                        //printTimedToPlayer("EDO MADARA R", 1, caster.getOwner())     
+                        //printTimedToPlayer (R2S(_dmg) , 1, caster.getOwner())
+                        instances = instances + 1
+                        //printTimedToPlayer (I2S(instances) , 1, caster.getOwner())                                                        
+                    else if id == DAMAGE_ABILITY_AIZEN_MODE_R
+                        _dmg = ((200.00 + (5.0 * stat)) /3)                                               // 675 dmg in testing environment
+                        DamageEvent.setAmount(_dmg)
+                        //printTimedToPlayer("AIZEN MODE R", 1, caster.getOwner())      
+                        //printTimedToPlayer (R2S(_dmg) , 1, caster.getOwner())
+                        instances = instances + 1
+                        //printTimedToPlayer (I2S(instances) , 1, caster.getOwner())                            
+                    else if id == DAMAGE_ABILITY_ABIGAIL_R
+                        _lvl = GetUnitAbilityLevel(caster, SPELL_R[pid])
+                        _dmg = (((70.00 * _lvl) + ((2 + _lvl) * stat)) / 30)                              // 900 dmg in testing environment
+                        DamageEvent.setAmount(_dmg)
+                        //printTimedToPlayer("ABIGAIL R", 1, caster.getOwner())       
+                        //printTimedToPlayer (R2S(_dmg) , 1, caster.getOwner())
+                        instances = instances + 1
+                        //printTimedToPlayer (I2S(instances) , 1, caster.getOwner())   
+                    else if id == DAMAGE_ABILITY_LAW_R2                 
+                        _dmg = (225.00 + (6.0 * stat))                                                   // 675 dmg in testing environment
+                        DamageEvent.setAmount(_dmg)
+                        caster.startAbilityCooldown(SPELL_R2[pid])
+                        //printTimedToPlayer("LAW R", 1, caster.getOwner())       
+                        //printTimedToPlayer (R2S(_dmg) , 1, caster.getOwner())
+                        instances = instances + 1
+                        //printTimedToPlayer (I2S(instances) , 1, caster.getOwner())   
+                    else if id == DAMAGE_ABILITY_LAW_R2_PROC                     
+                        _dmg = ((225.00 + (6.0 * stat)) * 1.15)                                            // 675 dmg in testing environment
+                        DamageEvent.setAmount(_dmg)
+                        caster.startAbilityCooldown(SPELL_R2[pid])
+                        //printTimedToPlayer("LAW R2", 1, caster.getOwner())       
+                        //printTimedToPlayer (R2S(_dmg) , 1, caster.getOwner())
+                        instances = instances + 1
+                        //printTimedToPlayer (I2S(instances) , 1, caster.getOwner()) 
+                    else if id == DAMAGE_ABILITY_FUTURE_ROGUE_MODE_R                   
+                        _dmg = ((200.00 + (5.0 * stat)) /50)                                               // 675 dmg in testing environment
+                        DamageEvent.setAmount(_dmg)
+                        //printTimedToPlayer("FUTURE ROGUE MODE R", 1, caster.getOwner()) 
+                        //printTimedToPlayer (R2S(_dmg) , 1, caster.getOwner())
+                        instances = instances + 1
+                        //printTimedToPlayer (I2S(instances) , 1, caster.getOwner())                                
+                    else if id == DAMAGE_ABILITY_DANTE_R
+                        _lvl = GetUnitAbilityLevel(caster, SPELL_R[pid])                        
+                        _dmg = (((70.00 * _lvl) + ((2 + _lvl) * stat)) / 16)                             // 900 dmg in testing environment
+                        DamageEvent.setAmount(_dmg)
+                        //printTimedToPlayer("DANTE R", 1, caster.getOwner()) 
+                        //printTimedToPlayer (R2S(_dmg) , 1, caster.getOwner())
+                        instances = instances + 1
+                        //printTimedToPlayer (I2S(instances) , 1, caster.getOwner())           
+                    else if id == DAMAGE_ABILITY_ENMA_R
+                        _lvl = GetUnitAbilityLevel(caster, SPELL_R[pid])                        
+                        _dmg = (((70.00 * _lvl) + ((2 + _lvl) * stat)) / 50)                              // 900 dmg in testing environment
+                        DamageEvent.setAmount(_dmg)
+                        //printTimedToPlayer("ENMA R", 1, caster.getOwner()) 
+                        //printTimedToPlayer (R2S(_dmg) , 1, caster.getOwner())
+                        instances = instances + 1
+                        //printTimedToPlayer (I2S(instances) , 1, caster.getOwner())      
+                    else if id == DAMAGE_ABILITY_KUROHIME_R
+                        _lvl = GetUnitAbilityLevel(caster, SPELL_R[pid])                        
+                        _dmg = ((70.00 * _lvl) + ((2 + _lvl) * stat))                            // 900 dmg in testing environment
+                        DamageEvent.setAmount(_dmg)
+                        //printTimedToPlayer("KUROHIME R", 1, caster.getOwner()) 
+                        //printTimedToPlayer (R2S(_dmg) , 1, caster.getOwner())
+                        instances = instances + 1
+                        //printTimedToPlayer (I2S(instances) , 1, caster.getOwner())      
+                    else if id == DAMAGE_ABILITY_KIYOHIME_R
+                        _lvl = GetUnitAbilityLevel(caster, SPELL_R[pid])                        
+                        _dmg = (((70.00 * _lvl) + ((2 + _lvl) * stat)) / 3)                             // 900 dmg in testing environment
+                        DamageEvent.setAmount(_dmg)
+                        //printTimedToPlayer("KIYOHIME R", 1, caster.getOwner()) 
+                        //printTimedToPlayer (R2S(_dmg) , 1, caster.getOwner())
+                        instances = instances + 1
+                        //printTimedToPlayer (I2S(instances) , 1, caster.getOwner())      
+                    else if id == DAMAGE_ABILITY_SEMIRAMIS_R
+                        _lvl = GetUnitAbilityLevel(caster, SPELL_R[pid])                        
+                        _dmg = (((70.00 * _lvl) + ((2 + _lvl) * stat)) / 30)                             // 900 dmg in testing environment
+                        DamageEvent.setAmount(_dmg)
+                        //printTimedToPlayer("SEMIRAMIS R", 1, caster.getOwner()) 
+                        //printTimedToPlayer (R2S(_dmg) , 1, caster.getOwner())
+                        instances = instances + 1
+                        //printTimedToPlayer (I2S(instances) , 1, caster.getOwner()) 
+                    else if id == DAMAGE_ABILITY_SASUKE_KIRIN
+                        _lvl = GetUnitAbilityLevel(caster, SPELL_R[pid])                        
+                        _dmg = ((70.00 * _lvl) + ((2 + _lvl) * stat))                            // 900 dmg in testing environment
+                        DamageEvent.setAmount(_dmg)
+                        //printTimedToPlayer("Kirin", 1, caster.getOwner()) 
+                        //printTimedToPlayer (R2S(_dmg) , 1, caster.getOwner())
+                        instances = instances + 1
+                        //printTimedToPlayer (I2S(instances) , 1, caster.getOwner())      
+                    else if id == DAMAGE_ABILITY_SASUKE_AMATERASU
+                        _lvl = GetUnitAbilityLevel(caster, SPELL_R2[pid])                        
+                        _dmg = ((70.00 * _lvl) + ((2 + _lvl) * stat))                             // 900 dmg in testing environment
+                        DamageEvent.setAmount(_dmg)
+                        //printTimedToPlayer("Amaterasu", 1, caster.getOwner()) 
+                        //printTimedToPlayer (R2S(_dmg) , 1, caster.getOwner())
+                        instances = instances + 1
+                        //printTimedToPlayer (I2S(instances) , 1, caster.getOwner())      
+                    else if id == DAMAGE_ABILITY_YAMI_R
+                        _lvl = GetUnitAbilityLevel(caster, SPELL_R[pid])                        
+                        _dmg = (((70.00 * _lvl) + ((2 + _lvl) * stat)) / 10)                             // 900 dmg in testing environment
+                        DamageEvent.setAmount(_dmg)
+                        //printTimedToPlayer("Yami R", 1, caster.getOwner()) 
+                        //printTimedToPlayer (R2S(_dmg) , 1, caster.getOwner())
+                        instances = instances + 1
+                        //printTimedToPlayer (I2S(instances) , 1, caster.getOwner())  
+
+
+
+                        
+                    // ━━━━━━━━━━━━━━━ [SPECIAL CASES: T] ━━━━━━━━━━━━━━━━━━ //
+
+
+
+
+
+                    else if id == DAMAGE_ABILITY_XANXUS_T
+                        _dmg = ((300.00 + (7 * stat)) / 3)                                                 // 1250 dmg in testing environment  
+                        DamageEvent.setAmount(_dmg)
+                        //printTimedToPlayer("XANXUS T", 1, caster.getOwner())  
+                        //printTimedToPlayer (R2S(_dmg) , 1, caster.getOwner())
+                        instances = instances + 1
+                        //printTimedToPlayer (I2S(instances) , 1, caster.getOwner())            
+                    else if id == DAMAGE_ABILITY_VERGIL_T
+                        _dmg = ((300.00 + (7 * stat)) / 51)                                                 // 1250 dmg in testing environment  
+                        DamageEvent.setAmount(_dmg)
+                        //printTimedToPlayer("VERGIL T", 1, caster.getOwner())
+                        //printTimedToPlayer (R2S(_dmg) , 1, caster.getOwner())
+                        instances = instances + 1
+                        //printTimedToPlayer (I2S(instances) , 1, caster.getOwner())                                 
+                    else if id == DAMAGE_ABILITY_ULQ_T
+                        _dmg = ((300.00 + (7 * stat)) / 2.625)                                                // 1363 dmg in testing environment  
+                        DamageEvent.setAmount(_dmg)
+                        //printTimedToPlayer("ULQ T", 1, caster.getOwner()) 
+                        //printTimedToPlayer (R2S(_dmg) , 1, caster.getOwner())
+                        instances = instances + 1
+                        //printTimedToPlayer (I2S(instances) , 1, caster.getOwner())                           
+                    else if id == DAMAGE_ABILITY_KIARA_T_ITEM
+                        _dmg = (350.00 + (8.5 * stat))                                                     // 1450 dmg in testing environment  
+                        DamageEvent.setAmount(_dmg)
+                        caster.startAbilityCooldown(SPELL_T[pid])
+                        //printTimedToPlayer("KIARA T ITEM", 1, caster.getOwner())      
+                        //printTimedToPlayer (R2S(_dmg) , 1, caster.getOwner())
+                        instances = instances + 1
+                        //printTimedToPlayer (I2S(instances) , 1, caster.getOwner())                               
+                    else if id == DAMAGE_ABILITY_MHX_T
+                        _dmg = ((300.00 + (7 * stat)) * 1.15)                                                // 1437 dmg in testing environment  
+                        DamageEvent.setAmount(_dmg)
+                        caster.startAbilityCooldown(SPELL_T[pid])
+                        //printTimedToPlayer("MHX T", 1, caster.getOwner())  
+                        //printTimedToPlayer (R2S(_dmg) , 1, caster.getOwner())
+                        instances = instances + 1
+                        //printTimedToPlayer (I2S(instances) , 1, caster.getOwner())                                
+                    else if id == DAMAGE_ABILITY_ROGUE_T
+                        _dmg = ((300.00 + (7 * stat)) / 25)                                                  // 1250 dmg in testing environment  
+                        DamageEvent.setAmount(_dmg)
+                        //printTimedToPlayer("ROGUE T", 1, caster.getOwner()) 
+                        //printTimedToPlayer (R2S(_dmg) , 1, caster.getOwner())
+                        instances = instances + 1
+                        //printTimedToPlayer (I2S(instances) , 1, caster.getOwner())                           
+                    else if id == DAMAGE_ABILITY_MUSASHI_T
+                        _dmg = ((300.00 + (7 * stat)) / 2)                                                  // 1250 dmg in testing environment  
+                        DamageEvent.setAmount(_dmg)
+                        //printTimedToPlayer("MUSASHI T", 1, caster.getOwner()) 
+                        //printTimedToPlayer (R2S(_dmg) , 1, caster.getOwner())
+                        instances = instances + 1
+                        //printTimedToPlayer (I2S(instances) , 1, caster.getOwner())                           
+                    else if id == DAMAGE_ABILITY_MADOKA_T
+                        _dmg = ((300.00 + (7 * stat)) / 3)                                                  // 1250 dmg in testing environment  
+                        DamageEvent.setAmount(_dmg)
+                        //printTimedToPlayer("MADOKA T", 1, caster.getOwner()) 
+                        //printTimedToPlayer (R2S(_dmg) , 1, caster.getOwner())
+                        instances = instances + 1
+                        //printTimedToPlayer (I2S(instances) , 1, caster.getOwner())                           
+                    else if id == DAMAGE_ABILITY_LAMBO_T
+                        _dmg = ((300.00 + (7 * stat)) / 15) 
+                        DamageEvent.setAmount(_dmg)                                                 // 1250 dmg in testing environment  
+                        //printTimedToPlayer("LAMBO T", 1, caster.getOwner()) 
+                        //printTimedToPlayer (R2S(_dmg) , 1, caster.getOwner())
+                        instances = instances + 1
+                        //printTimedToPlayer (I2S(instances) , 1, caster.getOwner())                           
+                    else if id == DAMAGE_ABILITY_WAVER_T
+                        _dmg = ((300.00 + (7 * stat)) / 9)    
+                        DamageEvent.setAmount(_dmg)                                              // 1250 dmg in testing environment  
+                        //printTimedToPlayer("WAVER T", 1, caster.getOwner()) 
+                        //printTimedToPlayer (R2S(_dmg) , 1, caster.getOwner())
+                        instances = instances + 1
+                        //printTimedToPlayer (I2S(instances) , 1, caster.getOwner())                           
+                    else if id == DAMAGE_ABILITY_KIZARU_T
+                        _dmg = ((300.00 + (7 * stat)) / 3)                                                  // 1250 dmg in testing environment  
+                        DamageEvent.setAmount(_dmg)
+                        //printTimedToPlayer("KIZARU T", 1, caster.getOwner()) 
+                        //printTimedToPlayer (R2S(_dmg) , 1, caster.getOwner())
+                        instances = instances + 1
+                        //printTimedToPlayer (I2S(instances) , 1, caster.getOwner())                           
+                    else if id == DAMAGE_ABILITY_KIYOHIME_NEW_T
+                        _dmg = ((300.00 + (7 * stat)) / 149)                                                  // 1250 dmg in testing environment  
+                        DamageEvent.setAmount(_dmg)
+                        //printTimedToPlayer("KIYOHIME NEW T", 1, caster.getOwner()) 
+                        //printTimedToPlayer (R2S(_dmg) , 1, caster.getOwner())
+                        instances = instances + 1
+                        //printTimedToPlayer (I2S(instances) , 1, caster.getOwner())                           
+                    else if id == DAMAGE_ABILITY_GRAY_T
+                        _dmg = ((300.00 + (7 * stat)) / 1)                                                  // 1250 dmg in testing environment  
+                        DamageEvent.setAmount(_dmg)
+                        //printTimedToPlayer("GRAY T", 1, caster.getOwner()) 
+                        //printTimedToPlayer (R2S(_dmg) , 1, caster.getOwner())
+                        instances = instances + 1
+                        //printTimedToPlayer (I2S(instances) , 1, caster.getOwner())                                              
+                    else if id == DAMAGE_ABILITY_SHIRO_T
+                        _dmg = ((300.00 + (7 * stat)) / 3)                                                  // 1250 dmg in testing environment  
+                        DamageEvent.setAmount(_dmg)
+                        //printTimedToPlayer("SHIRO T", 1, caster.getOwner()) 
+                        //printTimedToPlayer (R2S(_dmg) , 1, caster.getOwner())
+                        instances = instances + 1
+                        //printTimedToPlayer (I2S(instances) , 1, caster.getOwner())                           
+                    else if id == DAMAGE_ABILITY_ELIZABETH_T
+                        _dmg = ((300.00 + (7 * stat)) / 58)       
+                        DamageEvent.setAmount(_dmg)                                           // 1250 dmg in testing environment  
+                        //printTimedToPlayer("ELIZABETH T", 1, caster.getOwner())       
+                        //printTimedToPlayer (R2S(_dmg) , 1, caster.getOwner())
+                        instances = instances + 1
+                        //printTimedToPlayer (I2S(instances) , 1, caster.getOwner())                                             
+                    else if id == DAMAGE_ABILITY_EDMOND_T
+                        _dmg = ((300.00 + (7 * stat)) / 18)                                                  // 1250 dmg in testing environment  
+                        DamageEvent.setAmount(_dmg)
+                        //printTimedToPlayer("EDMOND T", 1, caster.getOwner())          
+                        //printTimedToPlayer (R2S(_dmg) , 1, caster.getOwner())
+                        instances = instances + 1
+                        //printTimedToPlayer (I2S(instances) , 1, caster.getOwner())                                                   
+                    else if id == DAMAGE_ABILITY_BYAKURAN_T
+                        _dmg = ((300.00 + (7 * stat)) / 30)                                                  // 1250 dmg in testing environment  
+                        DamageEvent.setAmount(_dmg)
+                        // printTimedToPlayer("BYAKURAN T", 1, caster.getOwner())         
+                        // printTimedToPlayer (R2S(_dmg) , 1, caster.getOwner())
+                        // instances = instances + 1
+                        // printTimedToPlayer (I2S(instances) , 1, caster.getOwner())                           
+                    else if id == DAMAGE_ABILITY_ARCHER_T
+                        _dmg = ((300.00 + (7 * stat)) / 3)                                                  // 1250 dmg in testing environment  
+                        DamageEvent.setAmount(_dmg)
+                        //printTimedToPlayer("ARCHER T", 1, caster.getOwner())      
+                        //printTimedToPlayer (R2S(_dmg) , 1, caster.getOwner())
+                        instances = instances + 1
+                        //printTimedToPlayer (I2S(instances) , 1, caster.getOwner())                           
+                    else if id == DAMAGE_ABILITY_ACCEL_T
+                        _dmg = ((300.00 + (7 * stat)) / 31)     
+                        DamageEvent.setAmount(_dmg)                                             // 1250 dmg in testing environment  
+                        //printTimedToPlayer("ACCEL T", 1, caster.getOwner())      
+                        //printTimedToPlayer (R2S(_dmg) , 1, caster.getOwner())
+                        instances = instances + 1
+                        //printTimedToPlayer (I2S(instances) , 1, caster.getOwner())                           
+                    else if id == DAMAGE_ABILITY_NANOHA_T
+                        _dmg = ((300.00 + (7 * stat)) / 124)  
+                        DamageEvent.setAmount(_dmg)                                                // 1250 dmg in testing environment  
+                        //printTimedToPlayer("NANOHA T", 1, caster.getOwner())      
+                        //printTimedToPlayer (R2S(_dmg) , 1, caster.getOwner())
+                        instances = instances + 1
+                        //printTimedToPlayer (I2S(instances) , 1, caster.getOwner()) 
+                    else if id == DAMAGE_ABILITY_SABER_ALTER_T
+                        _dmg = ((300.00 + (7 * stat)) / 19)  
+                        DamageEvent.setAmount(_dmg)                                                // 1250 dmg in testing environment  
+                        //printTimedToPlayer("SABER ALTER T", 1, caster.getOwner())      
+                        //printTimedToPlayer (R2S(_dmg) , 1, caster.getOwner())
+                        instances = instances + 1
+                        //printTimedToPlayer (I2S(instances) , 1, caster.getOwner())                                         
+                    else if id == DAMAGE_ABILITY_INUYASHA_T
+                        _dmg = (300.00 + (7 * stat)) 
+                        DamageEvent.setAmount(_dmg)                                                 // 1250 dmg in testing environment  
+                        //printTimedToPlayer("INUYASHA T", 1, caster.getOwner())      
+                        //printTimedToPlayer (R2S(_dmg) , 1, caster.getOwner())
+                        instances = instances + 1
+                        //printTimedToPlayer (I2S(instances) , 1, caster.getOwner()) 
+                    else if id == DAMAGE_ABILITY_EDO_MINATO_T
+                        _dmg = (300.00 + (7 * stat))       
+                        DamageEvent.setAmount(_dmg)                                           // 1250 dmg in testing environment  
+                        //printTimedToPlayer("EDO MINATO T", 1, caster.getOwner())      
+                        //printTimedToPlayer (R2S(_dmg) , 1, caster.getOwner())
+                        instances = instances + 1
+                        //printTimedToPlayer (I2S(instances) , 1, caster.getOwner())    
+                    else if id == DAMAGE_ABILITY_SAKUYA_T
+                        _dmg = (300.00 + (7 * stat))  
+                        DamageEvent.setAmount(_dmg)                                                // 1250 dmg in testing environment  
+                        //printTimedToPlayer("SAKUYA T", 1, caster.getOwner())      
+                        //printTimedToPlayer (R2S(_dmg) , 1, caster.getOwner())
+                        instances = instances + 1
+                        //printTimedToPlayer (I2S(instances) , 1, caster.getOwner()) 
+                    else if id == DAMAGE_ABILITY_JEANNE_LILY_T
+                        _dmg = ((300.00 + (7 * stat)) / 40)    
+                        DamageEvent.setAmount(_dmg)                                                   // 1250 dmg in testing environment  
+                        //printTimedToPlayer("JEANNE LILY T", 1, caster.getOwner())      
+                        //printTimedToPlayer (R2S(_dmg) , 1, caster.getOwner())
+                        instances = instances + 1
+                        //printTimedToPlayer (I2S(instances) , 1, caster.getOwner())                                                                                 
+
+                    // ━━━━━━━━━━━━━━━ [SPECIAL CASES: F] ━━━━━━━━━━━━━━━━━━ //
+
+
+
+
+
+                    else if id == DAMAGE_ABILITY_YAMI_F
+                        _dmg = ((250.00 + (6 * stat)) / 3)                                                  // 950 dmg in testing environment
+                        DamageEvent.setAmount(_dmg)
+                        //printTimedToPlayer("YAMI F", 1, caster.getOwner())                         
+                        //printTimedToPlayer (R2S(_dmg) , 1, caster.getOwner())
+                        instances = instances + 1
+                        //printTimedToPlayer (I2S(instances) , 1, caster.getOwner())                                               
+                    else if id == DAMAGE_ABILITY_VERGIL_F
+                        _dmg = ((250.00 + (6 * stat)) / 51)                                                  // 950 dmg in testing environment
+                        DamageEvent.setAmount(_dmg)
+                        //printTimedToPlayer("VERGIL F", 1, caster.getOwner())       
+                        //printTimedToPlayer (R2S(_dmg) , 1, caster.getOwner())
+                        instances = instances + 1
+                        //printTimedToPlayer (I2S(instances) , 1, caster.getOwner())                                  
+                    else if id == DAMAGE_ABILITY_TATSUYA_F
+                        _dmg = ((250.00 + (6 * stat)) / 1.9)                                                  // 950 dmg in testing environment
+                        DamageEvent.setAmount(_dmg)
+                        //printTimedToPlayer("TATSUYA F", 1, caster.getOwner())                    
+                        //printTimedToPlayer (R2S(_dmg) , 1, caster.getOwner())
+                        instances = instances + 1
+                        //printTimedToPlayer (I2S(instances) , 1, caster.getOwner())                                         
+                    else if id == DAMAGE_ABILITY_MIYUKI_F
+                        _dmg = ((250.00 + (6 * stat)) / 39)                                                  // 950 dmg in testing environment
+                        DamageEvent.setAmount(_dmg)
+                        //printTimedToPlayer("MIYUKI F", 1, caster.getOwner())     
+                        //printTimedToPlayer (R2S(_dmg) , 1, caster.getOwner())
+                        instances = instances + 1
+                        //printTimedToPlayer (I2S(instances) , 1, caster.getOwner())                                  
+                    else if id == DAMAGE_ABILITY_TSUNA_F
+                        _dmg = ((250.00 + (6 * stat)) / 30)     
+                        DamageEvent.setAmount(_dmg)                                                         // 950 dmg in testing environment
+                        //printTimedToPlayer("TSUNA F", 1, caster.getOwner())               
+                        //printTimedToPlayer (R2S(_dmg) , 1, caster.getOwner())
+                        instances = instances + 1
+                        //printTimedToPlayer (I2S(instances) , 1, caster.getOwner())                                                                              
+                    else if id == DAMAGE_ABILITY_MISAKA_OLD_F
+                        _dmg = ((250.00 + (6 * stat)) / 3)                                                  // 950 dmg in testing environment
+                        DamageEvent.setAmount(_dmg)
+                        //printTimedToPlayer("MISAKA OLD F", 1, caster.getOwner())       
+                        //printTimedToPlayer (R2S(_dmg) , 1, caster.getOwner())
+                        instances = instances + 1
+                        //printTimedToPlayer (I2S(instances) , 1, caster.getOwner())                                               
+                    else if id == DAMAGE_ABILITY_JELLAL_F
+                        _dmg = ((250.00 + (6 * stat)) / 50)                                                  // 950 dmg in testing environment
+                        DamageEvent.setAmount(_dmg)
+                        //printTimedToPlayer("JELLAL F", 1, caster.getOwner())             
+                        //printTimedToPlayer (R2S(_dmg) , 1, caster.getOwner())
+                        instances = instances + 1
+                        //printTimedToPlayer (I2S(instances) , 1, caster.getOwner())                                         
+                    else if id == DAMAGE_ABILITY_JEANNE_ALTER_F
+                        _dmg = ((250.00 + (6 * stat)) / 87)    
+                        DamageEvent.setAmount(_dmg)                                                         // 950 dmg in testing environment
+                        //printTimedToPlayer("JEANNE ALTER F", 1, caster.getOwner())  
+                        //printTimedToPlayer (R2S(_dmg) , 1, caster.getOwner())
+                        instances = instances + 1
+                        //printTimedToPlayer (I2S(instances) , 1, caster.getOwner())                                           
+                    else if id == DAMAGE_ABILITY_INUYASHA_F
+                        _dmg = ((250.00 + (6 * stat)) / 3)                                                  // 950 dmg in testing environment
+                        DamageEvent.setAmount(_dmg)
+                        //printTimedToPlayer("INUYASHA F", 1, caster.getOwner())        
+                        //printTimedToPlayer (R2S(_dmg) , 1, caster.getOwner())
+                        instances = instances + 1
+                        //printTimedToPlayer (I2S(instances) , 1, caster.getOwner())                                                                        
+                    else if id == DAMAGE_ABILITY_ILLYA_F
+                        _dmg = ((250.00 + (6 * stat)) / 3)                                                  // 950 dmg in testing environment
+                        DamageEvent.setAmount(_dmg)
+                        //printTimedToPlayer("ILLYA F", 1, caster.getOwner())         
+                        //printTimedToPlayer (R2S(_dmg) , 1, caster.getOwner())
+                        instances = instances + 1
+                        //printTimedToPlayer (I2S(instances) , 1, caster.getOwner())                                               
+                    else if id == DAMAGE_ABILITY_GILGAMESH_F
+                        _dmg = ((250.00 + (6 * stat)) / 3)                                                  // 950 dmg in testing environment
+                        DamageEvent.setAmount(_dmg)
+                        //printTimedToPlayer("GILGAMESH F", 1, caster.getOwner())        
+                        //printTimedToPlayer (R2S(_dmg) , 1, caster.getOwner())
+                        instances = instances + 1
+                        //printTimedToPlayer (I2S(instances) , 1, caster.getOwner())                                                                
+                    else if id == DAMAGE_ABILITY_DIO_F
+                        _dmg = ((250.00 + (6 * stat)) / 120)                                                  // 950 dmg in testing environment
+                        DamageEvent.setAmount(_dmg)
+                        //printTimedToPlayer("DIO F", 1, caster.getOwner())  
+                        //printTimedToPlayer (R2S(_dmg) , 1, caster.getOwner())
+                        instances = instances + 1
+                        //printTimedToPlayer (I2S(instances) , 1, caster.getOwner())                                                   
+                    else if id == DAMAGE_ABILITY_ACCEL_F
+                        _dmg = ((250.00 + (6 * stat)) / 80)                                                  // 950 dmg in testing environment
+                        DamageEvent.setAmount(_dmg)
+                        //printTimedToPlayer("ACCEL F", 1, caster.getOwner())   
+                        //printTimedToPlayer (R2S(_dmg) , 1, caster.getOwner())
+                        instances = instances + 1
+                        //printTimedToPlayer (I2S(instances) , 1, caster.getOwner())              
+                    else if id == DAMAGE_ABILITY_NOBUNAGA_F
+                        _dmg = ((250.00 + (6 * stat)) / 18)                                                  // 950 dmg in testing environment
+                        DamageEvent.setAmount(_dmg)
+                        //printTimedToPlayer("NOBUNAGA F", 1, caster.getOwner())   
+                        //printTimedToPlayer (R2S(_dmg) , 1, caster.getOwner())
+                        instances = instances + 1
+                        //printTimedToPlayer (I2S(instances) , 1, caster.getOwner()) 
+                    else if id == DAMAGE_ABILITY_EMILIA_F
+                        _dmg = ((250.00 + (6 * stat)) -175)                                                  // 950 dmg in testing environment
+                        DamageEvent.setAmount(_dmg)
+                        //printTimedToPlayer("EMILIA F", 1, caster.getOwner())   
+                        //printTimedToPlayer (R2S(_dmg) , 1, caster.getOwner())
+                        instances = instances + 1
+                        //printTimedToPlayer (I2S(instances) , 1, caster.getOwner())           
+                    else if id == DAMAGE_ABILITY_AQUA_F
+                        _dmg = ((250.00 + (6 * stat)) /58)                                                // 950 dmg in testing environment
+                        DamageEvent.setAmount(_dmg)
+                        //printTimedToPlayer("AQUA F1", 1, caster.getOwner())   
+                        //printTimedToPlayer (R2S(_dmg) , 1, caster.getOwner())
+                        instances = instances + 1
+                        //printTimedToPlayer (I2S(instances) , 1, caster.getOwner())           
+                    else if id == DAMAGE_ABILITY_AQUA_F2
+                        _dmg = ((250.00 + (6 * stat)) /2)                                              // 950 dmg in testing environment
+                        DamageEvent.setAmount(_dmg)
+                        //printTimedToPlayer("AQUA F2", 1, caster.getOwner())   
+                        //printTimedToPlayer (R2S(_dmg) , 1, caster.getOwner())
+                        instances = instances + 1
+                        //printTimedToPlayer (I2S(instances) , 1, caster.getOwner())                                   
+                    else if id == DAMAGE_ABILITY_ENMA_F
+                        _dmg = ((250.00 + (6 * stat)) /3)                                                  // 950 dmg in testing environment
+                        DamageEvent.setAmount(_dmg)
+                        //printTimedToPlayer("ENMA F", 1, caster.getOwner())   
+                        //printTimedToPlayer (R2S(_dmg) , 1, caster.getOwner())
+                        instances = instances + 1
+                        //printTimedToPlayer (I2S(instances) , 1, caster.getOwner()) 
+                    else if id == DAMAGE_ABILITY_LUFFY_F
+                        _dmg = ((250.00 + (6 * stat)) /35)                                                  // 950 dmg in testing environment
+                        DamageEvent.setAmount(_dmg)
+                        //printTimedToPlayer("LUFFY F", 1, caster.getOwner())   
+                        //printTimedToPlayer (R2S(_dmg) , 1, caster.getOwner())
+                        instances = instances + 1
+                        //printTimedToPlayer (I2S(instances) , 1, caster.getOwner()) 
+                    else if id == DAMAGE_ABILITY_BYAKURAN_F
+                        _dmg = ((250.00 + (6 * stat)) /2)                                                  // 950 dmg in testing environment
+                        DamageEvent.setAmount(_dmg)
+                        //printTimedToPlayer("BYAKURAN F", 1, caster.getOwner())   
+                        //printTimedToPlayer (R2S(_dmg) , 1, caster.getOwner())
+                        instances = instances + 1
+                        //printTimedToPlayer (I2S(instances) , 1, caster.getOwner()) 
+                    else if id == DAMAGE_ABILITY_MELIODAS_F
+                        _dmg = ((250.00 + (6 * stat)) /1)                                                  // 950 dmg in testing environment
+                        DamageEvent.setAmount(_dmg)
+                        //printTimedToPlayer("MELIODAS F", 1, caster.getOwner())   
+                        //printTimedToPlayer (R2S(_dmg) , 1, caster.getOwner())
+                        instances = instances + 1
+                        //printTimedToPlayer (I2S(instances) , 1, caster.getOwner()) 
+
+
+
+                    // ━━━━━━━━━━━━━━━ [SPECIAL CASES: G] ━━━━━━━━━━━━━━━━━━ //      
+
+
+
+                    else if id == DAMAGE_ABILITY_SHELIA_G
+                        let abilLvl = DamageEvent.getSource().getAbilityLvlG()  
+                        _dmg = ((8 * abilLvl) + (stat * 0.05 * abilLvl)) * 5                                 // 300 dmg in testing environment
+                        DamageEvent.setAmount(_dmg)
+                        //printTimedToPlayer("SHELIA G", 1, caster.getOwner())   
+                        //printTimedToPlayer (R2S(_dmg) , 1, caster.getOwner())
+                        instances = instances + 1
+                        //printTimedToPlayer (I2S(instances) , 1, caster.getOwner())     
+
+
+                    // ━━━━━━━━━━━━━━━ [SPECIAL CASES: COOLDOWNS Q/W/E/R/T] ━━━━━━━━━━━━━━━━━━ //        
+
+
+                    else if id == DAMAGE_ABILITY_DELAYED_W
+                        _lvl = GetUnitAbilityLevel(caster, SPELL_W[pid])              
+                        _dmg = (30.00 * _lvl) + (0.8 * stat * _lvl)                                   // 80/160/240/320/400 dmg in testing environment 
+                        DamageEvent.setAmount(_dmg)
+                        //printTimedToPlayer (R2S(_dmg) , 1, caster.getOwner()) 
+                        //printTimedToPlayer("W", 1, caster.getOwner())
+                    else if id == DAMAGE_ABILITY_DELAYED_W2
+                        _lvl = GetUnitAbilityLevel(caster, SPELL_W[pid])
+                        _dmg = (20.00 * _lvl) + (0.1 * stat * _lvl)                                   // 30/60/90/120/150 dmg in testing environment
+                        DamageEvent.setAmount(_dmg)
+                        //printTimedToPlayer (R2S(_dmg) , 1, caster.getOwner())
+                        //printTimedToPlayer("W2", 1, caster.getOwner())                
+                    else if id == DAMAGE_ABILITY_DELAYED_E
+                        _lvl = GetUnitAbilityLevel(caster, SPELL_E[pid])
+                        _dmg = (40.00 * _lvl) + (0.2 * stat * _lvl)                                   // 60/120/180/240/300 dmg in testing environment
+                        DamageEvent.setAmount(_dmg)
+                        //printTimedToPlayer (R2S(_dmg) , 1, caster.getOwner())
+                        //printTimedToPlayer("E", 1, caster.getOwner())                
+                    else if id == DAMAGE_ABILITY_DELAYED_R
+                        _lvl = GetUnitAbilityLevel(caster, SPELL_R[pid])
+                        _dmg = (70.00 * _lvl) + ((2 + _lvl) * stat)                                  // 500/700/900 dmg in testing environment  
+                        DamageEvent.setAmount(_dmg)
+                        //printTimedToPlayer (R2S(_dmg) , 1, caster.getOwner())
+                        //printTimedToPlayer("R", 1, caster.getOwner())                             
+                    else if id == DAMAGE_ABILITY_DELAYED_T 
+                        _dmg = (300.00 + (7 * stat))                                                  // 1250 dmg in testing environment  
+                        DamageEvent.setAmount(_dmg)
+                        //printTimedToPlayer (R2S(_dmg) , 1, caster.getOwner())                              
+                        //printTimedToPlayer("T", 1, caster.getOwner())
+                    else if id == DAMAGE_ABILITY_DELAYED_F
+                        _dmg = (250.00 + (6 * stat))                                                  // 950 dmg in testing environment
+                        DamageEvent.setAmount(_dmg)
+                        //printTimedToPlayer (R2S(_dmg) , 1, caster.getOwner())                             
+                        //printTimedToPlayer("F", 1, caster.getOwner())              
+                    else if id == DAMAGE_ABILITY_DELAYED_MODE_Q
+                        _dmg = (175.00 + (3.0 * stat))                                                  // 400 dmg in testing environment
+                        DamageEvent.setAmount(_dmg)
+                        //printTimedToPlayer (R2S(_dmg) , 1, caster.getOwner())
+                        //printTimedToPlayer("MQ", 1, caster.getOwner())                
+                    else if id == DAMAGE_ABILITY_DELAYED_MODE_W                           
+                        _dmg = (150.00 + (4.0 * stat))                                                  // 525 dmg in testing environment
+                        DamageEvent.setAmount(_dmg)
+                        //printTimedToPlayer (R2S(_dmg) , 1, caster.getOwner())
+                        //printTimedToPlayer("MW", 1, caster.getOwner())                
+                    else if id == DAMAGE_ABILITY_DELAYED_MODE_E
+                        _dmg = (125.00 + (2.0 * stat))                                                   // 275 dmg in testing environment 
+                        DamageEvent.setAmount(_dmg)
+                        //printTimedToPlayer (R2S(_dmg) , 1, caster.getOwner())
+                        //printTimedToPlayer("ME", 1, caster.getOwner())                
+                    else if id == DAMAGE_ABILITY_DELAYED_MODE_R
+                        _dmg = (200.00 + (5.0 * stat))                                                  // 675 dmg in testing environment
+                        DamageEvent.setAmount(_dmg)
+                        //printTimedToPlayer (R2S(_dmg) , 1, caster.getOwner())
+                        //printTimedToPlayer("MR", 1, caster.getOwner())
+
+                    // ━━━━━━━━━━━━━━━ [SPECIAL CASES: ITEMS] ━━━━━━━━━━━━━━━━━━ //        
+
+                    else if id == DAMAGE_ABILITY_THUNDER_RING
+                        _dmg = (100.00 + (2.5 * stat))                                                   // 350 dmg in testing environment 
+                        DamageEvent.setAmount(_dmg)
+                        //printTimedToPlayer (R2S(_dmg) , 1, caster.getOwner())
+                        //printTimedToPlayer("THUNDER RING", 1, caster.getOwner())                
+                    else if id == DAMAGE_ABILITY_THUNDER_ARCO
+                        _dmg = (200.00 + (4.0 * stat))                                                   // 600 dmg in testing environment
+                        DamageEvent.setAmount(_dmg)
+                        //printTimedToPlayer (R2S(_dmg) , 1, caster.getOwner())
+                        //printTimedToPlayer("THUNDER ARCO", 1, caster.getOwner())
+                    else if id == DAMAGE_ABILITY_STORM_RING
+                        _dmg = (100.00 + (2.5 * stat))                                                   // 350 dmg in testing environment 
+                        DamageEvent.setAmount(_dmg)
+                        //printTimedToPlayer (R2S(_dmg) , 1, caster.getOwner())
+                        //printTimedToPlayer("STORM RING", 1, caster.getOwner())                
+                    else if id == DAMAGE_ABILITY_STORM_ARCO
+                        _dmg = (200.00 + (4.0 * stat))                                                   // 600 dmg in testing environment
+                        DamageEvent.setAmount(_dmg)
+                        //printTimedToPlayer (R2S(_dmg) , 1, caster.getOwner())
+                        //printTimedToPlayer("STORM ARCO", 1, caster.getOwner())
+                    else if id == DAMAGE_ABILITY_RAIN_RING
+                        _dmg = (100.00 + (2.5 * stat))                                                   // 350 dmg in testing environment 
+                        DamageEvent.setAmount(_dmg)
+                        //printTimedToPlayer (R2S(_dmg) , 1, caster.getOwner())
+                        //printTimedToPlayer("RAIN RING", 1, caster.getOwner())                
+                    else if id == DAMAGE_ABILITY_RAIN_ARCO
+                        _dmg = (200.00 + (4.0 * stat))                                                   // 600 dmg in testing environment
+                        DamageEvent.setAmount(_dmg)
+                        //printTimedToPlayer (R2S(_dmg) , 1, caster.getOwner())
+                        //printTimedToPlayer("RAIN ARCO", 1, caster.getOwner())
+
+                    // ━━━━━━━━━━━━━━━ [SPECIAL CASES: SUPER EXCEPTIONS] ━━━━━━━━━━━━━━━━━━ //
+
+                    if caster.hasAbility('B068')                                                        // Sistine's F buff
+                        DamageEvent.setAmount(DamageEvent.getAmount()*1.30)                         
+
+                    if target.hasAbility('B04P') and DamageEvent.getAmount() >= target.getHP()          // SAber Lily's F buff
+                        DamageEvent.setAmount(0)
+                        target.removeAbility('B04P')
+                        doAfter(0.05) ->                             
+                            //printTimedToPlayer("nax HP: "+target.getMaxHP().toString(), 1, caster.getOwner())
+                            //printTimedToPlayer("Heal: "+(target.getMaxHP() * 0.2).toString(), 1, caster.getOwner())
+                            target.setHP(target.getMaxHP() * 0.2)    
+
+                    if DamageEvent.getTarget().hasAbility(ABILITY_SPELLBLOCK) // If target has (Spellblock)
+                        if DamageEvent.getAmount() >= GetUnitState(DamageEvent.getTarget(), UNIT_STATE_MAX_LIFE) * 0.20 // if incoming damage is equal or more than 20% of max health
+                            DamageEvent.getTarget().removeAbility(ABILITY_SPELLBLOCK) // remove spellblock
+                            DamageEvent.setAmount(DamageEvent.getAmount()*0.5) // reduce incoming damage by 50%
+                        
+                        if DamageEvent.getTarget().getTypeId() == ITACHI_EDO // Izanami Spellblock
+                            izanamiSound_proc.play()
+                            DamageEvent.getTarget()..removeAbility(IZANAMI_MODEL_EFFECT)..removeAbility(IZANAMI_BUFF)
+
+                        if DamageEvent.getTarget().getTypeId() == 'H03C' // Abigail Spellblock
+                            abigailSound_proc.play()
+                            DamageEvent.getTarget()..removeAbility('B052')
+
+                        if DamageEvent.getTarget().getTypeId() == RORONOA_ZORO // Zoro Spellblock
+                            zoroSound_proc.play()
+                            DamageEvent.getTarget()..removeAbility(RORONOA_ZORO_G_EFFECT)..removeAbility(RORONOA_ZORO_G_BUFF)
+
+                        if DamageEvent.getTarget().getTypeId() == ICHIGO_STRENGTH // Ichigo Spellblock
+                            ichigoSound_proc.play()
+                            DamageEvent.getTarget()..removeAbility(ICHIGO_STRENGTH_G_EFFECT)..removeAbility(ICHIGO_STRENGTH_G_BUFF)
+
+                        if DamageEvent.getTarget().getTypeId() == KAMIJOU_TOUMA // Touma Spellblock
+                            toumaSound_proc.play()
+                            DamageEvent.getTarget()..removeAbility(KAMIJOU_TOUMA_G_EFFECT)..removeAbility(KAMIJOU_TOUMA_G_BUFF)
+
+                        if DamageEvent.getTarget().getTypeId() == OKITA_STRENGTH // Okita Spellblock
+                            okitaSound_proc.play()
+                            DamageEvent.getTarget()..removeAbility(OKITA_STRENGTH_G_EFFECT)..removeAbility(OKITA_STRENGTH_G_BUFF)
+    
+                        if DamageEvent.getTarget().hasAbility(RINNEGAN_MODEL_EFFECT) // Rinnegan Spellblock
+                            rinneganSound_proc.play()
+                            DamageEvent.getTarget()..removeAbility(RINNEGAN_MODEL_EFFECT)..removeAbility(RINNEGAN_BUFF)
+
+                        if DamageEvent.getTarget().hasAbility(SHARINNEGAN_MODEL_EFFECT) // Sharinnegan
+                            rinneganSound_proc.play() 
+
+                    if DamageEvent.getTarget().hasAbility('B01T') // If target has tsuna G buff
+                        if DamageEvent.getAmount() < target.getHP()// If damage is lower than remaining health
+                            target.addHP(DamageEvent.getAmount() / 2) // Heals target for 50% of damage
+                            DamageEvent.setAmount(0) //Sets damage to 0                                               
+
+                    if DamageEvent.getTarget().hasAbility('B06K') or DamageEvent.getTarget().hasAbility('B06N')// If target has (Cloud)
+                        let cloudID = target.getUserData()
+                        if DamageEvent.getAmount() < cloudAbsorbValue[cloudID] // If damage is lower than absorb value
+                            cloudAbsorbValue[cloudID] = cloudAbsorbValue[cloudID] - DamageEvent.getAmount() // Lowers absorb
+                            DamageEvent.setAmount(0) // Sets damage to 0
+                        else if DamageEvent.getAmount() >= cloudAbsorbValue[cloudID] //else if damage is higher than absorb value         
+                            DamageEvent.setAmount(DamageEvent.getAmount() - cloudAbsorbValue[cloudID]) // Lowers damage
+                            cloudAbsorbValue[cloudID] = 0 // Sets absorb value to 0
+
+                    if DamageEvent.getTarget().hasAbility('B06M') // If target has (Mist Ring)
+                        if (DamageEvent.getAmount() * 0.2) < target.getMana() // If damage is lower than current mana
+                            DamageEvent.setAmount(DamageEvent.getAmount() * 0.8) // Sets damage to 80%
+                            target.setMana(target.getMana() - (DamageEvent.getAmount() * 0.4)) // drains mana equal to 40% of damage
+                        else if (DamageEvent.getAmount() * 0.2) >= target.getMana() //else if damage is higher than mana      
+                            DamageEvent.setAmount(DamageEvent.getAmount() - target.getMana()) // Lowers damage
+                            target.setMana(0) // Sets mana to 0
+                            for i = 0 to 5
+                                if UnitItemInSlot(target, i).getTypeId() == MIST_RING_VONGOLA
+                                    UnitItemInSlot(target, i).setIconPath("ReplaceableTextures\\CommandButtons\\BTNMistX.blp")
+                                    target.removeAbility('B06M') 
+
+                    if DamageEvent.getTarget().hasAbility('B06O') // If target has (Mist Arco)
+                        if (DamageEvent.getAmount() * 0.4) < target.getMana() // If damage is lower than current mana
+                            DamageEvent.setAmount(DamageEvent.getAmount() * 0.6) // Sets damage to 60%
+                            target.setMana(target.getMana() - (DamageEvent.getAmount() * 0.8)) // drains mana equal to 80% of damage
+                        else if (DamageEvent.getAmount() * 0.4) >= target.getMana() //else if damage is higher than mana      
+                            DamageEvent.setAmount(DamageEvent.getAmount() - target.getMana()) // Lowers damage
+                            target.setMana(0) // Sets mana to 0
+                            for i = 0 to 5
+                                if UnitItemInSlot(target, i).getTypeId() == MIST_RING_ARCOBALENO
+                                    UnitItemInSlot(target, i).setIconPath("ReplaceableTextures\\CommandButtons\\BTNArcobalenoMist.blp")
+                                    target.removeAbility('B06O')                                                                
+                    if gracePeriod == true
+                        DamageEvent.setAmount(0)
+                        DamageEvent.abortCurrent()
+                                                            
+            default

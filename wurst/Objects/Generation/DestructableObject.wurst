@@ -1,0 +1,21 @@
+package DestructableObject
+import ObjEditingNatives
+
+@compiletime function create_w3b_B900()
+	createObjectDefinition("w3b", 'B900', 'YTlb')
+	..setString("barm", "Ethereal")
+	..setInt("bcpd", 0)
+	..setUnreal("bflh", 10.0)
+	..setUnreal("boch", 0.0)
+	..setString("btar", "")
+	..setInt("bcpr", 0)
+	..setString("bfil", "war3mapImported\\button.mdl")
+	..setUnreal("bmas", 4.0)
+	..setString("bnam", "MisogiThai")
+	..setString("bptx", "")
+	..setReal("bgsc", 1.0)
+	..setUnreal("bsel", 0.0)
+	..setString("bshd", "")
+	..setString("btxf", "ReplaceableTextures\\CommandButtons\\MisogiReal.blp")
+	..setInt("btxi", 31)
+	..setInt("buch", 0)

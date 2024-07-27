@@ -1,0 +1,63 @@
+package Rain
+import ClosureForGroups
+import ObjectDefinitions
+import ClosureTimers
+import GroupUtils
+import ACR_Effects
+import ACR_Library
+import DamageEvent
+import AbilityGlobals
+init
+    rainSilence()
+function rainSilence ()
+    CreateTrigger()
+    ..registerAnyUnitEvent(EVENT_PLAYER_UNIT_SPELL_EFFECT)
+    ..addAction() ->
+        if GetSpellAbilityId() == RAIN_VONGOLA_ABILITY
+            let caster = GetTriggerUnit()
+            let spellPos = vec2(GetSpellTargetX(), GetSpellTargetY())
+            let silenced_damaged = CreateGroup()
+            let dmg = ((caster.getAgi(true)) * 2.5 + 100)
+            let eff1 = addEffect(RAIN_EFFECT, spellPos)
+            let eff1_2 = addEffect(RAIN_EFFECT, spellPos)
+            var count = 0
+            eff1.setScale(1.2)
+            eff1_2.setScale(1.2)             
+            doPeriodically(0.02) (CallbackPeriodic cb) ->
+                count++
+                forUnitsInRange(spellPos, 400) (unit target) ->
+                    if caster.isEnemyOf(target) and silenced_damaged.has(target) == false and target.isInvulnerable() == false
+                        DamageEvent.setNextDamageId(DAMAGE_ABILITY_RAIN_RING)
+                        DamageEvent.setNextDamageFromCode()
+                        caster.damageTarget(target, dmg, ATTACK_TYPE_MAGIC)
+                        acrSilence(caster, target, 0.7)
+                        silenced_damaged.add(target)
+                if count == 50
+                    eff1.destr()
+                    eff1_2.destr()
+                    silenced_damaged.release()
+                    destroy cb
+        if GetSpellAbilityId() == RAIN_ARCO_ABILITY
+            let caster = GetTriggerUnit()
+            let spellPos = vec2(GetSpellTargetX(), GetSpellTargetY())
+            let silenced_damaged = CreateGroup()
+            let dmg = ((caster.getAgi(true)) * 4.00 + 200)
+            let eff2 = addEffect(RAIN_EFFECT, spellPos)
+            let eff2_2 = addEffect(RAIN_EFFECT, spellPos)
+            var count = 0
+            eff2.setScale(1.2)
+            eff2_2.setScale(1.2)
+            doPeriodically(0.02) (CallbackPeriodic cb) ->
+                count++
+                forUnitsInRange(spellPos, 400) (unit target) ->
+                    if caster.isEnemyOf(target) and silenced_damaged.has(target) == false and target.isInvulnerable() == false
+                        DamageEvent.setNextDamageId(DAMAGE_ABILITY_RAIN_ARCO)
+                        DamageEvent.setNextDamageFromCode()
+                        caster.damageTarget(target, dmg, ATTACK_TYPE_MAGIC)
+                        acrSilence(caster, target, 1.0)
+                        silenced_damaged.add(target)
+                if count == 100
+                    eff2.destr()
+                    eff2_2.destr()
+                    silenced_damaged.release()
+                    destroy cb

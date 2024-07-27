@@ -1,0 +1,141 @@
+package StartGame
+
+init
+    initTrig_Startgame()
+
+function trig_StartgameFunc063002()
+    ShowUnitHide(GetEnumUnit())
+
+function trig_StartgameFunc073003001() returns boolean
+    return GetPlayerSlotState(GetFilterPlayer()) == PLAYER_SLOT_STATE_PLAYING
+
+function trig_StartgameFunc074A()
+    SetPlayerStateBJ(GetEnumPlayer(), PLAYER_STATE_RESOURCE_GOLD, 700)
+    SetPlayerFlagBJ(PLAYER_STATE_GIVES_BOUNTY, true, GetEnumPlayer())
+    SetPlayerHandicapXPBJ(GetEnumPlayer(), 125.00)
+    CreateFogModifierRectBJ(true, GetEnumPlayer(), FOG_OF_WAR_VISIBLE, gg_rct______________028)
+    CreateFogModifierRectBJ(true, GetEnumPlayer(), FOG_OF_WAR_VISIBLE, gg_rct______________034)
+
+function trig_StartgameFunc085T()
+    SetUnitInvulnerable(gg_unit_O005_0043, true)
+    PauseUnit(gg_unit_O005_0043, true)
+    h__SetUnitMoveSpeed(gg_unit_O005_0043, 0.00)
+    TriggerExecute(gg_trg_Dialog_Selection)
+    FlushChildHashtable(YDLOC, GetHandleId(GetExpiredTimer()))
+    DestroyTimer(GetExpiredTimer())
+
+function trig_StartgameActions()
+    timer _ydl_timer
+    integer trigger_ID = LoadInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 865)
+    trigger_ID += 3
+    SaveInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 865, trigger_ID)
+    SaveInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 1045, trigger_ID)
+    udg_PML = true
+    bj_forLoopAIndex = 1
+    bj_forLoopAIndexEnd = 3
+    while true
+        if bj_forLoopAIndex > bj_forLoopAIndexEnd
+            break
+        if GetPlayerSlotState(ConvertedPlayer(bj_forLoopAIndex)) == PLAYER_SLOT_STATE_PLAYING
+            udg_OpenApi++
+        bj_forLoopAIndex++
+    bj_forLoopAIndex = 5
+    bj_forLoopAIndexEnd = 7
+    while true
+        if bj_forLoopAIndex > bj_forLoopAIndexEnd
+            break
+        if GetPlayerSlotState(ConvertedPlayer(bj_forLoopAIndex)) == PLAYER_SLOT_STATE_PLAYING
+            udg_OpenApi++
+        bj_forLoopAIndex++
+    bj_forLoopAIndex = 9
+    bj_forLoopAIndexEnd = 11
+    while true
+        if bj_forLoopAIndex > bj_forLoopAIndexEnd
+            break
+        if GetPlayerSlotState(ConvertedPlayer(bj_forLoopAIndex)) == PLAYER_SLOT_STATE_PLAYING
+            udg_OpenApi++
+        bj_forLoopAIndex++
+    if udg_OpenApi <= 1
+        EnableTrigger(gg_trg_xieloujiance)
+        RemoveUnit(gg_unit_O007_0139)
+        SaveUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 834687666, CreateUnit(Player(PLAYER_NEUTRAL_AGGRESSIVE), 'H03Y', 9803.00, 241.30, 270.00))
+        SetPlayerAlliance(Player(0), GetOwningPlayer(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 834687666)), ALLIANCE_SHARED_ADVANCED_CONTROL, true)
+    SaveInteger(YDHT, StringHash("0"), 597637742, 'e0XV')
+    SaveInteger(YDHT, StringHash("1"), 597637742, 'e0XW')
+    SaveInteger(YDHT, StringHash("2"), 597637742, 'e0XX')
+    SaveInteger(YDHT, StringHash("3"), 597637742, 'e0XY')
+    SaveInteger(YDHT, StringHash("4"), 597637742, 'e0XZ')
+    SaveInteger(YDHT, StringHash("5"), 597637742, 'e0Y0')
+    SaveInteger(YDHT, StringHash("6"), 597637742, 'e0Y1')
+    SaveInteger(YDHT, StringHash("7"), 597637742, 'e0Y2')
+    SaveInteger(YDHT, StringHash("8"), 597637742, 'e0Y3')
+    SaveInteger(YDHT, StringHash("9"), 597637742, 'e0Y4')
+    SaveInteger(YDHT, StringHash("10"), 597637742, 'e0XU')
+    udg_MvpWin = false
+    udg_PlayBr2[25] = true
+    udg_PlayBr2[26] = false
+    udg_Kuroyukinteger = 1
+    bj_forLoopAIndex = 1
+    bj_forLoopAIndexEnd = 20
+    while true
+        if bj_forLoopAIndex > bj_forLoopAIndexEnd
+            break
+        udg_killmeinteger[GetForLoopIndexA()] = 0
+        udg_Yesha23[bj_forLoopAIndex] = 0
+        bj_forLoopAIndex++
+    udg_SasukeSkillR = true
+    udg_ZerfNoDie = true
+    udg_ULlight = 0
+    udg_MHtime = 0
+    udg_Unitsound = gg_unit_n003_0051
+    udg_MHcheck = true
+    bj_forLoopAIndex = 1
+    bj_forLoopAIndexEnd = 9
+    while true
+        if bj_forLoopAIndex > bj_forLoopAIndexEnd
+            break
+        udg_HeroDeathTime[GetForLoopIndexA()] = false
+        udg_KiyouHimeLanceOpen[GetForLoopIndexA()] = 0
+        udg_KiyouHimeLanceOpen2[GetForLoopIndexA()] = 0
+        bj_forLoopAIndex++
+    bj_forLoopAIndex = 1
+    bj_forLoopAIndexEnd = 3
+    while true
+        if bj_forLoopAIndex > bj_forLoopAIndexEnd
+            break
+        udg_shuaye[GetForLoopIndexA()] = 0
+        bj_forLoopAIndex++
+    bj_forLoopAIndex = 1
+    bj_forLoopAIndexEnd = 12
+    while true
+        if bj_forLoopAIndex > bj_forLoopAIndexEnd
+            break
+        udg_PlayerBr[GetForLoopIndexA()] = false
+        udg_PlayBr2[GetForLoopIndexA()] = false
+        udg_YeshaOpen[GetForLoopIndexA()] = false
+        bj_forLoopAIndex++
+    // ShowUnitHide(gg_unit_h012_0153)
+    EnableTrigger(gg_trg_CameraLock)
+    // SaveGroupHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 361, yDWEGetUnitsOfTypeIdAllNull('h012'))
+    // ForGroupBJ(LoadGroupHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 361), function trig_StartgameFunc063002)
+    // DestroyGroup(LoadGroupHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 361))
+    ShowDestructableBJ(false, gg_dest_B01G_0370)
+    ShowDestructableBJ(false, gg_dest_B01F_0371)
+    ShowDestructableBJ(false, gg_dest_B059_1437)
+    ShowDestructableBJ(false, gg_dest_B065_0659)
+    ShowDestructableBJ(false, gg_dest_B07I_0392)
+    ShowDestructableBJ(false, gg_dest_B083_1263)
+    SaveForceHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 'HeiF', yDWEGetPlayersMatchingNull(Condition(function trig_StartgameFunc073003001)))
+    ForForce(LoadForceHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 'HeiF'), function trig_StartgameFunc074A)
+    DestroyForce(LoadForceHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 'HeiF'))
+    SetUnitAnimation(gg_unit_o003_0003, "Spell One")
+    h__SetUnitMoveSpeed(gg_unit_O005_0043, 0.00)
+    SetMapFlag(MAP_LOCK_RESOURCE_TRADING, true)
+    _ydl_timer = CreateTimer()
+    TimerStart(_ydl_timer, 0.10, false, function trig_StartgameFunc085T) // was 3
+    FlushChildHashtable(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID)
+
+function initTrig_Startgame()
+    gg_trg_Startgame = CreateTrigger()
+    TriggerRegisterTimerEventSingle(gg_trg_Startgame, 0.00)
+    TriggerAddAction(gg_trg_Startgame, function trig_StartgameActions)

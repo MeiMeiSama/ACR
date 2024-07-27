@@ -1,0 +1,68 @@
+package MusicPlaylist
+import main
+import ClosureTimers
+
+sound array bgm
+sound array bgmException
+
+init
+    doPeriodically(1) (CallbackPeriodic cb) ->
+        if bgmIsPlaying() == false and bgmExceptionIsPlaying() == false
+            ResumeMusic()  
+
+public function stopBgm()
+    for i = 0 to 17
+        if bgm[i].isPlaying()
+            bgm[i].stop(false, false)
+
+function bgmIsPlaying() returns boolean
+    for i = 0 to 17
+        if bgm[i].isPlaying()
+            return true
+    return false                 
+
+public function bgmList()
+    bgm[0] = gg_snd_Lastsasuke5
+    bgm[1] = gg_snd_WendyDragonForce
+    bgm[2] = gg_snd_stingdragonfoce
+    bgm[3] = gg_snd_ShaltearBGM
+    bgm[4] = gg_snd_FTrogue5
+    bgm[5] = gg_snd_MinatoKyubiChakra
+    bgm[6] = gg_snd_MeliodasBGM
+    bgm[7] = gg_snd_edoMadaraBGM
+    bgm[8] = gg_snd_Gear4luffy
+    bgm[9] = gg_snd_IchigoBGM
+    bgm[10] = gg_snd_AizenBGM
+    bgm[11] = gg_snd_SLYBGM
+    bgm[12] = gg_snd_SessyoinNP
+    bgm[13] = gg_snd_AssShiKiNP
+    bgm[14] = gg_snd_hlhlq
+    bgm[15] = gg_snd_hibari5
+    bgm[16] = gg_snd_Rnatsu5_1
+    bgm[17] = gg_snd_MidoriyaTBGM
+
+public function bgmExceptionList()
+    bgmException[0] = gg_snd_SaberRyougiT
+    bgmException[1] = gg_snd_nanayaBGM4
+    bgmException[2] = gg_snd_kuroganeT
+    bgmException[3] = gg_snd_MHXT
+    bgmException[4] = gg_snd_EnmaT
+    bgmException[5] = gg_snd_AizenF
+  
+
+function bgmExceptionIsPlaying() returns boolean
+    for i = 0 to 5
+        if bgmException[i].isPlaying()
+            return true
+    return false 
+
+public function createMusic ()
+    integer index = 0
+    for i = 0 to 100
+        index += 1
+        Music[i] = "Music\\Music"+index.toString()+".mp3"
+        if index == 41
+            index = 0
+        if i == 100
+            PlayMusic(Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)])
+            ResumeMusic()

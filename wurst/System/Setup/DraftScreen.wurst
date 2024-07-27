@@ -1,0 +1,437 @@
+package DraftScreen
+import ObjectDefinitions
+import main
+import SoundUtils
+import HashSet
+import LinkedList
+import TimerUtils
+import ACR_TagSystem
+import InitializeFunctions
+import ClosureTimers
+import MusicPlaylist
+import GoldIncome
+
+int playerCount = 0
+int playersPicked = 0
+unit array pickDummyUnit
+unit OK_BUTTON_UNIT
+unit RANDOM_BUTTON_UNIT
+destructable array PICK_ICON_DESTRUCTABLE
+destructable array TEAM_ICON
+destructable array CONFIRMED_PICK
+destructable array CONFIRMED_DISABLE_PICK
+destructable OK_BUTTON_DESTRUCTABLE
+destructable RANDOM_BUTTON_DESTRUCTABLE
+unit array selectedUnit
+bool array playerPicked
+bool array canDoubleClick
+timer array canDoubleClick_Timer
+framehandle selected_icon
+framehandle selected_icon1
+
+SoundDefinition chooseOK = new SoundDefinition("war3mapImported\\ChooseOK.mp3")
+SoundDefinition chooseUNIT = new SoundDefinition("war3mapImported\\ChooseUnit.mp3")
+SoundDefinition chooseStart1 = new SoundDefinition("war3mapImported\\link1-1.mp3")
+SoundDefinition chooseStart2 = new SoundDefinition("war3mapImported\\link1-2.mp3")
+
+public var heroList_STR = new HashSet<int>
+public var canPick_Icon_STR = new HashSet<int>
+public var cannotPick_Icon_STR = new HashSet<int>
+
+public var heroList_AGI = new HashSet<int>
+public var canPick_Icon_AGI = new HashSet<int>
+public var cannotPick_Icon_AGI = new HashSet<int>
+
+public var heroList_INT = new HashSet<int>
+public var canPick_Icon_INT = new HashSet<int>
+public var cannotPick_Icon_INT = new HashSet<int>
+
+public var heroTotalList = new LinkedList<int>
+public var heroPickIconList = new LinkedList<int>
+public var heroPickedIconList = new LinkedList<int>
+
+texttag array text
+
+public timer draftCountdown
+timerdialog draftTime_dialog
+
+@configurable var delayAfterCountdown   = 1.5 // When countdown ends, how long to wait to start the game 
+@configurable var draftTime             = 60.0 // The time you have to select a hero
+
+init
+    dataList()
+    confirmIcon()
+    doubleClick_Confirm()
+    randomIcon()
+    pickIcon()
+
+function dataList()
+    // ━━━━━━━━━━━━━━━━━━━━━━━━ [THE INDEX PLACEMENT OF ALL 3 DATA LIST HAS TO BE IDENTICAL] ━━━━━━━━━━━━━━━━━━━━━━━━
+    // ━━━━━━━━━━━━ [For example, if Nanaya is first on the list, the other 2 data list has to be Nanaya too] ━━━━━━━━━━━━
+
+    // ━━━━━━━━━━━━ [STRENGTH HEROES] ━━━━━━━━━━━━
+    heroList_STR.add(
+    'H001','H00Y',GAJEEL_REDFOX,'H00L',COBRA,'H009','H00G','H005',MONKEYD_LUFFY,RORONOA_ZORO,PORTGASD_ACE,SABO,'H027',                                // Row 1
+    KIYOHIME_STRENGTH,'H021',OKITA_STRENGTH,'H03V',ARTURIA_STRENGTH,'H02V','H030',ICHIGO_STRENGTH,'H01Q','H01F',DIO_BRANDO,'H023',KAMIJOU_TOUMA)                 // Row 2
+    heroList_STR.add(
+    'H00W','H01M','H03Z','H04A','H00F','H007','H03X')                                                                                                 // Row 3   
+
+    canPick_Icon_STR.add(
+    'B00V','B01U','B01Z','B00S','B01K','B00Y','B00T','B020','B00U','B03I','B03O','B03M','B055',                                                       // Row 1
+    'B06Q','B04L','B088','B08O','B06W','B064','B076','B08D','B03W','B04P','B04R','B04N','B01J')                                                       // Row 2
+    canPick_Icon_STR.add(
+    'B01E','B03Q','B08T','B09B','B00W','B010','B08S')                                                                                                 // Row 3
+
+    cannotPick_Icon_STR.add(
+    'B02A','B02B','B00N','B01P','B00R','B01I','B028','B00K','B01R','B03J','B03P','B03N','B056',                                                       // Row 1
+    'B06R','B04M','B089','B08P','B06X','B066','B077','B08E','B03X','B04Q','B04S','B04O','B016')                                                       // Row 2
+    cannotPick_Icon_STR.add(
+    'B027','B03R','B08U','B09C','B01X','B022','B08B')                                                                                                 // Row 3
+
+    // ━━━━━━━━━━━━ [AGILITY HEROES] ━━━━━━━━━━━━
+    heroList_AGI.add(
+    'H01Y','H00O',SASUKE_YOUNG,SASUKE_ADULT,MADARA_NORMAL,NAGATO,'H00M','H03R','H028','H026',ITSUKA_KOTORI,'H048','H010')                        // Row 4
+    heroList_AGI.add(
+    'H02P','H014','H01S','H01E','H03S','H00Z','H033','H02G','H02A','H03K','H01X','H02N','H02O',                                                       // Row 5
+    'H016','H02Q','H038',MASHU_KYRIELIGHT,'H03G','H02I','H025','H03C','H02K','H02Z','H02S','H02X','H02M')                                             // Row 6
+    heroList_AGI.add(
+    'H01R','H018','H00A','H049','H029','H01N','H035','H01B','H01C','H02D','H00V','H01T','H031',                                                       // Row 7
+    'H046','H03T','H03W','H03U','H015','H00J','H04B',MISOGI_THAI,'H03A','H020','H01A','H000',LEVI_ACKERMAN)                                                // Row 8
+    heroList_AGI.add(
+    'H02L','H042','H00H','H022','H013','H03J','H040','H00E',AKAME_MURASAME,'H039','H004','H03B',KILLUA_ZOLDYCK,                                      // Row 9
+    'H037','H003','H019','H01Z')                                                       // Row 10
+
+    canPick_Icon_AGI.add(
+    'B04A','B01N','B029','B05O','B02C','B096','B01Y','B08H','B057','B053','B01C','B098','B02D')                                                       // Row 4
+    canPick_Icon_AGI.add(
+    'B04Z','B02I','B040','B03A','B08J','B02L','B04V','B05U','B05M','B086','B04H','B068','B06C',                                                       // Row 5
+    'B03G','B06A','B078','B05S','B07Y','B05W','B051','B07G','B060','B06S','B06G','B06E','B06M')                                                       // Row 6
+    canPick_Icon_AGI.add(
+    'B03Y','B005','B01L','B099','B04T','B03U','B000','B014','B038','B04X','B01D','B044','B072',                                                       // Row 7
+    'B094','B08L','B08Q','B08N','B02O','B00A','B09D','B900','B07A','B04E','B02Z','B01H','B06I')                                                       // Row 8
+    canPick_Icon_AGI.add(
+    'B062','B08Z','B04C','B04J','B074','B084','B08X','B00M','B046','B06K','B01Q','B07E','B03E',                                                       // Row 9
+    'B070','B00P','B02X','B048')                                                                                                                             // Row 10
+    
+    cannotPick_Icon_AGI.add(
+    'B04B','B00Q','B012','B05P','B024','B097','B00L','B08I','B058','B054','B01V','B08A','B02E')                                                       // Row 4
+    cannotPick_Icon_AGI.add(
+    'B050','B02J','B041','B03B','B08K','B02M','B04W','B05V','B05N','B087','B04I','B069','B06D',                                                       // Row 5
+    'B03H','B06B','B079','B05T','B07Z','B05X','B052','B07H','B061','B06T','B06H','B06F','B06N')                                                       // Row 6
+    cannotPick_Icon_AGI.add(
+    'B03Z','B00F','B00O','B09A','B04U','B03V','B02N','B023','B039','B04Y','B026','B045','B073',                                                       // Row 7
+    'B095','B08M','B08R','B08C','B02P','B01M','B09E','B900','B07B','B04F','B030','B00J','B06J')                                                       // Row 8
+    cannotPick_Icon_AGI.add(
+    'B063','B090','B04D','B04K','B075','B085','B08Y','B01W','B047','B06L','B00X','B07F','B03F',                                                      // Row 9
+    'B071','B025','B02Y','B049')                                                                                                                             // Row 10
+
+    // ━━━━━━━━━━━━ [INTELLIGENCE HEROES] ━━━━━━━━━━━━
+    heroList_INT.add(
+    'H006','H017','H01U',ITACHI_EDO,MADARA_EDO,'H00D','H02E','H02W','H032','H02T','H00R','H01O','H03D',                                               // Row 11
+    'H008','H02J','H03H','H03F','H03E','H043',ENMA_AI,'H02Y')                                                                                          // Row 12
+
+    canPick_Icon_INT.add(
+    'B00Z','B02Q','B042','B03K','B08F','B01O','B05Q','B06O','B06Y','B07C','B011','B03S','B07S',                                                       // Row 11
+    'B013','B05Y','B080','B07W','B07U','B08V','B092','B06U')                                                                                          // Row 12
+
+    cannotPick_Icon_INT.add(
+    'B021','B02R','B043','B03L','B08G','B015','B05R','B06P','B06Z','B07D','B01T','B03T','B07T',                                                       // Ro1 11
+    'B01S','B05Z','B081','B07X','B07V','B08W','B093','B06V')                                                                                          // Row 12
+    
+    // ━━━━━━━━━━━━ [ADD ALL HEROES TOGETHER INTO ONE LIST] ━━━━━━━━━━━━
+    for i = 0 to heroList_STR.size() - 1
+        heroTotalList.add(heroList_STR.get(i))
+        heroPickIconList.add(canPick_Icon_STR.get(i))
+        heroPickedIconList.add(cannotPick_Icon_STR.get(i))
+    for i = 0 to heroList_AGI.size() - 1
+        heroTotalList.add(heroList_AGI.get(i))
+        heroPickIconList.add(canPick_Icon_AGI.get(i))
+        heroPickedIconList.add(cannotPick_Icon_AGI.get(i))
+    for i = 0 to heroList_INT.size() - 1
+        heroTotalList.add(heroList_INT.get(i))
+        heroPickIconList.add(canPick_Icon_INT.get(i))
+        heroPickedIconList.add(cannotPick_Icon_INT.get(i))
+
+public function draftSetup()
+    let p = Player(PLAYER_NEUTRAL_PASSIVE)
+    var x_pos = 0
+    var y_pos = 8210.00
+    for i = 0 to (heroTotalList.size() - 1)
+        x_pos++
+        if x_pos > 13
+            x_pos = 1
+            y_pos -= 70
+        if i == (heroList_STR.size() + 0)
+            x_pos = 1
+            y_pos -= 90
+        else if i == ((heroList_STR.size() + 0) + (heroList_AGI.size() + 0))
+            x_pos = 1
+            y_pos -= 90
+
+        if i <= 13
+            pickDummyUnit[i] = CreateUnit(p, 'h012', (6830 + (x_pos * 70)).toReal(), y_pos, 270)..setUserData(i+1)..setVertexColor(100, 100, 100, 0)
+        else if i <= 26
+            pickDummyUnit[i] = CreateUnit(p, 'h012', (6830 + (x_pos * 70)).toReal(), y_pos, 270)..setUserData(i+1)..setVertexColor(100, 100, 100, 0)
+        else if i <= 39
+            pickDummyUnit[i] = CreateUnit(p, 'h012', (6830 + (x_pos * 70)).toReal(), y_pos, 270)..setUserData(i+1)..setVertexColor(100, 100, 100, 0)
+        else if i <= 52
+            pickDummyUnit[i] = CreateUnit(p, 'h012', (6830 + (x_pos * 70)).toReal(), y_pos, 270)..setUserData(i+1)..setVertexColor(100, 100, 100, 0)
+        else if i <= 65
+            pickDummyUnit[i] = CreateUnit(p, 'h012', (6830 + (x_pos * 70)).toReal(), y_pos, 270)..setUserData(i+1)..setVertexColor(100, 100, 100, 0)
+        else if i <= 78
+            pickDummyUnit[i] = CreateUnit(p, 'h012', (6830 + (x_pos * 70)).toReal(), y_pos, 270)..setUserData(i+1)..setVertexColor(100, 100, 100, 0)
+        else if i <= 91
+            pickDummyUnit[i] = CreateUnit(p, 'h012', (6830 + (x_pos * 70)).toReal(), y_pos, 270)..setUserData(i+1)..setVertexColor(100, 100, 100, 0)
+        else if i <= 104
+            pickDummyUnit[i] = CreateUnit(p, 'h012', (6830 + (x_pos * 70)).toReal(), y_pos, 270)..setUserData(i+1)..setVertexColor(100, 100, 100, 0)
+        else if i <= 117
+            pickDummyUnit[i] = CreateUnit(p, 'h012', (6830 + (x_pos * 70)).toReal(), y_pos, 270)..setUserData(i+1)..setVertexColor(100, 100, 100, 0)
+        else if i <= 130
+            pickDummyUnit[i] = CreateUnit(p, 'h012', (6830 + (x_pos * 70)).toReal(), y_pos, 270)..setUserData(i+1)..setVertexColor(100, 100, 100, 0)
+        else if i <= 143
+            pickDummyUnit[i] = CreateUnit(p, 'h012', (6830 + (x_pos * 70)).toReal(), y_pos, 270)..setUserData(i+1)..setVertexColor(100, 100, 100, 0)
+
+    OK_BUTTON_UNIT = CreateUnit(p, OK_BUTTON, 7920, 7860, 270)
+    OK_BUTTON_UNIT.setVertexColor(100, 100, 100, 0)
+    RANDOM_BUTTON_UNIT = CreateUnit(p, RANDOM_BUTTON, 7920, 8070, 270)
+    RANDOM_BUTTON_UNIT.setVertexColor(100, 100, 100, 0)
+
+    OK_BUTTON_DESTRUCTABLE = CreateDestructableZ('B01G', 7920, 7860, 10, 0, 1, 0)
+    RANDOM_BUTTON_DESTRUCTABLE = CreateDestructableZ('B01F', 7920, 8070, 10, 0, 1, 0)
+
+    TEAM_ICON[0] = CreateDestructableZ('B09K', 8100, 8070, 10, 0, 1, 0)
+    TEAM_ICON[1] = CreateDestructableZ('B09K', 8190, 8070, 10, 0, 1, 0)
+    TEAM_ICON[2] = CreateDestructableZ('B09K', 8280, 8070, 10, 0, 1, 0)
+
+    TEAM_ICON[4] = CreateDestructableZ('B09K', 8100, 7860, 10, 0, 1, 0)
+    TEAM_ICON[5] = CreateDestructableZ('B09K', 8190, 7860, 10, 0, 1, 0)
+    TEAM_ICON[6] = CreateDestructableZ('B09K', 8280, 7860, 10, 0, 1, 0)
+
+    TEAM_ICON[8] = CreateDestructableZ('B09K', 8100, 7650, 10, 0, 1, 0)
+    TEAM_ICON[9] = CreateDestructableZ('B09K', 8190, 7650, 10, 0, 1, 0)
+    TEAM_ICON[10] = CreateDestructableZ('B09K', 8280, 7650, 10, 0, 1, 0)
+
+    for i = 0 to heroTotalList.size() - 1
+        PICK_ICON_DESTRUCTABLE[i] = createDestructable(heroPickIconList.get(i), pickDummyUnit[i].getPos(), (0).asAngleDegrees(), 1, 0)
+
+    selected_icon = BlzCreateFrameByType("BACKDROP", "Blademaster", BlzGetOriginFrame(ORIGIN_FRAME_GAME_UI, 0), "", 0)
+    BlzFrameSetSize(selected_icon, 0.04, 0.04)
+    BlzFrameSetAbsPoint(selected_icon, FRAMEPOINT_CENTER, 0.5755, 0.242)
+    BlzFrameSetTexture(selected_icon, "ReplaceableTextures\\CommandButtons\\BTNSelectIcon.blp",0, true)
+
+    text[0] = CreateTextTag()
+    ..setText("|cff63ff4eConfirm|r", 12)
+    ..setPos(7870, 7790, 0)
+    text[1] = CreateTextTag()
+    ..setText("|cffff5151Random|r", 12)
+    ..setPos(7870, 8000, 0)
+    text[2] = CreateTextTag()
+    ..setText("|cffffd700Hero|r", 12)
+    ..setPos(7885, 7570, 0)
+
+    text[3] = CreateTextTag()
+    ..setText("|cff6078ffTeam 1|r", 15)
+    ..setPos(8345, 8050, 0)
+    text[4] = CreateTextTag()
+    ..setText("|cff6078ffTeam 2|r", 15)
+    ..setPos(8345, 7835, 0)
+    text[5] = CreateTextTag()
+    ..setText("|cff6078ffTeam 3|r", 15)
+    ..setPos(8345, 7620, 0)
+
+function pickIcon_Cond() returns boolean
+    if GetTriggerUnit().getTypeId() == 'h012' and playerPicked[GetTriggerPlayer().getId()] == false and GetTriggerUnit().getTypeId() != OK_BUTTON and GetTriggerUnit().getTypeId() != RANDOM_BUTTON
+        return true
+    return false
+
+function resetDoubleClick ()
+    canDoubleClick[GetExpiredTimer().getData()] = false
+    
+function pickIcon ()
+    CreateTrigger()
+    ..registerAnyUnitEvent(EVENT_PLAYER_UNIT_SELECTED)
+    ..addCondition(Condition(function pickIcon_Cond))
+    ..addAction() ->
+        let p = GetTriggerPlayer()
+        canDoubleClick[p.getId()] = true
+        canDoubleClick_Timer[p.getId()].destr()
+        canDoubleClick_Timer[p.getId()] = CreateTimer()..start(0.2, function resetDoubleClick)..setData(p.getId())
+        chooseUNIT.playForPlayer(GetTriggerPlayer())
+        selectedUnit[p.getId()] = GetTriggerUnit()
+        if GetTriggerPlayer() == GetLocalPlayer()
+            selected_icon.setTexture(BlzGetAbilityIcon(heroTotalList.get(GetTriggerUnit().getUserData()-1)), 0, false)
+
+function doubleClick_Cond() returns boolean
+    if GetTriggerUnit().getTypeId() == 'h012' and playerPicked[GetTriggerPlayer().getId()] == false and GetTriggerUnit().getTypeId() != OK_BUTTON and GetTriggerUnit().getTypeId() != RANDOM_BUTTON and selectedUnit[GetTriggerPlayer().getId()] == GetTriggerUnit() and canDoubleClick[GetTriggerPlayer().getId()] == true
+        return true
+    return false
+
+function doubleClick_Confirm ()
+    CreateTrigger()
+    ..registerAnyUnitEvent(EVENT_PLAYER_UNIT_SELECTED)
+    ..addCondition(Condition(function doubleClick_Cond))
+    ..addAction() ->
+        playerPicked[GetTriggerPlayer().getId()] = true
+        chooseOK.playForPlayer(GetTriggerPlayer())
+        let p = GetTriggerPlayer()
+        let uid = selectedUnit[p.getId()].getUserData() - 1
+        BlzFrameAddText(textArea, "|cff00a9ff["+p.getColor().toColor().toColorString()+p.getName()+"|cff00a9ff] |cffffd700Selected |cff5ccf58"+GetObjectName(heroTotalList.get(uid))+"|r")
+        CONFIRMED_DISABLE_PICK[p.getId()] = createDestructable(heroPickedIconList.get(uid), selectedUnit[p.getId()].getPos(), (0).asAngleDegrees(), 1, 0)
+        CONFIRMED_PICK[p.getId()] = createDestructable(heroPickIconList.get(uid), TEAM_ICON[GetTriggerPlayer().getId()].getPos(), (0).asAngleDegrees(), 1, 0)
+        PICK_ICON_DESTRUCTABLE[uid].remove()
+        TEAM_ICON[GetTriggerPlayer().getId()].remove()
+        selectedUnit[p.getId()]..setXY(vec2(9999, 9999))..addAbility('Aloc')
+
+function confirm_Cond() returns boolean
+    if GetTriggerUnit().getTypeId() == OK_BUTTON and selectedUnit[GetTriggerPlayer().getId()].hasAbility('Aloc') == false and playerPicked[GetTriggerPlayer().getId()] == false
+        return true
+    return false
+
+function confirmIcon ()
+    CreateTrigger()
+    ..registerAnyUnitEvent(EVENT_PLAYER_UNIT_SELECTED)
+    ..addCondition(Condition(function confirm_Cond))
+    ..addAction() ->
+        playerPicked[GetTriggerPlayer().getId()] = true
+        chooseOK.playForPlayer(GetTriggerPlayer())
+        let p = GetTriggerPlayer()
+        let u = selectedUnit[p.getId()]
+        let uid = u.getUserData() - 1
+        BlzFrameAddText(textArea, "|cff00a9ff["+p.getColor().toColor().toColorString()+p.getName()+"|cff00a9ff] |cffffd700Selected |cff5ccf58"+GetObjectName(heroTotalList.get(uid))+"|r")
+        CONFIRMED_DISABLE_PICK[p.getId()] = createDestructable(heroPickedIconList.get(uid), selectedUnit[p.getId()].getPos(), (0).asAngleDegrees(), 1, 0)
+        CONFIRMED_PICK[p.getId()] = createDestructable(heroPickIconList.get(uid), TEAM_ICON[GetTriggerPlayer().getId()].getPos(), (0).asAngleDegrees(), 1, 0)
+        PICK_ICON_DESTRUCTABLE[uid].remove()
+        TEAM_ICON[GetTriggerPlayer().getId()].remove()
+        selectedUnit[p.getId()]..setXY(vec2(9999, 9999))..addAbility('Aloc')
+
+function random_Cond() returns boolean
+    if GetTriggerUnit().getTypeId() == RANDOM_BUTTON and playerPicked[GetTriggerPlayer().getId()] == false
+        return true
+    return false
+
+function randomIcon ()
+    CreateTrigger()
+    ..registerAnyUnitEvent(EVENT_PLAYER_UNIT_SELECTED)
+    ..addCondition(Condition(function random_Cond))
+    ..addAction() ->
+        let p = GetTriggerPlayer()
+        p.addGold(300)
+        totalGoldEarnt[p.getId()] += 300
+        var randomID = GetRandomInt(0, heroTotalList.size())
+        while pickDummyUnit[randomID].hasAbility('Aloc') or pickDummyUnit[randomID] == null
+            randomID = GetRandomInt(0, heroTotalList.size())
+        playerPicked[p.getId()] = true
+        selectedUnit[p.getId()] = pickDummyUnit[randomID]
+        chooseOK.playForPlayer(GetTriggerPlayer())
+        BlzFrameAddText(textArea, "|cff00a9ff["+p.getColor().toColor().toColorString()+p.getName()+"|cff00a9ff] |cffffd700Selected |cff5ccf58"+GetObjectName(heroTotalList.get(randomID))+"|r")
+        CONFIRMED_DISABLE_PICK[p.getId()] = createDestructable(heroPickedIconList.get(randomID), selectedUnit[p.getId()].getPos(), (0).asAngleDegrees(), 1, 0)
+        CONFIRMED_PICK[p.getId()] = createDestructable(heroPickIconList.get(randomID), TEAM_ICON[GetTriggerPlayer().getId()].getPos(), (0).asAngleDegrees(), 1, 0)
+        PICK_ICON_DESTRUCTABLE[randomID].remove()
+        TEAM_ICON[GetTriggerPlayer().getId()].remove()
+        selectedUnit[p.getId()]..setXY(vec2(9999, 9999))..addAbility('Aloc')
+        if GetTriggerPlayer() == GetLocalPlayer()
+            selected_icon.setTexture(BlzGetAbilityIcon(heroTotalList.get(selectedUnit[p.getId()].getUserData()-1)), 0, false)
+
+function createHero (player p)
+    let pid = p.getId()
+    vec2 teamPos = vec2(0, 0)
+    var hero = heroTotalList.get(selectedUnit[pid].getUserData()-1)
+    if hero == 0 or playerPicked[pid] == false
+        p.addGold(300)
+        totalGoldEarnt[p.getId()] += 300
+        playerPicked[pid] = true
+        var randomID = GetRandomInt(0, heroTotalList.size())
+        while pickDummyUnit[randomID].hasAbility('Aloc') or pickDummyUnit[randomID] == null
+            randomID = GetRandomInt(0, heroTotalList.size())
+        chooseOK.playForPlayer(p)
+        hero = heroTotalList.get(pickDummyUnit[randomID].getUserData()-1)
+        CONFIRMED_PICK[p.getId()] = createDestructable(heroPickIconList.get(randomID), TEAM_ICON[pid].getPos(), (0).asAngleDegrees(), 1, 0)
+        TEAM_ICON[pid].remove()
+        BlzFrameAddText(textArea, "|cff00a9ff["+p.getColor().toColor().toColorString()+p.getName()+"|cff00a9ff] |cffffd700Selected |cff5ccf58"+GetObjectName(hero)+"|r")
+        if p == GetLocalPlayer()
+            selected_icon.setTexture(BlzGetAbilityIcon(hero), 0, false)
+        
+    if p.isAllyOf(Player(3))
+        teamPos = vec2(-10384, 9980)
+    else if p.isAllyOf(Player(7))
+        teamPos = vec2(5389, 2246)
+    else if p.isAllyOf(Player(11))
+        teamPos = vec2(-3436, -6244)
+
+    doAfter(delayAfterCountdown) ->
+        // print("pid: "+pid.toString()) 
+        udg_PlayHero[pid] = createUnit(p, hero, teamPos)..setUserData(pid+1)
+        p.panCamToTimed(udg_PlayHero[pid], 0)
+        doPeriodically(0.5) (CallbackPeriodic cb) ->
+            if udg_PlayHero[pid].getUserData() == 0
+                udg_PlayHero[pid].setUserData(pid+1)
+
+function draftTime_End ()
+    draftTime_dialog.destr()
+    draftCountdown.destr()
+    for i = 0 to 12
+        if Player(i).getController() == MAP_CONTROL_USER and Player(i).getSlotState() == PLAYER_SLOT_STATE_PLAYING
+            createHero(Player(i))  
+
+    doAfter(delayAfterCountdown) -> 
+        gg_trg_CameraLock.destr()
+        createMusic()
+        for i = 0 to 12
+            if Player(i).getController() == MAP_CONTROL_USER and Player(i).getSlotState() == PLAYER_SLOT_STATE_PLAYING
+                Player(i)..resetToGameCamera(0)..setCameraField(CAMERA_FIELD_TARGET_DISTANCE, 3500, 0)
+        for i = 0 to heroTotalList.size()
+            if pickDummyUnit[i] != null
+                pickDummyUnit[i].remove()
+            if PICK_ICON_DESTRUCTABLE[i] != null
+                PICK_ICON_DESTRUCTABLE[i].remove()
+
+        for i = 0 to 12
+            if TEAM_ICON[i] != null
+                TEAM_ICON[i].remove()
+            if CONFIRMED_DISABLE_PICK[i] != null
+                CONFIRMED_DISABLE_PICK[i].remove()
+
+            if CONFIRMED_PICK[i] != null
+                CONFIRMED_PICK[i].remove()
+
+        for i = 0 to 5
+            text[i].destr()
+
+        OK_BUTTON_UNIT.remove()
+        RANDOM_BUTTON_UNIT.remove()
+        OK_BUTTON_DESTRUCTABLE.remove()
+        RANDOM_BUTTON_DESTRUCTABLE.remove()
+        selected_icon..setVisible(false)..disable()
+        textArea..hide()..disable()
+        initFunctions()
+            
+function allPlayersPicked()
+    playersPicked = 0
+    var count = 0
+    doPeriodically(0.1) (CallbackPeriodic cb) ->
+        count++
+        for i = 0 to 12
+            if Player(i).getController() == MAP_CONTROL_USER and Player(i).getSlotState() == PLAYER_SLOT_STATE_PLAYING
+                let pid = Player(i).getId()
+                if playerPicked[pid] == true and Player(i).hasTagPicked() == false
+                    Player(i).addTagPicked()
+                    playersPicked++    
+        if playersPicked == playerCount
+            draftTime_End()   
+            destroy cb
+        if count >= 590
+            destroy cb    
+
+
+public function draftTimeSetup ()
+    playerCount = 0
+    for i = 0 to 12
+        if Player(i).getController() == MAP_CONTROL_USER and Player(i).getSlotState() == PLAYER_SLOT_STATE_PLAYING
+            playerCount++
+    if playerCount == 1
+        draftTime = 5 // was 5
+        delayAfterCountdown = 0.5
+
+    draftCountdown = CreateTimer()..start(draftTime, function draftTime_End)
+    draftTime_dialog = CreateTimerDialog(draftCountdown)..setTitle("|cffffd700Countdown|r")..display(true)
+    allPlayersPicked()

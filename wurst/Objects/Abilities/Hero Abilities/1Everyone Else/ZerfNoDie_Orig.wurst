@@ -1,0 +1,50 @@
+package ZerfNoDie_Orig
+
+
+init
+    initTrig_ZerfNoDie_Orig()
+
+function trig_ZerfNoDieConditions() returns boolean
+    return IsUnitType(GetEventDamageSource(), UNIT_TYPE_STRUCTURE) == false and IsUnitType(GetEventDamageSource(), UNIT_TYPE_HERO) == true and GetUnitTypeId(GetEventDamageSource()) != 'O005' and GetUnitAbilityLevel(GetTriggerUnit(), 'A0II') >= 1 and GetEventDamage() >= GetUnitState(GetTriggerUnit(), UNIT_STATE_LIFE) and udg_ZerfNoDie == true
+function trig_ZerfNoDieFunc007Func002T()
+    DisplayTextToPlayer(GetOwningPlayer(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594)), 0, 0, "The immortal body has cooled down!")
+    udg_ZerfNoDie = true
+    FlushChildHashtable(YDLOC, GetHandleId(GetExpiredTimer()))
+    DestroyTimer(GetExpiredTimer())
+function trig_ZerfNoDieFunc007T()
+    timer _ydl_timer
+    SetUnitInvulnerable(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), false)
+    _ydl_timer = CreateTimer()
+    SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 594, LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594))
+    if GetUnitAbilityLevel(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), 'A0II') == 1
+        TimerStart(_ydl_timer, 130.00, false, function trig_ZerfNoDieFunc007Func002T)
+    else if GetUnitAbilityLevel(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), 'A0II') == 2
+        TimerStart(_ydl_timer, 120.00, false, function trig_ZerfNoDieFunc007Func002T)
+    else if GetUnitAbilityLevel(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), 'A0II') == 3
+        TimerStart(_ydl_timer, 110.00, false, function trig_ZerfNoDieFunc007Func002T)
+    else if GetUnitAbilityLevel(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), 'A0II') == 4
+        TimerStart(_ydl_timer, 100.00, false, function trig_ZerfNoDieFunc007Func002T)
+    else if GetUnitAbilityLevel(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), 'A0II') == 5
+        TimerStart(_ydl_timer, 90.00, false, function trig_ZerfNoDieFunc007Func002T)        
+    FlushChildHashtable(YDLOC, GetHandleId(GetExpiredTimer()))
+    DestroyTimer(GetExpiredTimer())
+function trig_ZerfNoDieActions()
+    timer _ydl_timer
+    integer trigger_ID = LoadInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 865)
+    trigger_ID += 3
+    SaveInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 865, trigger_ID)
+    SaveInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 1045, trigger_ID)
+    udg_ZerfNoDie = false
+    SaveUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594, GetTriggerUnit())
+    SetUnitInvulnerable(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594), true)
+    SetUnitState(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594), UNIT_STATE_LIFE, 1.00)
+    SetUnitState(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594), UNIT_STATE_MANA, 0.00)
+    _ydl_timer = CreateTimer()
+    SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 594, LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594))
+    TimerStart(_ydl_timer, 1.00, false, function trig_ZerfNoDieFunc007T)
+    FlushChildHashtable(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID)
+function initTrig_ZerfNoDie_Orig()
+    gg_trg_ZerfNoDie = CreateTrigger()
+    yDWESyStemAnyUnitDamagedRegistTrigger(gg_trg_ZerfNoDie)
+    TriggerAddCondition(gg_trg_ZerfNoDie, Condition(function trig_ZerfNoDieConditions))
+    TriggerAddAction(gg_trg_ZerfNoDie, function trig_ZerfNoDieActions)

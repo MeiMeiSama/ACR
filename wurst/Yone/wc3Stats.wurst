@@ -1,0 +1,121 @@
+package wc3Stats
+
+import MMD
+import ClosureTimers
+import ClosureEvents
+import main
+import GoldIncome
+
+IMMDEvent killEvent
+IMMDEvent deathEvent
+IMMDValueInt killCount
+IMMDValueInt deathCount
+IMMDValueInt goldCount
+IMMDValueInt streakCount
+int array player_KillCount
+int array player_DeathCount
+public integer array unitLongestStreak
+public int playingPlayers = 0
+public int minPlayers = 6 // Required number of players to make a game rated
+public bool rankMode = false // Can be set ingame from Dialog
+init
+    for i = 0 to 12
+        // Set all players stat kill count & streak to 0
+        player_KillCount[i] = 0
+        unitLongestStreak[i] = 0
+        if Player(i).getSlotState() == PLAYER_SLOT_STATE_PLAYING
+            playingPlayers++
+
+    doAfter(0.3) ->
+        // Define the stat events to use
+        killEvent = MMD.defineEvent("Kill", "{0} killed {1}", "killer", "victim")
+        deathEvent = MMD.defineEvent("Death", "{0} died by {1}", "victim", "killer")
+        killCount = MMD.defineValueInt("Total Kills", Goal.None)
+        deathCount = MMD.defineValueInt("Total Deaths", Goal.None)
+        goldCount = MMD.defineValueInt("Total Gold", Goal.None)
+        streakCount = MMD.defineValueInt("Best Kill Streak", Goal.None)
+        Emitter.emitDefineVariable("ACR_MMD", ValueType.String, Goal.None, Suggestion.None)
+        wc3Stat_Listener()
+
+function wc3Stat_Listener()
+    MMD.logCustom("ACR_MMD", "ACR MMD v1.0.0")
+
+    registerPlayerUnitEvent(EVENT_PLAYER_UNIT_DEATH) () ->
+        let pid_killer = GetKillingUnit().getOwner().getId()
+        let pid_victim = GetDyingUnit().getOwner().getId()
+        
+        if GetDyingUnit() == udg_PlayHero[pid_victim] 
+            player_DeathCount[pid_victim]++
+            MMD.logEvent("Death", GetDyingUnit().getOwner().getName(), GetKillingUnit().getOwner().getName())
+            deathEvent.raise(
+                GetDyingUnit().getOwner().getName(),
+                GetKillingUnit().getOwner().getName())
+
+        if GetKillingUnit() == udg_PlayHero[pid_killer] and GetDyingUnit() == udg_PlayHero[pid_victim]
+            player_KillCount[pid_killer]++
+            killEvent.raise(
+                GetKillingUnit().getOwner().getName(),
+                GetDyingUnit().getOwner().getName())
+            MMD.logEvent("Kill", GetKillingUnit().getOwner().getName(), GetDyingUnit().getOwner().getName())
+
+public function victory_checker()
+    if team1_Kills == targetPoints or team2_Kills == targetPoints or team3_Kills == targetPoints
+        for i = 0 to 12
+            killCount.set(Player(i), player_KillCount[i])
+            deathCount.set(Player(i), player_DeathCount[i])
+            goldCount.set(Player(i), totalGoldEarnt[i])
+            streakCount.set(Player(i), unitLongestStreak[i])
+
+    if team1_Kills == targetPoints
+        ClearTextMessages()
+        print("|cffffd700Victory to following players:|r")
+        print(" ")
+        for i = 0 to 2
+            print(Player(i).getColor().toColor().toColorString()+Player(i).getName())
+        print("- - - - - - - - - - - - - - - - - - - -")
+        let playerAlly = Player(3)
+        for i = 0 to 12
+            if Player(i).isAllyOf(playerAlly)
+                if playingPlayers >= minPlayers and rankMode == true
+                    MMD.flagPlayer(Player(i), PlayerFlag.Winner)
+                CustomVictoryBJ(Player(i), true, true)
+            else
+                if playingPlayers >= minPlayers and rankMode == true
+                    MMD.flagPlayer(Player(i), PlayerFlag.Loser)
+                CustomDefeatBJ(Player(i), "Defeat!")
+
+    else if team2_Kills == targetPoints
+        ClearTextMessages()
+        print("|cffffd700Victory to following players:|r")
+        print(" ")
+        for i = 0 to 2
+            print(Player(i).getColor().toColor().toColorString()+Player(i).getName())
+        print("- - - - - - - - - - - - - - - - - - - -")
+        let playerAlly = Player(7)
+        for i = 0 to 12
+            if Player(i).isAllyOf(playerAlly)
+                if playingPlayers >= minPlayers and rankMode == true
+                    MMD.flagPlayer(Player(i), PlayerFlag.Winner)
+                CustomVictoryBJ(Player(i), true, true)
+            else
+                if playingPlayers >= minPlayers and rankMode == true
+                    MMD.flagPlayer(Player(i), PlayerFlag.Loser)
+                CustomDefeatBJ(Player(i), "Defeat!")
+
+    else if team3_Kills == targetPoints
+        ClearTextMessages()
+        print("|cffffd700Victory to following players:|r")
+        print(" ")
+        for i = 0 to 2
+            print(Player(i).getColor().toColor().toColorString()+Player(i).getName())
+        print("- - - - - - - - - - - - - - - - - - - -")
+        let playerAlly = Player(11)
+        for i = 0 to 12
+            if Player(i).isAllyOf(playerAlly)
+                if playingPlayers >= minPlayers and rankMode == true
+                    MMD.flagPlayer(Player(i), PlayerFlag.Winner)
+                CustomVictoryBJ(Player(i), true, true)
+            else
+                if playingPlayers >= minPlayers and rankMode == true
+                    MMD.flagPlayer(Player(i), PlayerFlag.Loser)
+                CustomDefeatBJ(Player(i), "Defeat!")

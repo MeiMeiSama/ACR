@@ -1,0 +1,43 @@
+package Sting_EucliffeAttack_Orig
+import DamageEvent
+import AbilityGlobals
+
+init
+    initTrig_Sting_EucliffeAttack_Orig()
+
+function trig_Sting_EucliffeAttackConditions() returns boolean
+    return GetUnitTypeId(GetAttacker()) == 'H009' and IsUnitType(GetAttackedUnitBJ(), UNIT_TYPE_STRUCTURE) == false and GetUnitAbilityLevel(GetAttacker(), 'A01E') != 0 and IsUnitAlly(GetAttackedUnitBJ(), GetOwningPlayer(GetAttacker())) == false
+function trig_Sting_EucliffeAttackFunc004Func013T()
+    EnableTrigger(LoadTriggerHandle(YDLOC, GetHandleId(GetExpiredTimer()), 925))
+    FlushChildHashtable(YDLOC, GetHandleId(GetExpiredTimer()))
+    DestroyTimer(GetExpiredTimer())
+function trig_Sting_EucliffeAttackActions()
+    timer _ydl_timer
+    integer trigger_ID = LoadInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 865)
+    trigger_ID += 3
+    SaveInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 865, trigger_ID)
+    SaveInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 1045, trigger_ID)
+    SaveUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594, GetAttacker())
+    SaveUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 549, GetAttackedUnitBJ())
+    SaveInteger(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 280, GetRandomInt(1, 10))
+    if LoadInteger(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 280) <= 2
+        SaveLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1108, GetUnitLoc(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594)))
+        SaveLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 683, GetUnitLoc(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 549)))
+        SaveReal(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 758404681, AngleBetweenPoints(LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1108), LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 683)))
+        DamageEvent.setNextDamageId(DAMAGE_ABILITY_STING_E)
+        DamageEvent.setNextDamageFromCode()
+        UnitDamageTargetBJ(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594), LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 549), 20.00 * I2R(GetUnitAbilityLevel(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594), 'A01E')), ATTACK_TYPE_MAGIC, DAMAGE_TYPE_MAGIC)
+
+        RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1108))
+        RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 683))
+        SaveTriggerHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 925, gg_trg_Sting_EucliffeAttack)
+        DisableTrigger(LoadTriggerHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 925))
+        _ydl_timer = CreateTimer()
+        SaveTriggerHandle(YDLOC, GetHandleId(_ydl_timer), 925, LoadTriggerHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 925))
+        TimerStart(_ydl_timer, 3.00, false, function trig_Sting_EucliffeAttackFunc004Func013T)
+    FlushChildHashtable(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID)
+function initTrig_Sting_EucliffeAttack_Orig()
+    gg_trg_Sting_EucliffeAttack = CreateTrigger()
+    TriggerRegisterAnyUnitEventBJ(gg_trg_Sting_EucliffeAttack, EVENT_PLAYER_UNIT_ATTACKED)
+    TriggerAddCondition(gg_trg_Sting_EucliffeAttack, Condition(function trig_Sting_EucliffeAttackConditions))
+    TriggerAddAction(gg_trg_Sting_EucliffeAttack, function trig_Sting_EucliffeAttackActions)

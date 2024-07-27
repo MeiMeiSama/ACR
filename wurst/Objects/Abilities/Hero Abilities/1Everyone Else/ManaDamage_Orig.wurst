@@ -1,0 +1,35 @@
+// package ManaDamage_Orig
+// import ObjectDefinitions
+
+// init
+//     initTrig_ManaDamage_Orig()
+
+// function trig_ManaDamageConditions() returns boolean
+//     return GetUnitTypeId(GetTriggerUnit()) == MASHU_KYRIELIGHT and GetEventDamage() >= 500.00 and IsUnitType(GetEventDamageSource(), UNIT_TYPE_STRUCTURE) == false and IsUnitType(GetEventDamageSource(), UNIT_TYPE_HERO) == true
+// function trig_ManaDamageFunc002Func005T()
+//     UnitRemoveAbility(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), 'A0FD')
+//     SetUnitLifeBJ(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), LoadReal(YDLOC, GetHandleId(GetExpiredTimer()), 1163))
+//     FlushChildHashtable(YDLOC, GetHandleId(GetExpiredTimer()))
+//     DestroyTimer(GetExpiredTimer())
+// function trig_ManaDamageActions()
+//     timer _ydl_timer
+//     integer trigger_ID = LoadInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 865)
+//     trigger_ID += 3
+//     SaveInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 865, trigger_ID)
+//     SaveInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 1045, trigger_ID)
+//     SaveInteger(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 280, GetRandomInt(1, 100))
+//     if LoadInteger(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 280) >= 90
+//         SaveUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594, GetTriggerUnit())
+//         SaveUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 549, GetEventDamageSource())
+//         SaveReal(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1163, GetUnitStateSwap(UNIT_STATE_LIFE, LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594)))
+//         UnitAddAbility(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594), 'A0FD')
+//         _ydl_timer = CreateTimer()
+//         SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 594, LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594))
+//         SaveReal(YDLOC, GetHandleId(_ydl_timer), 1163, LoadReal(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1163))
+//         TimerStart(_ydl_timer, 0.00, false, function trig_ManaDamageFunc002Func005T)
+//     FlushChildHashtable(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID)
+// function initTrig_ManaDamage_Orig()
+//     gg_trg_ManaDamage = CreateTrigger()
+//     yDWESyStemAnyUnitDamagedRegistTrigger(gg_trg_ManaDamage)
+//     TriggerAddCondition(gg_trg_ManaDamage, Condition(function trig_ManaDamageConditions))
+//     TriggerAddAction(gg_trg_ManaDamage, function trig_ManaDamageActions)

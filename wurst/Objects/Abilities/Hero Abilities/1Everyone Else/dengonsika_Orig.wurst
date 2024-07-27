@@ -1,0 +1,88 @@
+package dengonsika_Orig
+import ObjectDefinitions
+import OrderIds
+
+init
+    initTrig_dengonsika_Orig()
+
+function trig_dengonsikaConditions() returns boolean
+    return UnitHasBuffBJ(GetTriggerUnit(), 'B020') == true and GetUnitTypeId(GetTriggerUnit()) == KILLUA_ZOLDYCK and GetIssuedOrderId() == OrderIds.smart
+function trig_dengonsikaActions()
+    integer trigger_ID = LoadInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 865)
+    trigger_ID += 3
+    SaveInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 865, trigger_ID)
+    SaveInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 1045, trigger_ID)
+    SaveInteger(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 280, GetRandomInt(1, 10))
+    if LoadInteger(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 280) == 0
+        DoNothing()
+    else
+        SaveUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594, GetTriggerUnit())
+        SavePlayerHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 603, GetOwningPlayer(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594)))
+        SaveLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1108, GetUnitLoc(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594)))
+        SaveLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 683, GetOrderPointLoc())
+        SaveReal(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 689, DistanceBetweenPoints(LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1108), LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 683)))
+        SaveLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 48, LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 683))
+        if IsTerrainPathableBJ(LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 48), PATHING_TYPE_WALKABILITY) == true and IsTerrainPathableBJ(LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 48), PATHING_TYPE_FLYABILITY) == true
+            DoNothing()
+        else if LoadReal(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 689) > 600.00 and GetUnitAbilityLevel(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594), 'Avul') != 1
+            DoNothing()
+        else
+            let loc = vec2(GetOrderPointX(), GetOrderPointY())
+            let caster = GetTriggerUnit()
+            let casterloc = caster.getPos()
+    
+            if gg_rct_BossArea.contains(loc) == false and gg_rct_BossArea.contains(casterloc) == true
+                caster.getOwner().print("Can't teleport out/in of arena", 2)
+                caster.issueImmediateOrder("stop")
+            else if gg_rct_BossArea.contains(loc) == true and gg_rct_BossArea.contains(casterloc) == false
+                caster.getOwner().print("Can't teleport out/in of arena", 2)
+                caster.issueImmediateOrder("stop")        
+            else if gg_rct_1v1v1Area.contains(loc) == false and gg_rct_1v1v1Area.contains(casterloc) == true
+                caster.getOwner().print("Can't teleport out/in of arena", 2)
+                caster.issueImmediateOrder("stop") 
+            else if gg_rct_1v1v1Area.contains(loc) == true and gg_rct_1v1v1Area.contains(casterloc) == false
+                caster.getOwner().print("Can't teleport out/in of arena", 2)
+                caster.issueImmediateOrder("stop")   
+            else if gg_rct_2v2v2Area.contains(loc) == false and gg_rct_2v2v2Area.contains(casterloc) == true
+                caster.getOwner().print("Can't teleport out/in of arena", 2)
+                caster.issueImmediateOrder("stop")     
+            else if gg_rct_2v2v2Area.contains(loc) == true and gg_rct_2v2v2Area.contains(casterloc) == false
+                caster.getOwner().print("Can't teleport out/in of arena", 2)
+                caster.issueImmediateOrder("stop") 
+            else if gg_rct_FreeForAllArea.contains(loc) == false and gg_rct_FreeForAllArea.contains(casterloc) == true
+                caster.getOwner().print("Can't teleport out/in of arena", 2)
+                caster.issueImmediateOrder("stop")               
+            else if gg_rct_FreeForAllArea.contains(loc) == true and gg_rct_FreeForAllArea.contains(casterloc) == false
+                caster.getOwner().print("Can't teleport out/in of arena", 2)
+                caster.issueImmediateOrder("stop")  
+            else if gg_rct_TeamBattleArea.contains(loc) == false and gg_rct_TeamBattleArea.contains(casterloc) == true
+                caster.getOwner().print("Can't teleport out/in of arena", 2)
+                caster.issueImmediateOrder("stop")         
+            else if gg_rct_TeamBattleArea.contains(loc) == true and gg_rct_TeamBattleArea.contains(casterloc) == false
+                caster.getOwner().print("Can't teleport out/in of arena", 2)
+                caster.issueImmediateOrder("stop")                              
+            else    
+            // PlaySoundBJ(gg_snd_Killuabiu)
+                SetUnitPositionLoc(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594), LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 48))
+                SaveLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 555, GetUnitLoc(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594)))
+                SaveUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 929, CreateUnitAtLoc(LoadPlayerHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 603), 'e0KO', LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 555), GetRandomDirectionDeg()))
+                UnitApplyTimedLife(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 929), 'BHwe', 1.00)
+                SaveUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 843, CreateUnitAtLoc(LoadPlayerHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 603), 'e0JR', LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 555), GetUnitFacing(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594))))
+                UnitApplyTimedLife(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 843), 'BHwe', 1.50)
+                SaveUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 911, CreateUnitAtLoc(LoadPlayerHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 603), 'e0CY', LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 555), GetRandomDirectionDeg()))
+                UnitApplyTimedLife(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 911), 'BHwe', 1.50)
+                SaveUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 366, CreateUnitAtLoc(LoadPlayerHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 603), 'e0KM', LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 555), GetRandomDirectionDeg()))
+                UnitApplyTimedLife(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 366), 'BHwe', 2.00)
+                SaveUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 22821633, CreateUnitAtLoc(LoadPlayerHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 603), 'e03D', LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 555), GetRandomDirectionDeg()))
+                SetUnitScalePercent(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 22821633), 125.00, 125.00, 125.00)
+                UnitApplyTimedLife(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 22821633), 'BHwe', 2.00)
+                RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 555))
+        RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1108))
+        RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 683))
+        RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 48))
+    FlushChildHashtable(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID)
+function initTrig_dengonsika_Orig()
+    gg_trg_dengonsika = CreateTrigger()
+    TriggerRegisterAnyUnitEventBJ(gg_trg_dengonsika, EVENT_PLAYER_UNIT_ISSUED_POINT_ORDER)
+    TriggerAddCondition(gg_trg_dengonsika, Condition(function trig_dengonsikaConditions))
+    TriggerAddAction(gg_trg_dengonsika, function trig_dengonsikaActions)

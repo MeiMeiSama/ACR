@@ -1,0 +1,31 @@
+package Itachi_Edo_E
+
+import ClosureEvents
+import ObjectDefinitions
+import TimerUtils
+import SoundUtils
+constant sharinganSound = new SoundDefinition("war3mapImported\\Sharingan.mp3")
+timer sharinganTimer = null
+integer sharinganCount = 0
+init
+
+    EventListener.onCast(ITACHI_EDO_ABILITY_E) (unit caster) ->
+        sharinganSound.play()
+        caster
+        ..addAbility(ATTACK_EVASION)
+        ..addAbility(SHARINGAN_MODEL_EFFECT)
+        sharinganTimer = getTimer()..startPeriodic(0.1, function sharinganTimerFunction)..setData(caster.getOwner().getId())
+
+function sharinganTimerFunction ()
+    let pid = sharinganTimer.getData()
+    let caster = udg_PlayHero[pid]
+    if caster.isInvulnerable() == false
+        sharinganCount++
+    if sharinganCount == 40 // 0.1 * 40 = 4 seconds
+        if caster.hasAbility(ATTACK_EVASION)
+            caster.removeAbility(ATTACK_EVASION)
+        if caster.hasAbility(SHARINGAN_MODEL_EFFECT)
+            caster.removeAbility(SHARINGAN_MODEL_EFFECT)
+            caster.removeAbility(SHARINGAN_BUFF)
+        sharinganCount = 0
+        sharinganTimer.release()

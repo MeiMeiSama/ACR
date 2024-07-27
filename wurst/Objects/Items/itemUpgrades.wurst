@@ -1,0 +1,267 @@
+package itemUpgrades
+import ItemRecipe
+import ObjectDefinitions
+init
+
+    ringsUpgrade ()
+    bootsUpgrade ()
+    generalUpgrade ()
+    onVongolaUpgradeBuy_init ()
+
+function ringsUpgrade ()
+    // ------------------------- Cloud Ring ------------------------- //
+    let cloudRing1 = new ItemRecipe(CLOUD_RING_2, 0, false, true, true) // Ring 2
+    cloudRing1.addItem(CLOUD_RING_1) // Ring 1
+    cloudRing1.addItem(VONGOLA_RING_UPGRADE) // Upgrade Ring
+
+    let cloudRing2 = new ItemRecipe(CLOUD_RING_3, 0, false, true, true) // Ring 3
+    cloudRing2.addItem(CLOUD_RING_2) // Ring 2
+    cloudRing2.addItem(VONGOLA_RING_UPGRADE) // Upgrade Ring
+
+    let cloudRing3 = new ItemRecipe(CLOUD_RING_4, 0, false, true, true) // Ring 4
+    cloudRing3.addItem(CLOUD_RING_3) // Ring 3
+    cloudRing3.addItem(VONGOLA_RING_UPGRADE) // Upgrade Ring
+
+    let cloudRing4 = new ItemRecipe(CLOUD_RING_VONGOLA, 0, false, true, true) // Ring X
+    cloudRing4.addItem(CLOUD_RING_4) // Ring 4
+    cloudRing4.addItem(VONGOLA_RING_UPGRADE) // Upgrade Ring
+
+    let cloudRing5 = new ItemRecipe(CLOUD_RING_ARCOBALENO, 0, false, true, true) // Cloud Arcobaleno
+    cloudRing5.addItem(CLOUD_RING_VONGOLA) // Ring X
+    cloudRing5.addItem(CLOUD_RING_VONGOLA) // Ring X
+    cloudRing5.addItem(CLOUD_ARCOBALENO_RECIPE) // Cloud Arcobaleno Recipe
+
+    // ------------------------- Mist Ring ------------------------- //
+    let mistRing1 = new ItemRecipe(MIST_RING_2, 0, false, true, true) // Ring 2
+    mistRing1.addItem(MIST_RING_1) // Ring 1
+    mistRing1.addItem(VONGOLA_RING_UPGRADE) // Upgrade Ring
+
+    let mistRing2 = new ItemRecipe(MIST_RING_3, 0, false, true, true) // Ring 3
+    mistRing2.addItem(MIST_RING_2) // Ring 2
+    mistRing2.addItem(VONGOLA_RING_UPGRADE) // Upgrade Ring
+
+    let mistRing3 = new ItemRecipe(MIST_RING_4, 0, false, true, true) // Ring 4
+    mistRing3.addItem(MIST_RING_3) // Ring 3
+    mistRing3.addItem(VONGOLA_RING_UPGRADE) // Upgrade Ring
+
+    let mistRing4 = new ItemRecipe(MIST_RING_VONGOLA, 0, false, true, true) // Ring X
+    mistRing4.addItem(MIST_RING_4) // Ring 4
+    mistRing4.addItem(VONGOLA_RING_UPGRADE) // Upgrade Ring
+
+    let mistRing5 = new ItemRecipe(MIST_RING_ARCOBALENO, 0, false, true, true) // Mist Arcobaleno
+    mistRing5.addItem(MIST_RING_VONGOLA) // Ring X
+    mistRing5.addItem(MIST_RING_VONGOLA) // Ring X
+    mistRing5.addItem(MIST_ARCOBALENO_RECIPE) // Mist Arcobaleno Recipe
+
+    // ------------------------- Rain Ring ------------------------- //
+    let rainRing1 = new ItemRecipe(RAIN_RING_2, 0, false, true, true) // Ring 2
+    rainRing1.addItem(RAIN_RING_1) // Ring 1
+    rainRing1.addItem(VONGOLA_RING_UPGRADE) // Upgrade Ring
+
+    let rainRing2 = new ItemRecipe(RAIN_RING_3, 0, false, true, true) // Ring 3
+    rainRing2.addItem(RAIN_RING_2) // Ring 2
+    rainRing2.addItem(VONGOLA_RING_UPGRADE) // Upgrade Ring
+
+    let rainRing3 = new ItemRecipe(RAIN_RING_4, 0, false, true, true) // Ring 4
+    rainRing3.addItem(RAIN_RING_3) // Ring 3
+    rainRing3.addItem(VONGOLA_RING_UPGRADE) // Upgrade Ring
+
+    let rainRing4 = new ItemRecipe(RAIN_RING_VONGOLA, 0, false, true, true) // Ring X
+    rainRing4.addItem(RAIN_RING_4) // Ring 4
+    rainRing4.addItem(VONGOLA_RING_UPGRADE) // Upgrade Ring
+
+    let rainRing5 = new ItemRecipe(RAIN_RING_ARCOBALENO, 0, false, true, true) // Rain Arcobaleno
+    rainRing5.addItem(RAIN_RING_VONGOLA) // Ring X
+    rainRing5.addItem(RAIN_RING_VONGOLA) // Ring X
+    rainRing5.addItem(RAIN_ARCOBALENO_RECIPE) // Rain Arcobaleno Recipe
+
+    // ------------------------- Storm Ring ------------------------- //
+    let stormRing1 = new ItemRecipe(STORM_RING_2, 0, false, true, true) // Ring 2
+    stormRing1.addItem(STORM_RING_1) // Ring 1
+    stormRing1.addItem(VONGOLA_RING_UPGRADE) // Upgrade Ring
+
+    let stormRing2 = new ItemRecipe(STORM_RING_3, 0, false, true, true) // Ring 3
+    stormRing2.addItem(STORM_RING_2) // Ring 2
+    stormRing2.addItem(VONGOLA_RING_UPGRADE) // Upgrade Ring
+
+    let stormRing3 = new ItemRecipe(STORM_RING_4, 0, false, true, true) // Ring 4
+    stormRing3.addItem(STORM_RING_3) // Ring 3
+    stormRing3.addItem(VONGOLA_RING_UPGRADE) // Upgrade Ring
+
+    let stormRing4 = new ItemRecipe(STORM_RING_VONGOLA, 0, false, true, true) // Ring X
+    stormRing4.addItem(STORM_RING_4) // Ring 4
+    stormRing4.addItem(VONGOLA_RING_UPGRADE) // Upgrade Ring
+
+    let stormRing5 = new ItemRecipe(STORM_RING_ARCOBALENO, 0, false, true, true) // Storm Arcobaleno
+    stormRing5.addItem(STORM_RING_VONGOLA) // Ring X
+    stormRing5.addItem(STORM_RING_VONGOLA) // Ring X
+    stormRing5.addItem(STORM_ARCOBALENO_RECIPE) // Storm Arcobaleno Recipe
+
+    // ------------------------- Sun Ring ------------------------- //
+    let sunRing1 = new ItemRecipe(SUN_RING_2, 0, false, true, true) // Ring 2
+    sunRing1.addItem(SUN_RING_1) // Ring 1
+    sunRing1.addItem(VONGOLA_RING_UPGRADE) // Upgrade Ring
+
+    let sunRing2 = new ItemRecipe(SUN_RING_3, 0, false, true, true) // Ring 3
+    sunRing2.addItem(SUN_RING_2) // Ring 2
+    sunRing2.addItem(VONGOLA_RING_UPGRADE) // Upgrade Ring
+
+    let sunRing3 = new ItemRecipe(SUN_RING_4, 0, false, true, true) // Ring 4
+    sunRing3.addItem(SUN_RING_3) // Ring 3
+    sunRing3.addItem(VONGOLA_RING_UPGRADE) // Upgrade Ring
+
+    let sunRing4 = new ItemRecipe(SUN_RING_VONGOLA, 0, false, true, true) // Ring X
+    sunRing4.addItem(SUN_RING_4) // Ring 4
+    sunRing4.addItem(VONGOLA_RING_UPGRADE) // Upgrade Ring
+
+    let sunRing5 = new ItemRecipe(SUN_RING_ARCOBALENO, 0, false, true, true) // Sun Arcobaleno
+    sunRing5.addItem(SUN_RING_VONGOLA) // Ring X
+    sunRing5.addItem(SUN_RING_VONGOLA) // Ring X
+    sunRing5.addItem(SUN_ARCOBALENO_RECIPE) // Sun Arcobaleno Recipe
+
+    // ------------------------- Thunder Ring ------------------------- //
+    let thunderRing1 = new ItemRecipe(THUNDER_RING_2, 0, false, true, true) // Ring 2
+    thunderRing1.addItem(THUNDER_RING_1) // Ring 1
+    thunderRing1.addItem(VONGOLA_RING_UPGRADE) // Upgrade Ring
+
+    let thunderRing2 = new ItemRecipe(THUNDER_RING_3, 0, false, true, true) // Ring 3
+    thunderRing2.addItem(THUNDER_RING_2) // Ring 2
+    thunderRing2.addItem(VONGOLA_RING_UPGRADE) // Upgrade Ring
+
+    let thunderRing3 = new ItemRecipe(THUNDER_RING_4, 0, false, true, true) // Ring 4
+    thunderRing3.addItem(THUNDER_RING_3) // Ring 3
+    thunderRing3.addItem(VONGOLA_RING_UPGRADE) // Upgrade Ring
+
+    let thunderRing4 = new ItemRecipe(THUNDER_RING_VONGOLA, 0, false, true, true) // Ring X
+    thunderRing4.addItem(THUNDER_RING_4) // Ring 4
+    thunderRing4.addItem(VONGOLA_RING_UPGRADE) // Upgrade Ring
+
+    let thunderRing5 = new ItemRecipe(THUNDER_RING_ARCOBALENO, 0, false, true, true) // Thunder Arcobaleno
+    thunderRing5.addItem(THUNDER_RING_VONGOLA) // Ring X
+    thunderRing5.addItem(THUNDER_RING_VONGOLA) // Ring X
+    thunderRing5.addItem(THUNDER_ARCOBALENO_RECIPE) // Thunder Arcobaleno Recipe
+
+function bootsUpgrade ()
+    // ------------------------- Boots Lv. 2 ------------------------- //
+    let bootsLv2 = new ItemRecipe('I01W', 0, false, true, true) // Boots Lv. 2
+    bootsLv2.addItem('I01R') // Boots Lv. 1
+    bootsLv2.addItem('I020') // Upgrade Boots
+
+    // ------------------------- Boots Lv. 3 ------------------------- //
+    let bootsLv3 = new ItemRecipe('I01X', 0, false, true, true) // Boots Lv. 3
+    bootsLv3.addItem('I01W') // Boots Lv. 2
+    bootsLv3.addItem('I020') // Upgrade Boots
+
+    // ------------------------- Blink Boots ------------------------- //
+    let blinkBoot = new ItemRecipe('I02I', 0, false, true, true) // Blink Boots
+    blinkBoot.addItem('I01X') // Boots Lv. 3
+    blinkBoot.addItem('I02J') // Blink Boots Recipe
+
+    // ------------------------- Haste Boots ------------------------- //
+    let hasteBoot = new ItemRecipe(HASTE_BOOT, 0, false, true, true) // Haste Boots
+    hasteBoot.addItem('I01X') // Boots Lv. 3
+    hasteBoot.addItem('I02N') // Haste Boots Recipe
+
+    // ------------------------- Mana Boots ------------------------- //
+    let manaBoot = new ItemRecipe(MANA_BOOT, 0, false, true, true) // Mana Boots
+    manaBoot.addItem('I01X') // Boots Lv. 3
+    manaBoot.addItem('I074') // Mana Boots Recipe
+
+    // ------------------------- Teleport Boots ------------------------- //
+    let teleportBoot = new ItemRecipe('I02K', 0, false, true, true) // Teleportation Boots
+    teleportBoot.addItem('I01X') // Boots Lv. 3
+    teleportBoot.addItem('I02L') // Teleportation Boots Recipe
+
+    // ------------------------- Vitality Boots ------------------------- //
+    let vitalityBoot = new ItemRecipe('I02G', 0, false, true, true) // Vitality Boots
+    vitalityBoot.addItem('I01X') // Boots Lv. 3
+    vitalityBoot.addItem('I02H') // Vitality Boots Recipe
+
+    // ------------------------- Blink of True Sight ------------------------- //
+    let blinkSight = new ItemRecipe('I06Z', 0, false, true, true) // Blink of True Sight
+    blinkSight.addItem('I02I') // Blink Boots
+    blinkSight.addItem('gemt') // Gem of True Sight
+
+    // ------------------------- Haste of True Sight  ------------------------- //
+    let hasteSight = new ItemRecipe(HASTE_BOOT_TRUESIGHT, 0, false, true, true) // Haste of True Sight
+    hasteSight.addItem('I02M') // Haste Boots
+    hasteSight.addItem('gemt') // Gem of True Sight
+
+    // ------------------------- Mana of True Sight  ------------------------- //
+    let manaSight = new ItemRecipe(MANA_BOOT_TRUESIGHT, 0, false, true, true) // Mana of True Sight
+    manaSight.addItem(MANA_BOOT) // Mana Boots
+    manaSight.addItem('gemt') // Gem of True Sight
+
+    // ------------------------- Teleport of True Sight  ------------------------- //
+    let teleportSight = new ItemRecipe('I06Y', 0, false, true, true) // Teleport of True Sight
+    teleportSight.addItem('I02K') // Teleport Boots
+    teleportSight.addItem('gemt') // Gem of True Sight
+
+    // ------------------------- Vitality of True Sight  ------------------------- //
+    let vitalitySight = new ItemRecipe('I071', 0, false, true, true) // Vitality of True Sight
+    vitalitySight.addItem('I02G') // Vitality Boots
+    vitalitySight.addItem('gemt') // Gem of True Sight
+
+function generalUpgrade ()
+    // -------------------------- Greater Strength -------------------------- //
+    let greaterStr = new ItemRecipe('I02R', 0, false, true, true) // Greater Strength
+    greaterStr.addItem('I02O') // Lesser Strength
+    greaterStr.addItem('I02U') // Upgrade Lesser Catalyst
+
+    // -------------------------- Greater Agility -------------------------- //
+    let greaterAgi = new ItemRecipe('I02T', 0, false, true, true) // Greater Agility
+    greaterAgi.addItem('I02P') // Lesser Agility
+    greaterAgi.addItem('I02U') // Upgrade Lesser Catalyst
+
+    // -------------------------- Greater Intelligence -------------------------- //
+    let greaterInt = new ItemRecipe('I02S', 0, false, true, true) // Greater Intelligence
+    greaterInt.addItem('I02Q') // Lesser Intelligence
+    greaterInt.addItem('I02U') // Upgrade Lesser Catalyst
+
+    // -------------------------- Superior Strength -------------------------- //
+    let superiorStr = new ItemRecipe('I06M', 0, false, true, true) // Superior Strength
+    superiorStr.addItem('I02R') // Greater Strength
+    superiorStr.addItem('I02R') // Greater Strength
+    superiorStr.addItem('I02R') // Greater Strength
+    superiorStr.addItem('I06O') // Upgrade Greater Catalyst
+
+    // -------------------------- Superior Agility -------------------------- //
+    let superiorAgi = new ItemRecipe('I06L', 0, false, true, true) // Superior Agility
+    superiorAgi.addItem('I02T') // Greater Agility
+    superiorAgi.addItem('I02T') // Greater Agility
+    superiorAgi.addItem('I02T') // Greater Agility
+    superiorAgi.addItem('I06O') // Upgrade Greater Catalyst
+
+    // -------------------------- Superior Intelligence -------------------------- //
+    let superiorInt = new ItemRecipe('I06X', 0, false, true, true) // Superior Intelligence
+    superiorInt.addItem('I02S') // Greater Intelligence
+    superiorInt.addItem('I02S') // Greater Intelligence
+    superiorInt.addItem('I02S') // Greater Intelligence
+    superiorInt.addItem('I06O') // Upgrade Greater Catalyst
+
+function onVongolaUpgradeBuy_action ()
+    if GetSoldItem().getTypeId() == VONGOLA_RING_UPGRADE_TOME
+        GetBuyingUnit().addItemById(VONGOLA_RING_UPGRADE)
+
+    if GetSoldItem().getTypeId() == CLOUD_ARCOBALENO_RECIPE_TOME
+        GetBuyingUnit().addItemById(CLOUD_ARCOBALENO_RECIPE)
+
+    if GetSoldItem().getTypeId() == MIST_ARCOBALENO_RECIPE_TOME
+        GetBuyingUnit().addItemById(MIST_ARCOBALENO_RECIPE)
+
+    if GetSoldItem().getTypeId() == RAIN_ARCOBALENO_RECIPE_TOME
+        GetBuyingUnit().addItemById(RAIN_ARCOBALENO_RECIPE)
+
+    if GetSoldItem().getTypeId() == STORM_ARCOBALENO_RECIPE_TOME
+        GetBuyingUnit().addItemById(STORM_ARCOBALENO_RECIPE)
+
+    if GetSoldItem().getTypeId() == SUN_ARCOBALENO_RECIPE_TOME
+        GetBuyingUnit().addItemById(SUN_ARCOBALENO_RECIPE)
+
+    if GetSoldItem().getTypeId() == THUNDER_ARCOBALENO_RECIPE_TOME
+        GetBuyingUnit().addItemById(THUNDER_ARCOBALENO_RECIPE)
+
+function onVongolaUpgradeBuy_init ()
+    CreateTrigger()
+    ..registerAnyUnitEvent(EVENT_PLAYER_UNIT_SELL_ITEM)
+    ..addAction(function onVongolaUpgradeBuy_action)

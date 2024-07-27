@@ -1,0 +1,49 @@
+package DeathRing
+
+
+init
+    initTrig_DeathRing()
+
+function trig_DeathRingConditions() returns boolean
+    return (IsUnitType(GetDyingUnit(), UNIT_TYPE_HERO) == false and GetUnitTypeId(GetTriggerUnit()) == 'e0BI') or GetUnitTypeId(GetTriggerUnit()) == 'e0BB' or GetUnitTypeId(GetTriggerUnit()) == 'e0GK' or GetUnitTypeId(GetTriggerUnit()) == 'e0GI' or GetUnitTypeId(GetTriggerUnit()) == 'e02L' or GetUnitTypeId(GetTriggerUnit()) == 'e0H5' or GetUnitTypeId(GetTriggerUnit()) == 'e08V' or GetUnitTypeId(GetTriggerUnit()) == 'e051' or GetUnitTypeId(GetTriggerUnit()) == 'e0CP' or GetUnitTypeId(GetTriggerUnit()) == 'e0OC' or GetUnitTypeId(GetTriggerUnit()) == 'e0OG' or GetUnitTypeId(GetTriggerUnit()) == 'e0OL' or GetUnitTypeId(GetTriggerUnit()) == 'e0OP' or GetUnitTypeId(GetTriggerUnit()) == 'e07G' or GetUnitTypeId(GetTriggerUnit()) == 'e0TB' or GetUnitTypeId(GetTriggerUnit()) == 'e0TR' or GetUnitTypeId(GetTriggerUnit()) == 'e0VP' or GetUnitTypeId(GetTriggerUnit()) == 'e0LB'
+function trig_DeathRingFunc003Func001Func003T()
+    RemoveUnit(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 51))
+    FlushChildHashtable(YDLOC, GetHandleId(GetExpiredTimer()))
+    DestroyTimer(GetExpiredTimer())
+function trig_DeathRingFunc003Func002T()
+    RemoveUnit(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 51))
+    FlushChildHashtable(YDLOC, GetHandleId(GetExpiredTimer()))
+    DestroyTimer(GetExpiredTimer())
+function trig_DeathRingActions()
+    timer _ydl_timer
+    SetUnitTimeScalePercent(GetTriggerUnit(), 0.00)
+    if GetUnitTypeId(GetTriggerUnit()) == 'e0TB'
+        _ydl_timer = CreateTimer()
+        SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 51, GetTriggerUnit())
+        TimerStart(_ydl_timer, 1.25, false, function trig_DeathRingFunc003Func002T)
+    else if GetUnitTypeId(GetTriggerUnit()) == 'e0VP'
+        DoNothing()
+    else
+        _ydl_timer = CreateTimer()
+        SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 51, GetTriggerUnit())
+        TimerStart(_ydl_timer, 2.50, false, function trig_DeathRingFunc003Func001Func003T)
+function initTrig_DeathRing()
+    gg_trg_DeathRing = CreateTrigger()
+    TriggerRegisterPlayerUnitEventSimple(gg_trg_DeathRing, Player(0), EVENT_PLAYER_UNIT_DEATH)
+    TriggerRegisterPlayerUnitEventSimple(gg_trg_DeathRing, Player(1), EVENT_PLAYER_UNIT_DEATH)
+    TriggerRegisterPlayerUnitEventSimple(gg_trg_DeathRing, Player(2), EVENT_PLAYER_UNIT_DEATH)
+    TriggerRegisterPlayerUnitEventSimple(gg_trg_DeathRing, Player(3), EVENT_PLAYER_UNIT_DEATH)
+    TriggerRegisterPlayerUnitEventSimple(gg_trg_DeathRing, Player(4), EVENT_PLAYER_UNIT_DEATH)
+    TriggerRegisterPlayerUnitEventSimple(gg_trg_DeathRing, Player(5), EVENT_PLAYER_UNIT_DEATH)
+    TriggerRegisterPlayerUnitEventSimple(gg_trg_DeathRing, Player(6), EVENT_PLAYER_UNIT_DEATH)
+    TriggerRegisterPlayerUnitEventSimple(gg_trg_DeathRing, Player(7), EVENT_PLAYER_UNIT_DEATH)
+    TriggerRegisterPlayerUnitEventSimple(gg_trg_DeathRing, Player(8), EVENT_PLAYER_UNIT_DEATH)
+    TriggerRegisterPlayerUnitEventSimple(gg_trg_DeathRing, Player(9), EVENT_PLAYER_UNIT_DEATH)
+    TriggerRegisterPlayerUnitEventSimple(gg_trg_DeathRing, Player(10), EVENT_PLAYER_UNIT_DEATH)
+    TriggerRegisterPlayerUnitEventSimple(gg_trg_DeathRing, Player(11), EVENT_PLAYER_UNIT_DEATH)
+    TriggerRegisterPlayerUnitEventSimple(gg_trg_DeathRing, Player(12), EVENT_PLAYER_UNIT_DEATH)
+    TriggerRegisterPlayerUnitEventSimple(gg_trg_DeathRing, Player(13), EVENT_PLAYER_UNIT_DEATH)
+    TriggerRegisterPlayerUnitEventSimple(gg_trg_DeathRing, Player(14), EVENT_PLAYER_UNIT_DEATH)
+    TriggerRegisterPlayerUnitEventSimple(gg_trg_DeathRing, Player(15), EVENT_PLAYER_UNIT_DEATH)
+    TriggerAddCondition(gg_trg_DeathRing, Condition(function trig_DeathRingConditions))
+    TriggerAddAction(gg_trg_DeathRing, function trig_DeathRingActions)

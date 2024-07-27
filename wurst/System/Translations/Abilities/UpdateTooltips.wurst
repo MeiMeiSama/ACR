@@ -1,0 +1,1276 @@
+package UpdateTooltips // NEW SYSTEM //
+
+import ObjectDefinitions
+import TimerUtils
+import AbilityGlobals
+import UpdateTooltipExceptions
+import AbilityClassifications
+
+integer count = 0
+
+public function updateTooltips_Mode ()
+    let id = GetExpiredTimer().getData()
+    updateTooltipMode(id)
+
+public function updateTooltips () // ------------- Configurable ------------- //
+    let id = GetExpiredTimer().getData() // gets id
+    updateTooltipExceptions(id) 
+
+function updateTooltipsOnceInitModeCond () returns boolean
+    if GetSpellAbilityId().isTransform()
+        return true
+    return false
+
+public function updateTooltipsOnceInit_Mode (unit playHero)
+    CreateTrigger()
+    ..registerUnitEvent(playHero, EVENT_UNIT_SPELL_CAST)
+    ..addCondition(Condition(function updateTooltipsOnceInitModeCond))
+    ..addAction() ->
+        let hero = GetTriggerUnit()
+        let id = hero.getOwner().getId()
+        let tooltipTimer = CreateTimer()
+        tooltipTimer..start(0.1, function updateTooltips_Mode)..setData(id)
+
+function updateTooltipsInitModeCond () returns boolean
+    if GetManipulatedItem().isUpgrade()
+        return false
+    if GetTriggerUnit().isModeHeroTransformed()
+        return true
+    return false
+
+public function updateTooltipsInit_Mode (unit playHero)
+    CreateTrigger()
+    ..registerUnitEvent(playHero, EVENT_UNIT_HERO_SKILL)
+    ..registerUnitEvent(playHero, EVENT_UNIT_HERO_LEVEL)
+    ..registerUnitEvent(playHero, EVENT_UNIT_PICKUP_ITEM)
+    ..registerUnitEvent(playHero, EVENT_UNIT_DROP_ITEM)
+    ..addCondition(Condition(function updateTooltipsInitModeCond))
+    ..addAction() ->
+        let hero = GetTriggerUnit()
+        let id = hero.getOwner().getId()
+        let tooltipTimer = CreateTimer()
+        tooltipTimer..start(0.1, function updateTooltips_Mode)..setData(id)
+
+function updateTooltipsInitCond () returns boolean
+    if GetManipulatedItem().isUpgrade()
+        return false
+    if GetTriggerUnit().isModeHeroTransformed() //and not GetSpellAbilityId().isTransform()
+        return false
+    return true
+
+function updateTooltipsInit_Base (unit playHero)
+    CreateTrigger()
+    ..registerUnitEvent(playHero, EVENT_UNIT_HERO_SKILL)
+    ..registerUnitEvent(playHero, EVENT_UNIT_HERO_LEVEL)
+    ..registerUnitEvent(playHero, EVENT_UNIT_PICKUP_ITEM)
+    ..registerUnitEvent(playHero, EVENT_UNIT_DROP_ITEM)
+    ..addCondition(Condition(function updateTooltipsInitCond))
+    ..addAction() ->
+        let id = GetTriggerUnit().getOwner().getId()
+        let tooltipTimer = CreateTimer()
+        tooltipTimer..start(0.1, function updateTooltips)..setData(id)
+    let pid = playHero.getOwner().getId()
+    let runOnce = CreateTimer()
+    runOnce..start(0.1, function updateTooltips)..setData(pid)
+                
+
+// --------- The ability list for the heroes --------- //
+public function addAbilities (unit hero)
+    let id = hero.getOwner().getId()
+
+    if hero.getTypeId() == SASUKE_YOUNG // Sasuke
+        SPELL_Q[id] = 'A03W'
+        SPELL_W[id] = 'A0AI'
+        SPELL_E[id] = SASUKE_YOUNG_ABILITY_E
+        SPELL_R[id] = 'A02B'
+        SPELL_R2[id] = 'A0CY'
+        SPELL_T[id] = 'A0DA'
+        SPELL_F[id] = 'A02E'
+        SPELL_G[id] = SASUKE_YOUNG_ABILITY_G_SHARINGAN
+        SPELL_G2[id] = SASUKE_YOUNG_ABILITY_G_RINNEGAN
+    else if hero.getTypeId() == 'H03B' // 2B
+        SPELL_Q[id] = 'A0US'
+        SPELL_Q2[id] = 'A0UT'        
+        SPELL_W[id] = 'A0UU'
+        SPELL_E[id] = 'A0UX'
+        SPELL_R[id] = 'A0UV'
+        SPELL_T[id] = 'A0UR'
+        SPELL_F[id] = 'A0UW'
+        SPELL_G[id] = 'A0UY' 
+    else if hero.getTypeId() == 'H03C' // Abigail
+        SPELL_Q[id] = 'A0UJ'
+        SPELL_W[id] = 'A0UL'
+        SPELL_E[id] = 'A0UO'
+        SPELL_R[id] = 'A0UM'
+        SPELL_T[id] = 'A0UK'
+        SPELL_F[id] = 'A0UN'
+        SPELL_G[id] = 'A0UP'     
+    else if hero.getTypeId() == 'H03D' // Ainz
+        SPELL_Q[id] = 'A0UZ'
+        SPELL_W[id] = 'A0V0'
+        SPELL_E[id] = 'A0V4'
+        SPELL_R[id] = 'A0V1'
+        SPELL_T[id] = 'A0V2'
+        SPELL_F[id] = 'A0V3'
+        SPELL_G[id] = 'A0V5'
+    else if hero.getTypeId() == 'H01R' // Aizen
+        SPELL_Q[id] = 'A0HL'
+        SPELL_W[id] = 'A0HM'
+        SPELL_E[id] = 'A0HX'
+        SPELL_R[id] = 'A0HN'
+        SPELL_T[id] = 'A19D' //A0XR
+        SPELL_F[id] = 'A19E' //A0XW
+        SPELL_G[id] = 'A18I'
+        SPELL_MODO_Q[id] = 'A0XT'
+        SPELL_MODO_W[id] = 'A0XS'
+        SPELL_MODO_E[id] = 'A0XU'
+        SPELL_MODO_R[id] = 'A0HO'
+        SPELL_MODO_G[id] = 'A17U'
+    else if hero.getTypeId() == 'H000' // Alibaba
+        SPELL_Q[id] = 'A002'
+        SPELL_W[id] = 'A003'
+        SPELL_E[id] = 'A17S'
+        SPELL_R[id] = 'A045'
+        SPELL_T[id] = 'A00B'
+        SPELL_F[id] = 'A05G'
+        SPELL_G[id] = 'A17R'             
+    else if hero.getTypeId() == 'H02A' // Arturia 
+        SPELL_Q[id] = 'A0MB'
+        SPELL_Q2[id] = 'A0MC'
+        SPELL_W[id] = 'A0MD'
+        SPELL_E[id] = 'A0MI'
+        SPELL_R[id] = 'A0ME'
+        SPELL_T[id] = 'A0MF'
+        SPELL_F[id] = 'A0MG'
+        SPELL_G[id] = '_'                   
+    else if hero.getTypeId() == ARTURIA_STRENGTH // Arturia Lily
+        SPELL_Q[id] = 'A0RP'
+        SPELL_Q2[id] = 'A0RQ'        
+        SPELL_W[id] = 'A0RR'
+        SPELL_E[id] = 'A17P'
+        SPELL_R[id] = 'A0RV'
+        SPELL_T[id] = 'A0RN'
+        SPELL_F[id] = 'A0RT'
+        SPELL_G[id] = ARTURIA_STRENGTH_ABILITY_G 
+    else if hero.getTypeId() == 'H03K' // Saber Alter
+        SPELL_Q[id] = 'A0WM'
+        SPELL_W[id] = 'A0WN'
+        SPELL_E[id] = 'A0WV'
+        SPELL_R[id] = 'A0ZF'
+        SPELL_R2[id] = 'A0WR'        
+        SPELL_T[id] = 'A0WP'
+        SPELL_F[id] = 'A0WS'
+        SPELL_G[id] = 'A0WU'  
+    else if hero.getTypeId() == 'H00V' // Asuna
+        SPELL_Q[id] = 'A08L'
+        SPELL_W[id] = 'A08M'
+        SPELL_E[id] = 'A08O'
+        SPELL_R[id] = 'A08P'
+        SPELL_T[id] = 'A08Q'
+        SPELL_F[id] = 'A08R'
+        SPELL_G[id] = 'A08N'  
+    else if hero.getTypeId() == 'H02I' // Atila
+        SPELL_Q[id] = 'A0O6'
+        SPELL_W[id] = 'A0O7'
+        SPELL_E[id] = 'A0OD'
+        SPELL_R[id] = 'A0O8'
+        SPELL_T[id] = 'A0O9'
+        SPELL_F[id] = 'A0NU'
+        SPELL_G[id] = 'A16P'  
+    else if hero.getTypeId() == 'H00F' // Izayoi
+        SPELL_Q[id] = 'A020'
+        SPELL_W[id] = 'A02V'
+        SPELL_E[id] = 'A17O'
+        SPELL_R[id] = 'A02Y'
+        SPELL_T[id] = 'A02Z'
+        SPELL_F[id] = 'A030'
+        SPELL_G[id] = '_'  
+    else if hero.getTypeId() == 'H023' // Byakuran
+        SPELL_Q[id] = 'A0KJ'
+        SPELL_W[id] = 'A0KL'
+        SPELL_E[id] = 'A17N'
+        SPELL_R[id] = 'A0KM'
+        SPELL_T[id] = 'A0KN'
+        SPELL_F[id] = 'A0KT'
+        SPELL_G[id] = 'A0KI'  
+    else if hero.getTypeId() == 'H00R' // Lambo
+        SPELL_Q[id] = 'A039'
+        SPELL_W[id] = 'A197' //A0S9
+        SPELL_E[id] = 'A0SA'
+        SPELL_R[id] = 'A05D'
+        SPELL_T[id] = 'A05B'
+        SPELL_F[id] = 'A05E'
+        SPELL_G[id] = '_'  
+    else if hero.getTypeId() == 'H03G' // Edmond
+        SPELL_Q[id] = 'A0VR'
+        SPELL_W[id] = 'A0VO'
+        SPELL_E[id] = 'A17M'
+        SPELL_R[id] = 'A0VQ'
+        SPELL_T[id] = 'A0VS'
+        SPELL_F[id] = 'A0VU'
+        SPELL_G[id] = '_'  
+    else if hero.getTypeId() == 'H01A' // Shu
+        SPELL_Q[id] = 'A0CQ'
+        SPELL_W[id] = 'A0CR'
+        SPELL_E[id] = 'A0CU'
+        SPELL_R[id] = 'A0CS'
+        SPELL_T[id] = 'A0CT'
+        SPELL_F[id] = 'A0AD'
+        SPELL_G[id] = 'S000'  
+    else if hero.getTypeId() == DIO_BRANDO // Dio
+        SPELL_Q[id] = 'A0KX'
+        SPELL_W[id] = 'A0KZ'
+        SPELL_E[id] = 'A0L2'
+        SPELL_R[id] = 'A0KY'
+        SPELL_T[id] = 'A0L0'
+        SPELL_F[id] = 'A0L1'
+        SPELL_G[id] = DIO_BRANDO_ABILITY_G 
+    else if hero.getTypeId() == 'H025' // Elizabeth
+        SPELL_Q[id] = 'A0L5'
+        SPELL_W[id] = 'A0L6'
+        SPELL_E[id] = 'A0LB'
+        SPELL_R[id] = 'A0L7'
+        SPELL_T[id] = 'A0L8'
+        SPELL_F[id] = 'A0LC'
+        SPELL_G[id] = 'A16O'  
+    else if hero.getTypeId() == 'H02Y' // Emilia
+        SPELL_Q[id] = 'A0QU'
+        SPELL_W[id] = 'A0QV'
+        SPELL_E[id] = 'A0R0'
+        SPELL_R[id] = 'A0QW'
+        SPELL_T[id] = 'A0QX'
+        SPELL_F[id] = 'A0QY'
+        SPELL_G[id] = '_'  
+    else if hero.getTypeId() == 'H014' // Archer
+        SPELL_Q[id] = 'A0B2'
+        SPELL_W[id] = 'A0PK'
+        SPELL_W2[id] = 'A0D7'
+        SPELL_E[id] = 'A04E'
+        SPELL_R[id] = 'A0B4'
+        SPELL_T[id] = 'A0B5'
+        SPELL_T2[id] = 'A199'
+        SPELL_F[id] = 'A0B6'
+        SPELL_G[id] = 'A01Z'  
+    else if hero.getTypeId() == 'H02P' // Shiro
+        SPELL_Q[id] = 'A0PN'
+        SPELL_W[id] = 'A0PP'
+        SPELL_E[id] = 'A0PU'
+        SPELL_R[id] = 'A0PQ'
+        SPELL_T[id] = 'A0PR'
+        SPELL_T2[id] = 'A0PS'
+        SPELL_F[id] = 'A0PO'
+        SPELL_G[id] = 'A0PV'  
+    else if hero.getTypeId() == 'H037' // Yami
+        SPELL_Q[id] = 'A0SV'
+        SPELL_Q2[id] = 'A0SW'
+        SPELL_W[id] = 'A0SX'
+        SPELL_E[id] = 'A0SY'
+        SPELL_R[id] = 'A0SZ'
+        SPELL_T[id] = 'A0T0'
+        SPELL_F[id] = 'A0T1'
+        SPELL_G[id] = '_'  
+    else if hero.getTypeId() == 'H046' // Dante
+        SPELL_Q[id] = 'A10Y'
+        SPELL_W[id] = 'A10X'
+        SPELL_W2[id] = 'A10Z'
+        SPELL_E[id] = 'A110'
+        SPELL_R[id] = 'A111'
+        SPELL_T[id] = 'A112'
+        SPELL_F[id] = 'A115'
+        SPELL_G[id] = 'A114'  
+    else if hero.getTypeId() == 'H005' // Future Rogue
+        SPELL_Q[id] = 'A058'
+        SPELL_W[id] = 'A03B'
+        SPELL_E[id] = 'A03C'
+        SPELL_R[id] = 'A023'
+        SPELL_T[id] = 'A19M' //A03E
+        SPELL_F[id] = 'A05T'
+        SPELL_G[id] = '_'  
+        SPELL_MODO_Q[id] = 'A0AA'
+        SPELL_MODO_W[id] = 'A05Q'
+        SPELL_MODO_E[id] = 'A05R'
+        SPELL_MODO_R[id] = 'A05S'
+        SPELL_MODO_G[id] = 'A03H'
+    else if hero.getTypeId() == GAJEEL_REDFOX // Gajeel
+        SPELL_Q[id] = 'A044'
+        SPELL_W[id] = 'A03Q'
+        SPELL_E[id] = 'A0CV'
+        SPELL_R[id] = 'A049'
+        SPELL_T[id] = 'A01S'
+        SPELL_F[id] = 'A04H'
+        SPELL_G[id] = GAJEEL_REDFOX_ABILITY_G  
+    else if hero.getTypeId() == 'H00O' // Jellal
+        SPELL_Q[id] = 'A0A3'
+        SPELL_W[id] = 'A0A4'
+        SPELL_E[id] = 'A0A2'
+        SPELL_R[id] = 'A0A5'
+        SPELL_T[id] = 'A07W'
+        SPELL_F[id] = 'A0A6'
+        SPELL_G[id] = 'A0A7'  
+    else if hero.getTypeId() == 'H02E' // Gilgamesh
+        SPELL_Q[id] = 'A0NC'
+        SPELL_W[id] = 'A0ND'
+        SPELL_E[id] = 'A0NI'
+        SPELL_R[id] = 'A0NE'
+        SPELL_T[id] = 'A0NF'
+        SPELL_F[id] = 'A0NG'
+        SPELL_G[id] = '____'  
+    else if hero.getTypeId() == 'H042' // Glenn
+        SPELL_Q[id] = 'A108'
+        SPELL_W[id] = 'A08J'
+        SPELL_E[id] = 'A10A'
+        SPELL_R[id] = 'A0H6'
+        SPELL_T[id] = 'A10B'
+        SPELL_F[id] = 'A10C'
+        SPELL_G[id] = 'A16N'  
+    else if hero.getTypeId() == 'H01Y' // Gray
+        SPELL_Q[id] = 'A0JJ'
+        SPELL_W[id] = 'A0JL'
+        SPELL_E[id] = 'A0JO'
+        SPELL_R[id] = 'A0JM'
+        SPELL_T[id] = 'A0JN'
+        SPELL_F[id] = 'A0JP'
+        SPELL_G[id] = 'A180'  
+    else if hero.getTypeId() == 'H01N' // Hibari
+        SPELL_Q[id] = 'A04D'
+        SPELL_W[id] = 'A07F'
+        SPELL_E[id] = 'A0GB'
+        SPELL_R[id] = 'A0AF'
+        SPELL_T[id] = 'A0AU'
+        SPELL_T2[id] = 'A0H3'
+        SPELL_F[id] = 'A0G6'
+        SPELL_G[id] = 'A17Z'  
+    else if hero.getTypeId() == 'H02W' // Iliya
+        SPELL_Q[id] = 'A0QM'
+        SPELL_W[id] = 'A0QL'
+        SPELL_E[id] = 'A0QR'
+        SPELL_R[id] = 'A0QN'
+        SPELL_T[id] = 'A0QO'
+        SPELL_F[id] = 'A0QS'
+        SPELL_G[id] = '____'  
+    else if hero.getTypeId() == 'H02J' // Inuyasha
+        SPELL_Q[id] = 'A0NV'
+        SPELL_W[id] = 'A0O0'
+        SPELL_E[id] = 'A0O3'
+        SPELL_R[id] = 'A0O1'
+        SPELL_T[id] = 'A0O2'
+        SPELL_F[id] = 'A0O5'
+        SPELL_G[id] = 'A0O4'  
+    else if hero.getTypeId() == 'H019' // Yomi
+        SPELL_Q[id] = 'A01X'
+        SPELL_W[id] = 'A04P'
+        SPELL_E[id] = 'A0C1'
+        SPELL_R[id] = 'A0CK'
+        SPELL_T[id] = 'A0CM'
+        SPELL_F[id] = 'A0CN'
+        SPELL_G[id] = 'A17B'  
+    else if hero.getTypeId() == ITSUKA_KOTORI // Kotori
+        SPELL_Q[id] = 'A09U'
+        SPELL_W[id] = ITSUKA_KOTORI_ABILITY_W //A0YL
+        SPELL_E[id] = 'A0A1'
+        SPELL_R[id] = 'A09W'
+        SPELL_T[id] = 'A09X'
+        SPELL_F[id] = 'A09Z'
+        SPELL_G[id] = BURNDOT_ITSUKA_KOTORI  
+    else if hero.getTypeId() == 'H040' // Sakuya
+        SPELL_Q[id] = 'A0YH'
+        SPELL_W[id] = 'A0ZQ'
+        SPELL_E[id] = 'A0ZV'
+        SPELL_R[id] = 'A0ZR'
+        SPELL_T[id] = 'A0ZH'
+        SPELL_F[id] = 'A0ZW'
+        SPELL_G[id] = 'A0ZY'  
+    else if hero.getTypeId() == 'H04A' // Deku
+        SPELL_Q[id] = 'A122'
+        SPELL_W[id] = 'A120'
+        SPELL_W2[id] = 'A121'
+        SPELL_E[id] = 'A123'
+        SPELL_R[id] = 'A127'
+        SPELL_T[id] = 'A125'
+        SPELL_F[id] = 'A126'
+        SPELL_G[id] = 'A124'     
+    else if hero.getTypeId() == 'H02K' // Jack
+        SPELL_Q[id] = 'A0OY'
+        SPELL_W[id] = 'A18P' // was A0OC before rework
+        SPELL_E[id] = 'A0P4'
+        SPELL_R[id] = 'A0OZ'
+        SPELL_T[id] = 'A0P0'
+        SPELL_F[id] = 'A18Q' // was A0P1 before rework
+        SPELL_G[id] = 'A0OX'
+    else if hero.getTypeId() == 'H003' // Himeragi
+        SPELL_Q[id] = 'A007'
+        SPELL_W[id] = 'A009'
+        SPELL_E[id] = 'A00P'
+        SPELL_R[id] = 'A05H'
+        SPELL_T[id] = 'A00E'
+        SPELL_F[id] = 'A00A'
+        SPELL_G[id] = 'A17Y'
+    else if hero.getTypeId() == 'H02S' // Jeanne Alter
+        SPELL_Q[id] = 'A0PW'
+        SPELL_W[id] = 'A0PX'
+        SPELL_E[id] = 'A17L'
+        SPELL_R[id] = 'A0QE'
+        SPELL_T[id] = 'A0PZ'
+        SPELL_F[id] = 'A0Q4'
+        SPELL_G[id] = 'A16M'
+    else if hero.getTypeId() == 'H030' // Jeanne Lily
+        SPELL_Q[id] = 'A0T2'
+        SPELL_W[id] = 'A0T3'
+        SPELL_E[id] = 'A0T7'
+        SPELL_R[id] = 'A0T4'
+        SPELL_T[id] = 'A0T5'
+        SPELL_F[id] = 'A0T8'
+        SPELL_G[id] = 'A16L'
+    else if hero.getTypeId() == 'H01F' // Jotaro
+        SPELL_Q[id] = 'A0ES'
+        SPELL_W[id] = 'A0KU'
+        SPELL_E[id] = 'A17K'
+        SPELL_R[id] = 'A0EX'
+        SPELL_T[id] = 'A0AB'
+        SPELL_F[id] = 'A0EZ'
+        SPELL_G[id] = 'A0KV'
+    else if hero.getTypeId() == KAMIJOU_TOUMA // Touma
+        SPELL_Q[id] = 'A04R'
+        SPELL_W[id] = 'A04Q'
+        SPELL_E[id] = 'A17J'
+        SPELL_R[id] = 'A04U'
+        SPELL_T[id] = 'A04W'
+        SPELL_F[id] = 'A04V'
+        SPELL_G[id] = KAMIJOU_TOUMA_ABILITY_G
+    else if hero.getTypeId() == 'H02V' // Karna
+        SPELL_Q[id] = 'A0OI'
+        SPELL_W[id] = 'A0Q0'
+        SPELL_E[id] = 'A0QK'
+        SPELL_R[id] = 'A0QF'
+        SPELL_T[id] = 'A0QG'
+        SPELL_F[id] = 'A0QT'
+        SPELL_G[id] = '____'
+    else if hero.getTypeId() == 'H00E' // Kamito
+        SPELL_Q[id] = 'A02H'
+        SPELL_W[id] = 'A02I'
+        SPELL_E[id] = 'A05P'
+        SPELL_R[id] = 'A02K'
+        SPELL_T[id] = 'A02M'
+        SPELL_F[id] = 'A02N'
+        SPELL_G[id] = '____'
+    else if hero.getTypeId() == COBRA // Cobra
+        SPELL_Q[id] = 'A04J'
+        SPELL_W[id] = 'A03D'
+        SPELL_E[id] = 'A04I'
+        SPELL_R[id] = 'A04L'
+        SPELL_T[id] = 'A04M'
+        SPELL_F[id] = 'A04O'
+        SPELL_G[id] = POISONDOT_COBRA
+    else if hero.getTypeId() == 'H03Z' // Kenjiro
+        SPELL_Q[id] = 'A0ZL'
+        SPELL_W[id] = 'A0ZI'
+        SPELL_W2[id] = 'A0ZJ'
+        SPELL_E[id] = 'A0ZK'
+        SPELL_R[id] = 'A0ZM'
+        SPELL_T[id] = 'A0ZG'
+        SPELL_F[id] = 'A0ZO'
+        SPELL_G[id] = '____'
+    else if hero.getTypeId() == 'H02D' // Kirito New
+        SPELL_Q[id] = 'A0N4'
+        SPELL_W[id] = 'A0N6'
+        SPELL_E[id] = 'A173'
+        SPELL_R[id] = 'A0N7'
+        SPELL_T[id] = 'A0N5'
+        SPELL_F[id] = 'A0N9'
+        SPELL_G[id] = 'A178'
+    else if hero.getTypeId() == 'H01C' // Kirito Old
+        SPELL_Q[id] = 'A0DY'
+        SPELL_W[id] = 'A0DZ'
+        SPELL_E[id] = 'A173'
+        SPELL_R[id] = 'A0C7'
+        SPELL_T[id] = 'A0C9'
+        SPELL_F[id] = 'A0E0'
+        SPELL_G[id] = 'A182'
+    else if hero.getTypeId() == 'H02O' // Kiyohime Old
+        SPELL_Q[id] = 'A0PE'
+        SPELL_W[id] = 'A0PF'
+        SPELL_E[id] = 'A172'
+        SPELL_R[id] = 'A0PG'
+        SPELL_T[id] = 'A0PH'
+        SPELL_F[id] = 'A0PJ'
+        SPELL_G[id] = 'A0PI'
+    else if hero.getTypeId() == KIYOHIME_STRENGTH // Kiyohime New
+        SPELL_Q[id] = 'A129'
+        SPELL_W[id] = 'A12A'
+        SPELL_E[id] = 'A12E'
+        SPELL_R[id] = 'A12B'
+        SPELL_T[id] = 'A128'
+        SPELL_F[id] = KIYOHIME_STRENGTH_F
+        SPELL_G[id] = 'A12C'
+    else if hero.getTypeId() == 'H01T' // Yukki
+        SPELL_Q[id] = 'A0IQ'
+        SPELL_W[id] = 'A0IR'
+        SPELL_E[id] = 'A0AS'
+        SPELL_R[id] = 'A0IS'
+        SPELL_T[id] = 'A0IT'
+        SPELL_F[id] = 'A02A'
+        SPELL_G[id] = '____'
+    else if hero.getTypeId() == 'H04B' // Misogi
+        SPELL_Q[id] = 'A12F'
+        SPELL_W[id] = 'A12G'
+        SPELL_E[id] = 'A12I'
+        SPELL_R[id] = 'A12J'
+        SPELL_T[id] = 'A12K'
+        SPELL_F[id] = 'A12L'
+        SPELL_G[id] = 'A16K'
+    else if hero.getTypeId() == 'H02L' // Ikki
+        SPELL_Q[id] = 'A0ON'
+        SPELL_W[id] = 'A0OQ'
+        SPELL_E[id] = 'A0OW'
+        SPELL_R[id] = 'A0OR'
+        SPELL_T[id] = 'A0OM'
+        SPELL_F[id] = 'A0OT'
+        SPELL_G[id] = '____'
+    else if hero.getTypeId() == ICHIGO_STRENGTH // Ichigo New
+        SPELL_Q[id] = 'A0WZ' //A0WW
+        SPELL_W[id] = 'A0WX'
+        SPELL_E[id] = 'A194' //A0X9
+        SPELL_R[id] = 'A0X0' //A0WY
+        SPELL_T[id] = ICHIGO_STRENGTH_T
+        SPELL_F[id] = 'A0XA'
+        SPELL_G[id] = ICHIGO_STRENGTH_ABILITY_G
+        SPELL_MODO_Q[id] = 'A0X4'
+        SPELL_MODO_W[id] = 'A0X5'
+        SPELL_MODO_E[id] = 'A0X6'
+        SPELL_MODO_R[id] = 'A0X7'
+        SPELL_MODO_T[id] = 'A0X3' 
+        SPELL_MODO_G[id] = ICHIGO_STRENGTH_ABILITY_G
+    else if hero.getTypeId() == 'H018' // Ichigo Old
+        SPELL_Q[id] = 'A0D0'
+        SPELL_W[id] = 'A0D1'
+        SPELL_E[id] = 'A0D2'
+        SPELL_R[id] = 'A0CC'
+        SPELL_T[id] = 'A0D3'
+        SPELL_F[id] = 'A0D4'
+        SPELL_G[id] = 'A0CA'
+    else if hero.getTypeId() == 'H01Z' // Kurohime
+        SPELL_Q[id] = 'A0J2'
+        SPELL_W[id] = 'A0J3'
+        SPELL_E[id] = 'A17I'
+        SPELL_R[id] = 'A0J1'
+        SPELL_T[id] = 'A0J0'
+        SPELL_F[id] = 'A0J4'
+        SPELL_G[id] = 'A17B'
+    else if hero.getTypeId() == 'H00L' // Laxus
+        SPELL_Q[id] = 'A03G'
+        SPELL_W[id] = 'A03X'
+        SPELL_E[id] = 'A03Y'
+        SPELL_R[id] = 'A0A9'
+        SPELL_T[id] = 'A041'
+        SPELL_F[id] = 'A042'
+        SPELL_G[id] = 'A043'
+    else if hero.getTypeId() == LEVI_ACKERMAN // Levy
+        SPELL_Q[id] = 'A0Q6'
+        SPELL_W[id] = 'A0Q7'
+        SPELL_E[id] = 'A0QI'
+        SPELL_R[id] = 'A0Q8'
+        SPELL_T[id] = 'A0Q9'
+        SPELL_F[id] = 'A0QB'
+        SPELL_G[id] = LEVI_ACKERMAN_ABILITY_G
+    else if hero.getTypeId() == 'H027' // Blackbeard
+        SPELL_Q[id] = 'A0LL'
+        SPELL_W[id] = 'A0LM'
+        SPELL_E[id] = 'A17H'
+        SPELL_R[id] = 'A0LN'
+        SPELL_T[id] = 'A0LO'
+        SPELL_F[id] = 'A0LP'
+        SPELL_G[id] = '____'
+    else if hero.getTypeId() == MASHU_KYRIELIGHT // Mashu
+        SPELL_Q[id] = 'A0NN'
+        SPELL_W[id] = 'A0OE'
+        SPELL_E[id] = 'A0NM'
+        SPELL_R[id] = 'A0OH'
+        SPELL_T[id] = 'A0QC'
+        SPELL_T2[id] = 'A0OJ'
+        SPELL_F[id] = 'A0OK'
+        SPELL_G[id] = MASHU_KYRIELIGHT_ABILITY_G
+    else if hero.getTypeId() == 'H02M' // Meliodas
+        SPELL_Q[id] = 'A0SK'
+        SPELL_W[id] = 'A0SL'
+        SPELL_E[id] = 'A17G'
+        SPELL_R[id] = 'A0SN'
+        SPELL_T[id] = 'A19G' //A0SO
+        SPELL_F[id] = 'A0TC'
+        SPELL_F2[id] = 'A19J' //A0TD        
+        SPELL_G[id] = '____'
+        SPELL_MODO_Q[id] = 'A0SP'
+        SPELL_MODO_W[id] = 'A0SQ'
+        SPELL_MODO_E[id] = 'A0TE'
+        SPELL_MODO_R[id] = 'A0SS'
+        SPELL_MODO_G[id] = 'A0OO'
+    else if hero.getTypeId() == 'H02X' // Melt
+        SPELL_Q[id] = 'A0TG'
+        SPELL_W[id] = 'A0TH'
+        SPELL_E[id] = 'A17F'
+        SPELL_R[id] = 'A0TI'
+        SPELL_T[id] = 'A0TJ'
+        SPELL_F[id] = 'A0TK'
+        SPELL_G[id] = '____'
+    else if hero.getTypeId() == 'H008' // Misaka Old
+        SPELL_Q[id] = 'A011'
+        SPELL_W[id] = 'A02T'
+        SPELL_E[id] = 'A014'
+        SPELL_R[id] = 'A013'
+        SPELL_T[id] = 'A012'
+        SPELL_F[id] = 'A05L'
+        SPELL_G[id] = 'A00Z'
+    else if hero.getTypeId() == 'H03W' // Misaka New
+        SPELL_Q[id] = 'A0Z1'
+        SPELL_W[id] = 'A0Z2'
+        SPELL_E[id] = 'A17E'
+        SPELL_R[id] = 'A0YW'
+        SPELL_T[id] = 'A0Z3'
+        SPELL_F[id] = 'A0Z0'
+        SPELL_G[id] = 'A17D'
+        SPELL_G2[id] = 'A0Z4'
+    else if hero.getTypeId() == 'H038' // Musashi
+        SPELL_Q[id] = 'A0TN'
+        SPELL_W[id] = 'A0TQ'
+        SPELL_E[id] = 'A17C'
+        SPELL_R[id] = 'A0TO'
+        SPELL_T[id] = 'A0TP'
+        SPELL_F[id] = 'A0TR'
+        SPELL_G[id] = 'A0SR'
+    else if hero.getTypeId() == MONKEYD_LUFFY // Luffy
+        SPELL_Q[id] = 'A04B'
+        SPELL_W[id] = 'A028'
+        SPELL_E[id] = 'A191' //A047
+        SPELL_R[id] = 'A0D5'
+        SPELL_T[id] = 'A19N' //A01U
+        SPELL_F[id] = 'A0EO'
+        SPELL_G[id] = MONKEYD_LUFFY_ABILITY_G
+        SPELL_MODO_Q[id] = 'A0F1'
+        SPELL_MODO_W[id] = 'A0F0'
+        SPELL_MODO_E[id] = 'A04A'
+        SPELL_MODO_R[id] = 'A0F2'
+        SPELL_MODO_G[id] = 'A17V'
+    else if hero.getTypeId() == 'H021' // Mordred
+        SPELL_Q[id] = 'A0CG'
+        SPELL_W[id] = 'A0KO'
+        SPELL_E[id] = 'A0KS'
+        SPELL_R[id] = 'A0KP'
+        SPELL_T[id] = 'A0KH'
+        SPELL_F[id] = 'A0KQ'
+        SPELL_G[id] = 'A0KR'
+    else if hero.getTypeId() == 'H03V' //  MHX Alter
+        SPELL_Q[id] = 'A0YU'
+        SPELL_W[id] = 'A0YV'
+        SPELL_E[id] = 'A0YQ'
+        SPELL_R[id] = 'A0WT'
+        SPELL_T[id] = 'A0YX'
+        SPELL_F[id] = 'A0YZ'
+        SPELL_G[id] = 'A16J'
+    else if hero.getTypeId() == 'H02N' // MHX
+        SPELL_Q[id] = 'A0P5'
+        SPELL_W[id] = 'A0P3'
+        SPELL_E[id] = 'A0P9'
+        SPELL_R[id] = 'A0P6'
+        SPELL_T[id] = 'A0P7'
+        SPELL_F[id] = 'A0PA'
+        SPELL_G[id] = 'A0P8'
+    else if hero.getTypeId() == 'H03R' // Minato Edo
+        SPELL_Q[id] = 'A0XY'
+        SPELL_W[id] = 'A0XZ'
+        SPELL_E[id] = 'A0SU' 
+        SPELL_R[id] = 'A0Y0'
+        SPELL_T[id] = 'A0XX'
+        SPELL_F[id] = 'A0HP'
+        SPELL_G[id] = 'A0Y1'
+        SPELL_G2[id] = 'A00L'
+    else if hero.getTypeId() == 'H00M' // Minato
+        SPELL_Q[id] = 'A03L'
+        SPELL_W[id] = 'A03M'
+        SPELL_E[id] = 'A195' //A03N
+        SPELL_R[id] = 'A03K'
+        SPELL_T[id] = 'A19K' //A0H8
+        SPELL_F[id] = 'A03J'
+        SPELL_G[id] = 'A0NB'
+        SPELL_MODO_Q[id] = 'A0H9'
+        SPELL_MODO_W[id] = 'A04Z'
+        SPELL_MODO_E[id] = 'A0HB'
+        SPELL_MODO_R[id] = 'A03O'
+        SPELL_MODO_G[id] = 'A0HC'
+    else if hero.getTypeId() == 'H001' // Natsu
+        SPELL_Q[id] = 'A001'
+        SPELL_W[id] = 'A0EH'
+        SPELL_E[id] = 'A00I'
+        SPELL_R[id] = 'A00F'
+        SPELL_T[id] = 'A19L' //A02G
+        SPELL_F[id] = 'A093'
+        SPELL_G[id] = 'A01K'
+        SPELL_MODO_Q[id] = 'A0HA'
+        SPELL_MODO_W[id] = 'A053'
+        SPELL_MODO_E[id] = 'A055'
+        SPELL_MODO_R[id] = 'A056'
+        SPELL_MODO_G[id] = 'A054'
+    else if hero.getTypeId() == 'H00Y' // Natsu Shikkoku
+        SPELL_Q[id] = 'A08U'
+        SPELL_W[id] = 'A08Z'
+        SPELL_E[id] = 'A090'
+        SPELL_R[id] = 'A092'
+        SPELL_T[id] = 'A091'
+        SPELL_F[id] = 'A00H'
+        SPELL_G[id] = 'A184'
+    else if hero.getTypeId() == 'H015' // Neptune
+        SPELL_Q[id] = 'A0BA'
+        SPELL_W[id] = 'A0BB'
+        SPELL_E[id] = 'A185'
+        SPELL_R[id] = 'A0BC'
+        SPELL_T[id] = 'A0B9'
+        SPELL_F[id] = 'A0BD'
+        SPELL_G[id] = 'A17B'
+    else if hero.getTypeId() == 'H00J' // Noire
+        SPELL_Q[id] = 'A02R'
+        SPELL_W[id] = 'A03R'
+        SPELL_E[id] = 'A03S'
+        SPELL_R[id] = 'A03T'
+        SPELL_T[id] = 'A03U'
+        SPELL_F[id] = 'A04K'
+        SPELL_G[id] = 'A17X'
+    else if hero.getTypeId() == 'H004' // Nura
+        SPELL_Q[id] = 'A00D'
+        SPELL_W[id] = 'A004'
+        SPELL_E[id] = 'A006'
+        SPELL_R[id] = 'A00G'
+        SPELL_T[id] = 'A00U'
+        SPELL_F[id] = 'A05I'
+        SPELL_G[id] = 'A17W'
+    else if hero.getTypeId() == 'H01X' // Okita Old
+        SPELL_Q[id] = 'A0K1'
+        SPELL_W[id] = 'A0K2'
+        SPELL_E[id] = 'A0K8'
+        SPELL_R[id] = 'A0K3'
+        SPELL_T[id] = 'A0K4'
+        SPELL_F[id] = 'A0K5'
+        SPELL_G[id] = 'A0K6'
+    else if hero.getTypeId() == OKITA_STRENGTH // Okita New
+        SPELL_Q[id] = 'A0WF'
+        SPELL_W[id] = 'A0WG'
+        SPELL_E[id] = 'A0WJ'
+        SPELL_R[id] = 'A0WH'
+        SPELL_T[id] = 'A0WI'
+        SPELL_F[id] = 'A0WK'
+        SPELL_G[id] = OKITA_STRENGTH_ABILITY_G
+    else if hero.getTypeId() == 'H03U' // Accelerator
+        SPELL_Q[id] = 'A0YM'
+        SPELL_W[id] = 'A09V'
+        SPELL_E[id] = 'A0YS'
+        SPELL_R[id] = 'A0YN'
+        SPELL_T[id] = 'A0YO'
+        SPELL_F[id] = 'A0YP'
+        SPELL_G[id] = '____'
+    else if hero.getTypeId() == PORTGASD_ACE // Ace
+        SPELL_Q[id] = 'A0DM'
+        SPELL_W[id] = 'A0G4'
+        SPELL_E[id] = 'A0G5'
+        SPELL_R[id] = 'A0G7'
+        SPELL_T[id] = 'A0G8'
+        SPELL_F[id] = 'A0G9'
+        SPELL_G[id] = BURNDOT_PORTGASD_ACE
+    else if hero.getTypeId() == KILLUA_ZOLDYCK // Killua 
+        SPELL_Q[id] = 'A0F6'
+        SPELL_W[id] = 'A0F8'
+        SPELL_E[id] = 'A17A'
+        SPELL_R[id] = 'A0F9'
+        SPELL_T[id] = 'A09I'
+        SPELL_F[id] = 'A0FA'
+        SPELL_G[id] = KILLUA_ZOLDYCK_ABILITY_G
+    else if hero.getTypeId() == AKAME_MURASAME // Akame
+        SPELL_Q[id] = 'A0I6'
+        SPELL_W[id] = 'A0I7'
+        SPELL_E[id] = 'A0IE'
+        SPELL_R[id] = 'A0I8'
+        SPELL_T[id] = 'A0I9'
+        SPELL_F[id] = 'A0IA'
+        SPELL_G[id] = AKAME_MURASAME_ABILITY_G
+    else if hero.getTypeId() == 'H00G' // Rogue
+        SPELL_Q[id] = 'A031'
+        SPELL_W[id] = 'A032'
+        SPELL_E[id] = 'A036'
+        SPELL_R[id] = 'A037'
+        SPELL_T[id] = 'A035'
+        SPELL_F[id] = 'A038'
+        SPELL_G[id] = 'A033'
+    else if hero.getTypeId() == RORONOA_ZORO // Zoro
+        SPELL_Q[id] = 'A0FN'
+        SPELL_W[id] = 'A0FP'
+        SPELL_E[id] = 'A0FT'
+        SPELL_R[id] = 'A0FQ'
+        SPELL_T[id] = 'A0FR'
+        SPELL_F[id] = 'A0FS'
+        SPELL_G[id] = RORONOA_ZORO_ABILITY_G
+    else if hero.getTypeId() == SABO // Sabo
+        SPELL_Q[id] = 'A0FW'
+        SPELL_W[id] = 'A0FX'
+        SPELL_E[id] = 'A0G1'
+        SPELL_R[id] = 'A0FY'
+        SPELL_T[id] = 'A0FZ'
+        SPELL_F[id] = 'A0G0'
+        SPELL_G[id] = BURNDOT_SABO
+    else if hero.getTypeId() == SASUKE_ADULT // Sasuke Last
+        SPELL_Q[id] = 'A0MP'
+        SPELL_Q2[id] = 'A0MR'
+        SPELL_W[id] = 'A0MQ'
+        SPELL_E[id] = 'A0NQ'
+        SPELL_R[id] = 'A0MT'
+        SPELL_T[id] = SASUKE_ADULT_T
+        SPELL_F[id] = 'A15A'
+        SPELL_G[id] = SASUKE_ADULT_ABILITY_G
+        SPELL_MODO_Q[id] = 'A0MX'
+        SPELL_MODO_W[id] = 'A0MY'
+        SPELL_MODO_E[id] = 'A0N0'
+        SPELL_MODO_R[id] = 'A0MZ'
+    else if hero.getTypeId() == 'H00W' // Rentaro Old
+        SPELL_Q[id] = 'A08V'
+        SPELL_W[id] = 'A094'
+        SPELL_E[id] = 'A098'
+        SPELL_R[id] = 'A096'
+        SPELL_T[id] = 'A08S'
+        SPELL_F[id] = 'A097'
+        SPELL_G[id] = 'A0H7'
+    else if hero.getTypeId() == 'H03A' // Rentaro New
+        SPELL_Q[id] = 'A0U0'
+        SPELL_W[id] = 'A0U1'
+        SPELL_E[id] = 'A0U2'
+        SPELL_R[id] = 'A0U4'
+        SPELL_T[id] = 'A0U5'
+        SPELL_F[id] = 'A0U6'
+        SPELL_G[id] = 'A0UF'
+    else if hero.getTypeId() == 'H02Q' // Scathach
+        SPELL_Q[id] = 'A11O'
+        SPELL_W[id] = 'A11M'
+        SPELL_E[id] = 'A11P'
+        SPELL_R[id] = 'A11N'
+        SPELL_T[id] = 'A11L'
+        SPELL_F[id] = 'A11R'
+        SPELL_G[id] = 'A16H'
+    else if hero.getTypeId() == 'H02T' // Semiramis
+        SPELL_Q[id] = 'A0U7'
+        SPELL_W[id] = 'A0U8'
+        SPELL_E[id] = 'A177'
+        SPELL_R[id] = 'A0U9'
+        SPELL_T[id] = 'A0UC'
+        SPELL_F[id] = 'A0UA'
+        SPELL_G[id] = 'A0UD'
+    else if hero.getTypeId() == 'H03E' // Kiara
+        SPELL_Q[id] = 'A0V6'
+        SPELL_W[id] = 'A0V7'
+        SPELL_E[id] = 'A0VG'
+        SPELL_R[id] = 'A0V8'
+        SPELL_T[id] = 'A0V9'
+        SPELL_F[id] = 'A0VA'
+        SPELL_G[id] = 'A0VF'
+    else if hero.getTypeId() == 'H01B' // Shaltear
+        SPELL_Q[id] = 'A0D6'
+        SPELL_W[id] = 'A0FO'
+        SPELL_E[id] = 'A0GY'
+        SPELL_R[id] = 'A0D9'
+        SPELL_T[id] = 'A19C' //A05U
+        SPELL_F[id] = 'A0H4'
+        SPELL_G[id] = 'A05J'
+        SPELL_MODO_Q[id] = 'A0GC'
+        SPELL_MODO_W[id] = 'A0GL'
+        SPELL_MODO_E[id] = 'A0H1'
+        SPELL_MODO_R[id] = 'A0H2'
+        SPELL_MODO_G[id] = 'A0H0'
+    else if hero.getTypeId() == 'H007' // Shana Old
+        SPELL_Q[id] = 'A017'
+        SPELL_W[id] = 'A01C'
+        SPELL_E[id] = 'A0IZ'
+        SPELL_R[id] = 'A01B'
+        SPELL_T[id] = 'A05M'
+        SPELL_F[id] = 'A016'
+        SPELL_G[id] = 'A02J'
+    else if hero.getTypeId() == 'H020' // Shana New
+        SPELL_Q[id] = 'A0JE'
+        SPELL_W[id] = 'A0JV'
+        SPELL_E[id] = 'A0JT'
+        SPELL_R[id] = 'A0JI'
+        SPELL_T[id] = 'A0JW'
+        SPELL_F[id] = 'A0JY'
+        SPELL_G[id] = 'A0JZ'
+    else if hero.getTypeId() == 'H017' // Shelia
+        SPELL_Q[id] = 'A0DC'
+        SPELL_W[id] = 'A0DD'
+        SPELL_E[id] = 'A0AC'
+        SPELL_R[id] = 'A0DE'
+        SPELL_T[id] = 'A0DF'
+        SPELL_F[id] = 'A015'
+        SPELL_G[id] = 'A0DG'
+    else if hero.getTypeId() == 'H03F' // Miyuki
+        SPELL_Q[id] = 'A0VH'
+        SPELL_W[id] = 'A0VJ'
+        SPELL_E[id] = 'A176'
+        SPELL_R[id] = 'A0VK'
+        SPELL_T[id] = 'A0VI'
+        SPELL_F[id] = 'A0VL'
+        SPELL_G[id] = 'A0VM'
+    else if hero.getTypeId() == 'H01E' // Nanaya
+        SPELL_Q[id] = 'A0EI'
+        SPELL_W[id] = 'A0EJ'
+        SPELL_E[id] = 'A175'
+        SPELL_R[id] = 'A0YB'
+        SPELL_T[id] = 'A0EL'
+        SPELL_F[id] = 'A0YA'
+        SPELL_G[id] = 'A18K'
+    else if hero.getTypeId() == 'H03S' // Nanaya White
+        SPELL_Q[id] = 'A0Y2'
+        SPELL_W[id] = 'A0Y3'
+        SPELL_E[id] = 'A175'
+        SPELL_R[id] = 'A0Y4'
+        SPELL_T[id] = 'A0Y5'
+        SPELL_F[id] = 'A0Y6'
+        SPELL_G[id] = 'A18L'
+    else if hero.getTypeId() == 'H00H' // Madoka
+        SPELL_Q[id] = 'A0JF'
+        SPELL_W[id] = 'A0JG'
+        SPELL_E[id] = 'A0JS'
+        SPELL_R[id] = 'A0JH'
+        SPELL_T[id] = 'A0JK'
+        SPELL_F[id] = 'A0JQ'
+        SPELL_G[id] = 'A16G'
+    else if hero.getTypeId() == 'H03X' // Shizuo
+        SPELL_Q[id] = 'A0Z7'
+        SPELL_W[id] = 'A0Z8'
+        SPELL_E[id] = 'A174'
+        SPELL_R[id] = 'A0Z9'
+        SPELL_T[id] = 'A0ZA'
+        SPELL_F[id] = 'A0ZC'
+        SPELL_G[id] = '_'
+    else if hero.getTypeId() == 'H043' // Sistina
+        SPELL_Q[id] = 'A0BT'
+        SPELL_W[id] = 'A103'
+        SPELL_E[id] = 'A105'
+        SPELL_R[id] = 'A102'
+        SPELL_T[id] = 'A104'
+        SPELL_F[id] = 'A107'
+        SPELL_G[id] = 'A106'
+    else if hero.getTypeId() == 'H01O' // Mukuro
+        SPELL_Q[id] = 'A0GM'
+        SPELL_W[id] = 'A0GN'
+        SPELL_E[id] = 'A171'
+        SPELL_R[id] = 'A0GO'
+        SPELL_T[id] = 'A09T'
+        SPELL_F[id] = 'A0GP'
+        SPELL_G[id] = '_'
+    else if hero.getTypeId() == 'H022' // Youmu
+        SPELL_Q[id] = 'A0KA'
+        SPELL_W[id] = 'A0KC'
+        SPELL_E[id] = 'A0KF'
+        SPELL_R[id] = 'A0K9'
+        SPELL_T[id] = 'A0KB'
+        SPELL_F[id] = 'A0KD'
+        SPELL_G[id] = 'A16F'
+    else if hero.getTypeId() == 'H009' // Sting
+        SPELL_Q[id] = 'A018'
+        SPELL_W[id] = 'A01D'
+        SPELL_E[id] = 'A01E'
+        SPELL_R[id] = 'A01G' 
+        SPELL_T[id] = 'A19H' //A0IU
+        SPELL_F[id] = 'A01H'
+        SPELL_G[id] = 'A01F'
+        SPELL_MODO_Q[id] = 'A0IX'
+        SPELL_MODO_W[id] = 'A0IY'
+        SPELL_MODO_E[id] = 'A05N'
+        SPELL_MODO_R[id] = 'A0IW'
+        SPELL_MODO_G[id] = 'A0IV'
+    else if hero.getTypeId() == 'H013' // Goku
+        SPELL_Q[id] = 'A057'
+        SPELL_W[id] = 'A0SC'
+        SPELL_E[id] = 'A0SI'
+        SPELL_R[id] = 'A0SE'
+        SPELL_R2[id] = 'A0SF'        
+        SPELL_T[id] = 'A0SD'
+        SPELL_F[id] = 'A0SH'
+        SPELL_G[id] = 'A0SG'
+    else if hero.getTypeId() == 'H03H' // Nanoha
+        SPELL_Q[id] = 'A0VX'
+        SPELL_W[id] = 'A0VY'
+        SPELL_E[id] = 'A0W0'
+        SPELL_R[id] = 'A0VZ'
+        SPELL_T[id] = 'A0W1'
+        SPELL_F[id] = 'A0W2'
+        SPELL_G[id] = '_'
+    else if hero.getTypeId() == 'H03J' // Tatsuya
+        SPELL_Q[id] = 'A0W5'
+        SPELL_W[id] = 'A0W6'
+        SPELL_E[id] = 'A0WD'
+        SPELL_R[id] = 'A0W8'
+        SPELL_R2[id] = 'A0W9'
+        SPELL_R3[id] = 'A0WA'
+        SPELL_T[id] = 'A0W7'
+        SPELL_F[id] = 'A0WB'
+        SPELL_F2[id] = 'A0WC'
+        SPELL_G[id] = '_'
+    else if hero.getTypeId() == 'H01S' // Tohno
+        SPELL_Q[id] = 'A0HR'
+        SPELL_W[id] = 'A0HS'
+        SPELL_E[id] = 'A0HV'
+        SPELL_R[id] = 'A0HT'
+        SPELL_T[id] = 'A0HQ'
+        SPELL_F[id] = 'A0Y9'
+        SPELL_G[id] = 'A18M'
+    else if hero.getTypeId() == 'H016' // Rin
+        SPELL_Q[id] = 'A0HZ'
+        SPELL_W[id] = 'A0I0'
+        SPELL_E[id] = 'A0I4'
+        SPELL_R[id] = 'A0I1'
+        SPELL_T[id] = 'A0I2'
+        SPELL_F[id] = 'A0I3'
+        SPELL_G[id] = '_'
+    else if hero.getTypeId() == 'H00D' // Kurumi
+        SPELL_Q[id] = 'A04C'
+        SPELL_W[id] = 'A021'
+        SPELL_E[id] = 'A025'
+        SPELL_R[id] = 'A00C'
+        SPELL_T[id] = 'A024'
+        SPELL_F[id] = 'A026'
+        SPELL_G[id] = '_'
+    else if hero.getTypeId() == 'H028' // Law
+        SPELL_Q[id] = 'A0LR'
+        SPELL_W[id] = 'A0LS'
+        SPELL_E[id] = 'A0M2'
+        SPELL_R[id] = 'A0LT'
+        SPELL_T[id] = 'A0LV'
+        SPELL_F[id] = 'A0M0'
+        SPELL_G[id] = 'A0M1'
+        SPELL_Q2[id] = 'A0LX'
+        SPELL_W2[id] = 'A0LZ'
+        SPELL_E2[id] = 'A0LW'
+        SPELL_R2[id] = 'A0LY'
+    else if hero.getTypeId() == 'H00A' // Tsuna Old
+        SPELL_Q[id] = 'A01O'
+        SPELL_W[id] = 'A01Q'
+        SPELL_E[id] = 'A01R'
+        SPELL_R[id] = 'A01A'
+        SPELL_T[id] = 'A03Z'
+        SPELL_F[id] = 'A01Y'
+        SPELL_G[id] = 'A11Z'
+    else if hero.getTypeId() == 'H049' // Tsuna New
+        SPELL_Q[id] = 'A11T'
+        SPELL_W[id] = 'A11U'
+        SPELL_E[id] = 'A11V'
+        SPELL_R[id] = 'A11W'
+        SPELL_T[id] = 'A11S'
+        SPELL_F[id] = 'A11X'
+        SPELL_G[id] = 'A11Z'
+    else if hero.getTypeId() == ITACHI_EDO // Itachi
+        SPELL_Q[id] = 'A0FJ'
+        SPELL_W[id] = 'A0FK'
+        SPELL_E[id] = ITACHI_EDO_ABILITY_E
+        SPELL_R[id] = 'A0FI'
+        SPELL_T[id] = 'A0FG'
+        SPELL_F[id] = 'A0FL'
+        SPELL_G[id] = ITACHI_EDO_ABILITY_G
+    else if hero.getTypeId() == MADARA_NORMAL // Madara
+        SPELL_Q[id] = 'A099'
+        SPELL_W[id] = 'A09B'
+        SPELL_E[id] = MADARA_NORMAL_ABILITY_E
+        SPELL_R[id] = 'A0C3'
+        SPELL_T[id] = 'A09C'
+        SPELL_F[id] = 'A0AN'
+        SPELL_G[id] = MADARA_NORMAL_ABILITY_G
+    else if hero.getTypeId() == MADARA_EDO // Madara Edo
+        SPELL_Q[id] = 'A0XE'
+        SPELL_W[id] = 'A0XD'
+        SPELL_E[id] = MADARA_EDO_ABILITY_E
+        SPELL_R[id] = 'A0XG'
+        SPELL_T[id] = MADARA_EDO_T // A0XJ
+        SPELL_F[id] = 'A0XO'
+        SPELL_G[id] = MADARA_EDO_ABILITY_G
+        SPELL_MODO_Q[id] = 'A0XK'
+        SPELL_MODO_W[id] = 'A0XL'
+        SPELL_MODO_E[id] = 'A0XM'
+        SPELL_MODO_R[id] = 'A0XN'
+        SPELL_MODO_G[id] = 'A17T'
+    else if hero.getTypeId() == 'H01Q' // Ulquiorra
+        SPELL_Q[id] = 'A0HE'
+        SPELL_W[id] = 'A0HF'
+        SPELL_E[id] = 'A0HG'
+        SPELL_R[id] = 'A0HH'
+        SPELL_T[id] = 'A0HI'
+        SPELL_F[id] = 'A0HJ'
+        SPELL_G[id] = '_'
+    else if hero.getTypeId() == 'H03T' // Vergil
+        SPELL_Q[id] = 'A0EK'
+        SPELL_W[id] = 'A0EM'
+        SPELL_W2[id] = 'A0YC'
+        SPELL_E[id] = 'A0Y7'
+        SPELL_R[id] = 'A0WQ'
+        SPELL_R2[id] = 'A0YD'
+        SPELL_T[id] = 'A0HW'
+        SPELL_F[id] = 'A0YF'
+        SPELL_G[id] = 'A0YJ'
+    else if hero.getTypeId() == 'H006' // Wendy
+        SPELL_Q[id] = 'A00J'
+        SPELL_W[id] = 'A0BI'
+        SPELL_E[id] = 'A192' //A0XB
+        SPELL_R[id] = 'A00K'
+        SPELL_T[id] = 'A19I' //A0E7
+        SPELL_F[id] = 'A00R'
+        SPELL_G[id] = 'A01N'
+        SPELL_MODO_Q[id] = 'A0E8'
+        SPELL_MODO_W[id] = 'A0E9'
+        SPELL_MODO_E[id] = 'A0EB'
+        SPELL_MODO_R[id] = 'A0EC'
+        SPELL_MODO_G[id] = 'A0ED'
+    else if hero.getTypeId() == 'H035' // Xanxus
+        SPELL_Q[id] = 'A019'
+        SPELL_W[id] = 'A0AV'
+        SPELL_E[id] = 'A16Y'
+        SPELL_R[id] = 'A0AW'
+        SPELL_T[id] = 'A0AX'
+        SPELL_F[id] = 'A0AY'
+        SPELL_G[id] = 'A16D'
+    else if hero.getTypeId() == ENMA_AI // Enma
+        SPELL_Q[id] = 'A10P'
+        SPELL_W[id] = 'A10Q'
+        SPELL_E[id] = 'A16Z'
+        SPELL_R[id] = 'A10S'
+        SPELL_T[id] = 'A10U'
+        SPELL_F[id] = ENMA_AI_F
+        SPELL_G[id] = '_'
+    else if hero.getTypeId() == 'H029' // Yamamoto
+        SPELL_Q[id] = 'A0M3'
+        SPELL_Q2[id] = 'A0SJ'
+        SPELL_W[id] = 'A0M4'
+        SPELL_E[id] = 'A0ML'
+        SPELL_R[id] = 'A0M8'
+        SPELL_T[id] = 'A0M5'
+        SPELL_F[id] = 'A0M6'
+        SPELL_G[id] = 'A0MN'
+    else if hero.getTypeId() == 'H01M' // Yato
+        SPELL_Q[id] = 'A0BW'
+        SPELL_W[id] = 'A0BX'
+        SPELL_E[id] = 'A0B8'
+        SPELL_R[id] = 'A0BY'
+        SPELL_T[id] = 'A0BZ'
+        SPELL_F[id] = 'A02C'
+        SPELL_G[id] = 'A0C2'
+    else if hero.getTypeId() == 'H048' // Tohka New
+        SPELL_Q[id] = 'A11G'
+        SPELL_W[id] = 'A0G3'
+        SPELL_E[id] = 'A11H'
+        SPELL_R[id] = 'A11I'
+        SPELL_T[id] = 'A07N'
+        SPELL_F[id] = 'A11J'
+        SPELL_G[id] = 'A11K'
+    else if hero.getTypeId() == 'H010' // Tohka Old
+        SPELL_Q[id] = 'A09J'
+        SPELL_W[id] = 'A09K'
+        SPELL_E[id] = 'A16W'
+        SPELL_R[id] = 'A09L'
+        SPELL_T[id] = 'A09M'
+        SPELL_F[id] = 'A09N'
+        SPELL_G[id] = 'A09P'
+    else if hero.getTypeId() == 'H01U' // Zeref
+        SPELL_Q[id] = 'A0IC'
+        SPELL_W[id] = 'A0IG'
+        SPELL_E[id] = 'A0II'
+        SPELL_R[id] = 'A0IF'
+        SPELL_T[id] = 'A0IH'
+        SPELL_F[id] = 'A0IL'
+        SPELL_G[id] = 'A0IJ'
+    else if hero.getTypeId() == 'H032' // Waver
+        SPELL_Q[id] = 'A0RY'
+        SPELL_W[id] = 'A0RZ'
+        SPELL_E[id] = 'A170'
+        SPELL_R[id] = 'A0S0'
+        SPELL_T[id] = 'A0S1'
+        SPELL_F[id] = 'A0S4'
+        SPELL_G[id] = '_'
+    else if hero.getTypeId() == 'H039' // Momiji
+        SPELL_Q[id] = 'A0TT'
+        SPELL_W[id] = 'A0TU'
+        SPELL_E[id] = 'A16U'
+        SPELL_R[id] = 'A0TW'
+        SPELL_T[id] = 'A0TX'
+        SPELL_F[id] = 'A0TY'
+        SPELL_G[id] = 'A0UG'
+    else if hero.getTypeId() == NAGATO // Pein
+        SPELL_Q[id] = 'A119'
+        SPELL_W[id] = 'A118'
+        SPELL_E[id] = 'A11E'
+        SPELL_R[id] = 'A11A'
+        SPELL_T[id] = 'A11B'
+        SPELL_F[id] = 'A11D'
+        SPELL_G[id] = NAGATO_ABILITY_G
+    else if hero.getTypeId() == 'H026' // Kizaru
+        SPELL_Q[id] = 'A0LD'
+        SPELL_W[id] = 'A0LE'
+        SPELL_E[id] = 'A16T'
+        SPELL_R[id] = 'A0LF'
+        SPELL_T[id] = 'A0LG'
+        SPELL_F[id] = 'A0LI'
+        SPELL_G[id] = 'A15V'
+    else if hero.getTypeId() == 'H02G' // Ryougi Saber
+        SPELL_Q[id] = 'A0NO'
+        SPELL_W[id] = 'A0NP'
+        SPELL_E[id] = 'A16R'
+        SPELL_R[id] = 'A0PB'
+        SPELL_T[id] = 'A0MS'
+        SPELL_F[id] = 'A0NT'
+        SPELL_G[id] = 'A18O'
+    else if hero.getTypeId() == 'H033' // Ryougi Melty
+        SPELL_Q[id] = 'A0RF'
+        SPELL_W[id] = 'A0RG'
+        SPELL_E[id] = 'A16Q'
+        SPELL_R[id] = 'A0RH'
+        SPELL_T[id] = 'A0RI'
+        SPELL_F[id] = 'A0RJ'
+        SPELL_G[id] = 'A18N'
+    else if hero.getTypeId() == 'H00Z' // Ryougi Kimono
+        SPELL_Q[id] = 'A09S'
+        SPELL_W[id] = 'A0AO'
+        SPELL_E[id] = 'A0AT'
+        SPELL_R[id] = 'A0AR'
+        SPELL_T[id] = 'A0AQ'
+        SPELL_F[id] = 'A0AP'
+        SPELL_G[id] = 'A15Q'
+    else if hero.getTypeId() == 'H031' // Aqua
+        SPELL_Q[id] = 'A0R8'
+        SPELL_W[id] = 'A0R9'
+        SPELL_E[id] = 'A0RA'
+        SPELL_R[id] = 'A0RB'
+        SPELL_T[id] = 'A0RC'
+        SPELL_F[id] = 'A0RD'
+        SPELL_F2[id] = 'A0S5'
+        SPELL_G[id] = 'A0RE'
+    else if hero.getTypeId() == 'H02Z' // Nobunaga
+        SPELL_Q[id] = 'A0R1'
+        SPELL_W[id] = 'A0R2'
+        SPELL_E[id] = 'A0R7'
+        SPELL_R[id] = 'A0R3'
+        SPELL_T[id] = 'A0R4'
+        SPELL_F[id] = 'A0R5'
+        SPELL_G[id] = 'A0R6'
+    else if hero.getTypeId() == MISOGI_THAI // Misogi thai
+        SPELL_Q[id] = MISOGI_THAI_Q
+        SPELL_W[id] = MISOGI_THAI_W
+        SPELL_E[id] = MISOGI_THAI_E
+        SPELL_R[id] = MISOGI_THAI_R
+        SPELL_T[id] = MISOGI_THAI_T
+        SPELL_F[id] = MISOGI_THAI_F
+        SPELL_G[id] = 'A18T'    
+    else if hero.getTypeId() == 'C002' // Nanaya (str)
+        SPELL_Q[id] = 'A0R1'
+        SPELL_W[id] = 'A0R2'
+        SPELL_E[id] = 'A0R7'
+        SPELL_R[id] = 'A0R3'
+        SPELL_T[id] = 'A0R4'
+        SPELL_F[id] = 'A0R5'
+        SPELL_G[id] = 'A0R6'
+    else if hero.getTypeId() == 'C001' // Ryougi Saber (int)
+        SPELL_Q[id] = 'A0R1'
+        SPELL_W[id] = 'A0R2'
+        SPELL_E[id] = 'A0R7'
+        SPELL_R[id] = 'A0R3'
+        SPELL_T[id] = 'A0R4'
+        SPELL_F[id] = 'A0R5'
+        SPELL_G[id] = 'A0R6'        
+    updateTooltipsInit_Base(hero)

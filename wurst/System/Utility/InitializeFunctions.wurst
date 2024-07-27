@@ -1,0 +1,281 @@
+package InitializeFunctions
+// import ClosureTimers
+import WaveSystem
+import BountySystem
+import ObjectDefinitions
+import UpdateTooltips
+import AbilityClassifications
+import UpdateLearningTooltips
+import RUID
+import Scoreboard
+import GoldIncome
+import ClosureTimers
+import QuestItems
+import MusicPlaylist
+import ExperienceDistribution
+import SoundFunctions
+import ACR_Library
+import AbilityGlobals
+import ACR_TagSystem
+import CameraFunctions
+import ACR_SpeedBoost
+
+import Aqua_G
+import Natsu_G
+import Natsu_TG
+import Yato_G
+import Yamamoto_G
+import Kotori_G
+import Ace_G
+import Sabo_G
+import InuyashaAttack_Orig
+import Akame_G
+import Levi_G
+import Neptune_G
+import Nura_G
+import Noire_G
+import KiritoNew_G
+import Himeragi_G
+import Hibari_G
+import Gray_G
+import KiritoOld_G
+import S_Natsu_G
+import Natsu_E
+import Shana_New_E
+import Cobra_G
+import Sasuke_Young_E
+import Luffy_G
+import Luffy_E
+import MashKyrielight_G
+import GajeelRedfox_G
+import SaberStrength_G
+import DioBrando_G
+import Semiramis_G
+import Shalltear_G
+import Abigal_G
+import Sistine_F
+import Akame_F
+import Tohno_G
+import Nanaya_Normal_G
+import Nanaya_White_G
+import Ryougi_Melty_G
+import Ryougi_Saber_G
+import Jack_F
+import Aizen_F
+import IchigoStrength_R
+import IchigoStrength_E
+import Byakuran_F
+import Kenjiro_F
+import Wendy_E
+import N_Minato_E
+import Tohno_F
+import Nanaya_Normal_F
+import Ryougi_Kimono_T
+import Ryougi_Kimono_G
+/*
+
+    - Iniitalize functions after the game has started, when most data is "valid" such as udg_Playhero
+
+*/
+init
+
+public function initFunctions ()
+    BlzChangeMinimapTerrainTex("MinimapPreview.blp")
+    firstWave()
+    bountySystemSetup()
+    // acrAntiCheat()
+    BlzFrameSetVisible(BlzGetFrameByName("ConsoleUIBackdrop",0), true)
+    BlzHideOriginFrames(false)
+    moonUI()
+    acrSpeedBoostBase()
+    scoreboardMain()
+    scoreboardTab()
+    scoreboardValues()
+    goldIncome()
+    goldIncomeShared()
+    expDistr()
+    bgmList()
+    killSoundDatabase()
+    killSounds()
+    bgmExceptionList()
+    createQuest()
+    acrCooldownTracker()
+    doAfter(0.1) -> 
+        BlzFrameSetVisible(BlzFrameGetChild(BlzFrameGetChild(BlzGetOriginFrame(ORIGIN_FRAME_GAME_UI, 0), 5),0), false)
+        MultiboardSuppressDisplay(true)
+
+    // ---- Hero G's ---- \\
+    for i = 0 to 12
+        if udg_PlayHero[i] != null
+            doAfter(0.1) -> 
+                setTooltipTitleAll(udg_PlayHero[i])
+                acrCamera(udg_PlayHero[i])    
+            Player(i)..select(udg_PlayHero[i])..panCameraToTimed(udg_PlayHero[i].getPos(), 1)
+
+        if udg_PlayHero[i] != null
+            doAfter(0.05) ->
+                if not udg_PlayHero[i].hasAbility('A18V')
+                    udg_PlayHero[i].addAbility('A18V')
+                    udg_PlayHero[i].makeAbilityPermanent('A18V', true)
+                let id = udg_PlayHero[i].getOwner().getId()
+                udg_PlayHero[i].addAbility(SPELL_F[id])
+                udg_PlayHero[i].makeAbilityPermanent(SPELL_F[id], true)
+                if SPELL_F[id].hasTagHidden() == false
+                    SPELL_F[id].addTagHidden()
+                    udg_PlayHero[i].hideAbility(SPELL_F[id], true)
+                if udg_PlayHero[i].getTypeId() == 'H02M'
+                    udg_PlayHero[i].addAbility(SPELL_F2[id])
+                    udg_PlayHero[i].makeAbilityPermanent(SPELL_F2[id], true)
+                    if SPELL_F2[id].hasTagHidden() == false
+                        udg_PlayHero[i].hideAbility(SPELL_F2[id], true)
+                        SPELL_F2[id].addTagHidden()
+
+               
+        if udg_PlayHero[i].isModeHeroBase()
+            updateTooltipsInit_Mode(udg_PlayHero[i])
+            updateTooltipsOnceInit_Mode(udg_PlayHero[i])
+
+        if udg_PlayHero[i] != null
+            addAbilities(udg_PlayHero[i])
+            udg_PlayHero[i].updateLearningTooltips()
+
+        if udg_PlayHero[i].getTypeId() == AKAME_MURASAME
+            enhancedAttacksAkame(udg_PlayHero[i])
+            akameF()
+
+        if udg_PlayHero[i].getTypeId() == LEVI_ACKERMAN
+            enhancedAttacksLevi(udg_PlayHero[i])
+
+        if udg_PlayHero[i].getTypeId() == 'H001'
+            natsuG()    
+            natsuTG()
+            natsuE()     
+        if udg_PlayHero[i].getTypeId() == 'H020'
+            shanaNewE()           
+
+        if udg_PlayHero[i].getTypeId() == 'H006'
+            wendyE()  
+
+        if udg_PlayHero[i].getTypeId() == 'H00M'
+            minatoE()    
+
+        if udg_PlayHero[i].getTypeId() == 'H023'
+            byakuranF() 
+
+        if udg_PlayHero[i].getTypeId() == 'H01S'
+            tohnoF()  
+            tohnoG()
+
+        if udg_PlayHero[i].getTypeId() == 'H00Z'
+            ryougiKimonoT()  
+            ryougiKimonoG()            
+
+        if udg_PlayHero[i].getTypeId() == 'H01E'
+            nanayaNormalF() 
+            nanayaNormalG()                 
+
+        if udg_PlayHero[i].getTypeId() == 'H03Z'
+            kenjiroF() 
+
+        if udg_PlayHero[i].getTypeId() == 'H043'
+            sistineF()  
+
+        if udg_PlayHero[i].getTypeId() == 'H02K'
+            jackF()               
+
+        if udg_PlayHero[i].getTypeId() == 'H01R'
+            aizenF() 
+
+        if udg_PlayHero[i].getTypeId() == SASUKE_YOUNG
+            sasukeYoungE()                    
+
+        if udg_PlayHero[i].getTypeId() == ICHIGO_STRENGTH
+            ichigoStrR()
+            ichigoStrE()
+
+        if udg_PlayHero[i].hasAbility('B06D')
+            meltyRyougiG()     
+
+        if udg_PlayHero[i].hasAbility('B06E')
+            saberRyougiG()                                       
+ 
+        if udg_PlayHero[i].hasAbility('B06B')
+            nanayaWhiteG()    
+   
+        if udg_PlayHero[i].hasAbility('A0MN')
+            yamamotoG()
+   
+        if udg_PlayHero[i].hasAbility('A180')
+            grayG()     
+  
+        if udg_PlayHero[i].hasAbility('A182')
+            kiritoOldG()                                         
+   
+        if udg_PlayHero[i].hasAbility('A17B')
+            neptuneG()     
+   
+        if udg_PlayHero[i].hasAbility('A178')
+            kiritoNewG()
+   
+        if udg_PlayHero[i].hasAbility('A17Y')
+            himeragiG()     
+   
+        if udg_PlayHero[i].hasAbility('A17Z')
+            hibariG()                      
+    
+        if udg_PlayHero[i].hasAbility('A17X')
+            noireG()     
+        if udg_PlayHero[i].hasAbility('A17W')
+    
+            nuraG()                                                        
+        if udg_PlayHero[i].hasAbility('A0RE')
+            aquaG2()
+    
+        if udg_PlayHero[i].hasAbility('A0C2')
+            yatoG()    
+     
+        if udg_PlayHero[i].hasAbility('A184')
+            snatsuG()
+    
+        if udg_PlayHero[i].hasAbility('A18E')
+            semiramisG()
+   
+        if udg_PlayHero[i].hasAbility('A05J')
+            shaltearG()  
+   
+        if udg_PlayHero[i].hasAbility('A18G')
+            abigailG()                                                                                                          
+   
+        if udg_PlayHero[i].hasAbility(BURNDOT_ITSUKA_KOTORI)
+            kotoriG()
+   
+        if udg_PlayHero[i].hasAbility(BURNDOT_PORTGASD_ACE)
+            aceG()
+   
+        if udg_PlayHero[i].hasAbility(BURNDOT_SABO)
+            saboG()
+ 
+        if udg_PlayHero[i].hasAbility(POISONDOT_COBRA)
+            cobraG()                    
+ 
+        if udg_PlayHero[i].hasAbility('A0O4')
+            initTrig_InuyashaAttack_Orig()
+  
+        if udg_PlayHero[i].getTypeId() == MONKEYD_LUFFY
+            luffyG()
+            luffyE()
+  
+        if udg_PlayHero[i].getTypeId() == GAJEEL_REDFOX
+            gajeelG()
+    
+        if udg_PlayHero[i].getTypeId() == MASHU_KYRIELIGHT
+            mashG()
+    
+        if udg_PlayHero[i].getTypeId() == DIO_BRANDO
+            dioG()
+    
+        if udg_PlayHero[i].getTypeId() == ARTURIA_STRENGTH
+            saberStrG()
+ 
+    doAfter(3) -> 
+        updateSelect()

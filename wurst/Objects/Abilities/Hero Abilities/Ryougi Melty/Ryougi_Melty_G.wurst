@@ -1,0 +1,17 @@
+package Ryougi_Melty_G
+
+import ClosureEvents
+init
+
+public function meltyRyougiG ()
+    EventListener.add(EVENT_PLAYER_UNIT_DAMAGED) -> 
+        if BlzGetEventDamageTarget().hasAbility('B06D')
+            let dmgValue = GetEventDamage()
+            let attacker = GetEventDamageSource()
+            let ryougi = BlzGetEventDamageTarget()
+            if BlzGetEventAttackType() == ATTACK_TYPE_HERO and GetEventDamageSource().isType(UNIT_TYPE_HERO)
+                let reflect = (dmgValue * 0.35)
+                ryougi.damageTarget(attacker, reflect, ATTACK_TYPE_MAGIC)
+            else if not GetEventDamageSource().isType(UNIT_TYPE_HERO)
+                let reflect = (dmgValue * 1.5)
+                ryougi.damageTarget(attacker, reflect, ATTACK_TYPE_MAGIC)          

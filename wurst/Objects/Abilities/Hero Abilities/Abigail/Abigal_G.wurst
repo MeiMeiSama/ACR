@@ -1,0 +1,21 @@
+package Abigal_G
+
+import ClosureEvents
+
+        
+
+public function abigailG()
+
+    EventListener.add(EVENT_PLAYER_UNIT_DEATH) ->
+
+        if GetKillingUnit().getTypeId() == 'H03C'
+            let caster = GetKillingUnit()
+            let heroheal = caster.getMaxHP() * 0.30
+            let mobheal = caster.getMaxHP() * 0.03
+            if GetDyingUnit().isType(UNIT_TYPE_HERO)
+                caster.addHP(heroheal)
+                flashEffect("HealBuff.mdx", caster, "origin") 
+            else
+                caster.addHP(mobheal)
+                flashEffect("HealBuff.mdx", caster, "origin")     
+                

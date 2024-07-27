@@ -1,0 +1,14 @@
+package InuyashaAttack_Orig
+
+function trig_InuyashaAttackActions()
+    if IsUnitType(GetEventDamageSource(), UNIT_TYPE_HERO) == true and IsUnitType(BlzGetEventDamageTarget(), UNIT_TYPE_STRUCTURE) == false and UnitHasBuffBJ(GetEventDamageSource(), 'B044') == true and GetUnitTypeId(GetEventDamageSource()) == 'H02J'
+        let inuyasha = GetEventDamageSource()
+        let target = BlzGetEventDamageTarget()
+        let abillvl = GetUnitAbilityLevel(inuyasha, 'A0O3')
+        let manadrain = (GetUnitState(target, UNIT_STATE_MAX_MANA) * (abillvl * 0.008))
+        SetUnitState(target, UNIT_STATE_MANA, GetUnitState(target, UNIT_STATE_MANA) - manadrain)
+
+public function initTrig_InuyashaAttack_Orig()
+    gg_trg_InuyashaAttack = CreateTrigger()
+    TriggerRegisterAnyUnitEventBJ(gg_trg_InuyashaAttack, EVENT_PLAYER_UNIT_DAMAGED)
+    TriggerAddAction(gg_trg_InuyashaAttack, function trig_InuyashaAttackActions)

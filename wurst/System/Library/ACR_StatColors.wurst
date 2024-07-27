@@ -1,0 +1,13 @@
+package ACR_StatColors
+
+import AbilityGlobals
+
+public function unit.getStatColor () returns string
+    var stat_color = "|cffffffff"
+    if BlzGetUnitIntegerField(this, UNIT_IF_PRIMARY_ATTRIBUTE) == 1 // Strength
+        stat_color = RED
+    else if BlzGetUnitIntegerField(this, UNIT_IF_PRIMARY_ATTRIBUTE) == 2 // Intellect
+        stat_color = BLUE
+    else if BlzGetUnitIntegerField(this, UNIT_IF_PRIMARY_ATTRIBUTE) == 3 // Agility
+        stat_color = GREEN
+    return stat_color

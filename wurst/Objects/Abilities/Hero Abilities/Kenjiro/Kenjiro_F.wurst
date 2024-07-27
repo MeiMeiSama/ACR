@@ -1,0 +1,32 @@
+package Kenjiro_F
+
+import ClosureEvents
+import ClosureTimers
+import ACR_TagSystem
+int kenjiroFCount = 0
+
+public function kenjiroF ()
+    let abilityF = 'A0ZO'
+    let buffF = 'B05M'
+
+    EventListener.onCast(abilityF) (unit caster) ->
+        kenjiroFCount = 0
+        caster.disableAbility(abilityF, true, false)
+        abilityF.addTagDisabled()
+        caster.issueImmediateOrder("stop")
+        doPeriodically(0.03) (CallbackPeriodic cb) ->
+            if caster.isPaused() == false
+                kenjiroFCount++
+ 
+            if caster.hasAbility(buffF) == false
+                caster.disableAbility(abilityF, false, false)
+                abilityF.removeTagDisabled()
+                caster.startAbilityCooldown(abilityF)
+                destroy cb
+
+            if kenjiroFCount == 100
+                caster.removeAbility(buffF)
+                caster.disableAbility(abilityF, false, false)
+                abilityF.removeTagDisabled()
+                caster.startAbilityCooldown(abilityF)
+                destroy cb

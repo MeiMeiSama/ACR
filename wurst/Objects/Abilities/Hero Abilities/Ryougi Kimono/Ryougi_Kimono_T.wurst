@@ -1,0 +1,32 @@
+package Ryougi_Kimono_T
+
+import ClosureEvents
+import ClosureTimers
+import ACR_TagSystem
+int ryougiKimonoTCount = 0
+
+public function ryougiKimonoT()
+    let abilityT = 'A0AQ'
+    let buffT = 'B03A'
+
+    EventListener.onCast(abilityT) (unit caster) ->
+        ryougiKimonoTCount = 0
+        caster.disableAbility(abilityT, true, false)
+        abilityT.addTagDisabled()
+        caster.issueImmediateOrder("stop")
+        doPeriodically(0.03) (CallbackPeriodic cb) ->
+            if caster.isPaused() == false
+                ryougiKimonoTCount++
+ 
+            if caster.hasAbility(buffT) == false
+                caster.disableAbility(abilityT, false, false)
+                abilityT.removeTagDisabled()
+                caster.startAbilityCooldown(abilityT)
+                destroy cb
+
+            if ryougiKimonoTCount == 100
+                caster.removeAbility(buffT)
+                caster.disableAbility(abilityT, false, false)
+                abilityT.removeTagDisabled()
+                caster.startAbilityCooldown(abilityT)
+                destroy cb

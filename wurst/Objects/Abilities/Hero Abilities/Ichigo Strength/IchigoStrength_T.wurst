@@ -1,0 +1,101 @@
+package IchigoStrength_T
+import ClosureTimers
+import main
+import MusicPlaylist
+import ObjectDefinitions
+// import AbilityGlobals
+// import ACR_TagSystem
+import ACR_Library
+// import Translate_F
+// import UpdateAbilityData
+
+init
+    ichigoModoT()
+
+function ichigoModoT()
+
+    CreateTrigger()
+    ..registerAnyUnitEvent(EVENT_PLAYER_UNIT_SPELL_EFFECT)
+    ..addAction() ->
+        if ((GetSpellAbilityId() == ICHIGO_STRENGTH_T)) 
+            let caster = GetTriggerUnit()
+            let pid = caster.getOwner().getId()
+            let ichigoStrE = 'A0X9'
+            let ichigoStrELvl = caster.getAbilityLevel(ichigoStrE)
+            caster.removeAbility(ichigoStrE)
+            caster.removeAbility('B058')            
+            stopBgm()
+            StopMusic(false)
+            PlaySoundBJ(gg_snd_IchigoBGM)                
+            acrTransformation(caster, 40, ICHIGO_STRENGTH, ICHIGO_STRENGTH_MODO, 850, 4.0)
+            doPeriodically(0.01) (CallbackPeriodic cb) ->
+                if transformationActive[pid] == false
+                    caster.addAbility(ichigoStrE)
+                    caster.setAbilityLevel(ichigoStrE, ichigoStrELvl)
+                    if gg_snd_IchigoBGM.isPlaying()
+                        gg_snd_IchigoBGM.stop(false, false) 
+                    destroy cb
+
+
+
+
+// function ichigoModoT()
+//     CreateTrigger()
+//     ..registerAnyUnitEvent(EVENT_PLAYER_UNIT_SPELL_EFFECT)
+//     ..addAction() ->
+//         if ((GetSpellAbilityId() == ICHIGO_STRENGTH_T))
+//             ichigoTactive = true
+//             let caster = GetTriggerUnit()
+//             let pid = caster.getOwner().getId()
+//             let ichigoStrE = 'A0X9'
+//             let ichigoStrELvl = caster.getAbilityLevel(ichigoStrE)
+//             stopBgm()
+//             StopMusic(false)
+//             PlaySoundBJ(gg_snd_IchigoBGM)
+//             caster.removeAbility(ichigoStrE)
+//             caster.removeAbility('B058')        
+//             caster.hideAbility(SPELL_Q[pid], true)
+//             SPELL_Q[pid].addTagHidden()
+//             caster.hideAbility(SPELL_W[pid], true)
+//             SPELL_W[pid].addTagHidden()
+//             caster.hideAbility(SPELL_E[pid], true)
+//             SPELL_E[pid].addTagHidden()
+//             caster.hideAbility(SPELL_R[pid], true)
+//             SPELL_R[pid].addTagHidden() 
+//             caster.hideAbility(SPELL_T[pid], true)
+//             SPELL_T[pid].addTagHidden()                            
+
+//             doPeriodically(0.003) (CallbackPeriodic cb) ->
+//                 if ichigoTactive == true
+//                     if (((IsUnitDeadBJ(caster) == true) or (UnitHasBuffBJ(caster,'B057') == false)))
+//                         ichigoTactive = false
+//                         if gg_snd_IchigoBGM.isPlaying()
+//                             gg_snd_IchigoBGM.stop(false, false)  
+//                         if caster.hasTagPauseEX() == false
+//                             caster.issueImmediateOrder("stop")
+//                             caster.pauseEx()
+//                             caster.addTagPauseEX()    
+//                         doAfter(0.003) -> 
+//                             if SPELL_Q[pid].hasTagHidden()                        
+//                                 caster.hideAbility(SPELL_Q[pid], false)
+//                                 SPELL_Q[pid].removeTagHidden()
+//                             if SPELL_W[pid].hasTagHidden()                        
+//                                 caster.hideAbility(SPELL_W[pid], false)
+//                                 SPELL_W[pid].removeTagHidden()
+//                             if SPELL_E[pid].hasTagHidden()                        
+//                                 caster.hideAbility(SPELL_E[pid], false)
+//                                 SPELL_E[pid].removeTagHidden()
+//                                 caster.addAbility(ichigoStrE)
+//                                 caster.setAbilityLevel(ichigoStrE, ichigoStrELvl) 
+//                             if SPELL_R[pid].hasTagHidden()                        
+//                                 caster.hideAbility(SPELL_R[pid], false)
+//                                 SPELL_R[pid].removeTagHidden() 
+//                             if SPELL_T[pid].hasTagHidden() 
+//                                 caster.hideAbility(SPELL_T[pid], false)
+//                                 SPELL_T[pid].removeTagHidden()
+//                                 caster.startAbilityCooldown(SPELL_T[pid])
+//                                 acrCooldownT[pid] = 60.00   
+//                             if caster.hasTagPauseEX()    
+//                                 caster.unpauseEx()
+//                                 caster.removeTagPauseEX()                                   
+//                         destroy cb

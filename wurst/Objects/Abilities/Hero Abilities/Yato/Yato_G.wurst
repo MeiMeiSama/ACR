@@ -1,0 +1,11 @@
+package Yato_G
+
+init
+            
+public function yatoG ()
+
+    for i = 0 to 12
+        let yato = udg_PlayHero[i]
+        if yato.getTypeId() == 'H01M'
+            let yatogold = yato.getOwner().getGold()
+            yato.getOwner().setGold(yatogold + 250)

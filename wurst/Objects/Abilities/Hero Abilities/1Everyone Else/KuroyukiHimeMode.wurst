@@ -1,0 +1,61 @@
+package KuroyukiHimeMode
+
+
+init
+    initTrig_KuroyukiHimeMode()
+
+function trig_KuroyukiHimeModeConditions() returns boolean
+    return GetSpellAbilityId() == 'A0J5'
+function trig_KuroyukiHimeModeFunc002Func001Func001Func006T()
+    if IsUnitDeadBJ(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594)) == true or UnitHasBuffBJ(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), 'B027') == false
+        UnitRemoveAbility(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), 'A0JC')
+        UnitRemoveAbility(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), 'A0JB')
+        UnitRemoveAbility(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), 'A0J8')
+function trig_KuroyukiHimeModeFunc002Func001Func007T()
+    if IsUnitDeadBJ(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594)) == true or UnitHasBuffBJ(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), 'B027') == false
+        UnitRemoveAbility(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), 'A0J9')
+        UnitRemoveAbility(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), 'A06I')
+        UnitRemoveAbility(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), 'A0AM')
+function trig_KuroyukiHimeModeFunc002Func006T()
+    if IsUnitDeadBJ(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594)) == true or UnitHasBuffBJ(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), 'B027') == false
+        UnitRemoveAbility(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), 'A0J6')
+        UnitRemoveAbility(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), 'A0J7')
+function trig_KuroyukiHimeModeActions()
+    timer _ydl_timer
+    integer trigger_ID = LoadInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 865)
+    trigger_ID += 3
+    SaveInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 865, trigger_ID)
+    SaveInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 1045, trigger_ID)
+    SaveUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594, GetTriggerUnit())
+    if udg_Kuroyukinteger == 1
+        udg_Kuroyukinteger = 2
+        PlaySoundBJ(gg_snd_modered)
+        UnitAddAbility(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594), 'A0J6')
+        UnitAddAbility(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594), 'A0J7')
+        _ydl_timer = CreateTimer()
+        SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 594, LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594))
+        TimerStart(_ydl_timer, 0.03, true, function trig_KuroyukiHimeModeFunc002Func006T)
+    else if udg_Kuroyukinteger == 2
+        udg_Kuroyukinteger = 3
+        PlaySoundBJ(gg_snd_modeblue)
+        UnitAddAbility(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594), 'A0AM')
+        UnitAddAbility(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594), 'A06I')
+        UnitAddAbility(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594), 'A0J9')
+        _ydl_timer = CreateTimer()
+        SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 594, LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594))
+        TimerStart(_ydl_timer, 0.03, true, function trig_KuroyukiHimeModeFunc002Func001Func007T)
+    else if udg_Kuroyukinteger == 3
+        udg_Kuroyukinteger = 1
+        PlaySoundBJ(gg_snd_modegreen)
+        UnitAddAbility(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594), 'A0J8')
+        UnitAddAbility(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594), 'A0JB')
+        UnitAddAbility(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594), 'A0JC')
+        _ydl_timer = CreateTimer()
+        SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 594, LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594))
+        TimerStart(_ydl_timer, 0.03, true, function trig_KuroyukiHimeModeFunc002Func001Func001Func006T)
+    FlushChildHashtable(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID)
+function initTrig_KuroyukiHimeMode()
+    gg_trg_KuroyukiHimeMode = CreateTrigger()
+    TriggerRegisterAnyUnitEventBJ(gg_trg_KuroyukiHimeMode, EVENT_PLAYER_UNIT_SPELL_EFFECT)
+    TriggerAddCondition(gg_trg_KuroyukiHimeMode, Condition(function trig_KuroyukiHimeModeConditions))
+    TriggerAddAction(gg_trg_KuroyukiHimeMode, function trig_KuroyukiHimeModeActions)

@@ -1,0 +1,18 @@
+package Za_Wardo
+
+import ClosureEvents
+
+init
+    zaWardoFunc()
+
+public function zaWardoFunc ()
+
+    EventListener.onCast('A18V') (unit caster) ->
+        let target = GetSpellTargetLoc()
+        let id = caster.getOwner()
+        let ward = CreateUnitAtLoc(id, 'oeye', target, 0)
+        UnitApplyTimedLifeBJ(30, 'B069', ward)
+        // new DummyCaster()
+        // ..owner(caster.getOwner())
+        // ..origin(ward.getPos())
+        // ..castTarget('Apiv', 1, OrderIds.invisibility, ward)

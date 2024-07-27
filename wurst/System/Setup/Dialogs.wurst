@@ -1,0 +1,123 @@
+package Dialogs
+import main
+import DialogBox
+import DraftScreen
+import ClosureTimers
+import wc3Stats
+init
+    doAfter(0.2) ->
+        draftTextArea()
+        dialog_chooseMode()
+
+function dialog_choosePoints (player p)
+    let choosePoints = new DialogBox("Required Points to Win")
+    choosePoints.addButton("30") ->
+        BlzFrameAddText(textArea, "|cff00a9ff[30 Points] |cffffd700Accumulate 30 points in total to Win|r")
+        choosePoints.display(GetTriggerPlayer(), false)
+        targetPoints = 30
+        draftSetup()
+        draftTimeSetup()
+        destroy choosePoints
+        
+    choosePoints.addButton("40") ->
+        BlzFrameAddText(textArea, "|cff00a9ff[40 Points] |cffffd700Accumulate 40 points in total to Win|r")
+        choosePoints.display(GetTriggerPlayer(), false)
+        targetPoints = 40
+        draftSetup()
+        draftTimeSetup()
+        destroy choosePoints
+
+    choosePoints.addButton("50") ->
+        BlzFrameAddText(textArea, "|cff00a9ff[50 Points] |cffffd700Accumulate 50 points in total to Win|r")
+        choosePoints.display(GetTriggerPlayer(), false)
+        targetPoints = 50
+        draftSetup()
+        draftTimeSetup()
+        destroy choosePoints
+
+    choosePoints.addButton("60") ->
+        BlzFrameAddText(textArea, "|cff00a9ff[60 Points] |cffffd700Accumulate 60 points in total to Win|r")
+        choosePoints.display(GetTriggerPlayer(), false)
+        targetPoints = 60
+        draftSetup()
+        draftTimeSetup()
+        destroy choosePoints
+
+    choosePoints.addButton("70") ->
+        BlzFrameAddText(textArea, "|cff00a9ff[70 Points] |cffffd700Accumulate 70 points in total to Win|r")
+        choosePoints.display(GetTriggerPlayer(), false)
+        targetPoints = 70
+        draftSetup()
+        draftTimeSetup()
+        destroy choosePoints
+
+    choosePoints.addButton("80") ->
+        BlzFrameAddText(textArea, "|cff00a9ff[80 Points] |cffffd700Accumulate 80 points in total to Win|r")
+        choosePoints.display(GetTriggerPlayer(), false)
+        targetPoints = 80
+        draftSetup()
+        draftTimeSetup()
+        destroy choosePoints
+
+    choosePoints.addButton("90") ->
+        BlzFrameAddText(textArea, "|cff00a9ff[90 Points] |cffffd700Accumulate 90 points in total to Win|r")
+        choosePoints.display(GetTriggerPlayer(), false)
+        targetPoints = 90
+        draftSetup()
+        draftTimeSetup()
+        destroy choosePoints
+
+    choosePoints.addButton("100") ->
+        BlzFrameAddText(textArea, "|cff00a9ff[100 Points] |cffffd700Accumulate 100 points in total to Win|r")
+        choosePoints.display(GetTriggerPlayer(), false)
+        targetPoints = 100
+        draftSetup()
+        draftTimeSetup()
+        destroy choosePoints
+
+    choosePoints.addButton("110") ->
+        BlzFrameAddText(textArea, "|cff00a9ff[110 Points] |cffffd700Accumulate 110 points in total to Win|r")
+        choosePoints.display(GetTriggerPlayer(), false)
+        targetPoints = 110
+        draftSetup()
+        draftTimeSetup()
+        destroy choosePoints
+
+    choosePoints.addButton("120") ->
+        BlzFrameAddText(textArea, "|cff00a9ff[120 Points] |cffffd700Accumulate 120 points in total to Win|r")
+        choosePoints.display(GetTriggerPlayer(), false)
+        targetPoints = 120
+        draftSetup()
+        draftTimeSetup()
+        destroy choosePoints
+    choosePoints.display(p, true)
+
+
+
+function dialog_chooseMode ()
+    let chooseMode = new DialogBox("Mode")
+    chooseMode.addButton("Normal") ->
+        BlzFrameAddText(textArea, "|cff00a9ff[Normal] |cffffd700You will not earn rating or lose from this game|r")
+        chooseMode.display(GetTriggerPlayer(), false)
+        dialog_choosePoints(GetTriggerPlayer())
+        destroy chooseMode
+    chooseMode.addButton("Ranked") ->
+        if playingPlayers < minPlayers
+            rankMode = false
+            BlzFrameAddText(textArea, "|cff00a9ff[Normal] |cffffd700Not enough players for Ranked, defaulting to Normal|r")
+        else if playingPlayers >= minPlayers
+            rankMode = true
+            BlzFrameAddText(textArea, "|cff00a9ff[Ranked] |cffffd700You will earn rating from this game|r")
+        chooseMode.display(GetTriggerPlayer(), false)
+        dialog_choosePoints(GetTriggerPlayer())
+        destroy chooseMode
+
+    for i = 0 to 12
+        if Player(i).getController() == MAP_CONTROL_USER and Player(i).getSlotState() == PLAYER_SLOT_STATE_PLAYING
+            chooseMode.display(Player(i), true)
+            break
+
+function draftTextArea ()
+    textArea = BlzCreateFrame("EscMenuTextAreaTemplate", BlzGetOriginFrame(ORIGIN_FRAME_GAME_UI, 0),0,0)
+    BlzFrameSetAbsPoint(textArea, FRAMEPOINT_TOPLEFT, 0.5, 0.17)
+    BlzFrameSetAbsPoint(textArea, FRAMEPOINT_BOTTOMRIGHT, 0.8, 0.05)

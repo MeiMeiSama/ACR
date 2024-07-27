@@ -1,0 +1,9 @@
+package ACR_Effects
+
+public constant string CLOUD_EFFECT = "ACR Effects\\CloudRingEffect\\Sacred Guard Red.mdx"
+public constant string RAIN_EFFECT = "ACR Effects\\RainRingEffect\\RemorselessWinter.mdx"
+public constant string SUN_EFFECT = "ACR Effects\\SunRingEffect\\Sacred Exile.mdx"
+public constant string THUNDER_EFFECT = "ACR Effects\\ThunderRingEffect\\ThunderClapCaster.mdx"
+public constant string DOT_EFFECT = "ACR Effects\\DoT\\Pillar of Flame Orange.mdx"
+public constant string POISON_EFFECT = "war3mapImported\\posion.mdl"
+public constant string FIRETRAIL_EFFECT = "ACR Effects\\FireTrail\\Windwalk Fire.mdx"

@@ -1,0 +1,30 @@
+package E_Madara_G
+import ClosureEvents
+import ObjectDefinitions
+import TimerUtils
+import SoundUtils
+constant rinneganSound = new SoundDefinition("war3mapImported\\Rinnegan.mp3")
+timer rinneganTimer = null
+integer rinneganCount = 0
+init
+
+    EventListener.onCast(MADARA_EDO_ABILITY_G) (unit caster) ->
+        rinneganSound.play()
+        caster
+        ..addAbility(ABILITY_SPELLBLOCK)
+        ..addAbility(RINNEGAN_MODEL_EFFECT)
+        rinneganTimer = getTimer()..startPeriodic(0.1, function rinneganTimerFunction)..setData(caster.getOwner().getId())
+
+function rinneganTimerFunction ()
+    let pid = rinneganTimer.getData()
+    let caster = udg_PlayHero[pid]
+    if caster.isInvulnerable() == false
+        rinneganCount++
+    if rinneganCount == 40 // 0.1 * 40 = 4 seconds
+        if caster.hasAbility(ABILITY_SPELLBLOCK)
+            caster.removeAbility(ABILITY_SPELLBLOCK)
+        if caster.hasAbility(RINNEGAN_MODEL_EFFECT)
+            caster.removeAbility(RINNEGAN_MODEL_EFFECT)
+            caster.removeAbility(RINNEGAN_BUFF)
+        rinneganCount = 0
+        rinneganTimer.release()

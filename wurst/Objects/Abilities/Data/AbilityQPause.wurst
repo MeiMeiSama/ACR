@@ -1,0 +1,24 @@
+// package AbilityQPause
+
+// import AbilityGlobals
+// import ClosureTimers
+
+// init
+//     abilityQPauseFunc()
+
+
+// function abilityQPauseFunc()
+//     CreateTrigger()
+//     ..registerAnyUnitEvent(EVENT_PLAYER_UNIT_SPELL_EFFECT)
+//     ..addAction() ->
+//         let hero = GetTriggerUnit()
+//         let id = hero.getOwner().getId()
+//         if GetSpellAbilityId() == SPELL_Q[id]
+//             doAfter(0.11) ->
+//                 PauseUnit(hero, true)
+//             doAfter(0.20) ->
+//                 PauseUnit(hero, false) 
+                    
+                
+            
+

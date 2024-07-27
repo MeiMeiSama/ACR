@@ -1,0 +1,133 @@
+package ReviveHeroes
+import TimerUtils
+import ClosureTimers
+// import ACR_Library
+import ACR_TagSystem
+// import AbilityGlobals
+// import ACR_Library
+// import Translate_F
+public timer array heroDeathTimer
+public timerdialog array heroDeathTimerDialog
+real array reviveTime
+
+/*
+
+    red = 0
+    blue = 1
+    teal = 2
+    purple = 3
+
+    yellow = 4
+    orange = 5
+    green = 6
+    pink = 7
+
+    gray = 8
+    lightblue = 9
+    darkgreen = 10
+    brown = 11
+
+*/
+
+init
+    reviveHeroSetup()
+    for i = 0 to 12
+        reviveTime[i] = 2
+
+public function unit.reviveHero()
+    let pid = this.getOwner().getId()
+    let team1_base = vec2(-10425, 10034)
+    let team2_base = vec2(5291, 2241)
+    let team3_base = vec2(-3385, -6178)
+    if pid <= 2
+        udg_PlayHero[pid]
+        ..revive(team1_base, true)
+    else if pid <= 6
+        udg_PlayHero[pid]
+        ..revive(team2_base, true)
+    else if pid <= 10
+        udg_PlayHero[pid]
+        ..revive(team3_base, true)
+    udg_PlayHero[pid]
+    ..addAbility('Arav')..setFlyHeight(0, 0)..removeAbility('Arav') // Arav makes unit count as a flying unit, set height to 0, remove Arav (reset height)
+    ..setMoveSpeed(GetUnitDefaultMoveSpeed(udg_PlayHero[pid]))
+    ..addMana(udg_PlayHero[pid].getMaxMana())
+    ..setInvulnerable(true)
+    UnitRemoveBuffs(udg_PlayHero[pid], false, true)
+    SetUnitTimeScalePercent(udg_PlayHero[pid], 100)
+    udg_PlayHero[pid].getOwner()
+    ..cameraClearNoise()..panCameraToTimed(udg_PlayHero[pid].getPos(), 0)
+    // doAfter(0.2) ->                 
+    //     if udg_PlayHero[pid].hasTagHasF() and udg_PlayHero[pid].hasAbility(SPELL_F[pid]) == false
+    //         udg_PlayHero[pid].addAbility(SPELL_F[pid])
+    //         tooltip_F(pid)
+    //         udg_PlayHero[pid].startAbilityCooldown(SPELL_F[pid], acrCooldownF[pid])
+    doAfter(2) -> 
+        udg_PlayHero[pid]..setInvulnerable(false)        
+
+
+
+function reviveHeroInternal()
+    let pid = GetExpiredTimer().getData()
+    let team1_base = vec2(-10425, 10034)
+    let team2_base = vec2(5291, 2241)
+    let team3_base = vec2(-3385, -6178)
+    if pid <= 2
+        udg_PlayHero[pid]
+        ..revive(team1_base, true)
+    else if pid <= 6
+        udg_PlayHero[pid]
+        ..revive(team2_base, true)
+    else if pid <= 10
+        udg_PlayHero[pid]
+        ..revive(team3_base, true)
+    udg_PlayHero[pid]
+    ..addAbility('Arav')..setFlyHeight(0, 0)..removeAbility('Arav') // Arav makes unit count as a flying unit, set height to 0, remove Arav (reset height)
+    ..setMoveSpeed(GetUnitDefaultMoveSpeed(udg_PlayHero[pid]))
+    ..addMana(udg_PlayHero[pid].getMaxMana())
+    ..setInvulnerable(true)
+    UnitRemoveBuffs(udg_PlayHero[pid], false, true)
+    SetUnitTimeScalePercent(udg_PlayHero[pid], 100)
+    udg_PlayHero[pid].getOwner()
+    ..cameraClearNoise()..panCameraToTimed(udg_PlayHero[pid].getPos(), 0)
+    // doAfter(0.2) ->                 
+    //     if udg_PlayHero[pid].hasTagHasF() and udg_PlayHero[pid].hasAbility(SPELL_F[pid]) == false
+    //         udg_PlayHero[pid].addAbility(SPELL_F[pid])
+    //         tooltip_F(pid)
+    //         udg_PlayHero[pid].startAbilityCooldown(SPELL_F[pid], acrCooldownF[pid])
+    doAfter(2) -> 
+        udg_PlayHero[pid]..setInvulnerable(false)       
+    heroDeathTimerDialog[pid].destr()
+    heroDeathTimer[pid].destr()
+
+function getDeathTimer(unit u) returns real
+    let lvl = u.getLevel()
+    real time
+    if lvl <= 10
+        time = 3
+    else if lvl <= 20
+        time = 6
+    else if lvl <= 30
+        time = 9
+    else if lvl <= 40
+        time = 12
+    else
+        time = 15         
+    return time
+
+function reviveHeroSetup()
+    CreateTrigger()
+    ..registerAnyUnitEvent(EVENT_PLAYER_UNIT_DEATH)
+    ..addAction() ->
+        if GetDyingUnit().hasTagRevive() == false
+            if GetDyingUnit() == udg_PlayHero[GetDyingUnit().getOwner().getId()]
+                let owner = GetDyingUnit().getOwner()
+                let pid = owner.getId()
+                let name = owner.getName()
+                let playerColor = owner.getColor().toColor().toColorString()
+                heroDeathTimer[pid] = CreateTimer()..start(getDeathTimer(udg_PlayHero[pid]), function reviveHeroInternal)..setData(pid)       
+                heroDeathTimerDialog[pid] = heroDeathTimer[pid].createTimerDialog()
+                ..setTitle(playerColor+name+" |cffffd700 revives in:|r")
+                ..setTitleColor(255, 215, 0, 255)
+                ..setTimeColor(255, 215, 0, 255)
+                ..display(true)

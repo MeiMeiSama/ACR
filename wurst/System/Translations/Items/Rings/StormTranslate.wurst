@@ -1,0 +1,69 @@
+package StormTranslate
+
+import ObjectDefinitions
+import ClosureTimers
+
+timer array stormTimer
+int array stormInt
+real array stormMana
+unit array stormUser
+
+init
+    stormEventCheck()
+
+function stormDynamicTranslation(unit user, item storm)
+    if storm.getTypeId() == STORM_RING_VONGOLA
+        let currentMana = (user.getMana() * 0.05).ceil()
+        let currentInt = (user.getInt(true) * 2.5).ceil() 
+        let dmg = currentMana + currentInt
+        BlzSetItemExtendedTooltip(storm, "|n|cff008080Active:|n|n|r|cffffd700Shoot a beam in a frontal cone in front of yourself, dealing damage to any enemies struck and stunning them for 1 second.|n|n|r|cffffd700Damage output:|r|cffc0c0c0|cff1e90ff "+dmg.toString()+" |n|r|cffffd700Damage Formula:|r|cffc0c0c0|cff1e90ff 5% of mana left + |cff1e90ff2.5x Intelligence  |r|n|cffffd700Cooldown: |cffff808045|r|n|n|cffc0c0c0Passive|r|r|r|n|n|cff1e90ffIntelligence +75|n|r|cffffd700Increases the user's mana by 375|n|r|cffffd700Increases the user's health by 650")
+    else if storm.getTypeId() == STORM_RING_ARCOBALENO
+        let currentMana = (user.getMana() * 0.10).ceil()
+        let currentInt = (user.getInt(true) * 4.0).ceil() 
+        let dmg = currentMana + currentInt
+        BlzSetItemExtendedTooltip(storm, "|n|cff008080Active:|n|n|r|cffffd700Shoot a beam in a frontal cone in front of yourself, dealing damage to any enemies struck and stunning them for 2 seconds.|n|n|r|cffffd700Damage output:|r|cffc0c0c0|cff1e90ff "+dmg.toString()+" |n|r|cffffd700Damage Formula:|r|cffc0c0c0|cff1e90ff 10% of mana left + |cff1e90ff4x Intelligence  |r|n|cffffd700Cooldown: |cffff808045|r|n|n|cffc0c0c0Passive|r|r|r|n|n|cff1e90ffIntelligence +165|n|r|cffffd700Increases the user's mana by 825|n|r|cffffd700Increases the user's health by 1420")
+
+function stormEventCheck()
+
+    // ━━━━━━━━━━━━ [RUNS TRANSLATION FOR ALL storm RINGS/ARCOS IN THE INVENTORY IF storm RING/ARCO IS PICKED UP] ━━━━━━━━━━━━
+     
+    CreateTrigger()
+    ..registerAnyUnitEvent(EVENT_PLAYER_UNIT_PICKUP_ITEM)
+    ..addAction() ->
+        if GetManipulatedItem().getTypeId() == STORM_RING_VONGOLA or GetManipulatedItem().getTypeId() == STORM_RING_ARCOBALENO
+            let user = GetManipulatingUnit()
+            stormTimer[user.getOwner().getId()].destr()
+            stormTimer[user.getOwner().getId()] = CreateTimer()
+            if GetManipulatedItem().getTypeId() == STORM_RING_VONGOLA
+                for i = 0 to 5
+                    if UnitItemInSlot(user, i).getTypeId() == STORM_RING_VONGOLA
+                        let stormRing = UnitItemInSlot(user, i)
+                        stormDynamicTranslation(user, stormRing)
+            else if GetManipulatedItem().getTypeId() == STORM_RING_ARCOBALENO
+                for i = 0 to 5
+                    if UnitItemInSlot(user, i).getTypeId() == STORM_RING_ARCOBALENO
+                        let stormPacifier = UnitItemInSlot(user, i)
+                        stormDynamicTranslation(user, stormPacifier)
+                
+            stormInt[user.getOwner().getId()] = user.getInt(true)
+            stormMana[user.getOwner().getId()] = user.getMana() 
+            // ━━━━━━━━━━━━ [RUNS TRANSLATION FOR ALL storm RINGS/ARCOS IN THE INVENTORY WHENEVER AGI CHANGES] ━━━━━━━━━━━━
+            
+            stormTimer[user.getOwner().getId()].doPeriodically(0.25) (CallbackPeriodic cb) ->
+                if  stormInt[user.getOwner().getId()] != user.getStr(true) or stormMana[user.getOwner().getId()] != user.getHP()           
+                    for i = 0 to 5
+                        if UnitItemInSlot(user, i).getTypeId() == STORM_RING_VONGOLA
+                            stormInt[user.getOwner().getId()] = user.getStr(true)
+                            stormMana[user.getOwner().getId()] = user.getMana()
+                            let stormRing = UnitItemInSlot(user, i)
+                            stormDynamicTranslation(user, stormRing)
+                                    
+                            
+                        if UnitItemInSlot(user, i).getTypeId() == STORM_RING_ARCOBALENO
+                            stormInt[user.getOwner().getId()] = user.getStr(true)  
+                            stormMana[user.getOwner().getId()] = user.getMana()                     
+                            let stormPacifier = UnitItemInSlot(user, i)
+                            stormDynamicTranslation(user, stormPacifier)
+
+                if user.hasItemById(STORM_RING_VONGOLA) == false and user.hasItemById(STORM_RING_ARCOBALENO) == false
+                    stormTimer[user.getOwner().getId()].destr()

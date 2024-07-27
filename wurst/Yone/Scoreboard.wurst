@@ -1,0 +1,360 @@
+package Scoreboard
+import TableLayout
+import ClosureKeyPresses
+import main
+import InventoryEvent
+import StringUtils
+import AbilityGlobals
+
+TableLayout scoreBoardTable = null
+framehandle scoreboard
+
+public framehandle array playerHeroIcon
+public framehandle array playerNameFrame
+public framehandle array playerDamageFrame
+public framehandle array playerBountyFrame
+public framehandle array playerStatsFrame
+
+public framehandle array player1Items
+public framehandle array player2Items
+public framehandle array player3Items
+public framehandle array player4Items
+public framehandle array player5Items
+public framehandle array player6Items
+public framehandle array player7Items
+public framehandle array player8Items
+public framehandle array player9Items
+
+public framehandle teamScore
+
+public string array PLAYER_DAMAGE_COUNT_STRING
+public int array PLAYER_DAMAGE_COUNT
+public int array PLAYER_KILL_COUNT
+public int array PLAYER_DEATH_COUNT
+public int array PLAYER_LEVEL_COUNT
+public int array PLAYER_BOUNTY_COUNT
+
+public function scoreboardMain ()
+    scoreboard = BlzCreateFrameByType("BACKDROP", "Blademaster", BlzGetOriginFrame(ORIGIN_FRAME_GAME_UI, 0), "", 0)
+    BlzFrameSetAbsPoint(scoreboard, FRAMEPOINT_CENTER, 0.4, 0.36)
+    BlzFrameSetTexture(scoreboard, "Scoreboard.blp",0, true)
+    for i = 0 to 5
+        player1Items[i] = img("ReplaceableTextures\\CommandButtons\\BTNBagSlot.blp")
+        player2Items[i] = img("ReplaceableTextures\\CommandButtons\\BTNBagSlot.blp")
+        player3Items[i] = img("ReplaceableTextures\\CommandButtons\\BTNBagSlot.blp")
+        player4Items[i] = img("ReplaceableTextures\\CommandButtons\\BTNBagSlot.blp")
+        player5Items[i] = img("ReplaceableTextures\\CommandButtons\\BTNBagSlot.blp")
+        player6Items[i] = img("ReplaceableTextures\\CommandButtons\\BTNBagSlot.blp")
+        player7Items[i] = img("ReplaceableTextures\\CommandButtons\\BTNBagSlot.blp")
+        player8Items[i] = img("ReplaceableTextures\\CommandButtons\\BTNBagSlot.blp")
+        player9Items[i] = img("ReplaceableTextures\\CommandButtons\\BTNBagSlot.blp")
+
+    for i = 0 to 12
+        if Player(i).getController() == MAP_CONTROL_USER and Player(i).getSlotState() == PLAYER_SLOT_STATE_PLAYING
+            let playerColor = Player(i).getColor().toColor().toColorString()
+            let playerName = Player(i).getName().split("#")
+            playerHeroIcon[i] = img(udg_PlayHero[i].getIcon(), 0.028)
+            playerNameFrame[i] = h5(playerColor+playerName.get(0)+"|r")..setWidth(0.14)
+            playerDamageFrame[i] = h5(ORANGE+PLAYER_DAMAGE_COUNT_STRING[i]+"|r")..setWidth(0.065)
+            playerStatsFrame[i] = h5(GREEN+PLAYER_KILL_COUNT[i].toString()+"|r/"+RED+PLAYER_DEATH_COUNT[i].toString()+"|r/"+GOLD+PLAYER_LEVEL_COUNT[i].toString()+"|r")..setWidth(0.065)
+            playerBountyFrame[i] = h5(PURPLE+PLAYER_BOUNTY_COUNT[i].toString()+"|r")..setWidth(0.05)
+        else
+            playerHeroIcon[i] = img("ReplaceableTextures\\CommandButtons\\BTNSelectIcon.blp", 0.028)
+            playerNameFrame[i] = h5("")..setWidth(0.14)
+            playerDamageFrame[i] = h5("")..setWidth(0.065)
+            playerStatsFrame[i] = h5("")..setWidth(0.065)
+            playerBountyFrame[i] = h5("")..setWidth(0.05)
+
+    teamScore = h4("|cff963bff"+team1_Kills.toString()+"|cff5bb5ff | |cffff22c8"+team2_Kills.toString()+"|cff5bb5ff | |cff5f3900"+team3_Kills.toString()+"|r")
+
+    scoreBoardTable = new TableLayout(0.6, 0.4)
+    ..row() // Row 0
+    ..add(h4("|cff5bb5ffHero|r"))..padTop(0.05)
+    ..add(h4("|cff5bb5ffPlayer|r"))..padTop(0.05)..padLeft(0.02)..growX()
+    ..add(h4("|cff5bb5ffItems|r"))..padTop(0.05)..growX()..padLeft(0.06)..padRight(0.05)
+    ..add(h4("|cff5bb5ffDamage|r"))..padTop(0.05)..growX()
+    ..add(h4("|cff5bb5ffK/D/L|r"))..padTop(0.05)..growX()
+    ..add(h4("|cff5bb5ffBounty|r"))..padTop(0.05)
+    ..row() // Row 1
+    ..add(playerHeroIcon[0])..padTop(0.007)
+    ..add(playerNameFrame[0])..padTop(0.015)
+    ..add(player1Items[0])..padTop(0.0085) //  & ..padRight(0.0025)
+    ..add(player1Items[1])..padTop(0.0085)..padRight(0.0025) // ..padTop(0.009)
+    ..add(player1Items[2])..padTop(0.0085)..padRight(0.0025)
+    ..add(player1Items[3])..padTop(0.0085)..padRight(0.0025)
+    ..add(player1Items[4])..padTop(0.0085)..padRight(0.0025)
+    ..add(player1Items[5])..padTop(0.0085)..padRight(0.0225)
+    ..add(playerDamageFrame[0])..padTop(0.015)..padRight(0.0225)
+    ..add(playerStatsFrame[0])..padTop(0.015)..padRight(0.01)
+    ..add(playerBountyFrame[0])..padTop(0.015)
+    ..row() // Row 2
+    ..add(playerHeroIcon[1])..padTop(0.0035)
+    ..add(playerNameFrame[1])..padTop(0.012)
+    ..add(player2Items[0])..padTop(0.0055) //  & ..padRight(0.0025)
+    ..add(player2Items[1])..padTop(0.0055)..padRight(0.0025) // ..padTop(0.009)
+    ..add(player2Items[2])..padTop(0.0055)..padRight(0.0025)
+    ..add(player2Items[3])..padTop(0.0055)..padRight(0.0025)
+    ..add(player2Items[4])..padTop(0.0055)..padRight(0.0025)
+    ..add(player2Items[5])..padTop(0.0055)..padRight(0.0225)
+    ..add(playerDamageFrame[1])..padTop(0.012)..padRight(0.0225)
+    ..add(playerStatsFrame[1])..padTop(0.012)..padRight(0.01)
+    ..add(playerBountyFrame[1])..padTop(0.012)
+    ..row() // Row 3
+    ..add(playerHeroIcon[2])..padTop(0.0035)
+    ..add(playerNameFrame[2])..padTop(0.012)
+    ..add(player3Items[0])..padTop(0.0055) //  & ..padRight(0.0025)
+    ..add(player3Items[1])..padTop(0.0055)..padRight(0.0025) // ..padTop(0.009)
+    ..add(player3Items[2])..padTop(0.0055)..padRight(0.0025)
+    ..add(player3Items[3])..padTop(0.0055)..padRight(0.0025)
+    ..add(player3Items[4])..padTop(0.0055)..padRight(0.0025)
+    ..add(player3Items[5])..padTop(0.0055)..padRight(0.0225)
+    ..add(playerDamageFrame[2])..padTop(0.012)..padRight(0.0225)
+    ..add(playerStatsFrame[2])..padTop(0.012)..padRight(0.01)
+    ..add(playerBountyFrame[2])..padTop(0.012)
+    ..row() // Row 4
+    ..add(playerHeroIcon[4])..padTop(0.007)
+    ..add(playerNameFrame[4])..padTop(0.015)
+    ..add(player4Items[0])..padTop(0.0085) //  & ..padRight(0.0025)
+    ..add(player4Items[1])..padTop(0.0085)..padRight(0.0025) // ..padTop(0.009)
+    ..add(player4Items[2])..padTop(0.0085)..padRight(0.0025)
+    ..add(player4Items[3])..padTop(0.0085)..padRight(0.0025)
+    ..add(player4Items[4])..padTop(0.0085)..padRight(0.0025)
+    ..add(player4Items[5])..padTop(0.0085)..padRight(0.0225)
+    ..add(playerDamageFrame[4])..padTop(0.015)..padRight(0.0225)
+    ..add(playerStatsFrame[4])..padTop(0.015)..padRight(0.01)
+    ..add(playerBountyFrame[4])..padTop(0.015)
+    ..row() // Row 5
+    ..add(playerHeroIcon[5])..padTop(0.0035)
+    ..add(playerNameFrame[5])..padTop(0.012)
+    ..add(player5Items[0])..padTop(0.0055) //  & ..padRight(0.0025)
+    ..add(player5Items[1])..padTop(0.0055)..padRight(0.0025) // ..padTop(0.009)
+    ..add(player5Items[2])..padTop(0.0055)..padRight(0.0025)
+    ..add(player5Items[3])..padTop(0.0055)..padRight(0.0025)
+    ..add(player5Items[4])..padTop(0.0055)..padRight(0.0025)
+    ..add(player5Items[5])..padTop(0.0055)..padRight(0.0225)
+    ..add(playerDamageFrame[5])..padTop(0.012)..padRight(0.0225)
+    ..add(playerStatsFrame[5])..padTop(0.012)..padRight(0.01)
+    ..add(playerBountyFrame[5])..padTop(0.012)
+    ..row() // Row 6
+    ..add(playerHeroIcon[6])..padTop(0.0035)
+    ..add(playerNameFrame[6])..padTop(0.012)
+    ..add(player6Items[0])..padTop(0.0055) //  & ..padRight(0.0025)
+    ..add(player6Items[1])..padTop(0.0055)..padRight(0.0025) // ..padTop(0.009)
+    ..add(player6Items[2])..padTop(0.0055)..padRight(0.0025)
+    ..add(player6Items[3])..padTop(0.0055)..padRight(0.0025)
+    ..add(player6Items[4])..padTop(0.0055)..padRight(0.0025)
+    ..add(player6Items[5])..padTop(0.0055)..padRight(0.0225)
+    ..add(playerDamageFrame[6])..padTop(0.012)..padRight(0.0225)
+    ..add(playerStatsFrame[6])..padTop(0.012)..padRight(0.01)
+    ..add(playerBountyFrame[6])..padTop(0.012)
+    ..row() // Row 7
+    ..add(playerHeroIcon[8])..padTop(0.007)
+    ..add(playerNameFrame[8])..padTop(0.015)
+    ..add(player7Items[0])..padTop(0.0085) //  & ..padRight(0.0025)
+    ..add(player7Items[1])..padTop(0.0085)..padRight(0.0025) // ..padTop(0.009)
+    ..add(player7Items[2])..padTop(0.0085)..padRight(0.0025)
+    ..add(player7Items[3])..padTop(0.0085)..padRight(0.0025)
+    ..add(player7Items[4])..padTop(0.0085)..padRight(0.0025)
+    ..add(player7Items[5])..padTop(0.0085)..padRight(0.0225)
+    ..add(playerDamageFrame[8])..padTop(0.015)..padRight(0.0225)
+    ..add(playerStatsFrame[8])..padTop(0.015)..padRight(0.01)
+    ..add(playerBountyFrame[8])..padTop(0.015)
+    ..row() // Row 8
+    ..add(playerHeroIcon[9])..padTop(0.0035)
+    ..add(playerNameFrame[9])..padTop(0.012)
+    ..add(player8Items[0])..padTop(0.0055) //  & ..padRight(0.0025)
+    ..add(player8Items[1])..padTop(0.0055)..padRight(0.0025) // ..padTop(0.009)
+    ..add(player8Items[2])..padTop(0.0055)..padRight(0.0025)
+    ..add(player8Items[3])..padTop(0.0055)..padRight(0.0025)
+    ..add(player8Items[4])..padTop(0.0055)..padRight(0.0025)
+    ..add(player8Items[5])..padTop(0.0055)..padRight(0.0225)
+    ..add(playerDamageFrame[9])..padTop(0.012)..padRight(0.0225)
+    ..add(playerStatsFrame[9])..padTop(0.012)..padRight(0.01)
+    ..add(playerBountyFrame[9])..padTop(0.012)
+    ..row() // Row 9
+    ..add(playerHeroIcon[10])..padTop(0.0035)
+    ..add(playerNameFrame[10])..padTop(0.012)
+    ..add(player9Items[0])..padTop(0.0055) //  & ..padRight(0.0025)
+    ..add(player9Items[1])..padTop(0.0055)..padRight(0.0025) // ..padTop(0.009)
+    ..add(player9Items[2])..padTop(0.0055)..padRight(0.0025)
+    ..add(player9Items[3])..padTop(0.0055)..padRight(0.0025)
+    ..add(player9Items[4])..padTop(0.0055)..padRight(0.0025)
+    ..add(player9Items[5])..padTop(0.0055)..padRight(0.0225)
+    ..add(playerDamageFrame[10])..padTop(0.012)..padRight(0.0225)
+    ..add(playerStatsFrame[10])..padTop(0.012)..padRight(0.01)
+    ..add(playerBountyFrame[10])..padTop(0.012)
+    ..row()
+    ..add(h4("|cffffd700Required Points: |cff5bb5ff"+targetPoints.toString()+"|r"))..padTop(0.0075)
+    ..add(h4(" "))..growX()..padTop(0.0075)
+    ..add(teamScore)..padTop(0.0075)
+    ..applyTo(scoreboard)
+    scoreboard.hide()
+
+    addItemImage()
+    removeItemImage()
+    inventoryMove()
+
+public function scoreboardTab ()
+    onKeyPress(OSKEY_TAB) ->
+        if not scoreboard.isVisible(GetTriggerPlayer())
+            scoreBoardTable.layout()
+            scoreboard.show(GetTriggerPlayer())
+    onKeyRelease(OSKEY_TAB) ->
+        if scoreboard.isVisible(GetTriggerPlayer())
+            scoreboard.hide(GetTriggerPlayer())
+
+public function scoreboardValues ()
+    CreateTrigger()
+    ..registerAnyUnitEvent(EVENT_PLAYER_HERO_LEVEL)
+    ..addAction() ->
+        let u = GetTriggerUnit()
+        let id = u.getOwner().getId()
+        if u.isType(UNIT_TYPE_HERO) == true
+            PLAYER_LEVEL_COUNT[id] = u.getLevel()
+            playerStatsFrame[id].setText(GREEN+PLAYER_KILL_COUNT[id].toString()+"|r/"+RED+PLAYER_DEATH_COUNT[id].toString()+"|r/"+GOLD+PLAYER_LEVEL_COUNT[id].toString()+"|r")
+
+    CreateTrigger()
+    ..registerAnyUnitEvent(EVENT_PLAYER_UNIT_DAMAGED)
+    ..addAction() ->
+        let attacker = GetEventDamageSource()
+        let victim = GetTriggerUnit()
+        let id = attacker.getOwner().getId()
+        if victim.isType(UNIT_TYPE_HERO) == true 
+            PLAYER_DAMAGE_COUNT[id] += GetEventDamage().toInt()
+            if PLAYER_DAMAGE_COUNT[id] > 10000
+                PLAYER_DAMAGE_COUNT_STRING[id] = (PLAYER_DAMAGE_COUNT[id] / 1000).toInt().toString() + "k"
+            else
+                PLAYER_DAMAGE_COUNT_STRING[id] = PLAYER_DAMAGE_COUNT[id].toString()
+            playerDamageFrame[id].setText(ORANGE+PLAYER_DAMAGE_COUNT_STRING[id]+"|r")
+
+function addItemImage ()
+    CreateTrigger()
+    ..registerAnyUnitEvent(EVENT_PLAYER_UNIT_PICKUP_ITEM)
+    ..addAction() ->
+        let u = GetTriggerUnit()
+        let pid = u.getOwner().getId()
+        let itm = GetManipulatedItem()
+        let slot = u.getItemSlot(itm)
+
+        if pid == 0
+            player1Items[slot].setTexture(itm.getIconPath(), 0, false)
+        else if pid == 1
+            player2Items[slot].setTexture(itm.getIconPath(), 0, false)
+        else if pid == 2
+            player3Items[slot].setTexture(itm.getIconPath(), 0, false)
+        else if pid == 4
+            player4Items[slot].setTexture(itm.getIconPath(), 0, false)
+        else if pid == 5
+            player5Items[slot].setTexture(itm.getIconPath(), 0, false)
+        else if pid == 6
+            player6Items[slot].setTexture(itm.getIconPath(), 0, false)
+        else if pid == 8
+            player7Items[slot].setTexture(itm.getIconPath(), 0, false)
+        else if pid == 9
+            player8Items[slot].setTexture(itm.getIconPath(), 0, false)
+        else if pid == 10
+            player9Items[slot].setTexture(itm.getIconPath(), 0, false)
+        
+function removeItemImage ()
+    CreateTrigger()
+    ..registerAnyUnitEvent(EVENT_PLAYER_UNIT_DROP_ITEM)
+    ..addAction() ->
+        let u = GetTriggerUnit()
+        let pid = u.getOwner().getId()
+        let itm = GetManipulatedItem()
+        let slot = u.getItemSlot(itm)
+
+        if pid == 0
+            player1Items[slot].setTexture("ReplaceableTextures\\CommandButtons\\BTNBagSlot.blp", 0, false)
+        else if pid == 1
+            player2Items[slot].setTexture("ReplaceableTextures\\CommandButtons\\BTNBagSlot.blp", 0, false)
+        else if pid == 1
+            player3Items[slot].setTexture("ReplaceableTextures\\CommandButtons\\BTNBagSlot.blp", 0, false)
+        else if pid == 4
+            player4Items[slot].setTexture("ReplaceableTextures\\CommandButtons\\BTNBagSlot.blp", 0, false)
+        else if pid == 5
+            player5Items[slot].setTexture("ReplaceableTextures\\CommandButtons\\BTNBagSlot.blp", 0, false)
+        else if pid == 6
+            player6Items[slot].setTexture("ReplaceableTextures\\CommandButtons\\BTNBagSlot.blp", 0, false)
+        else if pid == 8
+            player7Items[slot].setTexture("ReplaceableTextures\\CommandButtons\\BTNBagSlot.blp", 0, false)
+        else if pid == 9
+            player8Items[slot].setTexture("ReplaceableTextures\\CommandButtons\\BTNBagSlot.blp", 0, false)
+        else if pid == 10
+            player9Items[slot].setTexture("ReplaceableTextures\\CommandButtons\\BTNBagSlot.blp", 0, false)
+
+function inventoryMove()
+    registerInventoryEvent(EVENT_ITEM_INVENTORY.MOVE) ->
+        let u = getInventoryManipulatingUnit()
+        let p = u.getOwner()
+        let pid = p.getId()
+        let itm = getInventoryManipulatedItem()
+        var itmIcon = itm.getIconPath()
+        let itmSwapped = getInventorySwappedItem()
+        var itmSwappedIcon = itmSwapped.getIconPath()
+        let slotFrom = getInventorySlotFrom()
+        let slotTo = getInventorySlotTo()
+
+        if pid == 0
+            if itm.getIconPath() == null
+                itmIcon = "ReplaceableTextures\\CommandButtons\\BTNBagSlot.blp"
+            if itmSwapped.getIconPath() == null
+                itmSwappedIcon = "ReplaceableTextures\\CommandButtons\\BTNBagSlot.blp"
+            player1Items[slotTo].setTexture(itmIcon, 0, false)
+            player1Items[slotFrom].setTexture(itmSwappedIcon, 0, false)
+        else if pid == 1
+            if itm.getIconPath() == null
+                itmIcon = "ReplaceableTextures\\CommandButtons\\BTNBagSlot.blp"
+            if itmSwapped.getIconPath() == null
+                itmSwappedIcon = "ReplaceableTextures\\CommandButtons\\BTNBagSlot.blp"
+            player2Items[slotTo].setTexture(itmIcon, 0, false)
+            player2Items[slotFrom].setTexture(itmSwappedIcon, 0, false)
+        else if pid == 2
+            if itm.getIconPath() == null
+                itmIcon = "ReplaceableTextures\\CommandButtons\\BTNBagSlot.blp"
+            if itmSwapped.getIconPath() == null
+                itmSwappedIcon = "ReplaceableTextures\\CommandButtons\\BTNBagSlot.blp"
+            player3Items[slotTo].setTexture(itmIcon, 0, false)
+            player3Items[slotFrom].setTexture(itmSwappedIcon, 0, false)
+        else if pid == 4
+            if itm.getIconPath() == null
+                itmIcon = "ReplaceableTextures\\CommandButtons\\BTNBagSlot.blp"
+            if itmSwapped.getIconPath() == null
+                itmSwappedIcon = "ReplaceableTextures\\CommandButtons\\BTNBagSlot.blp"
+            player4Items[slotTo].setTexture(itmIcon, 0, false)
+            player4Items[slotFrom].setTexture(itmSwappedIcon, 0, false)
+        else if pid == 5
+            if itm.getIconPath() == null
+                itmIcon = "ReplaceableTextures\\CommandButtons\\BTNBagSlot.blp"
+            if itmSwapped.getIconPath() == null
+                itmSwappedIcon = "ReplaceableTextures\\CommandButtons\\BTNBagSlot.blp"
+            player5Items[slotTo].setTexture(itmIcon, 0, false)
+            player5Items[slotFrom].setTexture(itmSwappedIcon, 0, false)
+        else if pid == 6
+            if itm.getIconPath() == null
+                itmIcon = "ReplaceableTextures\\CommandButtons\\BTNBagSlot.blp"
+            if itmSwapped.getIconPath() == null
+                itmSwappedIcon = "ReplaceableTextures\\CommandButtons\\BTNBagSlot.blp"
+            player6Items[slotTo].setTexture(itmIcon, 0, false)
+            player6Items[slotFrom].setTexture(itmSwappedIcon, 0, false)
+        else if pid == 8
+            if itm.getIconPath() == null
+                itmIcon = "ReplaceableTextures\\CommandButtons\\BTNBagSlot.blp"
+            if itmSwapped.getIconPath() == null
+                itmSwappedIcon = "ReplaceableTextures\\CommandButtons\\BTNBagSlot.blp"
+            player7Items[slotTo].setTexture(itmIcon, 0, false)
+            player7Items[slotFrom].setTexture(itmSwappedIcon, 0, false)
+        else if pid == 9
+            if itm.getIconPath() == null
+                itmIcon = "ReplaceableTextures\\CommandButtons\\BTNBagSlot.blp"
+            if itmSwapped.getIconPath() == null
+                itmSwappedIcon = "ReplaceableTextures\\CommandButtons\\BTNBagSlot.blp"
+            player8Items[slotTo].setTexture(itmIcon, 0, false)
+            player8Items[slotFrom].setTexture(itmSwappedIcon, 0, false)
+        else if pid == 10
+            if itm.getIconPath() == null
+                itmIcon = "ReplaceableTextures\\CommandButtons\\BTNBagSlot.blp"
+            if itmSwapped.getIconPath() == null
+                itmSwappedIcon = "ReplaceableTextures\\CommandButtons\\BTNBagSlot.blp"
+            player9Items[slotTo].setTexture(itmIcon, 0, false)
+            player9Items[slotFrom].setTexture(itmSwappedIcon, 0, false)

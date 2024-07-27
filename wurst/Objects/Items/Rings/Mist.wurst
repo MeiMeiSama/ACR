@@ -1,0 +1,63 @@
+package Mist
+import ObjectDefinitions
+import DummyCaster
+import OrderIds
+
+init
+
+    mistActivate()
+
+function mistActivate ()
+    CreateTrigger()
+    ..registerAnyUnitEvent(EVENT_PLAYER_UNIT_USE_ITEM)
+    ..addAction() ->
+        let mist = GetManipulatedItem()
+        if GetManipulatedItem().getTypeId() == MIST_RING_VONGOLA or GetManipulatedItem().getTypeId() == MIST_RING_ARCOBALENO
+            let caster = GetTriggerUnit()
+            if GetManipulatedItem().getTypeId() == MIST_RING_VONGOLA
+                if not caster.hasAbility('B06M')
+                    caster.getItemById(MIST_RING_ARCOBALENO).setIconPath("ReplaceableTextures\\CommandButtons\\BTNArcobalenoMist.blp")
+                    caster.removeAbility('B06O')     
+                    mist.setIconPath("ReplaceableTextures\\CommandButtons\\BTNNeutralManaShieldOff.blp")
+                    new DummyCaster()
+                    ..owner(caster.getOwner())
+                    ..origin(caster.getPos())
+                    ..castTarget(MIST_RING_DUMMY_SPELL, 1, OrderIds.bloodlust, caster)
+                else
+                    caster.removeAbility('B06M')     
+                    mist.setIconPath("ReplaceableTextures\\CommandButtons\\BTNMistX.blp") 
+
+            else
+                if not caster.hasAbility('B06O')
+                    caster.getItemById(MIST_RING_VONGOLA).setIconPath("ReplaceableTextures\\CommandButtons\\BTNMistX.blp")
+                    caster.removeAbility('B06M')   
+                    mist.setIconPath("ReplaceableTextures\\CommandButtons\\BTNNeutralManaShieldOff.blp")
+                    new DummyCaster()
+                    ..owner(caster.getOwner())
+                    ..origin(caster.getPos())
+                    ..castTarget(MIST_ARCO_DUMMY_SPELL, 1, OrderIds.bloodlust, caster) 
+                else
+                    caster.removeAbility('B06O')     
+                    mist.setIconPath("ReplaceableTextures\\CommandButtons\\BTNArcobalenoMist.blp")     
+
+    CreateTrigger()
+    ..registerAnyUnitEvent(EVENT_PLAYER_UNIT_DEATH)
+    ..addAction() -> 
+        if GetDyingUnit().hasItemById(MIST_RING_VONGOLA) or GetDyingUnit().hasItemById(MIST_RING_ARCOBALENO)
+            let caster = GetDyingUnit()
+            caster.getItemById(MIST_RING_VONGOLA).setIconPath("ReplaceableTextures\\CommandButtons\\BTNMistX.blp")
+            caster.getItemById(MIST_RING_ARCOBALENO).setIconPath("ReplaceableTextures\\CommandButtons\\BTNArcobalenoMist.blp")
+    
+            // for i = 0 to 5
+            //     if UnitItemInSlot(caster, i).getTypeId() == MIST_RING_VONGOLA
+            //         UnitItemInSlot(caster, i).setIconPath("ReplaceableTextures\\CommandButtons\\BTNMistX.blp")
+            //         caster.removeAbility('B06M')
+            //     if UnitItemInSlot(caster, i).getTypeId() == MIST_RING_ARCOBALENO
+            //         UnitItemInSlot(caster, i).setIconPath("ReplaceableTextures\\CommandButtons\\BTNArcobalenoMist.blp")
+            //         caster.removeAbility('B06O')                      
+
+
+            
+      
+
+

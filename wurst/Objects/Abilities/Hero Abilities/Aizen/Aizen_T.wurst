@@ -1,0 +1,120 @@
+package Aizen_T
+import ClosureTimers
+import main
+import MusicPlaylist
+import ACR_Library
+import AbilityGlobals
+import ACR_TagSystem
+// import UpdateAbilityData
+
+boolean aizenTactive = false
+
+init
+    aizenModoT()
+
+function aizenModoT ()
+
+    CreateTrigger()
+    ..registerAnyUnitEvent(EVENT_PLAYER_UNIT_SPELL_EFFECT)
+    ..addAction() ->
+        if ((GetSpellAbilityId() == 'A19D')) 
+            let caster = GetTriggerUnit()
+            let pid = caster.getOwner().getId()
+            if SPELL_G[pid].hasTagHidden() == false
+                caster.hideAbility(SPELL_G[pid], true)
+                SPELL_G[pid].addTagHidden()
+            stopBgm()
+            StopMusic(false)
+            PlaySoundBJ(gg_snd_AizenBGM)                
+            acrTransformation(caster, 40, 'H01R', 'H03Q', 850, 4.0)
+            doPeriodically(0.01) (CallbackPeriodic cb) ->
+                if transformationActive[pid] == false
+                    if SPELL_G[pid].hasTagHidden() == true
+                        caster.hideAbility(SPELL_G[pid], false)
+                        SPELL_G[pid].removeTagHidden()
+                    if gg_snd_AizenBGM.isPlaying()
+                        gg_snd_AizenBGM.stop(false, false) 
+                    destroy cb
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    // CreateTrigger()
+    // ..registerAnyUnitEvent(EVENT_PLAYER_UNIT_SPELL_EFFECT)
+    // ..addAction() ->
+    //     if ((GetSpellAbilityId() == 'A19D')) 
+    //         aizenTactive = true
+    //         let caster = GetTriggerUnit()
+    //         let pid = caster.getOwner().getId()
+    //         stopBgm()
+    //         StopMusic(false)
+    //         PlaySoundBJ(gg_snd_AizenBGM)            
+    //         caster.hideAbility(SPELL_Q[pid], true)
+    //         SPELL_Q[pid].addTagHidden()
+    //         caster.hideAbility(SPELL_W[pid], true)
+    //         SPELL_W[pid].addTagHidden()
+    //         caster.hideAbility(SPELL_E[pid], true)
+    //         SPELL_E[pid].addTagHidden()
+    //         caster.hideAbility(SPELL_R[pid], true)
+    //         SPELL_R[pid].addTagHidden()
+    //         caster.hideAbility(SPELL_T[pid], true)
+    //         SPELL_T[pid].addTagHidden()
+    //         caster.hideAbility(SPELL_G[pid], true)
+    //         SPELL_G[pid].addTagHidden()
+            
+
+    //         doPeriodically(0.003) (CallbackPeriodic cb) ->
+    //             if aizenTactive == true
+    //                 if IsUnitDeadBJ(caster) == true or UnitHasBuffBJ(caster, 'B05F') == false
+    //                     aizenTactive = false
+    //                     if gg_snd_AizenBGM.isPlaying()
+    //                         gg_snd_AizenBGM.stop(false, false)
+    //                     if caster.hasTagPauseEX() == false
+    //                         caster.issueImmediateOrder("stop")
+    //                         caster.pauseEx()
+    //                         caster.addTagPauseEX()
+    //                     doAfter(0.003) ->    
+    //                         if SPELL_Q[pid].hasTagHidden()                        
+    //                             caster.hideAbility(SPELL_Q[pid], false)
+    //                             SPELL_Q[pid].removeTagHidden()
+    //                         if SPELL_W[pid].hasTagHidden()                        
+    //                             caster.hideAbility(SPELL_W[pid], false)
+    //                             SPELL_W[pid].removeTagHidden()
+    //                         if SPELL_E[pid].hasTagHidden()                        
+    //                             caster.hideAbility(SPELL_E[pid], false)
+    //                             SPELL_E[pid].removeTagHidden()                   
+    //                         if SPELL_R[pid].hasTagHidden()                        
+    //                             caster.hideAbility(SPELL_R[pid], false)
+    //                             SPELL_R[pid].removeTagHidden() 
+    //                         if SPELL_T[pid].hasTagHidden() 
+    //                             caster.hideAbility(SPELL_T[pid], false)
+    //                             SPELL_T[pid].removeTagHidden()
+    //                             caster.startAbilityCooldown(SPELL_T[pid])
+    //                             acrCooldownT[pid] = 60.00
+    //                         if SPELL_G[pid].hasTagHidden()                        
+    //                             caster.hideAbility(SPELL_G[pid], false)
+    //                             SPELL_G[pid].removeTagHidden()                            
+    //                         if caster.hasTagPauseEX()    
+    //                             caster.unpauseEx()
+    //                             caster.removeTagPauseEX()
+    //                         destroy cb

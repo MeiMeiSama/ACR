@@ -1,0 +1,126 @@
+package BuffObjects
+
+import BuffObjEditing
+import AbilityIds
+import ACR_Effects
+import ObjectDefinitions
+
+@compiletime function buffs()
+    new BuffDefinition(BURNDOT_DEBUFF, 'Aslo')
+    ..setName(1, "Burn DoT Debuff")
+    ..setTooltipNormal(1, "Burning")
+    ..setTooltipNormalExtended(1, "This unit is taking damage")
+    ..setIcon("ReplaceableTextures\\PassiveButtons\\PASBTNMarkOfFire.blp")
+
+    new BuffDefinition(SHARINGAN_BUFF, AbilityIds.unholyAura)
+    ..setName(1, "Sharingan Attack Evasion")
+    ..setTooltipNormal(1, "Sharingan")
+    ..setTooltipNormalExtended(1, "Dodge all incoming basic attacks")
+    ..setIcon("war3mapImported\\eternalsasuke.blp")
+    ..setIconNormal(1, "war3mapImported\\eternalsasuke.blp")
+
+    new BuffDefinition(RINNEGAN_BUFF, AbilityIds.unholyAura)
+    ..setName(1, "Rinnegan Ability Nullification")
+    ..setTooltipNormal(1, "Rinnegan")
+    ..setTooltipNormalExtended(1, "Blocks the next incoming ability")
+    ..setIcon("Sharingan_Rinnegan.blp")
+    ..setIconNormal(1, "Sharingan_Rinnegan.blp")
+
+    new BuffDefinition(SHARINNEGAN_BUFF, AbilityIds.unholyAura)
+    ..setName(1, "Sharinnegan")
+    ..setTooltipNormal(1, "Sharinnegan")
+    ..setTooltipNormalExtended(1, "Blocks the next incoming ability and evades attacks")
+    ..setIcon("war3mapImported\\Sharinnegan.blp")
+    ..setIconNormal(1, "war3mapImported\\Sharinnegan.blp")
+
+    new BuffDefinition(IZANAMI_BUFF, AbilityIds.unholyAura)
+    ..setName(1, "Izanami")
+    ..setTooltipNormal(1, "Izanami")
+    ..setTooltipNormalExtended(1, "Blocks the next incoming ability")
+    ..setIcon("war3mapImported\\IzanamiEye.blp")
+    ..setIconNormal(1, "war3mapImported\\IzanamiEye.blp")
+
+    new BuffDefinition(HIBARI_T_BUFF, AbilityIds.innerFire)
+    ..setName(1, "Hibari Sphere")
+    ..setTooltipNormal(1, "Hibari Sphere")
+    ..setTooltipNormalExtended(1, "Hibari is in his Sphere")
+    ..setIcon("ReplaceableTextures\\CommandButtons\\BTNPurge.blp")
+
+    new BuffDefinition(OKITA_STRENGTH_G_BUFF, AbilityIds.innerFire)
+    ..setName(1, "Spellblock")
+    ..setTooltipNormal(1, "Spellblock")
+    ..setTooltipNormalExtended(1, "Currently has Spellblock Active")
+    ..setIcon("ReplaceableTextures\\CommandButtons\\BTNokitanew.blp")
+
+    new BuffDefinition(ICHIGO_STRENGTH_G_BUFF, AbilityIds.innerFire)
+    ..setName(1, "Spellblock")
+    ..setTooltipNormal(1, "Spellblock")
+    ..setTooltipNormalExtended(1, "Currently has Spellblock Active")
+    ..setIcon("ReplaceableTextures\\CommandButtons\\BTNNewichigo.blp")
+
+    new BuffDefinition(KAMIJOU_TOUMA_G_BUFF, AbilityIds.innerFire)
+    ..setName(1, "Spellblock")
+    ..setTooltipNormal(1, "Spellblock")
+    ..setTooltipNormalExtended(1, "Currently has Spellblock Active")
+    ..setIcon("ReplaceableTextures\\CommandButtons\\BTNtouma.blp")
+
+    new BuffDefinition(RORONOA_ZORO_G_BUFF, AbilityIds.innerFire)
+    ..setName(1, "Spellblock")
+    ..setTooltipNormal(1, "Spellblock")
+    ..setTooltipNormalExtended(1, "Currently has Spellblock Active")
+    ..setIcon("ReplaceableTextures\\CommandButtons\\BTNZoro.blp")
+
+    new BuffDefinition(CLOUD_VONGOLA_ARCO_ANTIMAGIC_BUFF, 'Bam2')
+    ..setName(1, "Cloud Anti-Magic")
+    ..setTooltipNormal(1, "Cloud Anti-Magic")
+    ..setTooltipNormalExtended(1, "This unit will absorb Spell Damage")
+
+    new BuffDefinition(SILENCE_DEBUFF, 'BNsi')
+    ..setName(1, "Rain Arcobaleno Silence")
+    ..setTooltipNormal(1, "Silence")
+    ..setTooltipNormalExtended(1, "This unit is silenced")
+    ..setIcon("ReplaceableTextures\\CommandButtons\\BTNSoulBurn.blp")
+
+    new BuffDefinition(STORM_VONGOLA_STUN_DEBUFF, AbilityIds.stormBolt)
+    ..setName("Storm Vongola Stun")
+    ..setTooltipNormal(1, "Storm Vongola")
+    ..setTooltipNormalExtended(1, "This unit is stunned")
+    ..setIcon("ReplaceableTextures\\CommandButtons\\BTNStormX.blp")
+
+    new BuffDefinition(STORM_ARCO_STUN_DEBUFF, AbilityIds.stormBolt)
+    ..setName("Storm Arcobaleno Stun")
+    ..setTooltipNormal(1, "Storm Arcobaleno")
+    ..setTooltipNormalExtended(1, "This unit is stunned")
+    ..setIcon("ReplaceableTextures\\CommandButtons\\BTNArcobalenoStorm.blp")
+
+    new BuffDefinition(SUN_VONGOLA_HOT_BUFF, AbilityIds.innerFire)
+    ..setName("Sun Vongola HoT")
+    ..setTooltipNormal(1, "Sun Vongola")
+    ..setTooltipNormalExtended(1, "This unit is being periodically healed")
+    ..setArtTarget(1, SUN_EFFECT)
+    ..setIcon("ReplaceableTextures\\CommandButtons\\BTNSunX.blp")
+
+    new BuffDefinition(SUN_ARCO_HOT_BUFF, AbilityIds.innerFire)
+    ..setName("Sun Arcobaleno HoT")
+    ..setTooltipNormal(1, "Sun Arcobaleno")
+    ..setTooltipNormalExtended(1, "This unit is being periodically healed")
+    ..setArtTarget(1, SUN_EFFECT)
+    ..setIcon("ReplaceableTextures\\CommandButtons\\BTNArcobalenoSun.blp")
+
+    new BuffDefinition(THUNDER_VONGOLA_SLOW_DEBUFF, 'Aslo')
+    ..setName(1, "Thunder Vongola Slow")
+    ..setTooltipNormal(1, "Thunder Vongola")
+    ..setTooltipNormalExtended(1, "This unit has reduced movespeed")
+    ..setIcon("ReplaceableTextures\\CommandButtons\\BTNThunderX.blp")
+
+    new BuffDefinition(THUNDER_ARCO_SLOW_DEBUFF, 'Aslo')
+    ..setName(1, "Thunder Arcobaleno Slow")
+    ..setTooltipNormal(1, "Thunder Arcobaleno")
+    ..setTooltipNormalExtended(1, "This unit has reduced movespeed")
+    ..setIcon("ReplaceableTextures\\CommandButtons\\BTNArcobalenoThunder.blp")
+
+    new BuffDefinition(EMPTY_BUFF, 'Aslo')
+    ..setName(1, "Empty")
+    ..setTooltipNormal(1, "Empty")
+    ..setTooltipNormalExtended(1, "Empty")
+    ..setIcon("Empty")

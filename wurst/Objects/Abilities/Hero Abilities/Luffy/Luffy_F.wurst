@@ -1,0 +1,113 @@
+package Luffy_F
+
+import ClosureTimers
+import MusicPlaylist
+import AbilityGlobals
+// import ACR_TagSystem
+import ObjectDefinitions
+import ACR_Library
+// import Translate_F
+// import UpdateAbilityData
+
+
+init
+    luffyModoF()
+
+function luffyModoF()
+
+    CreateTrigger()
+    ..registerAnyUnitEvent(EVENT_PLAYER_UNIT_SPELL_EFFECT)
+    ..addAction() ->
+        if ((GetSpellAbilityId() == 'A19N')) 
+            let caster = GetTriggerUnit()
+            let pid = caster.getOwner().getId()
+            let luffyE = 'A047'
+            let luffyELvl = caster.getAbilityLevel(luffyE) 
+            caster.removeAbility(SPELL_G[pid])
+            caster.removeAbility(luffyE)
+            caster.removeAbility('B00U')                
+            stopBgm()
+            StopMusic(false)
+            PlaySoundBJ(gg_snd_Gear4luffy)                
+            acrTransformation(caster, 40, MONKEYD_LUFFY, 'H00U', 850, 4.0)
+            doPeriodically(0.01) (CallbackPeriodic cb) ->
+                if transformationActive[pid] == false
+                    caster.addAbility(luffyE)
+                    caster.setAbilityLevel(luffyE, luffyELvl)
+                    caster.addAbility(SPELL_G[pid]) 
+                    if gg_snd_Gear4luffy.isPlaying()
+                        gg_snd_Gear4luffy.stop(false, false) 
+                    destroy cb
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    // CreateTrigger()
+    // ..registerAnyUnitEvent(EVENT_PLAYER_UNIT_SPELL_EFFECT)
+    // ..addAction() ->
+    //     if ((GetSpellAbilityId() == 'A19N')) 
+    //         luffyTactive = true
+    //         let caster = GetTriggerUnit()
+    //         let pid = caster.getOwner().getId()
+    //         let luffyE = 'A047'
+    //         let luffyELvl = caster.getAbilityLevel(luffyE)
+    //         stopBgm()
+    //         StopMusic(false)
+    //         PlaySoundBJ(gg_snd_Gear4luffy)
+    //         caster.removeAbility(SPELL_G[pid])
+    //         caster.removeAbility(luffyE)
+    //         caster.removeAbility('B00U')
+    //         caster.hideAbility(SPELL_Q[pid], true)
+    //         SPELL_Q[pid].addTagHidden()
+    //         caster.hideAbility(SPELL_W[pid], true)
+    //         SPELL_W[pid].addTagHidden()
+    //         caster.hideAbility(SPELL_E[pid], true)
+    //         SPELL_E[pid].addTagHidden()
+    //         caster.hideAbility(SPELL_R[pid], true)
+    //         SPELL_R[pid].addTagHidden() 
+    //         caster.hideAbility(SPELL_T[pid], true)
+    //         SPELL_T[pid].addTagHidden()            
+
+    //         doPeriodically(0.003) (CallbackPeriodic cb) ->
+    //             if luffyTactive == true
+    //                 if (((IsUnitDeadBJ(caster) == true) or (UnitHasBuffBJ(caster,'B00B') == false))) 
+    //                     luffyTactive = false 
+    //                     if gg_snd_Gear4luffy.isPlaying()
+    //                         gg_snd_Gear4luffy.stop(false, false) 
+    //                     if IsUnitDeadBJ(caster) == false
+    //                         acrRevive(caster)                              
+    //                     doAfter(0.003) -> 
+    //                         if SPELL_Q[pid].hasTagHidden()                        
+    //                             caster.hideAbility(SPELL_Q[pid], false)
+    //                             SPELL_Q[pid].removeTagHidden()
+    //                         if SPELL_W[pid].hasTagHidden()                        
+    //                             caster.hideAbility(SPELL_W[pid], false)
+    //                             SPELL_W[pid].removeTagHidden()
+    //                         if SPELL_E[pid].hasTagHidden()                        
+    //                             caster.hideAbility(SPELL_E[pid], false)
+    //                             SPELL_E[pid].removeTagHidden()
+    //                             caster.addAbility(luffyE)
+    //                             caster.setAbilityLevel(luffyE, luffyELvl)
+    //                             caster.addAbility(SPELL_G[pid]) 
+    //                         if SPELL_R[pid].hasTagHidden()                        
+    //                             caster.hideAbility(SPELL_R[pid], false)
+    //                             SPELL_R[pid].removeTagHidden() 
+    //                         if SPELL_T[pid].hasTagHidden() 
+    //                             caster.hideAbility(SPELL_T[pid], false)
+    //                             SPELL_T[pid].removeTagHidden()
+    //                             caster.startAbilityCooldown(SPELL_T[pid])
+    //                             acrCooldownT[pid] = 60.00                                                                                  
+    //                         destroy cb

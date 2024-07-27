@@ -1,0 +1,1147 @@
+package UpdateLearningTooltips
+
+import AbilityClassifications
+import AbilityGlobals
+import ObjectDefinitions
+
+init
+    skillLvlUp()
+
+public function unit.updateLearningTooltips ()
+    let id = this.getOwner().getId()
+    string stat = ""
+    int lvl
+    string cooldown
+    string manacost
+    string rangenumber
+    string projectilerangenumber
+    string damageabil
+    string damagestat
+    string msandasnumber
+    string aoenumber
+    string durationnumber
+
+    let range = GOLD+"Cast Range: "+PINK
+    let projectilerange = GOLD+"Projectile Range: "+PINK
+    let aoe = GOLD+"Area Of Effect: "+PINK
+    let mana = GOLD+"Mana Cost: "+PINK
+    let cd = GOLD+"Cooldown: "+PINK
+    let dmg = GOLD+"Damage Output: "+PINK
+    let bracketleft = GOLD+"( "+PINK
+    let bracketright = GOLD+" )"+PINK
+    let plus = GOLD+" + "+PINK
+    let multiply = GOLD+" • "+PINK
+    let heal = GOLD+"Heal Output: "+PINK
+    let manadrainbasic = GOLD+"Basic Attacks Mana Decrease: "+PINK
+    let manadrainw = GOLD+"W Mana Decrease: "+PINK
+    let maxmana = PINK+"% of max mana."+GOLD
+    let duration = GOLD+"Duration: "+PINK
+    let stunduration = GOLD+"Stun Duration: "+PINK
+    let ms = GOLD+"Movement Speed Increase: "+PINK
+    let as =  GOLD+"Attack Speed Increase: "+PINK
+    let percent = GOLD+"%"+PINK
+
+    if BlzGetUnitIntegerField(this, UNIT_IF_PRIMARY_ATTRIBUTE) == 1 // Strength
+        stat = RED+"STR"+CR
+    else if BlzGetUnitIntegerField(this, UNIT_IF_PRIMARY_ATTRIBUTE) == 2 // Intellect
+        stat = BLUE+"INT"+CR
+    else if BlzGetUnitIntegerField(this, UNIT_IF_PRIMARY_ATTRIBUTE) == 3 // Agility
+        stat = GREEN+"AGI"+CR
+
+    if SPELL_Q[id].isValid()
+        if SPELL_Q[id].isQProjectile()
+            if SPELL_Q[id] == 'A0BT' //Sistine
+                if this.hasAbility('A107')
+                    lvl = (SPELL_Q[id].getSkillLearnLvl(id))
+                    damageabil = (100 + (40 * lvl)).toString()
+                    damagestat = (2 + (0.6 * lvl)).toString()
+                    rangenumber = "1500"
+                    manacost = (5 + (lvl * 5)).toString()
+                    cooldown = (11 + lvl).toString()
+                    SPELL_Q[id]..setLearningTitle(BLUE+BlzGetAbilityResearchTooltip(SPELL_Q[id], this.getAbilityLevel(SPELL_Q[id]) - 1))
+                    ..setLearningDescription(GOLD+
+                    "Sistine deals damage to enemies along the path towards the targeted location."+
+                    "\n\n"+range+rangenumber+
+                    "\n"+mana+manacost+
+                    "\n"+cd+cooldown+
+                    "\n"+dmg+damageabil+plus+bracketleft+damagestat+multiply+stat+bracketright+CR)
+                else 
+                    lvl = (SPELL_Q[id].getSkillLearnLvl(id))
+                    damageabil = (40 * lvl).toString()
+                    damagestat = (0.6 * lvl).toString()
+                    rangenumber = "1500"
+                    manacost = (5 + (lvl * 5)).toString()
+                    cooldown = (11 + lvl).toString()
+                    SPELL_Q[id]..setLearningTitle(BLUE+BlzGetAbilityResearchTooltip(SPELL_Q[id], this.getAbilityLevel(SPELL_Q[id]) - 1))
+                    ..setLearningDescription(GOLD+
+                    "Sistine deals damage to enemies along the path towards the targeted location."+
+                    "\n\n"+range+rangenumber+
+                    "\n"+mana+manacost+
+                    "\n"+cd+cooldown+
+                    "\n"+dmg+damageabil+plus+bracketleft+damagestat+multiply+stat+bracketright+CR)    
+
+            else if SPELL_Q[id] == 'A0KJ' //Byakuran
+                if this.hasAbility('A0KT')
+                    lvl = (SPELL_Q[id].getSkillLearnLvl(id))
+                    damageabil = (100 + (40 * lvl)).toString()
+                    damagestat = (2 + (0.6 * lvl)).toString()
+                    rangenumber = "1500"
+                    manacost = (5 + (lvl * 5)).toString()
+                    cooldown = (11 + lvl).toString()
+                    SPELL_Q[id]..setLearningTitle(BLUE+BlzGetAbilityResearchTooltip(SPELL_Q[id], this.getAbilityLevel(SPELL_Q[id]) - 1))
+                    ..setLearningDescription(GOLD+
+                    "Byakuran deals damage to enemies along the path towards the targeted location."+
+                    "\n\n"+range+rangenumber+
+                    "\n"+mana+manacost+
+                    "\n"+cd+cooldown+
+                    "\n"+dmg+damageabil+plus+bracketleft+damagestat+multiply+stat+bracketright+CR)
+                else 
+                    lvl = (SPELL_Q[id].getSkillLearnLvl(id))
+                    damageabil = (40 * lvl).toString()
+                    damagestat = (0.6 * lvl).toString()
+                    rangenumber = "1500"
+                    manacost = (5 + (lvl * 5)).toString()
+                    cooldown = (11 + lvl).toString()
+                    SPELL_Q[id]..setLearningTitle(BLUE+BlzGetAbilityResearchTooltip(SPELL_Q[id], this.getAbilityLevel(SPELL_Q[id]) - 1))
+                    ..setLearningDescription(GOLD+
+                    "Byakuran deals damage to enemies along the path towards the targeted location."+
+                    "\n\n"+range+rangenumber+
+                    "\n"+mana+manacost+
+                    "\n"+cd+cooldown+
+                    "\n"+dmg+damageabil+plus+bracketleft+damagestat+multiply+stat+bracketright+CR)   
+
+            else if SPELL_Q[id] == 'A0M3' //Yamamoto
+                lvl = (SPELL_Q[id].getSkillLearnLvl(id))
+                damageabil = (40 * lvl).toString()
+                damagestat = (0.6 * lvl).toString()
+                rangenumber = "1500"
+                manacost = (5 + (lvl * 5)).toString()
+                cooldown = (11 + lvl).toString()
+                SPELL_Q[id]..setLearningTitle(BLUE+BlzGetAbilityResearchTooltip(SPELL_Q[id], this.getAbilityLevel(SPELL_Q[id]) - 1))
+                ..setLearningDescription(GOLD+
+                "Deals damage to enemies along the path towards the targeted location. This ability gets replaced by Q2 for 8 seconds after use."+
+                "\n\n"+range+rangenumber+
+                "\n"+mana+manacost+
+                "\n"+cd+cooldown+
+                "\n"+dmg+damageabil+plus+bracketleft+damagestat+multiply+stat+bracketright+CR)    
+
+            else if SPELL_Q[id] == 'A0US' //2B
+                lvl = (SPELL_Q[id].getSkillLearnLvl(id))
+                damageabil = (40 * lvl).toString()
+                damagestat = (0.6 * lvl).toString()
+                rangenumber = "1500"
+                manacost = (5 + (lvl * 5)).toString()
+                cooldown = (11 + lvl).toString()
+                SPELL_Q[id]..setLearningTitle(BLUE+BlzGetAbilityResearchTooltip(SPELL_Q[id], this.getAbilityLevel(SPELL_Q[id]) - 1))
+                ..setLearningDescription(GOLD+
+                "Deals damage to enemies along the path towards the targeted location. This ability gets replaced by Q2 for 2 seconds after use."+
+                "\n\n"+range+rangenumber+
+                "\n"+mana+manacost+
+                "\n"+cd+cooldown+
+                "\n"+dmg+damageabil+plus+bracketleft+damagestat+multiply+stat+bracketright+CR)  
+
+            else     
+                lvl = (SPELL_Q[id].getSkillLearnLvl(id))
+                damageabil = (40 * lvl).toString()
+                damagestat = (0.6 * lvl).toString()
+                rangenumber = "1500"
+                manacost = (5 + (lvl * 5)).toString()
+                cooldown = (11 + lvl).toString()
+                SPELL_Q[id]..setLearningTitle(BLUE+BlzGetAbilityResearchTooltip(SPELL_Q[id], this.getAbilityLevel(SPELL_Q[id]) - 1))
+                ..setLearningDescription(GOLD+
+                "Deals damage to enemies along the path towards the targeted location."+
+                "\n\n"+range+rangenumber+
+                "\n"+mana+manacost+
+                "\n"+cd+cooldown+
+                "\n"+dmg+damageabil+plus+bracketleft+damagestat+multiply+stat+bracketright+CR) 
+
+        else if SPELL_Q[id].isQDash()
+            lvl = (SPELL_Q[id].getSkillLearnLvl(id))
+            damageabil = (40 * lvl).toString()
+            damagestat = (0.6 * lvl).toString()
+            rangenumber = "1500"
+            manacost = (5 + (lvl * 5)).toString()
+            cooldown = (11 + lvl).toString()
+            SPELL_Q[id]..setLearningTitle(BLUE+BlzGetAbilityResearchTooltip(SPELL_Q[id], this.getAbilityLevel(SPELL_Q[id]) - 1))
+            ..setLearningDescription(GOLD+
+            "Dashes towards the targeted location, dealing damage to enemies in the path."+
+            "\n\n"+range+rangenumber+
+            "\n"+mana+manacost+
+            "\n"+cd+cooldown+
+            "\n"+dmg+damageabil+plus+bracketleft+damagestat+multiply+stat+bracketright+CR)
+
+        else if SPELL_Q[id].isQPoint()
+            if SPELL_Q[id] == 'A0V6'
+                if this.hasItemById('I05Y')
+                    lvl = (SPELL_Q[id].getSkillLearnLvl(id))
+                    damageabil = (25 + (40 * lvl)).toString()
+                    damagestat = (2 + (0.6 * lvl)).toString()
+                    rangenumber = "1500"
+                    manacost = (5 + (lvl * 5)).toString()
+                    cooldown = (11 + lvl).toString()
+                    SPELL_Q[id]..setLearningTitle(BLUE+BlzGetAbilityResearchTooltip(SPELL_Q[id], this.getAbilityLevel(SPELL_Q[id]) - 1))
+                    ..setLearningDescription(GOLD+
+                    "Kiara deals damage to enemies in the targeted area."+
+                    "\n\n"+range+rangenumber+
+                    "\n"+mana+manacost+
+                    "\n"+cd+cooldown+
+                    "\n"+dmg+damageabil+plus+bracketleft+damagestat+multiply+stat+bracketright+CR)
+                else
+                    lvl = (SPELL_Q[id].getSkillLearnLvl(id))
+                    damageabil = (40 * lvl).toString()
+                    damagestat = (0.6 * lvl).toString()
+                    rangenumber = "1500"
+                    manacost = (5 + (lvl * 5)).toString()
+                    cooldown = (11 + lvl).toString()
+                    SPELL_Q[id]..setLearningTitle(BLUE+BlzGetAbilityResearchTooltip(SPELL_Q[id], this.getAbilityLevel(SPELL_Q[id]) - 1))
+                    ..setLearningDescription(GOLD+
+                    "Kiara deals damage to enemies in the targeted area."+
+                    "\n\n"+range+rangenumber+
+                    "\n"+mana+manacost+
+                    "\n"+cd+cooldown+
+                    "\n"+dmg+damageabil+plus+bracketleft+damagestat+multiply+stat+bracketright+CR)         
+            else
+                lvl = (SPELL_Q[id].getSkillLearnLvl(id))
+                damageabil = (40 * lvl).toString()
+                damagestat = (0.6 * lvl).toString()
+                rangenumber = "1500"
+                manacost = (5 + (lvl * 5)).toString()
+                cooldown = (11 + lvl).toString()
+                SPELL_Q[id]..setLearningTitle(BLUE+BlzGetAbilityResearchTooltip(SPELL_Q[id], this.getAbilityLevel(SPELL_Q[id]) - 1))
+                ..setLearningDescription(GOLD+
+                "Deals damage to enemies in the targeted area."+
+                "\n\n"+range+rangenumber+
+                "\n"+mana+manacost+
+                "\n"+cd+cooldown+
+                "\n"+dmg+damageabil+plus+bracketleft+damagestat+multiply+stat+bracketright+CR)     
+
+        else if SPELL_Q[id].isQTeleport()
+            if SPELL_Q[id] == 'A0MB'  //Arturia
+                lvl = (SPELL_Q[id].getSkillLearnLvl(id))
+                damageabil = (40 * lvl).toString()
+                damagestat = (0.6 * lvl).toString()
+                rangenumber = "1500"
+                manacost = (5 + (lvl * 5)).toString()
+                cooldown = (11 + lvl).toString()
+                SPELL_Q[id]..setLearningTitle(BLUE+BlzGetAbilityResearchTooltip(SPELL_Q[id], this.getAbilityLevel(SPELL_Q[id]) - 1))
+                ..setLearningDescription(GOLD+
+                "Teleports to the targeted area and deals damage to surrounding enemies afterwards. This ability gets replaced by Q2 for 2 seconds after use."+
+                "\n\n"+range+rangenumber+
+                "\n"+mana+manacost+
+                "\n"+cd+cooldown+
+                "\n"+dmg+damageabil+plus+bracketleft+damagestat+multiply+stat+bracketright+CR)
+
+            else if SPELL_Q[id] == 'A0RP'  //Saber Lily
+                lvl = (SPELL_Q[id].getSkillLearnLvl(id))
+                damageabil = (40 * lvl).toString()
+                damagestat = (0.6 * lvl).toString()
+                rangenumber = "1500"
+                manacost = (5 + (lvl * 5)).toString()
+                cooldown = (11 + lvl).toString()
+                SPELL_Q[id]..setLearningTitle(BLUE+BlzGetAbilityResearchTooltip(SPELL_Q[id], this.getAbilityLevel(SPELL_Q[id]) - 1))
+                ..setLearningDescription(GOLD+
+                "Teleports to the targeted area and deals damage to surrounding enemies afterwards. This ability gets replaced by Q2 for 2 seconds after use."+
+                "\n\n"+range+rangenumber+
+                "\n"+mana+manacost+
+                "\n"+cd+cooldown+
+                "\n"+dmg+damageabil+plus+bracketleft+damagestat+multiply+stat+bracketright+CR)
+
+            else 
+                lvl = (SPELL_Q[id].getSkillLearnLvl(id))
+                damageabil = (40 * lvl).toString()
+                damagestat = (0.6 * lvl).toString()
+                rangenumber = "1500"
+                manacost = (5 + (lvl * 5)).toString()
+                cooldown = (11 + lvl).toString()
+                SPELL_Q[id]..setLearningTitle(BLUE+BlzGetAbilityResearchTooltip(SPELL_Q[id], this.getAbilityLevel(SPELL_Q[id]) - 1))
+                ..setLearningDescription(GOLD+
+                "Teleports to the targeted area and deals damage to surrounding enemies afterwards."+
+                "\n\n"+range+rangenumber+
+                "\n"+mana+manacost+
+                "\n"+cd+cooldown+
+                "\n"+dmg+damageabil+plus+bracketleft+damagestat+multiply+stat+bracketright+CR)
+
+        else
+            SPELL_Q[id]..setLearningTitle(BLUE+BlzGetAbilityResearchTooltip(SPELL_Q[id], this.getAbilityLevel(SPELL_Q[id]) - 1))
+            ..setLearningDescription(GOLD+
+            "Error, this was not picked up, please report it to the Developers, include the ability and unit.")
+    
+    if SPELL_Q2[id].isValid()
+        lvl = (SPELL_Q2[id].getSkillLearnLvl(id))
+        damageabil = (20 * lvl).toString()
+        damagestat = (0.1 * lvl).toString()
+        rangenumber = "1500"
+        manacost = (10 + (lvl * 5)).toString()
+        cooldown = (6 + lvl).toString()
+        SPELL_Q2[id]..setLearningTitle(BLUE+BlzGetAbilityResearchTooltip(SPELL_Q2[id], this.getAbilityLevel(SPELL_Q2[id]) - 1))
+        ..setLearningDescription(GOLD+
+        "Teleports to the targeted area and deals damage to surrounding enemies afterwards."+
+        "\n\n"+range+rangenumber+
+        "\n"+mana+manacost+
+        "\n"+cd+cooldown+
+        "\n"+dmg+damageabil+plus+bracketleft+damagestat+multiply+stat+bracketright+CR)
+
+    if SPELL_W[id].isValid()
+        if SPELL_W[id].isWDash()
+            if SPELL_W[id] == 'A0EM'
+                lvl = (SPELL_W[id].getSkillLearnLvl(id))
+                damageabil = (30 * lvl).toString()
+                damagestat = (0.8 * lvl).toString()
+                rangenumber = "1350"
+                manacost = (15 + (lvl * 5)).toString()
+                cooldown = (16 + lvl).toString()
+                SPELL_W[id]..setLearningTitle(BLUE+BlzGetAbilityResearchTooltip(SPELL_W[id], this.getAbilityLevel(SPELL_W[id]) - 1))
+                ..setLearningDescription(GOLD+
+                "The user dashes to the targeted location, dealing damage to enemies in their path. This ability gets replaced by W2 for 2 seconds after use."+
+                "\n\n"+range+rangenumber+
+                "\n"+mana+manacost+
+                "\n"+cd+cooldown+
+                "\n"+dmg+damageabil+plus+bracketleft+damagestat+multiply+stat+bracketright+CR)
+            else   
+                lvl = (SPELL_W[id].getSkillLearnLvl(id))
+                damageabil = (30 * lvl).toString()
+                damagestat = (0.8 * lvl).toString()
+                rangenumber = "1350"
+                manacost = (15 + (lvl * 5)).toString()
+                cooldown = (16 + lvl).toString()
+                SPELL_W[id]..setLearningTitle(BLUE+BlzGetAbilityResearchTooltip(SPELL_W[id], this.getAbilityLevel(SPELL_W[id]) - 1))
+                ..setLearningDescription(GOLD+
+                "The user dashes to the targeted location, dealing damage to enemies in their path."+
+                "\n\n"+range+rangenumber+
+                "\n"+mana+manacost+
+                "\n"+cd+cooldown+
+                "\n"+dmg+damageabil+plus+bracketleft+damagestat+multiply+stat+bracketright+CR) 
+
+        else if SPELL_W[id].isWPoint()
+            lvl = (SPELL_W[id].getSkillLearnLvl(id))
+            damageabil = (30 * lvl).toString()
+            damagestat = (0.8 * lvl).toString()
+            rangenumber = "1350"
+            manacost = (15 + (lvl * 5)).toString()
+            cooldown = (16 + lvl).toString()
+            SPELL_W[id]..setLearningTitle(BLUE+BlzGetAbilityResearchTooltip(SPELL_W[id], this.getAbilityLevel(SPELL_W[id]) - 1))
+            ..setLearningDescription(GOLD+
+            "Deals damage to enemies in the targeted area."+
+            "\n\n"+range+rangenumber+
+            "\n"+mana+manacost+
+            "\n"+cd+cooldown+
+            "\n"+dmg+damageabil+plus+bracketleft+damagestat+multiply+stat+bracketright+CR)
+
+        else if SPELL_W[id].isWAoe()
+            lvl = (SPELL_W[id].getSkillLearnLvl(id))
+            damageabil = (30 * lvl).toString()
+            damagestat = (0.8 * lvl).toString()
+            aoenumber = "600"
+            manacost = (15 + (lvl * 5)).toString()
+            cooldown = (16 + lvl).toString()
+            SPELL_W[id]..setLearningTitle(BLUE+BlzGetAbilityResearchTooltip(SPELL_W[id], this.getAbilityLevel(SPELL_W[id]) - 1))
+            ..setLearningDescription(GOLD+
+            "Deals damage to enemies around the user."+
+            "\n\n"+aoe+aoenumber+
+            "\n"+mana+manacost+
+            "\n"+cd+cooldown+
+            "\n"+dmg+damageabil+plus+bracketleft+damagestat+multiply+stat+bracketright+CR)
+
+        else if SPELL_W[id].isWTeleport()
+            lvl = (SPELL_W[id].getSkillLearnLvl(id))
+            damageabil = (30 * lvl).toString()
+            damagestat = (0.8 * lvl).toString()
+            rangenumber = "1350"
+            manacost = (15 + (lvl * 5)).toString()
+            cooldown = (16 + lvl).toString()
+            SPELL_W[id]..setLearningTitle(BLUE+BlzGetAbilityResearchTooltip(SPELL_W[id], this.getAbilityLevel(SPELL_W[id]) - 1))
+            ..setLearningDescription(GOLD+
+            "Teleports to the targeted area and deals damage to surrounding enemies afterwards."+
+            "\n\n"+range+rangenumber+
+            "\n"+mana+manacost+
+            "\n"+cd+cooldown+
+            "\n"+dmg+damageabil+plus+bracketleft+damagestat+multiply+stat+bracketright+CR)
+
+        else if SPELL_W[id].isWProjectile()
+            lvl = (SPELL_W[id].getSkillLearnLvl(id))
+            damageabil = (30 * lvl).toString()
+            damagestat = (0.8 * lvl).toString()
+            rangenumber = "1350"
+            manacost = (15 + (lvl * 5)).toString()
+            cooldown = (16 + lvl).toString()
+            SPELL_W[id]..setLearningTitle(BLUE+BlzGetAbilityResearchTooltip(SPELL_W[id], this.getAbilityLevel(SPELL_W[id]) - 1))
+            ..setLearningDescription(GOLD+
+            "Deals damage to enemies along the path towards the targeted location."+
+            "\n\n"+range+rangenumber+
+            "\n"+mana+manacost+
+            "\n"+cd+cooldown+
+            "\n"+dmg+damageabil+plus+bracketleft+damagestat+multiply+stat+bracketright+CR)
+
+        else if SPELL_W[id] == 'A120' //kenjiro
+            lvl = (SPELL_W[id].getSkillLearnLvl(id))
+            damageabil = (30 * lvl).toString()
+            damagestat = (0.8 * lvl).toString()
+            rangenumber = "900"
+            manacost = (15 + (lvl * 5)).toString()
+            cooldown = (16 + lvl).toString()
+            SPELL_W[id]..setLearningTitle(BLUE+BlzGetAbilityResearchTooltip(SPELL_W[id], this.getAbilityLevel(SPELL_W[id]) - 1))
+            ..setLearningDescription(GOLD+
+            "Deals damage to the targeted enemy. This ability gets replaced by W2 for 2 seconds after use."+
+            "\n\n"+range+rangenumber+
+            "\n"+mana+manacost+
+            "\n"+cd+cooldown+
+            "\n"+dmg+damageabil+plus+bracketleft+damagestat+multiply+stat+bracketright+CR)
+
+        else if SPELL_W[id] == 'A120' or SPELL_W[id] == 'A10X' //dante/deku
+            lvl = (SPELL_W[id].getSkillLearnLvl(id))
+            damageabil = (30 * lvl).toString()
+            damagestat = (0.8 * lvl).toString()
+            rangenumber = "900"
+            manacost = (15 + (lvl * 5)).toString()
+            cooldown = (16 + lvl).toString()
+            SPELL_W[id]..setLearningTitle(BLUE+BlzGetAbilityResearchTooltip(SPELL_W[id], this.getAbilityLevel(SPELL_W[id]) - 1))
+            ..setLearningDescription(GOLD+
+            "Deals damage to the targeted enemy, kicks them into the air and marks them until they hit the ground. While an enemy is marked, this ability is replaced by W2."+
+            "\n\n"+range+rangenumber+
+            "\n"+mana+manacost+
+            "\n"+cd+cooldown+
+            "\n"+dmg+damageabil+plus+bracketleft+damagestat+multiply+stat+bracketright+CR)
+
+        else if SPELL_W[id] == 'A08J'
+            lvl = (SPELL_W[id].getSkillLearnLvl(id))
+            damageabil = (30 * lvl).toString()
+            damagestat = (0.8 * lvl).toString()
+            rangenumber = "900"
+            manacost = (15 + (lvl * 5)).toString()
+            cooldown = (16 + lvl).toString()
+            SPELL_W[id]..setLearningTitle(BLUE+BlzGetAbilityResearchTooltip(SPELL_W[id], this.getAbilityLevel(SPELL_W[id]) - 1))
+            ..setLearningDescription(GOLD+
+            "Glenn dashes towards the direction he's facing, dealing damage to first enemy hero he comes into contact with."+
+            "\n\n"+range+rangenumber+
+            "\n"+mana+manacost+
+            "\n"+cd+cooldown+
+            "\n"+dmg+damageabil+plus+bracketleft+damagestat+multiply+stat+bracketright+CR)  
+
+        else
+            lvl = (SPELL_W[id].getSkillLearnLvl(id))
+            damageabil = (30 * lvl).toString()
+            damagestat = (0.8 * lvl).toString()
+            rangenumber = "900"
+            manacost = (15 + (lvl * 5)).toString()
+            cooldown = (16 + lvl).toString()
+            SPELL_W[id]..setLearningTitle(BLUE+BlzGetAbilityResearchTooltip(SPELL_W[id], this.getAbilityLevel(SPELL_W[id]) - 1))
+            ..setLearningDescription(GOLD+
+            "Deals damage to the targeted enemy."+
+            "\n\n"+range+rangenumber+
+            "\n"+mana+manacost+
+            "\n"+cd+cooldown+
+            "\n"+dmg+damageabil+plus+bracketleft+damagestat+multiply+stat+bracketright+CR)     
+
+    if SPELL_W2[id].isValid()
+        lvl = (SPELL_W2[id].getSkillLearnLvl(id))
+        damageabil = (20 * lvl).toString()
+        damagestat = (0.1 * lvl).toString()
+        rangenumber = "900"
+        manacost = (20 + (lvl * 5)).toString()
+        cooldown = (6 + lvl).toString()
+        SPELL_W2[id]..setLearningTitle(BLUE+BlzGetAbilityResearchTooltip(SPELL_W2[id], this.getAbilityLevel(SPELL_W2[id]) - 1))
+        ..setLearningDescription(GOLD+
+        "Description needed."+
+        "\n\n"+range+rangenumber+
+        "\n"+mana+manacost+
+        "\n"+cd+cooldown+
+        "\n"+dmg+damageabil+plus+bracketleft+damagestat+multiply+stat+bracketright+CR)
+
+    if SPELL_E[id].isValid()
+        if SPELL_E[id].isEDamaging()
+            if SPELL_E[id] == 'A014'//Misaka
+                lvl = (SPELL_E[id].getSkillLearnLvl(id))
+                damageabil = (40 * lvl).toString()
+                damagestat = (0.2 * lvl).toString()
+                rangenumber = "1"
+                SPELL_E[id]..setLearningTitle(BLUE+BlzGetAbilityResearchTooltip(SPELL_E[id], this.getAbilityLevel(SPELL_E[id]) - 1))
+                ..setLearningDescription(GOLD+
+                "Misaka's basic attacks have a 20% chance to deal additional damage and stun their target for a brief duration."+
+                "\n\n"+stunduration+rangenumber+
+                "\n"+dmg+damageabil+plus+bracketleft+damagestat+multiply+stat+bracketright+CR)
+
+            else if SPELL_E[id] == 'A01E'//Sting
+                lvl = (SPELL_E[id].getSkillLearnLvl(id))
+                damageabil = (40 * lvl).toString()
+                damagestat = (0.2 * lvl).toString()
+                rangenumber = "1"
+                SPELL_E[id]..setLearningTitle(BLUE+BlzGetAbilityResearchTooltip(SPELL_E[id], this.getAbilityLevel(SPELL_E[id]) - 1))
+                ..setLearningDescription(GOLD+
+                "Sting's basic attacks have a 20% chance to deal additional damage and stun their target for a brief duration."+
+                "\n\n"+stunduration+rangenumber+
+                "\n"+dmg+damageabil+plus+bracketleft+damagestat+multiply+stat+bracketright+CR)
+
+            else if SPELL_E[id] == 'A0D2'//Ichigo
+                lvl = (SPELL_E[id].getSkillLearnLvl(id))
+                damageabil = ((40 * lvl) / 5).toString().replace("00", "")
+                damagestat = ((0.2 * lvl) / 5).toString().replace("00", "")
+                rangenumber = "10"
+                msandasnumber = (4 * lvl).toString()
+                manacost = (10 + (lvl * 5)).toString()
+                cooldown = (15 + lvl).toString()
+                SPELL_E[id]..setLearningTitle(BLUE+BlzGetAbilityResearchTooltip(SPELL_E[id], this.getAbilityLevel(SPELL_E[id]) - 1))
+                ..setLearningDescription(GOLD+
+                "Ichigo gains increased movement and attack speed for a short duration. During this time, Ichigo's basic attacks unleash getsuga tensho upon their target."+
+                "\n\n"+duration+rangenumber+
+                "\n"+mana+manacost+
+                "\n"+cd+cooldown+
+                "\n"+ms+msandasnumber+percent+
+                "\n"+as+msandasnumber+percent+
+                "\n"+dmg+damageabil+plus+bracketleft+damagestat+multiply+stat+bracketright+CR)               
+
+            else if SPELL_E[id].isEProjectile()
+                lvl = (SPELL_E[id].getSkillLearnLvl(id))
+                damageabil = (40 * lvl).toString()
+                damagestat = (0.2 * lvl).toString()
+                rangenumber = "1300"
+                manacost = (10 + (lvl * 5)).toString()
+                cooldown = (15 + lvl).toString()
+                SPELL_E[id]..setLearningTitle(BLUE+BlzGetAbilityResearchTooltip(SPELL_E[id], this.getAbilityLevel(SPELL_E[id]) - 1))
+                ..setLearningDescription(GOLD+
+                "Deals damage to enemies along the path towards the targeted location."+
+                "\n\n"+range+rangenumber+
+                "\n"+mana+manacost+
+                "\n"+cd+cooldown+
+                "\n"+dmg+damageabil+plus+bracketleft+damagestat+multiply+stat+bracketright+CR) 
+
+            else if SPELL_E[id].isEAoe()
+                if SPELL_E[id] == 'A10A' //glenn
+                    lvl = (SPELL_E[id].getSkillLearnLvl(id))
+                    damageabil = (40 * lvl).toString()
+                    damagestat = (0.2 * lvl).toString()
+                    aoenumber = "550"
+                    manacost = (10 + (lvl * 5)).toString()
+                    cooldown = (15 + lvl).toString()
+                    SPELL_E[id]..setLearningTitle(BLUE+BlzGetAbilityResearchTooltip(SPELL_E[id], this.getAbilityLevel(SPELL_E[id]) - 1))
+                    ..setLearningDescription(GOLD+
+                    "Deals damage to the nearest enemy hero within certain range."+
+                    "\n\n"+aoe+aoenumber+
+                    "\n"+mana+manacost+
+                    "\n"+cd+cooldown+
+                    "\n"+dmg+damageabil+plus+bracketleft+damagestat+multiply+stat+bracketright+CR) 
+
+                else     
+                    lvl = (SPELL_E[id].getSkillLearnLvl(id))
+                    damageabil = (40 * lvl).toString()
+                    damagestat = (0.2 * lvl).toString()
+                    aoenumber = "550"
+                    manacost = (10 + (lvl * 5)).toString()
+                    cooldown = (15 + lvl).toString()
+                    SPELL_E[id]..setLearningTitle(BLUE+BlzGetAbilityResearchTooltip(SPELL_E[id], this.getAbilityLevel(SPELL_E[id]) - 1))
+                    ..setLearningDescription(GOLD+
+                    "Deals damage to enemies around the user."+
+                    "\n\n"+aoe+aoenumber+
+                    "\n"+mana+manacost+
+                    "\n"+cd+cooldown+
+                    "\n"+dmg+damageabil+plus+bracketleft+damagestat+multiply+stat+bracketright+CR) 
+            else if SPELL_E[id].isEDash()
+                lvl = (SPELL_E[id].getSkillLearnLvl(id))
+                damageabil = (40 * lvl).toString()
+                damagestat = (0.2 * lvl).toString()
+                rangenumber = "1300"
+                manacost = (10 + (lvl * 5)).toString()
+                cooldown = (15 + lvl).toString()
+                SPELL_E[id]..setLearningTitle(BLUE+BlzGetAbilityResearchTooltip(SPELL_E[id], this.getAbilityLevel(SPELL_E[id]) - 1))
+                ..setLearningDescription(GOLD+
+                "Dashes towards the targeted location, dealing damage to enemies in the path."+
+                "\n\n"+range+rangenumber+
+                "\n"+mana+manacost+
+                "\n"+cd+cooldown+
+                "\n"+dmg+damageabil+plus+bracketleft+damagestat+multiply+stat+bracketright+CR)               
+
+            else if SPELL_E[id] == 'A110' //dante
+                lvl = (SPELL_E[id].getSkillLearnLvl(id))
+                damageabil = (40 * lvl).toString()
+                damagestat = (0.2 * lvl).toString()
+                rangenumber = "875"
+                manacost = (10 + (lvl * 5)).toString()
+                cooldown = (15 + lvl).toString()
+                SPELL_E[id]..setLearningTitle(BLUE+BlzGetAbilityResearchTooltip(SPELL_E[id], this.getAbilityLevel(SPELL_E[id]) - 1))
+                ..setLearningDescription(GOLD+
+                "Deals damage to the targeted enemy and marks them. For the next 2 seconds, Dante's R becomes a single target ability and automatically targets the marked enemy."+
+                "\n\n"+range+rangenumber+
+                "\n"+mana+manacost+
+                "\n"+cd+cooldown+
+                "\n"+dmg+damageabil+plus+bracketleft+damagestat+multiply+stat+bracketright+CR)   
+
+            else
+                lvl = (SPELL_E[id].getSkillLearnLvl(id))
+                damageabil = (40 * lvl).toString()
+                damagestat = (0.2 * lvl).toString()
+                rangenumber = "875"
+                manacost = (10 + (lvl * 5)).toString()
+                cooldown = (15 + lvl).toString()
+                SPELL_E[id]..setLearningTitle(BLUE+BlzGetAbilityResearchTooltip(SPELL_E[id], this.getAbilityLevel(SPELL_E[id]) - 1))
+                ..setLearningDescription(GOLD+
+                "Deals damage to the targeted enemy."+
+                "\n\n"+range+rangenumber+
+                "\n"+mana+manacost+
+                "\n"+cd+cooldown+
+                "\n"+dmg+damageabil+plus+bracketleft+damagestat+multiply+stat+bracketright+CR)   
+
+        else if SPELL_E[id] == 'A0UX' // ━━━━━━━━━━━━ [2B] ━━━━━━━━━━━━
+            lvl = (SPELL_E[id].getSkillLearnLvl(id))
+            damageabil = (40 * lvl).toString()
+            damagestat = (0.2 * lvl).toString()
+            rangenumber = "875"
+            manacost = (10 + (lvl * 5)).toString()
+            cooldown = (15 + lvl).toString()
+            SPELL_E[id]..setLearningTitle(BLUE+BlzGetAbilityResearchTooltip(SPELL_E[id], this.getAbilityLevel(SPELL_E[id]) - 1))
+            ..setLearningDescription(GOLD+
+            "Description needed."+
+            "\n\n"+range+rangenumber+
+            "\n"+mana+manacost+
+            "\n"+cd+cooldown+
+            "\n"+dmg+damageabil+plus+bracketleft+damagestat+multiply+stat+bracketright+CR)
+
+        else if SPELL_E[id].isESelfHeal()// ━━━━━━━━━━━━ [Jack/Illya/Kurumi/Misogi] ━━━━━━━━━━━━
+            lvl = (SPELL_E[id].getSkillLearnLvl(id))
+            damageabil = (25 * lvl).toString()
+            damagestat = (0.5 * lvl).toString()
+            manacost = (10 + (lvl * 5)).toString()
+            cooldown = (25 + (lvl * 5)).toString()
+            SPELL_E[id]..setLearningTitle(BLUE+BlzGetAbilityResearchTooltip(SPELL_E[id], this.getAbilityLevel(SPELL_E[id]) - 1))
+            ..setLearningDescription(GOLD+
+            "The user heals themselves."+
+            "\n\n"+mana+manacost+
+            "\n"+cd+cooldown+
+            "\n"+heal+damageabil+plus+bracketleft+damagestat+multiply+stat+bracketright+CR)
+
+        else if SPELL_E[id] == 'A0T7' // ━━━━━━━━━━━━ [Jeanne Lily] ━━━━━━━━━━━━
+            lvl = (SPELL_E[id].getSkillLearnLvl(id))
+            damageabil = (25 * lvl).toString()
+            damagestat = (0.5 * lvl).toString()
+            rangenumber = "1200"
+            manacost = (10 + (lvl * 5)).toString()
+            cooldown = (25 + (lvl * 5)).toString()
+            SPELL_E[id]..setLearningTitle(BLUE+BlzGetAbilityResearchTooltip(SPELL_E[id], this.getAbilityLevel(SPELL_E[id]) - 1))
+            ..setLearningDescription(GOLD+
+            "Jeanne heals all friendly units in the targeted area."+
+            "\n\n"+range+rangenumber+
+            "\n"+mana+manacost+
+            "\n"+cd+cooldown+
+            "\n"+heal+damageabil+plus+bracketleft+damagestat+multiply+stat+bracketright+CR)
+
+        else if SPELL_E[id] == 'A0R0' // ━━━━━━━━━━━━ [Emilia] ━━━━━━━━━━━━
+            lvl = (SPELL_E[id].getSkillLearnLvl(id))
+            damageabil = (25 * lvl).toString()
+            damagestat = (0.5 * lvl).toString()
+            rangenumber = "1200"
+            manacost = (10 + (lvl * 5)).toString()
+            cooldown = (25 + (lvl * 5)).toString()
+            SPELL_E[id]..setLearningTitle(BLUE+BlzGetAbilityResearchTooltip(SPELL_E[id], this.getAbilityLevel(SPELL_E[id]) - 1))
+            ..setLearningDescription(GOLD+
+            "Emilia heals the target."+
+            "\n\n"+range+rangenumber+
+            "\n"+mana+manacost+
+            "\n"+cd+cooldown+
+            "\n"+heal+damageabil+plus+bracketleft+damagestat+multiply+stat+bracketright+CR)
+
+        else if SPELL_E[id] == 'A0O3' // ━━━━━━━━━━━━ [Inuyasha] ━━━━━━━━━━━━
+            lvl = (SPELL_E[id].getSkillLearnLvl(id))
+            damageabil = (3 * lvl).toString()
+            damagestat = (0.8 * lvl).toString().replace("00", "")
+            manacost = (10 + (lvl * 5)).toString()
+            cooldown = (15 + lvl).toString()
+            SPELL_E[id]..setLearningTitle(BLUE+BlzGetAbilityResearchTooltip(SPELL_E[id], this.getAbilityLevel(SPELL_E[id]) - 1))
+            ..setLearningDescription(GOLD+
+            "While active, Inuyasha's basic attacks and W ability decrease their target's current mana based on the target's max mana."+
+            "\n\n"+mana+manacost+
+            "\n"+cd+cooldown+
+            "\n"+manadrainbasic+damagestat+maxmana+
+            "\n"+manadrainw+damageabil+maxmana+CR)
+
+        else if SPELL_E[id] == MADARA_EDO_ABILITY_E or SPELL_E[id] == ITACHI_EDO_ABILITY_E or SPELL_E[id] == MADARA_NORMAL_ABILITY_E // ━━━━━━━━━━━━ [Sharingan] ━━━━━━━━━━━━
+            lvl = (SPELL_E[id].getSkillLearnLvl(id))
+            manacost = (10 + (lvl * 5)).toString()
+            cooldown = (90 - (10 * lvl)).toString()
+            rangenumber = "4"
+            SPELL_E[id]..setLearningTitle(BLUE+BlzGetAbilityResearchTooltip(SPELL_E[id], this.getAbilityLevel(SPELL_E[id]) - 1))
+            ..setLearningDescription(GOLD+
+            "While active, the user evades all incoming basic attacks."+
+            "\n\n"+duration+rangenumber+
+            "\n"+mana+manacost+
+            "\n"+cd+cooldown+CR)
+
+        else if SPELL_E[id] == SASUKE_YOUNG_ABILITY_E // ━━━━━━━━━━━━ [Sasuke Young] ━━━━━━━━━━━━
+            lvl = (SPELL_E[id].getSkillLearnLvl(id))
+            manacost = "5"
+            cooldown = "2"
+            msandasnumber = (2 * lvl).toString()
+            SPELL_E[id]..setLearningTitle(BLUE+BlzGetAbilityResearchTooltip(SPELL_E[id], this.getAbilityLevel(SPELL_E[id]) - 1))
+            ..setLearningDescription(GOLD+
+            "Sasuke gains increased movement speed. Additionally, Sasuke can use this ability to toggle between his eyes, gaining their respective ability and replacing his Q and R abilities with their alternative versions."+
+            "\n\n"+mana+manacost+
+            "\n"+cd+cooldown+            
+            "\n"+ms+msandasnumber+percent+CR)            
+
+        else if SPELL_E[id] == 'A00I' // ━━━━━━━━━━━━ [Natsu] ━━━━━━━━━━━━
+            lvl = (SPELL_E[id].getSkillLearnLvl(id))
+            manacost = "5"
+            cooldown = "1"
+            msandasnumber = (4 * lvl).toString()
+            SPELL_E[id]..setLearningTitle(BLUE+BlzGetAbilityResearchTooltip(SPELL_E[id], this.getAbilityLevel(SPELL_E[id]) - 1))
+            ..setLearningDescription(GOLD+
+            "Natsu gains increased movement speed. This ability can be used to toggle between his Q/W/R original abilities and their alternative versions."+
+            "\n\n"+mana+manacost+
+            "\n"+cd+cooldown+            
+            "\n"+ms+msandasnumber+percent+CR)
+
+        else if SPELL_E[id] == 'A0JT' // ━━━━━━━━━━━━ [Shana] ━━━━━━━━━━━━
+            lvl = (SPELL_E[id].getSkillLearnLvl(id))
+            manacost = "5"
+            cooldown = "1"
+            msandasnumber = (4 * lvl).toString()
+            SPELL_E[id]..setLearningTitle(BLUE+BlzGetAbilityResearchTooltip(SPELL_E[id], this.getAbilityLevel(SPELL_E[id]) - 1))
+            ..setLearningDescription(GOLD+
+            "Shana gains increased movement speed. This ability can be used to toggle between her Q/W/R original abilities and their alternative versions."+
+            "\n\n"+mana+manacost+
+            "\n"+cd+cooldown+            
+            "\n"+ms+msandasnumber+percent+CR)            
+
+        else
+            SPELL_E[id]..setLearningTitle(BLUE+BlzGetAbilityTooltip(SPELL_E[id], SPELL_E[id].getSkillLearnLvl(id)-1))
+            ..setLearningDescription(BlzGetAbilityExtendedTooltip(SPELL_E[id], SPELL_E[id].getSkillLearnLvl(id)-1))
+
+    if SPELL_R[id].isValid()
+        if SPELL_R[id] == 'A0ZF' // ━━━━━━━━━━━━ [Saber Alter] ━━━━━━━━━━━━
+            lvl = (SPELL_R[id].getSkillLearnLvl(id))
+            damageabil = ((70 * lvl)/1.74).toString()
+            damagestat = ((2 + (1 * lvl))/1.74).toString()
+            rangenumber = "1250"
+            manacost = (40 + (lvl * 10)).toString()
+            cooldown = (30 + (lvl * 5)).toString()
+            SPELL_R[id]..setLearningTitle(BLUE+BlzGetAbilityResearchTooltip(SPELL_R[id], this.getAbilityLevel(SPELL_R[id]) - 1))
+            ..setLearningDescription(GOLD+
+            "Saber teleports to the targeted location, dealing damage to surrounding enemies and knocking them back. This ability gets replaced for 10 seconds after used."+
+            "\n\n"+range+rangenumber+
+            "\n"+mana+manacost+
+            "\n"+cd+cooldown+
+            "\n"+dmg+damageabil+plus+bracketleft+damagestat+multiply+stat+bracketright+CR)         
+
+        else if SPELL_R[id] == 'A0SE' //Goku
+            lvl = (SPELL_R[id].getSkillLearnLvl(id))
+            damageabil = ((70 * lvl)/1.74).toString()
+            damagestat = ((2 + (1 * lvl))/1.74).toString()
+            manacost = (40 + (lvl * 10)).toString()
+            cooldown = (30 + (lvl * 5)).toString()
+            SPELL_R[id]..setLearningTitle(BLUE+BlzGetAbilityResearchTooltip(SPELL_R[id], this.getAbilityLevel(SPELL_R[id]) - 1))
+            ..setLearningDescription(GOLD+
+            "Goku deals damage to surrounding enemies. This skill gets replaced for 10 seconds after used."+
+            "\n\n"+mana+manacost+
+            "\n"+cd+cooldown+    
+            "\n"+dmg+damageabil+plus+bracketleft+damagestat+multiply+stat+bracketright+CR)
+
+        else if SPELL_R[id] == 'A02B' // ━━━━━━━━━━━━ [Young Sasuke ━━━━━━━━━━━━
+            lvl = (SPELL_R[id].getSkillLearnLvl(id))
+            damageabil = (70 * lvl).toString()
+            damagestat = (2 + (1 * lvl)).toString()
+            rangenumber = "850"
+            manacost = (40 + (lvl * 10)).toString()
+            cooldown = (30 + (lvl * 5)).toString()
+            SPELL_R[id]..setLearningTitle(BLUE+BlzGetAbilityResearchTooltip(SPELL_R[id], this.getAbilityLevel(SPELL_R[id]) - 1))
+            ..setLearningDescription(GOLD+
+            "Sasuke deals damage to his target."+
+            "\n\n"+range+rangenumber+
+            "\n"+mana+manacost+
+            "\n"+cd+cooldown+
+            "\n"+dmg+damageabil+plus+bracketleft+damagestat+multiply+stat+bracketright+CR)    
+
+        else if SPELL_R[id].isRProjectile()
+            if SPELL_R[id] == 'A0ZM' or SPELL_R[id] == 'A0YN'
+                lvl = (SPELL_R[id].getSkillLearnLvl(id))
+                damageabil = (70 * lvl).toString()
+                damagestat = (2 + (1 * lvl)).toString()
+                rangenumber = "850"
+                projectilerangenumber = "1250"
+                manacost = (40 + (lvl * 10)).toString()
+                cooldown = (30 + (lvl * 5)).toString()
+                SPELL_R[id]..setLearningTitle(BLUE+BlzGetAbilityResearchTooltip(SPELL_R[id], this.getAbilityLevel(SPELL_R[id]) - 1))
+                ..setLearningDescription(GOLD+
+                "Deals damage to the target and all enemies within the projectile range."+
+                "\n\n"+range+rangenumber+
+                "\n"+projectilerange+projectilerangenumber+
+                "\n"+mana+manacost+
+                "\n"+cd+cooldown+
+                "\n"+dmg+damageabil+plus+bracketleft+damagestat+multiply+stat+bracketright+CR)     
+
+            else
+                lvl = (SPELL_R[id].getSkillLearnLvl(id))
+                damageabil = (70 * lvl).toString()
+                damagestat = (2 + (1 * lvl)).toString()
+                rangenumber = "1250"
+                manacost = (40 + (lvl * 10)).toString()
+                cooldown = (30 + (lvl * 5)).toString()
+                SPELL_R[id]..setLearningTitle(BLUE+BlzGetAbilityResearchTooltip(SPELL_R[id], this.getAbilityLevel(SPELL_R[id]) - 1))
+                ..setLearningDescription(GOLD+
+                "Deals damage to enemies along the path towards the targeted location."+
+                "\n\n"+range+rangenumber+
+                "\n"+mana+manacost+
+                "\n"+cd+cooldown+
+                "\n"+dmg+damageabil+plus+bracketleft+damagestat+multiply+stat+bracketright+CR)                 
+
+        else if SPELL_R[id].isRAoe()
+            if SPELL_R[id] == 'A127' or SPELL_R[id] == 'A0YB' //Deku and Nanaya
+                lvl = (SPELL_R[id].getSkillLearnLvl(id))
+                damageabil = (70 * lvl).toString()
+                damagestat = (2 + (1 * lvl)).toString()
+                manacost = (40 + (lvl * 10)).toString()
+                cooldown = (30 + (lvl * 5)).toString()
+                SPELL_R[id]..setLearningTitle(BLUE+BlzGetAbilityResearchTooltip(SPELL_R[id], this.getAbilityLevel(SPELL_R[id]) - 1))
+                ..setLearningDescription(GOLD+
+                "Deals damage to enemies in front of the user."+
+                "\n\n"+mana+manacost+
+                "\n"+cd+cooldown+
+                "\n"+dmg+damageabil+plus+bracketleft+damagestat+multiply+stat+bracketright+CR)  
+
+            else
+                lvl = (SPELL_R[id].getSkillLearnLvl(id))
+                damageabil = (70 * lvl).toString()
+                damagestat = (2 + (1 * lvl)).toString()
+                aoenumber = "800"
+                manacost = (40 + (lvl * 10)).toString()
+                cooldown = (30 + (lvl * 5)).toString()
+                SPELL_R[id]..setLearningTitle(BLUE+BlzGetAbilityResearchTooltip(SPELL_R[id], this.getAbilityLevel(SPELL_R[id]) - 1))
+                ..setLearningDescription(GOLD+
+                "Deals damage to enemies around the user."+
+                "\n\n"+aoe+aoenumber+
+                "\n"+mana+manacost+
+                "\n"+cd+cooldown+
+                "\n"+dmg+damageabil+plus+bracketleft+damagestat+multiply+stat+bracketright+CR) 
+
+        else if SPELL_R[id].isRPoint()
+            lvl = (SPELL_R[id].getSkillLearnLvl(id))
+            damageabil = (70 * lvl).toString()
+            damagestat = (2 + (1 * lvl)).toString()
+            aoenumber = "1250"
+            manacost = (40 + (lvl * 10)).toString()
+            cooldown = (30 + (lvl * 5)).toString()
+            SPELL_R[id]..setLearningTitle(BLUE+BlzGetAbilityResearchTooltip(SPELL_R[id], this.getAbilityLevel(SPELL_R[id]) - 1))
+            ..setLearningDescription(GOLD+
+            "Deals damage to enemies inside of the targeted area."+
+            "\n\n"+aoe+aoenumber+
+            "\n"+mana+manacost+
+            "\n"+cd+cooldown+
+            "\n"+dmg+damageabil+plus+bracketleft+damagestat+multiply+stat+bracketright+CR)  
+
+        else if SPELL_R[id].isRTeleport()
+            lvl = (SPELL_R[id].getSkillLearnLvl(id))
+            damageabil = (70 * lvl).toString()
+            damagestat = (2 + (1 * lvl)).toString()
+            rangenumber = "1250"
+            manacost = (40 + (lvl * 10)).toString()
+            cooldown = (30 + (lvl * 5)).toString()
+            SPELL_R[id]..setLearningTitle(BLUE+BlzGetAbilityResearchTooltip(SPELL_R[id], this.getAbilityLevel(SPELL_R[id]) - 1))
+            ..setLearningDescription(GOLD+
+            "The user dashes to the targeted area and deals damage to surrounding enemies afterwards."+
+            "\n\n"+range+rangenumber+
+            "\n"+mana+manacost+
+            "\n"+cd+cooldown+
+            "\n"+dmg+damageabil+plus+bracketleft+damagestat+multiply+stat+bracketright+CR)  
+
+        else if SPELL_R[id].isRDash()
+            lvl = (SPELL_R[id].getSkillLearnLvl(id))
+            damageabil = (70 * lvl).toString()
+            damagestat = (2 + (1 * lvl)).toString()
+            rangenumber = "1250"
+            manacost = (40 + (lvl * 10)).toString()
+            cooldown = (30 + (lvl * 5)).toString()
+            SPELL_R[id]..setLearningTitle(BLUE+BlzGetAbilityResearchTooltip(SPELL_R[id], this.getAbilityLevel(SPELL_R[id]) - 1))
+            ..setLearningDescription(GOLD+
+            "The user dashes to the targeted location, dealing damage to enemies in their path."+
+            "\n\n"+range+rangenumber+
+            "\n"+mana+manacost+
+            "\n"+cd+cooldown+
+            "\n"+dmg+damageabil+plus+bracketleft+damagestat+multiply+stat+bracketright+CR)  
+
+        else if SPELL_R[id] == 'A0WQ'
+            lvl = (SPELL_R[id].getSkillLearnLvl(id))
+            damageabil = (70 * lvl).toString()
+            damagestat = (2 + (1 * lvl)).toString()
+            rangenumber = "850"
+            manacost = (40 + (lvl * 10)).toString()
+            cooldown = (30 + (lvl * 5)).toString()
+            SPELL_R[id]..setLearningTitle(BLUE+BlzGetAbilityResearchTooltip(SPELL_R[id], this.getAbilityLevel(SPELL_R[id]) - 1))
+            ..setLearningDescription(GOLD+
+            "Vergil creates 8 projectiles. This ability becomes R2 for up to 8 seconds."+
+            "\n\n"+range+rangenumber+
+            "\n"+mana+manacost+
+            "\n"+cd+cooldown+
+            "\n"+dmg+damageabil+plus+bracketleft+damagestat+multiply+stat+bracketright+CR)
+
+        else
+            lvl = (SPELL_R[id].getSkillLearnLvl(id))
+            damageabil = (70 * lvl).toString()
+            damagestat = (2 + (1 * lvl)).toString()
+            rangenumber = "850"
+            manacost = (40 + (lvl * 10)).toString()
+            cooldown = (30 + (lvl * 5)).toString()
+            SPELL_R[id]..setLearningTitle(BLUE+BlzGetAbilityResearchTooltip(SPELL_R[id], this.getAbilityLevel(SPELL_R[id]) - 1))
+            ..setLearningDescription(GOLD+
+            "Deals damage to the targeted enemy."+
+            "\n\n"+range+rangenumber+
+            "\n"+mana+manacost+
+            "\n"+cd+cooldown+
+            "\n"+dmg+damageabil+plus+bracketleft+damagestat+multiply+stat+bracketright+CR)
+
+    if SPELL_R2[id].isValid()
+        if SPELL_R2[id] == 'A0CY' // ━━━━━━━━━━━━ [Young Sasuke ━━━━━━━━━━━━
+            lvl = (SPELL_R2[id].getSkillLearnLvl(id))
+            damageabil = (70 * lvl).toString()
+            damagestat = (2 + (1 * lvl)).toString()
+            rangenumber = "1250"
+            manacost = (40 + (lvl * 10)).toString()
+            cooldown = (30 + (lvl * 5)).toString()
+            SPELL_R2[id]..setLearningTitle(BLUE+BlzGetAbilityResearchTooltip(SPELL_R2[id], this.getAbilityLevel(SPELL_R2[id]) - 1))
+            ..setLearningDescription(GOLD+
+            "Sasuke deals damage to all enemies in the targeted area."+
+            "\n\n"+range+rangenumber+
+            "\n"+mana+manacost+
+            "\n"+cd+cooldown+
+            "\n"+dmg+damageabil+plus+bracketleft+damagestat+multiply+stat+bracketright+CR) 
+
+        else
+            lvl = (SPELL_R2[id].getSkillLearnLvl(id))
+            damageabil = (70 * lvl).toString()
+            damagestat = (2 + (1 * lvl)).toString()
+            manacost = (40 + (lvl * 10)).toString()
+            cooldown = (30 + (lvl * 5)).toString()
+            SPELL_R2[id]..setLearningTitle(BLUE+BlzGetAbilityResearchTooltip(SPELL_R[id], this.getAbilityLevel(SPELL_R[id]) - 1))
+            ..setLearningDescription(GOLD+
+            "This skill shouldn't exist."+
+            "\n\n"+mana+manacost+
+            "\n"+cd+cooldown+    
+            "\n"+dmg+damageabil+plus+bracketleft+damagestat+multiply+stat+bracketright+CR)         
+
+    if SPELL_T[id].isValid()
+        if SPELL_T[id].isTransform() //Transformations
+            rangenumber = "60"
+            manacost = "100"
+            cooldown = "60"
+            SPELL_T[id]..setLearningTitle(BLUE+BlzGetAbilityResearchTooltip(SPELL_T[id], this.getAbilityLevel(SPELL_T[id]) - 1))
+            ..setLearningDescription(GOLD+
+            "The user transforms, gaining access to new abilities for a certain duration."+
+            "\n\n"+duration+rangenumber+
+            "\n"+mana+manacost+
+            "\n"+cd+cooldown+CR)
+
+        else if SPELL_T[id] == 'A0AU' //Hibari
+            rangenumber = "16"
+            manacost = "100"
+            cooldown = "60"
+            SPELL_T[id]..setLearningTitle(BLUE+BlzGetAbilityResearchTooltip(SPELL_T[id], this.getAbilityLevel(SPELL_T[id]) - 1))
+            ..setLearningDescription(GOLD+
+            "Hibari creates a giant sphere that blocks enemies caught in it from escaping. Enemies inside the sphere are also silenced for its duration."+
+            "\n\n"+duration+rangenumber+
+            "\n"+mana+manacost+
+            "\n"+cd+cooldown+CR)
+
+        else if SPELL_T[id] == 'A0ZA' // Shizuo
+            lvl = (SPELL_T[id].getSkillLearnLvl(id))
+            damageabil = (300 * lvl).toString()
+            damagestat = (7 * lvl).toString()
+            durationnumber = "3"
+            manacost = (99 + lvl).toString()
+            cooldown = (59 + lvl).toString()
+            SPELL_T[id]..setLearningTitle(BLUE+BlzGetAbilityResearchTooltip(SPELL_T[id], this.getAbilityLevel(SPELL_T[id]) - 1))
+            ..setLearningDescription(GOLD+
+            "Shizuo becomes invulnerable and gains maximum movement speed for a short duration. During this time, he deals damage to any enemies he comes into contact with."+
+            "\n\n"+duration+durationnumber+
+            "\n"+mana+manacost+
+            "\n"+cd+cooldown+
+            "\n"+dmg+damageabil+plus+bracketleft+damagestat+multiply+stat+bracketright+CR)  
+
+        else if SPELL_T[id] == 'A0LV' //Law
+            rangenumber = "40"
+            manacost = "100"
+            cooldown = "60"
+            SPELL_T[id]..setLearningTitle(BLUE+BlzGetAbilityResearchTooltip(SPELL_T[id], this.getAbilityLevel(SPELL_T[id]) - 1))
+            ..setLearningDescription(GOLD+
+            "Law creates a room that lasts for certain duration. During this time, Law's abilities are replaced. Room ends if Law moves more than 4000 range away from it."+
+            "\n\n"+duration+rangenumber+
+            "\n"+mana+manacost+
+            "\n"+cd+cooldown+CR)
+
+        else if SPELL_T[id] == 'A0V9' //Kiara
+            if this.hasItemById('I05Y')
+                lvl = (SPELL_T[id].getSkillLearnLvl(id))
+                damageabil = (350 * lvl).toString()
+                damagestat = (8.5 * lvl).toString()
+                rangenumber = "800"
+                manacost = (99 + lvl).toString()
+                cooldown = (59 + lvl).toString()
+                SPELL_T[id]..setLearningTitle(BLUE+BlzGetAbilityResearchTooltip(SPELL_T[id], this.getAbilityLevel(SPELL_T[id]) - 1))
+                ..setLearningDescription(GOLD+
+                "Kiara locks her target in place. This skill will continuously pull in enemy heroes in the vicinity while its active. When this skill ends, it deals 100% of it damage to the primary target and 50% to all other enemies pulled in."+
+                "\n\n"+range+rangenumber+
+                "\n"+mana+manacost+
+                "\n"+cd+cooldown+
+                "\n"+dmg+damageabil+plus+bracketleft+damagestat+multiply+stat+bracketright+CR)     
+            else
+                lvl = (SPELL_T[id].getSkillLearnLvl(id))
+                damageabil = (300 * lvl).toString()
+                damagestat = (7 * lvl).toString()
+                rangenumber = "800"
+                manacost = (99 + lvl).toString()
+                cooldown = (59 + lvl).toString()
+                SPELL_T[id]..setLearningTitle(BLUE+BlzGetAbilityResearchTooltip(SPELL_T[id], this.getAbilityLevel(SPELL_T[id]) - 1))
+                ..setLearningDescription(GOLD+
+                "Kiara locks her target in place. This skill will continuously pull in enemy heroes in the vicinity while its active. When this skill ends, it deals 100% of it damage to the primary target and 50% to all other enemies pulled in."+
+                "\n\n"+range+rangenumber+
+                "\n"+mana+manacost+
+                "\n"+cd+cooldown+
+                "\n"+dmg+damageabil+plus+bracketleft+damagestat+multiply+stat+bracketright+CR)                   
+
+        else if SPELL_T[id] == 'A0QC' //Mashu
+            rangenumber = "10"
+            manacost = "50"
+            cooldown = "60"
+            msandasnumber = "35"
+            SPELL_T[id]..setLearningTitle(BLUE+BlzGetAbilityResearchTooltip(SPELL_T[id], this.getAbilityLevel(SPELL_T[id]) - 1))
+            ..setLearningDescription(GOLD+
+            "Mashu gains movement speed for a short duration. During this time, this ability is replaced by T2."+
+            "\n\n"+duration+rangenumber+
+            "\n"+ms+msandasnumber+percent+
+            "\n"+mana+manacost+
+            "\n"+cd+cooldown+CR)
+
+        else if SPELL_T[id].isTDash()
+            lvl = (SPELL_T[id].getSkillLearnLvl(id))
+            damageabil = (300 * lvl).toString()
+            damagestat = (7 * lvl).toString()
+            rangenumber = "1150"
+            manacost = (99 + lvl).toString()
+            cooldown = (59 + lvl).toString()
+            SPELL_T[id]..setLearningTitle(BLUE+BlzGetAbilityResearchTooltip(SPELL_T[id], this.getAbilityLevel(SPELL_T[id]) - 1))
+            ..setLearningDescription(GOLD+
+            "Dashes to the targeted location, dealing damage to enemies in the path."+
+            "\n\n"+range+rangenumber+
+            "\n"+mana+manacost+
+            "\n"+cd+cooldown+
+            "\n"+dmg+damageabil+plus+bracketleft+damagestat+multiply+stat+bracketright+CR)     
+
+        else if SPELL_T[id].isTTeleport()
+            lvl = (SPELL_T[id].getSkillLearnLvl(id))
+            damageabil = (300 * lvl).toString()
+            damagestat = (7 * lvl).toString()
+            rangenumber = "1150"
+            manacost = (99 + lvl).toString()
+            cooldown = (59 + lvl).toString()
+            SPELL_T[id]..setLearningTitle(BLUE+BlzGetAbilityResearchTooltip(SPELL_T[id], this.getAbilityLevel(SPELL_T[id]) - 1))
+            ..setLearningDescription(GOLD+
+            "Teleports to the targeted area, and deals damage to enemies around the user afterwards."+
+            "\n\n"+range+rangenumber+
+            "\n"+mana+manacost+
+            "\n"+cd+cooldown+
+            "\n"+dmg+damageabil+plus+bracketleft+damagestat+multiply+stat+bracketright+CR)     
+
+        else if SPELL_T[id].isTProjectile()
+            if SPELL_T[id] == 'A0HI' //Ulq
+                lvl = (SPELL_T[id].getSkillLearnLvl(id))
+                damageabil = ((300 * lvl)/2.625).toString()
+                damagestat = ((7 * lvl)/2.625).toString()
+                rangenumber = "1150"
+                manacost = (34 + lvl).toString()
+                cooldown = (59 + lvl).toString()
+                SPELL_T[id]..setLearningTitle(BLUE+BlzGetAbilityResearchTooltip(SPELL_T[id], this.getAbilityLevel(SPELL_T[id]) - 1))
+                ..setLearningDescription(GOLD+
+                "Deals damage to enemies along the path towards the targeted location. This ability can be used up to 3 times before going on cooldown."+
+                "\n\n"+range+rangenumber+
+                "\n"+mana+manacost+
+                "\n"+cd+cooldown+
+                "\n"+dmg+damageabil+plus+bracketleft+damagestat+multiply+stat+bracketright+CR)   
+            else
+                lvl = (SPELL_T[id].getSkillLearnLvl(id))
+                damageabil = (300 * lvl).toString()
+                damagestat = (7 * lvl).toString()
+                rangenumber = "1150"
+                manacost = (99 + lvl).toString()
+                cooldown = (59 + lvl).toString()
+                SPELL_T[id]..setLearningTitle(BLUE+BlzGetAbilityResearchTooltip(SPELL_T[id], this.getAbilityLevel(SPELL_T[id]) - 1))
+                ..setLearningDescription(GOLD+
+                "Deals damage to enemies along the path towards the targeted location."+
+                "\n\n"+range+rangenumber+
+                "\n"+mana+manacost+
+                "\n"+cd+cooldown+
+                "\n"+dmg+damageabil+plus+bracketleft+damagestat+multiply+stat+bracketright+CR)   
+
+        else if SPELL_T[id].isTCounter()
+            if SPELL_T[id] == 'A10U' //Enma
+                lvl = (SPELL_T[id].getSkillLearnLvl(id))
+                damageabil = (300 * lvl).toString()
+                damagestat = (7 * lvl).toString()
+                durationnumber = "5"
+                manacost = (34 + lvl).toString()
+                cooldown = (59 + lvl).toString()
+                SPELL_T[id]..setLearningTitle(BLUE+BlzGetAbilityResearchTooltip(SPELL_T[id], this.getAbilityLevel(SPELL_T[id]) - 1))
+                ..setLearningDescription(GOLD+
+                "Enma targets herself or an ally hero. For a short duration, she counters the first incoming hero attack on the target of this skill, dealing damage to the countered enemy."+
+                "\n\n"+duration+durationnumber+
+                "\n"+mana+manacost+
+                "\n"+cd+cooldown+
+                "\n"+dmg+damageabil+plus+bracketleft+damagestat+multiply+stat+bracketright+CR)   
+            else     
+                lvl = (SPELL_T[id].getSkillLearnLvl(id))
+                damageabil = (300 * lvl).toString()
+                damagestat = (7 * lvl).toString()
+                durationnumber = "3"
+                manacost = (34 + lvl).toString()
+                cooldown = (59 + lvl).toString()
+                SPELL_T[id]..setLearningTitle(BLUE+BlzGetAbilityResearchTooltip(SPELL_T[id], this.getAbilityLevel(SPELL_T[id]) - 1))
+                ..setLearningDescription(GOLD+
+                "For a short duration, counters the first incoming hero attack, dealing damage to the countered enemy."+
+                "\n\n"+duration+durationnumber+
+                "\n"+mana+manacost+
+                "\n"+cd+cooldown+
+                "\n"+dmg+damageabil+plus+bracketleft+damagestat+multiply+stat+bracketright+CR)   
+
+        else if SPELL_T[id].isTPoint()
+            lvl = (SPELL_T[id].getSkillLearnLvl(id))
+            damageabil = (300 * lvl).toString()
+            damagestat = (7 * lvl).toString()
+            rangenumber = "1150"
+            manacost = (99 + lvl).toString()
+            cooldown = (59 + lvl).toString()
+            SPELL_T[id]..setLearningTitle(BLUE+BlzGetAbilityResearchTooltip(SPELL_T[id], this.getAbilityLevel(SPELL_T[id]) - 1))
+            ..setLearningDescription(GOLD+
+            "Deals damage to enemies inside of the targeted area."+
+            "\n\n"+range+rangenumber+
+            "\n"+mana+manacost+
+            "\n"+cd+cooldown+
+            "\n"+dmg+damageabil+plus+bracketleft+damagestat+multiply+stat+bracketright+CR) 
+
+        else if SPELL_T[id].isTAoe()
+            lvl = (SPELL_T[id].getSkillLearnLvl(id))
+            damageabil = (300 * lvl).toString()
+            damagestat = (7 * lvl).toString()
+            aoenumber = "900"
+            manacost = (99 + lvl).toString()
+            cooldown = (59 + lvl).toString()
+            SPELL_T[id]..setLearningTitle(BLUE+BlzGetAbilityResearchTooltip(SPELL_T[id], this.getAbilityLevel(SPELL_T[id]) - 1))
+            ..setLearningDescription(GOLD+
+            "Deals damage to enemies around the user."+
+            "\n\n"+aoe+aoenumber+
+            "\n"+mana+manacost+
+            "\n"+cd+cooldown+
+            "\n"+dmg+damageabil+plus+bracketleft+damagestat+multiply+stat+bracketright+CR)
+
+        else
+            lvl = (SPELL_T[id].getSkillLearnLvl(id))
+            damageabil = (300 * lvl).toString()
+            damagestat = (7 * lvl).toString()
+            rangenumber = "800"
+            manacost = (99 + lvl).toString()
+            cooldown = (59 + lvl).toString()
+            SPELL_T[id]..setLearningTitle(BLUE+BlzGetAbilityResearchTooltip(SPELL_T[id], this.getAbilityLevel(SPELL_T[id]) - 1))
+            ..setLearningDescription(GOLD+
+            "Deals damage to the targeted enemy."+
+            "\n\n"+range+rangenumber+
+            "\n"+mana+manacost+
+            "\n"+cd+cooldown+
+            "\n"+dmg+damageabil+plus+bracketleft+damagestat+multiply+stat+bracketright+CR)     
+
+function skillLvlUp ()
+    CreateTrigger()
+    ..registerAnyUnitEvent(EVENT_PLAYER_HERO_SKILL)
+    ..addAction() ->
+        GetTriggerUnit().updateLearningTooltips()

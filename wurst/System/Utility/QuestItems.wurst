@@ -1,0 +1,45 @@
+package QuestItems
+import Quest
+import Icons
+quest q
+public function createQuest ()
+    q = CreateQuest()
+    q.setTitle("|cffffd700Scoreboard|r")
+    q.setDescription("You can open the Scoreboard by pressing [TAB]")
+    q.setIcon(Icons.bTNAmulet)
+    q.discovered(true)
+
+    q = CreateQuest()
+    q.setTitle("|cffffd700Bounty|r")
+    q.setDescription("Introduced a new catch-up mechanic, the more kills you earn, the higher your base bounty increases."+
+    "|nKillstreaks will also further increase the bounty, but resets on death (only hero deaths). Base bounty is (100 + 15 * kills)")
+    q.setIcon(Icons.bTNBlink)
+    q.discovered(true)
+
+    q = CreateQuest()
+    q.setTitle("|cffffd700Future Version|r")
+    q.setDescription("Currently in the works is: Custom heroes & Items.|nIf there is a hero or item you want added for this map, make your voice heard in the Discord. :)")
+    q.setIcon(Icons.bTNCOP)
+    q.discovered(true)
+
+    q = CreateQuest()
+    q.setTitle("|cff00c1ffDiscord|r")
+    q.setDescription("Be a part of the development, get access to early test versions, and much more, perhaps even exclusive skins. You can get in contact with us on this Discord server: https://discord.gg/|cff00c1ffBbpFDvgJk5|r")
+    q.setIcon(Icons.bTNArcaniteArmor)
+    q.discovered(true)
+    q.setRequired(false)
+
+    q = CreateQuest()
+    q.setTitle("|cff00c1ffChangelog|r")
+    q.setDescription("This Version (2.0.0) introduced a lot of new changes and improvements (new formulas, UI, etc), so there is no full list of all the changes, but we'll make sure to include it for next time.")
+    q.setIcon(Icons.bTNAnkh)
+    q.discovered(true)
+    q.setRequired(false)
+
+    q = CreateQuest()
+    q.setTitle("|cff00c1ffSpecial Thanks|r")
+    q.setDescription("We offer our thanks to these individuals for their remarkable feedback and valuable testing, thank you."+
+    "|n|cffffd700Fujiwara_mokou|r,|cffffd700 Fexus|r,|cffffd700 Momiji|r,|cffffd700 Tebs|r,|cffffd700 Vrendal|r,|cffffd700 Vrendal's Friend|r")
+    q.setIcon(Icons.bTNTalisman)
+    q.discovered(true)
+    q.setRequired(false)

@@ -1,0 +1,30 @@
+package Natsu_E
+import ClosureEvents
+import ObjectDefinitions
+init
+
+public function natsuE()
+
+    EventListener.add(EVENT_PLAYER_HERO_SKILL) ->
+        if GetLearnedSkill() == 'A00I'
+            let u = GetTriggerUnit()
+            let a = GetLearnedSkill()
+            let abilvl = GetUnitAbilityLevel(u, a)
+            u.addAbility('A187')
+            u.setAbilityLevel('A187', abilvl)
+            u.hideAbility('A187', true)
+            
+    EventListener.onCast('A00I') (unit caster) ->
+        if caster.hasAbility(FIRE_SURROUND_MODEL_EFFECT) == false
+            caster.addAbility(FIRE_SURROUND_MODEL_EFFECT)
+            BlzSetAbilityIcon('A001', "ReplaceableTextures\\CommandButtons\\BTNWallOfFire.blp")
+            BlzSetAbilityIcon('A0EH', "ReplaceableTextures\\CommandButtons\\BTNOrbOfFire.blp")
+            BlzSetAbilityIcon('A00I', "ReplaceableTextures\\CommandButtons\\BTNneutralManaShieldOff.blp")
+            BlzSetAbilityIcon('A00F', "ReplaceableTextures\\CommandButtons\\BTNSoulBurn.blp")
+        else 
+            caster.removeAbility(FIRE_SURROUND_MODEL_EFFECT)
+            caster.removeAbility('B001')
+            BlzSetAbilityIcon('A001', "ReplaceableTextures\\CommandButtons\\BTNBreathOfFire.blp")
+            BlzSetAbilityIcon('A0EH', "ReplaceableTextures\\CommandButtons\\BTNSearingArrows.blp")
+            BlzSetAbilityIcon('A00I', "ReplaceableTextures\\CommandButtons\\BTNDisenchant.blp")
+            BlzSetAbilityIcon('A00F', "ReplaceableTextures\\CommandButtons\\BTNDoom.blp")

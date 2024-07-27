@@ -1,0 +1,32 @@
+package Zoro_G
+
+import ClosureEvents
+import ObjectDefinitions
+import TimerUtils
+import SoundUtils
+constant zoroBlockSound = new SoundDefinition("war3mapImported\\ZoroG.mp3")
+// import SoundUtils
+// constant spellblockSound = new SoundDefinition("war3mapImported\\spellblock.mp3")
+timer spellblockTimer = null
+integer spellblockCount = 0
+init
+
+    EventListener.onCast(RORONOA_ZORO_ABILITY_G) (unit caster) ->
+        zoroBlockSound.play()
+        caster
+        ..addAbility(ABILITY_SPELLBLOCK)
+        ..addAbility(RORONOA_ZORO_G_EFFECT)
+        spellblockTimer = getTimer()..startPeriodic(0.1, function spellblockTimerFunction)..setData(caster.getOwner().getId())
+
+function spellblockTimerFunction ()
+    let pid = spellblockTimer.getData()
+    let caster = udg_PlayHero[pid]
+    if caster.isInvulnerable() == false
+        spellblockCount++
+    if spellblockCount == 40 // 0.1 * 40 = 4 seconds
+        if caster.hasAbility(ABILITY_SPELLBLOCK)
+            caster.removeAbility(ABILITY_SPELLBLOCK)
+            caster.removeAbility(RORONOA_ZORO_G_EFFECT)
+            caster.removeAbility(RORONOA_ZORO_G_BUFF)
+        spellblockCount = 0
+        spellblockTimer.release()         

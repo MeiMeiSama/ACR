@@ -1,0 +1,31 @@
+package IchigoStrength_E
+
+import ClosureEvents
+import ObjectDefinitions
+int ichigoStrEDummyLvl
+init
+
+public function ichigoStrE()
+
+    let ichigoStrEDummy = 'A194'
+    let ichigoStrE = 'A0X9'       
+
+    EventListener.add(EVENT_PLAYER_HERO_SKILL) ->
+        if GetLearnedSkill() == ichigoStrEDummy
+            let abil = GetLearnedSkill()
+            let caster = GetTriggerUnit()
+            ichigoStrEDummyLvl = GetUnitAbilityLevel(caster, abil)
+            if ichigoStrEDummyLvl == 1
+                caster.addAbility(ichigoStrE)
+                caster.setAbilityLevel(ichigoStrE, ichigoStrEDummyLvl)
+            else
+                caster.setAbilityLevel(ichigoStrE, ichigoStrEDummyLvl)
+                caster.removeAbility('B058')
+
+    EventListener.add(EVENT_PLAYER_HERO_REVIVE_FINISH) ->
+        if GetTriggerUnit().getTypeId() == ICHIGO_STRENGTH
+            let caster = GetTriggerUnit()
+            if caster.hasAbility(ichigoStrEDummy) == true and caster.hasAbility(ichigoStrE) == false 
+                caster.addAbility(ichigoStrE)
+                caster.setAbilityLevel(ichigoStrE, ichigoStrEDummyLvl)
+                caster.removeAbility('B058')

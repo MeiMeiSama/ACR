@@ -1,0 +1,38 @@
+// package HibariE
+
+
+// init
+//     initTrig_HibariE()
+
+// function trig_HibariEConditions() returns boolean
+//     return GetUnitTypeId(GetLearningUnit()) == 'H01N' and GetLearnedSkill() == 'A0GB'
+// function trig_HibariEFunc001T()
+//     if GetUnitAbilityLevel(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 549081582), 'A0GB') == 1 and LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 231) == 'A0GB'
+//         UnitAddAbility(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 549081582), 'A0GD')
+//     else if GetUnitAbilityLevel(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 549081582), 'A0GB') == 2 and LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 231) == 'A0GB'
+//         UnitRemoveAbility(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 549081582), 'A0GD')
+//         UnitAddAbility(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 549081582), 'A0GE')
+//     else if GetUnitAbilityLevel(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 549081582), 'A0GB') == 3 and LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 231) == 'A0GB'
+//         UnitRemoveAbility(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 549081582), 'A0GE')
+//         UnitAddAbility(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 549081582), 'A0GF')
+//     else if GetUnitAbilityLevel(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 549081582), 'A0GB') == 4 and LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 231) == 'A0GB'
+//         UnitRemoveAbility(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 549081582), 'A0GF')
+//         UnitAddAbility(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 549081582), 'A0GG')
+//     else if GetUnitAbilityLevel(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 549081582), 'A0GB') == 5 and LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 231) == 'A0GB'
+//         UnitRemoveAbility(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 549081582), 'A0GG')
+//         UnitAddAbility(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 549081582), 'A0GH')
+//         DestroyTrigger(LoadTriggerHandle(YDLOC, GetHandleId(GetExpiredTimer()), 812))
+//     FlushChildHashtable(YDLOC, GetHandleId(GetExpiredTimer()))
+//     DestroyTimer(GetExpiredTimer())
+// function trig_HibariEActions()
+//     timer _ydl_timer
+//     _ydl_timer = CreateTimer()
+//     SaveInteger(YDLOC, GetHandleId(_ydl_timer), 231, GetLearnedSkill())
+//     SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 549081582, GetLearningUnit())
+//     SaveTriggerHandle(YDLOC, GetHandleId(_ydl_timer), 812, GetTriggeringTrigger())
+//     TimerStart(_ydl_timer, 0.01, false, function trig_HibariEFunc001T)
+// function initTrig_HibariE()
+//     gg_trg_HibariE = CreateTrigger()
+//     TriggerRegisterAnyUnitEventBJ(gg_trg_HibariE, EVENT_PLAYER_HERO_SKILL)
+//     TriggerAddCondition(gg_trg_HibariE, Condition(function trig_HibariEConditions))
+//     TriggerAddAction(gg_trg_HibariE, function trig_HibariEActions)

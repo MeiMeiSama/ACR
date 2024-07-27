@@ -1,0 +1,94 @@
+package RUID
+
+import ClosureTimers
+
+int array player_client_width
+
+public function moonUI ()
+    let parent = BlzGetFrameByName("ConsoleUIBackdrop", 0)
+    BlzEnableUIAutoPosition(false)
+
+    // Inventory
+    BlzGetFrameByName("InventoryText", 0)..hide()
+    BlzFrameSetSize(BlzGetFrameByName("InventoryText",0), 0, 0.0001)
+
+    var inv = BlzGetFrameByName("InventoryButton_0", 0)
+    BlzFrameClearAllPoints(inv)
+    inv..setAbsPoint(FRAMEPOINT_CENTER, 0.543, 0.099)
+    inv = BlzGetFrameByName("InventoryButton_1", 0)
+    BlzFrameClearAllPoints(inv)
+    inv..setAbsPoint(FRAMEPOINT_CENTER, 0.583, 0.099)
+    inv = BlzGetFrameByName("InventoryButton_2", 0)
+    BlzFrameClearAllPoints(inv)
+    inv..setAbsPoint(FRAMEPOINT_CENTER, 0.543, 0.0595)
+    inv = BlzGetFrameByName("InventoryButton_3", 0)
+    BlzFrameClearAllPoints(inv)
+    inv..setAbsPoint(FRAMEPOINT_CENTER, 0.583, 0.0595)
+    inv = BlzGetFrameByName("InventoryButton_4", 0)
+    BlzFrameClearAllPoints(inv)
+    inv..setAbsPoint(FRAMEPOINT_CENTER, 0.543, 0.0215)
+    inv = BlzGetFrameByName("InventoryButton_5", 0)
+    BlzFrameClearAllPoints(inv)
+    inv..setAbsPoint(FRAMEPOINT_CENTER, 0.583, 0.0215)
+
+    // Minimap Buttons
+    var fh = BlzGetFrameByName("MinimapSignalButton", 0)
+    BlzFrameClearAllPoints(fh)
+    BlzFrameSetAbsPoint(fh, FRAMEPOINT_BOTTOMLEFT, 0.008, 0.12)
+    BlzFrameSetAbsPoint(fh, FRAMEPOINT_TOPRIGHT, 0.035, 0.143)
+    BlzFrameSetTexture(fh, "UI\\ButtonBorder.dds", 0, true)
+
+    fh = BlzGetFrameByName("MiniMapTerrainButton", 0)
+    BlzFrameClearAllPoints(fh)
+    BlzFrameSetAbsPoint(fh, FRAMEPOINT_BOTTOMLEFT, 0.0093, 0.098)
+    BlzFrameSetAbsPoint(fh, FRAMEPOINT_TOPRIGHT, 0.0329, 0.121)
+    BlzFrameSetTexture(fh, "UI\\ButtonBorder.dds", 0, true)
+
+    fh = BlzGetFrameByName("MiniMapAllyButton", 0)
+    BlzFrameClearAllPoints(fh)
+    BlzFrameSetAbsPoint(fh, FRAMEPOINT_BOTTOMLEFT, 0.0092, 0.076)
+    BlzFrameSetAbsPoint(fh, FRAMEPOINT_TOPRIGHT, 0.034, 0.099)
+    BlzFrameSetTexture(fh, "UI\\ButtonBorder.dds", 0, true)
+
+    fh = BlzGetFrameByName("MiniMapCreepButton", 0)
+    BlzFrameClearAllPoints(fh)
+    BlzFrameSetAbsPoint(fh, FRAMEPOINT_BOTTOMLEFT, 0.012, 0.055)
+    BlzFrameSetAbsPoint(fh, FRAMEPOINT_TOPRIGHT, 0.032, 0.076)
+    BlzFrameSetTexture(fh, "UI\\ButtonBorder.dds", 0, true)
+
+    BlzGetFrameByName("FormationButton", 0)..hide()
+    BlzFrameSetSize(BlzGetFrameByName("ConsoleUIBackdrop",0), 0, 0.0001)
+
+    // Minimap & CommandButtons
+    let map = BlzGetFrameByName("MiniMapFrame", 0)
+    let commandButtons = BlzFrameGetChild(BlzGetFrameByName("ConsoleUI", 0), 0)
+    BlzFrameSetParent(map, parent)
+    BlzFrameSetParent(commandButtons, parent)
+    BlzFrameSetAbsPoint(map, FRAMEPOINT_BOTTOMLEFT, 0.034, 0.001)
+    BlzFrameSetAbsPoint(map, FRAMEPOINT_TOPRIGHT, 0.175, 0.1415)
+    BlzFrameSetAbsPoint(commandButtons, FRAMEPOINT_BOTTOMLEFT, 0.62615, 0.00005)
+    BlzFrameSetAbsPoint(commandButtons, FRAMEPOINT_TOPRIGHT, 0.17265, 0.14005)
+
+    // Portrait
+    let frame = BlzGetOriginFrame(ORIGIN_FRAME_PORTRAIT, 0)..setScale(1)
+    BlzFrameSetAbsPoint(frame, FRAMEPOINT_BOTTOMLEFT, 0.249, 0.03330)
+    BlzFrameSetAbsPoint(frame, FRAMEPOINT_TOPRIGHT, 0.312, 0.118)
+
+public function updateSelect ()
+    var bar = BlzGetOriginFrame(ORIGIN_FRAME_PORTRAIT_HP_TEXT, 0)
+    BlzFrameClearAllPoints(bar)
+    BlzFrameSetAbsPoint(bar, FRAMEPOINT_CENTER, 0.248, 0.022)
+    BlzFrameSetFont(BlzGetOriginFrame(ORIGIN_FRAME_PORTRAIT_HP_TEXT, 0), SkinManagerGetLocalPath("InfoPanelTextFont"), 0.010, 0)
+
+    bar = BlzGetOriginFrame(ORIGIN_FRAME_PORTRAIT_MANA_TEXT, 0)
+    BlzFrameClearAllPoints(bar)
+    BlzFrameSetAbsPoint(bar, FRAMEPOINT_CENTER, 0.248, 0.007)
+    BlzFrameSetFont(BlzGetOriginFrame(ORIGIN_FRAME_PORTRAIT_MANA_TEXT, 0), SkinManagerGetLocalPath("InfoPanelTextFont"), 0.010, 0)
+
+init
+    nullTimer() -> 
+        if not BlzLoadTOCFile( "war3mapImported\\ACR.toc" )
+            print("|cffff0000COULD NOT LOAD TOC FILE, MEANING CUSTOM |cffffd700UI|cffff0000 WILL NOT LOAD|r", 3)
+    doAfter(0.03) ->
+        BlzFrameSetVisible(BlzGetFrameByName("ConsoleUIBackdrop",0), false)
+        BlzHideOriginFrames(true)

@@ -1,0 +1,21 @@
+package Semiramis_G
+
+import ClosureEvents
+import AbilityClassifications
+import AbilityGlobals
+int intCount = 0
+
+        
+
+public function semiramisG()
+
+    EventListener.add(EVENT_PLAYER_UNIT_DEATH) ->
+
+        if GetKillingUnit().getTypeId() == 'H02T' and GetDyingUnit().isType(UNIT_TYPE_HERO) 
+            GetKillingUnit().addInt(1)
+            let skill = 'A18E'
+            intCount++
+            skill..setDescription(skill,
+            GOLD+
+            "Whenever Semiramis kills an enemy hero, she gains 1 intelligence point."+
+            "\n\nExtra Intelligence Gained: "+PINK+intCount.toString()+GOLD)

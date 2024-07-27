@@ -1,0 +1,24 @@
+package MukeuroG
+
+
+init
+    initTrig_MukeuroG()
+
+function trig_MukeuroGConditions() returns boolean
+    return IsUnitType(GetSummoningUnit(), UNIT_TYPE_HERO) == true and UnitHasBuffBJ(GetSummonedUnit(), 'B02U') == true and GetUnitTypeId(GetSummonedUnit()) != 'O005'
+function trig_MukeuroGActions()
+    integer trigger_ID = LoadInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 865)
+    trigger_ID += 3
+    SaveInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 865, trigger_ID)
+    SaveInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 1045, trigger_ID)
+    SaveLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1108, GetUnitLoc(GetSummoningUnit()))
+    SaveLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 683, PolarProjectionBJ(LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1108), 150.00, GetUnitFacing(GetSummoningUnit())))
+    SetUnitPositionLoc(GetSummonedUnit(), LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 683))
+    RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1108))
+    RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 683))
+    FlushChildHashtable(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID)
+function initTrig_MukeuroG()
+    gg_trg_MukeuroG = CreateTrigger()
+    TriggerRegisterAnyUnitEventBJ(gg_trg_MukeuroG, EVENT_PLAYER_UNIT_SUMMON)
+    TriggerAddCondition(gg_trg_MukeuroG, Condition(function trig_MukeuroGConditions))
+    TriggerAddAction(gg_trg_MukeuroG, function trig_MukeuroGActions)

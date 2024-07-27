@@ -1,0 +1,35 @@
+package Sasuke_G
+import ClosureEvents
+import ObjectDefinitions
+import TimerUtils
+import SoundUtils
+constant sharinganSound = new SoundDefinition("war3mapImported\\Sharingan.mp3")
+constant rinneganSound = new SoundDefinition("war3mapImported\\Rinnegan.mp3")
+timer sharinneganTimer = null
+integer sharinneganCount = 0
+init
+
+    EventListener.onCast(SASUKE_ADULT_ABILITY_G) (unit caster) ->
+        sharinganSound.play()
+        rinneganSound.play()
+        caster
+        ..addAbility(SHARINNEGAN_MODEL_EFFECT)
+        ..addAbility(ATTACK_EVASION)
+        ..addAbility(ABILITY_SPELLBLOCK)
+        sharinneganTimer = getTimer()..startPeriodic(0.1, function sharinneganTimerFunction)..setData(caster.getOwner().getId())
+
+function sharinneganTimerFunction ()
+    let pid = sharinneganTimer.getData()
+    let caster = udg_PlayHero[pid]
+    if caster.isInvulnerable() == false
+        sharinneganCount++
+    if sharinneganCount == 40 // 0.1 * 40 = 4 seconds
+        if caster.hasAbility(ATTACK_EVASION)
+            caster.removeAbility(ATTACK_EVASION)
+        if caster.hasAbility(SHARINNEGAN_MODEL_EFFECT)
+            caster.removeAbility(SHARINNEGAN_MODEL_EFFECT)
+            caster.removeAbility(SHARINNEGAN_BUFF)
+        if caster.hasAbility(ABILITY_SPELLBLOCK)
+            caster.removeAbility(ABILITY_SPELLBLOCK)
+        sharinneganCount = 0
+        sharinneganTimer.release()

@@ -1,0 +1,15 @@
+// package Deku_W
+
+// import ClosureTimers
+// init
+//     dekuW()
+// function dekuW()
+//     CreateTrigger()
+//     ..registerAnyUnitEvent(EVENT_PLAYER_UNIT_SPELL_EFFECT)
+//     ..addAction() ->
+//         if GetSpellAbilityId() == 'A120'
+//             let caster = GetTriggerUnit()
+//             caster.addAbility('A121')
+//             doAfter(0.5) ->
+//                 caster.removeAbility('A121') 
+                

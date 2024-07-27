@@ -1,0 +1,98 @@
+package UpdateTooltipExceptions // NEW SYSTEM //
+
+import AbilityGlobals
+import AbilityClassifications
+
+import Translate_Q
+import Translate_W
+import Translate_E
+import Translate_R
+import Translate_T
+import Translate_F
+import Translate_G
+
+// ----------------------------------------- Exceptions ----------------------------------------- //
+
+public function updateTooltipExceptions (int id) // ------------- Configurable ------------- //
+    if SPELL_Q[id].isValid() and SPELL_Q[id].isQProjectile()
+        tooltip_Projectile_Q(id)
+    else if SPELL_Q[id].isValid() and SPELL_Q[id].isQDash()
+        tooltip_Dash_Q(id)
+    else if SPELL_Q[id].isValid() and SPELL_Q[id].isQPoint()
+        tooltip_Point_Q(id)
+    else if SPELL_Q[id].isValid() and SPELL_Q[id].isQTeleport()
+        tooltip_Teleport_Q(id)
+    else if SPELL_Q[id].isValid()
+        tooltip_Q(id)
+    
+    if SPELL_Q2[id].isValid()
+        tooltip_Q2(id)
+
+    if SPELL_W[id].isValid()
+        tooltip_W(id)
+    
+    if SPELL_W2[id].isValid()
+        tooltip_W2(id)
+
+    if SPELL_E[id].isValid() and SPELL_E[id].isEDamaging()
+        tooltip_Damaging_E(id)
+    else if SPELL_E[id].isValid()
+        tooltip_E(id)
+    
+    if SPELL_E2[id].isValid()
+        tooltip_E2(id)
+
+    if SPELL_R[id].isValid()
+        tooltip_R(id)
+
+    if SPELL_R2[id].isValid()
+        tooltip_R2(id)
+
+    if SPELL_R3[id].isValid()
+        tooltip_R3(id)    
+
+    if SPELL_T[id].isValid() and SPELL_T[id].isTransform()
+        tooltip_Transform_T(id)
+    else if SPELL_T[id].isValid()
+        tooltip_T(id)
+
+    if SPELL_T2[id].isValid()
+        tooltip_T2(id)
+
+    if SPELL_F[id].isValid()
+        tooltip_F(id)
+
+    if SPELL_F2[id].isValid()
+        tooltip_F2(id)
+
+    if SPELL_F3[id].isValid()
+        tooltip_F3(id)  
+
+    if SPELL_G[id].isValid() and SPELL_G[id].isGBlink()
+        tooltip_Blink_G(id)
+    else if SPELL_G[id].isValid()
+        tooltip_G(id)
+
+    if SPELL_G2[id].isValid()
+        tooltip_G2(id)
+
+public function updateTooltipMode (int id) // ------------- Configurable ------------- //
+    let hero = udg_PlayHero[id]
+
+    if hero.getAbility(SPELL_MODO_Q[id]) != null
+        tooltip_Mode_Q(id)
+
+    if hero.getAbility(SPELL_MODO_W[id]) != null
+        tooltip_Mode_W(id)
+
+    if hero.getAbility(SPELL_MODO_E[id]) != null
+        tooltip_Mode_E(id)
+        
+    if hero.getAbility(SPELL_MODO_R[id]) != null
+        tooltip_Mode_R(id)
+
+    if hero.getAbility(SPELL_MODO_T[id]) != null
+        tooltip_Mode_T(id)
+
+    if hero.getAbility(SPELL_MODO_G[id]) != null
+        tooltip_Mode_G(id)

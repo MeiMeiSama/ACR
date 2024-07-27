@@ -1,0 +1,35 @@
+package GoldIncome
+import ClosureTimers
+
+public int array totalGoldEarnt
+init
+    for i = 0 to 12
+        totalGoldEarnt[i] = 0
+
+function player.increaseGold ()
+    doPeriodically(1) (CallbackPeriodic cb) ->
+        totalGoldEarnt[this.getId()] += 4
+        this.addGold(4)
+     
+public function goldIncome ()
+    for i = 0 to 12
+        if Player(i).getController() == MAP_CONTROL_USER and Player(i).getSlotState() == PLAYER_SLOT_STATE_PLAYING
+            Player(i).increaseGold()
+
+public function goldIncomeShared ()
+    CreateTrigger()
+    ..registerAnyUnitEvent(EVENT_PLAYER_UNIT_DEATH)
+    ..addAction() ->
+        if GetDyingUnit().isType(UNIT_TYPE_HERO) == false and GetKillingUnit().isType(UNIT_TYPE_HERO) == true
+            let creepGold = GetDyingUnit().getField(UNIT_IF_GOLD_BOUNTY_AWARDED_BASE)
+            totalGoldEarnt[GetKillingUnit().getOwner().getId()] += creepGold
+            for i = 0 to 12
+                if udg_PlayHero[i] != null and udg_PlayHero[i].getOwner().isAllyOf(GetKillingUnit().getOwner()) and udg_PlayHero[i] != GetKillingUnit()
+                    udg_PlayHero[i].getOwner().addGold(5)
+                    totalGoldEarnt[udg_PlayHero[i].getOwner().getId()] += 5
+
+    // doAfter(420) -> 
+    //     goldTrigger.destr()
+
+        
+

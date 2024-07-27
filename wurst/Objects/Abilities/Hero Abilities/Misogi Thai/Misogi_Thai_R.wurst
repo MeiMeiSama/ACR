@@ -1,0 +1,359 @@
+package Misogi_Thai_R
+
+import main
+import ObjectDefinitions
+import ChannelAbilityPreset
+import UnitIds
+import DamageEvent
+import AbilityGlobals
+
+integer misogiRInt
+unit misogiRCaster
+unit misogiRTarget
+unit array misogiREffect
+
+@compiletime function createAbility()
+    new ChannelAbilityPreset(MISOGI_THAI_R, 3, true)
+        ..presetTargetTypes(Targettype.UNIT)
+        ..setAnimationNames("11111111")
+        ..setButtonPositionNormalX(3)
+        ..setButtonPositionNormalY(2)
+        ..setButtonPositionResearchX(3)
+        ..setButtonPositionResearchY(0)
+        ..setIconNormal("ReplaceableTextures\\CommandButtons\\BTNOrbOfFrost.blp")
+        ..setIconResearch("ReplaceableTextures\\CommandButtons\\BTNOrbOfFrost.blp")
+        ..setMissileSpeed(99999)
+        ..setHeroAbility(true)
+        ..setHotkeyNormal("R")
+        ..setHotkeyLearn("R")
+        ..setLevels(3)
+        ..setRequiredLevel(8)
+        ..setLevelSkipRequirement(5)
+        ..presetArtDuration(lvl -> 0)
+        ..presetBaseOrderID(lvl -> "submerge")
+        ..presetDisableOtherAbilities(lvl -> false)
+        ..presetFollowThroughTime(lvl -> 0)
+        ..presetCastRange(lvl -> 2000)
+        ..presetCooldown(lvl -> 50)
+        ..presetManaCost(lvl -> 70)
+        ..presetTargetsAllowed(lvl -> "enemy,ground,air,neutral")
+        ..presetTooltipNormal(lvl -> "Misog R Title|r")
+        ..presetTooltipNormalExtended(lvl -> "Misogi R Desc|r")
+        ..setTooltipLearn("Learn R|r")
+        ..setTooltipLearnExtended("Learning R|r")
+    new UnitDefinition(MISOGI_THAI_R_DUMMY_1, UnitIds.wisp)
+        ..setNormalAbilities(commaList('Avul', 'Aloc', 'Amrf'))
+        ..setAnimationCastBackswing(0)
+        ..setDeathTimeseconds(0.1)
+        ..setScalingValue(4)
+        ..setUnitClassification("_")
+        ..setArtSpecial("_")
+        ..setHasWaterShadow(false)
+        ..setMaximumPitchAngledegrees(0)
+        ..setMaximumRollAngledegrees(0)
+        ..setModelFile("war3mapImported\\BloodEX-Special-2.mdl")
+        ..setArtSpecial("_")
+        ..setArmorType(ArmorType.Unarmored)
+        ..setPlaceableInEditor(false)
+        ..setMovementHeight(20)
+        ..setSpeedBase(100)
+        ..setTurnRate(3)
+        ..setMovementType(MovementType.Fly)
+        ..setCollisionSize(0)
+        ..setUnitSoundSet("_")
+        ..setCanFlee(false)
+        ..setFoodCost(0)
+        ..setHideMinimapDisplay(true)
+        ..setHitPointsMaximumBase(60)
+        ..setHitPointsRegenerationRate(-1)
+        ..setHitPointsRegenerationType("Always")
+        ..setStockMaximum(1)
+        ..setStockReplenishInterval(1)
+        ..setStructuresBuilt("_")
+        ..setUpgradesUsed("_")
+        ..setHotkey("_")
+        ..setName("effect dummy")
+        ..setTooltipBasic("_")
+        ..setTooltipExtended("_")
+    new UnitDefinition(MISOGI_THAI_R_DUMMY_2, UnitIds.wisp)
+        ..setNormalAbilities(commaList('Avul', 'Aloc', 'Amrf'))
+        ..setAnimationCastBackswing(0)
+        ..setDeathTimeseconds(0.1)
+        ..setScalingValue(4)
+        ..setUnitClassification("_")
+        ..setArtSpecial("_")
+        ..setHasWaterShadow(false)
+        ..setMaximumPitchAngledegrees(0)
+        ..setMaximumRollAngledegrees(0)
+        ..setModelFile("war3mapImported\\MisogiScrew3MDXReal.mdx")
+        ..setArtSpecial("_")
+        ..setArmorType(ArmorType.Unarmored)
+        ..setPlaceableInEditor(false)
+        ..setMovementHeight(20)
+        ..setSpeedBase(100)
+        ..setTurnRate(3)
+        ..setMovementType(MovementType.Fly)
+        ..setCollisionSize(0)
+        ..setUnitSoundSet("_")
+        ..setCanFlee(false)
+        ..setFoodCost(0)
+        ..setHideMinimapDisplay(true)
+        ..setHitPointsMaximumBase(60)
+        ..setHitPointsRegenerationRate(-1)
+        ..setHitPointsRegenerationType("Always")
+        ..setStockMaximum(1)
+        ..setStockReplenishInterval(1)
+        ..setStructuresBuilt("_")
+        ..setUpgradesUsed("_")
+        ..setHotkey("_")
+        ..setName("effect dummy")
+        ..setTooltipBasic("_")
+        ..setTooltipExtended("_")
+
+function misogiR4 ()
+    unit u
+    integer i
+    misogiRInt=misogiRInt+1
+    if misogiRInt<83
+        PauseUnit(misogiRCaster,true)
+        SetUnitInvulnerable(misogiRCaster,true)
+
+    PauseUnit(misogiRTarget,true)
+    SetUnitInvulnerable(misogiRTarget,true)
+    if misogiRInt<=78
+        SetUnitFacing(misogiRCaster,AngleBetweenPoints(GetUnitLoc(misogiRCaster),GetUnitLoc(misogiRTarget)))
+
+    if misogiRInt==25
+        soundPlay("war3mapImported\\misogiWSE2Real.wav", 0, 0)
+        u=CreateUnitAtLoc(GetOwningPlayer(misogiRCaster),MISOGI_THAI_R_DUMMY_1,GetUnitLoc(misogiRTarget),GetRandomDirectionDeg())
+        SetUnitScale(u,2.5,2.5,2.5)
+        UnitApplyTimedLife(u,'BHwe',3.5)
+
+    if misogiRInt==60
+        SetUnitAnimationByIndex(misogiRCaster,4)
+        SetUnitTimeScalePercent(misogiRCaster,300)
+
+    if misogiRInt==67
+        soundPlay("war3mapImported\\misogiRSEReal.wav", 0, 0)
+
+    if misogiRInt>67and misogiRInt<=77
+        SetUnitPositionLoc(misogiRTarget,PolarProjectionBJ(GetUnitLoc(misogiRTarget),50,AngleBetweenPoints(GetUnitLoc(misogiRCaster),GetUnitLoc(misogiRTarget))))
+
+    if misogiRInt==65
+        soundPlay("war3mapImported\\misogiR2Real.wav", 0, 0)
+
+    if misogiRInt==78
+        SetUnitAnimationByIndex(misogiRCaster,2)
+        SetUnitTimeScalePercent(misogiRCaster,100)
+        misogiREffect[1]=CreateUnitAtLoc(GetOwningPlayer(misogiRCaster),MISOGI_THAI_R_DUMMY_2,PolarProjectionBJ(GetUnitLoc(misogiRTarget),450,0),GetRandomDirectionDeg())
+        SetUnitScale(misogiREffect[1],2.5,2.5,2.5)
+        SetUnitFacing(misogiREffect[1],AngleBetweenPoints(GetUnitLoc(misogiREffect[1]),GetUnitLoc(misogiRTarget)))
+        UnitApplyTimedLife(misogiREffect[1],'BHwe',3.5)
+        UnitAddAbility(misogiREffect[1],'Amrf')
+        SetUnitFlyHeight(misogiREffect[1],650,999999)
+        misogiREffect[2]=CreateUnitAtLoc(GetOwningPlayer(misogiRCaster),MISOGI_THAI_R_DUMMY_2,PolarProjectionBJ(GetUnitLoc(misogiRTarget),450,30),GetRandomDirectionDeg())
+        SetUnitScale(misogiREffect[2],2.5,2.5,2.5)
+        SetUnitFacing(misogiREffect[2],AngleBetweenPoints(GetUnitLoc(misogiREffect[2]),GetUnitLoc(misogiRTarget)))
+        UnitApplyTimedLife(misogiREffect[2],'BHwe',3.5)
+        UnitAddAbility(misogiREffect[2],'Amrf')
+        SetUnitFlyHeight(misogiREffect[2],650,999999)
+        misogiREffect[3]=CreateUnitAtLoc(GetOwningPlayer(misogiRCaster),MISOGI_THAI_R_DUMMY_2,PolarProjectionBJ(GetUnitLoc(misogiRTarget),450,60),GetRandomDirectionDeg())
+        SetUnitScale(misogiREffect[3],2.5,2.5,2.5)
+        SetUnitFacing(misogiREffect[3],AngleBetweenPoints(GetUnitLoc(misogiREffect[3]),GetUnitLoc(misogiRTarget)))
+        UnitApplyTimedLife(misogiREffect[3],'BHwe',3.5)
+        UnitAddAbility(misogiREffect[3],'Amrf')
+        SetUnitFlyHeight(misogiREffect[3],650,999999)
+        misogiREffect[4]=CreateUnitAtLoc(GetOwningPlayer(misogiRCaster),MISOGI_THAI_R_DUMMY_2,PolarProjectionBJ(GetUnitLoc(misogiRTarget),450,90),GetRandomDirectionDeg())
+        SetUnitScale(misogiREffect[4],2.5,2.5,2.5)
+        SetUnitFacing(misogiREffect[4],AngleBetweenPoints(GetUnitLoc(misogiREffect[4]),GetUnitLoc(misogiRTarget)))
+        UnitApplyTimedLife(misogiREffect[4],'BHwe',3.5)
+        UnitAddAbility(misogiREffect[4],'Amrf')
+        SetUnitFlyHeight(misogiREffect[4],650,999999)
+        misogiREffect[5]=CreateUnitAtLoc(GetOwningPlayer(misogiRCaster),MISOGI_THAI_R_DUMMY_2,PolarProjectionBJ(GetUnitLoc(misogiRTarget),450,120),GetRandomDirectionDeg())
+        SetUnitScale(misogiREffect[5],2.5,2.5,2.5)
+        SetUnitFacing(misogiREffect[5],AngleBetweenPoints(GetUnitLoc(misogiREffect[5]),GetUnitLoc(misogiRTarget)))
+        UnitApplyTimedLife(misogiREffect[5],'BHwe',3.5)
+        UnitAddAbility(misogiREffect[5],'Amrf')
+        SetUnitFlyHeight(misogiREffect[5],650,999999)
+        misogiREffect[6]=CreateUnitAtLoc(GetOwningPlayer(misogiRCaster),MISOGI_THAI_R_DUMMY_2,PolarProjectionBJ(GetUnitLoc(misogiRTarget),450,150),GetRandomDirectionDeg())
+        SetUnitScale(misogiREffect[6],2.5,2.5,2.5)
+        SetUnitFacing(misogiREffect[6],AngleBetweenPoints(GetUnitLoc(misogiREffect[6]),GetUnitLoc(misogiRTarget)))
+        UnitApplyTimedLife(misogiREffect[5],'BHwe',3.5)
+        UnitAddAbility(misogiREffect[6],'Amrf')
+        SetUnitFlyHeight(misogiREffect[6],650,999999)
+        misogiREffect[7]=CreateUnitAtLoc(GetOwningPlayer(misogiRCaster),MISOGI_THAI_R_DUMMY_2,PolarProjectionBJ(GetUnitLoc(misogiRTarget),450,180),GetRandomDirectionDeg())
+        SetUnitScale(misogiREffect[7],2.5,2.5,2.5)
+        SetUnitFacing(misogiREffect[7],AngleBetweenPoints(GetUnitLoc(misogiREffect[7]),GetUnitLoc(misogiRTarget)))
+        UnitApplyTimedLife(misogiREffect[7],'BHwe',3.5)
+        UnitAddAbility(misogiREffect[7],'Amrf')
+        SetUnitFlyHeight(misogiREffect[7],650,999999)
+        misogiREffect[8]=CreateUnitAtLoc(GetOwningPlayer(misogiRCaster),MISOGI_THAI_R_DUMMY_2,PolarProjectionBJ(GetUnitLoc(misogiRTarget),450,210),GetRandomDirectionDeg())
+        SetUnitScale(misogiREffect[8],2.5,2.5,2.5)
+        SetUnitFacing(misogiREffect[8],AngleBetweenPoints(GetUnitLoc(misogiREffect[8]),GetUnitLoc(misogiRTarget)))
+        UnitApplyTimedLife(misogiREffect[8],'BHwe',3.5)
+        UnitAddAbility(misogiREffect[8],'Amrf')
+        SetUnitFlyHeight(misogiREffect[8],650,999999)
+        misogiREffect[9]=CreateUnitAtLoc(GetOwningPlayer(misogiRCaster),MISOGI_THAI_R_DUMMY_2,PolarProjectionBJ(GetUnitLoc(misogiRTarget),450,240),GetRandomDirectionDeg())
+        SetUnitScale(misogiREffect[9],2.5,2.5,2.5)
+        SetUnitFacing(misogiREffect[9],AngleBetweenPoints(GetUnitLoc(misogiREffect[9]),GetUnitLoc(misogiRTarget)))
+        UnitApplyTimedLife(misogiREffect[9],'BHwe',3.5)
+        UnitAddAbility(misogiREffect[9],'Amrf')
+        SetUnitFlyHeight(misogiREffect[9],650,999999)
+        misogiREffect[10]=CreateUnitAtLoc(GetOwningPlayer(misogiRCaster),MISOGI_THAI_R_DUMMY_2,PolarProjectionBJ(GetUnitLoc(misogiRTarget),450,270),GetRandomDirectionDeg())
+        SetUnitScale(misogiREffect[10],2.5,2.5,2.5)
+        SetUnitFacing(misogiREffect[10],AngleBetweenPoints(GetUnitLoc(misogiREffect[10]),GetUnitLoc(misogiRTarget)))
+        UnitApplyTimedLife(misogiREffect[10],'BHwe',3.5)
+        UnitAddAbility(misogiREffect[10],'Amrf')
+        SetUnitFlyHeight(misogiREffect[10],650,999999)
+        misogiREffect[11]=CreateUnitAtLoc(GetOwningPlayer(misogiRCaster),MISOGI_THAI_R_DUMMY_2,PolarProjectionBJ(GetUnitLoc(misogiRTarget),450,300),GetRandomDirectionDeg())
+        SetUnitScale(misogiREffect[11],2.5,2.5,2.5)
+        SetUnitFacing(misogiREffect[11],AngleBetweenPoints(GetUnitLoc(misogiREffect[11]),GetUnitLoc(misogiRTarget)))
+        UnitApplyTimedLife(misogiREffect[11],'BHwe',3.5)
+        UnitAddAbility(misogiREffect[11],'Amrf')
+        SetUnitFlyHeight(misogiREffect[11],650,999999)
+        misogiREffect[12]=CreateUnitAtLoc(GetOwningPlayer(misogiRCaster),MISOGI_THAI_R_DUMMY_2,PolarProjectionBJ(GetUnitLoc(misogiRTarget),450,330),GetRandomDirectionDeg())
+        SetUnitScale(misogiREffect[12],2.5,2.5,2.5)
+        SetUnitFacing(misogiREffect[12],AngleBetweenPoints(GetUnitLoc(misogiREffect[12]),GetUnitLoc(misogiRTarget)))
+        UnitApplyTimedLife(misogiREffect[12],'BHwe',3.5)
+        UnitAddAbility(misogiREffect[12],'Amrf')
+        SetUnitFlyHeight(misogiREffect[12],650,999999)
+
+    if misogiRInt==83
+        misogiRCaster.startAbilityCooldown(MISOGI_THAI_R)
+        PauseUnit(misogiRCaster,false)
+        SetUnitInvulnerable(misogiRCaster,false)
+        soundPlay("war3mapImported\\misogiRSE2Real.mp3", 0 ,0)
+
+    if misogiRInt==80
+        UnitAddAbility(misogiREffect[1],'Amrf')
+        SetUnitFlyHeight(misogiREffect[1],50,1700)
+
+    if misogiRInt==85
+        UnitAddAbility(misogiREffect[2],'Amrf')
+        SetUnitFlyHeight(misogiREffect[2],50,1700)
+
+    if misogiRInt==90
+        UnitAddAbility(misogiREffect[3],'Amrf')
+        SetUnitFlyHeight(misogiREffect[3],50,1700)
+
+    if misogiRInt==95
+        UnitAddAbility(misogiREffect[4],'Amrf')
+        SetUnitFlyHeight(misogiREffect[4],50,1700)
+
+    if misogiRInt==100
+        UnitAddAbility(misogiREffect[5],'Amrf')
+        SetUnitFlyHeight(misogiREffect[5],50,1700)
+
+    if misogiRInt==105
+        UnitAddAbility(misogiREffect[6],'Amrf')
+        SetUnitFlyHeight(misogiREffect[6],50,1700)
+
+    if misogiRInt==110
+        UnitAddAbility(misogiREffect[7],'Amrf')
+        SetUnitFlyHeight(misogiREffect[7],50,1700)
+
+    if misogiRInt==115
+        UnitAddAbility(misogiREffect[8],'Amrf')
+        SetUnitFlyHeight(misogiREffect[8],50,1700)
+
+    if misogiRInt==120
+        UnitAddAbility(misogiREffect[9],'Amrf')
+        SetUnitFlyHeight(misogiREffect[9],50,1700)
+
+    if misogiRInt==125
+        UnitAddAbility(misogiREffect[10],'Amrf')
+        SetUnitFlyHeight(misogiREffect[10],50,1700)
+
+    if misogiRInt==130
+        UnitAddAbility(misogiREffect[11],'Amrf')
+        SetUnitFlyHeight(misogiREffect[11],50,1700)
+
+    if misogiRInt==135
+        UnitAddAbility(misogiREffect[12],'Amrf')
+        SetUnitFlyHeight(misogiREffect[12],50,1700)
+
+    if misogiRInt==85or misogiRInt==90or misogiRInt==95or misogiRInt==100or misogiRInt==105or misogiRInt==110or misogiRInt==115or misogiRInt==120or misogiRInt==125or misogiRInt==130or misogiRInt==135or misogiRInt==140
+        u=CreateUnitAtLoc(GetOwningPlayer(misogiRCaster),MISOGI_THAI_R_DUMMY_1,GetUnitLoc(misogiRTarget),GetRandomDirectionDeg())
+        SetUnitScale(u,2.5,2.5,2.5)
+        UnitApplyTimedLife(u,'BHwe',2.5)
+
+    if misogiRInt>80
+        SetUnitPositionLoc(misogiREffect[1],PolarProjectionBJ(GetUnitLoc(misogiREffect[1]),50,AngleBetweenPoints(GetUnitLoc(misogiREffect[1]),GetUnitLoc(misogiRTarget))))
+
+    if misogiRInt>85
+        SetUnitPositionLoc(misogiREffect[2],PolarProjectionBJ(GetUnitLoc(misogiREffect[2]),50,AngleBetweenPoints(GetUnitLoc(misogiREffect[2]),GetUnitLoc(misogiRTarget))))
+
+    if misogiRInt>90
+        SetUnitPositionLoc(misogiREffect[3],PolarProjectionBJ(GetUnitLoc(misogiREffect[3]),50,AngleBetweenPoints(GetUnitLoc(misogiREffect[3]),GetUnitLoc(misogiRTarget))))
+
+    if misogiRInt>95
+        SetUnitPositionLoc(misogiREffect[4],PolarProjectionBJ(GetUnitLoc(misogiREffect[4]),50,AngleBetweenPoints(GetUnitLoc(misogiREffect[4]),GetUnitLoc(misogiRTarget))))
+
+    if misogiRInt>100
+        SetUnitPositionLoc(misogiREffect[5],PolarProjectionBJ(GetUnitLoc(misogiREffect[5]),50,AngleBetweenPoints(GetUnitLoc(misogiREffect[5]),GetUnitLoc(misogiRTarget))))
+
+    if misogiRInt>105
+        SetUnitPositionLoc(misogiREffect[6],PolarProjectionBJ(GetUnitLoc(misogiREffect[6]),50,AngleBetweenPoints(GetUnitLoc(misogiREffect[6]),GetUnitLoc(misogiRTarget))))
+
+    if misogiRInt>110
+        SetUnitPositionLoc(misogiREffect[7],PolarProjectionBJ(GetUnitLoc(misogiREffect[7]),50,AngleBetweenPoints(GetUnitLoc(misogiREffect[7]),GetUnitLoc(misogiRTarget))))
+
+    if misogiRInt>115
+        SetUnitPositionLoc(misogiREffect[8],PolarProjectionBJ(GetUnitLoc(misogiREffect[8]),50,AngleBetweenPoints(GetUnitLoc(misogiREffect[8]),GetUnitLoc(misogiRTarget))))
+
+    if misogiRInt>120
+        SetUnitPositionLoc(misogiREffect[9],PolarProjectionBJ(GetUnitLoc(misogiREffect[9]),50,AngleBetweenPoints(GetUnitLoc(misogiREffect[9]),GetUnitLoc(misogiRTarget))))
+
+    if misogiRInt>125
+        SetUnitPositionLoc(misogiREffect[10],PolarProjectionBJ(GetUnitLoc(misogiREffect[10]),50,AngleBetweenPoints(GetUnitLoc(misogiREffect[10]),GetUnitLoc(misogiRTarget))))
+
+    if misogiRInt>130
+        SetUnitPositionLoc(misogiREffect[11],PolarProjectionBJ(GetUnitLoc(misogiREffect[11]),50,AngleBetweenPoints(GetUnitLoc(misogiREffect[11]),GetUnitLoc(misogiRTarget))))
+
+    if misogiRInt>135
+        SetUnitPositionLoc(misogiREffect[12],PolarProjectionBJ(GetUnitLoc(misogiREffect[12]),50,AngleBetweenPoints(GetUnitLoc(misogiREffect[12]),GetUnitLoc(misogiRTarget))))
+
+    if misogiRInt>150
+        DestroyTimer(GetExpiredTimer())
+        PauseUnit(misogiRTarget,false)
+        SetUnitInvulnerable(misogiRTarget,false)
+        DamageEvent.setNextDamageId(DAMAGE_ABILITY_DELAYED_R)
+        DamageEvent.setNextDamageFromCode()
+        UnitDamageTargetBJ(misogiRCaster,misogiRTarget,(((GetUnitAbilityLevel(misogiRCaster,MISOGI_THAI_R))+9)*(GetHeroAgi(misogiRCaster,true))).toReal(),ATTACK_TYPE_MAGIC,DAMAGE_TYPE_MAGIC)
+        i=1
+        while true
+            if i>12
+                break
+            RemoveUnit(misogiREffect[i])
+            misogiREffect[i]=null
+            i=i+1
+        
+        misogiRCaster=null
+        misogiRTarget=null
+        misogiRInt=0
+
+function misogiR3 ()
+    let t=CreateTimer()
+    soundPlay("war3mapImported\\misogiRReal.wav", 0, 0)
+    misogiRCaster=GetSpellAbilityUnit()
+    misogiRTarget=GetSpellTargetUnit()
+    PauseUnit(misogiRCaster,true)
+    SetUnitInvulnerable(misogiRCaster,true)
+    PauseUnit(misogiRTarget,true)
+    SetUnitInvulnerable(misogiRTarget,true)
+    SetUnitPositionLoc(misogiRCaster,PolarProjectionBJ(GetUnitLoc(misogiRTarget),175,AngleBetweenPoints(GetUnitLoc(misogiRTarget),GetUnitLoc(misogiRCaster))))
+    SetUnitAnimationByIndex(misogiRCaster,6)
+    SetUnitTimeScalePercent(misogiRCaster,200)
+    misogiRInt=0
+    TimerStart(t,.02,true,function misogiR4)
+
+function misogiR2 () returns boolean
+    return GetSpellAbilityId() == MISOGI_THAI_R
+
+function misogiR1 ()
+    let t=CreateTrigger()
+    TriggerRegisterAnyUnitEventBJ(t,EVENT_PLAYER_UNIT_SPELL_EFFECT)
+    TriggerAddCondition(t,Condition(function misogiR2))
+    TriggerAddAction(t,function misogiR3)
+init
+    misogiR1()

@@ -1,0 +1,35 @@
+package HSaberF_Orig
+init
+
+function trig_HSaberFConditions() returns boolean
+    return IsUnitType(GetEventDamageSource(), UNIT_TYPE_STRUCTURE) == false and IsUnitType(GetEventDamageSource(), UNIT_TYPE_HERO) == true and UnitHasBuffBJ(GetTriggerUnit(), 'B04P') == true and GetEventDamage() >= GetUnitState(GetTriggerUnit(), UNIT_STATE_LIFE)
+function trig_HSaberFFunc007T()
+    UnitRemoveAbility(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), 'A0FD')
+    SetUnitState(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), UNIT_STATE_LIFE, LoadReal(YDLOC, GetHandleId(GetExpiredTimer()), 1163) + LoadReal(YDLOC, GetHandleId(GetExpiredTimer()), 1163) * 0.20)
+    UnitRemoveAbility(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 151), 'A0RU')
+    DisableTrigger(LoadTriggerHandle(YDLOC, GetHandleId(GetExpiredTimer()), 812))
+    FlushChildHashtable(YDLOC, GetHandleId(GetExpiredTimer()))
+    DestroyTimer(GetExpiredTimer())
+function trig_HSaberFActions()
+    timer _ydl_timer
+    integer trigger_ID = LoadInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 865)
+    trigger_ID += 3
+    SaveInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 865, trigger_ID)
+    SaveInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 1045, trigger_ID)
+    SaveUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594, GetTriggerUnit())
+    UnitRemoveBuffBJ('B04P', LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594))
+    SaveReal(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1163, GetUnitStateSwap(UNIT_STATE_LIFE, LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594)))
+    UnitAddAbility(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594), 'A0FD')
+    _ydl_timer = CreateTimer()
+    SaveTriggerHandle(YDLOC, GetHandleId(_ydl_timer), 812, GetTriggeringTrigger())
+    SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 594, LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594))
+    SaveReal(YDLOC, GetHandleId(_ydl_timer), 1163, LoadReal(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1163))
+    SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 151, LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 151))
+    TimerStart(_ydl_timer, 0.00, false, function trig_HSaberFFunc007T)
+    FlushChildHashtable(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID)
+public function initTrig_HSaberF_Orig()
+    gg_trg_HSaberF = CreateTrigger()
+    DisableTrigger(gg_trg_HSaberF)
+    yDWESyStemAnyUnitDamagedRegistTrigger(gg_trg_HSaberF)
+    TriggerAddCondition(gg_trg_HSaberF, Condition(function trig_HSaberFConditions))
+    TriggerAddAction(gg_trg_HSaberF, function trig_HSaberFActions)

@@ -1,0 +1,176 @@
+package Selection_End
+// import h_abilityModo_tooltip
+// import main
+// public trigger gg_trg_CountdownEnd=null
+// init
+    
+//     initTrig_CountdownEnd()
+
+// function trig_CountdownEnd_Func003Func014Func003003002() returns boolean
+//     return IsUnitType(GetFilterUnit(), UNIT_TYPE_HERO) == true and IsUnitAliveBJ(GetFilterUnit()) == true and GetPlayerController(GetOwningPlayer(GetFilterUnit())) == MAP_CONTROL_USER
+
+// function trig_CountdownEnd_Func003Func014Func004A()
+//     DoNothing()
+
+// function trig_CountdownEnd_Func003Func014T()
+//     TriggerExecute(gg_trg_Clear)
+//     TriggerExecute(gg_trg_Heroskill)
+//     SaveGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 666, yDWEGetUnitsInRectMatchingNull(GetPlayableMapRect(), Condition(function trig_CountdownEnd_Func003Func014Func003003002)))
+//     ForGroupBJ(LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 666), function trig_CountdownEnd_Func003Func014Func004A)
+//     GroupClear(LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 666))
+//     DestroyGroup(LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 666))
+//     FlushChildHashtable(YDLOC, GetHandleId(GetExpiredTimer()))
+//     DestroyTimer(GetExpiredTimer())
+
+// function trig_CountdownEnd_Func003Func036T()
+//     ExecuteFunc("initTrig_IntegrationItem_Orig")
+//     DisableTrigger(gg_trg_CountdownEnd)
+//     DisableTrigger(gg_trg_Clear)
+//     DisableTrigger(gg_trg_CheckMH)
+//     udg_RandomHero = 1
+//     DestroyTrigger(gg_trg_dmbbl)
+//     DestroyTrigger(gg_trg_dmbbl2)
+//     DestroyTrigger(gg_trg_suo1)
+//     DestroyTrigger(gg_trg_suo2)
+//     DestroyTrigger(gg_trg_suo3)
+//     FlushChildHashtable(YDLOC, GetHandleId(GetExpiredTimer()))
+//     DestroyTimer(GetExpiredTimer())
+
+// function trig_CountdownEnd_Func003T()
+//     timer ydl_timer
+//     integer index = 0
+//     SetUnitInvulnerable(gg_unit_O005_0043, true)
+//     PauseUnit(gg_unit_O005_0043, true)
+//     ClearTextMessagesBJ(GetPlayersAll())
+//     TriggerExecute(gg_trg_CheckMH)
+//     EnableTrigger(gg_trg_SunNight)
+//     bj_forLoopAIndex = 1
+//     bj_forLoopAIndexEnd = 12
+//     while true
+//         if bj_forLoopAIndex > bj_forLoopAIndexEnd
+//             break
+//         ResetToGameCameraForPlayer(ConvertedPlayer(GetForLoopIndexA()), 0)
+//         SetCameraField(CAMERA_FIELD_TARGET_DISTANCE, 3500.00, 0)
+//         udg_PlayerInter = GetForLoopIndexA()
+//         if IsPlayerAlly(ConvertedPlayer(GetForLoopIndexA()), Player(3)) == true
+//             SaveLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 1108, GetRectCenter(gg_rct______________015))
+//             CreateNUnitsAtLoc(1, udg_HeroType[udg_MenoHero[udg_PlayerInter]], ConvertedPlayer(udg_PlayerInter), LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 1108), bj_UNIT_FACING)
+//             udg_PlayHero[GetForLoopIndexA()-1] = GetLastCreatedUnit()
+//             // PanCameraToTimedLocForPlayer(ConvertedPlayer(udg_PlayerInter), LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 1108), 1.00)
+//             SetPlayerName(ConvertedPlayer(udg_PlayerInter), GetPlayerName(ConvertedPlayer(udg_PlayerInter)))
+//             RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 1108))
+//         else if IsPlayerAlly(ConvertedPlayer(GetForLoopIndexA()), Player(7)) == true
+//             SaveLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 683, GetRectCenter(gg_rct______________014))
+//             CreateNUnitsAtLoc(1, udg_HeroType[udg_MenoHero[udg_PlayerInter]], ConvertedPlayer(udg_PlayerInter), LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 683), bj_UNIT_FACING)
+//             udg_PlayHero[GetForLoopIndexA()-1] = GetLastCreatedUnit()
+//             // PanCameraToTimedLocForPlayer(ConvertedPlayer(udg_PlayerInter), LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 683), 1.00)
+//             SetPlayerName(ConvertedPlayer(udg_PlayerInter), GetPlayerName(ConvertedPlayer(udg_PlayerInter)))
+//             RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 683))
+//         else if IsPlayerAlly(ConvertedPlayer(GetForLoopIndexA()), Player(11)) == true
+//             SaveLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 48, GetRectCenter(gg_rct______________013))
+//             CreateNUnitsAtLoc(1, udg_HeroType[udg_MenoHero[udg_PlayerInter]], ConvertedPlayer(udg_PlayerInter), LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 48), bj_UNIT_FACING)
+//             udg_PlayHero[GetForLoopIndexA()-1] = GetLastCreatedUnit()
+//             // PanCameraToTimedLocForPlayer(ConvertedPlayer(udg_PlayerInter), LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 48), 1.00)
+//             SetPlayerName(ConvertedPlayer(udg_PlayerInter), GetPlayerName(ConvertedPlayer(udg_PlayerInter)))
+//             RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 48))
+//         if LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 4) == 0 and GetUnitTypeId(udg_PlayHero[bj_forLoopAIndex-1]) == 'H02L'
+//             SaveInteger(YDLOC, GetHandleId(GetExpiredTimer()), 4, 1)
+//             if GetRandomInt(1, 2) == 1
+//                 soundPlay("war3mapImported\\DZyihuiCC.mp3", GetUnitX(udg_Unitsound), GetUnitY(udg_Unitsound))
+//             else
+//                 soundPlay("war3mapImported\\YihuiYTXX.mp3", GetUnitX(udg_Unitsound), GetUnitY(udg_Unitsound))
+//                 CinematicFilterGenericBJ(10.00, BLEND_MODE_BLEND, "war3mapImported\\YihuiYT.tga", 100, 100, 100, 0.00, 100.00, 100.00, 100.00, 100.00)
+//         if LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 130) == 0 and GetUnitTypeId(udg_PlayHero[bj_forLoopAIndex-1]) == 'H01E'
+//             SaveInteger(YDLOC, GetHandleId(GetExpiredTimer()), 130, 1)
+//             soundPlay("war3mapImported\\DZkc1nanaya.mp3", GetUnitX(udg_Unitsound), GetUnitY(udg_Unitsound))
+//         if LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 52) == 0
+//             SaveInteger(YDLOC, GetHandleId(GetExpiredTimer()), 52, 1)
+//             soundPlay("war3mapImported\\GelunKc.mp3", GetUnitX(udg_Unitsound), GetUnitY(udg_Unitsound))
+//         bj_forLoopAIndex++
+    
+//     udg_SkillAction[0] = 0
+//     bj_forLoopAIndex = 1
+//     bj_forLoopAIndexEnd = 20
+//     while true
+//         if bj_forLoopAIndex > bj_forLoopAIndexEnd
+//             break
+//         udg_SkillAction[GetForLoopIndexA()] = 0
+//         bj_forLoopAIndex++
+//     ydl_timer = CreateTimer()
+//     SaveGroupHandle(YDLOC, GetHandleId(ydl_timer), 666, LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 666))
+//     TimerStart(ydl_timer, 0.00, false, function trig_CountdownEnd_Func003Func014T)
+    // for i = 0 to 100
+    //     index += 1
+    //     Music[i] = "Music\\Music"+index.toString()+".mp3"
+    //     if index == 41
+    //         index = 0
+    //     if i == 100
+    //         PlayMusic(Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)]+";"+Music[GetRandomInt(0, 100)])
+    //         ResumeMusic()
+    
+//     DisableTrigger(gg_trg_Startgame)
+//     DisableTrigger(gg_trg_Dialog_Selection)
+//     DisableTrigger(gg_trg_KillModel)
+//     DisableTrigger(gg_trg_Kill30)
+//     DisableTrigger(gg_trg_Kill50)
+//     DisableTrigger(gg_trg_Kill70)
+//     DisableTrigger(gg_trg_Kill90)
+//     DisableTrigger(gg_trg_Kill120)
+//     DisableTrigger(gg_trg_Battle)
+//     DisableTrigger(gg_trg_SeletionHeroStart)
+//     DisableTrigger(gg_trg_Pointmodel)
+//     DisableTrigger(gg_trg_Seticon)
+//     DisableTrigger(gg_trg_Seticon2)
+//     DisableTrigger(gg_trg_OK_Button)
+//     DisableTrigger(gg_trg_SecretChoose)
+//     DisableTrigger(gg_trg_Select_Unit)
+//     DisableTrigger(gg_trg_Select_Unit2)
+//     DisableTrigger(gg_trg_Random_Button)
+//     ydl_timer = CreateTimer()
+//     TimerStart(ydl_timer, 1.00, false, function trig_CountdownEnd_Func003Func036T)
+//     FlushChildHashtable(YDLOC, GetHandleId(GetExpiredTimer()))
+//     DestroyTimer(GetExpiredTimer())
+
+// function trig_CountdownEnd_Actions()
+//     timer ydl_timer
+//     DestroyTimerDialog(udg_Jsqwindow)
+//     bj_forLoopAIndex = 1
+//     bj_forLoopAIndexEnd = 12
+//     while true
+//         if bj_forLoopAIndex > bj_forLoopAIndexEnd
+//             break
+//         if ConvertedPlayer(GetForLoopIndexA()) != Player(3) and ConvertedPlayer(GetForLoopIndexA()) != Player(7) and ConvertedPlayer(GetForLoopIndexA()) != Player(11) and GetPlayerController(ConvertedPlayer(GetForLoopIndexA())) == MAP_CONTROL_USER and GetPlayerSlotState(ConvertedPlayer(GetForLoopIndexA())) == PLAYER_SLOT_STATE_PLAYING and udg_SelectYet[GetForLoopIndexA()] == false
+//             udg_PlayerInter = GetForLoopIndexA()
+//             while true
+//                 if udg_SelectYet[udg_PlayerInter] == true
+//                     break
+//                 udg_RandomHero = GetRandomInt(1, udg_Maxhero)
+//                 if udg_HeroGone[udg_RandomHero] == false
+//                     udg_MenoHero[udg_PlayerInter] = udg_RandomHero
+//                     RemoveDestructable(udg_OldIcon[udg_PlayerInter])
+//                     CreateDestructableLoc(udg_IconHero[udg_RandomHero], udg_PointSelectHero[udg_PlayerInter], GetRandomDirectionDeg(), 1, 0)
+//                     udg_OldIcon[udg_PlayerInter] = GetLastCreatedDestructable()
+//                     udg_HeroGone[udg_RandomHero] = true
+//                     udg_SelectYet[udg_PlayerInter] = true
+//                     RemoveDestructable(udg_EnableIcon[udg_RandomHero])
+//                     CreateDestructableLoc(udg_IconDisHero[udg_RandomHero], GetUnitLoc(udg_UnitIcon[udg_RandomHero]), GetRandomDirectionDeg(), 1, 0)
+//                     udg_EnableIcon[udg_RandomHero] = GetLastCreatedDestructable()
+//                     RemoveUnit(udg_UnitIcon[udg_RandomHero])
+//                     AddSpecialEffectLocBJ(udg_PointSelectHero[udg_PlayerInter], "war3mapImported\\Rasengan6.mdl")
+//                     DestroyEffect(GetLastCreatedEffectBJ())
+//         bj_forLoopAIndex++
+//     ydl_timer = CreateTimer()
+//     SaveGroupHandle(YDLOC, GetHandleId(ydl_timer), 666, LoadGroupHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * LoadInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 1045), 666))
+//     SaveLocationHandle(YDLOC, GetHandleId(ydl_timer), 1108, LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * LoadInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 1045), 1108))
+//     SaveLocationHandle(YDLOC, GetHandleId(ydl_timer), 683, LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * LoadInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 1045), 683))
+//     SaveLocationHandle(YDLOC, GetHandleId(ydl_timer), 48, LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * LoadInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 1045), 48))
+//     SaveInteger(YDLOC, GetHandleId(ydl_timer), 4, LoadInteger(YDLOC, GetHandleId(GetTriggeringTrigger()) * LoadInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 1045), 4))
+//     SaveInteger(YDLOC, GetHandleId(ydl_timer), 130, LoadInteger(YDLOC, GetHandleId(GetTriggeringTrigger()) * LoadInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 1045), 130))
+//     SaveInteger(YDLOC, GetHandleId(ydl_timer), 52, LoadInteger(YDLOC, GetHandleId(GetTriggeringTrigger()) * LoadInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 1045), 52))
+//     TimerStart(ydl_timer, 3.00, false, function trig_CountdownEnd_Func003T)
+
+// function initTrig_CountdownEnd()
+//     gg_trg_CountdownEnd = CreateTrigger()
+//     DisableTrigger(gg_trg_CountdownEnd)
+//     TriggerRegisterTimerExpireEvent(gg_trg_CountdownEnd, udg_Jsq)
+//     TriggerAddAction(gg_trg_CountdownEnd, function trig_CountdownEnd_Actions)

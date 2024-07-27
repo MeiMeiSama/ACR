@@ -1,0 +1,39 @@
+package SoundFunctions
+
+import ACR_Library
+import ClosureEvents
+
+sound array lolsound
+constant LOL1 = acrCreateSound("war3mapImported\\LOL1.mp3")
+constant LOL2 = acrCreateSound("war3mapImported\\LOL2.mp3")
+constant LOL3 = acrCreateSound("war3mapImported\\LOL3.mp3")
+constant LOL4 = acrCreateSound("war3mapImported\\LOL4.mp3")
+
+
+public function lolSoundDatabase()
+    lolsound[0] = LOL1
+    lolsound[1] = LOL2
+    lolsound[2] = LOL3
+
+function lolSoundIsPlaying() returns boolean
+    for i = 0 to 2
+        if lolsound[i].isPlaying()
+            return true
+    return false
+
+public function lolSounds()
+    EventListener.add(EVENT_PLAYER_UNIT_DEATH) -> 
+        if GetDyingUnit().isType(UNIT_TYPE_HERO) and GetKillingUnit().isType(UNIT_TYPE_HERO) and lolSoundIsPlaying() == false
+            let randomlolsound = GetRandomInt(0, 2)
+            lolsound[randomlolsound].play()
+
+public function killSoundDatabase()
+    // database goes here
+
+function killSoundIsPlaying() returns boolean
+    return true
+    //condition goes here 
+
+public function killSounds()
+    // actual kill sounds function goes here
+

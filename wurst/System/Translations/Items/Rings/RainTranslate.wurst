@@ -1,0 +1,65 @@
+package RainTranslate
+
+import ObjectDefinitions
+import ClosureTimers
+
+timer array rainTimer
+int array rainAgi
+unit array rainUser
+
+init
+    rainEventCheck()
+
+function rainDynamicTranslation(unit user, item rain)
+    if rain.getTypeId() == RAIN_RING_VONGOLA
+        let baseDmg = 100
+        let currentAgi = (user.getAgi(true) * 2.5).ceil() 
+        let dmg = baseDmg + currentAgi
+        BlzSetItemExtendedTooltip(rain, "|n|cff008080Active:|n|n|r|cffffd700Creates a circle at the targeted location, damaging enemies in it and silencing them for 1 second. Any enemy who walks into the circle while it stays up will also be affected. The circle lasts for 3 seconds and can only apply its effect to each opponent once per use.|n|n|r|cffffd700Damage output:|cff03cf64"+dmg.toString()+" |n|r|cffffd700Damage output:|r|cffc0c0c0 100 |cffff8080+ |cffff0000|cff03cf642.5x Agility  |r|n|cffffd700Cooldown: |cffff808045|r|n|n|cffc0c0c0Passive|r|n|n|cff03cf64Agility + 75|n|r|cffffd700Increases the user's attack speed by 50%|n|r|cffffd700Increases the user's health by 650")
+    else if rain.getTypeId() == RAIN_RING_ARCOBALENO
+        let baseDmg = 200
+        let currentAgi = (user.getAgi(true) * 4.0).ceil() 
+        let dmg = baseDmg + currentAgi 
+        BlzSetItemExtendedTooltip(rain, "|n|cff008080Active:|n|n|r|cffffd700Creates a circle at the targeted location, damaging enemies in it and silencing them for 2 seconds. Any enemy who walks into the circle while it stays up will also be affected. The circle lasts for 3 seconds and can only apply its effect to each opponent once per use.|n|n|r|cffffd700Damage output:|cff03cf64"+dmg.toString()+" |n|r|cffffd700Damage output:|r|cffc0c0c0 100 |cffff8080+ |cffff0000|cff03cf642.5x Agility  |r|n|cffffd700Cooldown: |cffff808045|r|n|n|cffc0c0c0Passive|r|n|n|cff03cf64Agility + 165|n|r|cffffd700Increases the user's attack speed by 110%|n|r|cffffd700Increases the user's health by 1430")
+
+function rainEventCheck()
+
+    // ━━━━━━━━━━━━ [RUNS TRANSLATION FOR ALL rain RINGS/ARCOS IN THE INVENTORY IF rain RING/ARCO IS PICKED UP] ━━━━━━━━━━━━
+     
+    CreateTrigger()
+    ..registerAnyUnitEvent(EVENT_PLAYER_UNIT_PICKUP_ITEM)
+    ..addAction() ->
+        if GetManipulatedItem().getTypeId() == RAIN_RING_VONGOLA or GetManipulatedItem().getTypeId() == RAIN_RING_ARCOBALENO
+            let user = GetManipulatingUnit()
+            rainTimer[user.getOwner().getId()].destr()
+            rainTimer[user.getOwner().getId()] = CreateTimer()
+            if GetManipulatedItem().getTypeId() == RAIN_RING_VONGOLA
+                for i = 0 to 5
+                    if UnitItemInSlot(user, i).getTypeId() == RAIN_RING_VONGOLA
+                        let rainRing = UnitItemInSlot(user, i)
+                        rainDynamicTranslation(user, rainRing)
+            else if GetManipulatedItem().getTypeId() == RAIN_RING_ARCOBALENO
+                for i = 0 to 5
+                    if UnitItemInSlot(user, i).getTypeId() == RAIN_RING_ARCOBALENO
+                        let rainPacifier = UnitItemInSlot(user, i)
+                        rainDynamicTranslation(user, rainPacifier)
+                
+            rainAgi[user.getOwner().getId()] = user.getAgi(true)
+            // ━━━━━━━━━━━━ [RUNS TRANSLATION FOR ALL rain RINGS/ARCOS IN THE INVENTORY WHENEVER AGI CHANGES] ━━━━━━━━━━━━
+            
+            rainTimer[user.getOwner().getId()].doPeriodically(0.25) (CallbackPeriodic cb) ->
+                if  rainAgi[user.getOwner().getId()] != user.getAgi(true)    
+                    for i = 0 to 5
+                        if UnitItemInSlot(user, i).getTypeId() == RAIN_RING_VONGOLA
+                            rainAgi[user.getOwner().getId()] = user.getAgi(true)
+                            let rainRing = UnitItemInSlot(user, i)
+                            rainDynamicTranslation(user, rainRing)
+                                    
+                            
+                        if UnitItemInSlot(user, i).getTypeId() == RAIN_RING_ARCOBALENO
+                            rainAgi[user.getOwner().getId()] = user.getAgi(true)                      
+                            let rainPacifier = UnitItemInSlot(user, i)
+                            rainDynamicTranslation(user, rainPacifier)
+
+                if user.hasItemById(RAIN_RING_VONGOLA) == false and user.hasItemById(RAIN_RING_ARCOBALENO) == false
+                    rainTimer[user.getOwner().getId()].destr()

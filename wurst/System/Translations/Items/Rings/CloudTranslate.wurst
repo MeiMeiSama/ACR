@@ -1,0 +1,68 @@
+package CloudTranslate
+import ObjectDefinitions
+import ClosureTimers
+
+timer array cloudTimer
+int array cloudAgi
+real array cloudArmor
+unit array cloudUser
+
+init
+    cloudEventCheck()
+
+function cloudDynamicTranslation(unit user, item cloud)
+    if cloud.getTypeId() == CLOUD_RING_VONGOLA
+        let currentArmor = (user.getArmor() * 6).ceil()
+        let currentAgi = user.getAgi(true) * 5 
+        let absorb = currentArmor + currentAgi
+        BlzSetItemExtendedTooltip(cloud, "|n|cff008080Active:|n|n|r|cffffd700Upon use, gain an absorb shield that absorbs all magic damage taken. Lasts 3 seconds.|n|n|r|cffffd700Shield Amount: |cff03cf64"+absorb.toString()+"|n|r|cffffd700Shield Formula:|cffc0c0c0 6 x armor |cffff8080+ |cff03cf645 x Agility.  |r|n|cffffd700Cooldown: |cffff808045|r|n|n|cffc0c0c0Passive|r|r|r|n|n|r|cff03cf64Agility +50|n|r|cffffd700Increases the user's armor by 25|n|r|cffffd700Increases the user's health by 1000")
+    else if cloud.getTypeId() == CLOUD_RING_ARCOBALENO
+        let currentArmor = (user.getArmor() * 6).ceil()
+        let currentAgi = user.getAgi(true) * 8
+        let absorb = currentArmor + currentAgi 
+        BlzSetItemExtendedTooltip(cloud, "|n|cff008080Active:|n|n|r|cffffd700Upon use, gain an absorb shield that absorbs all magic damage taken. Lasts 5 seconds.|n|n|r|cffffd700Shield Amount: |cff03cf64"+absorb.toString()+"|n|r|cffffd700Shield Formula:|cffc0c0c0 6 x armor |cffff8080+ |cff03cf648 x Agility.  |r|n|cffffd700Cooldown: |cffff808045|r|n|n|cffc0c0c0Passive|r|r|r|n|n|r|cff03cf64Agility +110|n|r|cffffd700Increases the user's armor by 55|n|r|cffffd700Increases the user's health by 2200")
+
+function cloudEventCheck()
+
+    // ━━━━━━━━━━━━ [RUNS TRANSLATION FOR ALL cloud RINGS/ARCOS IN THE INVENTORY IF cloud RING/ARCO IS PICKED UP] ━━━━━━━━━━━━
+     
+    CreateTrigger()
+    ..registerAnyUnitEvent(EVENT_PLAYER_UNIT_PICKUP_ITEM)
+    ..addAction() ->
+        if GetManipulatedItem().getTypeId() == CLOUD_RING_VONGOLA or GetManipulatedItem().getTypeId() == CLOUD_RING_ARCOBALENO
+            let user = GetManipulatingUnit()
+            cloudTimer[user.getOwner().getId()].destr()
+            cloudTimer[user.getOwner().getId()] = CreateTimer()
+            if GetManipulatedItem().getTypeId() == CLOUD_RING_VONGOLA
+                for i = 0 to 5
+                    if UnitItemInSlot(user, i).getTypeId() == CLOUD_RING_VONGOLA
+                        let cloudRing = UnitItemInSlot(user, i)
+                        cloudDynamicTranslation(user, cloudRing)
+            else if GetManipulatedItem().getTypeId() == CLOUD_RING_ARCOBALENO
+                for i = 0 to 5
+                    if UnitItemInSlot(user, i).getTypeId() == CLOUD_RING_ARCOBALENO
+                        let cloudPacifier = UnitItemInSlot(user, i)
+                        cloudDynamicTranslation(user, cloudPacifier)
+                
+            cloudAgi[user.getOwner().getId()] = user.getAgi(true)
+            cloudArmor[user.getOwner().getId()] = user.getArmor()
+            // ━━━━━━━━━━━━ [RUNS TRANSLATION FOR ALL cloud RINGS/ARCOS IN THE INVENTORY WHENEVER AGI CHANGES] ━━━━━━━━━━━━
+            
+            cloudTimer[user.getOwner().getId()].doPeriodically(0.25) (CallbackPeriodic cb) ->
+                if  cloudAgi[user.getOwner().getId()] != user.getAgi(true) or cloudArmor[user.getOwner().getId()] != user.getArmor()   
+                    for i = 0 to 5
+                        if UnitItemInSlot(user, i).getTypeId() == CLOUD_RING_VONGOLA
+                            cloudAgi[user.getOwner().getId()] = user.getAgi(true)
+                            cloudArmor[user.getOwner().getId()] = user.getArmor()
+                            let cloudRing = UnitItemInSlot(user, i)
+                            cloudDynamicTranslation(user, cloudRing)
+                                    
+                            
+                        if UnitItemInSlot(user, i).getTypeId() == CLOUD_RING_ARCOBALENO
+                            cloudAgi[user.getOwner().getId()] = user.getAgi(true)
+                            cloudArmor[user.getOwner().getId()] = user.getArmor()                      
+                            let cloudPacifier = UnitItemInSlot(user, i)
+                            cloudDynamicTranslation(user, cloudPacifier)
+
+                if user.hasItemById(CLOUD_RING_VONGOLA) == false and user.hasItemById(CLOUD_RING_ARCOBALENO) == false
+                    cloudTimer[user.getOwner().getId()].destr()

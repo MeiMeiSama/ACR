@@ -1,0 +1,43 @@
+// package Nanayattack_Orig
+// import main
+// init
+//     initTrig_Nanayattack_Orig()
+
+// function trig_NanayattackConditions() returns boolean
+//     return GetUnitTypeId(GetAttacker()) == 'H01E' or GetUnitTypeId(GetAttacker()) == 'H01S' or GetUnitTypeId(GetAttacker()) == 'H01B' or GetUnitTypeId(GetAttacker()) == 'H00B' or GetUnitTypeId(GetAttacker()) == 'H00Z' or GetUnitTypeId(GetAttacker()) == 'H02G' or (GetUnitTypeId(GetAttacker()) == DIO_BRANDO and IsUnitType(GetAttackedUnitBJ(), UNIT_TYPE_STRUCTURE) == false and IsUnitAlly(GetAttackedUnitBJ(), GetOwningPlayer(GetAttacker())) == false)
+// function trig_NanayattackActions()
+//     integer trigger_ID = LoadInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 865)
+//     trigger_ID += 3
+//     SaveInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 865, trigger_ID)
+//     SaveInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 1045, trigger_ID)
+//     SaveUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594, GetAttacker())
+//     SaveUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 549, GetAttackedUnitBJ())
+//     SaveEffectHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 487, AddSpecialEffect("Abilities\\Spells\\Other\\Stampede\\StampedeMissileDeath.mdl", GetUnitX(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 549)), GetUnitY(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 549))))
+//     DestroyEffect(LoadEffectHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 487))
+//     // if GetUnitTypeId(GetAttacker()) == 'H01S' and GetUnitTypeId(GetAttackedUnitBJ()) != 'O005' and GetUnitTypeId(GetAttackedUnitBJ()) != 'O007' and IsUnitType(GetAttackedUnitBJ(), UNIT_TYPE_STRUCTURE) == false and IsUnitType(GetAttackedUnitBJ(), UNIT_TYPE_HERO) == true and IsUnitAlly(GetAttackedUnitBJ(), GetOwningPlayer(GetAttacker())) == false
+//     //     if GetUnitState(GetAttackedUnitBJ(), UNIT_STATE_LIFE) <= GetUnitStateSwap(UNIT_STATE_MAX_LIFE, GetAttackedUnitBJ()) * 0.15
+//     //         UnitDamageTargetBJ(GetAttacker(), GetAttackedUnitBJ(), 9999999.00, ATTACK_TYPE_MAGIC, DAMAGE_TYPE_DIVINE)
+//     //         PlaySoundBJ(gg_snd_toonovsnanaya)
+//     //         SaveLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 772, GetUnitLoc(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 549)))
+//     //         SaveUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 289, CreateUnitAtLoc(GetOwningPlayer(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594)), 'e0AX', LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 772), GetRandomDirectionDeg()))
+//     //         UnitApplyTimedLife(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 289), 'BHwe', 1.50)
+//     //         RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 772))
+//     // if GetUnitTypeId(GetAttacker()) == 'H00Z' or (GetUnitTypeId(GetAttacker()) == 'H02G' and GetUnitTypeId(GetAttackedUnitBJ()) != 'O005' and GetUnitTypeId(GetAttackedUnitBJ()) != 'O007' and IsUnitType(GetAttackedUnitBJ(), UNIT_TYPE_STRUCTURE) == false and IsUnitType(GetAttackedUnitBJ(), UNIT_TYPE_HERO) == true and IsUnitAlly(GetAttackedUnitBJ(), GetOwningPlayer(GetAttacker())) == false)
+//     //     if GetUnitState(GetAttackedUnitBJ(), UNIT_STATE_LIFE) <= GetUnitStateSwap(UNIT_STATE_MAX_LIFE, GetAttackedUnitBJ()) * 0.15
+//     //         UnitDamageTargetBJ(GetAttacker(), GetAttackedUnitBJ(), 9999999.00, ATTACK_TYPE_MAGIC, DAMAGE_TYPE_DIVINE)
+//     //         if GetUnitTypeId(GetAttacker()) == 'H00Z'
+//     //             PlaySoundBJ(gg_snd_Ryougi_Kill)
+//     //         else
+//     //             soundPlay("war3mapImported\\Sabershikikill.mp3", GetUnitX(udg_Unitsound), GetUnitY(udg_Unitsound))
+//     //         SaveLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 772, GetUnitLoc(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 549)))
+//     //         SaveUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 953, CreateUnitAtLoc(GetOwningPlayer(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594)), 'e0KE', LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 772), GetRandomDirectionDeg()))
+//     //         UnitApplyTimedLife(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 953), 'BHwe', 2.50)
+//     //         SaveUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 521272976, CreateUnitAtLoc(GetOwningPlayer(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594)), 'e0KF', LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 772), GetRandomDirectionDeg()))
+//     //         UnitApplyTimedLife(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 521272976), 'BHwe', 2.00)
+//     //         RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 772))
+//     FlushChildHashtable(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID)
+// function initTrig_Nanayattack_Orig()
+//     gg_trg_Nanayattack = CreateTrigger()
+//     TriggerRegisterAnyUnitEventBJ(gg_trg_Nanayattack, EVENT_PLAYER_UNIT_ATTACKED)
+//     TriggerAddCondition(gg_trg_Nanayattack, Condition(function trig_NanayattackConditions))
+//     TriggerAddAction(gg_trg_Nanayattack, function trig_NanayattackActions)

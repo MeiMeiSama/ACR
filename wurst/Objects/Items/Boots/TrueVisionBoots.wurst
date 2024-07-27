@@ -1,0 +1,7 @@
+package TrueVisionBoots
+import ClosureEvents
+init
+    EventListener.add(EVENT_PLAYER_UNIT_PICKUP_ITEM) -> 
+        let t = GetManipulatedItem()
+        if t.getTypeId() == 'I06Z' or t.getTypeId() == 'I070' or t.getTypeId() == 'I06Y' or t.getTypeId() == 'I071'
+            t.addAbility('Adt1')

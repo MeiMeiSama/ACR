@@ -1,0 +1,30 @@
+package IchigoStrength_G
+
+import ClosureEvents
+import ObjectDefinitions
+import TimerUtils
+import SoundUtils
+constant ichigoBlockSound = new SoundDefinition("war3mapImported\\IchigoG.mp3")
+timer spellblockTimer = null
+integer spellblockCount = 0
+init
+
+    EventListener.onCast(ICHIGO_STRENGTH_ABILITY_G) (unit caster) ->
+        ichigoBlockSound.play()
+        caster
+        ..addAbility(ABILITY_SPELLBLOCK)
+        ..addAbility(ICHIGO_STRENGTH_G_EFFECT)
+        spellblockTimer = getTimer()..startPeriodic(0.1, function spellblockTimerFunction)..setData(caster.getOwner().getId())
+
+function spellblockTimerFunction ()
+    let pid = spellblockTimer.getData()
+    let caster = udg_PlayHero[pid]
+    if caster.isInvulnerable() == false
+        spellblockCount++
+    if spellblockCount == 40 // 0.1 * 40 = 4 seconds
+        if caster.hasAbility(ABILITY_SPELLBLOCK)
+            caster.removeAbility(ABILITY_SPELLBLOCK)
+            caster.removeAbility(ICHIGO_STRENGTH_G_EFFECT)
+            caster.removeAbility(ICHIGO_STRENGTH_G_BUFF)
+        spellblockCount = 0
+        spellblockTimer.release()        

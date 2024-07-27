@@ -1,0 +1,18 @@
+package RentaroE
+
+
+init
+    initTrig_RentaroE()
+
+function trig_RentaroEConditions() returns boolean
+    return GetUnitTypeId(GetTriggerUnit()) == 'H00W'
+function trig_RentaroEActions()
+    if GetSpellAbilityId() == 'A098'
+        PlaySoundBJ(gg_snd_satomiG)
+    else if GetSpellAbilityId() == 'A0H7'
+        PlaySoundBJ(gg_snd_satomi3)
+function initTrig_RentaroE()
+    gg_trg_RentaroE = CreateTrigger()
+    TriggerRegisterAnyUnitEventBJ(gg_trg_RentaroE, EVENT_PLAYER_UNIT_SPELL_EFFECT)
+    TriggerAddCondition(gg_trg_RentaroE, Condition(function trig_RentaroEConditions))
+    TriggerAddAction(gg_trg_RentaroE, function trig_RentaroEActions)

@@ -1,0 +1,9 @@
+package GajeelRedfox_G
+
+import ClosureEvents
+import ObjectDefinitions
+
+public function gajeelG ()
+    EventListener.add(EVENT_PLAYER_UNIT_DAMAGED) -> 
+        if BlzGetEventDamageTarget().getTypeId() == GAJEEL_REDFOX and BlzGetEventAttackType() == ATTACK_TYPE_HERO
+            BlzSetEventDamage(GetEventDamage()*0.65.ceil())

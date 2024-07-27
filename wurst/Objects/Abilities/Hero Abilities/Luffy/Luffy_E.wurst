@@ -1,0 +1,31 @@
+package Luffy_E
+
+import ClosureEvents
+import ObjectDefinitions
+int luffyEDummyLvl
+init
+
+public function luffyE()
+
+    let luffyEDummy = 'A191'
+    let luffyE = 'A047'       
+
+    EventListener.add(EVENT_PLAYER_HERO_SKILL) ->
+        if GetLearnedSkill() == luffyEDummy
+            let abil = GetLearnedSkill()
+            let caster = GetTriggerUnit()
+            luffyEDummyLvl = GetUnitAbilityLevel(caster, abil)
+            if luffyEDummyLvl == 1
+                caster.addAbility(luffyE)
+                caster.setAbilityLevel(luffyE, luffyEDummyLvl)
+            else
+                caster.setAbilityLevel(luffyE, luffyEDummyLvl)
+                caster.removeAbility('B00U')
+
+    EventListener.add(EVENT_PLAYER_HERO_REVIVE_FINISH) ->
+        if GetTriggerUnit().getTypeId() == MONKEYD_LUFFY
+            let caster = GetTriggerUnit()
+            if caster.hasAbility(luffyEDummy) == true and caster.hasAbility(luffyE) == false 
+                caster.addAbility(luffyE)
+                caster.setAbilityLevel(luffyE, luffyEDummyLvl)
+                caster.removeAbility('B00U')

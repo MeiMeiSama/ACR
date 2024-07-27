@@ -1,0 +1,91 @@
+package Meliodas_T
+import ClosureTimers
+import main
+import MusicPlaylist
+import AbilityGlobals
+// import ACR_TagSystem
+import ACR_Library
+// import UpdateAbilityData
+
+boolean meliodasTactive = false
+
+init
+
+    meliodasModoT()
+
+function meliodasModoT()
+
+    CreateTrigger()
+    ..registerAnyUnitEvent(EVENT_PLAYER_UNIT_SPELL_EFFECT)
+    ..addAction() ->
+        if ((GetSpellAbilityId() == 'A19G')) 
+            let caster = GetTriggerUnit()
+            let pid = caster.getOwner().getId()
+            caster.disableAbility(SPELL_E[pid], true, true)
+            caster.removeAbility('B065')
+            stopBgm()
+            StopMusic(false)
+            PlaySoundBJ(gg_snd_MeliodasBGM)                
+            acrTransformation(caster, 40, 'H02M', 'H036', 850, 4.0)
+            doPeriodically(0.01) (CallbackPeriodic cb) ->
+                if transformationActive[pid] == false
+                    caster.disableAbility(SPELL_E[pid], false, false)
+                    if gg_snd_MeliodasBGM.isPlaying()
+                        gg_snd_MeliodasBGM.stop(false, false) 
+                    destroy cb
+    // CreateTrigger()
+    // ..registerAnyUnitEvent(EVENT_PLAYER_UNIT_SPELL_EFFECT)
+    // ..addAction() ->
+    //     if ((GetSpellAbilityId() == 'A19G')) 
+    //         meliodasTactive = true
+    //         let caster = GetTriggerUnit()
+    //         let pid = caster.getOwner().getId()
+    //         stopBgm()
+    //         StopMusic(false)
+    //         PlaySoundBJ(gg_snd_MeliodasBGM)
+    //         caster.hideAbility(SPELL_Q[pid], true)
+    //         SPELL_Q[pid].addTagHidden()
+    //         caster.hideAbility(SPELL_W[pid], true)
+    //         SPELL_W[pid].addTagHidden()
+    //         caster.disableAbility(SPELL_E[pid], true, true)
+    //         SPELL_E[pid].addTagDisabled()
+    //         SPELL_E[pid].addTagHidden()
+    //         caster.removeAbility('B065')
+    //         caster.hideAbility(SPELL_R[pid], true)
+    //         SPELL_R[pid].addTagHidden() 
+    //         caster.hideAbility(SPELL_T[pid], true)
+    //         SPELL_T[pid].addTagHidden()  
+
+    //         doPeriodically(0.003) (CallbackPeriodic cb) ->
+    //             if meliodasTactive == true
+    //                 if (((IsUnitDeadBJ(caster) == true) or (UnitHasBuffBJ(caster,'B04T') == false))) 
+    //                     meliodasTactive = false
+    //                     if gg_snd_MeliodasBGM.isPlaying()
+    //                         gg_snd_MeliodasBGM.stop(false, false)  
+    //                     if caster.hasTagPauseEX() == false
+    //                         caster.issueImmediateOrder("stop")
+    //                         caster.pauseEx()
+    //                         caster.addTagPauseEX() 
+    //                     doAfter(0.003) ->     
+    //                         if SPELL_Q[pid].hasTagHidden()                        
+    //                             caster.hideAbility(SPELL_Q[pid], false)
+    //                             SPELL_Q[pid].removeTagHidden()
+    //                         if SPELL_W[pid].hasTagHidden()                        
+    //                             caster.hideAbility(SPELL_W[pid], false)
+    //                             SPELL_W[pid].removeTagHidden()
+    //                         if SPELL_E[pid].hasTagHidden()
+    //                             caster.disableAbility(SPELL_E[pid], false, false)
+    //                             SPELL_E[pid].removeTagDisabled()
+    //                             SPELL_E[pid].removeTagHidden()
+    //                         if SPELL_R[pid].hasTagHidden()                        
+    //                             caster.hideAbility(SPELL_R[pid], false)
+    //                             SPELL_R[pid].removeTagHidden() 
+    //                         if SPELL_T[pid].hasTagHidden() 
+    //                             caster.hideAbility(SPELL_T[pid], false)
+    //                             SPELL_T[pid].removeTagHidden()
+    //                             caster.startAbilityCooldown(SPELL_T[pid])
+    //                             acrCooldownT[pid] = 60.00   
+    //                         if caster.hasTagPauseEX()    
+    //                             caster.unpauseEx()
+    //                             caster.removeTagPauseEX()                             
+    //                         destroy cb

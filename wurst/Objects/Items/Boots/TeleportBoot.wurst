@@ -1,0 +1,21 @@
+package TeleportBoot
+import ClosureEvents
+import GoldIncome
+integer array tpBootsGoldEarnt
+
+init
+    EventListener.add(EVENT_PLAYER_UNIT_DEATH) -> 
+        let deadUnit = GetDyingUnit()
+        let killingUnit = GetKillingUnit()
+        if deadUnit.getTypeId() == 'e05K' or deadUnit.getTypeId() == 'e05G' or deadUnit.getTypeId() == 'e05M' // Team 1
+            if killingUnit.hasItemById('I02K') or killingUnit.hasItemById('I06Y')
+                killingUnit.getOwner().addGold(3)
+                totalGoldEarnt[killingUnit.getOwner().getId()] += 3
+        else if deadUnit.getTypeId() == 'e05L' or deadUnit.getTypeId() == 'e05I' or deadUnit.getTypeId() == 'e05O' // Team 3
+            if killingUnit.hasItemById('I02K') or killingUnit.hasItemById('I06Y')
+                killingUnit.getOwner().addGold(3)
+                totalGoldEarnt[killingUnit.getOwner().getId()] += 3
+        else if deadUnit.getTypeId() == 'e05J' or deadUnit.getTypeId() == 'e05H' or deadUnit.getTypeId() == 'e05N' // Team 3
+            if killingUnit.hasItemById('I02K') or killingUnit.hasItemById('I06Y')
+                killingUnit.getOwner().addGold(3)
+                totalGoldEarnt[killingUnit.getOwner().getId()] += 3

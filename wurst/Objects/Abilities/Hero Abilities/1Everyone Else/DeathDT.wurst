@@ -1,0 +1,24 @@
+package DeathDT
+
+
+init
+    initTrig_DeathDT()
+
+function trig_DeathDTConditions() returns boolean
+    return GetUnitTypeId(GetTriggerUnit()) == 'e0RE'
+function trig_DeathDTFunc002T()
+    RemoveUnit(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 51))
+    FlushChildHashtable(YDLOC, GetHandleId(GetExpiredTimer()))
+    DestroyTimer(GetExpiredTimer())
+function trig_DeathDTActions()
+    timer _ydl_timer
+    SetUnitTimeScalePercent(GetTriggerUnit(), 0.00)
+    _ydl_timer = CreateTimer()
+    SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 51, GetTriggerUnit())
+    TimerStart(_ydl_timer, 5.10, false, function trig_DeathDTFunc002T)
+function initTrig_DeathDT()
+    gg_trg_DeathDT = CreateTrigger()
+    DisableTrigger(gg_trg_DeathDT)
+    TriggerRegisterAnyUnitEventBJ(gg_trg_DeathDT, EVENT_PLAYER_UNIT_DEATH)
+    TriggerAddCondition(gg_trg_DeathDT, Condition(function trig_DeathDTConditions))
+    TriggerAddAction(gg_trg_DeathDT, function trig_DeathDTActions)

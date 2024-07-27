@@ -1,0 +1,15 @@
+package Gray_G
+import ClosureEvents
+import AbilityClassifications
+init
+
+public function grayG ()
+    EventListener.add(EVENT_PLAYER_UNIT_DAMAGED) -> 
+        if GetEventDamageSource().hasAbility('A180') and BlzGetEventAttackType() == ATTACK_TYPE_HERO
+            let user = GetEventDamageSource()
+            let victim = BlzGetEventDamageTarget()
+            let agi = user.getAgi(true)
+            let abilLvl = user.getAbilityLvlG()
+            let dmg = (8*abilLvl) + (agi * 0.05*abilLvl)
+
+            user.damageTarget(victim, dmg, ATTACK_TYPE_MAGIC)

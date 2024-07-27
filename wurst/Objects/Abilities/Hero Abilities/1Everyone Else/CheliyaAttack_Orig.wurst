@@ -1,0 +1,36 @@
+package CheliyaAttack_Orig
+import DamageEvent
+import AbilityGlobals
+
+init
+    initTrig_CheliyaAttack_Orig()
+
+function trig_CheliyaAttackConditions() returns boolean
+    return GetUnitTypeId(GetAttacker()) == 'H017' and IsUnitType(GetAttackedUnitBJ(), UNIT_TYPE_STRUCTURE) == false and IsUnitAlly(GetAttackedUnitBJ(), GetOwningPlayer(GetAttacker())) == false
+function trig_CheliyaAttackActions()
+    integer trigger_ID = LoadInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 865)
+    trigger_ID += 3
+    SaveInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 865, trigger_ID)
+    SaveInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 1045, trigger_ID)
+    SaveUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594, GetAttacker())
+    SaveUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 549, GetAttackedUnitBJ())
+    SaveInteger(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 280, GetRandomInt(1, 10))
+    if LoadInteger(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 280) <= 2
+        PlaySoundBJ(gg_snd_swordwhip)
+        SaveLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1108, GetUnitLoc(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594)))
+        SaveLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 683, GetUnitLoc(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 549)))
+        SaveReal(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 758404681, AngleBetweenPoints(LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1108), LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 683)))
+        DamageEvent.setNextDamageId(DAMAGE_ABILITY_SHELIA_G)
+        DamageEvent.setNextDamageFromCode()
+        UnitDamageTargetBJ(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594), LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 549), 1.50 * I2R(GetHeroInt(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594), true)), ATTACK_TYPE_MAGIC, DAMAGE_TYPE_MAGIC)
+
+        SaveUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 487, CreateUnitAtLoc(GetOwningPlayer(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594)), 'e0J4', LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1108), GetUnitFacing(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594))))
+        yDWETimerRemoveUnit(0.80, LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 487))
+        RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1108))
+        RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 683))
+    FlushChildHashtable(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID)
+function initTrig_CheliyaAttack_Orig()
+    gg_trg_CheliyaAttack = CreateTrigger()
+    TriggerRegisterAnyUnitEventBJ(gg_trg_CheliyaAttack, EVENT_PLAYER_UNIT_ATTACKED)
+    TriggerAddCondition(gg_trg_CheliyaAttack, Condition(function trig_CheliyaAttackConditions))
+    TriggerAddAction(gg_trg_CheliyaAttack, function trig_CheliyaAttackActions)

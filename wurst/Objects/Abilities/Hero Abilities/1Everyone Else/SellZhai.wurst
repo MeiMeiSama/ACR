@@ -1,0 +1,31 @@
+// package SellZhai
+
+
+// init
+//     initTrig_SellZhai()
+
+// function trig_SellZhaiConditions() returns boolean
+//     return GetItemTypeId(GetSoldItem()) == 'I03D'
+// function trig_SellZhaiActions()
+//     AdjustPlayerStateBJ(4500, GetTriggerPlayer(), PLAYER_STATE_RESOURCE_GOLD)
+//     DisplayTextToPlayer(GetTriggerPlayer(), 0, 0, "give" + GetPlayerName(GetTriggerPlayer()) + "4500 financial compensation!")
+// function initTrig_SellZhai()
+//     gg_trg_SellZhai = CreateTrigger()
+//     TriggerRegisterPlayerUnitEventSimple(gg_trg_SellZhai, Player(0), EVENT_PLAYER_UNIT_PAWN_ITEM)
+//     TriggerRegisterPlayerUnitEventSimple(gg_trg_SellZhai, Player(1), EVENT_PLAYER_UNIT_PAWN_ITEM)
+//     TriggerRegisterPlayerUnitEventSimple(gg_trg_SellZhai, Player(2), EVENT_PLAYER_UNIT_PAWN_ITEM)
+//     TriggerRegisterPlayerUnitEventSimple(gg_trg_SellZhai, Player(3), EVENT_PLAYER_UNIT_PAWN_ITEM)
+//     TriggerRegisterPlayerUnitEventSimple(gg_trg_SellZhai, Player(4), EVENT_PLAYER_UNIT_PAWN_ITEM)
+//     TriggerRegisterPlayerUnitEventSimple(gg_trg_SellZhai, Player(5), EVENT_PLAYER_UNIT_PAWN_ITEM)
+//     TriggerRegisterPlayerUnitEventSimple(gg_trg_SellZhai, Player(6), EVENT_PLAYER_UNIT_PAWN_ITEM)
+//     TriggerRegisterPlayerUnitEventSimple(gg_trg_SellZhai, Player(7), EVENT_PLAYER_UNIT_PAWN_ITEM)
+//     TriggerRegisterPlayerUnitEventSimple(gg_trg_SellZhai, Player(8), EVENT_PLAYER_UNIT_PAWN_ITEM)
+//     TriggerRegisterPlayerUnitEventSimple(gg_trg_SellZhai, Player(9), EVENT_PLAYER_UNIT_PAWN_ITEM)
+//     TriggerRegisterPlayerUnitEventSimple(gg_trg_SellZhai, Player(10), EVENT_PLAYER_UNIT_PAWN_ITEM)
+//     TriggerRegisterPlayerUnitEventSimple(gg_trg_SellZhai, Player(11), EVENT_PLAYER_UNIT_PAWN_ITEM)
+//     TriggerRegisterPlayerUnitEventSimple(gg_trg_SellZhai, Player(12), EVENT_PLAYER_UNIT_PAWN_ITEM)
+//     TriggerRegisterPlayerUnitEventSimple(gg_trg_SellZhai, Player(13), EVENT_PLAYER_UNIT_PAWN_ITEM)
+//     TriggerRegisterPlayerUnitEventSimple(gg_trg_SellZhai, Player(14), EVENT_PLAYER_UNIT_PAWN_ITEM)
+//     TriggerRegisterPlayerUnitEventSimple(gg_trg_SellZhai, Player(15), EVENT_PLAYER_UNIT_PAWN_ITEM)
+//     TriggerAddCondition(gg_trg_SellZhai, Condition(function trig_SellZhaiConditions))
+//     TriggerAddAction(gg_trg_SellZhai, function trig_SellZhaiActions)

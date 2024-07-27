@@ -1,0 +1,97 @@
+package Xburner_Orig
+import DamageEvent
+import AbilityGlobals
+import ClosureForGroups
+import ClosureTimers
+import GroupUtils
+unit tsuna_Caster
+location burnerCastLocation
+location tsunaLocation
+boolean tsunaCastingR = false
+int array tsunaRCount
+trigger xBurnerSetupTrigger
+init
+    xBurner_Setup()
+    
+function xBurner_End()
+    if xBurnerSetupTrigger != null
+        xBurnerSetupTrigger.destr() 
+    xBurnerSetupTrigger = CreateTrigger()
+    ..registerAnyUnitEvent(EVENT_PLAYER_UNIT_SPELL_ENDCAST)
+    ..addAction() ->
+        if GetSpellAbilityId() == 'A01A'
+            tsunaCastingR = false
+            SetUnitInvulnerable(tsuna_Caster, false)
+            SetUnitTimeScalePercent(tsuna_Caster, 100)
+            gg_snd_xburnerfire.stop(false, true)
+            gg_snd_XBurner.stop(false, true)
+            for i = 0 to 6
+                udg_XburnerDammy[i].remove()
+            RemoveUnit(udg_XburnerDammy[25])
+            RemoveUnit(udg_XburnerDammy[69])
+            RemoveLocation(burnerCastLocation)
+            tsuna_Caster = null
+                
+
+                
+
+function xBurner_Start()
+    let damagedUnit = getGroup()
+    PlaySoundBJ(gg_snd_XBurner)
+    udg_XburnerCount = 165
+    doPeriodically(0.065) (CallbackPeriodic cb) ->
+        if tsunaCastingR == false
+            damagedUnit.release()
+            destroy cb
+        tsunaLocation = GetUnitLoc(tsuna_Caster)
+        udg_XburnerPolar = PolarProjectionBJ(tsunaLocation, udg_XburnerCount, AngleBetweenPoints(tsunaLocation, burnerCastLocation))
+        udg_XburnerDammy[69] = CreateUnitAtLoc(GetOwningPlayer(tsuna_Caster), 'e027', udg_XburnerPolar, GetRandomDirectionDeg())
+        UnitApplyTimedLife(udg_XburnerDammy[69], 'BHwe', 0.5)
+        SetUnitTimeScalePercent(udg_XburnerDammy[69], 40.00)
+        udg_XburnerCount = udg_XburnerCount + 165
+        if udg_XburnerCount >= 1150
+            udg_XburnerCount = 165
+        if udg_XburnerCount % 330 == 0 // If its divide-able by 400, do this, aka 800 / 400 = yes, but 600 / 400 = no
+            udg_XburnerBoom = AddSpecialEffectLoc("Objects\\Spawnmodels\\Other\\NeutralBuildingExplosion\\NeutralBuildingExplosion.mdl", udg_XburnerPolar)
+            DestroyEffect(udg_XburnerBoom)
+        RemoveLocation(tsunaLocation)
+        RemoveLocation(udg_XburnerPolar)
+        for i = 0 to 6
+            forUnitsInRange(udg_XburnerDammy[i].getPos(), 330) (unit u) ->
+                if tsuna_Caster.isEnemyOf(u) and u.isInvulnerable() == false
+                    if damagedUnit.has(u) == false
+                        damagedUnit.add(u)
+                    let id = u.getUserData()
+                    if tsunaRCount[id] == 0
+                        doAfter(5) ->
+                            tsunaRCount[id] = 0                
+                    if tsunaRCount[id] < 3
+                        DamageEvent.setNextDamageId(DAMAGE_ABILITY_TSUNA_R)
+                        DamageEvent.setNextDamageFromCode()
+                        tsuna_Caster.damageTarget(u, 1, ATTACK_TYPE_MAGIC)
+                        tsunaRCount[id]++                           
+            if i == 6
+                damagedUnit.clear()
+
+function xBurner_Setup()
+    xBurner_End()
+    CreateTrigger()
+    ..registerAnyUnitEvent(EVENT_PLAYER_UNIT_SPELL_EFFECT)
+    ..addAction() ->
+        if GetSpellAbilityId() == 'A01A'
+            //PlaySoundBJ(gg_snd_xburnerfire)
+            tsunaCastingR = true
+            tsuna_Caster = GetTriggerUnit()
+            ..setInvulnerable(true)..setAnimation(4)
+            burnerCastLocation = GetSpellTargetLoc()
+            tsunaLocation = GetUnitLoc(tsuna_Caster)
+            udg_XburnerDamageCount = 165
+            udg_XburnerDammy[25] = CreateUnitAtLoc(GetOwningPlayer(tsuna_Caster), 'e022', tsunaLocation, AngleBetweenPoints(burnerCastLocation, tsunaLocation))
+            for i = 0 to 6
+                udg_XburnerPointDamage = PolarProjectionBJ(tsunaLocation, udg_XburnerDamageCount, AngleBetweenPoints(tsunaLocation, burnerCastLocation))
+                udg_XburnerDammy[i] = CreateUnitAtLoc(GetOwningPlayer(tsuna_Caster), 'e028', udg_XburnerPointDamage, AngleBetweenPoints(tsunaLocation, burnerCastLocation))
+                udg_XburnerDamageCount += 165
+                RemoveLocation(udg_XburnerPointDamage)               
+            doAfter(0.1) ->
+                if  tsunaCastingR == true
+                    xBurner_Start()

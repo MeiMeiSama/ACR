@@ -1,0 +1,135 @@
+package ACR_TagSystem
+
+import HashMap
+
+constant pauseMap = new HashMap<unit, boolean>()
+constant stunMap = new HashMap<unit, boolean>()
+constant slowMap = new HashMap<unit, boolean>()
+constant knockbackMap = new HashMap<unit, boolean>()
+constant pullMap = new HashMap<unit, boolean>()
+constant silenceMap = new HashMap<unit, boolean>()
+constant abilityFMap = new HashMap<unit, boolean>()
+constant reviveMap = new HashMap<unit, boolean>()
+constant pickedMap = new HashMap<player, boolean>()
+
+constant hiddenAbilitiesMap = new HashMap<int, boolean>()
+constant disabledAbilitiesMap = new HashMap<int, boolean>()
+
+public function int.addTagHidden()
+    hiddenAbilitiesMap.put(this, true)
+
+public function int.removeTagHidden()
+    hiddenAbilitiesMap.put(this, false)
+
+public function int.hasTagHidden() returns boolean
+    return hiddenAbilitiesMap.get(this)
+
+
+
+public function int.addTagDisabled()
+    disabledAbilitiesMap.put(this, true)
+
+public function int.removeTagDisabled()
+    disabledAbilitiesMap.put(this, false)
+
+public function int.hasTagDisabled() returns boolean
+    return disabledAbilitiesMap.get(this)
+
+
+
+public function unit.addTagHasF()
+    abilityFMap.put(this, true)
+
+public function unit.removeTagHasF()
+    abilityFMap.put(this, false)
+
+public function unit.hasTagHasF() returns boolean
+    return abilityFMap.get(this)
+
+
+
+public function unit.addTagPauseEX()
+    pauseMap.put(this, true)
+
+public function unit.removeTagPauseEX()
+    pauseMap.put(this, false)
+
+public function unit.hasTagPauseEX() returns boolean
+    return pauseMap.get(this)
+
+
+
+public function unit.addTagStun()
+    stunMap.put(this, true)
+
+public function unit.removeTagStun()
+    stunMap.put(this, false)
+
+public function unit.hasTagStun() returns boolean
+    return stunMap.get(this)
+
+
+
+public function unit.addTagSilence()
+    silenceMap.put(this, true)
+
+public function unit.removeTagSilence()
+    silenceMap.put(this, false)
+
+public function unit.hasTagSilence() returns boolean
+    return silenceMap.get(this)
+
+
+
+public function unit.addTagSlow()
+    slowMap.put(this, true)
+
+public function unit.removeTagSlow()
+    slowMap.put(this, false)
+
+public function unit.hasTagSlow() returns boolean
+    return slowMap.get(this)
+
+
+
+public function unit.addTagKnockback()
+    knockbackMap.put(this, true)
+
+public function unit.removeTagKnockback()
+    knockbackMap.put(this, false)
+
+public function unit.hasTagKnockback() returns boolean
+    return knockbackMap.get(this)
+
+
+
+public function unit.addTagPull()
+    pullMap.put(this, true)
+
+public function unit.removeTagPull()
+    pullMap.put(this, false)
+
+public function unit.hasTagPull() returns boolean
+    return pullMap.get(this)
+
+
+
+public function unit.addTagRevive()
+    reviveMap.put(this, true)
+
+public function unit.removeTagRevive()
+    reviveMap.put(this, false)
+
+public function unit.hasTagRevive() returns boolean
+    return reviveMap.get(this)
+
+
+
+public function player.addTagPicked()
+    pickedMap.put(this, true)
+
+public function player.removeTagPicked()
+    pickedMap.put(this, false)
+
+public function player.hasTagPicked() returns boolean
+    return pickedMap.get(this)

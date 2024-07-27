@@ -1,0 +1,31 @@
+package Shana_New_E
+
+import ClosureEvents
+import ObjectDefinitions
+init
+
+public function shanaNewE()
+
+    EventListener.add(EVENT_PLAYER_HERO_SKILL) ->
+        if GetLearnedSkill() == 'A0JT'
+            let u = GetTriggerUnit()
+            let a = GetLearnedSkill()
+            let abilvl = GetUnitAbilityLevel(u, a)
+            u.addAbility('A188')
+            u.setAbilityLevel('A188', abilvl)
+            u.hideAbility('A188', true)
+            
+    EventListener.onCast('A0JT') (unit caster) ->
+        if caster.hasAbility(SHANA_FIRE_EFFECT) == false
+            caster.addAbility(SHANA_FIRE_EFFECT)
+            BlzSetAbilityIcon('A0JE', "ReplaceableTextures\\CommandButtons\\BTNFlare.blp")
+            BlzSetAbilityIcon('A0JV', "ReplaceableTextures\\CommandButtons\\BTNMarkOfFire.blp")
+            BlzSetAbilityIcon('A0JT', "ReplaceableTextures\\CommandButtons\\BTNneutralManaShieldOff.blp")
+            BlzSetAbilityIcon('A0JI', "ReplaceableTextures\\CommandButtons\\BTNReincarnation.blp")
+        else
+            caster.removeAbility(SHANA_FIRE_EFFECT)
+            caster.removeAbility('B062')
+            BlzSetAbilityIcon('A0JE', "ReplaceableTextures\\CommandButtons\\BTNOrbOfFire.blp")
+            BlzSetAbilityIcon('A0JV', "ReplaceableTextures\\CommandButtons\\BTNCleavingAttack.blp")
+            BlzSetAbilityIcon('A0JT', "ReplaceableTextures\\CommandButtons\\BTNShanaNew.blp")
+            BlzSetAbilityIcon('A0JI', "ReplaceableTextures\\CommandButtons\\BTNWallOfFire.blp")

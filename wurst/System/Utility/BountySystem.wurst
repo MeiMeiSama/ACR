@@ -1,0 +1,206 @@
+package BountySystem
+import Scoreboard
+import main
+import AbilityGlobals
+import ClosureTimers
+import wc3Stats
+import ClosureEvents
+import GoldIncome
+import ErrorHandling
+string COLOR_GOLD = "|cffffd700"
+string COLOR_RED = "|cffff0000"
+string COLOR_LIGHTBLUE = "|cff63ceff"
+integer array unitBounty
+integer array unitStreak
+integer array unitKills
+bool firstBlood
+int team1PlayerCount = 0
+int team2PlayerCount = 0
+int team3PlayerCount = 0
+
+init
+    // After 3 seconds, check how many players in each team, and reduce it by 1 in the event someone leaves for accurate representation
+    doAfter(3) -> 
+        for i = 0 to 2
+            if Player(i).getSlotState() == PLAYER_SLOT_STATE_PLAYING
+                team1PlayerCount++
+        for i = 4 to 6
+            if Player(i).getSlotState() == PLAYER_SLOT_STATE_PLAYING
+                team2PlayerCount++
+        for i = 8 to 10
+            if Player(i).getSlotState() == PLAYER_SLOT_STATE_PLAYING
+                team2PlayerCount++
+    
+        EventListener.add(EVENT_PLAYER_LEAVE) -> 
+            let leaver = GetTriggerPlayer()
+            if leaver.isAllyOf(Player(3))
+                team1PlayerCount--
+            else if leaver.isAllyOf(Player(7))
+                team2PlayerCount--
+            else if leaver.isAllyOf(Player(11))
+                team3PlayerCount--
+
+function streakMessages (unit killer, unit victim, integer streak)
+    let killerPlayerName = killer.getOwner().getName()
+    let victimPlayerName = victim.getOwner().getName()
+    let killerPlayerColor = killer.getOwner().getColor().toColor().toColorString()
+    let victimPlayerColor = victim.getOwner().getColor().toColor().toColorString()
+    if killer.getOwner().getController() == MAP_CONTROL_USER
+        print(killerPlayerColor+killerPlayerName+COLOR_LIGHTBLUE+" has killed "+victimPlayerColor+victimPlayerName+COLOR_LIGHTBLUE+" and claimed their bounty of "+COLOR_GOLD+victim.getField(UNIT_IF_GOLD_BOUNTY_AWARDED_BASE).toString()+" gold|r", 5)
+        print(COLOR_LIGHTBLUE+"Their bounty is now "+COLOR_GOLD+killer.getField(UNIT_IF_GOLD_BOUNTY_AWARDED_BASE).toString()+" gold|r", 5)
+        print(" ", 5)
+
+        if streak == 3
+            print(killerPlayerColor+killerPlayerName+COLOR_LIGHTBLUE+" is on a "+COLOR_RED+"killing spree!|r", 5)
+        else if streak == 4
+            print(killerPlayerColor+killerPlayerName+COLOR_LIGHTBLUE+" has just achieved "+COLOR_RED+"4 kills"+COLOR_LIGHTBLUE+" in a row!|r", 5)
+        else if streak == 5
+            print(killerPlayerColor+killerPlayerName+COLOR_LIGHTBLUE+" is unable to be stopped, they just achieved "+COLOR_RED+"5 kills!|r", 5)
+        else if streak == 6
+            print(killerPlayerColor+killerPlayerName+COLOR_LIGHTBLUE+" is killing it! "+COLOR_RED+"6 kills"+COLOR_LIGHTBLUE+" in a row!|r", 5)
+        else if streak == 7
+            print(killerPlayerColor+killerPlayerName+COLOR_LIGHTBLUE+" is on a rampage! currently has "+COLOR_RED+"7 kills"+COLOR_LIGHTBLUE+" and counting . . .|r", 5)
+        else if streak == 8
+            print(killerPlayerColor+killerPlayerName+COLOR_LIGHTBLUE+", introducing the walking "+COLOR_RED+"genocide"+COLOR_LIGHTBLUE+" themselves.|r", 5)
+        else if streak == 9
+            print(killerPlayerColor+killerPlayerName+COLOR_LIGHTBLUE+" is approaching the "+COLOR_GOLD+"Realm of God.|r", 5)
+        else if streak == 10
+            print(killerPlayerColor+killerPlayerName+COLOR_LIGHTBLUE+" has "+COLOR_GOLD+"ASCENDED"+COLOR_LIGHTBLUE+" to the "+COLOR_GOLD+"Realm of God.|r", 5)
+        else if streak > 10
+            print(killerPlayerColor+killerPlayerName+COLOR_LIGHTBLUE+", you're insane. I am too lazy to create more kill-messages, so enjoy this handsome text while you can.", 5)
+            print(COLOR_LIGHTBLUE+"Kill streak: "+COLOR_RED+unitStreak[killer.getOwner().getId()].toString()+"|r", 5)
+    
+    // If the killer is a computer, distribute the bounty evenly to the allied players of the computer
+    else if GetKillingUnit().getOwner().getController() == MAP_CONTROL_COMPUTER
+        if killer.getOwner() == Player(3) and team1PlayerCount != 0
+            print(killerPlayerColor+"Team 1 computer"+COLOR_LIGHTBLUE+" has killed "+victimPlayerColor+victimPlayerName+COLOR_LIGHTBLUE+", their bounty of "+COLOR_GOLD+victim.getField(UNIT_IF_GOLD_BOUNTY_AWARDED_BASE).toString()+" gold"+COLOR_LIGHTBLUE+" has been evenly distributed between the computer's teammates|r", 5)
+            print(" ", 5)
+            let reward = (victim.getField(UNIT_IF_GOLD_BOUNTY_AWARDED_BASE) / team1PlayerCount).ceil()
+            for i = 0 to 2
+                if Player(i).getSlotState() == PLAYER_SLOT_STATE_PLAYING
+                    Player(i).addGold(reward)
+                    totalGoldEarnt[i] += reward
+
+        else if killer.getOwner() == Player(7) and team2PlayerCount != 0    
+            print(killerPlayerColor+"Team 2 computer"+COLOR_LIGHTBLUE+" has killed "+victimPlayerColor+victimPlayerName+COLOR_LIGHTBLUE+", their bounty of "+COLOR_GOLD+victim.getField(UNIT_IF_GOLD_BOUNTY_AWARDED_BASE).toString()+" gold"+COLOR_LIGHTBLUE+" has been evenly distributed between the computer's teammates|r", 5)
+            print(" ", 5)
+            let reward = (victim.getField(UNIT_IF_GOLD_BOUNTY_AWARDED_BASE) / team2PlayerCount).ceil()
+            for i = 4 to 6
+                if Player(i).getSlotState() == PLAYER_SLOT_STATE_PLAYING
+                    Player(i).addGold(reward)
+                    totalGoldEarnt[i] += reward
+                    
+        else if killer.getOwner() == Player(11) and team3PlayerCount != 0    
+            print(killerPlayerColor+"Team 3 computer"+COLOR_LIGHTBLUE+" has killed "+victimPlayerColor+victimPlayerName+COLOR_LIGHTBLUE+", their bounty of "+COLOR_GOLD+victim.getField(UNIT_IF_GOLD_BOUNTY_AWARDED_BASE).toString()+" gold"+COLOR_LIGHTBLUE+" has been evenly distributed between the computer's teammates|r", 5)
+            print(" ", 5)
+            let reward = (victim.getField(UNIT_IF_GOLD_BOUNTY_AWARDED_BASE) / team3PlayerCount).ceil()
+            for i = 8 to 10
+                if Player(i).getSlotState() == PLAYER_SLOT_STATE_PLAYING
+                    Player(i).addGold(reward)
+                    totalGoldEarnt[i] += reward
+    
+public function bountySystemSetup ()
+    let trig = CreateTrigger()
+    for i = 0 to 12
+        if udg_PlayHero[i] != null
+            udg_PlayHero[i].setField(UNIT_BF_HERO_HIDE_HERO_DEATH_MESSAGE, true)
+            udg_PlayHero[i].setField(UNIT_IF_GOLD_BOUNTY_AWARDED_BASE, 100)
+            udg_PlayHero[i].setField(UNIT_IF_GOLD_BOUNTY_AWARDED_SIDES_PER_DIE, 0)
+            udg_PlayHero[i].setField(UNIT_IF_GOLD_BOUNTY_AWARDED_NUMBER_OF_DICE, 0)
+            udg_PlayHero[i].setFieldWeapon(UNIT_WEAPON_IF_ATTACK_DAMAGE_NUMBER_OF_DICE, 1, 0)
+            udg_PlayHero[i].setFieldWeapon(UNIT_WEAPON_IF_ATTACK_DAMAGE_SIDES_PER_DIE, 1, 0)
+        trig.registerUnitEvent(udg_PlayHero[i], EVENT_UNIT_DEATH)
+    trig.addAction() ->
+        let killer = GetKillingUnit()
+        let victim = GetDyingUnit()
+        let killerPlayerID = killer.getOwner().getId()
+        let victimPlayerID = victim.getOwner().getId()
+        let killerPlayerColor = killer.getOwner().getColor().toColor().toColorString()
+        PLAYER_DEATH_COUNT[victimPlayerID]++
+        playerStatsFrame[victimPlayerID].setText(GREEN+PLAYER_KILL_COUNT[victimPlayerID].toString()+"|r/"+RED+PLAYER_DEATH_COUNT[victimPlayerID].toString()+"|r/"+GOLD+PLAYER_LEVEL_COUNT[victimPlayerID].toString()+"|r")
+        if GetKillingUnit().getOwner().getController() == MAP_CONTROL_USER
+            // Check which team killer belong to, and give them a team point
+            if killer.isAllyOf(Player(3))
+                team1_Kills++
+            else if killer.isAllyOf(Player(7))
+                team2_Kills++
+            else if killer.isAllyOf(Player(11))
+                team3_Kills++
+
+            // Set the "score" to TAB Scoreboad
+            teamScore.setText("|cff963bff"+team1_Kills.toString()+"|cff5bb5ff | |cffff22c8"+team2_Kills.toString()+"|cff5bb5ff | |cff5f3900"+team3_Kills.toString()+"|r")
+
+            // Whether first blood has been drawn or not
+            if firstBlood == false
+                firstBlood = true
+                print(killerPlayerColor+killer.getOwner().getName()+COLOR_LIGHTBLUE+" claimed "+COLOR_RED+"First Blood"+COLOR_LIGHTBLUE+", and receives an additional "+COLOR_GOLD+"100G|r", 5)
+                killer.getOwner().addGold(100)
+                totalGoldEarnt[killerPlayerID] += 100
+            totalGoldEarnt[killerPlayerID] += udg_PlayHero[victimPlayerID].getField(UNIT_IF_GOLD_BOUNTY_AWARDED_BASE)
+            
+            unitBounty[killerPlayerID] = udg_PlayHero[killerPlayerID].getField(UNIT_IF_GOLD_BOUNTY_AWARDED_BASE) // Get player base bounty
+            unitStreak[killerPlayerID]++ // Increase players kill-streak
+            if unitStreak[killerPlayerID] > unitLongestStreak[killerPlayerID]
+                unitLongestStreak[killerPlayerID] = unitStreak[killerPlayerID]
+            unitKills[killerPlayerID]++ // Increase players kill count
+            unitBounty[killerPlayerID] += 15 // Increase players bounty
+            
+            if unitStreak[killerPlayerID] > 1 // From the second kill in a row and forth, bounty increases by additional 50
+                unitBounty[killerPlayerID] += 50
+
+            udg_PlayHero[killerPlayerID].setField(UNIT_IF_GOLD_BOUNTY_AWARDED_BASE, unitBounty[killerPlayerID]) // Set the killer bounty
+            streakMessages(killer, victim, unitStreak[killerPlayerID]) // Kill Message
+
+            udg_PlayHero[victimPlayerID].setField(UNIT_IF_GOLD_BOUNTY_AWARDED_BASE, 100+(unitKills[victimPlayerID]*15)) // Set the victim bounty
+            unitStreak[victimPlayerID] = 0 // Remove victim streak, if he had any
+
+            PLAYER_KILL_COUNT[killerPlayerID]++ // Increase player kill count, used for Scoreboard
+            
+            PLAYER_BOUNTY_COUNT[killerPlayerID] = unitBounty[killerPlayerID] // Set player bounty, used for the scoreboard
+            PLAYER_BOUNTY_COUNT[victimPlayerID] = 100+(unitKills[victimPlayerID]*15) // Set player bounty, used for the scoreboard
+
+            // Set the K/D/L for scoreboard
+            playerStatsFrame[killerPlayerID].setText(GREEN+PLAYER_KILL_COUNT[killerPlayerID].toString()+"|r/"+RED+PLAYER_DEATH_COUNT[killerPlayerID].toString()+"|r/"+GOLD+PLAYER_LEVEL_COUNT[killerPlayerID].toString()+"|r")
+
+            // Set the bounty for killer and victim in scoreboard
+            playerBountyFrame[killerPlayerID].setText(PURPLE+PLAYER_BOUNTY_COUNT[killerPlayerID].toString()+"|r")
+            playerBountyFrame[victimPlayerID].setText(PURPLE+PLAYER_BOUNTY_COUNT[victimPlayerID].toString()+"|r")
+
+            // Check if a team reached win condition or not
+            victory_checker()
+
+        // If killer is a computer and not a player
+        else if GetKillingUnit().getOwner().getController() == MAP_CONTROL_COMPUTER
+            if killer.isAllyOf(Player(3)) 
+                if team1PlayerCount == 0
+                    suppressErrorMessages = true
+                    error("Team empty, crashing the thread")
+                team1_Kills++
+            else if killer.isAllyOf(Player(7))
+                if team2PlayerCount == 0
+                    suppressErrorMessages = true
+                    error("Team empty, crashing the thread")
+                team2_Kills++
+            else if killer.isAllyOf(Player(11))
+                if team3PlayerCount == 0
+                    suppressErrorMessages = true
+                    error("Team empty, crashing the thread")
+                team3_Kills++
+
+            // Set team kill score in the scoreboard  
+            teamScore.setText("|cff963bff"+team1_Kills.toString()+"|cff5bb5ff | |cffff22c8"+team2_Kills.toString()+"|cff5bb5ff | |cff5f3900"+team3_Kills.toString()+"|r")                    
+            
+            // Display the kill message
+
+            streakMessages(killer, victim, unitStreak[killerPlayerID])
+ 
+            // Set the victim's bounty
+            udg_PlayHero[victimPlayerID].setField(UNIT_IF_GOLD_BOUNTY_AWARDED_BASE, 100+(unitKills[victimPlayerID]*15))
+            unitStreak[victimPlayerID] = 0 // Reset their streak, if they had any
+
+            // Set victim bounty, used for the scoreboard
+            PLAYER_BOUNTY_COUNT[victimPlayerID] = 100+(unitKills[victimPlayerID]*15)   
+            playerBountyFrame[victimPlayerID].setText(PURPLE+PLAYER_BOUNTY_COUNT[victimPlayerID].toString()+"|r") // Sets the text on scoreboard                    
+
+            // Check if the team reached enough points to win
+            victory_checker()

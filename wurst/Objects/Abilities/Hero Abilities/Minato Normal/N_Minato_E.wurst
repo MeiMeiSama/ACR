@@ -1,0 +1,30 @@
+package N_Minato_E
+
+import ClosureEvents
+int minatoEDummyLvl
+init
+
+public function minatoE()
+
+    let minatoEDummy = 'A195'
+    let minatoE = 'A03N'       
+
+    EventListener.add(EVENT_PLAYER_HERO_SKILL) ->
+        if GetLearnedSkill() == minatoEDummy
+            let abil = GetLearnedSkill()
+            let caster = GetTriggerUnit()
+            minatoEDummyLvl = GetUnitAbilityLevel(caster, abil)
+            if minatoEDummyLvl == 1
+                caster.addAbility(minatoE)
+                caster.setAbilityLevel(minatoE, minatoEDummyLvl)
+            else
+                caster.setAbilityLevel(minatoE, minatoEDummyLvl)
+                caster.removeAbility('B00P')
+
+    EventListener.add(EVENT_PLAYER_HERO_REVIVE_FINISH) ->
+        if GetTriggerUnit().getTypeId() == 'H00M'
+            let caster = GetTriggerUnit()
+            if caster.hasAbility(minatoEDummy) == true and caster.hasAbility(minatoE) == false 
+                caster.addAbility(minatoE)
+                caster.setAbilityLevel(minatoE, minatoEDummyLvl)
+                caster.removeAbility('B00P')

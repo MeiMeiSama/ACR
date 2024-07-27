@@ -1,0 +1,15 @@
+package ManaBoot
+import ObjectDefinitions
+import ClosureForGroups
+init
+    manaBootUse()
+function manaBootUse ()
+    CreateTrigger()
+    ..registerAnyUnitEvent(EVENT_PLAYER_UNIT_SPELL_EFFECT)
+    ..addAction() ->
+        let caster = GetTriggerUnit()
+        if GetSpellAbilityId() == MANABOOT_RESTOREMANA_ABILITY
+            forUnitsInRange(caster.getPos(), 600) (unit u) ->
+                if caster.isAllyOf(u)
+                    u.addMana(u.getMaxMana()*0.2)
+                    flashEffect("Abilities\\Spells\\Items\\AIma\\AImaTarget.mdl", u, "origin")

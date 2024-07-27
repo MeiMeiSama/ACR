@@ -1,0 +1,6 @@
+ui\framedef\ui\escmenutemplates.fdf
+ui\framedef\glue\standardtemplates.fdf
+ui\framedef\glue\battlenettemplates.fdf
+war3mapimported\MyTextArea.fdf
+war3mapimported\BigBnetTextArea.fdf
+war3mapimported\HeroFrame.fdf

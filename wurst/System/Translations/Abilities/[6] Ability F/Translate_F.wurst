@@ -1,0 +1,601 @@
+package Translate_F
+
+import AbilityClassifications
+import AbilityGlobals
+import ACR_StatColors
+
+public function tooltip_F (int pid)
+    let id = pid
+    let hero = udg_PlayHero[id]
+    int spellLvl
+    int range
+    int castrange
+    int stat = 0
+    int mana
+    int dmg
+    int cd
+    string dmgbonus
+    string globalcastrange
+    let skill = SPELL_F[id]
+    if BlzGetUnitIntegerField(hero, UNIT_IF_PRIMARY_ATTRIBUTE) == 1 // Strength
+        stat = hero.getStr(true)
+    else if BlzGetUnitIntegerField(hero, UNIT_IF_PRIMARY_ATTRIBUTE) == 2 // Intellect
+        stat = hero.getInt(true)
+    else if BlzGetUnitIntegerField(hero, UNIT_IF_PRIMARY_ATTRIBUTE) == 3 // Agility
+        stat = hero.getAgi(true)
+    if skill == 'A0WB' //Tatsuya
+        dmg = ((250.00 + (6 * stat)) / 1.9).toInt()     
+        cd = (50)
+        mana = (85)
+        range = (1200)
+        castrange = (5000)
+
+        skill
+        ..setDescription(id, 
+        GOLD+
+        "Tatsuya fires a projectile towards the targeted location, damaging and marking all enemies in its path. This ability gets replaced by F2 for 5 seconds after being used."+
+        "\n\nCast Range: "+PINK+range.toString()+GOLD+
+        "\nCooldown: "+PINK+cd.toString()+GOLD+
+        "\nDamage Output: "+hero.getStatColor()+dmg.toString()+GOLD)
+        
+        hero.getAbility(skill)
+
+        ..setField(ABILITY_ILF_MANA_COST, hero.getAbilityLevel(skill) - 1, mana)
+        ..setField(ABILITY_RLF_COOLDOWN, hero.getAbilityLevel(skill) - 1, cd.toReal())
+        ..setField(ABILITY_RLF_CAST_RANGE, hero.getAbilityLevel(skill) - 1, castrange.toReal())
+  
+
+    else if skill == 'A0MG' //Arturia
+        cd = (50)
+        mana = (85)
+
+        skill
+        ..setDescription(id, 
+        GOLD+
+        "Saber gains bonus agility, health regeneration and movement speed for a short duration. Furthermore, while Avalon is active, Saber's skills deal 15% additional damage."+
+        "\n\nDuration: "+PINK+"20"+GOLD+
+        "\nAgility Bonus: "+GREEN+"25"+GOLD+
+        "\nHealth Regeneration Bonus: "+PINK+"1000%"+GOLD+
+        "\nMovement Speed Bonus: "+PINK+"15%"+GOLD+
+        "\nCooldown: "+PINK+cd.toString()+GOLD)
+        
+        hero.getAbility(skill)
+
+        ..setField(ABILITY_ILF_MANA_COST, hero.getAbilityLevel(skill) - 1, mana)
+        ..setField(ABILITY_RLF_COOLDOWN, hero.getAbilityLevel(skill) - 1, cd.toReal())
+
+
+    else if skill == 'A0RT' //Arturia Lily
+        cd = (50)
+        mana = (85)
+
+        skill
+        ..setDescription(id, 
+        GOLD+
+        "Lily targets herself or an ally hero, giving them primary stat bonus for the duration of this skill. During this time, if their health reaches 0, they'll be healed back to 20% of their max health and this skill ends."+
+        "\n\nDuration: "+PINK+"20"+GOLD+
+        "\nPrimary Stat Bonus: "+GREEN+"25"+GOLD+
+        "\nCooldown: "+PINK+cd.toString()+GOLD)
+        
+        hero.getAbility(skill)
+
+        ..setField(ABILITY_ILF_MANA_COST, hero.getAbilityLevel(skill) - 1, mana)
+        ..setField(ABILITY_RLF_COOLDOWN, hero.getAbilityLevel(skill) - 1, cd.toReal())
+
+
+    else if skill == 'A0VA' //Kiara
+        skill
+        ..setDescription(id, 
+        GOLD+
+        "Kiara gains various passive bonuses. Click this spellbook for additional information.") 
+
+
+    else if skill == 'A0TC' //Meliodas
+        spellLvl = skill.getSkillLvl(id)
+        cd = 60
+        mana = 50
+
+        skill..setTitle(id, BLUE+"Full Counter"+LEVEL_TOOLTIP+spellLvl.toString()+CR+"]")
+        ..setDescription(id,
+        GOLD+
+        "While active, the next instance of damage the user receives that's equal or higher than 20% of their maximum health is reflected back to the attacker."+
+        "\n\nDuration: "+PINK+"3"+GOLD+                        
+        "\nCooldown: "+PINK+cd.toString()+GOLD)
+        hero.getAbility(skill)
+
+        ..setField(ABILITY_ILF_MANA_COST, hero.getAbilityLevel(skill) - 1, mana)
+        ..setField(ABILITY_RLF_COOLDOWN, hero.getAbilityLevel(skill) - 1, cd.toReal())
+    
+
+    else if skill == 'A0QY' //Emilia
+        dmg = ((250 + (6 * stat))-175)
+        cd = (50)
+        mana = (85)
+        range = (825)
+
+        skill
+        ..setDescription(id, 
+        GOLD+
+        "Emilia deals damage to her target, steals 25 of their primary stat and converts it to her own intelligence. This effect lasts 10 seconds."+
+        "\n\nCast Range: "+PINK+range.toString()+GOLD+
+        "\nCooldown: "+PINK+cd.toString()+GOLD+
+        "\nDamage Output: "+hero.getStatColor()+dmg.toString()+GOLD)
+        
+        hero.getAbility(skill)
+
+        ..setField(ABILITY_ILF_MANA_COST, hero.getAbilityLevel(skill) - 1, mana)
+        ..setField(ABILITY_RLF_CAST_RANGE, hero.getAbilityLevel(skill) - 1, range.toReal()) 
+        ..setField(ABILITY_RLF_COOLDOWN, hero.getAbilityLevel(skill) - 1, cd.toReal())         
+  
+
+    else if skill == 'A107' //Sistine
+        dmgbonus = "30%"
+        cd = (50)
+        mana = (85)
+        range = (10)
+
+        skill
+        ..setDescription(id, 
+        GOLD+
+        "Sistine targets herself or an ally hero, increasing any damage they deal for a short duration."+
+        "\n\nDuration: "+PINK+range.toString()+GOLD+
+        "\nCooldown: "+PINK+cd.toString()+GOLD+
+        "\nDamage Increase: "+hero.getStatColor()+dmgbonus+GOLD)
+        
+        hero.getAbility(skill)
+
+        ..setField(ABILITY_ILF_MANA_COST, hero.getAbilityLevel(skill) - 1, mana)
+        ..setField(ABILITY_RLF_COOLDOWN, hero.getAbilityLevel(skill) - 1, cd.toReal())
+
+
+    else if skill == 'A0IA' //Akame
+        dmg = (250 + (6 * stat))
+        cd = (50)
+        mana = (85)
+        range = (5)
+
+        skill
+        ..setDescription(id, 
+        GOLD+
+        "Akame becomes invisible for a short duration. During this time, she gains maximum movement speed and her first basic attack deals bonus damage, stunning her target for 1 second."+
+        "\n\nDuration: "+PINK+range.toString()+GOLD+
+        "\nCooldown: "+PINK+cd.toString()+GOLD+
+        "\nBonus Damage: "+hero.getStatColor()+dmg.toString()+GOLD)
+        
+        hero.getAbility(skill)
+
+        ..setField(ABILITY_ILF_MANA_COST, hero.getAbilityLevel(skill) - 1, mana)
+        ..setField(ABILITY_RLF_COOLDOWN, hero.getAbilityLevel(skill) - 1, cd.toReal())
+
+
+    else if skill == 'A18Q' //Jack
+        dmg = (250 + (6 * stat))
+        cd = (50)
+        mana = (85)
+        range = (5)
+
+        skill
+        ..setDescription(id, 
+        GOLD+
+        "Jack becomes invisible for a short duration. During this time, she gains maximum movement speed and her first basic attack deals bonus damage, stunning her target for 1 second."+
+        "\n\nDuration: "+PINK+range.toString()+GOLD+
+        "\nCooldown: "+PINK+cd.toString()+GOLD+
+        "\nBonus Damage: "+hero.getStatColor()+dmg.toString()+GOLD)
+        
+        hero.getAbility(skill)
+
+        ..setField(ABILITY_ILF_MANA_COST, hero.getAbilityLevel(skill) - 1, mana)
+        ..setField(ABILITY_RLF_COOLDOWN, hero.getAbilityLevel(skill) - 1, cd.toReal())
+
+
+    else if skill == 'A0RD' //Aqua
+        dmg = ((250 + (6 * stat))/2).toInt()
+        cd = (50)
+        mana = (45)
+        range = (1200)
+
+        skill
+        ..setDescription(id, 
+        GOLD+
+        "Aqua slows and deals damage to enemies inside of the targeted area. When used, this ability gets replaced by F2"+
+        "\n\nCast Range: "+PINK+range.toString()+GOLD+
+        "\nCooldown: "+PINK+cd.toString()+GOLD+
+        "\nDamage Output: "+hero.getStatColor()+dmg.toString()+GOLD)
+        
+        hero.getAbility(skill)
+
+        ..setField(ABILITY_ILF_MANA_COST, hero.getAbilityLevel(skill) - 1, mana)
+        ..setField(ABILITY_RLF_CAST_RANGE, hero.getAbilityLevel(skill) - 1, range.toReal()) 
+        ..setField(ABILITY_RLF_COOLDOWN, hero.getAbilityLevel(skill) - 1, cd.toReal())      
+
+    else if skill.isFProjectile()
+        if skill == 'A0A6' //Jellal
+            dmg = (250 + (6 * stat))
+            cd = (50)
+            mana = (85)
+            range = (1200)
+            castrange = (5000)
+
+            skill
+            ..setDescription(id, 
+            GOLD+
+            "Fires a projectile that expands upon coming into collision with an enemy unit, dealing damage to it and all surrounding enemies."+
+            "\n\nCast Range: "+PINK+range.toString()+GOLD+
+            "\nCooldown: "+PINK+cd.toString()+GOLD+
+            "\nDamage Output: "+hero.getStatColor()+dmg.toString()+GOLD)
+            
+            hero.getAbility(skill)
+
+            ..setField(ABILITY_ILF_MANA_COST, hero.getAbilityLevel(skill) - 1, mana)
+            ..setField(ABILITY_RLF_CAST_RANGE, hero.getAbilityLevel(skill) - 1, castrange.toReal()) 
+            ..setField(ABILITY_RLF_COOLDOWN, hero.getAbilityLevel(skill) - 1, cd.toReal()) 
+
+        else    
+            dmg = (250 + (6 * stat))
+            cd = (50)
+            mana = (85)
+            range = (1200)
+            castrange = (5000)
+
+            skill
+            ..setDescription(id, 
+            GOLD+
+            "Deals damage to enemies along the path towards the targeted location."+
+            "\n\nCast Range: "+PINK+range.toString()+GOLD+
+            "\nCooldown: "+PINK+cd.toString()+GOLD+
+            "\nDamage Output: "+hero.getStatColor()+dmg.toString()+GOLD)
+            
+            hero.getAbility(skill)
+
+            ..setField(ABILITY_ILF_MANA_COST, hero.getAbilityLevel(skill) - 1, mana)
+            ..setField(ABILITY_RLF_CAST_RANGE, hero.getAbilityLevel(skill) - 1, castrange.toReal()) 
+            ..setField(ABILITY_RLF_COOLDOWN, hero.getAbilityLevel(skill) - 1, cd.toReal())          
+    else if skill.isFTeleport()
+        dmg = (250 + (6 * stat))
+        cd = (50)
+        mana = (85)
+        range = (1200)
+
+        skill
+        ..setDescription(id, 
+        GOLD+
+        "Teleports to the targeted area and deals damage to surrounding enemies afterwards."+
+        "\n\nCast Range: "+PINK+range.toString()+GOLD+
+        "\nCooldown: "+PINK+cd.toString()+GOLD+
+        "\nDamage Output: "+hero.getStatColor()+dmg.toString()+GOLD)
+        
+        hero.getAbility(skill)
+
+        ..setField(ABILITY_ILF_MANA_COST, hero.getAbilityLevel(skill) - 1, mana)
+        ..setField(ABILITY_RLF_CAST_RANGE, hero.getAbilityLevel(skill) - 1, range.toReal()) 
+        ..setField(ABILITY_RLF_COOLDOWN, hero.getAbilityLevel(skill) - 1, cd.toReal())  
+
+    else if skill.isFAoe()
+        if skill == 'A0YP' //Accel
+            dmg = (250 + (6 * stat))
+            cd = (50)
+            mana = (85)
+            range = (600)
+
+            skill
+            ..setDescription(id, 
+            GOLD+
+            "Accelerator becomes invulnerable for 1.6 seconds. During this time, he'll continuously pull enemy units to himself, dealing damage to them."+
+            "\n\nArea Of Effect: "+PINK+range.toString()+GOLD+
+            "\nCooldown: "+PINK+cd.toString()+GOLD+
+            "\nDamage Output: "+hero.getStatColor()+dmg.toString()+GOLD)
+            
+            hero.getAbility(skill)
+
+            ..setField(ABILITY_ILF_MANA_COST, hero.getAbilityLevel(skill) - 1, mana)
+            ..setField(ABILITY_RLF_CAST_RANGE, hero.getAbilityLevel(skill) - 1, range.toReal()) 
+            ..setField(ABILITY_RLF_COOLDOWN, hero.getAbilityLevel(skill) - 1, cd.toReal())  
+
+        else if skill == 'A0OK' or skill == 'A0JQ' //Madoka/Mashu
+            dmg = (250 + (6 * stat))
+            cd = (50)
+            mana = (85)
+            range = (925)
+
+            skill
+            ..setDescription(id, 
+            GOLD+
+            "Deals damage to enemies and heals allies around the user."+
+            "\n\nArea Of Effect: "+PINK+range.toString()+GOLD+
+            "\nCooldown: "+PINK+cd.toString()+GOLD+
+            "\nDamage/Heal Output: "+hero.getStatColor()+dmg.toString()+GOLD)
+            
+            hero.getAbility(skill)
+
+            ..setField(ABILITY_ILF_MANA_COST, hero.getAbilityLevel(skill) - 1, mana)
+            ..setField(ABILITY_RLF_CAST_RANGE, hero.getAbilityLevel(skill) - 1, range.toReal()) 
+            ..setField(ABILITY_RLF_COOLDOWN, hero.getAbilityLevel(skill) - 1, cd.toReal())  
+
+        else     
+            dmg = (250 + (6 * stat))
+            cd = (50)
+            mana = (85)
+            range = (925)
+
+            skill
+            ..setDescription(id, 
+            GOLD+
+            "Deals damage to enemies around the user."+
+            "\n\nArea Of Effect: "+PINK+range.toString()+GOLD+
+            "\nCooldown: "+PINK+cd.toString()+GOLD+
+            "\nDamage Output: "+hero.getStatColor()+dmg.toString()+GOLD)
+            
+            hero.getAbility(skill)
+
+            ..setField(ABILITY_ILF_MANA_COST, hero.getAbilityLevel(skill) - 1, mana)
+            ..setField(ABILITY_RLF_CAST_RANGE, hero.getAbilityLevel(skill) - 1, range.toReal()) 
+            ..setField(ABILITY_RLF_COOLDOWN, hero.getAbilityLevel(skill) - 1, cd.toReal())
+    else if skill.isFDash()
+        dmg = (250 + (6 * stat))
+        cd = (50)
+        mana = (85)
+        range = (1200)
+
+        skill
+        ..setDescription(id, 
+        GOLD+
+        "Dashes to the targeted location, dealing damage to enemies in the path."+
+        "\n\nArea Of Effect: "+PINK+range.toString()+GOLD+
+        "\nCooldown: "+PINK+cd.toString()+GOLD+
+        "\nDamage Output: "+hero.getStatColor()+dmg.toString()+GOLD)
+        
+        hero.getAbility(skill)
+
+        ..setField(ABILITY_ILF_MANA_COST, hero.getAbilityLevel(skill) - 1, mana)
+        ..setField(ABILITY_RLF_CAST_RANGE, hero.getAbilityLevel(skill) - 1, range.toReal()) 
+        ..setField(ABILITY_RLF_COOLDOWN, hero.getAbilityLevel(skill) - 1, cd.toReal())  
+
+    else if skill.isFPoint()
+        if skill == 'A0NU' // Atila
+            dmg = (250 + (6 * stat))
+            cd = (50)
+            mana = (85)
+            castrange = (120000)
+            globalcastrange = "Global"
+
+
+            skill
+            ..setDescription(id, 
+            GOLD+
+            "Deals damage to enemies inside of the targeted area."+
+            "\n\nCast Range: "+PINK+globalcastrange+GOLD+
+            "\nCooldown: "+PINK+cd.toString()+GOLD+
+            "\nDamage Output: "+hero.getStatColor()+dmg.toString()+GOLD)
+            
+            hero.getAbility(skill)
+
+            ..setField(ABILITY_ILF_MANA_COST, hero.getAbilityLevel(skill) - 1, mana)
+            ..setField(ABILITY_RLF_CAST_RANGE, hero.getAbilityLevel(skill) - 1, castrange.toReal()) 
+            ..setField(ABILITY_RLF_COOLDOWN, hero.getAbilityLevel(skill) - 1, cd.toReal()) 
+
+        else    
+            dmg = (250 + (6 * stat))
+            cd = (50)
+            mana = (85)
+            range = (1200)
+
+            skill
+            ..setDescription(id, 
+            GOLD+
+            "Deals damage to enemies inside of the targeted area."+
+            "\n\nCast Range: "+PINK+range.toString()+GOLD+
+            "\nCooldown: "+PINK+cd.toString()+GOLD+
+            "\nDamage Output: "+hero.getStatColor()+dmg.toString()+GOLD)
+            
+            hero.getAbility(skill)
+
+            ..setField(ABILITY_ILF_MANA_COST, hero.getAbilityLevel(skill) - 1, mana)
+            ..setField(ABILITY_RLF_CAST_RANGE, hero.getAbilityLevel(skill) - 1, range.toReal()) 
+            ..setField(ABILITY_RLF_COOLDOWN, hero.getAbilityLevel(skill) - 1, cd.toReal()) 
+
+    else if skill.isFcounter()
+        if skill == 'A0KT' //Byakuran
+            dmg = ((250 + (6 * stat)) / 2).toInt()
+            cd = (50)
+            mana = (85)
+            range = (3)
+
+            skill
+            ..setDescription(id, 
+            GOLD+
+            "For a short duration, counters the first incoming hero attack, dealing damage to the countered enemy."+
+            "\n\nDuration: "+PINK+range.toString()+GOLD+
+            "\nCooldown: "+PINK+cd.toString()+GOLD+
+            "\nDamage Output: "+hero.getStatColor()+dmg.toString()+GOLD)
+            
+            hero.getAbility(skill)
+
+            ..setField(ABILITY_ILF_MANA_COST, hero.getAbilityLevel(skill) - 1, mana)
+            ..setField(ABILITY_RLF_COOLDOWN, hero.getAbilityLevel(skill) - 1, cd.toReal())  
+        else
+            dmg = (250 + (6 * stat))
+            cd = (50)
+            mana = (85)
+            range = (3)
+
+            skill
+            ..setDescription(id, 
+            GOLD+
+            "For a short duration, counters the first incoming hero attack, dealing damage to the countered enemy."+
+            "\n\nDuration: "+PINK+range.toString()+GOLD+
+            "\nCooldown: "+PINK+cd.toString()+GOLD+
+            "\nDamage Output: "+hero.getStatColor()+dmg.toString()+GOLD)
+            
+            hero.getAbility(skill)
+
+            ..setField(ABILITY_ILF_MANA_COST, hero.getAbilityLevel(skill) - 1, mana)
+            ..setField(ABILITY_RLF_COOLDOWN, hero.getAbilityLevel(skill) - 1, cd.toReal())  
+
+    else if skill == 'A19E' //aizen
+        DoNothing()
+
+    else if skill == 'A12L' //Misogi
+        cd = (50)
+        mana = (85)
+        range = (825)
+
+        skill
+        ..setDescription(id, 
+        GOLD+
+        "Misogi ends the cooldown of his most recently used ability."+
+        "\nCooldown: "+PINK+cd.toString()+GOLD)
+        
+        hero.getAbility(skill)
+
+        ..setField(ABILITY_ILF_MANA_COST, hero.getAbilityLevel(skill) - 1, mana)
+        ..setField(ABILITY_RLF_CAST_RANGE, hero.getAbilityLevel(skill) - 1, range.toReal()) 
+        ..setField(ABILITY_RLF_COOLDOWN, hero.getAbilityLevel(skill) - 1, cd.toReal())         
+        
+    else     
+        dmg = (250 + (6 * stat))
+        cd = (50)
+        mana = (85)
+        range = (825)
+
+        skill
+        ..setDescription(id, 
+        GOLD+
+        "Deals damage to the targeted enemy."+
+        "\n\nCast Range: "+PINK+range.toString()+GOLD+
+        "\nCooldown: "+PINK+cd.toString()+GOLD+
+        "\nDamage Output: "+hero.getStatColor()+dmg.toString()+GOLD)
+        
+        hero.getAbility(skill)
+
+        ..setField(ABILITY_ILF_MANA_COST, hero.getAbilityLevel(skill) - 1, mana)
+        ..setField(ABILITY_RLF_CAST_RANGE, hero.getAbilityLevel(skill) - 1, range.toReal()) 
+        ..setField(ABILITY_RLF_COOLDOWN, hero.getAbilityLevel(skill) - 1, cd.toReal())          
+  
+
+public function tooltip_F2 (int pid)
+    let id = pid
+    let hero = udg_PlayHero[id]
+    string tatsuyarange
+    int range
+    int castrange
+    int stat = 0
+    int mana
+    int dmg
+    int cd
+    let skill = SPELL_F2[id]
+    if BlzGetUnitIntegerField(hero, UNIT_IF_PRIMARY_ATTRIBUTE) == 1 // Strength
+        stat = hero.getStr(true)
+    else if BlzGetUnitIntegerField(hero, UNIT_IF_PRIMARY_ATTRIBUTE) == 2 // Intellect
+        stat = hero.getInt(true)
+    else if BlzGetUnitIntegerField(hero, UNIT_IF_PRIMARY_ATTRIBUTE) == 3 // Agility
+        stat = hero.getAgi(true)
+    if skill == 'A0WC' //Tatsuya
+        dmg = ((250.00 + (6 * stat)) / 1.9).toInt()   
+        cd = (10)
+        mana = (25)
+        tatsuyarange = "Global"
+
+        skill
+        ..setDescription(id, 
+        GOLD+
+        "Tatsuya deals damage to all marked enemies."+
+        "\n\nCast Range: "+PINK+tatsuyarange+GOLD+
+        "\nCooldown: "+PINK+cd.toString()+GOLD+
+        "\nDamage Output: "+hero.getStatColor()+dmg.toString()+GOLD)
+        
+        hero.getAbility(skill)
+
+        ..setField(ABILITY_ILF_MANA_COST, hero.getAbilityLevel(skill) - 1, mana)
+        ..setField(ABILITY_RLF_COOLDOWN, hero.getAbilityLevel(skill) - 1, cd.toReal())
+
+    else if skill == 'A19J' //Meliodas
+        dmg = (250 + (6 * stat))
+        cd = (50)
+        mana = (85)
+
+        skill
+        ..setDescription(id, 
+        GOLD+
+        "Meliodas deals damage to enemies around him."+
+        "\n\nCooldown: "+PINK+cd.toString()+GOLD+
+        "\nDamage Output: "+hero.getStatColor()+dmg.toString()+GOLD)
+        
+        hero.getAbility(skill)
+
+        ..setField(ABILITY_ILF_MANA_COST, hero.getAbilityLevel(skill) - 1, mana)
+        ..setField(ABILITY_RLF_COOLDOWN, hero.getAbilityLevel(skill) - 1, cd.toReal())
+ 
+    else if skill == 'A0S5' //Aqua
+        dmg = ((250 + (6 * stat)) /2).toInt()
+        cd = (50)
+        mana = (85)
+        range = (1200)
+        castrange = (5000)
+
+        skill
+        ..setDescription(id, 
+        GOLD+
+        "Aqua fires a projectile, dealing damage to enemies along its path."+
+        "\n\nCast Range: "+PINK+range.toString()+GOLD+
+        "\nCooldown: "+PINK+cd.toString()+GOLD+
+        "\nDamage Output: "+hero.getStatColor()+dmg.toString()+GOLD)
+        
+        hero.getAbility(skill)
+
+        ..setField(ABILITY_ILF_MANA_COST, hero.getAbilityLevel(skill) - 1, mana)
+        ..setField(ABILITY_RLF_CAST_RANGE, hero.getAbilityLevel(skill) - 1, castrange.toReal()) 
+        ..setField(ABILITY_RLF_COOLDOWN, hero.getAbilityLevel(skill) - 1, cd.toReal())    
+
+    else           
+        dmg = ((250 + (6 * stat)) /1).toInt()
+        cd = (50)
+        mana = (85)
+        range = (825)
+
+        skill
+        ..setDescription(id, 
+        GOLD+
+        "This should not exist."+
+        "\n\nCast Range: "+PINK+range.toString()+GOLD+
+        "\nCooldown: "+PINK+cd.toString()+GOLD+
+        "\nDamage Output: "+hero.getStatColor()+dmg.toString()+GOLD)
+        
+        hero.getAbility(skill)
+
+        ..setField(ABILITY_ILF_MANA_COST, hero.getAbilityLevel(skill) - 1, mana)
+        ..setField(ABILITY_RLF_CAST_RANGE, hero.getAbilityLevel(skill) - 1, range.toReal()) 
+        ..setField(ABILITY_RLF_COOLDOWN, hero.getAbilityLevel(skill) - 1, cd.toReal())      
+        
+public function tooltip_F3 (int pid)
+    let id = pid
+    let hero = udg_PlayHero[id]
+    string range
+    int stat = 0
+    int mana
+    int dmg
+    int cd
+    let skill = SPELL_F3[id]
+    if BlzGetUnitIntegerField(hero, UNIT_IF_PRIMARY_ATTRIBUTE) == 1 // Strength
+        stat = hero.getStr(true)
+    else if BlzGetUnitIntegerField(hero, UNIT_IF_PRIMARY_ATTRIBUTE) == 2 // Intellect
+        stat = hero.getInt(true)
+    else if BlzGetUnitIntegerField(hero, UNIT_IF_PRIMARY_ATTRIBUTE) == 3 // Agility
+        stat = hero.getAgi(true)
+
+    dmg = ((250.00 + (6 * stat)) / 1.9).toInt()   
+    cd = (10)
+    mana = (25)
+    range = "Global"
+
+    skill
+    ..setDescription(id, 
+    GOLD+
+    "Tatsuya deals damage to all marked enemies."+
+    "\n\nCast Range: "+PINK+range+GOLD+
+    "\nCooldown: "+PINK+cd.toString()+GOLD+
+    "\nDamage Output: "+hero.getStatColor()+dmg.toString()+GOLD)
+    
+    hero.getAbility(skill)
+    ..setField(ABILITY_ILF_MANA_COST, hero.getAbilityLevel(skill) - 1, mana)
+    ..setField(ABILITY_RLF_COOLDOWN, hero.getAbilityLevel(skill) - 1, cd.toReal())
+    
