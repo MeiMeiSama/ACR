@@ -1,5 +1,4 @@
 package WaveSystem
-import ClosureTimers
 
 int array waveUnit
 int waveCreepID = 100
@@ -44,358 +43,223 @@ init
     waveUnit[7] = 'e05H'
     waveUnit[8] = 'e05N'
 
+function periodicSpawnTeam1Melee()
+    for i = 1 to 4
+        createUnit(Player(3), team1_Melee, team1_waveCenter)..setUserData(waveCreepID)
+        ..issuePointOrder("attack", wave_CenterOfMap)
+        if waveCreepID < 898
+            waveCreepID++
+        else 
+            waveCreepID = 100    
+        createUnit(Player(3), team1_Melee, team1_waveRight)..setUserData(waveCreepID)
+        ..issuePointOrder("attack", wave_bottomLeft)
+        if waveCreepID < 898
+            waveCreepID++
+        else 
+            waveCreepID = 100   
+        createUnit(Player(3), team1_Melee, team1_waveLeft)..setUserData(waveCreepID)
+        ..issuePointOrder("attack", wave_topRight)
+        if waveCreepID < 898
+            waveCreepID++
+        else 
+            waveCreepID = 100   
+
+function periodicSpawnTeam1Ranged()
+    createUnit(Player(3), team1_Range, team1_waveCenter)..setUserData(waveCreepID)
+    ..issuePointOrder("attack", wave_CenterOfMap)
+    if waveCreepID < 898
+        waveCreepID++
+    else 
+        waveCreepID = 100               
+    createUnit(Player(3), team1_Range, team1_waveRight)..setUserData(waveCreepID)
+    ..issuePointOrder("attack", wave_bottomLeft)
+    if waveCreepID < 898
+        waveCreepID++
+    else 
+        waveCreepID = 100               
+    createUnit(Player(3), team1_Range, team1_waveLeft)..setUserData(waveCreepID)
+    ..issuePointOrder("attack", wave_topRight)
+    if waveCreepID < 898
+        waveCreepID++
+    else 
+        waveCreepID = 100               
+
+function periodicSpawnTeam1Balista()
+    createUnit(Player(3), team1_Ballista, team1_waveCenter)..setUserData(waveCreepID)
+    ..issuePointOrder("attack", wave_CenterOfMap)
+    if waveCreepID < 898
+        waveCreepID++
+    else 
+        waveCreepID = 100                   
+    createUnit(Player(3), team1_Ballista, team1_waveRight)..setUserData(waveCreepID)
+    ..issuePointOrder("attack", wave_bottomLeft)
+    if waveCreepID < 898
+        waveCreepID++
+    else 
+        waveCreepID = 100                 
+    createUnit(Player(3), team1_Ballista, team1_waveLeft)..setUserData(waveCreepID)
+    ..issuePointOrder("attack", wave_topRight)
+    if waveCreepID < 898
+        waveCreepID++
+    else 
+        waveCreepID = 100     
+
+function periodicSpawnTeam2Melee()
+    for i = 1 to 4
+        createUnit(Player(7), team2_Melee, team2_waveCenter)..setUserData(waveCreepID)
+        ..issuePointOrder("attack", wave_CenterOfMap)
+        if waveCreepID < 898
+            waveCreepID++
+        else 
+            waveCreepID = 100             
+        createUnit(Player(7), team2_Melee, team2_waveRight)..setUserData(waveCreepID)
+        ..issuePointOrder("attack", wave_topRight)
+        if waveCreepID < 898
+            waveCreepID++
+        else 
+            waveCreepID = 100               
+        createUnit(Player(7), team2_Melee, team2_waveLeft)..setUserData(waveCreepID)
+        ..issuePointOrder("attack", wave_bottomRight)
+        if waveCreepID < 898
+            waveCreepID++
+        else 
+            waveCreepID = 100     
+
+
+function periodicSpawnTeam2Ranged()
+    createUnit(Player(7), team2_Range, team2_waveCenter)..setUserData(waveCreepID)
+    ..issuePointOrder("attack", wave_CenterOfMap)
+    if waveCreepID < 898
+        waveCreepID++
+    else 
+        waveCreepID = 100               
+    createUnit(Player(7), team2_Range, team2_waveRight)..setUserData(waveCreepID)
+    ..issuePointOrder("attack", wave_topRight)
+    if waveCreepID < 898
+        waveCreepID++
+    else 
+        waveCreepID = 100               
+    createUnit(Player(7), team2_Range, team2_waveLeft)..setUserData(waveCreepID)
+    ..issuePointOrder("attack", wave_bottomRight)
+    if waveCreepID < 898
+        waveCreepID++
+    else 
+        waveCreepID = 100    
+
+function periodicSpawnTeam2Balista()    
+    createUnit(Player(7), team2_Ballista, team2_waveLeft)..setUserData(waveCreepID)
+    ..issuePointOrder("attack", wave_bottomRight)
+    if waveCreepID < 898
+        waveCreepID++
+    else 
+        waveCreepID = 100                   
+    createUnit(Player(7), team2_Ballista, team2_waveRight)..setUserData(waveCreepID)
+    ..issuePointOrder("attack", wave_topRight)
+    if waveCreepID < 898
+        waveCreepID++
+    else 
+        waveCreepID = 100                       
+    createUnit(Player(7), team2_Ballista, team2_waveCenter)..setUserData(waveCreepID)
+    ..issuePointOrder("attack", wave_CenterOfMap)
+    if waveCreepID < 898
+        waveCreepID++
+    else 
+        waveCreepID = 100    
+
+function periodicSpawnTeam3Melee()
+    for i = 1 to 4
+        createUnit(Player(11), team3_Melee, team3_waveCenter)..setUserData(waveCreepID)
+        ..issuePointOrder("attack", wave_CenterOfMap)
+        if waveCreepID < 898
+            waveCreepID++
+        else 
+            waveCreepID = 100                  
+        createUnit(Player(11), team3_Melee, team3_waveRight)..setUserData(waveCreepID)
+        ..issuePointOrder("attack", wave_bottomRight)
+        if waveCreepID < 898
+            waveCreepID++
+        else 
+            waveCreepID = 100              
+        createUnit(Player(11), team3_Melee, team3_waveLeft)..setUserData(waveCreepID)
+        ..issuePointOrder("attack", wave_bottomLeft)
+        if waveCreepID < 898
+            waveCreepID++
+        else 
+            waveCreepID = 100       
+
+function periodicSpawnTeam3Ranged()
+    createUnit(Player(11), team3_Range, team3_waveCenter)..setUserData(waveCreepID)
+    ..issuePointOrder("attack", wave_CenterOfMap)
+    if waveCreepID < 898
+        waveCreepID++
+    else 
+        waveCreepID = 100              
+    createUnit(Player(11), team3_Range, team3_waveRight)..setUserData(waveCreepID)
+    ..issuePointOrder("attack", wave_bottomRight)
+    if waveCreepID < 898
+        waveCreepID++
+    else 
+        waveCreepID = 100              
+    createUnit(Player(11), team3_Range, team3_waveLeft)..setUserData(waveCreepID)
+    ..issuePointOrder("attack", wave_bottomLeft)
+    if waveCreepID < 898
+        waveCreepID++
+    else 
+        waveCreepID = 100       
+
+function periodicSpawnTeam3Balista()
+    createUnit(Player(11), team3_Ballista, team3_waveLeft)..setUserData(waveCreepID)
+    ..issuePointOrder("attack", wave_bottomLeft)     
+    if waveCreepID < 898
+        waveCreepID++
+    else 
+        waveCreepID = 100                         
+    createUnit(Player(11), team3_Ballista, team3_waveRight)..setUserData(waveCreepID)
+    ..issuePointOrder("attack", wave_bottomRight)
+    if waveCreepID < 898
+        waveCreepID++
+    else 
+        waveCreepID = 100                            
+    createUnit(Player(11), team3_Ballista, team3_waveCenter)..setUserData(waveCreepID)
+    ..issuePointOrder("attack", wave_CenterOfMap)
+    if waveCreepID < 898
+        waveCreepID++
+    else 
+        waveCreepID = 100       
+
 function waveSetup()
-    doPeriodically(30) (CallbackPeriodic cb) ->
-        for i = 1 to 4
-            createUnit(Player(3), team1_Melee, team1_waveCenter)..setUserData(waveCreepID)
-            ..issuePointOrder("attack", wave_CenterOfMap)
-            if waveCreepID < 898
-                waveCreepID++
-            else 
-                waveCreepID = 100    
-            createUnit(Player(3), team1_Melee, team1_waveRight)..setUserData(waveCreepID)
-            ..issuePointOrder("attack", wave_bottomLeft)
-            if waveCreepID < 898
-                waveCreepID++
-            else 
-                waveCreepID = 100   
-            createUnit(Player(3), team1_Melee, team1_waveLeft)..setUserData(waveCreepID)
-            ..issuePointOrder("attack", wave_topRight)
-            if waveCreepID < 898
-                waveCreepID++
-            else 
-                waveCreepID = 100   
-        doAfter(0.5) -> 
-            createUnit(Player(3), team1_Range, team1_waveCenter)..setUserData(waveCreepID)
-            ..issuePointOrder("attack", wave_CenterOfMap)
-            if waveCreepID < 898
-                waveCreepID++
-            else 
-                waveCreepID = 100               
-            createUnit(Player(3), team1_Range, team1_waveRight)..setUserData(waveCreepID)
-            ..issuePointOrder("attack", wave_bottomLeft)
-            if waveCreepID < 898
-                waveCreepID++
-            else 
-                waveCreepID = 100               
-            createUnit(Player(3), team1_Range, team1_waveLeft)..setUserData(waveCreepID)
-            ..issuePointOrder("attack", wave_topRight)
-            if waveCreepID < 898
-                waveCreepID++
-            else 
-                waveCreepID = 100               
-            doAfter(0.5) -> 
-                createUnit(Player(3), team1_Ballista, team1_waveCenter)..setUserData(waveCreepID)
-                ..issuePointOrder("attack", wave_CenterOfMap)
-                if waveCreepID < 898
-                    waveCreepID++
-                else 
-                    waveCreepID = 100                   
-                createUnit(Player(3), team1_Ballista, team1_waveRight)..setUserData(waveCreepID)
-                ..issuePointOrder("attack", wave_bottomLeft)
-                if waveCreepID < 898
-                    waveCreepID++
-                else 
-                    waveCreepID = 100                 
-                createUnit(Player(3), team1_Ballista, team1_waveLeft)..setUserData(waveCreepID)
-                ..issuePointOrder("attack", wave_topRight)
-                if waveCreepID < 898
-                    waveCreepID++
-                else 
-                    waveCreepID = 100                 
-        for i = 1 to 4
-            createUnit(Player(7), team2_Melee, team2_waveCenter)..setUserData(waveCreepID)
-            ..issuePointOrder("attack", wave_CenterOfMap)
-            if waveCreepID < 898
-                waveCreepID++
-            else 
-                waveCreepID = 100             
-            createUnit(Player(7), team2_Melee, team2_waveRight)..setUserData(waveCreepID)
-            ..issuePointOrder("attack", wave_topRight)
-            if waveCreepID < 898
-                waveCreepID++
-            else 
-                waveCreepID = 100               
-            createUnit(Player(7), team2_Melee, team2_waveLeft)..setUserData(waveCreepID)
-            ..issuePointOrder("attack", wave_bottomRight)
-            if waveCreepID < 898
-                waveCreepID++
-            else 
-                waveCreepID = 100               
-        doAfter(0.5) -> 
-            createUnit(Player(7), team2_Range, team2_waveCenter)..setUserData(waveCreepID)
-            ..issuePointOrder("attack", wave_CenterOfMap)
-            if waveCreepID < 898
-                waveCreepID++
-            else 
-                waveCreepID = 100               
-            createUnit(Player(7), team2_Range, team2_waveRight)..setUserData(waveCreepID)
-            ..issuePointOrder("attack", wave_topRight)
-            if waveCreepID < 898
-                waveCreepID++
-            else 
-                waveCreepID = 100               
-            createUnit(Player(7), team2_Range, team2_waveLeft)..setUserData(waveCreepID)
-            ..issuePointOrder("attack", wave_bottomRight)
-            if waveCreepID < 898
-                waveCreepID++
-            else 
-                waveCreepID = 100               
-            doAfter(0.5) -> 
-                createUnit(Player(7), team2_Ballista, team2_waveLeft)..setUserData(waveCreepID)
-                ..issuePointOrder("attack", wave_bottomRight)
-                if waveCreepID < 898
-                    waveCreepID++
-                else 
-                    waveCreepID = 100                   
-                createUnit(Player(7), team2_Ballista, team2_waveRight)..setUserData(waveCreepID)
-                ..issuePointOrder("attack", wave_topRight)
-                if waveCreepID < 898
-                    waveCreepID++
-                else 
-                    waveCreepID = 100                       
-                createUnit(Player(7), team2_Ballista, team2_waveCenter)..setUserData(waveCreepID)
-                ..issuePointOrder("attack", wave_CenterOfMap)
-                if waveCreepID < 898
-                    waveCreepID++
-                else 
-                    waveCreepID = 100                       
-        for i = 1 to 4
-            createUnit(Player(11), team3_Melee, team3_waveCenter)..setUserData(waveCreepID)
-            ..issuePointOrder("attack", wave_CenterOfMap)
-            if waveCreepID < 898
-                waveCreepID++
-            else 
-                waveCreepID = 100                  
-            createUnit(Player(11), team3_Melee, team3_waveRight)..setUserData(waveCreepID)
-            ..issuePointOrder("attack", wave_bottomRight)
-            if waveCreepID < 898
-                waveCreepID++
-            else 
-                waveCreepID = 100              
-            createUnit(Player(11), team3_Melee, team3_waveLeft)..setUserData(waveCreepID)
-            ..issuePointOrder("attack", wave_bottomLeft)
-            if waveCreepID < 898
-                waveCreepID++
-            else 
-                waveCreepID = 100              
-        doAfter(0.5) -> 
-            createUnit(Player(11), team3_Range, team3_waveCenter)..setUserData(waveCreepID)
-            ..issuePointOrder("attack", wave_CenterOfMap)
-            if waveCreepID < 898
-                waveCreepID++
-            else 
-                waveCreepID = 100              
-            createUnit(Player(11), team3_Range, team3_waveRight)..setUserData(waveCreepID)
-            ..issuePointOrder("attack", wave_bottomRight)
-            if waveCreepID < 898
-                waveCreepID++
-            else 
-                waveCreepID = 100              
-            createUnit(Player(11), team3_Range, team3_waveLeft)..setUserData(waveCreepID)
-            ..issuePointOrder("attack", wave_bottomLeft)
-            if waveCreepID < 898
-                waveCreepID++
-            else 
-                waveCreepID = 100              
-            doAfter(0.5) -> 
-                createUnit(Player(11), team3_Ballista, team3_waveLeft)..setUserData(waveCreepID)
-                ..issuePointOrder("attack", wave_bottomLeft)     
-                if waveCreepID < 898
-                    waveCreepID++
-                else 
-                    waveCreepID = 100                         
-                createUnit(Player(11), team3_Ballista, team3_waveRight)..setUserData(waveCreepID)
-                ..issuePointOrder("attack", wave_bottomRight)
-                if waveCreepID < 898
-                    waveCreepID++
-                else 
-                    waveCreepID = 100                            
-                createUnit(Player(11), team3_Ballista, team3_waveCenter)..setUserData(waveCreepID)
-                ..issuePointOrder("attack", wave_CenterOfMap)
-                if waveCreepID < 898
-                    waveCreepID++
-                else 
-                    waveCreepID = 100                            
+    periodicSpawnTeam1Melee()   
+    CreateTimer()..start(0.5, function periodicSpawnTeam1Ranged)
+    CreateTimer()..start(1.0, function periodicSpawnTeam1Balista) 
+    periodicSpawnTeam2Melee()
+    CreateTimer()..start(0.5, function periodicSpawnTeam2Ranged)
+    CreateTimer()..start(1.0, function periodicSpawnTeam2Balista)   
+    periodicSpawnTeam3Melee()       
+    CreateTimer()..start(0.5, function periodicSpawnTeam3Ranged)
+    CreateTimer()..start(1.0, function periodicSpawnTeam3Balista)                      
+
+
+function waveTimer()
+    CreateTimer()..startPeriodic(30, function waveSetup)
+
+function firstWaveSpawn()
+    waveTimer()
+    periodicSpawnTeam1Melee()   
+    CreateTimer()..start(0.5, function periodicSpawnTeam1Ranged)
+    CreateTimer()..start(1.0, function periodicSpawnTeam1Balista) 
+    periodicSpawnTeam2Melee()
+    CreateTimer()..start(0.5, function periodicSpawnTeam2Ranged)
+    CreateTimer()..start(1.0, function periodicSpawnTeam2Balista)   
+    periodicSpawnTeam3Melee()       
+    CreateTimer()..start(0.5, function periodicSpawnTeam3Ranged)
+    CreateTimer()..start(1.0, function periodicSpawnTeam3Balista)    
 
 public function firstWave()
     waveEnterCenter()
     waveBottomRight()
     waveBottomLeft()
     waveTopRight()
-    doAfter(10) ->
-        waveSetup()
-        for i = 1 to 4
-            createUnit(Player(3), team1_Melee, team1_waveCenter)..setUserData(waveCreepID)
-            ..issuePointOrder("attack", wave_CenterOfMap)
-            if waveCreepID < 898
-                waveCreepID++
-            else 
-                waveCreepID = 100               
-            createUnit(Player(3), team1_Melee, team1_waveRight)..setUserData(waveCreepID)
-            ..issuePointOrder("attack", wave_bottomLeft)
-            if waveCreepID < 898
-                waveCreepID++
-            else 
-                waveCreepID = 100               
-            createUnit(Player(3), team1_Melee, team1_waveLeft)..setUserData(waveCreepID)
-            ..issuePointOrder("attack", wave_topRight)
-            if waveCreepID < 898
-                waveCreepID++
-            else 
-                waveCreepID = 100               
-        doAfter(0.5) -> 
-            createUnit(Player(3), team1_Range, team1_waveCenter)..setUserData(waveCreepID)
-            ..issuePointOrder("attack", wave_CenterOfMap)
-            if waveCreepID < 898
-                waveCreepID++
-            else 
-                waveCreepID = 100               
-            createUnit(Player(3), team1_Range, team1_waveRight)..setUserData(waveCreepID)
-            ..issuePointOrder("attack", wave_bottomLeft)
-            if waveCreepID < 898
-                waveCreepID++
-            else 
-                waveCreepID = 100               
-            createUnit(Player(3), team1_Range, team1_waveLeft)..setUserData(waveCreepID)
-            ..issuePointOrder("attack", wave_topRight)
-            if waveCreepID < 898
-                waveCreepID++
-            else 
-                waveCreepID = 100               
-            doAfter(0.5) -> 
-                createUnit(Player(3), team1_Ballista, team1_waveCenter)..setUserData(waveCreepID)
-                ..issuePointOrder("attack", wave_CenterOfMap)
-                if waveCreepID < 898
-                    waveCreepID++
-                else 
-                    waveCreepID = 100                   
-                createUnit(Player(3), team1_Ballista, team1_waveRight)..setUserData(waveCreepID)
-                ..issuePointOrder("attack", wave_bottomLeft)
-                if waveCreepID < 898
-                    waveCreepID++
-                else 
-                    waveCreepID = 100                
-                createUnit(Player(3), team1_Ballista, team1_waveLeft)..setUserData(waveCreepID)
-                ..issuePointOrder("attack", wave_topRight)
-                if waveCreepID < 898
-                    waveCreepID++
-                else 
-                    waveCreepID = 100                
-        for i = 1 to 4
-            createUnit(Player(7), team2_Melee, team2_waveCenter)..setUserData(waveCreepID)
-            ..issuePointOrder("attack", wave_CenterOfMap)
-            if waveCreepID < 898
-                waveCreepID++
-            else 
-                waveCreepID = 100            
-            createUnit(Player(7), team2_Melee, team2_waveRight)..setUserData(waveCreepID)
-            ..issuePointOrder("attack", wave_topRight)
-            if waveCreepID < 898
-                waveCreepID++
-            else 
-                waveCreepID = 100               
-            createUnit(Player(7), team2_Melee, team2_waveLeft)..setUserData(waveCreepID)
-            ..issuePointOrder("attack", wave_bottomRight)
-            if waveCreepID < 898
-                waveCreepID++
-            else 
-                waveCreepID = 100               
-        doAfter(0.5) -> 
-            createUnit(Player(7), team2_Range, team2_waveCenter)..setUserData(waveCreepID)
-            ..issuePointOrder("attack", wave_CenterOfMap)
-            if waveCreepID < 898
-                waveCreepID++
-            else 
-                waveCreepID = 100               
-            createUnit(Player(7), team2_Range, team2_waveRight)..setUserData(waveCreepID)
-            ..issuePointOrder("attack", wave_topRight)
-            if waveCreepID < 898
-                waveCreepID++
-            else 
-                waveCreepID = 100               
-            createUnit(Player(7), team2_Range, team2_waveLeft)..setUserData(waveCreepID)
-            ..issuePointOrder("attack", wave_bottomRight)
-            if waveCreepID < 898
-                waveCreepID++
-            else 
-                waveCreepID = 100               
-            doAfter(0.5) -> 
-                createUnit(Player(7), team2_Ballista, team2_waveLeft)..setUserData(waveCreepID)
-                ..issuePointOrder("attack", wave_bottomRight)
-                if waveCreepID < 898
-                    waveCreepID++
-                else 
-                    waveCreepID = 100                   
-                createUnit(Player(7), team2_Ballista, team2_waveRight)..setUserData(waveCreepID)
-                ..issuePointOrder("attack", wave_topRight)
-                if waveCreepID < 898
-                    waveCreepID++
-                else 
-                    waveCreepID = 100                        
-                createUnit(Player(7), team2_Ballista, team2_waveCenter)..setUserData(waveCreepID)
-                ..issuePointOrder("attack", wave_CenterOfMap)
-                if waveCreepID < 898
-                    waveCreepID++
-                else 
-                    waveCreepID = 100                        
-        for i = 1 to 4
-            createUnit(Player(11), team3_Melee, team3_waveCenter)..setUserData(waveCreepID)
-            ..issuePointOrder("attack", wave_CenterOfMap)
-            if waveCreepID < 898
-                waveCreepID++
-            else 
-                waveCreepID = 100                    
-            createUnit(Player(11), team3_Melee, team3_waveRight)..setUserData(waveCreepID)
-            ..issuePointOrder("attack", wave_bottomRight)
-            if waveCreepID < 898
-                waveCreepID++
-            else 
-                waveCreepID = 100              
-            createUnit(Player(11), team3_Melee, team3_waveLeft)..setUserData(waveCreepID)
-            ..issuePointOrder("attack", wave_bottomLeft)
-            if waveCreepID < 898
-                waveCreepID++
-            else 
-                waveCreepID = 100              
-        doAfter(0.5) -> 
-            createUnit(Player(11), team3_Range, team3_waveCenter)..setUserData(waveCreepID)
-            ..issuePointOrder("attack", wave_CenterOfMap)
-            if waveCreepID < 898
-                waveCreepID++
-            else 
-                waveCreepID = 100              
-            createUnit(Player(11), team3_Range, team3_waveRight)..setUserData(waveCreepID)
-            ..issuePointOrder("attack", wave_bottomRight)
-            if waveCreepID < 898
-                waveCreepID++
-            else 
-                waveCreepID = 100              
-            createUnit(Player(11), team3_Range, team3_waveLeft)..setUserData(waveCreepID)
-            ..issuePointOrder("attack", wave_bottomLeft)
-            if waveCreepID < 898
-                waveCreepID++
-            else 
-                waveCreepID = 100              
-            doAfter(0.5) -> 
-                createUnit(Player(11), team3_Ballista, team3_waveLeft)..setUserData(waveCreepID)
-                ..issuePointOrder("attack", wave_bottomLeft)  
-                if waveCreepID < 898
-                    waveCreepID++
-                else 
-                    waveCreepID = 100                            
-                createUnit(Player(11), team3_Ballista, team3_waveRight)..setUserData(waveCreepID)
-                ..issuePointOrder("attack", wave_bottomRight)
-                if waveCreepID < 898
-                    waveCreepID++
-                else 
-                    waveCreepID = 100                  
-                createUnit(Player(11), team3_Ballista, team3_waveCenter)..setUserData(waveCreepID)
-                ..issuePointOrder("attack", wave_CenterOfMap)
-                if waveCreepID < 898
-                    waveCreepID++
-                else 
-                    waveCreepID = 100                  
+    CreateTimer()..start(10.0, function firstWaveSpawn)                     
 
 function isWaveUnit() returns boolean
     for i = 0 to 8

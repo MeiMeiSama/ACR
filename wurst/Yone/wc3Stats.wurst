@@ -1,7 +1,7 @@
 package wc3Stats
 
 import MMD
-import ClosureTimers
+// import ClosureTimers
 import ClosureEvents
 import main
 import GoldIncome
@@ -26,16 +26,18 @@ init
         if Player(i).getSlotState() == PLAYER_SLOT_STATE_PLAYING
             playingPlayers++
 
-    doAfter(0.3) ->
-        // Define the stat events to use
-        killEvent = MMD.defineEvent("Kill", "{0} killed {1}", "killer", "victim")
-        deathEvent = MMD.defineEvent("Death", "{0} died by {1}", "victim", "killer")
-        killCount = MMD.defineValueInt("Total Kills", Goal.None)
-        deathCount = MMD.defineValueInt("Total Deaths", Goal.None)
-        goldCount = MMD.defineValueInt("Total Gold", Goal.None)
-        streakCount = MMD.defineValueInt("Best Kill Streak", Goal.None)
-        Emitter.emitDefineVariable("ACR_MMD", ValueType.String, Goal.None, Suggestion.None)
-        wc3Stat_Listener()
+    CreateTimer()..start(0.3, function statsDefinitions)
+
+function statsDefinitions()
+    // Define the stat events to use
+    killEvent = MMD.defineEvent("Kill", "{0} killed {1}", "killer", "victim")
+    deathEvent = MMD.defineEvent("Death", "{0} died by {1}", "victim", "killer")
+    killCount = MMD.defineValueInt("Total Kills", Goal.None)
+    deathCount = MMD.defineValueInt("Total Deaths", Goal.None)
+    goldCount = MMD.defineValueInt("Total Gold", Goal.None)
+    streakCount = MMD.defineValueInt("Best Kill Streak", Goal.None)
+    Emitter.emitDefineVariable("ACR_MMD", ValueType.String, Goal.None, Suggestion.None)
+    wc3Stat_Listener()
 
 function wc3Stat_Listener()
     MMD.logCustom("ACR_MMD", "ACR MMD v1.0.0")

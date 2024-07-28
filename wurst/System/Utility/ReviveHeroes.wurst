@@ -1,6 +1,6 @@
 package ReviveHeroes
 import TimerUtils
-import ClosureTimers
+// import ClosureTimers
 // import ACR_Library
 import ACR_TagSystem
 // import AbilityGlobals
@@ -34,6 +34,10 @@ init
     for i = 0 to 12
         reviveTime[i] = 2
 
+function afterRevive()
+    let pid = GetExpiredTimer().getData()
+    udg_PlayHero[pid]..setInvulnerable(false)
+
 public function unit.reviveHero()
     let pid = this.getOwner().getId()
     let team1_base = vec2(-10425, 10034)
@@ -57,15 +61,7 @@ public function unit.reviveHero()
     SetUnitTimeScalePercent(udg_PlayHero[pid], 100)
     udg_PlayHero[pid].getOwner()
     ..cameraClearNoise()..panCameraToTimed(udg_PlayHero[pid].getPos(), 0)
-    // doAfter(0.2) ->                 
-    //     if udg_PlayHero[pid].hasTagHasF() and udg_PlayHero[pid].hasAbility(SPELL_F[pid]) == false
-    //         udg_PlayHero[pid].addAbility(SPELL_F[pid])
-    //         tooltip_F(pid)
-    //         udg_PlayHero[pid].startAbilityCooldown(SPELL_F[pid], acrCooldownF[pid])
-    doAfter(2) -> 
-        udg_PlayHero[pid]..setInvulnerable(false)        
-
-
+    CreateTimer()..start(2, function afterRevive)..setData(pid)      
 
 function reviveHeroInternal()
     let pid = GetExpiredTimer().getData()
@@ -90,13 +86,7 @@ function reviveHeroInternal()
     SetUnitTimeScalePercent(udg_PlayHero[pid], 100)
     udg_PlayHero[pid].getOwner()
     ..cameraClearNoise()..panCameraToTimed(udg_PlayHero[pid].getPos(), 0)
-    // doAfter(0.2) ->                 
-    //     if udg_PlayHero[pid].hasTagHasF() and udg_PlayHero[pid].hasAbility(SPELL_F[pid]) == false
-    //         udg_PlayHero[pid].addAbility(SPELL_F[pid])
-    //         tooltip_F(pid)
-    //         udg_PlayHero[pid].startAbilityCooldown(SPELL_F[pid], acrCooldownF[pid])
-    doAfter(2) -> 
-        udg_PlayHero[pid]..setInvulnerable(false)       
+    CreateTimer()..start(2, function afterRevive)..setData(pid)    
     heroDeathTimerDialog[pid].destr()
     heroDeathTimer[pid].destr()
 

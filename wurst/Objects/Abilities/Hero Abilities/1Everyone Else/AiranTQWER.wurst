@@ -4,6 +4,7 @@ import AbilityGlobals
 import main
 import ClosureTimers
 import ACR_TagSystem
+import TimerUtils
 import ACR_Library
 
 int array aizenModeRCount
@@ -12,6 +13,9 @@ group aizenModeEgroup
 init
     initTrig_AiranTQWER()
 
+function aizenReset()
+    let id = GetExpiredTimer().getData()
+    aizenModeRCount[id] = 0
 function trig_AiranTQWERConditions() returns boolean
     return GetSpellAbilityId() == 'A0XT' or GetSpellAbilityId() == 'A0XS' or GetSpellAbilityId() == 'A0XU' or GetSpellAbilityId() == 'A0HO' or GetSpellAbilityId() == 'A0HX'
 function trig_AiranTQWERFunc007Func002Func001Func002Func011Func003003003() returns boolean
@@ -24,8 +28,7 @@ function trig_AiranTQWERFunc007Func002Func001Func002Func011Func009Func002Func010
     SaveUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 1034, GetEnumUnit())
     let id = GetEnumUnit().getUserData()
     if aizenModeRCount[id] == 0
-        doAfter(5) ->
-            aizenModeRCount[id] = 0                
+        CreateTimer()..start(5, function aizenReset)..setData(id)               
     if aizenModeRCount[id] < 3
         DamageEvent.setNextDamageId(DAMAGE_ABILITY_AIZEN_MODE_R)
         DamageEvent.setNextDamageFromCode()

@@ -85,10 +85,13 @@ public function updateSelect ()
     BlzFrameSetAbsPoint(bar, FRAMEPOINT_CENTER, 0.248, 0.007)
     BlzFrameSetFont(BlzGetOriginFrame(ORIGIN_FRAME_PORTRAIT_MANA_TEXT, 0), SkinManagerGetLocalPath("InfoPanelTextFont"), 0.010, 0)
 
+function hideFrame()
+    BlzFrameSetVisible(BlzGetFrameByName("ConsoleUIBackdrop",0), false)
+    BlzHideOriginFrames(true)
+
+
 init
     nullTimer() -> 
         if not BlzLoadTOCFile( "war3mapImported\\ACR.toc" )
             print("|cffff0000COULD NOT LOAD TOC FILE, MEANING CUSTOM |cffffd700UI|cffff0000 WILL NOT LOAD|r", 3)
-    doAfter(0.03) ->
-        BlzFrameSetVisible(BlzGetFrameByName("ConsoleUIBackdrop",0), false)
-        BlzHideOriginFrames(true)
+    CreateTimer()..start(0.03, function hideFrame)        

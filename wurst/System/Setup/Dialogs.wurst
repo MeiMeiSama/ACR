@@ -2,12 +2,13 @@ package Dialogs
 import main
 import DialogBox
 import DraftScreen
-import ClosureTimers
 import wc3Stats
 init
-    doAfter(0.2) ->
-        draftTextArea()
-        dialog_chooseMode()
+    CreateTimer()..start(0.2, function dialogStart)
+
+function dialogStart()
+    draftTextArea()
+    dialog_chooseMode()    
 
 function dialog_choosePoints (player p)
     let choosePoints = new DialogBox("Required Points to Win")

@@ -2,7 +2,6 @@ package BountySystem
 import Scoreboard
 import main
 import AbilityGlobals
-import ClosureTimers
 import wc3Stats
 import ClosureEvents
 import GoldIncome
@@ -20,25 +19,29 @@ int team3PlayerCount = 0
 
 init
     // After 3 seconds, check how many players in each team, and reduce it by 1 in the event someone leaves for accurate representation
-    doAfter(3) -> 
-        for i = 0 to 2
-            if Player(i).getSlotState() == PLAYER_SLOT_STATE_PLAYING
-                team1PlayerCount++
-        for i = 4 to 6
-            if Player(i).getSlotState() == PLAYER_SLOT_STATE_PLAYING
-                team2PlayerCount++
-        for i = 8 to 10
-            if Player(i).getSlotState() == PLAYER_SLOT_STATE_PLAYING
-                team2PlayerCount++
-    
-        EventListener.add(EVENT_PLAYER_LEAVE) -> 
-            let leaver = GetTriggerPlayer()
-            if leaver.isAllyOf(Player(3))
-                team1PlayerCount--
-            else if leaver.isAllyOf(Player(7))
-                team2PlayerCount--
-            else if leaver.isAllyOf(Player(11))
-                team3PlayerCount--
+    CreateTimer()..start(3, function bountyStart)
+
+function bountyStart()
+    for i = 0 to 2
+        if Player(i).getSlotState() == PLAYER_SLOT_STATE_PLAYING
+            team1PlayerCount++
+    for i = 4 to 6
+        if Player(i).getSlotState() == PLAYER_SLOT_STATE_PLAYING
+            team2PlayerCount++
+    for i = 8 to 10
+        if Player(i).getSlotState() == PLAYER_SLOT_STATE_PLAYING
+            team2PlayerCount++
+
+    EventListener.add(EVENT_PLAYER_LEAVE) -> 
+        let leaver = GetTriggerPlayer()
+        if leaver.isAllyOf(Player(3))
+            team1PlayerCount--
+        else if leaver.isAllyOf(Player(7))
+            team2PlayerCount--
+        else if leaver.isAllyOf(Player(11))
+            team3PlayerCount--    
+
+
 
 function streakMessages (unit killer, unit victim, integer streak)
     let killerPlayerName = killer.getOwner().getName()
