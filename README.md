@@ -1,14 +1,14 @@
 # Anime Carnage Reforged
 
-**Description:**  
+### Description:**  
 A thrilling W3 map featuring **anime-inspired battles**, intricate strategies, and **dynamic gameplay**
 
-**Features:**  
+### Features: 
 - **Vibrant Graphics**  
 - **Exciting Combat**  
 - **Strategic Depth**  
 
-**Join the action and immerse yourself in a unique anime world!**
+_Join the action and immerse yourself in a unique anime world!_
 
 ![Discord Banner](https://discord.com/api/guilds/1265059821439287369/widget.png?style=banner3)
 
