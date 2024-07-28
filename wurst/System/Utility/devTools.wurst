@@ -4,6 +4,7 @@ import Orders
 import main
 import ACR_TagSystem
 import ACR_ReviveInstant
+import ObjectDefinitions
 import ClosureTimers
 CallbackPeriodic acrTimer
 int acrdevtimer
@@ -12,13 +13,13 @@ bool array devTools
 fogmodifier array acr_MH
 
 init
-    udg_PlayHero[4] = createUnit(Player(4), 'H02W', vec2(0, 0))..setUserData(4)
+    udg_PlayHero[4] = createUnit(Player(4), COBRA, vec2(0, 0))..setUserData(4)
     ..setStr(5000)
     udg_PlayHero[5] = createUnit(Player(5), 'H01N', vec2(0, 0))..setUserData(5)
     ..setStr(5000)
     udg_PlayHero[6] = createUnit((Player(6)), 'H028', vec2(0, 0))..setUserData(6)
     ..setStr(500)
-    udg_PlayHero[9] = createUnit((Player(9)), 'H008', vec2(-2000, -2000))..setUserData(9)
+    udg_PlayHero[9] = createUnit((Player(9)), ITSUKA_KOTORI, vec2(-2000, -2000))..setUserData(9)
     ..setStr(5000)
     devTools()
 function devTools ()

@@ -1,0 +1,75 @@
+package FireDot
+
+import ClosureTimers
+import ACR_Effects
+import ObjectDefinitions
+import ClosureEvents
+import DamageEvent
+
+int array fireDotStack
+
+init 
+    fireDot()
+
+public function fireDot()
+    EventListener.add(EVENT_PLAYER_UNIT_DAMAGED) ->
+        // Natsu, Natsu Raienryuu, Natsu Shikkoku, Kotori, Ace, Sabo, Cobra
+        if GetEventDamageSource().hasAbility(BURNDOT_ITSUKA_KOTORI) or GetEventDamageSource().hasAbility(BURNDOT_PORTGASD_ACE) or GetEventDamageSource().hasAbility(BURNDOT_SABO) or GetEventDamageSource().hasAbility('A01K') or GetEventDamageSource().hasAbility('A054') or GetEventDamageSource().hasAbility('A184') or GetEventDamageSource().hasAbility(POISONDOT_COBRA)
+            if DamageEvent.getAttackType() != ATTACK_TYPE_CHAOS
+                print("works")
+                let user = GetEventDamageSource()
+                let victim = GetTriggerUnit()
+                let id = victim.getUserData()
+                var count = 0
+                fireDotStack[id]++
+                doPeriodically(0.1) (CallbackPeriodic cb) ->
+                    print("dot stack: " +fireDotStack[id].toString())
+                    count++
+                    if victim.isAlive() == false or count == 30 or fireDotStack[id] >= 2
+                        fireDotStack[id]--
+                        print("dot stack: " +fireDotStack[id].toString())
+                        destroy cb
+                    if victim.isType(UNIT_TYPE_HERO) == true
+                        let maxHP = victim.getMaxHP()
+                        let herodmg = maxHP * 0.001
+                        if victim.getHP() > (herodmg * 1.1).ceil()   
+                            if victim.isInvulnerable()
+                                victim.setInvulnerable(false)
+                                DamageEvent.setNextDamageFromCode()
+                                user.damageTarget(victim, herodmg, ATTACK_TYPE_CHAOS)
+                                victim.setInvulnerable(true)
+                                if user.getTypeId() == COBRA
+                                    flashEffect(POISON_EFFECT, victim, "origin")
+                                else
+                                    flashEffect(FIRE_EFFECT, victim, "origin")
+                            else
+                                DamageEvent.setNextDamageFromCode()
+                                user.damageTarget(victim, herodmg, ATTACK_TYPE_CHAOS)  
+                                flashEffect(FIRE_EFFECT, victim, "origin")
+                                if user.getTypeId() == COBRA
+                                    flashEffect(POISON_EFFECT, victim, "origin")
+                                else
+                                    flashEffect(FIRE_EFFECT, victim, "origin")
+
+                    else if victim.isType(UNIT_TYPE_HERO) == false
+                        let maxHP = victim.getMaxHP()
+                        let mobdmg = maxHP * 0.01
+                        if victim.getHP() > (mobdmg * 1.1).ceil()   
+                            if victim.isInvulnerable()
+                                victim.setInvulnerable(false)
+                                DamageEvent.setNextDamageFromCode()
+                                user.damageTarget(victim, mobdmg, ATTACK_TYPE_CHAOS)
+                                victim.setInvulnerable(true)
+                                if user.getTypeId() == COBRA
+                                    flashEffect(POISON_EFFECT, victim, "origin")
+                                else
+                                    flashEffect(FIRE_EFFECT, victim, "origin") 
+
+                            else
+                                
+                                DamageEvent.setNextDamageFromCode()
+                                user.damageTarget(victim, mobdmg, ATTACK_TYPE_CHAOS)   
+                                if user.getTypeId() == COBRA
+                                    flashEffect(POISON_EFFECT, victim, "origin")
+                                else
+                                    flashEffect(FIRE_EFFECT, victim, "origin")                                   

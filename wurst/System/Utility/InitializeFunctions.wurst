@@ -21,13 +21,8 @@ import CameraFunctions
 import ACR_SpeedBoost
 
 import Aqua_G
-import Natsu_G
-import Natsu_TG
 import Yato_G
 import Yamamoto_G
-import Kotori_G
-import Ace_G
-import Sabo_G
 import InuyashaAttack_Orig
 import Akame_G
 import Levi_G
@@ -42,7 +37,6 @@ import KiritoOld_G
 import S_Natsu_G
 import Natsu_E
 import Shana_New_E
-import Cobra_G
 import Sasuke_Young_E
 import Luffy_G
 import Luffy_E
@@ -147,8 +141,6 @@ public function initFunctions ()
             enhancedAttacksLevi(udg_PlayHero[i])
 
         if udg_PlayHero[i].getTypeId() == 'H001'
-            natsuG()    
-            natsuTG()
             natsuE()     
         if udg_PlayHero[i].getTypeId() == 'H020'
             shanaNewE()           
@@ -244,19 +236,7 @@ public function initFunctions ()
             shaltearG()  
    
         if udg_PlayHero[i].hasAbility('A18G')
-            abigailG()                                                                                                          
-   
-        if udg_PlayHero[i].hasAbility(BURNDOT_ITSUKA_KOTORI)
-            kotoriG()
-   
-        if udg_PlayHero[i].hasAbility(BURNDOT_PORTGASD_ACE)
-            aceG()
-   
-        if udg_PlayHero[i].hasAbility(BURNDOT_SABO)
-            saboG()
- 
-        if udg_PlayHero[i].hasAbility(POISONDOT_COBRA)
-            cobraG()                    
+            abigailG()                                                                                                                               
  
         if udg_PlayHero[i].hasAbility('A0O4')
             initTrig_InuyashaAttack_Orig()
