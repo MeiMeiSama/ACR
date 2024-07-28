@@ -5,7 +5,7 @@ import AbilityGlobals
 import MusicPlaylist
 import TimerUtils
 import UpdateTooltips
-import ACR_Library
+import ACR_Stun
 init
     initTrig_Midoliya_Orig()
 

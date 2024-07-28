@@ -1,10 +1,10 @@
 package ReviveHeroes
 import TimerUtils
 // import ClosureTimers
-// import ACR_Library
+// import ACR_Stun
 import ACR_TagSystem
 // import AbilityGlobals
-// import ACR_Library
+// import ACR_Stun
 // import Translate_F
 public timer array heroDeathTimer
 public timerdialog array heroDeathTimerDialog

@@ -6,7 +6,7 @@ import ClosureTimers
 import UpdateTooltips
 import TimerUtils
 import ACR_TagSystem
-import ACR_Library
+import ACR_CooldownTracker
 init
 
 public boolean sasukeRinneganON = true

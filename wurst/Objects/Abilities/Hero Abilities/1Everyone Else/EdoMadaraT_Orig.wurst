@@ -2,7 +2,7 @@ package EdoMadaraT_Orig
 import DamageEvent
 import AbilityGlobals
 import main
-import ACR_Library
+import ACR_Stun
 init
     initTrig_EdoMadaraT_Orig()
 

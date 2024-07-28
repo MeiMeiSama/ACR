@@ -1,0 +1,5 @@
+package ACR_SoundCreation
+
+public function acrCreateSound(string fileName) returns sound
+    let t = CreateSound(fileName, false, false, false, 0, 0, "")
+    return t

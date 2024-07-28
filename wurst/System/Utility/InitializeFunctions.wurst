@@ -1,5 +1,6 @@
 package InitializeFunctions
 // import ClosureTimers
+import ACR_CooldownTracker
 import WaveSystem
 import BountySystem
 import ObjectDefinitions
@@ -14,7 +15,6 @@ import QuestItems
 import MusicPlaylist
 import ExperienceDistribution
 import SoundFunctions
-import ACR_Library
 import AbilityGlobals
 import ACR_TagSystem
 import CameraFunctions

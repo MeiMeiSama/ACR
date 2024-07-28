@@ -1,0 +1,63 @@
+package ACR_Stun
+import DummyCaster
+import OrderIds
+import TimerUtils
+import ACR_TagSystem
+// import ClosureEvents
+
+unit array acrStunnedUnit
+timer array acrStunTimer
+real array acrStunDuration
+real array acrStunCount
+
+
+
+// API
+
+
+// Math     
+
+function acrStunEnd()
+    let id = GetExpiredTimer().getData()
+    // if acrStunnedUnit[id].isPaused() == true
+    //     if acrStunnedUnit[id].isInvulnerable() == true
+    //         DoNothing()
+    //     else        
+    //         acrStunCount[id] = acrStunCount[id] + 0.02
+    // else
+    if acrStunnedUnit[id].hasTagStun() == false
+        acrStunnedUnit[id].addTagStun()
+    acrStunCount[id] = acrStunCount[id] + 0.02         
+    if acrStunCount[id] >= acrStunDuration[id]
+        acrStunTimer[id].release()
+        if acrStunnedUnit[id].hasTagStun()
+            acrStunnedUnit[id].removeAbility('B06J')
+            acrStunnedUnit[id].removeTagStun()        
+
+public function acrStun(unit caster, unit victim, real duration)
+    if victim.isInvulnerable() == false
+        if victim.hasTagPauseEX() == false
+            IssueImmediateOrder(victim, "stop")
+        let id = victim.getUserData()         
+        acrStunnedUnit[id] = victim
+        acrStunDuration[id] = duration
+        acrStunCount[id] = 0.0
+        if victim.hasTagStun()
+            acrStunTimer[id].release()
+        else
+            new DummyCaster()
+            ..owner(caster.getOwner())
+            ..origin(victim.getPos())
+            ..castTarget('A193', 1, OrderIds.thunderbolt, victim)
+            victim.addTagStun()      
+        acrStunTimer[id] = CreateTimer()..startPeriodic(0.02, function acrStunEnd)..setData(id)
+
+        
+
+                        
+
+
+
+
+                
+                    

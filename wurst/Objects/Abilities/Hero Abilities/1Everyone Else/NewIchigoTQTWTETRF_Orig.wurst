@@ -2,7 +2,8 @@ package NewIchigoTQTWTETRF_Orig
 import DamageEvent
 import AbilityGlobals
 import main
-import ACR_Library
+import ACR_Stun
+import ACR_PauseArea
 
 int ichigoStrModeEcount
 
@@ -487,7 +488,7 @@ function trig_NewIchigoTQTWTETRFActions()
         SaveInteger(YDLOC, GetHandleId(_ydl_timer), 943, LoadInteger(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 943))
         let caster = LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594)
         let casterpos = caster.getPos()
-        acrAoePause(caster, casterpos, 550, 0.5)       
+        acrPauseArea(caster, casterpos, 550, 0.5)       
         TimerStart(_ydl_timer, 0.01, true, function trig_NewIchigoTQTWTETRFFunc007Func001Func001Func019T)
     else if GetSpellAbilityId() == 'A0X7'
         soundPlay("war3mapImported\\NewIchigo5-4.mp3", GetUnitX(udg_Unitsound), GetUnitY(udg_Unitsound))

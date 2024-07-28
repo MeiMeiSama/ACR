@@ -1,0 +1,49 @@
+package ACR_Pull
+
+import ACR_TagSystem
+import TimerUtils
+
+unit array acrPulledUnit
+unit array acrPullCaster
+timer array acrPullTimer
+real array acrPullDistance
+int array acrPullCount
+vec2 array acrPullCasterBasePos
+
+function acrPullEnd()
+    let id = GetExpiredTimer().getData()
+    let casterPos = vec2(GetUnitX(acrPullCaster[id]), GetUnitY(acrPullCaster[id]))
+    let victimPos = vec2(GetUnitX(acrPulledUnit[id]), GetUnitY(acrPulledUnit[id]))
+    let dist = acrPullCasterBasePos[id].distanceTo(victimPos) - (acrPullDistance[id] / 35)
+    let angle = acrPullCasterBasePos[id].angleTo(victimPos)
+    let polar = acrPullCasterBasePos[id].polarOffset(angle, dist)                
+    acrPulledUnit[id].setPos(polar)
+    acrPullCount[id]++
+    if acrPulledUnit[id].hasTagPull() == false    
+        acrPulledUnit[id].addTagPull()   
+    if acrPulledUnit[id].hasTagPauseEX() == false    
+        acrPulledUnit[id].pauseEx()
+        acrPulledUnit[id].addTagPauseEX()
+    if acrPullCount[id] == 35 or casterPos.distanceTo(victimPos) <= 150
+        acrPullTimer[id].release()
+        if acrPulledUnit[id].hasTagPauseEX()
+            acrPulledUnit[id].unpauseEx()
+            acrPulledUnit[id].removeTagPauseEX()
+        if acrPulledUnit[id].hasTagPull()     
+            acrPulledUnit[id].removeTagPull()                       
+
+public function acrPull(unit caster, unit victim, real distance)
+    if victim.isInvulnerable() == false
+        if victim.hasTagPauseEX() == false
+            IssueImmediateOrder(victim, "stop")   
+        let id = victim.getUserData()
+        if victim.hasTagPull()
+            acrPullTimer[id].release()
+        acrPullCaster[id] = caster
+        acrPullCasterBasePos[id] = vec2(GetUnitX(caster), GetUnitY(caster))
+        acrPullCount[id] = 0
+        acrPulledUnit[id] = victim
+        acrPullDistance[id] = distance
+        if victim.hasTagPull() == false
+            victim.addTagPull() 
+        acrPullTimer[id] = CreateTimer()..startPeriodic(0.02, function acrPullEnd)..setData(id)

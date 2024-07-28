@@ -1,0 +1,24 @@
+package ACR_ReviveInstant
+
+import ClosureTimers
+import ACR_TagSystem
+
+public function acrRevive(unit caster)
+    let casterpos = caster.getPos()
+    let p = caster.getOwner()
+    let hp = caster.getHP()
+    let mp = caster.getMana()
+    var selected = false
+    if caster.hasTagRevive() == false
+        caster.addTagRevive()
+    if IsUnitSelected(caster, p)
+        selected = true   
+    caster.setHP(0)
+    doAfter(0.001) ->        
+        caster.revive(casterpos, false)
+        caster.setMana(mp)
+        caster.setHP(hp)
+        if caster.hasTagRevive() == true
+            caster.removeTagRevive()
+        if selected == true
+            p.select(caster)

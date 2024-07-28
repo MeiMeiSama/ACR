@@ -1,7 +1,7 @@
 package Debug_Commands
 
 import ClosureEvents
-import ACR_Library
+import ACR_AbilityReset
 
 init
     debugCommands()

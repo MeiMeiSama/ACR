@@ -1,0 +1,254 @@
+package ACR_CooldownTracker
+
+import AbilityGlobals
+import ClosureTimers
+
+public real array acrCooldownQ
+public real array acrCooldownQ2
+public real array acrCooldownModoQ
+public real array acrCooldownModoQ2
+public real array acrCooldownW
+public real array acrCooldownW2
+public real array acrCooldownModoW
+public real array acrCooldownModoW2
+public real array acrCooldownE
+public real array acrCooldownE2
+public real array acrCooldownModoE
+public real array acrCooldownModoE2
+public real array acrCooldownR
+public real array acrCooldownR2
+public real array acrCooldownR3
+public real array acrCooldownModoR
+public real array acrCooldownModoR2
+public real array acrCooldownT
+public real array acrCooldownT2
+public real array acrCooldownModoT
+public real array acrCooldownModoT2
+public real array acrCooldownF
+public real array acrCooldownF2
+public real array acrCooldownF3
+public real array acrCooldownModoF
+public real array acrCooldownModoF2
+public real array acrCooldownG
+public real array acrCooldownG2
+public real array acrCooldownModoG
+public real array acrCooldownModoG2
+
+public function acrCooldownTracker()
+    CreateTrigger()
+    ..registerAnyUnitEvent(EVENT_PLAYER_UNIT_SPELL_EFFECT)
+    ..addAction() ->
+        let caster = GetSpellAbilityUnit()
+        let p = caster.getOwner()
+        let id = p.getId()
+        if GetSpellAbilityId() == SPELL_Q[id]
+            acrCooldownQ[id] = 50.00
+            doPeriodically(0.2) (CallbackPeriodic cb) ->
+                acrCooldownQ[id] = caster.getAbilityCooldownRemaining(SPELL_Q[id])
+                if acrCooldownQ[id] <= 0.2
+                    destroy cb
+                    acrCooldownQ[id] = 0.0
+        else if GetSpellAbilityId() == SPELL_Q2[id]
+            acrCooldownQ2[id] = 50.00
+            doPeriodically(0.2) (CallbackPeriodic cb) ->
+                acrCooldownQ2[id] = caster.getAbilityCooldownRemaining(SPELL_Q2[id])
+                if acrCooldownQ2[id] <= 0.2
+                    destroy cb
+                    acrCooldownQ2[id] = 0.0
+        else if GetSpellAbilityId() == SPELL_MODO_Q[id]
+            acrCooldownModoQ[id] = 50.00
+            doPeriodically(0.2) (CallbackPeriodic cb) ->
+                acrCooldownModoQ[id] = caster.getAbilityCooldownRemaining(SPELL_MODO_Q[id])
+                if acrCooldownModoQ[id] <= 0.2
+                    destroy cb
+                    acrCooldownModoQ[id] = 0.0
+        else if GetSpellAbilityId() == SPELL_MODO_Q2[id]
+            acrCooldownModoQ2[id] = 50.00
+            doPeriodically(0.2) (CallbackPeriodic cb) ->
+                acrCooldownModoQ2[id] = caster.getAbilityCooldownRemaining(SPELL_MODO_Q2[id])
+                if acrCooldownModoQ2[id] <= 0.2
+                    destroy cb
+                    acrCooldownModoQ2[id] = 0.0
+        else if GetSpellAbilityId() == SPELL_W[id]
+            acrCooldownW[id] = 50.00
+            doPeriodically(0.2) (CallbackPeriodic cb) ->
+                acrCooldownW[id] = caster.getAbilityCooldownRemaining(SPELL_W[id])
+                if acrCooldownW[id] <= 0.2
+                    destroy cb
+                    acrCooldownW[id] = 0.0
+        else if GetSpellAbilityId() == SPELL_W2[id]
+            acrCooldownW2[id] = 50.00
+            doPeriodically(0.2) (CallbackPeriodic cb) ->
+                acrCooldownW2[id] = caster.getAbilityCooldownRemaining(SPELL_W2[id])
+                if acrCooldownW2[id] <= 0.2
+                    destroy cb
+                    acrCooldownW2[id] = 0.0
+        else if GetSpellAbilityId() == SPELL_MODO_W[id]
+            acrCooldownModoW[id] = 50.00
+            doPeriodically(0.2) (CallbackPeriodic cb) ->
+                acrCooldownModoW[id] = caster.getAbilityCooldownRemaining(SPELL_MODO_W[id])
+                if acrCooldownModoW[id] <= 0.2
+                    destroy cb 
+                    acrCooldownModoW[id] = 0.0                                                                                               
+        else if GetSpellAbilityId() == SPELL_MODO_W2[id]
+            acrCooldownModoW2[id] = 50.00
+            doPeriodically(0.2) (CallbackPeriodic cb) ->
+                acrCooldownModoW2[id] = caster.getAbilityCooldownRemaining(SPELL_MODO_W2[id])
+                if acrCooldownModoW2[id] <= 0.2
+                    destroy cb       
+                    acrCooldownModoW2[id] = 0.0         
+        else if GetSpellAbilityId() == SPELL_E[id]
+            acrCooldownE[id] = 50.00
+            doPeriodically(0.2) (CallbackPeriodic cb) ->
+                acrCooldownE[id] = caster.getAbilityCooldownRemaining(SPELL_E[id])
+                if acrCooldownE[id] <= 0.2
+                    destroy cb   
+                    acrCooldownE[id] = 0.0 
+        else if GetSpellAbilityId() == SPELL_E2[id]
+            acrCooldownE2[id] = 50.00
+            doPeriodically(0.2) (CallbackPeriodic cb) ->
+                acrCooldownE2[id] = caster.getAbilityCooldownRemaining(SPELL_E2[id])
+                if acrCooldownE2[id] <= 0.2
+                    destroy cb
+                    acrCooldownE2[id] = 0.0
+        else if GetSpellAbilityId() == SPELL_MODO_E[id]
+            acrCooldownModoE[id] = 50.00
+            doPeriodically(0.2) (CallbackPeriodic cb) ->
+                acrCooldownModoE[id] = caster.getAbilityCooldownRemaining(SPELL_MODO_E[id])
+                if acrCooldownModoE[id] <= 0.2
+                    destroy cb 
+                    acrCooldownModoE[id] = 0.0
+
+        else if GetSpellAbilityId() == SPELL_MODO_E2[id]
+            acrCooldownModoE2[id] = 50.00
+            doPeriodically(0.2) (CallbackPeriodic cb) ->
+                acrCooldownModoE2[id] = caster.getAbilityCooldownRemaining(SPELL_MODO_E2[id])
+                if acrCooldownModoE2[id] <= 0.2
+                    destroy cb  
+                    acrCooldownModoE2[id] = 0.0                                    
+        else if GetSpellAbilityId() == SPELL_R[id]
+            acrCooldownR[id] = 50.00
+            doPeriodically(0.2) (CallbackPeriodic cb) ->
+                acrCooldownR[id] = caster.getAbilityCooldownRemaining(SPELL_R[id])
+                if acrCooldownR[id] <= 0.2
+                    destroy cb
+                    acrCooldownR[id] = 0.0
+        else if GetSpellAbilityId() == SPELL_R2[id]
+            acrCooldownR2[id] = 50.00
+            doPeriodically(0.2) (CallbackPeriodic cb) ->
+                acrCooldownR2[id] = caster.getAbilityCooldownRemaining(SPELL_R2[id])
+                if acrCooldownR2[id] <= 0.2
+                    destroy cb
+                    acrCooldownR2[id] = 0.0
+        else if GetSpellAbilityId() == SPELL_R3[id]
+            acrCooldownR3[id] = 50.00
+            doPeriodically(0.2) (CallbackPeriodic cb) ->
+                acrCooldownR3[id] = caster.getAbilityCooldownRemaining(SPELL_R3[id])
+                if acrCooldownR3[id] <= 0.2
+                    destroy cb  
+                    acrCooldownR3[id] = 0.0                  
+        else if GetSpellAbilityId() == SPELL_MODO_R[id]
+            acrCooldownModoR[id] = 50.00
+            doPeriodically(0.2) (CallbackPeriodic cb) ->
+                acrCooldownModoR[id] = caster.getAbilityCooldownRemaining(SPELL_MODO_R[id])
+                if acrCooldownModoR[id] <= 0.2
+                    destroy cb
+                    acrCooldownModoR[id] = 0.0
+        else if GetSpellAbilityId() == SPELL_MODO_R2[id]
+            acrCooldownModoR2[id] = 50.00
+            doPeriodically(0.2) (CallbackPeriodic cb) ->
+                acrCooldownModoR2[id] = caster.getAbilityCooldownRemaining(SPELL_MODO_R2[id])
+                if acrCooldownModoR2[id] <= 0.2
+                    destroy cb
+                    acrCooldownModoR2[id] = 0.0
+        else if GetSpellAbilityId() == SPELL_T[id]
+            acrCooldownT[id] = 50.00
+            doPeriodically(0.2) (CallbackPeriodic cb) ->
+                acrCooldownT[id] = caster.getAbilityCooldownRemaining(SPELL_T[id])
+                if acrCooldownT[id] <= 0.2
+                    destroy cb   
+                    acrCooldownT[id] = 0.0                 
+        else if GetSpellAbilityId() == SPELL_T2[id]
+            acrCooldownT2[id] = 50.00
+            doPeriodically(0.2) (CallbackPeriodic cb) ->
+                acrCooldownT2[id] = caster.getAbilityCooldownRemaining(SPELL_T2[id])
+                if acrCooldownT2[id] <= 0.2
+                    destroy cb 
+                    acrCooldownT2[id] = 0.0
+        else if GetSpellAbilityId() == SPELL_MODO_T[id]
+            acrCooldownModoT[id] = 50.00
+            doPeriodically(0.2) (CallbackPeriodic cb) ->
+                acrCooldownModoT[id] = caster.getAbilityCooldownRemaining(SPELL_MODO_T[id])
+                if acrCooldownModoT[id] <= 0.2
+                    destroy cb
+                    acrCooldownModoT[id] = 0.0
+        else if GetSpellAbilityId() == SPELL_MODO_T2[id]
+            acrCooldownModoT2[id] = 50.00
+            doPeriodically(0.2) (CallbackPeriodic cb) ->
+                acrCooldownModoT2[id] = caster.getAbilityCooldownRemaining(SPELL_MODO_T2[id])
+                if acrCooldownModoT2[id] <= 0.2
+                    destroy cb  
+                    acrCooldownModoT2[id] = 0.0                    
+        else if GetSpellAbilityId() == SPELL_F[id]
+            acrCooldownF[id] = 50.00
+            doPeriodically(0.2) (CallbackPeriodic cb) ->
+                acrCooldownF[id] = caster.getAbilityCooldownRemaining(SPELL_F[id])
+                if acrCooldownF[id] <= 0.2
+                    destroy cb 
+                    acrCooldownF[id] = 0.0 
+        else if GetSpellAbilityId() == SPELL_F2[id]
+            acrCooldownF2[id] = 50.00
+            doPeriodically(0.2) (CallbackPeriodic cb) ->
+                acrCooldownF2[id] = caster.getAbilityCooldownRemaining(SPELL_F2[id])
+                if acrCooldownF2[id] <= 0.2
+                    destroy cb 
+                    acrCooldownF2[id] = 0.0 
+        else if GetSpellAbilityId() == SPELL_F3[id]
+            acrCooldownF3[id] = 50.00
+            doPeriodically(0.2) (CallbackPeriodic cb) ->
+                acrCooldownF3[id] = caster.getAbilityCooldownRemaining(SPELL_F3[id])
+                if acrCooldownF3[id] <= 0.2
+                    destroy cb 
+                    acrCooldownF3[id] = 0.0 
+        else if GetSpellAbilityId() == SPELL_MODO_F[id]
+            acrCooldownModoF[id] = 50.00
+            doPeriodically(0.2) (CallbackPeriodic cb) ->
+                acrCooldownModoF[id] = caster.getAbilityCooldownRemaining(SPELL_MODO_F[id])
+                if acrCooldownModoF[id] <= 0.2
+                    destroy cb 
+                    acrCooldownModoF[id] = 0.0
+        else if GetSpellAbilityId() == SPELL_MODO_F2[id]
+            acrCooldownModoF2[id] = 50.00
+            doPeriodically(0.2) (CallbackPeriodic cb) ->
+                acrCooldownModoF2[id] = caster.getAbilityCooldownRemaining(SPELL_MODO_F2[id])
+                if acrCooldownModoF2[id] <= 0.2
+                    destroy cb 
+                    acrCooldownModoF2[id] = 0.0
+        else if GetSpellAbilityId() == SPELL_G[id]
+            acrCooldownG[id] = 50.00
+            doPeriodically(0.2) (CallbackPeriodic cb) ->
+                acrCooldownG[id] = caster.getAbilityCooldownRemaining(SPELL_G[id])
+                if acrCooldownG[id] <= 0.2
+                    destroy cb 
+                    acrCooldownG[id] = 0.0
+        else if GetSpellAbilityId() == SPELL_G2[id]
+            acrCooldownG2[id] = 50.00
+            doPeriodically(0.2) (CallbackPeriodic cb) ->
+                acrCooldownG2[id] = caster.getAbilityCooldownRemaining(SPELL_G2[id])
+                if acrCooldownG2[id] <= 0.2
+                    destroy cb 
+                    acrCooldownG2[id] = 0.0
+        else if GetSpellAbilityId() == SPELL_MODO_G[id]
+            acrCooldownModoG[id] = 50.00
+            doPeriodically(0.2) (CallbackPeriodic cb) ->
+                acrCooldownModoG[id] = caster.getAbilityCooldownRemaining(SPELL_MODO_G[id])
+                if acrCooldownModoG[id] <= 0.2
+                    destroy cb
+                    acrCooldownModoG[id] = 0.0 
+        else if GetSpellAbilityId() == SPELL_MODO_G2[id]
+            acrCooldownModoG2[id] = 50.00
+            doPeriodically(0.2) (CallbackPeriodic cb) ->
+                acrCooldownModoG2[id] = caster.getAbilityCooldownRemaining(SPELL_MODO_G2[id])
+                if acrCooldownModoG2[id] <= 0.2
+                    destroy cb   
+                    acrCooldownModoG2[id] = 0.0               

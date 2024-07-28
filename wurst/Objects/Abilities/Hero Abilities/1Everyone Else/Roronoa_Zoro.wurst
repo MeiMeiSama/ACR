@@ -2,7 +2,7 @@ package Roronoa_Zoro
 import DamageEvent
 import AbilityGlobals
 import AbilityQ_data
-import ACR_Library
+import ACR_Stun
 
 vec2 zoroTTargetPoint
 vec2 zoroCurrentPosition

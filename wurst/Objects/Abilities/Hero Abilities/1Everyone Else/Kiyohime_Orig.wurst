@@ -3,8 +3,9 @@ import DamageEvent
 import AbilityGlobals
 import main
 import AbilityQ_data
-import ACR_Library
+import ACR_Stun
 import ACR_TagSystem
+import ACR_PauseArea
 
 vec2 kiyoTTargetPoint
 
@@ -358,7 +359,7 @@ function trig_KiyohimeActions()
         SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 449, LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 449))
         SaveInteger(YDLOC, GetHandleId(_ydl_timer), 280, LoadInteger(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 280))
         let caster = LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594)
-        acrAoePause(caster, kiyoTTargetPoint, 800.00, 1.5)
+        acrPauseArea(caster, kiyoTTargetPoint, 800.00, 1.5)
         TimerStart(_ydl_timer, 0.01, true, function trig_KiyohimeFunc006Func027T)
     else if GetSpellAbilityId() == 'A129'
         soundPlay("war3mapImported\\KiyohimeB1.mp3", GetUnitX(udg_Unitsound), GetUnitY(udg_Unitsound))

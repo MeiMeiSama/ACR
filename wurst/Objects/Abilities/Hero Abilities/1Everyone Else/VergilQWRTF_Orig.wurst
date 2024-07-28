@@ -2,10 +2,11 @@ package VergilQWRTF_Orig
 import DamageEvent
 import AbilityGlobals
 import main
-import ACR_Library
+import ACR_Stun
 import TimerUtils
 import ClosureTimers
 import UpdateTooltips
+import ACR_PauseArea
 
 vec2 vergilTTargetPoint
 
@@ -305,7 +306,7 @@ function trig_VergilQWRTFFunc007Func001Func002Func001Func002Func002Func002Func01
         LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594).startAbilityCooldown('A0HW')
         PauseUnitBJ(false, LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594))
         let caster = LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594)
-        acrAoePause(caster, vergilTTargetPoint, 650, 1.0)
+        acrPauseArea(caster, vergilTTargetPoint, 650, 1.0)
     if LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 280) >= 30 and LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 280) <= 80
         SaveInteger(YDLOC, GetHandleId(GetExpiredTimer()), 943, LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 943) + 1)
         SaveGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 361, yDWEGetUnitsInRangeOfLocMatchingNull(650.00, LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 310), Condition(function trig_VergilQWRTFFunc007Func001Func002Func001Func002Func002Func002Func017Func003Func002003003)))

@@ -1,0 +1,43 @@
+package ACR_Silence
+
+import TimerUtils
+import ACR_TagSystem
+import DummyCaster
+import OrderIds
+import ObjectDefinitions
+
+unit array acrSilencedUnit
+timer array acrSilenceTimer
+real array acrSilenceDuration
+real array acrSilenceCount
+
+
+
+
+
+function acrSilenceEnd()
+    let id = GetExpiredTimer().getData()
+    if acrSilencedUnit[id].hasTagSilence() == false
+        acrSilencedUnit[id].addTagSilence()
+    acrSilenceCount[id] = acrSilenceCount[id] + 0.02         
+    if acrSilenceCount[id] >= acrSilenceDuration[id]
+        GetExpiredTimer().release()
+        if acrSilencedUnit[id].hasTagSilence()
+            acrSilencedUnit[id].removeAbility(SILENCE_DEBUFF)
+            acrSilencedUnit[id].removeTagSilence()      
+
+public function acrSilence(unit caster, unit victim, real duration)
+    if victim.isInvulnerable() == false 
+        let id = victim.getUserData()
+        acrSilencedUnit[id] = victim
+        acrSilenceDuration[id] = duration
+        acrSilenceCount[id] = 0.0
+        if victim.hasTagSilence()
+            acrSilenceTimer[id].release()
+        else
+            new DummyCaster()
+            ..owner(caster.getOwner())
+            ..origin(victim.getPos())
+            ..castTarget(SILENCE_DUMMY_SPELL, 1, OrderIds.soulburn, victim)
+            victim.addTagSilence()      
+        acrSilenceTimer[id] = CreateTimer()..startPeriodic(0.02, function acrSilenceEnd)..setData(id)

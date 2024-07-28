@@ -1,7 +1,7 @@
 package ByakuranW
 import DamageEvent
 import AbilityGlobals
-import ACR_Library
+import ACR_Pull
 
 init
     initTrig_ByakuranW()

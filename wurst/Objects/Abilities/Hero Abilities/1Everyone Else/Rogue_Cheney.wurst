@@ -3,7 +3,8 @@ import DamageEvent
 import AbilityGlobals
 import main
 import AbilityQ_data
-import ACR_Library
+import ACR_PauseArea
+import ACR_Knockback
 
 vec2 rogueTTargetPoint
 
@@ -228,7 +229,7 @@ function trig_Rogue_CheneyFunc004Func001Func001Func001Func001Func025T()
     SaveInteger(YDLOC, GetHandleId(_ydl_timer), 943, LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 943))
     SaveInteger(YDLOC, GetHandleId(_ydl_timer), 745, LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 745))
     let caster = LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594)
-    acrAoePause(caster, rogueTTargetPoint, 700.00, 1.25)
+    acrPauseArea(caster, rogueTTargetPoint, 700.00, 1.25)
     TimerStart(_ydl_timer, 0.05, true, function trig_Rogue_CheneyFunc004Func001Func001Func001Func001Func025Func013T)
     FlushChildHashtable(YDLOC, GetHandleId(GetExpiredTimer()))
     DestroyTimer(GetExpiredTimer())

@@ -4,7 +4,7 @@ import AbilityGlobals
 import main
 import GroupUtils
 import ClosureForGroups
-import ACR_Library
+import ACR_Knockback
 import ACR_TagSystem
 
 group shizuoGroup = getGroup()

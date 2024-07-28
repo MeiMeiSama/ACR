@@ -1,0 +1,38 @@
+package ACR_PauseArea
+
+import ClosureForGroups
+import ACR_TagSystem
+import ClosureTimers
+
+group array acrPauseAreaGroup
+
+public function acrPauseArea(unit caster, vec2 targetPoint, real aoe, real duration)
+    let id = caster.getUserData() 
+    forUnitsInRange(targetPoint, aoe) (unit victim) ->
+        if caster.isEnemyOf(victim) and victim.isInvulnerable() == false and victim.hasTagPauseEX() == false
+            IssueImmediateOrder(victim, "stop")
+    if acrPauseAreaGroup[id] == null
+        acrPauseAreaGroup[id] = CreateGroup()
+    doPeriodicallyTimed(0.02, duration) (CallbackCounted cb) ->   
+        forUnitsInRange(targetPoint, aoe) (unit victim) ->
+            if caster.isEnemyOf(victim) and victim.isInvulnerable() == false and victim.hasTagPauseEX() == false
+                victim.pauseEx()
+                victim.addTagPauseEX()
+            if caster.isEnemyOf(victim) and victim.isInvulnerable() == false and acrPauseAreaGroup[id].has(victim) == false
+                acrPauseAreaGroup[id].add(victim)
+            if caster.isEnemyOf(victim) and victim.isInvulnerable() == true and acrPauseAreaGroup[id].has(victim) == true and victim.hasTagPauseEX() == true
+                victim.unpauseEx()
+                victim.removeTagPauseEX()   
+    doPeriodicallyTimed(0.02, duration) (CallbackCounted cb) ->
+        acrPauseAreaGroup[id].forEachIn() (unit victim) ->
+            if targetPoint.distanceTo(vec2(GetUnitX(victim), GetUnitY(victim))) > aoe
+                if victim.hasTagPauseEX()                                 
+                    victim.unpauseEx()
+                    victim.removeTagPauseEX()
+                    acrPauseAreaGroup[id].remove(victim)
+    doAfter(duration + 0.02) ->            
+        acrPauseAreaGroup[id].forEachIn() (unit victim) ->
+            if victim.hasTagPauseEX()                                 
+                victim.unpauseEx()
+                victim.removeTagPauseEX()
+            acrPauseAreaGroup[id].remove(victim)    

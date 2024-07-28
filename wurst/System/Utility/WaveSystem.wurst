@@ -125,7 +125,6 @@ function periodicSpawnTeam2Melee()
         else 
             waveCreepID = 100     
 
-
 function periodicSpawnTeam2Ranged()
     createUnit(Player(7), team2_Range, team2_waveCenter)..setUserData(waveCreepID)
     ..issuePointOrder("attack", wave_CenterOfMap)
@@ -237,7 +236,6 @@ function waveSetup()
     periodicSpawnTeam3Melee()       
     CreateTimer()..start(0.5, function periodicSpawnTeam3Ranged)
     CreateTimer()..start(1.0, function periodicSpawnTeam3Balista)                      
-
 
 function waveTimer()
     CreateTimer()..startPeriodic(30, function waveSetup)

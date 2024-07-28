@@ -2,7 +2,7 @@ package LastsasukeQQ
 import DamageEvent
 import AbilityGlobals
 import main
-import ACR_Library
+import ACR_Slow
 
 vec2 sasukeQ2TargetPos
 

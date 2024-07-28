@@ -1,7 +1,7 @@
 package yadouw
 import DamageEvent
 import AbilityGlobals
-import ACR_Library
+import ACR_Knockback
 
 init
     initTrig_yadouw()

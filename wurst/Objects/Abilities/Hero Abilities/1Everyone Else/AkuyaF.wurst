@@ -2,7 +2,7 @@ package AkuyaF
 import DamageEvent
 import AbilityGlobals
 import main
-import ACR_Library
+import ACR_SlowArea
 
 vec2 aquaF1TargetPoint
 
@@ -136,7 +136,7 @@ function trig_AkuyaFActions()
         SaveLocationHandle(YDLOC, GetHandleId(_ydl_timer), 711, LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 711))
         SaveInteger(YDLOC, GetHandleId(_ydl_timer), 280, LoadInteger(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 280))
         let caster = LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594)
-        acrAoeSlow(caster, aquaF1TargetPoint, 600, 85, 0.9)
+        acrSlowArea(caster, aquaF1TargetPoint, 600, 85, 0.9)
         TimerStart(_ydl_timer, 0.03, true, function trig_AkuyaFFunc003Func021T)
     else
         soundPlay("war3mapImported\\Akuya6-2.mp3", GetUnitX(udg_Unitsound), GetUnitY(udg_Unitsound))

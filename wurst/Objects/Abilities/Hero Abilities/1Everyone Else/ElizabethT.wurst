@@ -1,7 +1,7 @@
 package ElizabethT
 import DamageEvent
 import AbilityGlobals
-import ACR_Library
+import ACR_PauseArea
 
 vec2 elizabethTTargetPoint
 
@@ -101,7 +101,7 @@ function trig_ElizabethTFunc036Func001Func013T()
         SaveLocationHandle(YDLOC, GetHandleId(_ydl_timer), 199, LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 199))
         TimerStart(_ydl_timer, 0.03, true, function trig_ElizabethTFunc036Func001Func013Func001Func009T)
         let caster = LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594)
-        acrAoePause(caster, elizabethTTargetPoint, 1000, 1.7)
+        acrPauseArea(caster, elizabethTTargetPoint, 1000, 1.7)
         FlushChildHashtable(YDLOC, GetHandleId(GetExpiredTimer()))
         DestroyTimer(GetExpiredTimer())
     else

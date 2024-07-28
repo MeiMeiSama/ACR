@@ -3,7 +3,7 @@ import DamageEvent
 import AbilityGlobals
 import main
 import ClosureTimers
-import ACR_Library
+import ACR_Stun
 init
     initTrig_Tokisaki_Kurumi()
 

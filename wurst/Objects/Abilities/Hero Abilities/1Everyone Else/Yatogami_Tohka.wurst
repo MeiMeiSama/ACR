@@ -2,7 +2,7 @@ package Yatogami_Tohka
 import DamageEvent
 import AbilityGlobals
 import AbilityQ_data
-import ACR_Library
+import ACR_Stun
 
 init
     initTrig_Yatogami_Tohka()

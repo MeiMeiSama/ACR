@@ -3,7 +3,8 @@ import DamageEvent
 import AbilityGlobals
 import main
 import AbilityQ_data
-import ACR_Library
+import ACR_PauseArea
+import ACR_Knockback
 
 vec2 nanayaQTargetPoint
 vec2 nanayaCurrentPosition
@@ -910,7 +911,7 @@ function trig_NanayaWhiteQWERFActions()
                 SaveInteger(YDLOC, GetHandleId(_ydl_timer), 943, LoadInteger(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 943))
                 SaveInteger(YDLOC, GetHandleId(_ydl_timer), 745, LoadInteger(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 745))
                 SaveInteger(YDLOC, GetHandleId(_ydl_timer), 73782792, LoadInteger(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 73782792))
-                acrAoePause(caster, nanayaTTargetPoint, 700.00, 1.34)
+                acrPauseArea(caster, nanayaTTargetPoint, 700.00, 1.34)
                 TimerStart(_ydl_timer, 0.02, true, function trig_NanayaWhiteQWERFFunc007Func001Func001Func001Func001Func026T)
         FlushChildHashtable(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID)
 function initTrig_NanayaWhiteQWERF_Orig()

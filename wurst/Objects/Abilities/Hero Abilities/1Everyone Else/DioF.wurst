@@ -2,7 +2,7 @@ package DioF
 import DamageEvent
 import AbilityGlobals
 import main
-import ACR_Library
+import ACR_PauseArea
 
 vec2 dioTTargetPoint
 
@@ -243,7 +243,7 @@ function trig_DioFFunc004Func020Func001Func006T()
         SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 449, LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 449))
         SaveInteger(YDLOC, GetHandleId(_ydl_timer), 280, LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 280))
         let caster = LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594)
-        acrAoePause(caster, dioTTargetPoint, 800.00, 3.5)
+        acrPauseArea(caster, dioTTargetPoint, 800.00, 3.5)
         TimerStart(_ydl_timer, 0.03, true, function trig_DioFFunc004Func020Func001Func006Func001Func023T)
         _ydl_timer = CreateTimer()
         SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 1138, LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 1138))

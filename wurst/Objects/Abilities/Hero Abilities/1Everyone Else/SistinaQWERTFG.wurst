@@ -4,7 +4,7 @@ import AbilityGlobals
 import main
 import AbilityQ_data
 import ClosureTimers
-import ACR_Library
+import ACR_Stun
 
 int array sistinaRCount
 

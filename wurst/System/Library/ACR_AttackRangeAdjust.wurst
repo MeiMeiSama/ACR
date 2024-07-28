@@ -1,0 +1,7 @@
+package ACR_AttackRangeAdjust
+
+public function unit.setUnitAttackRange (int desired_range) // Sets the unit attack range to whatever you want
+    let desired_range_real = desired_range.toReal()
+    let current_range_first = this.getFieldWeapon(UNIT_WEAPON_RF_ATTACK_RANGE, 0)
+    let currange_range_second = this.getFieldWeapon(UNIT_WEAPON_RF_ATTACK_RANGE, 1)
+    this.setFieldWeapon(UNIT_WEAPON_RF_ATTACK_RANGE, 1, desired_range_real - current_range_first + currange_range_second)

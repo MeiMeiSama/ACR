@@ -1,7 +1,8 @@
 package Jellal_Fernandes
 import DamageEvent
 import AbilityGlobals
-import ACR_Library
+import ACR_Stun
+import ACR_PauseArea
 
 vec2 jellalFTargetPoint
 
@@ -26,7 +27,7 @@ function trig_Jellal_FernandesFunc004Func001Func001Func001Func001Func001Func018F
         let caster = LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594)
         SaveLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 377, GetUnitLoc(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 36)))
         jellalFTargetPoint = vec2(GetLocationX(LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 377)), GetLocationY(LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 377)))
-        acrAoePause(caster, jellalFTargetPoint, 600.00, 1.5)
+        acrPauseArea(caster, jellalFTargetPoint, 600.00, 1.5)
 
     if LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 858) >= 50
         SaveLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 377, GetUnitLoc(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 36)))

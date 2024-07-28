@@ -2,7 +2,8 @@ package Luffy
 import DamageEvent
 import AbilityGlobals
 import AbilityQ_data
-import ACR_Library
+import ACR_Stun
+import ACR_Knockback
 
 vec2 luffyMETargetPoint
 vec2 luffyCurrentPosition

@@ -3,7 +3,7 @@ import ClosureEvents
 import Orders
 import main
 import ACR_TagSystem
-import ACR_Library
+import ACR_ReviveInstant
 import ClosureTimers
 CallbackPeriodic acrTimer
 int acrdevtimer

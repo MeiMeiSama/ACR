@@ -4,7 +4,8 @@ import AbilityGlobals
 import main
 import AbilityQ_data
 import ObjectDefinitions
-import ACR_Library
+import ACR_SoundCreation
+import ACR_Stun
 
 constant edoMadaraQsound = acrCreateSound("war3mapImported\\MadaraN1.mp3")
 constant edoMadaraRsound = acrCreateSound("war3mapImported\\MadaraN4.mp3")

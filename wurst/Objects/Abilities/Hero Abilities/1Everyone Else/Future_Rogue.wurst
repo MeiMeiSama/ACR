@@ -2,7 +2,9 @@ package Future_Rogue
 import DamageEvent
 import AbilityGlobals
 import AbilityQ_data
-import ACR_Library
+import ACR_Stun
+import ACR_Knockback
+import ACR_PauseArea
 
 vec2 futureRogueTTargetPoint
 
@@ -130,7 +132,7 @@ function trig_Future_RogueFunc004Func001Func001Func001Func001Func001Func001Func0
     SaveGroupHandle(YDLOC, GetHandleId(_ydl_timer), 744928215, LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 744928215))
     SaveInteger(YDLOC, GetHandleId(_ydl_timer), 280, LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 280))
     let caster = LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594)
-    acrAoePause(caster, futureRogueTTargetPoint, 750.00, 1.00)
+    acrPauseArea(caster, futureRogueTTargetPoint, 750.00, 1.00)
     TimerStart(_ydl_timer, 0.02, true, function trig_Future_RogueFunc004Func001Func001Func001Func001Func001Func001Func001Func001Func018Func004T)
     FlushChildHashtable(YDLOC, GetHandleId(GetExpiredTimer()))
     DestroyTimer(GetExpiredTimer())

@@ -1,0 +1,39 @@
+package ACR_SilenceArea
+
+import ClosureTimers
+import ACR_TagSystem
+import DummyCaster
+import OrderIds
+import ObjectDefinitions
+import ClosureForGroups
+
+group array acrSilenceAreaGroup
+
+public function acrSilenceArea(unit caster, vec2 targetPoint, real aoe, real duration)
+    let id = caster.getUserData()
+    if acrSilenceAreaGroup[id] == null
+        acrSilenceAreaGroup[id] = CreateGroup()            
+    doPeriodicallyTimed(0.02, duration) (CallbackCounted cb) ->      
+        forUnitsInRange(targetPoint, aoe) (unit victim) ->
+            if caster.isEnemyOf(victim) and victim.isInvulnerable() == false
+                if acrSilenceAreaGroup[id].has(victim) == false
+                    acrSilenceAreaGroup[id].add(victim)
+                if victim.hasTagSilence() == false
+                    new DummyCaster()
+                    ..owner(caster.getOwner())
+                    ..origin(victim.getPos())
+                    ..castTarget(SILENCE_DUMMY_SPELL, 1, OrderIds.soulburn, victim)
+                    victim.addTagSilence()  
+    doPeriodicallyTimed(0.02, duration) (CallbackCounted cb) ->       
+        acrSilenceAreaGroup[id].forEachIn() (unit victim) ->
+            if targetPoint.distanceTo(vec2(GetUnitX(victim), GetUnitY(victim))) > aoe
+                if victim.hasTagSilence()                                 
+                    victim.removeAbility(SILENCE_DEBUFF)
+                    victim.removeTagSilence()
+                    acrSilenceAreaGroup[id].remove(victim)
+    doAfter(duration + 0.02) ->
+        acrSilenceAreaGroup[id].forEachIn() (unit victim) ->
+            if victim.hasTagSilence()                                 
+                victim.removeAbility(SILENCE_DEBUFF)
+                victim.removeTagSilence()
+            acrSilenceAreaGroup[id].remove(victim) 

@@ -2,7 +2,7 @@ package EmiyaShirouW_Orig
 import DamageEvent
 import AbilityGlobals
 import main
-import ACR_Library
+import ACR_Knockback
 init
     initTrig_EmiyaShirouW_Orig()
 

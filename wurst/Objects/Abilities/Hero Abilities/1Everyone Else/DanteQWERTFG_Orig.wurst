@@ -5,7 +5,8 @@ import main
 import AbilityQ_data
 import UpdateTooltips
 import TimerUtils
-import ACR_Library
+import ACR_Stun
+import ACR_PauseArea
 
 vec2 danteTTargetPoint
 
@@ -967,7 +968,7 @@ function trig_DanteQWERTFGActions()
                 SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 550, LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 550))
                 SaveLocationHandle(YDLOC, GetHandleId(_ydl_timer), 310, LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 310))
                 SaveInteger(YDLOC, GetHandleId(_ydl_timer), 280, LoadInteger(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 280))
-                acrAoePause(caster, danteTTargetPoint, 900.00, 0.83)
+                acrPauseArea(caster, danteTTargetPoint, 900.00, 0.83)
                 TimerStart(_ydl_timer, 0.01, true, function trig_DanteQWERTFGFunc007Func003Func009T)
     else if GetSpellAbilityId() == 'A10Y'
         if udg_Yesha23[4] == 1

@@ -2,7 +2,8 @@ package SawadaTsuna_Orig
 import DamageEvent
 import AbilityGlobals
 import AbilityQ_data
-import ACR_Library
+import ACR_Knockback
+import ACR_PauseArea
 
 vec2 tsunaFTargetPoint
 int array tsunaFCount
@@ -84,7 +85,7 @@ function trig_SawadaTsunaFunc004Func001Func001Func001Func001Func023T()
     SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 338, LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 338))
     SaveInteger(YDLOC, GetHandleId(_ydl_timer), 280, LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 280))
     let caster = LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594)
-    acrAoePause(caster, tsunaFTargetPoint, 650.00, 3.00)
+    acrPauseArea(caster, tsunaFTargetPoint, 650.00, 3.00)
     TimerStart(_ydl_timer, 0.1, true, function trig_SawadaTsunaFunc004Func001Func001Func001Func001Func023Func010T)
     FlushChildHashtable(YDLOC, GetHandleId(GetExpiredTimer()))
     DestroyTimer(GetExpiredTimer())

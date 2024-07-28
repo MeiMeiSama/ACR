@@ -5,7 +5,7 @@ import main
 import ClosureTimers
 import ACR_TagSystem
 import TimerUtils
-import ACR_Library
+import ACR_Stun
 
 int array aizenModeRCount
 group aizenModeEgroup

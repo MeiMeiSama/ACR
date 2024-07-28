@@ -5,7 +5,7 @@ import main
 import AbilityQ_data
 import UpdateTooltips
 import TimerUtils
-import ACR_Library
+import ACR_PauseArea
 
 vec2 yamamotoQ2TargetPoint
 
@@ -178,7 +178,7 @@ function trig_YamamotoQActions()
     else
         let caster = GetTriggerUnit()    
         yamamotoQ2TargetPoint = vec2(GetSpellTargetX(), GetSpellTargetY())
-        acrAoePause(caster, yamamotoQ2TargetPoint, 550, 1.0)
+        acrPauseArea(caster, yamamotoQ2TargetPoint, 550, 1.0)
         UnitRemoveAbility(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594), 'A0SJ')
         SetPlayerAbilityAvailable(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594).getOwner(), 'A0M3', true)
         PauseUnit(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594), true)

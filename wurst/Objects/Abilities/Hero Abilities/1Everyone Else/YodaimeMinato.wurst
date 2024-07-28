@@ -3,7 +3,8 @@ import DamageEvent
 import AbilityGlobals
 import main
 import AbilityQ_data
-import ACR_Library
+import ACR_Knockback
+import ACR_Stun
 init
     initTrig_YodaimeMinato()
 

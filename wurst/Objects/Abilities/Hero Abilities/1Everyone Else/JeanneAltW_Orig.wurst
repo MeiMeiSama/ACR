@@ -2,7 +2,7 @@ package JeanneAltW_Orig
 import DamageEvent
 import AbilityGlobals
 import main
-import ACR_Library
+import ACR_Stun
 
 init
     initTrig_JeanneAltW_Orig()

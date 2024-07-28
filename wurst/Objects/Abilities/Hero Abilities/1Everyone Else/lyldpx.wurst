@@ -1,7 +1,8 @@
 package lyldpx
 import DamageEvent
 import AbilityGlobals
-import ACR_Library
+import ACR_Stun
+import ACR_Knockback
 
 init
     initTrig_lyldpx()
