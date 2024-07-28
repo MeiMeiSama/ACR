@@ -9,8 +9,6 @@ A thrilling W3 map featuring **anime-inspired battles**, intricate strategies, a
 - **Strategic Depth**  
 
 **Join the action and immerse yourself in a unique anime world!**
-
-```python
-  def hello_world():
-    print ("Hello, world!")
+```
+https://discord.gg/cm2RkbSSCD
 ```

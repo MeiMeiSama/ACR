@@ -13,7 +13,7 @@ public function updateTooltips_Mode ()
     updateTooltipMode(id)
 
 public function updateTooltips () // ------------- Configurable ------------- //
-    let id = GetExpiredTimer().getData() // gets id
+    let id = GetExpiredTimer().getData()
     updateTooltipExceptions(id) 
 
 function updateTooltipsOnceInitModeCond () returns boolean

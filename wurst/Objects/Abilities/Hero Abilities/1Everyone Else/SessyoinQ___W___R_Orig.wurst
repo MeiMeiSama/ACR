@@ -43,7 +43,9 @@ function trig_SessyoinQ___W___RFunc007Func001Func002Func025Func003Func004A()
     if IsUnitInGroup(GetEnumUnit(), LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 744928215)) == true
         DoNothing()
     else
-        GroupAddUnit(LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 744928215), GetEnumUnit())
+        GroupAddUnit(LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 744928215), GetEnumUnit())    
+    LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 223).kill()    
+    LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 1164).kill() 
     _ydl_timer = CreateTimer()
     SaveEffectHandle(YDLOC, GetHandleId(_ydl_timer), 360, LoadEffectHandle(YDLOC, GetHandleId(GetExpiredTimer()), 360))
     SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 223, LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 223))
