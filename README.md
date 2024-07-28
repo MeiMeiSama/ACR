@@ -1,6 +1,6 @@
 # Anime Carnage Reforged
 
-### Description:**  
+### Description:
 A thrilling W3 map featuring **anime-inspired battles**, intricate strategies, and **dynamic gameplay**
 
 ### Features: 
