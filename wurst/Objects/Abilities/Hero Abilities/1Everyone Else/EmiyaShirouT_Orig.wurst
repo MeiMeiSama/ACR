@@ -3,7 +3,6 @@ import DamageEvent
 import AbilityGlobals
 import main
 import ClosureTimers
-import ACR_TagSystem
 
 int array shiroTCount
 unit shiroTTarget
@@ -157,8 +156,7 @@ function trig_EmiyaShirouTFunc015T()
         var count = 0
         var shiroInsideT = false
         let pid = caster.getOwner().getId()
-        caster.hideAbility(SPELL_T[pid], true)
-        SPELL_T[pid].addTagHidden()
+        SetPlayerAbilityAvailable(caster.getOwner(), SPELL_T[pid], false)
         caster.addAbility('A0PS')
         doPeriodically(0.01) (CallbackPeriodic cb) ->
             count++
@@ -181,10 +179,14 @@ function trig_EmiyaShirouTFunc015T()
                             caster.setInvulnerable(false)
                             destroy cb                             
                 caster.removeAbility('A0PS')
-                if SPELL_T[pid].hasTagHidden() == true
-                    caster.hideAbility(SPELL_T[pid], false)
-                    SPELL_T[pid].removeTagHidden()
+                SetPlayerAbilityAvailable(caster.getOwner(), SPELL_T[pid], true)
+                caster.startAbilityCooldown(SPELL_T[pid])
                 destroy cb 
+            if caster.isAlive() == false   
+                caster.removeAbility('A0PS')
+                SetPlayerAbilityAvailable(caster.getOwner(), SPELL_T[pid], true)
+                caster.startAbilityCooldown(SPELL_T[pid])
+                destroy cb                 
         _ydl_timer = CreateTimer()
         SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 594, LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594))
         SaveLocationHandle(YDLOC, GetHandleId(_ydl_timer), 549, LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 549))
