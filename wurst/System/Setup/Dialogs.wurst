@@ -3,13 +3,14 @@ import main
 import DialogBox
 import DraftScreen
 import wc3Stats
+import TimerUtils
 init
-    CreateTimer()..start(0.2, function dialogStart)
+    getTimer()..start(0.2, function dialogStart)
 
 function dialogStart()
     draftTextArea()
     dialog_chooseMode() 
-    GetExpiredTimer().destr()   
+    GetExpiredTimer().release()   
 
 function dialog_choosePoints (player p)
     let choosePoints = new DialogBox("Required Points to Win")
