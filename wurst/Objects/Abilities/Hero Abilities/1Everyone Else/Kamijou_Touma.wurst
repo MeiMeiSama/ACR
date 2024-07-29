@@ -316,52 +316,17 @@ function trig_Kamijou_ToumaActions()
     SaveUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 549, GetSpellTargetUnit())
     SavePlayerHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 603, GetOwningPlayer(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594)))
     if GetSpellAbilityId() == 'A04R'
-        let loc = vec2(GetSpellTargetX(), GetSpellTargetY())
-        let caster = GetTriggerUnit()
-        let casterloc = caster.getPos()
-        
-        if gg_rct_BossArea.contains(loc) == false and gg_rct_BossArea.contains(casterloc) == true
-            caster.getOwner().print("Can't teleport out/in of arena", 2)
-            caster.issueImmediateOrder("stop")
-        else if gg_rct_BossArea.contains(loc) == true and gg_rct_BossArea.contains(casterloc) == false
-            caster.getOwner().print("Can't teleport out/in of arena", 2)
-            caster.issueImmediateOrder("stop")        
-        else if gg_rct_1v1v1Area.contains(loc) == false and gg_rct_1v1v1Area.contains(casterloc) == true
-            caster.getOwner().print("Can't teleport out/in of arena", 2)
-            caster.issueImmediateOrder("stop") 
-        else if gg_rct_1v1v1Area.contains(loc) == true and gg_rct_1v1v1Area.contains(casterloc) == false
-            caster.getOwner().print("Can't teleport out/in of arena", 2)
-            caster.issueImmediateOrder("stop")   
-        else if gg_rct_2v2v2Area.contains(loc) == false and gg_rct_2v2v2Area.contains(casterloc) == true
-            caster.getOwner().print("Can't teleport out/in of arena", 2)
-            caster.issueImmediateOrder("stop")     
-        else if gg_rct_2v2v2Area.contains(loc) == true and gg_rct_2v2v2Area.contains(casterloc) == false
-            caster.getOwner().print("Can't teleport out/in of arena", 2)
-            caster.issueImmediateOrder("stop") 
-        else if gg_rct_FreeForAllArea.contains(loc) == false and gg_rct_FreeForAllArea.contains(casterloc) == true
-            caster.getOwner().print("Can't teleport out/in of arena", 2)
-            caster.issueImmediateOrder("stop")               
-        else if gg_rct_FreeForAllArea.contains(loc) == true and gg_rct_FreeForAllArea.contains(casterloc) == false
-            caster.getOwner().print("Can't teleport out/in of arena", 2)
-            caster.issueImmediateOrder("stop")  
-        else if gg_rct_TeamBattleArea.contains(loc) == false and gg_rct_TeamBattleArea.contains(casterloc) == true
-            caster.getOwner().print("Can't teleport out/in of arena", 2)
-            caster.issueImmediateOrder("stop")         
-        else if gg_rct_TeamBattleArea.contains(loc) == true and gg_rct_TeamBattleArea.contains(casterloc) == false
-            caster.getOwner().print("Can't teleport out/in of arena", 2)
-            caster.issueImmediateOrder("stop")                              
-        else  
-            SaveLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1108, GetSpellTargetLoc())
-            _ydl_timer = CreateTimer()
-            SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 594, LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594))
-            SavePlayerHandle(YDLOC, GetHandleId(_ydl_timer), 603, LoadPlayerHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 603))
-            SaveLocationHandle(YDLOC, GetHandleId(_ydl_timer), 1108, LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1108))
-            SaveLocationHandle(YDLOC, GetHandleId(_ydl_timer), 683, LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 683))
-            SaveGroupHandle(YDLOC, GetHandleId(_ydl_timer), 361, LoadGroupHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 361))
-            SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 942949714, LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 942949714))
-            SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 632, LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 632))
-            SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 449, LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 449))
-            TimerStart(_ydl_timer, 0.01, false, function trig_Kamijou_ToumaFunc005Func004T)
+        SaveLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1108, GetSpellTargetLoc())
+        _ydl_timer = CreateTimer()
+        SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 594, LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594))
+        SavePlayerHandle(YDLOC, GetHandleId(_ydl_timer), 603, LoadPlayerHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 603))
+        SaveLocationHandle(YDLOC, GetHandleId(_ydl_timer), 1108, LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1108))
+        SaveLocationHandle(YDLOC, GetHandleId(_ydl_timer), 683, LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 683))
+        SaveGroupHandle(YDLOC, GetHandleId(_ydl_timer), 361, LoadGroupHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 361))
+        SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 942949714, LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 942949714))
+        SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 632, LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 632))
+        SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 449, LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 449))
+        TimerStart(_ydl_timer, 0.01, false, function trig_Kamijou_ToumaFunc005Func004T)
     else if GetSpellAbilityId() == 'A04Q'
         PlaySoundBJ(gg_snd_touma1)
         SaveLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1108, GetUnitLoc(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594)))

@@ -206,95 +206,60 @@ function trig_LancerKiyohimeRFunc003Func010T()
         TimerStart(_ydl_timer, 0.02, true, function trig_LancerKiyohimeRFunc003Func010Func015Func003T)
         FlushChildHashtable(YDLOC, GetHandleId(GetExpiredTimer()))
         DestroyTimer(GetExpiredTimer())
-function trig_LancerKiyohimeRActions()
-    let loc = vec2(GetSpellTargetX(), GetSpellTargetY())
-    let caster = GetTriggerUnit()
-    let casterloc = caster.getPos()
-    
-    if gg_rct_BossArea.contains(loc) == false and gg_rct_BossArea.contains(casterloc) == true
-        caster.getOwner().print("Can't teleport out/in of arena", 2)
-        caster.issueImmediateOrder("stop")
-    else if gg_rct_BossArea.contains(loc) == true and gg_rct_BossArea.contains(casterloc) == false
-        caster.getOwner().print("Can't teleport out/in of arena", 2)
-        caster.issueImmediateOrder("stop")        
-    else if gg_rct_1v1v1Area.contains(loc) == false and gg_rct_1v1v1Area.contains(casterloc) == true
-        caster.getOwner().print("Can't teleport out/in of arena", 2)
-        caster.issueImmediateOrder("stop") 
-    else if gg_rct_1v1v1Area.contains(loc) == true and gg_rct_1v1v1Area.contains(casterloc) == false
-        caster.getOwner().print("Can't teleport out/in of arena", 2)
-        caster.issueImmediateOrder("stop")   
-    else if gg_rct_2v2v2Area.contains(loc) == false and gg_rct_2v2v2Area.contains(casterloc) == true
-        caster.getOwner().print("Can't teleport out/in of arena", 2)
-        caster.issueImmediateOrder("stop")     
-    else if gg_rct_2v2v2Area.contains(loc) == true and gg_rct_2v2v2Area.contains(casterloc) == false
-        caster.getOwner().print("Can't teleport out/in of arena", 2)
-        caster.issueImmediateOrder("stop") 
-    else if gg_rct_FreeForAllArea.contains(loc) == false and gg_rct_FreeForAllArea.contains(casterloc) == true
-        caster.getOwner().print("Can't teleport out/in of arena", 2)
-        caster.issueImmediateOrder("stop")               
-    else if gg_rct_FreeForAllArea.contains(loc) == true and gg_rct_FreeForAllArea.contains(casterloc) == false
-        caster.getOwner().print("Can't teleport out/in of arena", 2)
-        caster.issueImmediateOrder("stop")  
-    else if gg_rct_TeamBattleArea.contains(loc) == false and gg_rct_TeamBattleArea.contains(casterloc) == true
-        caster.getOwner().print("Can't teleport out/in of arena", 2)
-        caster.issueImmediateOrder("stop")         
-    else if gg_rct_TeamBattleArea.contains(loc) == true and gg_rct_TeamBattleArea.contains(casterloc) == false
-        caster.getOwner().print("Can't teleport out/in of arena", 2)
-        caster.issueImmediateOrder("stop")                              
-    else        
-        timer _ydl_timer
-        integer trigger_ID = LoadInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 865)
-        trigger_ID += 3
-        if kiyoRgroup == null
-            kiyoRgroup = CreateGroup()
-        SaveInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 865, trigger_ID)
-        SaveInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 1045, trigger_ID)
-        SaveUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594, GetSpellAbilityUnit())
-        SaveLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 549, GetSpellTargetLoc())
-        if IsTerrainPathableBJ(LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 549), PATHING_TYPE_WALKABILITY) == true and IsTerrainPathableBJ(LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 549), PATHING_TYPE_FLYABILITY) == true
-            IssueImmediateOrder(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594), "stop")
-            RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 549))
-        else
-            soundPlay("war3mapImported\\LancerKiyohime4-1.mp3", GetUnitX(udg_Unitsound), GetUnitY(udg_Unitsound))
-            SaveInteger(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 280, 0)
-            SaveGroupHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 993, CreateGroup())
-            SaveGroupHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 744928215, CreateGroup())
-            SavePlayerHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 603, GetOwningPlayer(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594)))
-            SetUnitInvulnerable(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594), true)
-            PauseUnit(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594), true)
-            SetUnitAnimationByIndex(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594), 9)
-            bj_forLoopAIndex = 1
-            bj_forLoopAIndexEnd = 4
-            while true
-                if bj_forLoopAIndex > bj_forLoopAIndexEnd
-                    break
-                SaveUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 624725945, CreateUnitAtLoc(LoadPlayerHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 603), 'e0FL', LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 549), GetRandomDirectionDeg()))
-                GroupAddUnit(LoadGroupHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 993), LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 624725945))
-                bj_forLoopAIndex++
-            _ydl_timer = CreateTimer()
-            SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 1164, LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1164))
-            SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 594, LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594))
-            SaveLocationHandle(YDLOC, GetHandleId(_ydl_timer), 549, LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 549))
-            SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 939, LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 939))
-            SavePlayerHandle(YDLOC, GetHandleId(_ydl_timer), 603, LoadPlayerHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 603))
-            SaveLocationHandle(YDLOC, GetHandleId(_ydl_timer), 1108, LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1108))
-            SaveLocationHandle(YDLOC, GetHandleId(_ydl_timer), 683, LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 683))
-            SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 306, LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 306))
-            SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 874408969, LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 874408969))
-            SaveGroupHandle(YDLOC, GetHandleId(_ydl_timer), 339273988, LoadGroupHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 339273988))
-            SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 253, LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 253))
-            SaveGroupHandle(YDLOC, GetHandleId(_ydl_timer), 1153, LoadGroupHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1153))
-            SaveGroupHandle(YDLOC, GetHandleId(_ydl_timer), 744928215, LoadGroupHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 744928215))
-            SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 580, LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 580))
-            SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 22, LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 22))
-            SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 963, LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 963))
-            SaveGroupHandle(YDLOC, GetHandleId(_ydl_timer), 993, LoadGroupHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 993))
-            SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 465, LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 465))
-            SaveLocationHandle(YDLOC, GetHandleId(_ydl_timer), 450813563, LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 450813563))
-            SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 449, LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 449))
-            SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 94460517, LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 94460517))
-            SaveInteger(YDLOC, GetHandleId(_ydl_timer), 280, LoadInteger(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 280))
-            TimerStart(_ydl_timer, 0.02, true, function trig_LancerKiyohimeRFunc003Func010T)
+function trig_LancerKiyohimeRActions()  
+    timer _ydl_timer
+    integer trigger_ID = LoadInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 865)
+    trigger_ID += 3
+    if kiyoRgroup == null
+        kiyoRgroup = CreateGroup()
+    SaveInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 865, trigger_ID)
+    SaveInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 1045, trigger_ID)
+    SaveUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594, GetSpellAbilityUnit())
+    SaveLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 549, GetSpellTargetLoc())
+    if IsTerrainPathableBJ(LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 549), PATHING_TYPE_WALKABILITY) == true and IsTerrainPathableBJ(LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 549), PATHING_TYPE_FLYABILITY) == true
+        IssueImmediateOrder(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594), "stop")
+        RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 549))
+    else
+        soundPlay("war3mapImported\\LancerKiyohime4-1.mp3", GetUnitX(udg_Unitsound), GetUnitY(udg_Unitsound))
+        SaveInteger(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 280, 0)
+        SaveGroupHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 993, CreateGroup())
+        SaveGroupHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 744928215, CreateGroup())
+        SavePlayerHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 603, GetOwningPlayer(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594)))
+        SetUnitInvulnerable(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594), true)
+        PauseUnit(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594), true)
+        SetUnitAnimationByIndex(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594), 9)
+        bj_forLoopAIndex = 1
+        bj_forLoopAIndexEnd = 4
+        while true
+            if bj_forLoopAIndex > bj_forLoopAIndexEnd
+                break
+            SaveUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 624725945, CreateUnitAtLoc(LoadPlayerHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 603), 'e0FL', LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 549), GetRandomDirectionDeg()))
+            GroupAddUnit(LoadGroupHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 993), LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 624725945))
+            bj_forLoopAIndex++
+        _ydl_timer = CreateTimer()
+        SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 1164, LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1164))
+        SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 594, LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594))
+        SaveLocationHandle(YDLOC, GetHandleId(_ydl_timer), 549, LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 549))
+        SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 939, LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 939))
+        SavePlayerHandle(YDLOC, GetHandleId(_ydl_timer), 603, LoadPlayerHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 603))
+        SaveLocationHandle(YDLOC, GetHandleId(_ydl_timer), 1108, LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1108))
+        SaveLocationHandle(YDLOC, GetHandleId(_ydl_timer), 683, LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 683))
+        SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 306, LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 306))
+        SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 874408969, LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 874408969))
+        SaveGroupHandle(YDLOC, GetHandleId(_ydl_timer), 339273988, LoadGroupHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 339273988))
+        SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 253, LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 253))
+        SaveGroupHandle(YDLOC, GetHandleId(_ydl_timer), 1153, LoadGroupHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1153))
+        SaveGroupHandle(YDLOC, GetHandleId(_ydl_timer), 744928215, LoadGroupHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 744928215))
+        SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 580, LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 580))
+        SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 22, LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 22))
+        SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 963, LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 963))
+        SaveGroupHandle(YDLOC, GetHandleId(_ydl_timer), 993, LoadGroupHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 993))
+        SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 465, LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 465))
+        SaveLocationHandle(YDLOC, GetHandleId(_ydl_timer), 450813563, LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 450813563))
+        SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 449, LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 449))
+        SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 94460517, LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 94460517))
+        SaveInteger(YDLOC, GetHandleId(_ydl_timer), 280, LoadInteger(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 280))
+        TimerStart(_ydl_timer, 0.02, true, function trig_LancerKiyohimeRFunc003Func010T)
         FlushChildHashtable(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID)
 function initTrig_LancerKiyohimeR_Orig()
     gg_trg_LancerKiyohimeR = CreateTrigger()

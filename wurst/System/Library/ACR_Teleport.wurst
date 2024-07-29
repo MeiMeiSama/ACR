@@ -1,0 +1,46 @@
+package ACR_Teleport
+
+import ClosureEvents
+import AbilityClassifications
+integer array tpBootsGoldEarnt
+
+init
+
+    EventListener.add(EVENT_PLAYER_UNIT_SPELL_CAST) -> 
+        if GetSpellAbilityId() == 'A08I' or GetSpellAbilityId() == 'A0V5' or GetSpellAbilityId().isQTeleport() or GetSpellAbilityId().isWTeleport() or GetSpellAbilityId().isETeleport() or GetSpellAbilityId().isRTeleport() or GetSpellAbilityId().isTTeleport() or GetSpellAbilityId().isFTeleport() or GetSpellAbilityId().ismodeWTeleport()
+            let loc = vec2(GetSpellTargetX(), GetSpellTargetY())
+            let caster = GetTriggerUnit()
+            let casterloc = caster.getPos()
+            
+            if gg_rct_BossArea.contains(loc) == false and gg_rct_BossArea.contains(casterloc) == true
+                caster.getOwner().print("Can't teleport out/in of arena", 2)
+                caster.issueImmediateOrder("stop")
+            else if gg_rct_BossArea.contains(loc) == true and gg_rct_BossArea.contains(casterloc) == false
+                caster.getOwner().print("Can't teleport out/in of arena", 2)
+                caster.issueImmediateOrder("stop")        
+            else if gg_rct_1v1v1Area.contains(loc) == false and gg_rct_1v1v1Area.contains(casterloc) == true
+                caster.getOwner().print("Can't teleport out/in of arena", 2)
+                caster.issueImmediateOrder("stop") 
+            else if gg_rct_1v1v1Area.contains(loc) == true and gg_rct_1v1v1Area.contains(casterloc) == false
+                caster.getOwner().print("Can't teleport out/in of arena", 2)
+                caster.issueImmediateOrder("stop")   
+            else if gg_rct_2v2v2Area.contains(loc) == false and gg_rct_2v2v2Area.contains(casterloc) == true
+                caster.getOwner().print("Can't teleport out/in of arena", 2)
+                caster.issueImmediateOrder("stop")     
+            else if gg_rct_2v2v2Area.contains(loc) == true and gg_rct_2v2v2Area.contains(casterloc) == false
+                caster.getOwner().print("Can't teleport out/in of arena", 2)
+                caster.issueImmediateOrder("stop") 
+            else if gg_rct_FreeForAllArea.contains(loc) == false and gg_rct_FreeForAllArea.contains(casterloc) == true
+                caster.getOwner().print("Can't teleport out/in of arena", 2)
+                caster.issueImmediateOrder("stop")               
+            else if gg_rct_FreeForAllArea.contains(loc) == true and gg_rct_FreeForAllArea.contains(casterloc) == false
+                caster.getOwner().print("Can't teleport out/in of arena", 2)
+                caster.issueImmediateOrder("stop")  
+            else if gg_rct_TeamBattleArea.contains(loc) == false and gg_rct_TeamBattleArea.contains(casterloc) == true
+                caster.getOwner().print("Can't teleport out/in of arena", 2)
+                caster.issueImmediateOrder("stop")         
+            else if gg_rct_TeamBattleArea.contains(loc) == true and gg_rct_TeamBattleArea.contains(casterloc) == false
+                caster.getOwner().print("Can't teleport out/in of arena", 2)
+                caster.issueImmediateOrder("stop")                              
+            else
+                DoNothing()    

@@ -57,65 +57,30 @@ function trig_MatthewQActions()
     SaveUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594, GetSpellAbilityUnit())
     SavePlayerHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 603, GetOwningPlayer(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594)))
     if GetSpellAbilityId() == 'A0NN'
-        let loc = vec2(GetSpellTargetX(), GetSpellTargetY())
-        let caster = GetTriggerUnit()
-        let casterloc = caster.getPos()
-        
-        if gg_rct_BossArea.contains(loc) == false and gg_rct_BossArea.contains(casterloc) == true
-            caster.getOwner().print("Can't teleport out/in of arena", 2)
-            caster.issueImmediateOrder("stop")
-        else if gg_rct_BossArea.contains(loc) == true and gg_rct_BossArea.contains(casterloc) == false
-            caster.getOwner().print("Can't teleport out/in of arena", 2)
-            caster.issueImmediateOrder("stop")        
-        else if gg_rct_1v1v1Area.contains(loc) == false and gg_rct_1v1v1Area.contains(casterloc) == true
-            caster.getOwner().print("Can't teleport out/in of arena", 2)
-            caster.issueImmediateOrder("stop") 
-        else if gg_rct_1v1v1Area.contains(loc) == true and gg_rct_1v1v1Area.contains(casterloc) == false
-            caster.getOwner().print("Can't teleport out/in of arena", 2)
-            caster.issueImmediateOrder("stop")   
-        else if gg_rct_2v2v2Area.contains(loc) == false and gg_rct_2v2v2Area.contains(casterloc) == true
-            caster.getOwner().print("Can't teleport out/in of arena", 2)
-            caster.issueImmediateOrder("stop")     
-        else if gg_rct_2v2v2Area.contains(loc) == true and gg_rct_2v2v2Area.contains(casterloc) == false
-            caster.getOwner().print("Can't teleport out/in of arena", 2)
-            caster.issueImmediateOrder("stop") 
-        else if gg_rct_FreeForAllArea.contains(loc) == false and gg_rct_FreeForAllArea.contains(casterloc) == true
-            caster.getOwner().print("Can't teleport out/in of arena", 2)
-            caster.issueImmediateOrder("stop")               
-        else if gg_rct_FreeForAllArea.contains(loc) == true and gg_rct_FreeForAllArea.contains(casterloc) == false
-            caster.getOwner().print("Can't teleport out/in of arena", 2)
-            caster.issueImmediateOrder("stop")  
-        else if gg_rct_TeamBattleArea.contains(loc) == false and gg_rct_TeamBattleArea.contains(casterloc) == true
-            caster.getOwner().print("Can't teleport out/in of arena", 2)
-            caster.issueImmediateOrder("stop")         
-        else if gg_rct_TeamBattleArea.contains(loc) == true and gg_rct_TeamBattleArea.contains(casterloc) == false
-            caster.getOwner().print("Can't teleport out/in of arena", 2)
-            caster.issueImmediateOrder("stop")                              
-        else  
-            SaveLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1108, GetSpellTargetLoc())
-            SaveLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 555, GetUnitLoc(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594)))
-            if IsTerrainPathableBJ(LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1108), PATHING_TYPE_WALKABILITY) == true and IsTerrainPathableBJ(LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1108), PATHING_TYPE_FLYABILITY) == true
-                IssueImmediateOrder(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594), "stop")
-                RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 555))
-                RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1108))
-            else
-                soundPlay("war3mapImported\\Matthew1.mp3", GetUnitX(udg_Unitsound), GetUnitY(udg_Unitsound))
-                SetUnitAnimationByIndex(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594), 3)
-                SetUnitTimeScalePercent(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594), 135.00)
-                SetUnitPositionLoc(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594), LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1108))
-                SaveUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 942949714, CreateUnitAtLoc(LoadPlayerHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 603), 'e0JQ', LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 555), GetUnitFacing(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594))))
-                UnitApplyTimedLife(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 942949714), 'BHwe', 2.00)
-                _ydl_timer = CreateTimer()
-                SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 594, LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594))
-                SavePlayerHandle(YDLOC, GetHandleId(_ydl_timer), 603, LoadPlayerHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 603))
-                SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 724, LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 724))
-                SaveLocationHandle(YDLOC, GetHandleId(_ydl_timer), 555, LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 555))
-                SaveLocationHandle(YDLOC, GetHandleId(_ydl_timer), 1108, LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1108))
-                SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 'MUFV', LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 'MUFV'))
-                SaveGroupHandle(YDLOC, GetHandleId(_ydl_timer), 361, LoadGroupHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 361))
-                SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 632, LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 632))
-                SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 94460517, LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 94460517))
-                TimerStart(_ydl_timer, 0.05, false, function trig_MatthewQFunc003Func013Func012T)
+        SaveLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1108, GetSpellTargetLoc())
+        SaveLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 555, GetUnitLoc(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594)))
+        if IsTerrainPathableBJ(LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1108), PATHING_TYPE_WALKABILITY) == true and IsTerrainPathableBJ(LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1108), PATHING_TYPE_FLYABILITY) == true
+            IssueImmediateOrder(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594), "stop")
+            RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 555))
+            RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1108))
+        else
+            soundPlay("war3mapImported\\Matthew1.mp3", GetUnitX(udg_Unitsound), GetUnitY(udg_Unitsound))
+            SetUnitAnimationByIndex(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594), 3)
+            SetUnitTimeScalePercent(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594), 135.00)
+            SetUnitPositionLoc(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594), LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1108))
+            SaveUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 942949714, CreateUnitAtLoc(LoadPlayerHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 603), 'e0JQ', LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 555), GetUnitFacing(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594))))
+            UnitApplyTimedLife(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 942949714), 'BHwe', 2.00)
+            _ydl_timer = CreateTimer()
+            SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 594, LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594))
+            SavePlayerHandle(YDLOC, GetHandleId(_ydl_timer), 603, LoadPlayerHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 603))
+            SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 724, LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 724))
+            SaveLocationHandle(YDLOC, GetHandleId(_ydl_timer), 555, LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 555))
+            SaveLocationHandle(YDLOC, GetHandleId(_ydl_timer), 1108, LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1108))
+            SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 'MUFV', LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 'MUFV'))
+            SaveGroupHandle(YDLOC, GetHandleId(_ydl_timer), 361, LoadGroupHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 361))
+            SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 632, LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 632))
+            SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 94460517, LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 94460517))
+            TimerStart(_ydl_timer, 0.05, false, function trig_MatthewQFunc003Func013Func012T)
     else
         soundPlay("war3mapImported\\Matthew3.mp3", GetUnitX(udg_Unitsound), GetUnitY(udg_Unitsound))
         SaveLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 916, GetUnitLoc(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594)))
