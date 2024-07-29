@@ -34,7 +34,6 @@ import Himeragi_G
 import Hibari_G
 import Gray_G
 import KiritoOld_G
-import S_Natsu_G
 import Natsu_E
 import Shana_New_E
 import Sasuke_Young_E
@@ -225,9 +224,6 @@ public function initFunctions ()
     
         if udg_PlayHero[i].hasAbility('A0C2')
             yatoG()    
-     
-        if udg_PlayHero[i].hasAbility('A184')
-            snatsuG()
     
         if udg_PlayHero[i].hasAbility('A18E')
             semiramisG()
