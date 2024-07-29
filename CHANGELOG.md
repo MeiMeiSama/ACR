@@ -1,4 +1,4 @@
-# ----------- Anime Carnage Reforged v2.1.0 ----------- #
+# ━━━━━━━━━ Anime Carnage Reforged v2.1.0 ━━━━━━━━━ #
 
 ### Added
 Nothing Added.
@@ -19,7 +19,7 @@ Fixed Cobra's poison not giving credit when killing a target with it.
 ### Deleted
 Nothing Deleted.
 
-# ----------- Anime Carnage Reforged v2.0.2 ----------- #
+# ━━━━━━━━━ Anime Carnage Reforged v2.0.2 ━━━━━━━━━ #
 
 ### Added
 1. Added Ranked Mode. Ranked work as long as starting players are equal to 6 or more and Ranked is chosen at the start. Data tracked will be MMR, Kills, longest kill streak, total gold earnt, deaths, and more. Assists not yet implemented. Discord bot later date. View Leaderbord [here](https://wc3stats.com/Anime-Carnage-Reforged/leaderboard).
@@ -38,7 +38,7 @@ Nothing Improved.
 ### Deleted
 Nothing Deleted.
 
-# ----------- Anime Carnage Reforged v2.0.1 ----------- #
+# ━━━━━━━━━ Anime Carnage Reforged v2.0.1 ━━━━━━━━━ #
 
 ### Added
 Nothing added.
@@ -56,7 +56,7 @@ Fixed Abigail's E, should now works properly.
 ### Deleted
 Nothing deleted.
 
-# ----------- Anime Carnage Reforged v2.0.0 ----------- #
+# ━━━━━━━━━ Anime Carnage Reforged v2.0.0 ━━━━━━━━━ #
 
 ### Added
 Added Social Income: Whenever any player kills a mob, their allies earn 5 extra gold.
