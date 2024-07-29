@@ -11,10 +11,12 @@ integer count = 0
 public function updateTooltips_Mode ()
     let id = GetExpiredTimer().getData()
     updateTooltipMode(id)
+    GetExpiredTimer().destr()
 
 public function updateTooltips () // ------------- Configurable ------------- //
     let id = GetExpiredTimer().getData()
     updateTooltipExceptions(id) 
+    GetExpiredTimer().destr()
 
 function updateTooltipsOnceInitModeCond () returns boolean
     if GetSpellAbilityId().isTransform()
