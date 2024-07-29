@@ -2,6 +2,7 @@ package RUID
 
 import ClosureTimers
 import GetFrames
+import TimerUtils
 
 int array player_client_width
 
@@ -77,8 +78,8 @@ public function moonUI ()
 
     // Minimap & CommandButtons
     // let map = BlzGetFrameByName("MiniMapFrame", 0)
-    let map = getFrameACR("MiniMapFrame", 0)
     // let commandButtons = BlzFrameGetChild(BlzGetFrameByName("ConsoleUI", 0), 0)
+    let map = getFrameACR("MiniMapFrame", 0)
     let commandButtons = BlzFrameGetChild(getFrameACR("ConsoleUI", 0), 0)
     BlzFrameSetParent(map, parent)
     BlzFrameSetParent(commandButtons, parent)
@@ -107,11 +108,10 @@ function hideFrame()
     // BlzFrameSetVisible(BlzGetFrameByName("ConsoleUIBackdrop",0), false)
     BlzFrameSetVisible(getFrameACR("ConsoleUIBackdrop", 0), false)
     BlzHideOriginFrames(true)
-    GetExpiredTimer().destr()
-
+    GetExpiredTimer().release()
 
 init
     nullTimer() -> 
         if not BlzLoadTOCFile( "war3mapImported\\ACR.toc" )
             print("|cffff0000COULD NOT LOAD TOC FILE, MEANING CUSTOM |cffffd700UI|cffff0000 WILL NOT LOAD|r", 3)
-    CreateTimer()..start(0.03, function hideFrame)        
+    getTimer()..start(0.03, function hideFrame)        

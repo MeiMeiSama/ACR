@@ -9,5 +9,4 @@ public function getFrameACR (string frameName, integer context) returns framehan
     if frame.getHandleId() == 0 and not myFramesTable.hasHandle(frameName.getHash(), context)
         if gameStatus == gameStatus.REPLAY
             myFramesTable.saveLocationHandle(frameName.getHash(), context, Location(0, 0))
-
-    return frame 
+    return frame
