@@ -9,6 +9,7 @@ import InitializeFunctions
 import ClosureTimers
 import MusicPlaylist
 import GoldIncome
+import ACR_LinkedList
 
 int playerCount = 0
 unit array pickDummyUnit
@@ -45,10 +46,6 @@ public var cannotPick_Icon_AGI = new HashSet<int>
 public var heroList_INT = new HashSet<int>
 public var canPick_Icon_INT = new HashSet<int>
 public var cannotPick_Icon_INT = new HashSet<int>
-
-public var heroTotalList = new LinkedList<int>
-public var heroPickIconList = new LinkedList<int>
-public var heroPickedIconList = new LinkedList<int>
 
 texttag array text
 

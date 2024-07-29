@@ -1,0 +1,44 @@
+package ACR_LinkedList
+
+import LinkedList
+// import HashSet
+
+public var heroTotalList = new LinkedList<int>
+public var heroPickIconList = new LinkedList<int>
+public var heroPickedIconList = new LinkedList<int> 
+
+// public var BLINK_ABILITY = new HashSet<int> 
+
+// function insertBlinkAbilities()
+
+//     BLINK_ABILITY.add(
+//         'A0UY','A0R6','A0PI','A0UG','A0JZ',
+//         'A05O','A0YJ','A09P','A114','A0OV',
+//         'A09Y','A10N','A0JZ','A16H','A16I',
+//         'A11K','A0WU','A0BG','A15V','A0HK',
+//         'A16J','A00Z','A0SG', 'A16G','A18T'
+//     )
+//     BLINK_ABILITY.add(
+//         'A0CA', 'A16K','A16L','A18I','A16M',
+//         'A16O', 'A16P','A17D', 'A17R','A16K',
+//         'A16N'
+//     )
+
+//     if BLINK_ABILITY.has(GetSpellAbilityId())
+//         print("The cast spell is a blink")
+//     else
+//         print("It is not")
+
+
+
+
+
+
+
+
+
+
+
+
+// init
+//     insertBlinkAbilities()
