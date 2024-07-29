@@ -38,6 +38,7 @@ function statsDefinitions()
     streakCount = MMD.defineValueInt("Best Kill Streak", Goal.None)
     Emitter.emitDefineVariable("ACR_MMD", ValueType.String, Goal.None, Suggestion.None)
     wc3Stat_Listener()
+    GetExpiredTimer().destr()
 
 function wc3Stat_Listener()
     MMD.logCustom("ACR_MMD", "ACR MMD v1.0.0")

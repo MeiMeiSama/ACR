@@ -8,7 +8,8 @@ init
 
 function dialogStart()
     draftTextArea()
-    dialog_chooseMode()    
+    dialog_chooseMode() 
+    GetExpiredTimer().destr()   
 
 function dialog_choosePoints (player p)
     let choosePoints = new DialogBox("Required Points to Win")

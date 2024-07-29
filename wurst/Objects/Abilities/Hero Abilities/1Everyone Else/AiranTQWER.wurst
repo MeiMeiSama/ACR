@@ -16,6 +16,7 @@ init
 function aizenReset()
     let id = GetExpiredTimer().getData()
     aizenModeRCount[id] = 0
+    GetExpiredTimer().destr()
 function trig_AiranTQWERConditions() returns boolean
     return GetSpellAbilityId() == 'A0XT' or GetSpellAbilityId() == 'A0XS' or GetSpellAbilityId() == 'A0XU' or GetSpellAbilityId() == 'A0HO' or GetSpellAbilityId() == 'A0HX'
 function trig_AiranTQWERFunc007Func002Func001Func002Func011Func003003003() returns boolean

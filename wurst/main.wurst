@@ -6581,6 +6581,7 @@ function trig_TeamTournament333BeginFunc010Func041T()
 
 function gracePeriodToggle()
     gracePeriod = false
+    GetExpiredTimer().destr()
 
 public function trig_TeamTournament333BeginActions()
     gracePeriod = true

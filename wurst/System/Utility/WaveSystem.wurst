@@ -82,7 +82,8 @@ function periodicSpawnTeam1Ranged()
     if waveCreepID < 898
         waveCreepID++
     else 
-        waveCreepID = 100               
+        waveCreepID = 100    
+    GetExpiredTimer().destr()                   
 
 function periodicSpawnTeam1Balista()
     createUnit(Player(3), team1_Ballista, team1_waveCenter)..setUserData(waveCreepID)
@@ -103,6 +104,7 @@ function periodicSpawnTeam1Balista()
         waveCreepID++
     else 
         waveCreepID = 100     
+    GetExpiredTimer().destr()        
 
 function periodicSpawnTeam2Melee()
     for i = 1 to 4
@@ -143,7 +145,8 @@ function periodicSpawnTeam2Ranged()
     if waveCreepID < 898
         waveCreepID++
     else 
-        waveCreepID = 100    
+        waveCreepID = 100   
+    GetExpiredTimer().destr()         
 
 function periodicSpawnTeam2Balista()    
     createUnit(Player(7), team2_Ballista, team2_waveLeft)..setUserData(waveCreepID)
@@ -164,6 +167,7 @@ function periodicSpawnTeam2Balista()
         waveCreepID++
     else 
         waveCreepID = 100    
+    GetExpiredTimer().destr()        
 
 function periodicSpawnTeam3Melee()
     for i = 1 to 4
@@ -205,6 +209,7 @@ function periodicSpawnTeam3Ranged()
         waveCreepID++
     else 
         waveCreepID = 100       
+    GetExpiredTimer().destr()        
 
 function periodicSpawnTeam3Balista()
     createUnit(Player(11), team3_Ballista, team3_waveLeft)..setUserData(waveCreepID)
@@ -224,7 +229,8 @@ function periodicSpawnTeam3Balista()
     if waveCreepID < 898
         waveCreepID++
     else 
-        waveCreepID = 100       
+        waveCreepID = 100  
+    GetExpiredTimer().destr()             
 
 function waveSetup()
     periodicSpawnTeam1Melee()   
@@ -241,6 +247,7 @@ function waveTimer()
     CreateTimer()..startPeriodic(30, function waveSetup)
 
 function firstWaveSpawn()
+    GetExpiredTimer().destr()
     waveTimer()
     periodicSpawnTeam1Melee()   
     CreateTimer()..start(0.5, function periodicSpawnTeam1Ranged)

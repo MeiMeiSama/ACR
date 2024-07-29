@@ -31,6 +31,7 @@ function bountyStart()
     for i = 8 to 10
         if Player(i).getSlotState() == PLAYER_SLOT_STATE_PLAYING
             team2PlayerCount++
+    GetExpiredTimer().destr()        
 
     EventListener.add(EVENT_PLAYER_LEAVE) -> 
         let leaver = GetTriggerPlayer()

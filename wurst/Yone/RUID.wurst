@@ -88,6 +88,7 @@ public function updateSelect ()
 function hideFrame()
     BlzFrameSetVisible(BlzGetFrameByName("ConsoleUIBackdrop",0), false)
     BlzHideOriginFrames(true)
+    GetExpiredTimer().destr()
 
 
 init
