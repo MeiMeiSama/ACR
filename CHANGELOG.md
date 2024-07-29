@@ -1,22 +1,22 @@
 # ━━━━━━━━━ Anime Carnage Reforged v2.1.0 ━━━━━━━━━ #
 
-### Added
+### Added ###
 Nothing Added.
 
-### Improved
+### Improved ###
 Nothing Improved.
 
-### Changed
+### Changed ###
 Nothing Changed.
 
-### Fixed
+### Fixed ###
 Fixed Replay Viewer, they should no longer desync.
 Fixed Stat Tracker to https://wc3stats.com - should now upload all relevant data.
 Fixed Xanxus Q range.
 Fixed Emiya Shirou losing UBW.
 Fixed Cobra's poison not giving credit when killing a target with it.
 
-### Deleted
+### Deleted ###
 Nothing Deleted.
 
 # ━━━━━━━━━ Anime Carnage Reforged v2.0.2 ━━━━━━━━━ #
