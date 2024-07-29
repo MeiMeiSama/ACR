@@ -1,7 +1,6 @@
 package wc3Stats
 
 import MMD
-// import ClosureTimers
 import ClosureEvents
 import main
 import GoldIncome
