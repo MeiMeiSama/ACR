@@ -19,6 +19,7 @@ import AbilityGlobals
 import ACR_TagSystem
 import CameraFunctions
 import ACR_SpeedBoost
+import GetFrames
 
 import Aqua_G
 import Yato_G
@@ -77,7 +78,8 @@ public function initFunctions ()
     firstWave()
     bountySystemSetup()
     // acrAntiCheat()
-    BlzFrameSetVisible(BlzGetFrameByName("ConsoleUIBackdrop",0), true)
+    // BlzFrameSetVisible(BlzGetFrameByName("ConsoleUIBackdrop",0), true)
+    BlzFrameSetVisible(getFrameACR("ConsoleUIBackdrop", 0), true)
     BlzHideOriginFrames(false)
     moonUI()
     acrSpeedBoostBase()

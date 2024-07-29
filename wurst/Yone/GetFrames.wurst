@@ -1,0 +1,13 @@
+package GetFrames
+
+import GameStatus
+
+hashtable myFramesTable = InitHashtable()
+
+public function getFrameACR (string frameName, integer context) returns framehandle
+    let frame = BlzGetFrameByName(frameName, context)
+    if frame.getHandleId() == 0 and not myFramesTable.hasHandle(frameName.getHash(), context)
+        if gameStatus == gameStatus.REPLAY
+            myFramesTable.saveLocationHandle(frameName.getHash(), context, Location(0, 0))
+
+    return frame 
