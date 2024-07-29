@@ -16,6 +16,15 @@ function trig_HibariFConditions() returns boolean
 function trig_HibariTFunc016Func001Func007Func001Func004A()
     h__SetUnitMoveSpeed(GetEnumUnit(), GetUnitDefaultMoveSpeed(GetEnumUnit()))
     SetUnitManaBJ(GetEnumUnit(), 350.00)
+    if GetEnumUnit().hasAbility('A19A') == true   
+        if GetEnumUnit().isInvulnerable() == true
+            doPeriodically(0.03) (CallbackPeriodic cb) ->
+                if GetEnumUnit().isInvulnerable() == false
+                    doAfter(0.02) ->
+                        GetEnumUnit().removeAbility('A19A')
+                        destroy cb 
+        else 
+            GetEnumUnit().removeAbility('A19A')                 
     if GetUnitTypeId(GetEnumUnit()) == 'O005' or GetUnitTypeId(GetEnumUnit()) == 'O007'
         UnitRemoveAbility(GetEnumUnit(), 'A0L4')
 function trig_HibariTFunc016Func001Func007Func001Func012003003() returns boolean
@@ -38,6 +47,8 @@ function trig_HibariTFunc016Func001Func007Func001Func016A()
 function trig_HibariTFunc016Func001Func007Func001Func018003003() returns boolean
     return IsUnitType(GetFilterUnit(), UNIT_TYPE_STRUCTURE) == false and IsUnitDeadBJ(GetFilterUnit()) == false and IsUnitType(GetFilterUnit(), UNIT_TYPE_HERO) == true and IsUnitEnemy(GetFilterUnit(), LoadPlayerHandle(YDLOC, GetHandleId(GetExpiredTimer()), 603)) == true
 function trig_HibariTFunc016Func001Func007Func001Func019A()
+    if GetEnumUnit().hasAbility('A19A') == false
+        GetEnumUnit().addAbility('A19A')
     if GetUnitStateSwap(UNIT_STATE_LIFE, GetEnumUnit()) > 10.00
         SetUnitLifeBJ(GetEnumUnit(), GetUnitState(GetEnumUnit(), UNIT_STATE_LIFE) - 3.00)
     h__SetUnitMoveSpeed(GetEnumUnit(), 65.00)
