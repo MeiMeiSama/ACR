@@ -9,7 +9,22 @@ import InitializeFunctions
 import ClosureTimers
 import MusicPlaylist
 import GoldIncome
-import ACR_LinkedList
+
+public var heroList_STR = new HashSet<int>
+public var canPick_Icon_STR = new HashSet<int>
+public var cannotPick_Icon_STR = new HashSet<int>
+
+public var heroList_AGI = new HashSet<int>
+public var canPick_Icon_AGI = new HashSet<int>
+public var cannotPick_Icon_AGI = new HashSet<int>
+
+public var heroList_INT = new HashSet<int>
+public var canPick_Icon_INT = new HashSet<int>
+public var cannotPick_Icon_INT = new HashSet<int>
+
+public var heroTotalList = new LinkedList<int>
+public var heroPickIconList = new LinkedList<int>
+public var heroPickedIconList = new LinkedList<int> 
 
 int playerCount = 0
 unit array pickDummyUnit
@@ -34,18 +49,6 @@ SoundDefinition chooseOK = new SoundDefinition("war3mapImported\\ChooseOK.mp3")
 SoundDefinition chooseUNIT = new SoundDefinition("war3mapImported\\ChooseUnit.mp3")
 SoundDefinition chooseStart1 = new SoundDefinition("war3mapImported\\link1-1.mp3")
 SoundDefinition chooseStart2 = new SoundDefinition("war3mapImported\\link1-2.mp3")
-
-public var heroList_STR = new HashSet<int>
-public var canPick_Icon_STR = new HashSet<int>
-public var cannotPick_Icon_STR = new HashSet<int>
-
-public var heroList_AGI = new HashSet<int>
-public var canPick_Icon_AGI = new HashSet<int>
-public var cannotPick_Icon_AGI = new HashSet<int>
-
-public var heroList_INT = new HashSet<int>
-public var canPick_Icon_INT = new HashSet<int>
-public var cannotPick_Icon_INT = new HashSet<int>
 
 texttag array text
 

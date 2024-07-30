@@ -1,11 +1,7 @@
 package ACR_LinkedList
 
-import LinkedList
+// import LinkedList
 // import HashSet
-
-public var heroTotalList = new LinkedList<int>
-public var heroPickIconList = new LinkedList<int>
-public var heroPickedIconList = new LinkedList<int> 
 
 // public var BLINK_ABILITY = new HashSet<int> 
 
