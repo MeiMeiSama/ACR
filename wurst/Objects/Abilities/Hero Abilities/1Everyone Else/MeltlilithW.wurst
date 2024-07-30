@@ -191,98 +191,63 @@ function trig_MeltlilithWActions()
     SaveUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594, GetSpellAbilityUnit())
     SavePlayerHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 603, GetOwningPlayer(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594)))
     SaveLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 549, GetSpellTargetLoc())
-    if GetSpellAbilityId() == 'A0TI'
-        let loc = vec2(GetSpellTargetX(), GetSpellTargetY())
-        let caster = GetTriggerUnit()
-        let casterloc = caster.getPos()
-        
-        if gg_rct_BossArea.contains(loc) == false and gg_rct_BossArea.contains(casterloc) == true
-            caster.getOwner().print("Can't teleport out/in of arena", 2)
-            caster.issueImmediateOrder("stop")
-        else if gg_rct_BossArea.contains(loc) == true and gg_rct_BossArea.contains(casterloc) == false
-            caster.getOwner().print("Can't teleport out/in of arena", 2)
-            caster.issueImmediateOrder("stop")        
-        else if gg_rct_1v1v1Area.contains(loc) == false and gg_rct_1v1v1Area.contains(casterloc) == true
-            caster.getOwner().print("Can't teleport out/in of arena", 2)
-            caster.issueImmediateOrder("stop") 
-        else if gg_rct_1v1v1Area.contains(loc) == true and gg_rct_1v1v1Area.contains(casterloc) == false
-            caster.getOwner().print("Can't teleport out/in of arena", 2)
-            caster.issueImmediateOrder("stop")   
-        else if gg_rct_2v2v2Area.contains(loc) == false and gg_rct_2v2v2Area.contains(casterloc) == true
-            caster.getOwner().print("Can't teleport out/in of arena", 2)
-            caster.issueImmediateOrder("stop")     
-        else if gg_rct_2v2v2Area.contains(loc) == true and gg_rct_2v2v2Area.contains(casterloc) == false
-            caster.getOwner().print("Can't teleport out/in of arena", 2)
-            caster.issueImmediateOrder("stop") 
-        else if gg_rct_FreeForAllArea.contains(loc) == false and gg_rct_FreeForAllArea.contains(casterloc) == true
-            caster.getOwner().print("Can't teleport out/in of arena", 2)
-            caster.issueImmediateOrder("stop")               
-        else if gg_rct_FreeForAllArea.contains(loc) == true and gg_rct_FreeForAllArea.contains(casterloc) == false
-            caster.getOwner().print("Can't teleport out/in of arena", 2)
-            caster.issueImmediateOrder("stop")  
-        else if gg_rct_TeamBattleArea.contains(loc) == false and gg_rct_TeamBattleArea.contains(casterloc) == true
-            caster.getOwner().print("Can't teleport out/in of arena", 2)
-            caster.issueImmediateOrder("stop")         
-        else if gg_rct_TeamBattleArea.contains(loc) == true and gg_rct_TeamBattleArea.contains(casterloc) == false
-            caster.getOwner().print("Can't teleport out/in of arena", 2)
-            caster.issueImmediateOrder("stop")                              
-        else        
-            if IsTerrainPathableBJ(LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 549), PATHING_TYPE_WALKABILITY) == false and IsTerrainPathableBJ(LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 549), PATHING_TYPE_FLYABILITY) == false
-                SaveReal(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 252, 0.00)
-                SaveInteger(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 614110132, 0)
-                SaveLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 450813563, GetUnitLoc(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594)))
-                SaveReal(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 248, (I2R(GetUnitAbilityLevel(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594), 'A0TI')) + 9.00) * I2R(GetHeroAgi(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594), true)))
-                bj_forLoopBIndex = 1
-                bj_forLoopBIndexEnd = 40
-                while true
-                    if bj_forLoopBIndex > bj_forLoopBIndexEnd
-                        break
-                    SaveReal(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 252, LoadReal(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 252) + 30.00)
-                    SaveLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 247, PolarProjectionBJ(LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 450813563), LoadReal(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 252), AngleBetweenPoints(LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 450813563), LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 549))))
-                    if IsTerrainPathableBJ(LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 247), PATHING_TYPE_WALKABILITY) == true and IsTerrainPathableBJ(LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 247), PATHING_TYPE_FLYABILITY) == true
-                        SaveInteger(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 614110132, 1)
-                    else
-                        DoNothing()
-                    RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 247))
-                    bj_forLoopBIndex++
-                RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 450813563))
-                if LoadInteger(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 614110132) == 0
-                    SaveInteger(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 280, 0)
-                    PauseUnitBJ(true, LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594))
-                    SetUnitInvulnerable(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594), true)
-                    SetUnitPositionLoc(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594), LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 549))
-                    if GetRandomInt(1, 2) == 1
-                        soundPlay("war3mapImported\\Meltlilith4-1.mp3", GetUnitX(udg_Unitsound), GetUnitY(udg_Unitsound))
-                    else if GetRandomInt(1, 2) == 1
-                        soundPlay("war3mapImported\\Meltlilith4-2.mp3", GetUnitX(udg_Unitsound), GetUnitY(udg_Unitsound))
-                    else
-                        soundPlay("war3mapImported\\Meltlilith4-3.mp3", GetUnitX(udg_Unitsound), GetUnitY(udg_Unitsound))
-                    SetUnitFlyHeight(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594), 3500.00, 0.00)
-                    SetUnitVertexColorBJ(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594), 100, 100, 100, 100.00)
-                    SaveUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 449, CreateUnitAtLoc(LoadPlayerHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 603), 'e0XA', LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 549), GetUnitFacing(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594))))
-                    UnitAddAbility(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 449), 'A0OA')
-                    SetUnitTimeScalePercent(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 449), 175.00)
-                    SetUnitFlyHeight(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 449), 1500.00, 0.00)
-                    SetUnitAnimationByIndex(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 449), 16)
-                    _ydl_timer = CreateTimer()
-                    SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 594, LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594))
-                    SaveLocationHandle(YDLOC, GetHandleId(_ydl_timer), 549, LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 549))
-                    SavePlayerHandle(YDLOC, GetHandleId(_ydl_timer), 603, LoadPlayerHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 603))
-                    SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 895725564, LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 895725564))
-                    SaveReal(YDLOC, GetHandleId(_ydl_timer), 248, LoadReal(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 248))
-                    SaveGroupHandle(YDLOC, GetHandleId(_ydl_timer), 361, LoadGroupHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 361))
-                    SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 394499473, LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 394499473))
-                    SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 1012, LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1012))
-                    SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 447, LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 447))
-                    SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 449, LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 449))
-                    SaveInteger(YDLOC, GetHandleId(_ydl_timer), 280, LoadInteger(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 280))
-                    TimerStart(_ydl_timer, 0.01, true, function trig_MeltlilithWFunc005Func001Func007Func015T)
+    if GetSpellAbilityId() == 'A0TI'      
+        if IsTerrainPathableBJ(LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 549), PATHING_TYPE_WALKABILITY) == false and IsTerrainPathableBJ(LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 549), PATHING_TYPE_FLYABILITY) == false
+            SaveReal(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 252, 0.00)
+            SaveInteger(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 614110132, 0)
+            SaveLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 450813563, GetUnitLoc(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594)))
+            SaveReal(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 248, (I2R(GetUnitAbilityLevel(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594), 'A0TI')) + 9.00) * I2R(GetHeroAgi(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594), true)))
+            bj_forLoopBIndex = 1
+            bj_forLoopBIndexEnd = 40
+            while true
+                if bj_forLoopBIndex > bj_forLoopBIndexEnd
+                    break
+                SaveReal(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 252, LoadReal(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 252) + 30.00)
+                SaveLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 247, PolarProjectionBJ(LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 450813563), LoadReal(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 252), AngleBetweenPoints(LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 450813563), LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 549))))
+                if IsTerrainPathableBJ(LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 247), PATHING_TYPE_WALKABILITY) == true and IsTerrainPathableBJ(LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 247), PATHING_TYPE_FLYABILITY) == true
+                    SaveInteger(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 614110132, 1)
                 else
-                    RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 549))
-                    IssueImmediateOrder(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594), "stop")
+                    DoNothing()
+                RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 247))
+                bj_forLoopBIndex++
+            RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 450813563))
+            if LoadInteger(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 614110132) == 0
+                SaveInteger(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 280, 0)
+                PauseUnitBJ(true, LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594))
+                SetUnitInvulnerable(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594), true)
+                SetUnitPositionLoc(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594), LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 549))
+                if GetRandomInt(1, 2) == 1
+                    soundPlay("war3mapImported\\Meltlilith4-1.mp3", GetUnitX(udg_Unitsound), GetUnitY(udg_Unitsound))
+                else if GetRandomInt(1, 2) == 1
+                    soundPlay("war3mapImported\\Meltlilith4-2.mp3", GetUnitX(udg_Unitsound), GetUnitY(udg_Unitsound))
+                else
+                    soundPlay("war3mapImported\\Meltlilith4-3.mp3", GetUnitX(udg_Unitsound), GetUnitY(udg_Unitsound))
+                SetUnitFlyHeight(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594), 3500.00, 0.00)
+                SetUnitVertexColorBJ(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594), 100, 100, 100, 100.00)
+                SaveUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 449, CreateUnitAtLoc(LoadPlayerHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 603), 'e0XA', LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 549), GetUnitFacing(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594))))
+                UnitAddAbility(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 449), 'A0OA')
+                SetUnitTimeScalePercent(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 449), 175.00)
+                SetUnitFlyHeight(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 449), 1500.00, 0.00)
+                SetUnitAnimationByIndex(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 449), 16)
+                _ydl_timer = CreateTimer()
+                SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 594, LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594))
+                SaveLocationHandle(YDLOC, GetHandleId(_ydl_timer), 549, LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 549))
+                SavePlayerHandle(YDLOC, GetHandleId(_ydl_timer), 603, LoadPlayerHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 603))
+                SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 895725564, LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 895725564))
+                SaveReal(YDLOC, GetHandleId(_ydl_timer), 248, LoadReal(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 248))
+                SaveGroupHandle(YDLOC, GetHandleId(_ydl_timer), 361, LoadGroupHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 361))
+                SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 394499473, LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 394499473))
+                SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 1012, LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1012))
+                SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 447, LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 447))
+                SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 449, LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 449))
+                SaveInteger(YDLOC, GetHandleId(_ydl_timer), 280, LoadInteger(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 280))
+                TimerStart(_ydl_timer, 0.01, true, function trig_MeltlilithWFunc005Func001Func007Func015T)
             else
-                IssueImmediateOrder(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594), "stop")
                 RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 549))
+                IssueImmediateOrder(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594), "stop")
+        else
+            IssueImmediateOrder(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594), "stop")
+            RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 549))
     else if GetSpellAbilityId() == 'A0TK'
         soundPlay("war3mapImported\\MeltlilithSE3.mp3", GetUnitX(udg_Unitsound), GetUnitY(udg_Unitsound))
         soundPlay("war3mapImported\\Meltlilith5-4.mp3", GetUnitX(udg_Unitsound), GetUnitY(udg_Unitsound))

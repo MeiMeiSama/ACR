@@ -2,7 +2,7 @@ package EdmondT___F_Orig
 import DamageEvent
 import AbilityGlobals
 import main
-import ACR_Library
+import ACR_PauseArea
 
 vec2 edmondTTargetPoint
 
@@ -204,7 +204,7 @@ function trig_EdmondT___FFunc007Func029T()
     if LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 280) == 14
         SaveGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 1153, yDWEGetUnitsInRectMatchingNull(GetPlayableMapRect(), null))
         let caster = LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594)
-        acrAoePause(caster, edmondTTargetPoint, 700.00, 0.8)
+        acrPauseArea(caster, edmondTTargetPoint, 700.00, 0.8)
         GroupClear(LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 1153))
         DestroyGroup(LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 1153))
         soundPlay("war3mapImported\\Edmond5-2.mp3", GetUnitX(udg_Unitsound), GetUnitY(udg_Unitsound))

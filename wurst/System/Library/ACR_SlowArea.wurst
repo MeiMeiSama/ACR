@@ -1,0 +1,43 @@
+package ACR_SlowArea
+
+import ClosureTimers
+import ACR_TagSystem
+import ClosureForGroups
+import DummyCaster
+import OrderIds
+
+group array acrSlowAreaGroup
+
+public function acrSlowArea(unit caster, vec2 targetPoint, real aoe, real slowPercentage, real duration)
+    let id = caster.getUserData()
+    if acrSlowAreaGroup[id] == null
+        acrSlowAreaGroup[id] = CreateGroup()            
+    doPeriodicallyTimed(0.02, duration) (CallbackCounted cb) ->      
+        forUnitsInRange(targetPoint, aoe) (unit victim) ->
+            if caster.isEnemyOf(victim) and victim.isInvulnerable() == false
+                if acrSlowAreaGroup[id].has(victim) == false
+                    acrSlowAreaGroup[id].add(victim)
+                if victim.hasTagSlow() == false
+                    new DummyCaster()
+                    ..owner(caster.getOwner())
+                    ..origin(victim.getPos())
+                    ..castTarget('A18Y', 1, OrderIds.slow, victim)
+                    victim.setMoveSpeed(victim.getDefaultMovespeed() - (victim.getDefaultMovespeed() * (slowPercentage / 100)))
+                    victim.addTagSlow()
+                else if victim.getMoveSpeed() > (victim.getDefaultMovespeed() - (victim.getDefaultMovespeed() * (slowPercentage / 100)))
+                    victim.setMoveSpeed(victim.getDefaultMovespeed() - (victim.getDefaultMovespeed() * (slowPercentage / 100)))
+    doPeriodicallyTimed(0.02, duration) (CallbackCounted cb) ->       
+        acrSlowAreaGroup[id].forEachIn() (unit victim) ->
+            if targetPoint.distanceTo(vec2(GetUnitX(victim), GetUnitY(victim))) > aoe
+                if victim.hasTagSlow()                                 
+                    victim.setMoveSpeed(victim.getDefaultMovespeed())
+                    victim.removeAbility('B06P')
+                    victim.removeTagSlow()
+                    acrSlowAreaGroup[id].remove(victim)
+    doAfter(duration + 0.02) ->
+        acrSlowAreaGroup[id].forEachIn() (unit victim) ->
+            if victim.hasTagSlow()                                 
+                victim.setMoveSpeed(victim.getDefaultMovespeed())
+                victim.removeAbility('B06P')
+                victim.removeTagSlow()
+            acrSlowAreaGroup[id].remove(victim)

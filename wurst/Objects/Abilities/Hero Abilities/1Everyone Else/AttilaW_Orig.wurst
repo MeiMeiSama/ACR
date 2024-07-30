@@ -2,7 +2,7 @@ package AttilaW_Orig
 import DamageEvent
 import AbilityGlobals
 import main
-import ACR_Library
+import ACR_Knockback
 
 init
     initTrig_AttilaW_Orig()

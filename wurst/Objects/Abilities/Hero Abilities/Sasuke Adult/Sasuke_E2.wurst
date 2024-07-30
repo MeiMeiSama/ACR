@@ -3,7 +3,7 @@ package Sasuke_E2
 import DamageEvent
 import AbilityGlobals
 import main
-import ACR_Library
+import ACR_Knockback
 // import ObjectDefinitions
 init
     initTrig_LastsasukeE2()

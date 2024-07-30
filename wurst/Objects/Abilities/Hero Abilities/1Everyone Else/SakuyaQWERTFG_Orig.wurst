@@ -5,7 +5,8 @@ import main
 import AbilityQ_data
 import ObjectDefinitions
 import MusicPlaylist
-import ACR_Library
+import ACR_Stun
+import ACR_PauseArea
 
 vec2 sakuyaETargetPoint
 vec2 sakuyaWTargetPoint
@@ -1054,7 +1055,7 @@ function trig_SakuyaQWERTFGActions()
         SaveLocationHandle(YDLOC, GetHandleId(_ydl_timer), 310, LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 310))
         SaveInteger(YDLOC, GetHandleId(_ydl_timer), 280, LoadInteger(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 280))
         let caster = GetTriggerUnit()
-        acrAoePause(caster, sakuyaETargetPoint, 400.00, 1.0)
+        acrPauseArea(caster, sakuyaETargetPoint, 400.00, 1.0)
         TimerStart(_ydl_timer, 0.03, true, function trig_SakuyaQWERTFGFunc007Func001Func016Func003Func001Func011T)
     else if GetSpellAbilityId() == 'A0ZW'
         udg_YeshaOpen[12] = false

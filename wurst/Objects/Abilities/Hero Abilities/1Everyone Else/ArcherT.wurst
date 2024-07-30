@@ -3,7 +3,6 @@ import DamageEvent
 import AbilityGlobals
 import main
 import ClosureTimers
-import ACR_TagSystem
 
 int array archerTCount
 vec2 archerTTargetPoint
@@ -160,8 +159,7 @@ function trig_ArcherTFunc023T()
         var count = 0
         var archerInsideT = false
         let pid = caster.getOwner().getId()
-        caster.hideAbility(SPELL_T[pid], true)
-        SPELL_T[pid].addTagHidden()
+        SetPlayerAbilityAvailable(caster.getOwner(), SPELL_T[pid], false)
         caster.addAbility('A199')
         doPeriodically(0.01) (CallbackPeriodic cb) ->
             count++
@@ -184,10 +182,14 @@ function trig_ArcherTFunc023T()
                             caster.setInvulnerable(false)
                             destroy cb                             
                 caster.removeAbility('A199')
-                if SPELL_T[pid].hasTagHidden() == true
-                    caster.hideAbility(SPELL_T[pid], false)
-                    SPELL_T[pid].removeTagHidden()
-                destroy cb       
+                SetPlayerAbilityAvailable(caster.getOwner(), SPELL_T[pid], true)
+                caster.startAbilityCooldown(SPELL_T[pid])
+                destroy cb
+            if caster.isAlive() == false  
+                caster.removeAbility('A199')
+                SetPlayerAbilityAvailable(caster.getOwner(), SPELL_T[pid], true)
+                caster.startAbilityCooldown(SPELL_T[pid])
+                destroy cb                          
 
         TimerStart(_ydl_timer, 0.06, true, function trig_ArcherTFunc023Func001Func013T)
         FlushChildHashtable(YDLOC, GetHandleId(GetExpiredTimer()))

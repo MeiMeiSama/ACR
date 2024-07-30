@@ -5,7 +5,7 @@ import main
 import ClosureForGroups
 import GroupUtils
 import ACR_TagSystem
-import ACR_Library
+import ACR_PauseArea
 
 group nanohaGroup = getGroup()
 vec2 nanohaTTargetPoint
@@ -270,7 +270,7 @@ function trig_NanohaTFunc003Func035T()
         SaveInteger(YDLOC, GetHandleId(_ydl_timer), 858, LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 858))
         SaveInteger(YDLOC, GetHandleId(_ydl_timer), 943, LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 943))
         let caster = LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594)
-        acrAoePause(caster, nanohaTTargetPoint, 650.00, 1.25)
+        acrPauseArea(caster, nanohaTTargetPoint, 650.00, 1.25)
         TimerStart(_ydl_timer, 0.01, true, function trig_NanohaTFunc003Func035Func009Func016T)
         FlushChildHashtable(YDLOC, GetHandleId(GetExpiredTimer()))
         DestroyTimer(GetExpiredTimer())

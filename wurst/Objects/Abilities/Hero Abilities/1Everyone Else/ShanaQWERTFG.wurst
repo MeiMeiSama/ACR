@@ -2,7 +2,8 @@ package ShanaQWERTFG
 import DamageEvent
 import AbilityGlobals
 import AbilityQ_data
-import ACR_Library
+import ACR_Stun
+import ACR_PauseArea
 
 vec2 shanaWTargetPoint
 vec2 shanaCurrentPosition
@@ -574,7 +575,7 @@ function trig_ShanaQWERTFGActions()
         UnitApplyTimedLife(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 744), 'BHwe', 1.00)
         let caster = LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594)
         let targetPoint = caster.getPos()
-        acrAoePause(caster, targetPoint, 500, 1.0)
+        acrPauseArea(caster, targetPoint, 500, 1.0)
         SaveGroupHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 361, yDWEGetUnitsInRangeOfLocMatchingNull(500.00, LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1108), Condition(function trig_ShanaQWERTFGFunc005Func001Func006003003)))
         ForGroupBJ(LoadGroupHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 361), function trig_ShanaQWERTFGFunc005Func001Func007A)
         GroupClear(LoadGroupHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 361))
@@ -589,7 +590,7 @@ function trig_ShanaQWERTFGActions()
         ForGroupBJ(LoadGroupHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 361), function trig_ShanaQWERTFGFunc005Func001Func001Func007A)
         let caster = LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594)
         let targetPoint = caster.getPos()
-        acrAoePause(caster, targetPoint, 500, 1.0)
+        acrPauseArea(caster, targetPoint, 500, 1.0)
         _ydl_timer = CreateTimer()
         SaveLocationHandle(YDLOC, GetHandleId(_ydl_timer), 1108, LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1108))
         SaveGroupHandle(YDLOC, GetHandleId(_ydl_timer), 361, LoadGroupHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 361))

@@ -1,7 +1,7 @@
 package YukiW
 import DamageEvent
 import AbilityGlobals
-import ACR_Library
+import ACR_Stun
 
 init
     initTrig_YukiW()

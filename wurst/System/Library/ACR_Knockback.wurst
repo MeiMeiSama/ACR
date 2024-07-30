@@ -1,0 +1,47 @@
+package ACR_Knockback
+
+import ACR_TagSystem
+import TimerUtils
+
+unit array acrKnockbackedVictim
+timer array acrKnockbackTimer
+real array acrKnockbackDistance
+int array acrKnockbackCount
+vec2 array acrKnockbackCasterPos
+vec2 array acrKnockbackVictimPos
+
+function acrKnockbackEnd()
+    let id = GetExpiredTimer().getData()
+    let victimPos = vec2(GetUnitX(acrKnockbackedVictim[id]), GetUnitY(acrKnockbackedVictim[id]))
+    let dist = acrKnockbackCasterPos[id].distanceTo(victimPos) + (acrKnockbackDistance[id] / 35)
+    let angle = acrKnockbackCasterPos[id].angleTo(victimPos)
+    let polar = acrKnockbackCasterPos[id].polarOffset(angle, dist)    
+    acrKnockbackedVictim[id].setPos(polar)
+    acrKnockbackCount[id]++
+    if acrKnockbackedVictim[id].hasTagPauseEX() == false    
+        acrKnockbackedVictim[id].pauseEx()
+        acrKnockbackedVictim[id].addTagPauseEX()  
+    if acrKnockbackedVictim[id].hasTagKnockback() == false
+        acrKnockbackedVictim[id].addTagKnockback()
+    if acrKnockbackCount[id] == 35
+        acrKnockbackTimer[id].release()
+        if acrKnockbackedVictim[id].hasTagPauseEX()
+            acrKnockbackedVictim[id].unpauseEx()
+            acrKnockbackedVictim[id].removeTagPauseEX()
+        if acrKnockbackedVictim[id].hasTagKnockback()    
+            acrKnockbackedVictim[id].removeTagKnockback()
+
+public function acrKnockback(unit caster, unit victim, real distance)
+    if victim.isInvulnerable() == false
+        if victim.hasTagPauseEX() == false
+            IssueImmediateOrder(victim, "stop")   
+        let id = victim.getUserData()
+        acrKnockbackCasterPos[id] = vec2(GetUnitX(caster), GetUnitY(caster))
+        acrKnockbackCount[id] = 0
+        acrKnockbackedVictim[id] = victim
+        acrKnockbackDistance[id] = distance 
+        if victim.hasTagKnockback()
+            acrKnockbackTimer[id].release()
+        if victim.hasTagKnockback() == false    
+            victim.addTagKnockback()    
+        acrKnockbackTimer[id] = CreateTimer()..startPeriodic(0.02, function acrKnockbackEnd)..setData(id) 

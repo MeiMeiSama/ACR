@@ -4,7 +4,7 @@ import AbilityGlobals
 import main
 import ClosureTimers
 import ClosureForGroups
-import ACR_Library
+import ACR_Stun
 
 init
     initTrig_YamiW()

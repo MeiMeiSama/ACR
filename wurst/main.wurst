@@ -1,7 +1,6 @@
 package main
 import ObjectDefinitions
 import ReviveHeroes
-import ClosureTimers
 import DamageEvent
 public hashtable ACR_TABLE
 public sound characterBGM
@@ -6580,10 +6579,13 @@ function trig_TeamTournament333BeginFunc010Func041T()
     FlushChildHashtable(YDLOC, GetHandleId(GetExpiredTimer()))
     DestroyTimer(GetExpiredTimer())
 
+function gracePeriodToggle()
+    gracePeriod = false
+    GetExpiredTimer().destr()
+
 public function trig_TeamTournament333BeginActions()
     gracePeriod = true
-    doAfter(12) -> 
-        gracePeriod = false
+    CreateTimer().start(12, function gracePeriodToggle)
     timer _ydl_timer
     integer trigger_ID = LoadInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 865)
     trigger_ID += 3
@@ -6969,8 +6971,7 @@ function trig_TournamentFFAFunc010Func040T()
 
 public function trig_TournamentFFAActions()
     gracePeriod = true
-    doAfter(12) -> 
-        gracePeriod = false
+    CreateTimer().start(12, function gracePeriodToggle)
     timer _ydl_timer
     integer trigger_ID = LoadInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 865)
     trigger_ID += 3
@@ -7635,8 +7636,7 @@ function trig_VsBossBeginFunc016Func040T()
 
 public function trig_VsBossBeginActions()
     gracePeriod = true
-    doAfter(12) -> 
-        gracePeriod = false
+    CreateTimer().start(12, function gracePeriodToggle)
     timer _ydl_timer
     integer trigger_ID = LoadInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 865)
     trigger_ID += 3
@@ -8081,8 +8081,7 @@ function trig_TournamentSoLoBeginFunc013T()
 
 public function trig_TournamentSoLoBeginActions()
     gracePeriod = true
-    doAfter(12) -> 
-        gracePeriod = false
+    CreateTimer().start(12, function gracePeriodToggle)
     for i = 0 to 12
         if udg_PlayHero[i] != null and udg_PlayHero[i].isAlive() == false
             udg_PlayHero[i].reviveHero()
@@ -8637,8 +8636,7 @@ function trig_Tournament222BeginFunc017Func040T()
 
 public function trig_Tournament222BeginActions()
     gracePeriod = true
-    doAfter(12) -> 
-        gracePeriod = false
+    CreateTimer().start(12, function gracePeriodToggle)
     timer _ydl_timer
     integer trigger_ID = LoadInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 865)
     trigger_ID += 3

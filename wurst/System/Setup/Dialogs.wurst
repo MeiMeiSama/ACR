@@ -2,12 +2,15 @@ package Dialogs
 import main
 import DialogBox
 import DraftScreen
-import ClosureTimers
 import wc3Stats
+import TimerUtils
 init
-    doAfter(0.2) ->
-        draftTextArea()
-        dialog_chooseMode()
+    getTimer()..start(0.2, function dialogStart)
+
+function dialogStart()
+    draftTextArea()
+    dialog_chooseMode() 
+    GetExpiredTimer().release()   
 
 function dialog_choosePoints (player p)
     let choosePoints = new DialogBox("Required Points to Win")
@@ -92,8 +95,6 @@ function dialog_choosePoints (player p)
         destroy choosePoints
     choosePoints.display(p, true)
 
-
-
 function dialog_chooseMode ()
     let chooseMode = new DialogBox("Mode")
     chooseMode.addButton("Normal") ->
@@ -102,10 +103,10 @@ function dialog_chooseMode ()
         dialog_choosePoints(GetTriggerPlayer())
         destroy chooseMode
     chooseMode.addButton("Ranked") ->
-        if playingPlayers < minPlayers
+        if requiredPlayers == false
             rankMode = false
             BlzFrameAddText(textArea, "|cff00a9ff[Normal] |cffffd700Not enough players for Ranked, defaulting to Normal|r")
-        else if playingPlayers >= minPlayers
+        else if requiredPlayers
             rankMode = true
             BlzFrameAddText(textArea, "|cff00a9ff[Ranked] |cffffd700You will earn rating from this game|r")
         chooseMode.display(GetTriggerPlayer(), false)

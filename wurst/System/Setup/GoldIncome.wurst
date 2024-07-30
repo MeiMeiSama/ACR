@@ -28,8 +28,6 @@ public function goldIncomeShared ()
                     udg_PlayHero[i].getOwner().addGold(5)
                     totalGoldEarnt[udg_PlayHero[i].getOwner().getId()] += 5
 
-    // doAfter(420) -> 
-    //     goldTrigger.destr()
 
         
 

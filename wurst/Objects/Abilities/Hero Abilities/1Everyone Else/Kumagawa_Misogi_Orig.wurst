@@ -2,7 +2,7 @@ package Kumagawa_Misogi_Orig
 import main
 import DamageEvent
 import AbilityGlobals
-import ACR_Library
+import ACR_Stun
 
 string misogiFvar
 

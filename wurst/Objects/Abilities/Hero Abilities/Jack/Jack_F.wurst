@@ -5,7 +5,7 @@ import DamageEvent
 import ObjectDefinitions
 import SoundUtils
 import ClosureTimers
-import ACR_Library
+import ACR_Stun
 
 constant jackFStart = new SoundDefinition("war3mapImported\\Jack6.mp3")
 constant jackFFinish = new SoundDefinition("war3mapImported\\JackEffect2.mp3")

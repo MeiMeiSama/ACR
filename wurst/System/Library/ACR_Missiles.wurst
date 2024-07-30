@@ -1,0 +1,591 @@
+package ACR_Missiles
+
+import MapBounds
+import HashMap
+import Fx
+// import Annotations
+import ClosureTimers
+import ClosureForGroups
+// import Execute
+import LinkedList
+
+// System based in Missiles v2.3 by Chopinski https://www.hiveworkshop.com/threads/relativistic-missiles-vjass-lua-gui.325964/
+
+/** The update period of the system */
+@configurable constant real PERIOD = compiletime(1./40.)
+/** The avarage collision size compensation when detecting collisions */
+@configurable constant real COLLISION_SIZE = 128.
+/** Item size used in z collision */
+@configurable constant real ITEM_SIZE = 16.
+
+let PI_ANG = angle(PI)
+let PI_HALF_ANG = angle(PIHALF)
+
+function unit.getCollisionSizeEx() returns real
+    return 64.
+
+function getMapCliffLevel() returns integer
+    return GetTerrainCliffLevel(boundMax.x, boundMax.y)
+
+class Coordinates
+    real x
+    real y
+    real z
+    angle angl
+    real distance
+    real square
+    real slope
+    angle alpha
+
+    // Creates an origin - impact link.
+    private Coordinates ref
+
+    private function math(Coordinates other)
+        real dx
+        real dy
+        while true
+            dx = other.x - this.x
+            dy = other.y - this.y
+            dx = dx*dx + dy*dy
+            dy = SquareRoot(dx)
+            if dx != 0. and dy != 0.
+                break
+            other.x = other.x + .01
+            other.z = other.z - vec2(other.x -.01, other.y).getTerrainZ() + vec2(other.x, other.y).getTerrainZ()
+
+        this.square   = dx
+        this.distance = dy
+        this.angl    = angle(Atan2(other.y - this.y, other.x - this.x))
+        this.slope    = (other.z - this.z)/dy
+        this.alpha    = angle(Atan(this.slope))
+        
+        if other.ref == this
+            other.angl     = this.angl + PI_ANG
+            other.distance  = dy
+            other.slope     = -this.slope
+            other.alpha     = (-1.)*this.alpha
+            other.square    = dx
+
+    function link(Coordinates other)
+        ref = other
+        other.ref = this
+        math(other)
+
+    function move(real toX, real toY, real toZ)
+        x = toX
+        y = toY
+        z = toZ + vec2(toX, toY).getTerrainZ()
+        if ref != this
+            math(ref)
+
+    construct(real x, real y, real z)
+        ref = this
+        move(x, y, z)
+
+interface UnitClosure
+    function run(unit u) returns boolean
+
+interface MissileClosure
+    function run(Missiles missil) returns boolean
+
+interface DestClosure
+    function run(destructable d) returns boolean
+
+interface ItemClosure
+    function run(item i) returns boolean
+
+interface IntClosure
+    function run(int id) returns boolean
+
+interface VoidClosure
+    function run() returns boolean
+
+interface VoidClosureNotBool
+    function run()
+
+public class Missiles
+    private static rect r = Rect(0., 0., 0., 0.)
+    private static Missiles temp = null
+    
+    static LinkedList<Missiles> collection = new LinkedList<Missiles>()
+    
+    private HashMap<widget, boolean> widgetMap
+    private HashMap<Missiles, boolean> missilMap
+    private angle cA
+    private string path = ""
+    private real size = 0.
+    private real height = 0.
+    private real open = 0.
+    private real toZ = 0.
+    private real time = 0.
+    private Coordinates impact
+    private Coordinates origin
+    private vec3 pos
+    private vec3 prevPos
+    private vec3 nextPos
+    private Fx fx = null
+    private real veloc = 0.
+    private real travel = 0.
+    private boolean paused = false
+    private int tileset = 0
+    private boolean launched = false
+    private CallbackPeriodic cb = null
+
+    unit source = null
+    unit target = null
+    player owner = null
+    boolean collideZ = false
+    real collision = 0.
+    real damage = 0.
+    real acceleration = 0.
+    int data = 0
+    int typ = 0
+    real turn = 0.
+
+    private UnitClosure unitEvent = null
+    private MissileClosure missileEvent = null
+    private DestClosure destEvent = null
+    private ItemClosure itemEvent = null
+    private VoidClosure cliffEvent = null
+    private VoidClosure terrainEvent = null
+    private IntClosure tilesetEvent = null
+    private VoidClosure finishEvent = null
+    private VoidClosure periodEvent = null
+    private VoidClosure boundEvent = null
+    private VoidClosure pauseEvent = null
+    private VoidClosure resumeEvent = null
+    private VoidClosureNotBool removeEvent = null
+
+    /* -------------------------- Model of the missile -------------------------- */
+    function setModel(string fxpath)
+        fx.setFx(fxpath)
+        path = fxpath
+
+    function getModel() returns string
+        return path
+
+    /* ----------------------------- Curved movement ---------------------------- */
+    function setCurve(angle value)
+        open = value.tan()*origin.distance
+
+    function getCurve() returns angle
+        return Atan(open/origin.distance).asAngleDegrees()
+
+    /* ----------------------------- Arced Movement ----------------------------- */
+    function setArc(angle value)
+        height = value.tan()*origin.distance/4
+
+    function getArc() returns angle
+        return Atan(4*height/origin.distance).asAngleDegrees()
+
+    /* ------------------------------ Effect scale ------------------------------ */
+    function setScale(real v)
+        fx.setScale(v)
+        size = v
+
+    function getScale() returns real
+        return size
+
+    /* ------------------------------ Missile Speed ----------------------------- */
+    function setSpeed(real newspeed)
+        let d = origin.distance
+    
+        veloc = newspeed*PERIOD
+        let s = travel + veloc
+        nextPos = pos.offset2d(cA, veloc)
+
+        if height != 0 or origin.slope != 0
+            nextPos.z = 4*height*s*(d-s)/(d*d) + origin.slope*s + origin.z
+            pos.z = nextPos.z
+
+    function getSpeed() returns real
+        return veloc/PERIOD
+
+    /* ------------------------------- Flight Time ------------------------------ */
+    function setDuration(real flightTime)
+        let d = origin.distance
+    
+        veloc = max(0.00000001, (origin.distance - travel)*PERIOD/max(0.00000001, flightTime))
+        time = flightTime
+        let s = travel + veloc
+        nextPos = pos.offset2d(cA, veloc)
+
+        if height != 0 or origin.slope != 0
+            nextPos.z = 4*height*s*(d-s)/(d*d) + origin.slope*s + origin.z
+            pos.z = nextPos.z
+
+    function getDuration() returns real
+        return time
+
+    /* ---------------------------- Bound and Deflect --------------------------- */
+    function bounce()
+        origin.move(pos.x, pos.y, pos.z - pos.toVec2().getTerrainZ())
+        travel = 0.
+    
+    function deflect(vec2 t)
+        let locZ = pos.toVec2().getTerrainZ()
+        
+        target = null
+        toZ = origin.z - t.getTerrainZ()
+        
+        if pos.z < locZ
+            nextPos = prevPos
+
+        impact.move(t.x, t.y, toZ)
+        origin.move(pos.x, pos.y, pos.z - locZ)
+        
+        travel = 0.
+
+    /* ---------------------------- Flush hit targets --------------------------- */
+    function flush()
+        widgetMap.flush()
+        missilMap.flush()
+
+    function flush(widget w)
+        if w != null
+            widgetMap.remove(w)
+
+    function hitted(widget w) returns boolean
+        return widgetMap.has(w)
+
+    /* ------------------------------ Missile Pause ----------------------------- */
+    function pause(boolean flag)
+        paused = flag
+        if flag
+            if cb != null
+                destroy cb
+                cb = null
+            if pauseEvent != null
+                if pauseEvent.run()
+                    terminate()
+        else
+            launch()
+            if resumeEvent != null
+                if resumeEvent.run()
+                    terminate()
+    
+    /* -------------------------- Getters ------------------------- */
+
+    function getSize() returns real
+        return size
+
+    function getPos() returns vec3
+        return pos
+
+    function isLaunched() returns boolean
+        return launched
+
+    function isPaused() returns boolean
+        return paused
+
+    function getTileset() returns int
+        return tileset
+
+    /* -------------------------------- Terminate ------------------------------- */
+
+    function terminate()
+        nullTimer(() -> destroy this) // To wait until the loops ended
+
+    ondestroy
+        if removeEvent != null
+            removeEvent.run()
+            destroy removeEvent
+        
+        collection.remove(this)
+
+        if cb != null
+            destroy cb
+
+        destroy fx
+        destroy origin
+        destroy impact
+        destroy widgetMap
+        destroy missilMap
+
+        if unitEvent != null
+            destroy unitEvent
+        if missileEvent != null
+            destroy missileEvent
+        if destEvent != null
+            destroy destEvent
+        if itemEvent != null
+            destroy itemEvent
+        if cliffEvent != null
+            destroy cliffEvent
+        if terrainEvent != null
+            destroy terrainEvent
+        if tilesetEvent != null
+            destroy tilesetEvent
+        if finishEvent != null
+            destroy finishEvent
+        if periodEvent != null
+            destroy periodEvent
+        if boundEvent != null
+            destroy boundEvent
+        if pauseEvent != null
+            destroy pauseEvent
+        if resumeEvent != null
+            destroy resumeEvent
+
+    private function move()
+        if collision > 0
+            if unitEvent != null
+                forUnitsInRange(pos.toVec2(), collision + COLLISION_SIZE, u -> begin
+                    if not widgetMap.has(u)
+                        if IsUnitInRangeXY(u, pos.x, pos.y, collision)
+                            if collideZ
+                                let dx = u.getPos3Real().z
+                                let dy = u.getCollisionSizeEx()
+                                if dx + dy >= pos.z - collision and dx <= pos.z + collision
+                                    widgetMap.put(u, true)
+                                    if unitEvent.run(u)
+                                        terminate()
+                            else
+                                widgetMap.put(u, true)
+                                if unitEvent.run(u)
+                                    terminate()
+                end)
+
+            if missileEvent != null
+                for missile in collection
+                    if missile != this
+                        if not missilMap.has(missile)
+                            if missile.pos.distanceTo(pos) <= collision
+                                missilMap.put(missile, true)
+                                if missileEvent.run(missile)
+                                    terminate()
+            
+            if destEvent != null or itemEvent != null
+                let dx = collision
+                SetRect(r, pos.x - dx, pos.y - dx, pos.x + dx, pos.y + dx)
+                /* ------------------------- Destructable hit function ------------------------ */
+                if destEvent != null
+                    forDestructablesInRect(r, d -> begin
+                        let d = GetEnumDestructable()
+
+                        if not widgetMap.has(d)
+                            if collideZ
+                                let dz = d.getPos().getTerrainZ()
+                                let tz = GetDestructableOccluderHeight(d)
+                                if dz + tz >= pos.z - collision and dz <= pos.z + collision
+                                    widgetMap.put(d, true)
+                                    if destEvent.run(d)
+                                        terminate()
+                            else
+                                widgetMap.put(d, true)
+                                if destEvent.run(d)
+                                    terminate()
+                    end)
+                /* -------------------------- Item collision function ------------------------- */
+                if itemEvent != null
+                    temp = this
+                    EnumItemsInRect(r, null, () -> begin
+                        let i = GetEnumItem()
+
+                        if not temp.widgetMap.has(i)
+                            if temp.collideZ
+                                let dz = i.getPos().getTerrainZ()
+                                if dz + ITEM_SIZE >= temp.pos.z - temp.collision and dz <= temp.pos.z + temp.collision
+                                    temp.widgetMap.put(i, true)
+                                    if temp.itemEvent.run(i)
+                                        temp.terminate()
+                            else
+                                temp.widgetMap.put(i, true)
+                                if temp.itemEvent.run(i)
+                                    temp.terminate()
+                    end)
+                    temp = null
+
+        if cliffEvent != null
+            let dx = GetTerrainCliffLevel(nextPos.x, nextPos.y).toReal()
+            let dy = GetTerrainCliffLevel(pos.x, pos.y).toReal()
+            if dy < dx and pos.z  < (dx - getMapCliffLevel())*bj_CLIFFHEIGHT
+                if cliffEvent.run()
+                    terminate()
+
+        if terrainEvent != null
+            if pos.toVec2().getTerrainZ() > pos.z
+                if terrainEvent.run()
+                    terminate()
+
+        if tilesetEvent != null
+            let k = GetTerrainType(pos.x, pos.y)
+            if k != tileset
+                if tilesetEvent.run(k)
+                    terminate()
+            tileset = k
+
+        if periodEvent != null
+            if periodEvent.run()
+                terminate()
+
+        // Homing or not
+        let o = origin
+        angle a
+
+        if target != null and target.getTypeId() != 0
+            impact.move(target.getX(), target.getY(), GetUnitFlyHeight(target) + toZ)
+            let dx = impact.x - nextPos.x
+            let dy = impact.y - nextPos.y
+            a = angle(Atan2(dy, dx))
+            travel = o.distance - SquareRoot(dx*dx + dy*dy)
+        else
+            a = o.angl
+            target = null
+        
+        // turn rate
+        if turn != 0 and not ((cA-a).cos() >= Cos(turn))
+            if (a-cA).sin() >= 0
+                cA.radians += turn
+            else
+                cA.radians -= turn
+        else
+            cA = a
+
+        let vel = veloc
+        var yaw = cA
+        let s = travel + vel
+        veloc += acceleration
+        travel = s
+        var pitch = origin.alpha
+        prevPos = pos
+        pos = nextPos
+        nextPos = pos.offset2d(cA, vel)
+
+        // arc calculation
+        let h = height
+        let c = open
+        let d = o.distance
+
+        if h != 0 or o.slope != 0
+            nextPos.z = 4*h*s*(d-s)/(d*d) + o.slope*s + o.z
+            pitch -= angle(Atan(((4*h)*(2*s - d))/(d*d)))
+    
+        // curve calculation
+        if c != 0
+            let dx = 4*c*s*(d-s)/(d*d)
+            a = cA + PI_HALF_ANG
+            pos = pos.offset2d(a, dx)
+            yaw = cA + angle(Atan(-((4*c)*(2*s - d))/(d*d)))
+        
+        if s >= d
+            if finishEvent != null
+                if finishEvent.run()
+                    terminate()
+                else
+                    if travel > 0
+                        terminate()
+            else
+                terminate()
+        
+        fx.setXYAngle(yaw)
+        fx.setZAngle(pitch)
+        if pos.inBounds()
+            fx.setXYZ(pos)
+        else
+            if boundEvent != null
+                if boundEvent.run()
+                    terminate()
+    
+    function launch()
+        if not launched
+            launched = true
+            cb = doPeriodically(PERIOD, _ -> move())
+    
+    construct(vec3 first, vec3 last)
+        origin = new Coordinates(first.x, first.y, first.z)
+        impact = new Coordinates(last.x, last.y, last.z)
+        origin.link(impact)
+        cA = origin.angl
+        pos = first.toVec2().withZ(impact.z)
+        prevPos = pos
+        nextPos = pos
+        this.toZ = last.z
+
+        fx = new Fx(first, first.angleTo2d(last))
+
+        widgetMap = new HashMap<widget, boolean>()
+        missilMap = new HashMap<Missiles, boolean>()
+
+        collection.add(this)
+        
+
+    // Missile events, if returns true, the missile will be destroyed
+
+    /** If collision is greater than 0 will run whenever the missile collides with a unit */
+    function onHit(UnitClosure unitEvent)
+        if this.unitEvent != null
+            destroy this.unitEvent
+        this.unitEvent = unitEvent
+
+    /** If collision is greater than 0 will run whenever the missile collides with another missile */
+    function onMissile(MissileClosure missileEvent)
+        if this.missileEvent != null
+            destroy this.missileEvent
+        this.missileEvent = missileEvent
+    
+    /** If collision is greater than 0 will run whenever the missile collides with a destructable */
+    function onDestructable(DestClosure destEvent)
+        if this.destEvent != null
+            destroy this.destEvent
+        this.destEvent = destEvent
+    
+    /** If collision is greater than 0 will run whenever the missile collides with an item */
+    function onItem(ItemClosure itemEvent)
+        if this.itemEvent != null
+            destroy this.itemEvent
+        this.itemEvent = itemEvent
+    
+    /** Will run whenever the missile collides with a cliff wall height greater than the current missile height */
+    function onCliff(VoidClosure cliffEvent)
+        if this.cliffEvent != null
+            destroy this.cliffEvent
+        this.cliffEvent = cliffEvent
+    
+    /** Will run whenever the missile collides with terrain */
+    function onTerrain(VoidClosure terrainEvent)
+        if this.terrainEvent != null
+            destroy this.terrainEvent
+        this.terrainEvent = terrainEvent
+    
+    /** Will run whenever the missile changes tileset types */
+    function onTileset(IntClosure tilesetEvent)
+        if this.tilesetEvent != null
+            destroy this.tilesetEvent
+        this.tilesetEvent = tilesetEvent
+    
+    /** Will run whenever every missile period */
+    function onPeriod(VoidClosure periodEvent)
+        if this.periodEvent != null
+            destroy this.periodEvent
+        this.periodEvent = periodEvent
+    
+    /** Will run when the missiles reaches its destination*/
+    function onFinish(VoidClosure finishEvent)
+        if this.finishEvent != null
+            destroy this.finishEvent
+        this.finishEvent = finishEvent
+    
+    /** Will run whenever the missile tries to go out of the map boundaries */
+    function onBoundaries(VoidClosure boundEvent)
+        if this.boundEvent != null
+            destroy this.boundEvent
+        this.boundEvent = boundEvent
+    
+    /** Will run when the missile is paused */
+    function onPause(VoidClosure pauseEvent)
+        if this.pauseEvent != null
+            destroy this.pauseEvent
+        this.pauseEvent = pauseEvent
+    
+    /** Will run when the missile is unpaused */
+    function onResume(VoidClosure resumeEvent)
+        if this.resumeEvent != null
+            destroy this.resumeEvent
+        this.resumeEvent = resumeEvent
+    
+    /** Will run when the missile is removed */
+    function onRemove(VoidClosureNotBool removeEvent)
+        if this.removeEvent != null
+            destroy this.removeEvent
+        this.removeEvent = removeEvent

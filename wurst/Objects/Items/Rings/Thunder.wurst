@@ -56,7 +56,6 @@ function thunderDash ()
             var dashCount = 0
             doPeriodicallyCounted(0.03, 100) (CallbackCounted cb) ->
                 dashCount++
-                print(dashCount)
                 if pos.polarOffset(pos.angleTo(spellPos), 100).isTerrainPathable(PATHING_TYPE_WALKABILITY) == true and pos.polarOffset(pos.angleTo(spellPos), 100).isTerrainPathable(PATHING_TYPE_FLYABILITY) == true// This one is weird, but it works this way: if playable area, and not boundary (black terrain) do 
                     falseDash(caster)
                     damaged.release()

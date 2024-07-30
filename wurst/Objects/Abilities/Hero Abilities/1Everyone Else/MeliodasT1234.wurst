@@ -2,7 +2,7 @@ package MeliodasT1234
 import DamageEvent
 import AbilityGlobals
 import main
-import ACR_Library
+import ACR_Stun
 
 init
     initTrig_MeliodasT1234()

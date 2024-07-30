@@ -1,0 +1,66 @@
+package ACR_Slow
+
+import TimerUtils
+import ACR_TagSystem
+import DummyCaster
+import OrderIds
+
+real array acrSlowDuration
+real array acrSlowPercentage
+real array acrSlowCount
+timer array acrSlowTimer
+unit array acrSlowedUnit
+unit array acrSlowCaster
+
+function acrSlowEnd()
+    let id = GetExpiredTimer().getData()
+    // if acrSlowedUnit[id].isPaused() == true
+    //     if acrSlowedUnit[id].isInvulnerable() == true
+    //         DoNothing()
+    //     else        
+    //         acrSlowCount[id] = acrSlowCount[id] + 0.02
+    // else
+    if acrSlowedUnit[id].hasTagSlow() == false
+        new DummyCaster()
+        ..owner(acrSlowCaster[id].getOwner())
+        ..origin(acrSlowedUnit[id].getPos())
+        ..castTarget('A18Y', 1, OrderIds.slow, acrSlowedUnit[id])
+        acrSlowedUnit[id].setMoveSpeed(acrSlowedUnit[id].getDefaultMovespeed() - (acrSlowedUnit[id].getDefaultMovespeed() * (acrSlowPercentage[id] / 100)))
+        acrSlowedUnit[id].addTagSlow()
+    acrSlowCount[id] = acrSlowCount[id] + 0.02               
+    if acrSlowCount[id] >= acrSlowDuration[id]
+        GetExpiredTimer().release()
+        if acrSlowedUnit[id].hasTagSlow()
+            acrSlowedUnit[id].setMoveSpeed(acrSlowedUnit[id].getDefaultMovespeed())
+            acrSlowedUnit[id].removeAbility('B06P')
+            acrSlowedUnit[id].removeTagSlow()
+
+public function acrSlow(unit caster, unit victim, real slowPercentage, real duration)
+    if victim.isInvulnerable() == false
+        let id = victim.getUserData()
+        acrSlowCaster[id] = caster
+        acrSlowedUnit[id] = victim
+        acrSlowPercentage[id] = slowPercentage
+        acrSlowDuration[id] = duration
+        acrSlowCount[id] = 0.0
+        if victim.hasTagSlow()
+            acrSlowTimer[id].release()
+        else     
+            new DummyCaster()
+            ..owner(caster.getOwner())
+            ..origin(victim.getPos())
+            ..castTarget('A18Y', 1, OrderIds.slow, victim)
+            victim.addTagSlow()
+        if victim.getMoveSpeed() > (victim.getDefaultMovespeed() - (victim.getDefaultMovespeed() * (slowPercentage / 100)))  
+            victim.setMoveSpeed(victim.getDefaultMovespeed() - (victim.getDefaultMovespeed() * (slowPercentage / 100)))
+        acrSlowTimer[id] = CreateTimer()..startPeriodic(0.02, function acrSlowEnd)..setData(id)
+
+        
+    // CreateTimer()..setData(id)..start(duration + 0.02) () ->
+    //     let id1 = GetExpiredTimer().getData()
+    //     acrSlowAreaGroup[id1].forEachIn() (unit victim) ->
+    //         if victim.hasTagSlow()                                 
+    //             victim.setMoveSpeed(victim.getDefaultMovespeed())
+    //             victim.removeAbility('B06P')
+    //             victim.removeTagSlow()
+    //         acrSlowAreaGroup[id1].remove(victim)        

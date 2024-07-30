@@ -1,3 +1,6 @@
 package TableLayout_config
 
-@config public constant DEFAULT_FRAME_PARENT = BlzGetFrameByName("ConsoleUIBackdrop", 0)
+import GetFrames
+
+// @config public constant DEFAULT_FRAME_PARENT = BlzGetFrameByName("ConsoleUIBackdrop", 0)
+@config public constant DEFAULT_FRAME_PARENT = getFrameACR("ConsoleUIBackdrop", 0)

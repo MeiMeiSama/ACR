@@ -5,7 +5,7 @@ import main
 import AbilityQ_data
 import SoundUtils
 import ClosureTimers
-import ACR_Library
+import ACR_Knockback
 
 constant tohnoQ = new SoundDefinition("war3mapImported\\TohnoQ.mp3")
 constant tohnoW11 = new SoundDefinition("war3mapImported\\TohnoW1-1.mp3")

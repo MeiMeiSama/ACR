@@ -2,7 +2,7 @@ package Himeragi_Yukina_Orig
 import DamageEvent
 import AbilityGlobals
 import AbilityQ_data
-import ACR_Library
+import ACR_Stun
 
 vec2 himeragiQTargetPoint
 vec2 himeragiCurrentPosition

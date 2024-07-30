@@ -2,7 +2,7 @@ package Gajeelhouko
 import DamageEvent
 import AbilityGlobals
 import AbilityQ_data
-import ACR_Library
+import ACR_Knockback
 init
     initTrig_Gajeelhouko()
 

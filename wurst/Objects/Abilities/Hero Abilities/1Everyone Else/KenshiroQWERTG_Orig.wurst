@@ -5,7 +5,7 @@ import main
 import AbilityQ_data
 import TimerUtils
 import UpdateTooltips
-import ACR_Library
+import ACR_Stun
 
 vec2 kenjiroQTargetPoint
 vec2 kenjiroCurrentPosition

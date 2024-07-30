@@ -2,7 +2,8 @@ package UchihaMadara
 import DamageEvent
 import AbilityGlobals
 import AbilityQ_data
-import ACR_Library
+import ACR_Stun
+import ACR_PauseArea
 
 vec2 madaraFTargetPoint
 vec2 madaraTTargetPoint
@@ -235,7 +236,7 @@ function trig_UchihaMadaraFunc004Func001Func001Func001Func001Func001Func023Func0
         SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 244, LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 244))
         SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 206, LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 206))
         let caster = LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594)
-        acrAoePause(caster, madaraTTargetPoint, 800.00, 4.00)
+        acrPauseArea(caster, madaraTTargetPoint, 800.00, 4.00)
         TimerStart(_ydl_timer, 0.06, true, function trig_UchihaMadaraFunc004Func001Func001Func001Func001Func001Func023Func007Func001Func013T)
         _ydl_timer = CreateTimer()
         SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 1077, LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 1077))
@@ -558,7 +559,7 @@ function trig_UchihaMadaraActions()
         SaveGroupHandle(YDLOC, GetHandleId(_ydl_timer), 919, LoadGroupHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 919))
         SaveInteger(YDLOC, GetHandleId(_ydl_timer), 280, LoadInteger(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 280))
         let caster = LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594)
-        acrAoePause(caster, madaraFTargetPoint, 600.00, 1.20)
+        acrPauseArea(caster, madaraFTargetPoint, 600.00, 1.20)
         TimerStart(_ydl_timer, 0.02, true, function trig_UchihaMadaraFunc004Func001Func001Func001Func001Func001Func001Func015T)
     else if GetSpellAbilityId() == 'A0C3'
         PlaySoundBJ(gg_snd_madara2)

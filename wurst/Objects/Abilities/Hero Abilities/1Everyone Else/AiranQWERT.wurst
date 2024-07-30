@@ -5,7 +5,7 @@ import main
 import AbilityQ_data
 import MusicPlaylist
 import ACR_TagSystem
-import ACR_Library
+import ACR_Stun
 
 init
     initTrig_AiranQWERT()

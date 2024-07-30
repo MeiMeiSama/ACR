@@ -5,7 +5,6 @@ import AbilityGlobals
 import ObjectDefinitions
 import AbilityClassifications
 import SoundUtils
-import ClosureTimers
 import main
 import Cloud
 constant izanamiSound_proc = new SoundDefinition("war3mapImported\\Izanami_proc.mp3")
@@ -77,10 +76,7 @@ init
                     // let target = DamageEvent.getTarget()
                     int stat = 0
                     real _dmg
-                    int _lvl = 0
-                    // doAfter(10) -> 
-                    //     instances = 0
-                    //     //printTimedToPlayer("instances reset", 1, caster.getOwner())    
+                    int _lvl = 0  
                     if BlzGetUnitIntegerField(caster, UNIT_IF_PRIMARY_ATTRIBUTE) == 1 // Strength
                         stat = caster.getStr(true)
                     else if BlzGetUnitIntegerField(caster, UNIT_IF_PRIMARY_ATTRIBUTE) == 2 // Intellect
@@ -1095,10 +1091,7 @@ init
                     if target.hasAbility('B04P') and DamageEvent.getAmount() >= target.getHP()          // SAber Lily's F buff
                         DamageEvent.setAmount(0)
                         target.removeAbility('B04P')
-                        doAfter(0.05) ->                             
-                            //printTimedToPlayer("nax HP: "+target.getMaxHP().toString(), 1, caster.getOwner())
-                            //printTimedToPlayer("Heal: "+(target.getMaxHP() * 0.2).toString(), 1, caster.getOwner())
-                            target.setHP(target.getMaxHP() * 0.2)    
+                        target.setHP(target.getMaxHP() * 0.2)    
 
                     if DamageEvent.getTarget().hasAbility(ABILITY_SPELLBLOCK) // If target has (Spellblock)
                         if DamageEvent.getAmount() >= GetUnitState(DamageEvent.getTarget(), UNIT_STATE_MAX_LIFE) * 0.20 // if incoming damage is equal or more than 20% of max health

@@ -5,7 +5,7 @@ import ChannelAbilityPreset
 import UnitIds
 import DamageEvent
 import AbilityGlobals
-import ACR_Library
+import ACR_Stun
 
 unit misogiWCaster
 unit misogiWTarget

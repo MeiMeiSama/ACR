@@ -5,7 +5,7 @@ import DamageEvent
 import ObjectDefinitions
 import SoundUtils
 import ClosureTimers
-import ACR_Library
+import ACR_Stun
 
 constant akameFSound = new SoundDefinition("war3mapImported\\Akameslash.mp3")
 

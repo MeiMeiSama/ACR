@@ -1,5 +1,6 @@
 package InitializeFunctions
-// import ClosureTimers
+
+import ACR_CooldownTracker
 import WaveSystem
 import BountySystem
 import ObjectDefinitions
@@ -9,25 +10,20 @@ import UpdateLearningTooltips
 import RUID
 import Scoreboard
 import GoldIncome
-import ClosureTimers
 import QuestItems
 import MusicPlaylist
 import ExperienceDistribution
 import SoundFunctions
-import ACR_Library
 import AbilityGlobals
 import ACR_TagSystem
 import CameraFunctions
 import ACR_SpeedBoost
+import GetFrames
+import TimerUtils
 
 import Aqua_G
-import Natsu_G
-import Natsu_TG
 import Yato_G
 import Yamamoto_G
-import Kotori_G
-import Ace_G
-import Sabo_G
 import InuyashaAttack_Orig
 import Akame_G
 import Levi_G
@@ -39,10 +35,8 @@ import Himeragi_G
 import Hibari_G
 import Gray_G
 import KiritoOld_G
-import S_Natsu_G
 import Natsu_E
 import Shana_New_E
-import Cobra_G
 import Sasuke_Young_E
 import Luffy_G
 import Luffy_E
@@ -77,14 +71,47 @@ import Ryougi_Kimono_G
     - Iniitalize functions after the game has started, when most data is "valid" such as udg_Playhero
 
 */
-init
+function initUI ()
+    BlzFrameSetVisible(BlzFrameGetChild(BlzFrameGetChild(BlzGetOriginFrame(ORIGIN_FRAME_GAME_UI, 0), 5),0), false)
+    MultiboardSuppressDisplay(true)
+    GetExpiredTimer().release()
+
+function heroG_delay2 ()
+    let i = GetExpiredTimer().getData()
+    if not udg_PlayHero[i].hasAbility('A18V')
+        udg_PlayHero[i].addAbility('A18V')
+        udg_PlayHero[i].makeAbilityPermanent('A18V', true)
+    let id = udg_PlayHero[i].getOwner().getId()
+    udg_PlayHero[i].addAbility(SPELL_F[id])
+    udg_PlayHero[i].makeAbilityPermanent(SPELL_F[id], true)
+    if SPELL_F[id].hasTagHidden() == false
+        SPELL_F[id].addTagHidden()
+        udg_PlayHero[i].hideAbility(SPELL_F[id], true)
+    if udg_PlayHero[i].getTypeId() == 'H02M'
+        udg_PlayHero[i].addAbility(SPELL_F2[id])
+        udg_PlayHero[i].makeAbilityPermanent(SPELL_F2[id], true)
+        if SPELL_F2[id].hasTagHidden() == false
+            udg_PlayHero[i].hideAbility(SPELL_F2[id], true)
+            SPELL_F2[id].addTagHidden()
+    GetExpiredTimer().release()
+
+function heroG_delay1 ()
+    let i = GetExpiredTimer().getData()
+    setTooltipTitleAll(udg_PlayHero[i])
+    acrCamera(udg_PlayHero[i])
+    GetExpiredTimer().release()
+
+function updateSelection ()
+    updateSelect()
+    GetExpiredTimer().release()
 
 public function initFunctions ()
     BlzChangeMinimapTerrainTex("MinimapPreview.blp")
     firstWave()
     bountySystemSetup()
     // acrAntiCheat()
-    BlzFrameSetVisible(BlzGetFrameByName("ConsoleUIBackdrop",0), true)
+    // BlzFrameSetVisible(BlzGetFrameByName("ConsoleUIBackdrop",0), true)
+    BlzFrameSetVisible(getFrameACR("ConsoleUIBackdrop", 0), true)
     BlzHideOriginFrames(false)
     moonUI()
     acrSpeedBoostBase()
@@ -100,36 +127,16 @@ public function initFunctions ()
     bgmExceptionList()
     createQuest()
     acrCooldownTracker()
-    doAfter(0.1) -> 
-        BlzFrameSetVisible(BlzFrameGetChild(BlzFrameGetChild(BlzGetOriginFrame(ORIGIN_FRAME_GAME_UI, 0), 5),0), false)
-        MultiboardSuppressDisplay(true)
+    getTimer()..start(0.1, function initUI)
 
     // ---- Hero G's ---- \\
     for i = 0 to 12
         if udg_PlayHero[i] != null
-            doAfter(0.1) -> 
-                setTooltipTitleAll(udg_PlayHero[i])
-                acrCamera(udg_PlayHero[i])    
+            getTimer()..start(0.1, function heroG_delay1)..setData(i)
             Player(i)..select(udg_PlayHero[i])..panCameraToTimed(udg_PlayHero[i].getPos(), 1)
 
         if udg_PlayHero[i] != null
-            doAfter(0.05) ->
-                if not udg_PlayHero[i].hasAbility('A18V')
-                    udg_PlayHero[i].addAbility('A18V')
-                    udg_PlayHero[i].makeAbilityPermanent('A18V', true)
-                let id = udg_PlayHero[i].getOwner().getId()
-                udg_PlayHero[i].addAbility(SPELL_F[id])
-                udg_PlayHero[i].makeAbilityPermanent(SPELL_F[id], true)
-                if SPELL_F[id].hasTagHidden() == false
-                    SPELL_F[id].addTagHidden()
-                    udg_PlayHero[i].hideAbility(SPELL_F[id], true)
-                if udg_PlayHero[i].getTypeId() == 'H02M'
-                    udg_PlayHero[i].addAbility(SPELL_F2[id])
-                    udg_PlayHero[i].makeAbilityPermanent(SPELL_F2[id], true)
-                    if SPELL_F2[id].hasTagHidden() == false
-                        udg_PlayHero[i].hideAbility(SPELL_F2[id], true)
-                        SPELL_F2[id].addTagHidden()
-
+            getTimer()..start(0.05, function heroG_delay2)..setData(i)
                
         if udg_PlayHero[i].isModeHeroBase()
             updateTooltipsInit_Mode(udg_PlayHero[i])
@@ -147,8 +154,6 @@ public function initFunctions ()
             enhancedAttacksLevi(udg_PlayHero[i])
 
         if udg_PlayHero[i].getTypeId() == 'H001'
-            natsuG()    
-            natsuTG()
             natsuE()     
         if udg_PlayHero[i].getTypeId() == 'H020'
             shanaNewE()           
@@ -233,9 +238,6 @@ public function initFunctions ()
     
         if udg_PlayHero[i].hasAbility('A0C2')
             yatoG()    
-     
-        if udg_PlayHero[i].hasAbility('A184')
-            snatsuG()
     
         if udg_PlayHero[i].hasAbility('A18E')
             semiramisG()
@@ -244,19 +246,7 @@ public function initFunctions ()
             shaltearG()  
    
         if udg_PlayHero[i].hasAbility('A18G')
-            abigailG()                                                                                                          
-   
-        if udg_PlayHero[i].hasAbility(BURNDOT_ITSUKA_KOTORI)
-            kotoriG()
-   
-        if udg_PlayHero[i].hasAbility(BURNDOT_PORTGASD_ACE)
-            aceG()
-   
-        if udg_PlayHero[i].hasAbility(BURNDOT_SABO)
-            saboG()
- 
-        if udg_PlayHero[i].hasAbility(POISONDOT_COBRA)
-            cobraG()                    
+            abigailG()                                                                                                                               
  
         if udg_PlayHero[i].hasAbility('A0O4')
             initTrig_InuyashaAttack_Orig()
@@ -276,6 +266,5 @@ public function initFunctions ()
     
         if udg_PlayHero[i].getTypeId() == ARTURIA_STRENGTH
             saberStrG()
- 
-    doAfter(3) -> 
-        updateSelect()
+
+    getTimer().start(3, function updateSelection)

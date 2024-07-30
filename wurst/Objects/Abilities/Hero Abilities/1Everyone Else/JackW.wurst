@@ -2,7 +2,7 @@ package JackW
 import DamageEvent
 import AbilityGlobals
 import SoundUtils
-import ACR_Library
+import ACR_Stun
 
 constant jackWStart = new SoundDefinition("war3mapImported\\JackW.mp3")
 constant jackWFinish = new SoundDefinition("war3mapImported\\JackEffect2.mp3")

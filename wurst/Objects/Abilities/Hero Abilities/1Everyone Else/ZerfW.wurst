@@ -2,7 +2,7 @@ package ZerfW
 import DamageEvent
 import AbilityGlobals
 import main
-import ACR_Library
+import ACR_Pull
 
 init
     initTrig_ZerfW()

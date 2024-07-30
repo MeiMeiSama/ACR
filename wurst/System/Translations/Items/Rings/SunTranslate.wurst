@@ -15,14 +15,14 @@ function sunDynamicTranslation(unit user, item sun)
     if sun.getTypeId() == SUN_RING_VONGOLA
         let missingHP = user.getMissingHP()
         let currentStr = user.getStr(true) 
-        let directHeal = (missingHP * 0.1).ceil() + (currentStr * 2)
-        let healOverTime = (missingHP * 0.025).ceil() + (currentStr * 1)
+        let directHeal = (missingHP * 0.08).ceil() + (currentStr * 2)
+        let healOverTime = (missingHP * 0.02).ceil() + (currentStr * 1)
         BlzSetItemExtendedTooltip(sun, "|n|cff008080Active:|n|n|r|cffffd700Heals the user and all friendly units around them. Also applies a healing over time effect that heals allies affected every second for 3 seconds.|n|n|r|cffffd700Direct Heal :|r|cffff0000 "+directHeal.toString()+"|n|r|cffffd700HoT :|r|cffff0000 "+healOverTime.toString()+"|n|r|cffffd700DH Formula:|r|cffc0c0c0 10% of missing health |cffff8080+ |cffff00002 x Strength|n|r|cffffd700HoT Formula:|r|cffc0c0c0 2.5% of missing health |cffff8080+ |cffff00001 x Strength  |r|n|cffffd700Cooldown: |cffff808045|r|n|n|cffc0c0c0Passive|r|n|n|cffff0000Strength + 50|n|r|cffffd700Increases the user's health regeneration by 25|n|r|cffffd700Increases the user's health by 600")
     else if sun.getTypeId() == SUN_RING_ARCOBALENO
         let missingHP = user.getMissingHP()
         let currentStr = user.getStr(true) 
-        let directHeal = (missingHP * 0.15).ceil() + (currentStr * 5)
-        let healOverTime = (missingHP * 0.05).ceil() + (currentStr * 1)
+        let directHeal = (missingHP * 0.12).ceil() + (currentStr * 5)
+        let healOverTime = (missingHP * 0.04).ceil() + (currentStr * 1)
         BlzSetItemExtendedTooltip(sun, "|n|cff008080Active:|n|n|r|cffffd700Heals the user and all friendly units around them. Also applies a healing over time effect that heals allies affected every second for 3 seconds.|n|n|r|cffffd700Direct Heal :|r|cffff0000 "+directHeal.toString()+"|n|r|cffffd700HoT :|r|cffff0000 "+healOverTime.toString()+"|n|r|cffffd700DH Formula:|r|cffc0c0c0 15% of missing health |cffff8080+ |cffff00005 x Strength|n|r|cffffd700HoT Formula:|r|cffc0c0c0 5% of missing health |cffff8080+ |cffff00001 x Strength  |r|n|cffffd700Cooldown: |cffff808045|r|n|n|cffc0c0c0Passive|r|n|n|cffff0000Strength + 110|n|r|cffffd700Increases the user's health regeneration by 55|n|r|cffffd700Increases the user's health by 1320")
   
 

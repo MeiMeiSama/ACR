@@ -183,7 +183,6 @@ function trig_AttilaFFunc016T()
         udg_MHtime--
         SetSkyModel(null)
 function trig_AttilaFActions()
-    print("works")
     let loc = vec2(GetSpellTargetX(), GetSpellTargetY())
     let caster = GetTriggerUnit()
     let casterloc = caster.getPos()

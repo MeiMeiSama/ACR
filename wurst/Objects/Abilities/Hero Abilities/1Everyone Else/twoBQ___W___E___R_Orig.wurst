@@ -5,7 +5,7 @@ import main
 import AbilityQ_data
 import UpdateTooltips
 import TimerUtils
-import ACR_Library
+import ACR_Stun
 
 init
     initTrig_2BQ___W___E___R_Orig()
