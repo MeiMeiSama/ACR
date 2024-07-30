@@ -1,7 +1,7 @@
 # ━━━━━━━━━ Anime Carnage Reforged v2.1.0 ━━━━━━━━━ #
 
 ### Added
-Nothing Added.
+1. Added a Quickcast Limiter, and a Macro detection system, games should now be more fair.
 
 ### Improved
 Nothing Improved.

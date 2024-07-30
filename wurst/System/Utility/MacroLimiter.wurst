@@ -3,7 +3,8 @@ package MacroLimiter
 import ClosureEvents
 import TimerUtils
 // The time, 0.01 would be in normal x1 speed, but making it 0.08 speeds it up by 8 times, to prevent timer running too much. Afraid of performance issues.
-constant PERIODIC_TIME = 0.08 // 0.01 = x1 | 0.02 = x2 . . . | 0.08 = x8
+constant PERIODIC_TIME = 0.08 // 0.01 = x1 | 0.02 = x2 . . . | 0.08 = x8.
+constant CLICK_COUNT_THRESHOLD = 5 // If CPS is determined by click count instead of time, then calculate every 5 clicks.
 
 framehandle clickBlocker
 timer array inputTimer
@@ -48,6 +49,8 @@ timer array keyT_timer
 timer array keyF_timer
 timer array keyG_timer
 
+// NOTE: I changed click count threshold, need to test its cps again
+
 ///////////////////////////////////////////////////////////////////////////////
 //                                                                           //
 // TO COMPLETE 5 CLICKS, THIS IS THE TIME IT TAKES WITH THESE CPS VALUES     //      
@@ -77,110 +80,112 @@ function disableInput(player user)
 function mouseLMB_timer()
     let pid = GetExpiredTimer().getData()
     mouseLMB_time[pid] += PERIODIC_TIME
-    if mouseLMB_count[pid] >= 3
+    if mouseLMB_count[pid] >= CLICK_COUNT_THRESHOLD
     // if mouseLMB_time[pid] >= 0.5 // Replace with this to determine CPS by time, instead of clicks. Value 0.5 means after 0.5 seconds.
         mouseLMB_count_cps[pid] = (mouseLMB_count[pid] / mouseLMB_time[pid])
         mouseLMB_time[pid] = 0
         mouseLMB_count[pid] = 0
         mouseLMB_timer[pid].destr()
         mouseLMB_timer[pid] = null
-        if mouseLMB_count_cps[pid] >= 20
+        if mouseLMB_count_cps[pid] >= 12
             disableInput(Player(pid))
 
 function mouseRMB_timer()
     let pid = GetExpiredTimer().getData()
     mouseRMB_time[pid] += PERIODIC_TIME
-    if mouseRMB_count[pid] >= 3
+    if mouseRMB_count[pid] >= CLICK_COUNT_THRESHOLD
         mouseRMB_count_cps[pid] = (mouseRMB_count[pid] / mouseRMB_time[pid])
         mouseRMB_time[pid] = 0
         mouseRMB_count[pid] = 0
         mouseRMB_timer[pid].destr()
         mouseRMB_timer[pid] = null
-        if mouseRMB_count_cps[pid] >= 20
+        print(mouseRMB_count_cps[pid])
+        if mouseRMB_count_cps[pid] >= 12
             disableInput(Player(pid))
 
 function keyQ_timer()
     let pid = GetExpiredTimer().getData()
     keyQ_time[pid] += PERIODIC_TIME
-    if keyQ_count[pid] >= 3
+    if keyQ_count[pid] >= CLICK_COUNT_THRESHOLD
         keyQ_count_cps[pid] = (keyQ_count[pid] / keyQ_time[pid])
         keyQ_time[pid] = 0
         keyQ_count[pid] = 0
         keyQ_timer[pid].destr()
         keyQ_timer[pid] = null
-        if keyQ_count_cps[pid] >= 30
+        if keyQ_count_cps[pid] >= 20
             disableInput(Player(pid))
     
 function keyW_timer()
     let pid = GetExpiredTimer().getData()
     keyW_time[pid] += PERIODIC_TIME
-    if keyW_count[pid] >= 3
+    if keyW_count[pid] >= CLICK_COUNT_THRESHOLD
         keyW_count_cps[pid] = (keyW_count[pid] / keyW_time[pid])
         keyW_time[pid] = 0
         keyW_count[pid] = 0
         keyW_timer[pid].destr()
         keyW_timer[pid] = null
-        if keyW_count_cps[pid] >= 30
+        print(keyW_count_cps[pid])
+        if keyW_count_cps[pid] >= 20
             disableInput(Player(pid))
     
 function keyE_timer()
     let pid = GetExpiredTimer().getData()
     keyE_time[pid] += PERIODIC_TIME
-    if keyE_count[pid] >= 3
+    if keyE_count[pid] >= CLICK_COUNT_THRESHOLD
         keyE_count_cps[pid] = (keyE_count[pid] / keyE_time[pid])
         keyE_time[pid] = 0
         keyE_count[pid] = 0
         keyE_timer[pid].destr()
         keyE_timer[pid] = null
-        if keyE_count_cps[pid] >= 30
+        if keyE_count_cps[pid] >= 20
             disableInput(Player(pid))
     
 function keyR_timer()
     let pid = GetExpiredTimer().getData()
     keyR_time[pid] += PERIODIC_TIME
-    if keyR_count[pid] >= 3
+    if keyR_count[pid] >= CLICK_COUNT_THRESHOLD
         keyR_count_cps[pid] = (keyR_count[pid] / keyR_time[pid])
         keyR_time[pid] = 0
         keyR_count[pid] = 0
         keyR_timer[pid].destr()
         keyR_timer[pid] = null
-        if keyR_count_cps[pid] >= 30
+        if keyR_count_cps[pid] >= 20
             disableInput(Player(pid))
     
 function keyT_timer()
     let pid = GetExpiredTimer().getData()
     keyT_time[pid] += PERIODIC_TIME
-    if keyT_count[pid] >= 3
+    if keyT_count[pid] >= CLICK_COUNT_THRESHOLD
         keyT_count_cps[pid] = (keyT_count[pid] / keyT_time[pid])
         keyT_time[pid] = 0
         keyT_count[pid] = 0
         keyT_timer[pid].destr()
         keyT_timer[pid] = null
-        if keyT_count_cps[pid] >= 30
+        if keyT_count_cps[pid] >= 20
             disableInput(Player(pid))
     
 function keyF_timer()
     let pid = GetExpiredTimer().getData()
     keyF_time[pid] += PERIODIC_TIME
-    if keyF_count[pid] >= 3
+    if keyF_count[pid] >= CLICK_COUNT_THRESHOLD
         keyF_count_cps[pid] = (keyF_count[pid] / keyF_time[pid])
         keyF_time[pid] = 0
         keyF_count[pid] = 0
         keyF_timer[pid].destr()
         keyF_timer[pid] = null
-        if keyF_count_cps[pid] >= 30
+        if keyF_count_cps[pid] >= 20
             disableInput(Player(pid))
     
 function keyG_timer()
     let pid = GetExpiredTimer().getData()
     keyG_time[pid] += PERIODIC_TIME
-    if keyG_count[pid] >= 3
+    if keyG_count[pid] >= CLICK_COUNT_THRESHOLD
         keyG_count_cps[pid] = (keyG_count[pid] / keyG_time[pid])
         keyG_time[pid] = 0
         keyG_count[pid] = 0
         keyG_timer[pid].destr()
         keyG_timer[pid] = null
-        if keyG_count_cps[pid] >= 30
+        if keyG_count_cps[pid] >= 20
             disableInput(Player(pid))
 
 function macroListener()
