@@ -290,11 +290,11 @@ init
     macroListener()
     EventListener.add(EVENT_PLAYER_CHAT_FILTER) ->
         let input = GetEventPlayerChatString()
-        let arg = input.substring(4, 5)
-        let pid = GetTriggerPlayer().getId()
-        if input.startsWith("cps ") and input.substring(6) == null
-            if Player(arg.toInt()).getController() == MAP_CONTROL_USER
-                printTimedToPlayerClear("CPS for Player "+Player(arg.toInt()).getColor().toColor().toColorString()+Player(arg.toInt()).getName()+"|r", 10, GetTriggerPlayer())
+        let arg = input.substring(4, 6)
+        let pid = arg.toInt()
+        if input.startsWith("cps ")
+            if Player(pid).getController() == MAP_CONTROL_USER
+                printTimedToPlayerClear("CPS for Player "+Player(pid).getColor().toColor().toColorString()+Player(pid).getName()+"|r", 10, GetTriggerPlayer())
                 printTimedToPlayer("|cff34b8f5- - - - - - - - - - - - - - - - - - -|r", 10, GetTriggerPlayer())
                 printTimedToPlayer("Mouse LMB: |cffffd700"+(mouseLMB_count_cps[pid]).toString()+"|r", 10, GetTriggerPlayer())
                 printTimedToPlayer("Mouse RMB: |cffffd700"+(mouseRMB_count_cps[pid]).toString()+"|r", 10, GetTriggerPlayer())
@@ -311,4 +311,5 @@ init
                 printTimedToPlayer("Format: cps <|cffffd700id|r>", 3, GetTriggerPlayer())
 
         if GetEventPlayerChatStringMatched() == "clickfix"
+            printTimedToPlayer("|cffffd700Click fix applied!|r", 3, GetTriggerPlayer())
             clickBlocker.hide(GetTriggerPlayer())
