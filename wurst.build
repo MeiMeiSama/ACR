@@ -1,5 +1,5 @@
 ---
-projectName: ACR_v2.1.0
+projectName: ACR_v2.0.3
 dependencies:
 - https://github.com/wurstscript/wurstStdlib2
 - https://github.com/null15/InventoryUtils
