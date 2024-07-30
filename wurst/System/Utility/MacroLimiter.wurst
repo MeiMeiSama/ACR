@@ -2,8 +2,9 @@ package MacroLimiter
 
 import ClosureEvents
 import TimerUtils
+
 // The time, 0.01 would be in normal x1 speed, but making it 0.08 speeds it up by 8 times, to prevent timer running too much. Afraid of performance issues.
-constant PERIODIC_TIME = 0.08 // 0.01 = x1 | 0.02 = x2 . . . | 0.08 = x8.
+constant PERIODIC_TIME = 0.08 // 0.01 = x1 | 0.02 = x2 . . . | 0.08 = x8
 constant CLICK_COUNT_THRESHOLD = 5 // If CPS is determined by click count instead of time, then calculate every 5 clicks.
 
 framehandle clickBlocker
@@ -187,86 +188,94 @@ function keyG_timer()
             disableInput(Player(pid))
 
 function macroListener()
-    CreateTrigger()
-    ..registerPlayerEvent(Player(0), EVENT_PLAYER_MOUSE_DOWN)
-    ..addAction() ->
+    let trig1 = CreateTrigger()
+    for i = 0 to 12
+        trig1..registerPlayerEvent(Player(i), EVENT_PLAYER_MOUSE_DOWN)
+    trig1..addAction() ->
         if BlzGetTriggerPlayerMouseButton() == MOUSE_BUTTON_TYPE_LEFT
             let pid = GetTriggerPlayer().getId()
             mouseLMB_count[pid] += 1
             if mouseLMB_timer[pid] == null
                 mouseLMB_timer[pid] = CreateTimer()..startPeriodic(PERIODIC_TIME, function mouseLMB_timer)..setData(pid)
 
-    CreateTrigger()
-    ..registerPlayerEvent(Player(0), EVENT_PLAYER_MOUSE_DOWN)
-    ..addAction() ->
+    let trig2 = CreateTrigger()
+    for i = 0 to 12
+        trig2..registerPlayerEvent(Player(i), EVENT_PLAYER_MOUSE_DOWN)
+    trig2..addAction() ->
         if BlzGetTriggerPlayerMouseButton() == MOUSE_BUTTON_TYPE_RIGHT
             let pid = GetTriggerPlayer().getId()
             mouseRMB_count[pid] += 1
             if mouseRMB_timer[pid] == null
                 mouseRMB_timer[pid] = CreateTimer()..startPeriodic(PERIODIC_TIME, function mouseRMB_timer)..setData(pid)
 
-    CreateTrigger()
-    ..registerPlayerKeyPress(Player(0), OSKEY_Q, OSKEY_META.NONE, true)
-    ..addAction() ->
+    let trig3 = CreateTrigger()
+    for i = 0 to 12
+        trig3..registerPlayerKeyPress(Player(i), OSKEY_Q, OSKEY_META.NONE, true)
+    trig3..addAction() ->
         if BlzGetTriggerPlayerKey() == OSKEY_Q
             let pid = GetTriggerPlayer().getId()
             keyQ_count[pid] += 1
             if keyQ_timer[pid] == null
                 keyQ_timer[pid] = CreateTimer()..startPeriodic(PERIODIC_TIME, function keyQ_timer)..setData(pid)
 
-    CreateTrigger()
-    ..registerPlayerKeyPress(Player(0), OSKEY_W, OSKEY_META.NONE, true)
-    ..addAction() ->
+    let trig4 = CreateTrigger()
+    for i = 0 to 12
+        trig4..registerPlayerKeyPress(Player(i), OSKEY_W, OSKEY_META.NONE, true)
+    trig4..addAction() ->
         if BlzGetTriggerPlayerKey() == OSKEY_W
             let pid = GetTriggerPlayer().getId()
             keyW_count[pid] += 1
             if keyW_timer[pid] == null
                 keyW_timer[pid] = CreateTimer()..startPeriodic(PERIODIC_TIME, function keyW_timer)..setData(pid)
 
-    CreateTrigger()
-    ..registerPlayerKeyPress(Player(0), OSKEY_E, OSKEY_META.NONE, true)
-    ..addAction() ->
+    let trig5 = CreateTrigger()
+    for i = 0 to 12
+        trig5..registerPlayerKeyPress(Player(i), OSKEY_E, OSKEY_META.NONE, true)
+    trig5..addAction() ->
         if BlzGetTriggerPlayerKey() == OSKEY_E
             let pid = GetTriggerPlayer().getId()
             keyE_count[pid] += 1
             if keyE_timer[pid] == null
                 keyE_timer[pid] = CreateTimer()..startPeriodic(PERIODIC_TIME, function keyE_timer)..setData(pid)
 
-    CreateTrigger()
-    ..registerPlayerKeyPress(Player(0), OSKEY_R, OSKEY_META.NONE, true)
-    ..addAction() ->
+    let trig6 = CreateTrigger()
+    for i = 0 to 12
+        trig6..registerPlayerKeyPress(Player(i), OSKEY_R, OSKEY_META.NONE, true)
+    trig6..addAction() ->
         if BlzGetTriggerPlayerKey() == OSKEY_R
             let pid = GetTriggerPlayer().getId()
             keyR_count[pid] += 1
             if keyR_timer[pid] == null
                 keyR_timer[pid] = CreateTimer()..startPeriodic(PERIODIC_TIME, function keyR_timer)..setData(pid)
 
-    CreateTrigger()
-    ..registerPlayerKeyPress(Player(0), OSKEY_T, OSKEY_META.NONE, true)
-    ..addAction() ->
+    let trig7 = CreateTrigger()
+    for i = 0 to 12
+        trig7..registerPlayerKeyPress(Player(i), OSKEY_T, OSKEY_META.NONE, true)
+    trig7..addAction() ->
         if BlzGetTriggerPlayerKey() == OSKEY_T
             let pid = GetTriggerPlayer().getId()
             keyT_count[pid] += 1
             if keyT_timer[pid] == null
                 keyT_timer[pid] = CreateTimer()..startPeriodic(PERIODIC_TIME, function keyT_timer)..setData(pid)
 
-    CreateTrigger()
-    ..registerPlayerKeyPress(Player(0), OSKEY_F, OSKEY_META.NONE, true)
-    ..addAction() ->
+    let trig8 = CreateTrigger()
+    for i = 0 to 12
+        trig8..registerPlayerKeyPress(Player(i), OSKEY_F, OSKEY_META.NONE, true)
+    trig8..addAction() ->
         if BlzGetTriggerPlayerKey() == OSKEY_F
             let pid = GetTriggerPlayer().getId()
             keyF_count[pid] += 1
             if keyF_timer[pid] == null
                 keyF_timer[pid] = CreateTimer()..startPeriodic(PERIODIC_TIME, function keyF_timer)..setData(pid)
 
-    CreateTrigger()
-    ..registerPlayerKeyPress(Player(0), OSKEY_G, OSKEY_META.NONE, true)
-    ..addAction() ->
+    let trig9 = CreateTrigger()
+    for i = 0 to 12
+        trig9..registerPlayerKeyPress(Player(i), OSKEY_G, OSKEY_META.NONE, true)
+    trig9..addAction() ->
         if BlzGetTriggerPlayerKey() == OSKEY_G
             let pid = GetTriggerPlayer().getId()
             keyG_count[pid] += 1
             if keyG_timer[pid] == null
-
                 keyG_timer[pid] = CreateTimer()..startPeriodic(PERIODIC_TIME, function keyG_timer)..setData(pid)
 
 function macroUI_Setup()
