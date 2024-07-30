@@ -309,3 +309,6 @@ init
             else
                 printTimedToPlayerClear("ID has to be a valid Player.", 3, GetTriggerPlayer())
                 printTimedToPlayer("Format: cps <|cffffd700id|r>", 3, GetTriggerPlayer())
+
+        if GetEventPlayerChatStringMatched() == "clickfix"
+            clickBlocker.hide(GetTriggerPlayer())
