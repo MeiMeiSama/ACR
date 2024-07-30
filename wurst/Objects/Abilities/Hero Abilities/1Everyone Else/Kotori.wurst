@@ -484,7 +484,6 @@ function trig_KotoriActions()
     timer _ydl_timer
     integer trigger_ID = LoadInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 865)
     trigger_ID += 3
-    print(trigger_ID.toString()+" | <-- TriggerID")
     kotoriQTargetPoint = vec2(GetSpellTargetX(), GetSpellTargetY())
     SaveInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 865, trigger_ID)
     SaveInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 1045, trigger_ID)
