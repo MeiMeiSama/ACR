@@ -76,7 +76,7 @@ function disableInput(player user)
     if inputTimer[pid] != null
         inputTimer[pid].destr()
         inputTimer[pid] = null
-    inputTimer[pid] = CreateTimer()..start(0.5, function enableInput)
+    inputTimer[pid] = CreateTimer()..start(0.5, function enableInput)..setData(pid)
 
 function mouseLMB_timer()
     let pid = GetExpiredTimer().getData()
