@@ -1,0 +1,299 @@
+package MacroLimiter
+
+import ClosureEvents
+import TimerUtils
+// The time, 0.01 would be in normal x1 speed, but making it 0.08 speeds it up by 8 times, to prevent timer running too much. Afraid of performance issues.
+constant PERIODIC_TIME = 0.08 // 0.01 = x1 | 0.02 = x2 . . . | 0.08 = x8
+
+framehandle clickBlocker
+timer array inputTimer
+
+real array mouseLMB_count_cps
+real array mouseRMB_count_cps
+real array keyQ_count_cps
+real array keyW_count_cps
+real array keyE_count_cps
+real array keyR_count_cps
+real array keyT_count_cps
+real array keyF_count_cps
+real array keyG_count_cps
+
+int array mouseLMB_count
+int array mouseRMB_count
+int array keyQ_count
+int array keyW_count
+int array keyE_count
+int array keyR_count
+int array keyT_count
+int array keyF_count
+int array keyG_count
+
+real array mouseLMB_time
+real array mouseRMB_time
+real array keyQ_time
+real array keyW_time
+real array keyE_time
+real array keyR_time
+real array keyT_time
+real array keyF_time
+real array keyG_time
+
+timer array mouseLMB_timer
+timer array mouseRMB_timer
+timer array keyQ_timer
+timer array keyW_timer
+timer array keyE_timer
+timer array keyR_timer
+timer array keyT_timer
+timer array keyF_timer
+timer array keyG_timer
+
+///////////////////////////////////////////////////////////////////////////////
+//                                                                           //
+// TO COMPLETE 5 CLICKS, THIS IS THE TIME IT TAKES WITH THESE CPS VALUES     //      
+//                                                                           //
+// 7cps = 0.715s <-- NORMAL PLAYER                                           //
+// 8cps = 0.625s <-- PROFESSIONAL CLICKER                                    //
+// 9cps = 0.556s <-- BORDERLINE INHUMANE                                     //
+// 10cps = 0.5s <-- ENTERING INHUMANE                                        //
+// 11cps = 0.455s <-- ALIEN                                                  //
+//                                                                           //
+///////////////////////////////////////////////////////////////////////////////
+
+function enableInput()
+    let pid = GetExpiredTimer().getData()
+    clickBlocker.hide(Player(pid))
+    inputTimer[pid].destr()
+    inputTimer[pid] = null
+
+function disableInput(player user)
+    let pid = user.getId()
+    clickBlocker.show(user)
+    if inputTimer[pid] != null
+        inputTimer[pid].destr()
+        inputTimer[pid] = null
+    inputTimer[pid] = CreateTimer()..start(0.5, function enableInput)
+
+function mouseLMB_timer()
+    let pid = GetExpiredTimer().getData()
+    mouseLMB_time[pid] += PERIODIC_TIME
+    if mouseLMB_count[pid] >= 3
+    // if mouseLMB_time[pid] >= 0.5 // Replace with this to determine CPS by time, instead of clicks. Value 0.5 means after 0.5 seconds.
+        mouseLMB_count_cps[pid] = (mouseLMB_count[pid] / mouseLMB_time[pid])
+        mouseLMB_time[pid] = 0
+        mouseLMB_count[pid] = 0
+        mouseLMB_timer[pid].destr()
+        mouseLMB_timer[pid] = null
+        if mouseLMB_count_cps[pid] >= 20
+            disableInput(Player(pid))
+
+function mouseRMB_timer()
+    let pid = GetExpiredTimer().getData()
+    mouseRMB_time[pid] += PERIODIC_TIME
+    if mouseRMB_count[pid] >= 3
+        mouseRMB_count_cps[pid] = (mouseRMB_count[pid] / mouseRMB_time[pid])
+        mouseRMB_time[pid] = 0
+        mouseRMB_count[pid] = 0
+        mouseRMB_timer[pid].destr()
+        mouseRMB_timer[pid] = null
+        if mouseRMB_count_cps[pid] >= 20
+            disableInput(Player(pid))
+
+function keyQ_timer()
+    let pid = GetExpiredTimer().getData()
+    keyQ_time[pid] += PERIODIC_TIME
+    if keyQ_count[pid] >= 3
+        keyQ_count_cps[pid] = (keyQ_count[pid] / keyQ_time[pid])
+        keyQ_time[pid] = 0
+        keyQ_count[pid] = 0
+        keyQ_timer[pid].destr()
+        keyQ_timer[pid] = null
+        if keyQ_count_cps[pid] >= 30
+            disableInput(Player(pid))
+    
+function keyW_timer()
+    let pid = GetExpiredTimer().getData()
+    keyW_time[pid] += PERIODIC_TIME
+    if keyW_count[pid] >= 3
+        keyW_count_cps[pid] = (keyW_count[pid] / keyW_time[pid])
+        keyW_time[pid] = 0
+        keyW_count[pid] = 0
+        keyW_timer[pid].destr()
+        keyW_timer[pid] = null
+        if keyW_count_cps[pid] >= 30
+            disableInput(Player(pid))
+    
+function keyE_timer()
+    let pid = GetExpiredTimer().getData()
+    keyE_time[pid] += PERIODIC_TIME
+    if keyE_count[pid] >= 3
+        keyE_count_cps[pid] = (keyE_count[pid] / keyE_time[pid])
+        keyE_time[pid] = 0
+        keyE_count[pid] = 0
+        keyE_timer[pid].destr()
+        keyE_timer[pid] = null
+        if keyE_count_cps[pid] >= 30
+            disableInput(Player(pid))
+    
+function keyR_timer()
+    let pid = GetExpiredTimer().getData()
+    keyR_time[pid] += PERIODIC_TIME
+    if keyR_count[pid] >= 3
+        keyR_count_cps[pid] = (keyR_count[pid] / keyR_time[pid])
+        keyR_time[pid] = 0
+        keyR_count[pid] = 0
+        keyR_timer[pid].destr()
+        keyR_timer[pid] = null
+        if keyR_count_cps[pid] >= 30
+            disableInput(Player(pid))
+    
+function keyT_timer()
+    let pid = GetExpiredTimer().getData()
+    keyT_time[pid] += PERIODIC_TIME
+    if keyT_count[pid] >= 3
+        keyT_count_cps[pid] = (keyT_count[pid] / keyT_time[pid])
+        keyT_time[pid] = 0
+        keyT_count[pid] = 0
+        keyT_timer[pid].destr()
+        keyT_timer[pid] = null
+        if keyT_count_cps[pid] >= 30
+            disableInput(Player(pid))
+    
+function keyF_timer()
+    let pid = GetExpiredTimer().getData()
+    keyF_time[pid] += PERIODIC_TIME
+    if keyF_count[pid] >= 3
+        keyF_count_cps[pid] = (keyF_count[pid] / keyF_time[pid])
+        keyF_time[pid] = 0
+        keyF_count[pid] = 0
+        keyF_timer[pid].destr()
+        keyF_timer[pid] = null
+        if keyF_count_cps[pid] >= 30
+            disableInput(Player(pid))
+    
+function keyG_timer()
+    let pid = GetExpiredTimer().getData()
+    keyG_time[pid] += PERIODIC_TIME
+    if keyG_count[pid] >= 3
+        keyG_count_cps[pid] = (keyG_count[pid] / keyG_time[pid])
+        keyG_time[pid] = 0
+        keyG_count[pid] = 0
+        keyG_timer[pid].destr()
+        keyG_timer[pid] = null
+        if keyG_count_cps[pid] >= 30
+            disableInput(Player(pid))
+
+function macroListener()
+    CreateTrigger()
+    ..registerPlayerEvent(Player(0), EVENT_PLAYER_MOUSE_DOWN)
+    ..addAction() ->
+        if BlzGetTriggerPlayerMouseButton() == MOUSE_BUTTON_TYPE_LEFT
+            let pid = GetTriggerPlayer().getId()
+            mouseLMB_count[pid] += 1
+            if mouseLMB_timer[pid] == null
+                mouseLMB_timer[pid] = CreateTimer()..startPeriodic(PERIODIC_TIME, function mouseLMB_timer)..setData(pid)
+
+    CreateTrigger()
+    ..registerPlayerEvent(Player(0), EVENT_PLAYER_MOUSE_DOWN)
+    ..addAction() ->
+        if BlzGetTriggerPlayerMouseButton() == MOUSE_BUTTON_TYPE_RIGHT
+            let pid = GetTriggerPlayer().getId()
+            mouseRMB_count[pid] += 1
+            if mouseRMB_timer[pid] == null
+                mouseRMB_timer[pid] = CreateTimer()..startPeriodic(PERIODIC_TIME, function mouseRMB_timer)..setData(pid)
+
+    CreateTrigger()
+    ..registerPlayerKeyPress(Player(0), OSKEY_Q, OSKEY_META.NONE, true)
+    ..addAction() ->
+        if BlzGetTriggerPlayerKey() == OSKEY_Q
+            let pid = GetTriggerPlayer().getId()
+            keyQ_count[pid] += 1
+            if keyQ_timer[pid] == null
+                keyQ_timer[pid] = CreateTimer()..startPeriodic(PERIODIC_TIME, function keyQ_timer)..setData(pid)
+
+    CreateTrigger()
+    ..registerPlayerKeyPress(Player(0), OSKEY_W, OSKEY_META.NONE, true)
+    ..addAction() ->
+        if BlzGetTriggerPlayerKey() == OSKEY_W
+            let pid = GetTriggerPlayer().getId()
+            keyW_count[pid] += 1
+            if keyW_timer[pid] == null
+                keyW_timer[pid] = CreateTimer()..startPeriodic(PERIODIC_TIME, function keyW_timer)..setData(pid)
+
+    CreateTrigger()
+    ..registerPlayerKeyPress(Player(0), OSKEY_E, OSKEY_META.NONE, true)
+    ..addAction() ->
+        if BlzGetTriggerPlayerKey() == OSKEY_E
+            let pid = GetTriggerPlayer().getId()
+            keyE_count[pid] += 1
+            if keyE_timer[pid] == null
+                keyE_timer[pid] = CreateTimer()..startPeriodic(PERIODIC_TIME, function keyE_timer)..setData(pid)
+
+    CreateTrigger()
+    ..registerPlayerKeyPress(Player(0), OSKEY_R, OSKEY_META.NONE, true)
+    ..addAction() ->
+        if BlzGetTriggerPlayerKey() == OSKEY_R
+            let pid = GetTriggerPlayer().getId()
+            keyR_count[pid] += 1
+            if keyR_timer[pid] == null
+                keyR_timer[pid] = CreateTimer()..startPeriodic(PERIODIC_TIME, function keyR_timer)..setData(pid)
+
+    CreateTrigger()
+    ..registerPlayerKeyPress(Player(0), OSKEY_T, OSKEY_META.NONE, true)
+    ..addAction() ->
+        if BlzGetTriggerPlayerKey() == OSKEY_T
+            let pid = GetTriggerPlayer().getId()
+            keyT_count[pid] += 1
+            if keyT_timer[pid] == null
+                keyT_timer[pid] = CreateTimer()..startPeriodic(PERIODIC_TIME, function keyT_timer)..setData(pid)
+
+    CreateTrigger()
+    ..registerPlayerKeyPress(Player(0), OSKEY_F, OSKEY_META.NONE, true)
+    ..addAction() ->
+        if BlzGetTriggerPlayerKey() == OSKEY_F
+            let pid = GetTriggerPlayer().getId()
+            keyF_count[pid] += 1
+            if keyF_timer[pid] == null
+                keyF_timer[pid] = CreateTimer()..startPeriodic(PERIODIC_TIME, function keyF_timer)..setData(pid)
+
+    CreateTrigger()
+    ..registerPlayerKeyPress(Player(0), OSKEY_G, OSKEY_META.NONE, true)
+    ..addAction() ->
+        if BlzGetTriggerPlayerKey() == OSKEY_G
+            let pid = GetTriggerPlayer().getId()
+            keyG_count[pid] += 1
+            if keyG_timer[pid] == null
+
+                keyG_timer[pid] = CreateTimer()..startPeriodic(PERIODIC_TIME, function keyG_timer)..setData(pid)
+
+function macroUI_Setup()
+    clickBlocker = BlzCreateFrameByType("FRAME", "ClickBlocker", GAME_UI, "", 0)
+    clickBlocker..setSize(0.80, 0.60)..setAbsPoint(FRAMEPOINT_CENTER, 0.4, 0.3)..hide()
+
+function initialSetup()
+    getTimer()..start(0.3, function macroUI_Setup)
+
+init
+    initialSetup()
+    macroListener()
+    EventListener.add(EVENT_PLAYER_CHAT_FILTER) ->
+        let input = GetEventPlayerChatString()
+        let arg = input.substring(4, 5)
+        let pid = GetTriggerPlayer().getId()
+        if input.startsWith("cps ") and input.substring(6) == null
+            if Player(arg.toInt()).getController() == MAP_CONTROL_USER
+                printTimedToPlayerClear("CPS for Player "+Player(arg.toInt()).getColor().toColor().toColorString()+Player(arg.toInt()).getName()+"|r", 10, GetTriggerPlayer())
+                printTimedToPlayer("|cff34b8f5- - - - - - - - - - - - - - - - - - -|r", 10, GetTriggerPlayer())
+                printTimedToPlayer("Mouse LMB: |cffffd700"+(mouseLMB_count_cps[pid]).toString()+"|r", 10, GetTriggerPlayer())
+                printTimedToPlayer("Mouse RMB: |cffffd700"+(mouseRMB_count_cps[pid]).toString()+"|r", 10, GetTriggerPlayer())
+                printTimedToPlayer("Key Q: |cffffd700"+(keyQ_count_cps[pid]).toString()+"|r", 10, GetTriggerPlayer())
+                printTimedToPlayer("Key W: |cffffd700"+(keyW_count_cps[pid]).toString()+"|r", 10, GetTriggerPlayer())
+                printTimedToPlayer("Key E: |cffffd700"+(keyE_count_cps[pid]).toString()+"|r", 10, GetTriggerPlayer())
+                printTimedToPlayer("Key R: |cffffd700"+(keyR_count_cps[pid]).toString()+"|r", 10, GetTriggerPlayer())
+                printTimedToPlayer("Key T: |cffffd700"+(keyT_count_cps[pid]).toString()+"|r", 10, GetTriggerPlayer())
+                printTimedToPlayer("Key F: |cffffd700"+(keyF_count_cps[pid]).toString()+"|r", 10, GetTriggerPlayer())
+                printTimedToPlayer("Key G: |cffffd700"+(keyG_count_cps[pid]).toString()+"|r", 10, GetTriggerPlayer())
+                printTimedToPlayer("|cff34b8f5- - - - - - - - - - - - - - - - - - -|r", 10, GetTriggerPlayer())
+            else
+                printTimedToPlayerClear("ID has to be a valid Player.", 3, GetTriggerPlayer())
+                printTimedToPlayer("Format: cps <|cffffd700id|r>", 3, GetTriggerPlayer())
