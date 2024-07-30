@@ -1,4 +1,4 @@
-# ━━━━━━━━━ Anime Carnage Reforged v2.1.0 ━━━━━━━━━ #
+# ━━━━━━━━━ Anime Carnage Reforged v2.0.3 ━━━━━━━━━ #
 
 ### Added
 1. Added a Quickcast Limiter, and a Macro detection system, games should now be more fair.
@@ -15,6 +15,7 @@ Nothing Changed.
 3. Fixed Xanxus Q range.
 4. Fixed Emiya Shirou losing UBW.
 5. Fixed Cobra's poison not giving credit when killing a target with it.
+4. Fixed Teleport Boots being usable to get inside or leave tournament areas.
 
 ### Deleted
 Nothing Deleted.
