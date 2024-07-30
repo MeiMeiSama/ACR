@@ -99,7 +99,6 @@ function mouseRMB_timer()
         mouseRMB_count[pid] = 0
         mouseRMB_timer[pid].destr()
         mouseRMB_timer[pid] = null
-        print(mouseRMB_count_cps[pid])
         if mouseRMB_count_cps[pid] >= 12
             disableInput(Player(pid))
 
@@ -124,7 +123,6 @@ function keyW_timer()
         keyW_count[pid] = 0
         keyW_timer[pid].destr()
         keyW_timer[pid] = null
-        print(keyW_count_cps[pid])
         if keyW_count_cps[pid] >= 20
             disableInput(Player(pid))
     
