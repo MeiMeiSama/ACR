@@ -20,6 +20,8 @@ public int minPlayers = 6 // Required number of players to make a game rated
 public bool rankMode = false // Can be set ingame from Dialog
 public bool requiredPlayers = false
 
+// Stat tracker for ACR to https://wc3stats.com
+
 init
     mmdSetup()
 
