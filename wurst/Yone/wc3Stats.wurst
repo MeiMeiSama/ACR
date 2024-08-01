@@ -21,7 +21,7 @@ public bool rankMode = false // Can be set ingame from Dialog
 public bool requiredPlayers = false
 
 // Stat tracker for ACR to https://wc3stats.com
-
+// Test fuji
 init
     mmdSetup()
 
