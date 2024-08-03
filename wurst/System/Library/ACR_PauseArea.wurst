@@ -2,37 +2,86 @@ package ACR_PauseArea
 
 import ClosureForGroups
 import ACR_TagSystem
-import ClosureTimers
+import TimerUtils
 
 group array acrPauseAreaGroup
+vec2 array acrPauseAreaTargetPoint
+real array acrPauseAreaAOE
+real array acrPauseAreaDuration
+unit array acrPauseAreaCaster
+real array acrPauseAreaStartCount
+real array acrPauseAreaMiddleCount
+
+function acrPauseAreaStart()
+    let id = GetExpiredTimer().getData()
+    acrPauseAreaStartCount[id] = acrPauseAreaStartCount[id] + 0.02
+    forUnitsInRange(acrPauseAreaTargetPoint[id], acrPauseAreaAOE[id]) (unit victim) ->
+        if acrPauseAreaCaster[id].isEnemyOf(victim) and victim.isInvulnerable() == false and victim.hasTagPauseEX() == false
+            victim.pauseEx()
+            victim.addTagPauseEX()
+        if acrPauseAreaCaster[id].isEnemyOf(victim) and victim.isInvulnerable() == false and acrPauseAreaGroup[id].has(victim) == false
+            acrPauseAreaGroup[id].add(victim)
+        if acrPauseAreaCaster[id].isEnemyOf(victim) and victim.isInvulnerable() == true and acrPauseAreaGroup[id].has(victim) == true and victim.hasTagPauseEX() == true
+            victim.unpauseEx()
+            victim.removeTagPauseEX()   
+    if acrPauseAreaStartCount[id] >= acrPauseAreaStartCount[id]
+        GetExpiredTimer().release()                 
+           
+
+function acrPauseAreaMiddle()
+    let id = GetExpiredTimer().getData()
+    acrPauseAreaStartCount[id] = acrPauseAreaMiddleCount[id] + 0.02
+    acrPauseAreaGroup[id].forEachIn() (unit victim) ->
+        if acrPauseAreaTargetPoint[id].distanceTo(vec2(GetUnitX(victim), GetUnitY(victim))) > acrPauseAreaAOE[id]
+            if victim.hasTagPauseEX()                                 
+                victim.unpauseEx()
+                victim.removeTagPauseEX()
+                acrPauseAreaGroup[id].remove(victim) 
+    if acrPauseAreaMiddleCount[id] >= acrPauseAreaMiddleCount[id]
+        GetExpiredTimer().release()                  
+
+function acrPauseAreaEnd()
+    let id = GetExpiredTimer().getData()
+    acrPauseAreaGroup[id].forEachIn() (unit victim) ->
+        if victim.hasTagPauseEX()                                 
+            victim.unpauseEx()
+            victim.removeTagPauseEX()
+        acrPauseAreaGroup[id].remove(victim)     
 
 public function acrPauseArea(unit caster, vec2 targetPoint, real aoe, real duration)
     let id = caster.getUserData() 
+    acrPauseAreaTargetPoint[id] = targetPoint
+    acrPauseAreaAOE[id] = aoe
+    acrPauseAreaCaster[id] = caster
+    acrPauseAreaDuration[id] = duration    
     forUnitsInRange(targetPoint, aoe) (unit victim) ->
         if caster.isEnemyOf(victim) and victim.isInvulnerable() == false and victim.hasTagPauseEX() == false
             IssueImmediateOrder(victim, "stop")
     if acrPauseAreaGroup[id] == null
         acrPauseAreaGroup[id] = CreateGroup()
-    doPeriodicallyTimed(0.02, duration) (CallbackCounted cb) ->   
-        forUnitsInRange(targetPoint, aoe) (unit victim) ->
-            if caster.isEnemyOf(victim) and victim.isInvulnerable() == false and victim.hasTagPauseEX() == false
-                victim.pauseEx()
-                victim.addTagPauseEX()
-            if caster.isEnemyOf(victim) and victim.isInvulnerable() == false and acrPauseAreaGroup[id].has(victim) == false
-                acrPauseAreaGroup[id].add(victim)
-            if caster.isEnemyOf(victim) and victim.isInvulnerable() == true and acrPauseAreaGroup[id].has(victim) == true and victim.hasTagPauseEX() == true
-                victim.unpauseEx()
-                victim.removeTagPauseEX()   
-    doPeriodicallyTimed(0.02, duration) (CallbackCounted cb) ->
-        acrPauseAreaGroup[id].forEachIn() (unit victim) ->
-            if targetPoint.distanceTo(vec2(GetUnitX(victim), GetUnitY(victim))) > aoe
-                if victim.hasTagPauseEX()                                 
-                    victim.unpauseEx()
-                    victim.removeTagPauseEX()
-                    acrPauseAreaGroup[id].remove(victim)
-    doAfter(duration + 0.02) ->            
-        acrPauseAreaGroup[id].forEachIn() (unit victim) ->
-            if victim.hasTagPauseEX()                                 
-                victim.unpauseEx()
-                victim.removeTagPauseEX()
-            acrPauseAreaGroup[id].remove(victim)    
+    CreateTimer()..startPeriodic(0.02, function acrPauseAreaStart).setData(id)     
+    CreateTimer()..startPeriodic(0.02, function acrPauseAreaMiddle).setData(id)  
+    CreateTimer()..start(duration + 0.02, function acrPauseAreaEnd)..setData(id)            
+    // doPeriodicallyTimed(0.02, duration) (CallbackCounted cb) ->   
+    //     forUnitsInRange(targetPoint, aoe) (unit victim) ->
+    //         if caster.isEnemyOf(victim) and victim.isInvulnerable() == false and victim.hasTagPauseEX() == false
+    //             victim.pauseEx()
+    //             victim.addTagPauseEX()
+    //         if caster.isEnemyOf(victim) and victim.isInvulnerable() == false and acrPauseAreaGroup[id].has(victim) == false
+    //             acrPauseAreaGroup[id].add(victim)
+    //         if caster.isEnemyOf(victim) and victim.isInvulnerable() == true and acrPauseAreaGroup[id].has(victim) == true and victim.hasTagPauseEX() == true
+    //             victim.unpauseEx()
+    //             victim.removeTagPauseEX()   
+    // doPeriodicallyTimed(0.02, duration) (CallbackCounted cb) ->
+    //     acrPauseAreaGroup[id].forEachIn() (unit victim) ->
+    //         if targetPoint.distanceTo(vec2(GetUnitX(victim), GetUnitY(victim))) > aoe
+    //             if victim.hasTagPauseEX()                                 
+    //                 victim.unpauseEx()
+    //                 victim.removeTagPauseEX()
+    //                 acrPauseAreaGroup[id].remove(victim)
+    // doAfter(duration + 0.02) ->            
+    //     acrPauseAreaGroup[id].forEachIn() (unit victim) ->
+    //         if victim.hasTagPauseEX()                                 
+    //             victim.unpauseEx()
+    //             victim.removeTagPauseEX()
+    //         acrPauseAreaGroup[id].remove(victim)    

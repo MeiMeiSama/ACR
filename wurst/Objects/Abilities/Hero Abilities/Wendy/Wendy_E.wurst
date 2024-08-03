@@ -2,7 +2,6 @@ package Wendy_E
 
 import ClosureEvents
 // import AbilityGlobals
-// import ClosureTimers
 // import ACR_TagSystem
 
 int wendyEDummyLvl

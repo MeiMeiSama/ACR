@@ -1,63 +1,89 @@
 package Rain
 import ClosureForGroups
 import ObjectDefinitions
-import ClosureTimers
-import GroupUtils
 import ACR_Effects
 import ACR_Silence
 import DamageEvent
 import AbilityGlobals
+import TimerUtils
+
+unit array rainUser
+vec2 array rainvictimPos
+int array rainCount
+group array rainGroup
+effect array rainEffect1
+effect array rainEffect2
+
 init
     rainSilence()
+
+function rainRingEnd()
+    let id = GetExpiredTimer().getData()
+    rainCount[id]++
+    let dmg = ((rainUser[id].getAgi(true)) * 2.5 + 100)
+    forUnitsInRange(rainvictimPos[id], 400) (unit victim) ->
+        if rainUser[id].isEnemyOf(victim) and rainGroup[id].has(victim) == false and victim.isInvulnerable() == false
+            victim.issueImmediateOrder("stop")
+            DamageEvent.setNextDamageId(DAMAGE_ABILITY_RAIN_RING)
+            DamageEvent.setNextDamageFromCode()
+            rainUser[id].damageTarget(victim, dmg, ATTACK_TYPE_MAGIC)
+            acrSilence(rainUser[id], victim, 0.7)
+            rainGroup[id].add(victim)  
+    if rainCount[id] >= 50
+        rainEffect1[id].destr()
+        rainEffect2[id].destr()
+        rainGroup[id].clear()
+        GetExpiredTimer().destr()    
+
+function rainArcoEnd()
+    let id = GetExpiredTimer().getData()
+    rainCount[id]++
+    let dmg = ((rainUser[id].getAgi(true)) * 4.00 + 200)
+    forUnitsInRange(rainvictimPos[id], 400) (unit victim) ->
+        if rainUser[id].isEnemyOf(victim) and rainGroup[id].has(victim) == false and victim.isInvulnerable() == false
+            victim.issueImmediateOrder("stop")
+            DamageEvent.setNextDamageId(DAMAGE_ABILITY_RAIN_ARCO)
+            DamageEvent.setNextDamageFromCode()
+            rainUser[id].damageTarget(victim, dmg, ATTACK_TYPE_MAGIC)
+            acrSilence(rainUser[id], victim, 0.7)
+            rainGroup[id].add(victim)
+    if rainCount[id] >= 100
+        rainEffect1[id].destr()
+        rainEffect2[id].destr()
+        rainGroup[id].clear()
+        GetExpiredTimer().destr() 
+
+
 function rainSilence ()
     CreateTrigger()
     ..registerAnyUnitEvent(EVENT_PLAYER_UNIT_SPELL_EFFECT)
     ..addAction() ->
         if GetSpellAbilityId() == RAIN_VONGOLA_ABILITY
             let caster = GetTriggerUnit()
+            let id = caster.getOwner().getId()
             let spellPos = vec2(GetSpellTargetX(), GetSpellTargetY())
-            let silenced_damaged = CreateGroup()
-            let dmg = ((caster.getAgi(true)) * 2.5 + 100)
-            let eff1 = addEffect(RAIN_EFFECT, spellPos)
-            let eff1_2 = addEffect(RAIN_EFFECT, spellPos)
-            var count = 0
-            eff1.setScale(1.2)
-            eff1_2.setScale(1.2)             
-            doPeriodically(0.02) (CallbackPeriodic cb) ->
-                count++
-                forUnitsInRange(spellPos, 400) (unit target) ->
-                    if caster.isEnemyOf(target) and silenced_damaged.has(target) == false and target.isInvulnerable() == false
-                        DamageEvent.setNextDamageId(DAMAGE_ABILITY_RAIN_RING)
-                        DamageEvent.setNextDamageFromCode()
-                        caster.damageTarget(target, dmg, ATTACK_TYPE_MAGIC)
-                        acrSilence(caster, target, 0.7)
-                        silenced_damaged.add(target)
-                if count == 50
-                    eff1.destr()
-                    eff1_2.destr()
-                    silenced_damaged.release()
-                    destroy cb
+            rainvictimPos[id] = spellPos
+            rainUser[id] = caster
+            if rainGroup[id] == null
+                rainGroup[id] = CreateGroup()
+            rainEffect1[id] = addEffect(RAIN_EFFECT, spellPos)
+            rainEffect2[id] = addEffect(RAIN_EFFECT, spellPos)
+            rainCount[id] = 0
+            rainEffect1[id].setScale(1.2)
+            rainEffect2[id].setScale(1.2)   
+            CreateTimer()..startPeriodic(0.02, function rainRingEnd).setData(id)
+
         if GetSpellAbilityId() == RAIN_ARCO_ABILITY
             let caster = GetTriggerUnit()
+            let id = caster.getOwner().getId()
             let spellPos = vec2(GetSpellTargetX(), GetSpellTargetY())
-            let silenced_damaged = CreateGroup()
-            let dmg = ((caster.getAgi(true)) * 4.00 + 200)
-            let eff2 = addEffect(RAIN_EFFECT, spellPos)
-            let eff2_2 = addEffect(RAIN_EFFECT, spellPos)
-            var count = 0
-            eff2.setScale(1.2)
-            eff2_2.setScale(1.2)
-            doPeriodically(0.02) (CallbackPeriodic cb) ->
-                count++
-                forUnitsInRange(spellPos, 400) (unit target) ->
-                    if caster.isEnemyOf(target) and silenced_damaged.has(target) == false and target.isInvulnerable() == false
-                        DamageEvent.setNextDamageId(DAMAGE_ABILITY_RAIN_ARCO)
-                        DamageEvent.setNextDamageFromCode()
-                        caster.damageTarget(target, dmg, ATTACK_TYPE_MAGIC)
-                        acrSilence(caster, target, 1.0)
-                        silenced_damaged.add(target)
-                if count == 100
-                    eff2.destr()
-                    eff2_2.destr()
-                    silenced_damaged.release()
-                    destroy cb
+            rainvictimPos[id] = spellPos
+            rainUser[id] = caster            
+            if rainGroup[id] == null
+                rainGroup[id] = CreateGroup()
+            rainEffect1[id] = addEffect(RAIN_EFFECT, spellPos)
+            rainEffect2[id] = addEffect(RAIN_EFFECT, spellPos)
+            rainCount[id] = 0
+            rainEffect1[id].setScale(1.2)
+            rainEffect2[id].setScale(1.2) 
+            CreateTimer()..startPeriodic(0.02, function rainArcoEnd).setData(id)

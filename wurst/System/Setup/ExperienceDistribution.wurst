@@ -1,16 +1,23 @@
 package ExperienceDistribution
 
-import ClosureTimers
 import ClosureEvents
+import TimerUtils
 
-function unit.increaseXP ()
-    doPeriodically(5) (CallbackPeriodic cb) ->
-        this.addXp(80, true)        
+unit array unitToGainXp
+
+function passiveXP()
+    let id = GetExpiredTimer().getData()
+    unitToGainXp[id].addXp(80, true)
+
+function increaseXP (unit u)
+    let id = u.getOwner().getId()
+    unitToGainXp[id] = u
+    CreateTimer()..startPeriodic(5, function passiveXP).setData(id)      
 
 public function expDistr ()
     for i = 0 to 12
         if udg_PlayHero[i] != null
-            udg_PlayHero[i].increaseXP()
+            increaseXP(udg_PlayHero[i])
 
     EventListener.add(EVENT_PLAYER_UNIT_DEATH) -> 
         if not GetDyingUnit().isType(UNIT_TYPE_HERO)

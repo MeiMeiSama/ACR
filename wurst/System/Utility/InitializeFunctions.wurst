@@ -66,6 +66,12 @@ import Tohno_F
 import Nanaya_Normal_F
 import Ryougi_Kimono_T
 import Ryougi_Kimono_G
+import Kotori_G
+import Ace_G
+import Sabo_G
+import N_Natsu_G
+import S_Natsu_G
+import Cobra_G
 /*
 
     - Iniitalize functions after the game has started, when most data is "valid" such as udg_Playhero
@@ -114,7 +120,7 @@ public function initFunctions ()
     BlzFrameSetVisible(getFrameACR("ConsoleUIBackdrop", 0), true)
     BlzHideOriginFrames(false)
     moonUI()
-    acrSpeedBoostBase()
+    acrSpeedBoostTimer()
     scoreboardMain()
     scoreboardTab()
     scoreboardValues()
@@ -266,5 +272,17 @@ public function initFunctions ()
     
         if udg_PlayHero[i].getTypeId() == ARTURIA_STRENGTH
             saberStrG()
+        if udg_PlayHero[i].getTypeId() == ITSUKA_KOTORI
+            kotoriDot()        
+        if udg_PlayHero[i].getTypeId() == PORTGASD_ACE
+            aceDot()      
+        if udg_PlayHero[i].getTypeId() == SABO
+            saboDot()          
+        if udg_PlayHero[i].getTypeId() == 'H001'
+            natsuDot()    
+        if udg_PlayHero[i].getTypeId() == 'H00Y'
+            natsu2Dot()     
+        if udg_PlayHero[i].getTypeId() == COBRA
+            cobraDot()                                                         
 
     getTimer().start(3, function updateSelection)

@@ -1,20 +1,27 @@
 package GoldIncome
-import ClosureTimers
+import TimerUtils
+player array incomePlayer
 
 public int array totalGoldEarnt
 init
     for i = 0 to 12
         totalGoldEarnt[i] = 0
 
-function player.increaseGold ()
-    doPeriodically(1) (CallbackPeriodic cb) ->
-        totalGoldEarnt[this.getId()] += 4
-        this.addGold(4)
+function passiveIncome()
+    let id = GetExpiredTimer().getData()
+    incomePlayer[id].addGold(4)
+    totalGoldEarnt[id] += 4
+
+
+function increaseGold (player p)
+    let id = p.getId()
+    incomePlayer[id] = p
+    CreateTimer()..startPeriodic(1, function passiveIncome).setData(id)
      
 public function goldIncome ()
     for i = 0 to 12
         if Player(i).getController() == MAP_CONTROL_USER and Player(i).getSlotState() == PLAYER_SLOT_STATE_PLAYING
-            Player(i).increaseGold()
+            increaseGold(Player(i))
 
 public function goldIncomeShared ()
     CreateTrigger()

@@ -1,0 +1,5 @@
+package acrDot
+
+public int array acrDotStack
+public int array acrDotCount
+public unit array acrDotVictim

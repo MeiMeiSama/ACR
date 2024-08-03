@@ -1,5 +1,4 @@
 package TestingFile
-// import ClosureTimers
 @test function myTesting ()
     // let myStr1 = "1.600"
     var myStr2 = "0.04"

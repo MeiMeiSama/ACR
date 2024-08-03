@@ -1053,32 +1053,32 @@ init
                     // ━━━━━━━━━━━━━━━ [SPECIAL CASES: ITEMS] ━━━━━━━━━━━━━━━━━━ //        
 
                     else if id == DAMAGE_ABILITY_THUNDER_RING
-                        _dmg = (100.00 + (2.5 * stat))                                                   // 350 dmg in testing environment 
+                        _dmg = (100.00 + (2.5 * caster.getStr(true)))                                                   // 350 dmg in testing environment 
                         DamageEvent.setAmount(_dmg)
-                        //printTimedToPlayer (R2S(_dmg) , 1, caster.getOwner())
-                        //printTimedToPlayer("THUNDER RING", 1, caster.getOwner())                
+                        // printTimedToPlayer (R2S(_dmg) , 1, caster.getOwner())
+                        // printTimedToPlayer("THUNDER RING", 1, caster.getOwner())                
                     else if id == DAMAGE_ABILITY_THUNDER_ARCO
-                        _dmg = (200.00 + (4.0 * stat))                                                   // 600 dmg in testing environment
+                        _dmg = (200.00 + (4.0 * caster.getStr(true)))                                                   // 600 dmg in testing environment
                         DamageEvent.setAmount(_dmg)
-                        //printTimedToPlayer (R2S(_dmg) , 1, caster.getOwner())
-                        //printTimedToPlayer("THUNDER ARCO", 1, caster.getOwner())
+                        // printTimedToPlayer (R2S(_dmg) , 1, caster.getOwner())
+                        // printTimedToPlayer("THUNDER ARCO", 1, caster.getOwner())
                     else if id == DAMAGE_ABILITY_STORM_RING
-                        _dmg = (100.00 + (2.5 * stat))                                                   // 350 dmg in testing environment 
+                        _dmg = (100.00 + (2.5 * caster.getInt(true)))                                                   // 350 dmg in testing environment 
                         DamageEvent.setAmount(_dmg)
                         //printTimedToPlayer (R2S(_dmg) , 1, caster.getOwner())
                         //printTimedToPlayer("STORM RING", 1, caster.getOwner())                
                     else if id == DAMAGE_ABILITY_STORM_ARCO
-                        _dmg = (200.00 + (4.0 * stat))                                                   // 600 dmg in testing environment
+                        _dmg = (200.00 + (4.0 * caster.getInt(true)))                                                   // 600 dmg in testing environment
                         DamageEvent.setAmount(_dmg)
                         //printTimedToPlayer (R2S(_dmg) , 1, caster.getOwner())
                         //printTimedToPlayer("STORM ARCO", 1, caster.getOwner())
                     else if id == DAMAGE_ABILITY_RAIN_RING
-                        _dmg = (100.00 + (2.5 * stat))                                                   // 350 dmg in testing environment 
+                        _dmg = (100.00 + (2.5 * caster.getAgi(true)))                                                   // 350 dmg in testing environment 
                         DamageEvent.setAmount(_dmg)
                         //printTimedToPlayer (R2S(_dmg) , 1, caster.getOwner())
                         //printTimedToPlayer("RAIN RING", 1, caster.getOwner())                
                     else if id == DAMAGE_ABILITY_RAIN_ARCO
-                        _dmg = (200.00 + (4.0 * stat))                                                   // 600 dmg in testing environment
+                        _dmg = (200.00 + (4.0 * caster.getAgi(true)))                                                   // 600 dmg in testing environment
                         DamageEvent.setAmount(_dmg)
                         //printTimedToPlayer (R2S(_dmg) , 1, caster.getOwner())
                         //printTimedToPlayer("RAIN ARCO", 1, caster.getOwner())

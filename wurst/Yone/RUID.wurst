@@ -1,6 +1,5 @@
 package RUID
 
-import ClosureTimers
 import GetFrames
 import TimerUtils
 
@@ -110,8 +109,10 @@ function hideFrame()
     BlzHideOriginFrames(true)
     GetExpiredTimer().release()
 
+function tocMissing() 
+    if not BlzLoadTOCFile( "war3mapImported\\ACR.toc" )
+        print("|cffff0000COULD NOT LOAD TOC FILE, MEANING CUSTOM |cffffd700UI|cffff0000 WILL NOT LOAD|r", 3)       
+
 init
-    nullTimer() -> 
-        if not BlzLoadTOCFile( "war3mapImported\\ACR.toc" )
-            print("|cffff0000COULD NOT LOAD TOC FILE, MEANING CUSTOM |cffffd700UI|cffff0000 WILL NOT LOAD|r", 3)
+    getTimer()..start(0, function tocMissing)
     getTimer()..start(0.03, function hideFrame)        

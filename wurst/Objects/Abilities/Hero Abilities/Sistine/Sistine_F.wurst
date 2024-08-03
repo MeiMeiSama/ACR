@@ -4,23 +4,25 @@ import ClosureEvents
 import DummyCaster
 import ObjectDefinitions
 import OrderIds
-import ClosureTimers
 init
 
-
+unit sistineFtarget
+effect sistineFSFX
 
 public function sistineF ()
 
     EventListener.onCast('A107') (unit caster) ->
         let target = GetSpellTargetUnit()
-        let sfx = AddSpecialEffectTarget("war3mapImported\\Effect_Fate_jiujian_qixuan_1.mdl", target, "chest")
-        sfx.setScale(0.5)
-        doPeriodically(0.1) (CallbackPeriodic cb) ->
-            if not target.hasAbility('B068')
-                sfx.destr()
-                destroy cb
+        sistineFtarget = target
+        sistineFSFX = AddSpecialEffectTarget("war3mapImported\\Effect_Fate_jiujian_qixuan_1.mdl", target, "chest")
+        sistineFSFX.setScale(0.5)
         new DummyCaster()
         ..owner(caster.getOwner())
         ..origin(target.getPos())
         ..castTarget(SISTINE_F_DUMMY_ABILITY, 1, OrderIds.bloodlust, target)
-        
+        CreateTimer()..startPeriodic(0.1, function sistineFEnd)        
+
+function sistineFEnd()
+    if sistineFtarget.hasAbility('B068') == false
+        sistineFSFX.destr()
+        GetExpiredTimer().destr()       

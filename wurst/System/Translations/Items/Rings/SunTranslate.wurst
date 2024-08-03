@@ -1,7 +1,7 @@
 package SunTranslate
 
 import ObjectDefinitions
-import ClosureTimers
+import TimerUtils
 
 timer array sunTimer
 int array sunStr
@@ -24,7 +24,27 @@ function sunDynamicTranslation(unit user, item sun)
         let directHeal = (missingHP * 0.12).ceil() + (currentStr * 5)
         let healOverTime = (missingHP * 0.04).ceil() + (currentStr * 1)
         BlzSetItemExtendedTooltip(sun, "|n|cff008080Active:|n|n|r|cffffd700Heals the user and all friendly units around them. Also applies a healing over time effect that heals allies affected every second for 3 seconds.|n|n|r|cffffd700Direct Heal :|r|cffff0000 "+directHeal.toString()+"|n|r|cffffd700HoT :|r|cffff0000 "+healOverTime.toString()+"|n|r|cffffd700DH Formula:|r|cffc0c0c0 15% of missing health |cffff8080+ |cffff00005 x Strength|n|r|cffffd700HoT Formula:|r|cffc0c0c0 5% of missing health |cffff8080+ |cffff00001 x Strength  |r|n|cffffd700Cooldown: |cffff808045|r|n|n|cffc0c0c0Passive|r|n|n|cffff0000Strength + 110|n|r|cffffd700Increases the user's health regeneration by 55|n|r|cffffd700Increases the user's health by 1320")
-  
+
+function sunTranslationTimer() 
+    let id = GetExpiredTimer().getData()
+    if  sunStr[id] != sunUser[id].getStr(true) or sunHp[id] != sunUser[id].getHP()           
+        for i = 0 to 5
+            if UnitItemInSlot(sunUser[id], i).getTypeId() == SUN_RING_VONGOLA
+                sunStr[id] = sunUser[id].getStr(true)
+                sunHp[id] = sunUser[id].getHP() 
+                let sunRing = UnitItemInSlot(sunUser[id], i)
+                sunDynamicTranslation(sunUser[id], sunRing)
+                        
+                
+            if UnitItemInSlot(sunUser[id], i).getTypeId() == SUN_RING_ARCOBALENO
+                sunStr[id] = sunUser[id].getStr(true)  
+                sunHp[id] = sunUser[id].getHP()                      
+                let sunPacifier = UnitItemInSlot(sunUser[id], i)
+                sunDynamicTranslation(sunUser[id], sunPacifier)
+
+    if sunUser[id].hasItemById(SUN_RING_VONGOLA) == false and sunUser[id].hasItemById(SUN_RING_ARCOBALENO) == false
+        sunTimer[id].destr()    
+
 
 function sunEventCheck()
 
@@ -35,9 +55,8 @@ function sunEventCheck()
     ..addAction() ->
         if GetManipulatedItem().getTypeId() == SUN_RING_VONGOLA or GetManipulatedItem().getTypeId() == SUN_RING_ARCOBALENO
             let user = GetManipulatingUnit()
-            sunTimer[user.getOwner().getId()].pause()
-            sunTimer[user.getOwner().getId()].destr()
-            sunTimer[user.getOwner().getId()] = CreateTimer()
+            let id = user.getOwner().getId()
+            sunUser[id] = user
             if GetManipulatedItem().getTypeId() == SUN_RING_VONGOLA
                 for i = 0 to 5
                     if UnitItemInSlot(user, i).getTypeId() == SUN_RING_VONGOLA
@@ -49,25 +68,7 @@ function sunEventCheck()
                         let sunPacifier = UnitItemInSlot(user, i)
                         sunDynamicTranslation(user, sunPacifier)
                 
-            sunStr[user.getOwner().getId()] = user.getStr(true)
-            sunHp[user.getOwner().getId()] = user.getHP() 
+            sunStr[id] = user.getStr(true)
+            sunHp[id] = user.getHP() 
             // ━━━━━━━━━━━━ [RUNS TRANSLATION FOR ALL sun RINGS/ARCOS IN THE INVENTORY WHENEVER AGI CHANGES] ━━━━━━━━━━━━
-            
-            sunTimer[user.getOwner().getId()].doPeriodically(0.25) (CallbackPeriodic cb) ->
-                if  sunStr[user.getOwner().getId()] != user.getStr(true) or sunHp[user.getOwner().getId()] != user.getHP()           
-                    for i = 0 to 5
-                        if UnitItemInSlot(user, i).getTypeId() == SUN_RING_VONGOLA
-                            sunStr[user.getOwner().getId()] = user.getStr(true)
-                            sunHp[user.getOwner().getId()] = user.getHP() 
-                            let sunRing = UnitItemInSlot(user, i)
-                            sunDynamicTranslation(user, sunRing)
-                                    
-                            
-                        if UnitItemInSlot(user, i).getTypeId() == SUN_RING_ARCOBALENO
-                            sunStr[user.getOwner().getId()] = user.getStr(true)  
-                            sunHp[user.getOwner().getId()] = user.getHP()                      
-                            let sunPacifier = UnitItemInSlot(user, i)
-                            sunDynamicTranslation(user, sunPacifier)
-
-                if user.hasItemById(SUN_RING_VONGOLA) == false and user.hasItemById(SUN_RING_ARCOBALENO) == false
-                    sunTimer[user.getOwner().getId()].destr()
+            CreateTimer()..startPeriodic(0.25, function sunTranslationTimer).setData(id)

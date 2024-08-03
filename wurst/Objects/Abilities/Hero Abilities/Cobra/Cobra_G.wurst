@@ -1,0 +1,59 @@
+package Cobra_G
+
+import ACR_Effects
+import ObjectDefinitions
+import ClosureEvents
+import DamageEvent
+import TimerUtils
+import acrDot
+
+unit cobra
+
+function cobraDotEnd()
+    let id = GetExpiredTimer().getData()
+    if acrDotVictim[id].isAlive() == false or acrDotCount[id] == 30 or acrDotStack[id] >= 2
+        acrDotStack[id]--
+        GetExpiredTimer().destr()
+    acrDotCount[id]++       
+    if acrDotVictim[id].isType(UNIT_TYPE_HERO) == true
+        let maxHP = acrDotVictim[id].getMaxHP()
+        let herodmg = maxHP * 0.001
+        if acrDotVictim[id].getHP() > (herodmg * 1.1).ceil()   
+            if acrDotVictim[id].isInvulnerable()
+                acrDotVictim[id].setInvulnerable(false)
+                DamageEvent.setNextDamageFromCode()
+                cobra.damageTarget(acrDotVictim[id], herodmg, ATTACK_TYPE_CHAOS)
+                acrDotVictim[id].setInvulnerable(true)
+                flashEffect(POISON_EFFECT, acrDotVictim[id], "origin")
+            else
+                DamageEvent.setNextDamageFromCode()
+                cobra.damageTarget(acrDotVictim[id], herodmg, ATTACK_TYPE_CHAOS)  
+                flashEffect(POISON_EFFECT, acrDotVictim[id], "origin")
+
+    else if acrDotVictim[id].isType(UNIT_TYPE_HERO) == false
+        let maxHP = acrDotVictim[id].getMaxHP()
+        let mobdmg = maxHP * 0.01
+        if acrDotVictim[id].getHP() > (mobdmg * 1.1).ceil()   
+            if acrDotVictim[id].isInvulnerable()
+                acrDotVictim[id].setInvulnerable(false)
+                DamageEvent.setNextDamageFromCode()
+                cobra.damageTarget(acrDotVictim[id], mobdmg, ATTACK_TYPE_CHAOS)
+                acrDotVictim[id].setInvulnerable(true)
+                flashEffect(POISON_EFFECT, acrDotVictim[id], "origin") 
+            else                
+                DamageEvent.setNextDamageFromCode()
+                cobra.damageTarget(acrDotVictim[id], mobdmg, ATTACK_TYPE_CHAOS)   
+                flashEffect(POISON_EFFECT, acrDotVictim[id], "origin")          
+
+public function cobraDot()
+    EventListener.add(EVENT_PLAYER_UNIT_DAMAGED) ->
+        if GetEventDamageSource().hasAbility(POISONDOT_COBRA)
+            if DamageEvent.getAttackType() != ATTACK_TYPE_CHAOS and GetTriggerUnit().isInvulnerable() == false
+                let user = GetEventDamageSource()
+                cobra = user
+                let victim = GetTriggerUnit()
+                let id = victim.getUserData()
+                acrDotVictim[id] = victim
+                acrDotCount[id] = 0
+                acrDotStack[id]++
+                CreateTimer()..startPeriodic(0.1, function cobraDotEnd).setData(id)
