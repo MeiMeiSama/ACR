@@ -6,19 +6,24 @@ import AbilityGlobals
 import ObjectDefinitions
 
 unit saberStr
-int healing_amount
-int saberStrGCount
-real healing_HoT
+real saberStrDamageTaken
+real saberStrHealingAmount = 0
+real saberStrhealingPerSecond = 0
+real saberStrhealingDuration = 4
+real saberStrhealingElapsedTime = 0
+int saberStrGInstanceCount
+timer saberStrHealTimer
+timer saberStrTranslationTimer
 
 function saberStrGTranslation()
-    if healing_amount > 0
+    if saberStrhealingDuration > 0
         let skill = ARTURIA_STRENGTH_ABILITY_G
         skill..setDescription(skill,
         GOLD+
         "Whenever Lily receives damage from a basic attack, she heals back a portion of that damage over the next few seconds."+
         "\n\nDuration: "+PINK+"4"+GOLD+
         "\nDamage Healed: "+PINK+"50%"+GOLD+
-        "\nCurrent Healing Stored: "+PINK+healing_amount.toString()+GOLD)
+        "\nCurrent Healing Stored: "+PINK+(saberStrhealingPerSecond * saberStrhealingDuration).toString()+GOLD)
     else 
         let skill = ARTURIA_STRENGTH_ABILITY_G
         skill..setDescription(skill,
@@ -26,35 +31,34 @@ function saberStrGTranslation()
         "Whenever Lily receives damage from a basic attack, she heals back a portion of that damage over the next few seconds."+
         "\n\nDuration: "+PINK+"4"+GOLD+
         "\nDamage Healed: "+PINK+"50%"+GOLD+
-        "\nCurrent Healing Stored: "+PINK+"0"+GOLD)  
-        GetExpiredTimer().destr()   
+        "\nCurrent Healing Stored: "+PINK+"0"+GOLD)
+        GetExpiredTimer().destr()     
 
-function saberStrGheal()
+function saberStrGheal() 
+    if saberStrhealingDuration <= 1
+        saberStrDamageTaken = 0
+        GetExpiredTimer().destr()
     flashEffect("HealBuff.mdx", saberStr, "origin")
-    print("healing left: "+healing_amount.toString())
-    print("healed for: "+healing_HoT.toString())
-    saberStr.addHP(healing_HoT)
-    healing_amount -= (healing_HoT).toInt()    
-    if saberStr.isAlive() == false
-        healing_amount = 0  
-    if healing_amount <= 0 
-        GetExpiredTimer().destr()           
+    print("healing stored pre heal: "+(saberStrhealingPerSecond * saberStrhealingDuration).toString())
+    print("healing for: "+ saberStrhealingPerSecond.toString())
+    saberStr.addHP((saberStrhealingPerSecond))
+    saberStrDamageTaken = saberStrDamageTaken - saberStrhealingPerSecond 
+    saberStrhealingDuration--
+    print("healing left post heal: "+(saberStrhealingPerSecond * saberStrhealingDuration).toString())        
 
 
 public function saberStrG()
     EventListener.add(EVENT_PLAYER_UNIT_DAMAGED) -> 
-        if BlzGetEventDamageTarget().getTypeId() == ARTURIA_STRENGTH and BlzGetEventAttackType() == ATTACK_TYPE_HERO
+        if BlzGetEventDamageTarget().getTypeId() == ARTURIA_STRENGTH and BlzGetEventAttackType() == ATTACK_TYPE_MAGIC == false and BlzGetEventAttackType() == ATTACK_TYPE_CHAOS == false 
 
             // ━━━━━━━━━━━━ [Variables] ━━━━━━━━━━━━
             
             saberStr = BlzGetEventDamageTarget()
-            var dmgAmount = GetEventDamage().floor()
-            if not dmgAmount.isEven()
-                dmgAmount++
-            dmgAmount = (dmgAmount / 2).floor()
-
-            healing_amount += dmgAmount
-            healing_HoT = (healing_amount / 4)
-            saberStrGCount = 0
-            CreateTimer()..startPeriodic(0.1, function saberStrGTranslation)
-            CreateTimer()..startPeriodic(1, function saberStrGheal)  
+            saberStrhealingDuration = 4
+            saberStrDamageTaken = saberStrDamageTaken + GetEventDamage()
+            saberStrHealingAmount = saberStrDamageTaken * 0.5
+            saberStrhealingPerSecond = saberStrHealingAmount / saberStrhealingDuration
+            if saberStrTranslationTimer.getRemaining() <= 0
+                saberStrTranslationTimer = CreateTimer()..startPeriodic(0.1, function saberStrGTranslation)    
+            if saberStrHealTimer.getRemaining() <= 0 
+                saberStrHealTimer = CreateTimer()..startPeriodic(1, function saberStrGheal)     

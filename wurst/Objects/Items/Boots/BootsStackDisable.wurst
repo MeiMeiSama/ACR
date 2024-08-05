@@ -1,0 +1,46 @@
+package BootsStackDisable
+
+import ObjectDefinitions
+
+int array boots
+int array bootsOwned
+
+public function bootStack ()
+    boots[0] = 'I01R' //boots lvl 1
+    boots[1] = 'I01W' //boots lvl 2
+    boots[2] = 'I01X' //boots lvl 3
+    boots[3] = 'I02I' // Blink boots
+    boots[4] = HASTE_BOOT //Haste boots
+    boots[5] = MANA_BOOT // Mana boots
+    boots[6] = 'I02K' // Teleportation boots
+    boots[7] = 'I02G' // Vitality boots
+    boots[8] = 'I06Z' // Blink boots of true sight
+    boots[9] = HASTE_BOOT_TRUESIGHT // Haste boots of true sight
+    boots[10] = MANA_BOOT_TRUESIGHT // Mana boots of true sight
+    boots[11] = 'I06Y' // Teleport boots of true sight
+    boots[12] = 'I071' // Vitality boots of true sight    
+    CreateTrigger()
+    ..registerAnyUnitEvent(EVENT_PLAYER_UNIT_PICKUP_ITEM)
+    ..addAction() ->
+        let user = GetTriggerUnit()
+        let id = user.getOwner().getId()
+        for i = 0 to 12
+            if GetManipulatedItem().getTypeId() == boots[i]
+                bootsOwned[id]++
+        if bootsOwned[id] >= 2
+            printTimedToPlayer("cannot stack boots, the item has been destroyed, next time read warnings on items dipshit", 2, user.getOwner())
+            GetManipulatedItem().remove()                  
+
+    CreateTrigger()
+    ..registerAnyUnitEvent(EVENT_PLAYER_UNIT_DROP_ITEM)
+    ..addAction() ->
+        let user = GetTriggerUnit()
+        let id = user.getOwner().getId()
+        for i = 0 to 12
+            if GetManipulatedItem().getTypeId() == boots[i]
+                bootsOwned[id]--
+
+
+
+                
+

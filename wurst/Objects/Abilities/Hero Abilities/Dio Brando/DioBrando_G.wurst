@@ -1,57 +1,64 @@
 package DioBrando_G
 
 import ClosureEvents
-// import AbilityClassifications
-// import AbilityGlobals
+import AbilityClassifications
+import AbilityGlobals
 import ObjectDefinitions
 
-int healing_amount
-real healing_HoT
-bool heal_active
+unit dio
+real dioDamageTaken
+real dioHealingAmount = 0
+real diohealingPerSecond = 0
+real diohealingDuration = 4
+real diohealingElapsedTime = 0
+int dioGInstanceCount
+timer dioHealTimer
+timer dioTranslationTimer
+
+function dioGTranslation()
+    if diohealingDuration > 0
+        let skill = ARTURIA_STRENGTH_ABILITY_G
+        skill..setDescription(skill,
+        GOLD+
+        "Whenever Lily receives damage from a basic attack, she heals back a portion of that damage over the next few seconds."+
+        "\n\nDuration: "+PINK+"4"+GOLD+
+        "\nDamage Healed: "+PINK+"50%"+GOLD+
+        "\nCurrent Healing Stored: "+PINK+(diohealingPerSecond * diohealingDuration).toString()+GOLD)
+    else 
+        let skill = ARTURIA_STRENGTH_ABILITY_G
+        skill..setDescription(skill,
+        GOLD+
+        "Whenever Lily receives damage from a basic attack, she heals back a portion of that damage over the next few seconds."+
+        "\n\nDuration: "+PINK+"4"+GOLD+
+        "\nDamage Healed: "+PINK+"50%"+GOLD+
+        "\nCurrent Healing Stored: "+PINK+"0"+GOLD)
+        GetExpiredTimer().destr()     
+
+function dioGheal() 
+    if diohealingDuration <= 1
+        dioDamageTaken = 0
+        GetExpiredTimer().destr()
+    flashEffect("HealBuff.mdx", dio, "origin")
+    print("healing stored pre heal: "+(diohealingPerSecond * diohealingDuration).toString())
+    print("healing for: "+ diohealingPerSecond.toString())
+    dio.addHP((diohealingPerSecond))
+    dioDamageTaken = dioDamageTaken - diohealingPerSecond 
+    diohealingDuration--
+    print("healing left post heal: "+(diohealingPerSecond * diohealingDuration).toString())        
+
 
 public function dioG()
     EventListener.add(EVENT_PLAYER_UNIT_DAMAGED) -> 
-        if BlzGetEventDamageTarget().getTypeId() == DIO_BRANDO and BlzGetEventAttackType() == ATTACK_TYPE_HERO
+        if BlzGetEventDamageTarget().getTypeId() == DIO_BRANDO and BlzGetEventAttackType() == ATTACK_TYPE_MAGIC == false and BlzGetEventAttackType() == ATTACK_TYPE_CHAOS == false 
 
             // ━━━━━━━━━━━━ [Variables] ━━━━━━━━━━━━
             
-            // let hero = BlzGetEventDamageTarget()
-            var dmgAmount = GetEventDamage().floor()
-            if not dmgAmount.isEven()
-                dmgAmount++
-            dmgAmount = (dmgAmount / 2).floor()
-
-            healing_amount += dmgAmount
-            healing_HoT = (healing_amount / 2)
-
-            // ━━━━━━━━━━━━ [Translation] ━━━━━━━━━━━━
-
-            // doPeriodicallyCounted(0.1, 40) (CallbackCounted cb) ->
-            //     if healing_amount > 0
-            //         let skill = DIO_BRANDO_ABILITY_G
-            //         skill..setDescription(skill,
-            //         GOLD+
-            //         "Whenever Dio receives damage from a basic attack, he heals back a portion of that damage over the next few seconds."+
-            //         "\n\nDuration: "+PINK+"4"+GOLD+
-            //         "\nDamage Healed: "+PINK+"50%"+GOLD+
-            //         "\nCurrent Healing Stored: "+PINK+healing_amount.toString()+GOLD)
-            //     else 
-            //         let skill = DIO_BRANDO_ABILITY_G
-            //         skill..setDescription(skill,
-            //         GOLD+
-            //         "Whenever Dio receives damage from a basic attack, he heals back a portion of that damage over the next few seconds."+
-            //         "\n\nDuration: "+PINK+"4"+GOLD+
-            //         "\nDamage Healed: "+PINK+"50%"+GOLD+
-            //         "\nCurrent Healing Stored: "+PINK+"0"+GOLD)    
-
-            // ━━━━━━━━━━━━ [Healing Part] ━━━━━━━━━━━━
-
-            if heal_active == false
-                heal_active = true
-                // doPeriodically(1) (CallbackPeriodic cb) ->
-                //     flashEffect("HealBuff.mdx", hero, "origin")
-                //     if healing_amount <= 0 or not hero.isAlive()
-                //         heal_active = false
-                //         destroy cb
-                //     hero.addHP(healing_HoT)
-                //     healing_amount -= (healing_HoT).toInt()
+            dio = BlzGetEventDamageTarget()
+            diohealingDuration = 4
+            dioDamageTaken = dioDamageTaken + GetEventDamage()
+            dioHealingAmount = dioDamageTaken * 0.5
+            diohealingPerSecond = dioHealingAmount / diohealingDuration
+            if dioTranslationTimer.getRemaining() <= 0
+                dioTranslationTimer = CreateTimer()..startPeriodic(0.1, function dioGTranslation)    
+            if dioHealTimer.getRemaining() <= 0 
+                dioHealTimer = CreateTimer()..startPeriodic(1, function dioGheal)  

@@ -20,6 +20,7 @@ import CameraFunctions
 import ACR_SpeedBoost
 import GetFrames
 import TimerUtils
+import BootsStackDisable
 
 import Aqua_G
 import Yato_G
@@ -122,6 +123,7 @@ public function initFunctions ()
     acrSpeedBoostTimer()
     scoreboardMain()
     scoreboardTab()
+    bootStack()
     scoreboardValues()
     goldIncome()
     goldIncomeShared()
