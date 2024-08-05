@@ -10,7 +10,6 @@ import ACR_Stun
 constant edoMadaraQsound = acrCreateSound("war3mapImported\\MadaraN1.mp3")
 constant edoMadaraRsound = acrCreateSound("war3mapImported\\MadaraN4.mp3")
 constant edoMadaraRProcsound = acrCreateSound("war3mapImported\\MadaraNSE3.mp3")
-// import ClosureTimers
 vec2 edoMadaraR
 init
     initTrig_EdoMadaraQWRT_Orig()

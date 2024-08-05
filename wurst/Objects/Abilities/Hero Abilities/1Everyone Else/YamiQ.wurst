@@ -4,7 +4,6 @@ import AbilityGlobals
 import main
 import AbilityQ_data
 import ClosureForGroups
-import ClosureTimers
 import UpdateTooltips
 import TimerUtils
 import ACR_Slow
@@ -54,6 +53,10 @@ function trig_YamiQFunc004Func039Func008Func015T()
     RemoveUnit(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 1101))
     FlushChildHashtable(YDLOC, GetHandleId(GetExpiredTimer()))
     DestroyTimer(GetExpiredTimer())
+
+function yamiQFlush()
+    yamiQ_Group.clear()
+
 function trig_YamiQFunc004Func039T()
     timer _ydl_timer
     let pos = yamiCaster.getPos()
@@ -94,8 +97,7 @@ function trig_YamiQFunc004Func039T()
         SavePlayerHandle(YDLOC, GetHandleId(_ydl_timer), 603, LoadPlayerHandle(YDLOC, GetHandleId(GetExpiredTimer()), 603))
         TimerStart(_ydl_timer, 2.00, false, function trig_YamiQFunc004Func039Func007Func017T)
         FlushChildHashtable(YDLOC, GetHandleId(GetExpiredTimer()))
-        doAfter(0.5) ->
-            yamiQ_Group.destr()
+        CreateTimer()..start(0.5, function yamiQFlush)
         DestroyTimer(GetExpiredTimer())
     if LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 151551948) == 2
         SaveUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 80, CreateUnit(LoadPlayerHandle(YDLOC, GetHandleId(GetExpiredTimer()), 603), 'e028', GetUnitX(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594)), GetUnitY(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594)), GetUnitFacing(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594))))
@@ -140,7 +142,8 @@ function trig_YamiQActions()
         SetUnitTimeScalePercent(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594), 175.00)
         SetUnitAnimationByIndex(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594), 12)
         _ydl_timer = CreateTimer()
-        yamiQ_Group = CreateGroup()
+        if yamiQ_Group == null
+            yamiQ_Group = CreateGroup()
         SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 594, LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594))
         SaveLocationHandle(YDLOC, GetHandleId(_ydl_timer), 549, LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 549))
         SavePlayerHandle(YDLOC, GetHandleId(_ydl_timer), 603, LoadPlayerHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 603))

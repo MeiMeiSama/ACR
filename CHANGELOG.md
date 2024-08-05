@@ -1,7 +1,30 @@
+# ━━━━━━━━━ Anime Carnage Reforged v2.0.4 ━━━━━━━━━ #
+
+### Added
+1. Added new icons for all characters.
+
+### Improved
+1. Altera's F cast time has been reduced by approximately 66%.
+2. Hibari's T now makes allies immune to magic damage along with enemies.
+3. Ainz's F now grants him maximum movement speed for its duration.
+
+### Changed
+1. Players can now only carry one boots item at a time.
+
+### Fixed
+1. Hibari's T now properly removes magic immunity from affected characters after it ends.
+2. Dio's/Saber Lily's passives now properly heal for 50% of basic attack damage receieved. 
+3. Gajeel's/Mashu's/Luffy's passives now properly reduce incoming basic attack damage by 35%.
+4. Aqua's F1 now properly deals damage to non-hero enemy units.
+5. Modos should now properly change abilities back to normal after they end.
+
+### Deleted
+Nothing Deleted.
+
 # ━━━━━━━━━ Anime Carnage Reforged v2.0.3 ━━━━━━━━━ #
 
 ### Added
-1. Added a Quickcast Limiter, and a Macro detection system, games should now be more fair.
+1. Added a Quickcast Limiter, games should now be more fair.
 
 ### Improved
 Nothing Improved.

@@ -2,7 +2,10 @@ package XanxusR___F_Orig
 import DamageEvent
 import AbilityGlobals
 import main
-import ClosureTimers
+
+unit xanxus
+unit xanxusRVictim
+
 init
     initTrig_XanxusR___F_Orig()
 
@@ -158,6 +161,14 @@ function trig_XanxusR___FFunc003Func032T()
         SaveInteger(YDLOC, GetHandleId(_ydl_timer), 745, LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 745))
         SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 582028818, LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 582028818))
         TimerStart(_ydl_timer, 0.02, true, function trig_XanxusR___FFunc003Func032Func004Func013T)
+
+function xanxusREnd()
+    xanxus.setInvulnerable(false)
+    xanxus.unpause()
+    xanxusRVictim.setInvulnerable(false)
+    xanxusRVictim.unpause()
+
+
 function trig_XanxusR___FActions()
     timer _ydl_timer
     integer trigger_ID = LoadInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 865)
@@ -210,11 +221,9 @@ function trig_XanxusR___FActions()
         SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 582028818, LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 582028818))
         let caster = LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594)
         let victim = LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 549)
-        doAfter(3) ->
-            caster.setInvulnerable(false)
-            caster.unpause()
-            victim.setInvulnerable(false)
-            victim.unpause()            
+        xanxus = caster
+        xanxusRVictim = victim
+        CreateTimer()..start(3, function xanxusREnd)        
         TimerStart(_ydl_timer, 0.01, true, function trig_XanxusR___FFunc003Func032T)
     else
         soundPlay("war3mapImported\\Xanxus6.mp3", GetUnitX(udg_Unitsound), GetUnitY(udg_Unitsound))

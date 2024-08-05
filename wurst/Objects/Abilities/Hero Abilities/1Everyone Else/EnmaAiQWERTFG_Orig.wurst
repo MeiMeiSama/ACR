@@ -5,10 +5,10 @@ import main
 import AbilityQ_data
 import MusicPlaylist
 import ACR_Stun
-import ClosureTimers
 
 int enmaTDuration
 bool enmaTActive
+unit enma
 
 init
     initTrig_EnmaAiQWERTFG_Orig()
@@ -454,15 +454,11 @@ function trig_EnmaAiQWERTFGActions()
     else if GetSpellAbilityId() == 'A10U'
         enmaTActive = true
         let caster = LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594)
+        enma = caster
         caster.disableAbility('A10U', true, false)
         DisplayTextToPlayer(caster.getOwner(), 0, 0, "Hell Communication duration: 5")
         enmaTDuration = 4
-        doPeriodically(1) (CallbackPeriodic cb) ->
-            if enmaTActive == false or enmaTDuration == 0
-                destroy cb
-            else                  
-                DisplayTextToPlayer(caster.getOwner(), 0, 0, enmaTDuration.toString())
-                enmaTDuration--
+        CreateTimer()..startPeriodic(1, function enmaTEnd)
         SaveReal(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 248, 15.00 * I2R(GetHeroInt(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594), true)))
         SaveTimerHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 947400700, CreateTimer())
         StartTimerBJ(LoadTimerHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 947400700), false, 5.00)
@@ -548,6 +544,15 @@ function trig_EnmaAiQWERTFGActions()
         SaveInteger(YDLOC, GetHandleId(_ydl_timer), 745, LoadInteger(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 745))
         TimerStart(_ydl_timer, 0.02, true, function trig_EnmaAiQWERTFGFunc007Func001Func001Func002Func001Func001Func016T)
     FlushChildHashtable(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID)
+
+function enmaTEnd()
+    if enmaTActive == false or enmaTDuration == 0
+        GetExpiredTimer().destr()
+    else                  
+        DisplayTextToPlayer(enma.getOwner(), 0, 0, enmaTDuration.toString())
+        enmaTDuration--
+
+
 function initTrig_EnmaAiQWERTFG_Orig()
     gg_trg_EnmaAiQWERTFG = CreateTrigger()
     TriggerRegisterAnyUnitEventBJ(gg_trg_EnmaAiQWERTFG, EVENT_PLAYER_UNIT_SPELL_EFFECT)

@@ -1,14 +1,15 @@
 package MusicPlaylist
 import main
-import ClosureTimers
 
 sound array bgm
 sound array bgmException
 
 init
-    doPeriodically(1) (CallbackPeriodic cb) ->
-        if bgmIsPlaying() == false and bgmExceptionIsPlaying() == false
-            ResumeMusic()  
+    CreateTimer()..startPeriodic(1, function bgmResume) 
+
+function bgmResume()
+    if bgmIsPlaying() == false and bgmExceptionIsPlaying() == false
+        ResumeMusic()    
 
 public function stopBgm()
     for i = 0 to 17

@@ -2,29 +2,84 @@ package Sasuke_Young_E
 
 import ClosureEvents
 import ObjectDefinitions
-import ClosureTimers
 import UpdateTooltips
 import TimerUtils
 import ACR_TagSystem
 import ACR_CooldownTracker
 init
 
+real kirinCd
+real amaterasuCd
+int kirinLvl
+int amaterasuLvl
+int sharingan_buff = 'B026'
+int rinnegan_buff = 'B00F'
+int sharingan = 'A0CX'
+int rinnegan = 'A02F'
+int mspassive = 'A189'
+int amaterasu = 'A0CY'
+int kirin = 'A02B'
+int upgrade = 'A18A'
+unit sasuke
+
 public boolean sasukeRinneganON = true
 
-public function sasukeYoungE()
 
-    let sharingan_buff = 'B026'
-    let rinnegan_buff = 'B00F'
-    let sharingan = 'A0CX'
-    let rinnegan = 'A02F'
-    let mspassive = 'A189'
-    let amaterasu = 'A0CY'
-    let kirin = 'A02B'
-    let upgrade = 'A18A'
+function sasukeEyeSwitch1()
+    let id = GetExpiredTimer().getData()
+    if sasuke.hasAbility(upgrade)
+        sasuke.removeAbility(upgrade) // removes spell B and adds spell A instead (including learning tooltip) but is bugged                           
+    sasuke.disableAbility(rinnegan, false, false)
+    sasuke.disableAbility(SASUKE_YOUNG_ABILITY_G_RINNEGAN, false, false)
+    rinnegan.removeTagDisabled()
+    SASUKE_YOUNG_ABILITY_G_RINNEGAN.removeTagDisabled()
+    let tooltipTimer = CreateTimer()
+    tooltipTimer..start(0.02, function updateTooltips)..setData(id)    
+
+function sasukeEyeSwitch2()
+    let id = GetExpiredTimer().getData()
+    sasuke.addAbility(kirin)// and add it back again shortly after
+    sasuke.setAbilityLevel(kirin, amaterasuLvl)
+    sasuke.startAbilityCooldown(kirin, amaterasuCd)                              
+    sasuke.disableAbility(rinnegan, false, false)
+    sasuke.disableAbility(SASUKE_YOUNG_ABILITY_G_RINNEGAN, false, false)
+    rinnegan.removeTagDisabled()
+    SASUKE_YOUNG_ABILITY_G_RINNEGAN.removeTagDisabled()
+    let tooltipTimer = CreateTimer()
+    tooltipTimer..start(0.02, function updateTooltips)..setData(id)
+
+function sasukeEyeSwitch3()
+    let id = GetExpiredTimer().getData()
+    sasuke.addAbility(upgrade) // removes spell A and adds spell B instead (including learning tooltip) but is bugged                                           
+    sasuke.disableAbility(sharingan, false, false)
+    sasuke.disableAbility(SASUKE_YOUNG_ABILITY_G_SHARINGAN, false, false)
+    sharingan.removeTagDisabled()
+    SASUKE_YOUNG_ABILITY_G_SHARINGAN.removeTagDisabled()
+    let tooltipTimer = CreateTimer()
+    tooltipTimer..start(0.02, function updateTooltips)..setData(id)      
+    
+function sasukeEyeSwitch4()
+    let id = GetExpiredTimer().getData()
+    sasuke.addAbility(amaterasu) // and add it back again shortly after
+    sasuke.setAbilityLevel(amaterasu, kirinLvl)
+    sasuke.startAbilityCooldown(amaterasu, kirinCd)                                                   
+    sasuke.disableAbility(sharingan, false, false)
+    sasuke.disableAbility(SASUKE_YOUNG_ABILITY_G_SHARINGAN, false, false)
+    sharingan.removeTagDisabled()
+    SASUKE_YOUNG_ABILITY_G_SHARINGAN.removeTagDisabled()
+    let tooltipTimer = CreateTimer()
+    tooltipTimer..start(0.02, function updateTooltips)..setData(id)
+
+function sasukeEyeAdd()
+    sasuke.addAbility(rinnegan)
+    sasuke.addAbility(SASUKE_YOUNG_ABILITY_G_RINNEGAN)    
+
+public function sasukeYoungE()
 
     EventListener.add(EVENT_PLAYER_HERO_SKILL) ->
         if GetLearnedSkill() == SASUKE_YOUNG_ABILITY_E
             let u = GetTriggerUnit()
+            sasuke = u
             let a = GetLearnedSkill()
             let abilvl = GetUnitAbilityLevel(u, a)
             if abilvl == 1
@@ -35,9 +90,7 @@ public function sasukeYoungE()
                 SASUKE_YOUNG_ABILITY_G_SHARINGAN.addTagDisabled()
                 sharingan.addTagDisabled()
                 u.removeAbility(sharingan_buff)
-                doAfter(0.002) ->                                       
-                    u.addAbility(rinnegan)
-                    u.addAbility(SASUKE_YOUNG_ABILITY_G_RINNEGAN)
+                CreateTimer()..start(0.002, function sasukeEyeAdd)
                     // sasukeRinneganON = true
             u.addAbility(mspassive)
             u.setAbilityLevel(mspassive, abilvl)
@@ -63,21 +116,13 @@ public function sasukeYoungE()
             sharingan.addTagDisabled()
             caster.removeAbility(sharingan_buff)
             sasukeRinneganON = true
-            doAfter(0.002) ->
-                if caster.hasAbility(upgrade)
-                    caster.removeAbility(upgrade) // removes spell B and adds spell A instead (including learning tooltip) but is bugged                           
-                caster.disableAbility(rinnegan, false, false)
-                caster.disableAbility(SASUKE_YOUNG_ABILITY_G_RINNEGAN, false, false)
-                rinnegan.removeTagDisabled()
-                SASUKE_YOUNG_ABILITY_G_RINNEGAN.removeTagDisabled()
-                let tooltipTimer = CreateTimer()
-                tooltipTimer..start(0.02, function updateTooltips)..setData(id)
+            CreateTimer()..start(0.002, function sasukeEyeSwitch1)..setData(id)
 
 
         else if sasukeRinneganON == false and caster.getAbilityLevel(amaterasu) != 0
-            let cd = caster.getAbilityCooldownRemaining(amaterasu)
-            let lvl = caster.getAbilityLevel(amaterasu)
-            acrCooldownR[id] = cd
+            amaterasuCd = caster.getAbilityCooldownRemaining(amaterasu)
+            amaterasuLvl = caster.getAbilityLevel(amaterasu)
+            acrCooldownR[id] = amaterasuCd
             caster.disableAbility(sharingan, true, true)
             caster.disableAbility(SASUKE_YOUNG_ABILITY_G_SHARINGAN, true, true)
             sharingan.addTagDisabled()
@@ -87,16 +132,7 @@ public function sasukeYoungE()
                 caster.removeAbility(upgrade) // removes spell B and adds spell A instead (including learning tooltip) but is bugged    
             caster.removeAbility(kirin) // to fix the bug, remove spell A
             sasukeRinneganON = true
-            doAfter(0.002) ->
-                caster.addAbility(kirin)// and add it back again shortly after
-                caster.setAbilityLevel(kirin, lvl)
-                caster.startAbilityCooldown(kirin, cd)                              
-                caster.disableAbility(rinnegan, false, false)
-                caster.disableAbility(SASUKE_YOUNG_ABILITY_G_RINNEGAN, false, false)
-                rinnegan.removeTagDisabled()
-                SASUKE_YOUNG_ABILITY_G_RINNEGAN.removeTagDisabled()
-                let tooltipTimer = CreateTimer()
-                tooltipTimer..start(0.02, function updateTooltips)..setData(id)
+            CreateTimer()..start(0.002, function sasukeEyeSwitch2)..setData(id)
 
         else if sasukeRinneganON == true and caster.getAbilityLevel(kirin) == 0
             caster.disableAbility(rinnegan, true, true)
@@ -105,20 +141,13 @@ public function sasukeYoungE()
             SASUKE_YOUNG_ABILITY_G_RINNEGAN.addTagDisabled()
             caster.removeAbility(rinnegan_buff)   
             sasukeRinneganON = false
-            doAfter(0.002) ->
-                caster.addAbility(upgrade) // removes spell A and adds spell B instead (including learning tooltip) but is bugged                                           
-                caster.disableAbility(sharingan, false, false)
-                caster.disableAbility(SASUKE_YOUNG_ABILITY_G_SHARINGAN, false, false)
-                sharingan.removeTagDisabled()
-                SASUKE_YOUNG_ABILITY_G_SHARINGAN.removeTagDisabled()
-                let tooltipTimer = CreateTimer()
-                tooltipTimer..start(0.02, function updateTooltips)..setData(id)                
+            CreateTimer()..start(0.002, function sasukeEyeSwitch3)..setData(id)            
                       
 
         else if sasukeRinneganON == true and caster.getAbilityLevel(kirin) != 0
-            let cd = caster.getAbilityCooldownRemaining(kirin)
-            let lvl = caster.getAbilityLevel(kirin)
-            acrCooldownR2[id] = cd
+            kirinCd = caster.getAbilityCooldownRemaining(kirin)
+            kirinLvl = caster.getAbilityLevel(kirin)
+            acrCooldownR2[id] = kirinCd
             caster.disableAbility(rinnegan, true, true)
             caster.disableAbility(SASUKE_YOUNG_ABILITY_G_RINNEGAN, true, true)
             rinnegan.addTagDisabled()
@@ -127,14 +156,5 @@ public function sasukeYoungE()
             caster.addAbility(upgrade) // removes spell A and adds spell B instead (including learning tooltip) but is bugged
             caster.removeAbility(amaterasu) // to fix the bug, remove spell B    
             sasukeRinneganON = false
-            doAfter(0.002) ->
-                caster.addAbility(amaterasu) // and add it back again shortly after
-                caster.setAbilityLevel(amaterasu, lvl)
-                caster.startAbilityCooldown(amaterasu, cd)                                                   
-                caster.disableAbility(sharingan, false, false)
-                caster.disableAbility(SASUKE_YOUNG_ABILITY_G_SHARINGAN, false, false)
-                sharingan.removeTagDisabled()
-                SASUKE_YOUNG_ABILITY_G_SHARINGAN.removeTagDisabled()
-                let tooltipTimer = CreateTimer()
-                tooltipTimer..start(0.02, function updateTooltips)..setData(id)
+            CreateTimer()..start(0.002, function sasukeEyeSwitch4)..setData(id) 
 

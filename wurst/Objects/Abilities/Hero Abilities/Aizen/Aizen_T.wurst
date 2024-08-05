@@ -1,12 +1,13 @@
 package Aizen_T
-import ClosureTimers
 import main
 import MusicPlaylist
 import ACR_Transformation
 import AbilityGlobals
 import ACR_TagSystem
+import TimerUtils
 // import UpdateAbilityData
 
+unit aizen
 boolean aizenTactive = false
 
 init
@@ -19,6 +20,7 @@ function aizenModoT ()
     ..addAction() ->
         if ((GetSpellAbilityId() == 'A19D')) 
             let caster = GetTriggerUnit()
+            aizen = caster
             let pid = caster.getOwner().getId()
             if SPELL_G[pid].hasTagHidden() == false
                 caster.hideAbility(SPELL_G[pid], true)
@@ -27,16 +29,17 @@ function aizenModoT ()
             StopMusic(false)
             PlaySoundBJ(gg_snd_AizenBGM)                
             acrTransformation(caster, 40, 'H01R', 'H03Q', 850, 4.0)
-            doPeriodically(0.01) (CallbackPeriodic cb) ->
-                if transformationActive[pid] == false
-                    if SPELL_G[pid].hasTagHidden() == true
-                        caster.hideAbility(SPELL_G[pid], false)
-                        SPELL_G[pid].removeTagHidden()
-                    if gg_snd_AizenBGM.isPlaying()
-                        gg_snd_AizenBGM.stop(false, false) 
-                    destroy cb
+            CreateTimer()..startPeriodic(0.01, function aizenModoTEnd).setData(pid)
 
-
+function aizenModoTEnd()
+    let pid = GetExpiredTimer().getData()
+    if transformationActive[pid] == false
+        if SPELL_G[pid].hasTagHidden() == true
+            aizen.hideAbility(SPELL_G[pid], false)
+            SPELL_G[pid].removeTagHidden()
+        if gg_snd_AizenBGM.isPlaying()
+            gg_snd_AizenBGM.stop(false, false) 
+        GetExpiredTimer().destr() 
 
 
 

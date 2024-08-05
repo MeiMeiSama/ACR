@@ -184,7 +184,7 @@ function bootsUpgrade ()
 
     // ------------------------- Haste of True Sight  ------------------------- //
     let hasteSight = new ItemRecipe(HASTE_BOOT_TRUESIGHT, 0, false, true, true) // Haste of True Sight
-    hasteSight.addItem('I02M') // Haste Boots
+    hasteSight.addItem(HASTE_BOOT) // Haste Boots
     hasteSight.addItem('gemt') // Gem of True Sight
 
     // ------------------------- Mana of True Sight  ------------------------- //

@@ -1,7 +1,7 @@
 package ThunderTranslate
 
 import ObjectDefinitions
-import ClosureTimers
+import TimerUtils
 
 timer array thunderTimer
 int array thunderStr
@@ -20,7 +20,25 @@ function thunderDynamicTranslation(unit user, item thunder)
         let baseDmg = 200
         let currentStr = (user.getStr(true) * 4.0).ceil() 
         let dmg = baseDmg + currentStr 
-        BlzSetItemExtendedTooltip(thunder, "|n|cff008080Active:|n|n|r|cffffd700Dash towards the targeted location, dealing damage to enemies struck and paralyzing them for 2 seconds.|n|n|r|cffffd700Damage output: |cffff0000"+dmg.toString()+"|n|r|cffffd700Damage Formula:|r|cffc0c0c0 100 |cffff8080+ |cffff00002.5x Strength|r|n|cffffd700Cooldown: |cffff808045|r|n|n|cffc0c0c0Passive|r|n|n|cffff0000Strength + 165|n|r|cffffd700Increases the user's attack by 165|n|r|cffffd700Increases the user's health by 66")
+        BlzSetItemExtendedTooltip(thunder, "|n|cff008080Active:|n|n|r|cffffd700Dash towards the targeted location, dealing damage to enemies struck and paralyzing them for 2 seconds.|n|n|r|cffffd700Damage output: |cffff0000"+dmg.toString()+"|n|r|cffffd700Damage Formula:|r|cffc0c0c0 200 |cffff8080+ |cffff00004.0x Strength|r|n|cffffd700Cooldown: |cffff808045|r|n|n|cffc0c0c0Passive|r|n|n|cffff0000Strength + 165|n|r|cffffd700Increases the user's attack by 165|n|r|cffffd700Increases the user's health by 66")
+
+function thunderTranslationTimer() 
+    let id = GetExpiredTimer().getData()
+    if  thunderStr[id] != thunderUser[id].getStr(true)    
+        for i = 0 to 5
+            if UnitItemInSlot(thunderUser[id], i).getTypeId() == THUNDER_RING_VONGOLA
+                thunderStr[id] = thunderUser[id].getStr(true)
+                let thunderRing = UnitItemInSlot(thunderUser[id], i)
+                thunderDynamicTranslation(thunderUser[id], thunderRing)
+                        
+                
+            if UnitItemInSlot(thunderUser[id], i).getTypeId() == THUNDER_RING_ARCOBALENO
+                thunderStr[id] = thunderUser[id].getStr(true)                      
+                let thunderPacifier = UnitItemInSlot(thunderUser[id], i)
+                thunderDynamicTranslation(thunderUser[id], thunderPacifier)
+
+    if thunderUser[id].hasItemById(THUNDER_RING_VONGOLA) == false and thunderUser[id].hasItemById(THUNDER_RING_ARCOBALENO) == false
+        thunderTimer[id].destr()    
 
 function thunderEventCheck()
 
@@ -31,8 +49,8 @@ function thunderEventCheck()
     ..addAction() ->
         if GetManipulatedItem().getTypeId() == THUNDER_RING_VONGOLA or GetManipulatedItem().getTypeId() == THUNDER_RING_ARCOBALENO
             let user = GetManipulatingUnit()
-            thunderTimer[user.getOwner().getId()].destr()
-            thunderTimer[user.getOwner().getId()] = CreateTimer()
+            let id = user.getOwner().getId()
+            thunderUser[id] = user
             if GetManipulatedItem().getTypeId() == THUNDER_RING_VONGOLA
                 for i = 0 to 5
                     if UnitItemInSlot(user, i).getTypeId() == THUNDER_RING_VONGOLA
@@ -44,22 +62,6 @@ function thunderEventCheck()
                         let thunderPacifier = UnitItemInSlot(user, i)
                         thunderDynamicTranslation(user, thunderPacifier)
                 
-            thunderStr[user.getOwner().getId()] = user.getStr(true)
+            thunderStr[id] = user.getStr(true)
             // ━━━━━━━━━━━━ [RUNS TRANSLATION FOR ALL thunder RINGS/ARCOS IN THE INVENTORY WHENEVER AGI CHANGES] ━━━━━━━━━━━━
-            
-            thunderTimer[user.getOwner().getId()].doPeriodically(0.25) (CallbackPeriodic cb) ->
-                if  thunderStr[user.getOwner().getId()] != user.getStr(true)    
-                    for i = 0 to 5
-                        if UnitItemInSlot(user, i).getTypeId() == THUNDER_RING_VONGOLA
-                            thunderStr[user.getOwner().getId()] = user.getStr(true)
-                            let thunderRing = UnitItemInSlot(user, i)
-                            thunderDynamicTranslation(user, thunderRing)
-                                    
-                            
-                        if UnitItemInSlot(user, i).getTypeId() == THUNDER_RING_ARCOBALENO
-                            thunderStr[user.getOwner().getId()] = user.getStr(true)                      
-                            let thunderPacifier = UnitItemInSlot(user, i)
-                            thunderDynamicTranslation(user, thunderPacifier)
-
-                if user.hasItemById(THUNDER_RING_VONGOLA) == false and user.hasItemById(THUNDER_RING_ARCOBALENO) == false
-                    thunderTimer[user.getOwner().getId()].destr()
+            CreateTimer()..startPeriodic(0.25, function thunderTranslationTimer).setData(id)

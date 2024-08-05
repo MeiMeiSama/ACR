@@ -2,7 +2,7 @@ package IllyaF_Orig
 import DamageEvent
 import AbilityGlobals
 import main
-import ClosureTimers
+import TimerUtils
 
 int array illyaFCount
 
@@ -13,11 +13,15 @@ function trig_IllyaFConditions() returns boolean
     return GetSpellAbilityId() == 'A0QS'
 function trig_IllyaFFunc012Func001Func032Func002003003() returns boolean
     return IsUnitType(GetFilterUnit(), UNIT_TYPE_STRUCTURE) == false and IsUnitEnemy(GetFilterUnit(), LoadPlayerHandle(YDLOC, GetHandleId(GetExpiredTimer()), 603)) == true and GetUnitAbilityLevel(GetFilterUnit(), 'Avul') != 1 and IsUnitDeadBJ(GetFilterUnit()) == false
+
+function illyaFFlush()
+    let id = GetExpiredTimer().getData()
+    illyaFCount[id] = 0
+
 function trig_IllyaFFunc012Func001Func032Func003A()
     let id = GetEnumUnit().getUserData()
     if illyaFCount[id] == 0
-        doAfter(5) ->
-            illyaFCount[id] = 0  
+        CreateTimer()..start(5, function illyaFFlush).setData(id)  
     if illyaFCount[id] < 3 
         DamageEvent.setNextDamageId(DAMAGE_ABILITY_ILLYA_F)
         DamageEvent.setNextDamageFromCode()

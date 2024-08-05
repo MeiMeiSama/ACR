@@ -1,14 +1,15 @@
 package Sting_F
 
-import ClosureTimers
 import MusicPlaylist
 import AbilityGlobals
 import ACR_TagSystem
+import TimerUtils
 // import Translate_F
 import ACR_Transformation
 // import UpdateAbilityData
 
 boolean stingTactive = false
+unit sting
 
 init
     stingModo()
@@ -20,6 +21,7 @@ function stingModo()
     ..addAction() ->
         if ((GetSpellAbilityId() == 'A19H')) 
             let caster = GetTriggerUnit()
+            sting = caster
             let pid = caster.getOwner().getId()
             if SPELL_G[pid].hasTagHidden() == false
                 caster.hideAbility(SPELL_G[pid], true)
@@ -28,16 +30,17 @@ function stingModo()
             StopMusic(false)
             PlaySoundBJ(gg_snd_stingdragonfoce)                
             acrTransformation(caster, 40, 'H009', 'H01W', 850, 4.0)
-            doPeriodically(0.01) (CallbackPeriodic cb) ->
-                if transformationActive[pid] == false
-                    if SPELL_G[pid].hasTagHidden() == true
-                        caster.hideAbility(SPELL_G[pid], false)
-                        SPELL_G[pid].removeTagHidden()
-                    if gg_snd_stingdragonfoce.isPlaying()
-                        gg_snd_stingdragonfoce.stop(false, false) 
-                    destroy cb
+            CreateTimer()..startPeriodic(0.01, function stingModoTEnd).setData(pid)
 
-
+function stingModoTEnd()
+    let pid = GetExpiredTimer().getData()
+    if transformationActive[pid] == false
+        if SPELL_G[pid].hasTagHidden() == true
+            sting.hideAbility(SPELL_G[pid], false)
+            SPELL_G[pid].removeTagHidden()
+        if gg_snd_stingdragonfoce.isPlaying()
+            gg_snd_stingdragonfoce.stop(false, false) 
+        GetExpiredTimer().destr()  
 
 
 

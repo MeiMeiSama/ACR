@@ -1,7 +1,7 @@
 package RainTranslate
 
 import ObjectDefinitions
-import ClosureTimers
+import TimerUtils
 
 timer array rainTimer
 int array rainAgi
@@ -22,6 +22,24 @@ function rainDynamicTranslation(unit user, item rain)
         let dmg = baseDmg + currentAgi 
         BlzSetItemExtendedTooltip(rain, "|n|cff008080Active:|n|n|r|cffffd700Creates a circle at the targeted location, damaging enemies in it and silencing them for 2 seconds. Any enemy who walks into the circle while it stays up will also be affected. The circle lasts for 3 seconds and can only apply its effect to each opponent once per use.|n|n|r|cffffd700Damage output:|cff03cf64"+dmg.toString()+" |n|r|cffffd700Damage output:|r|cffc0c0c0 100 |cffff8080+ |cffff0000|cff03cf642.5x Agility  |r|n|cffffd700Cooldown: |cffff808045|r|n|n|cffc0c0c0Passive|r|n|n|cff03cf64Agility + 165|n|r|cffffd700Increases the user's attack speed by 110%|n|r|cffffd700Increases the user's health by 1430")
 
+function rainTranslationTimer() 
+    let id = GetExpiredTimer().getData()
+    if  rainAgi[id] != rainUser[id].getAgi(true)    
+        for i = 0 to 5
+            if UnitItemInSlot(rainUser[id], i).getTypeId() == RAIN_RING_VONGOLA
+                rainAgi[id] = rainUser[id].getAgi(true)
+                let rainRing = UnitItemInSlot(rainUser[id], i)
+                rainDynamicTranslation(rainUser[id], rainRing)
+                        
+                
+            if UnitItemInSlot(rainUser[id], i).getTypeId() == RAIN_RING_ARCOBALENO
+                rainAgi[id] = rainUser[id].getAgi(true)                      
+                let rainPacifier = UnitItemInSlot(rainUser[id], i)
+                rainDynamicTranslation(rainUser[id], rainPacifier)
+
+    if rainUser[id].hasItemById(RAIN_RING_VONGOLA) == false and rainUser[id].hasItemById(RAIN_RING_ARCOBALENO) == false
+        rainTimer[id].destr()    
+
 function rainEventCheck()
 
     // ━━━━━━━━━━━━ [RUNS TRANSLATION FOR ALL rain RINGS/ARCOS IN THE INVENTORY IF rain RING/ARCO IS PICKED UP] ━━━━━━━━━━━━
@@ -31,8 +49,8 @@ function rainEventCheck()
     ..addAction() ->
         if GetManipulatedItem().getTypeId() == RAIN_RING_VONGOLA or GetManipulatedItem().getTypeId() == RAIN_RING_ARCOBALENO
             let user = GetManipulatingUnit()
-            rainTimer[user.getOwner().getId()].destr()
-            rainTimer[user.getOwner().getId()] = CreateTimer()
+            let id = user.getOwner().getId()
+            rainUser[id] = user
             if GetManipulatedItem().getTypeId() == RAIN_RING_VONGOLA
                 for i = 0 to 5
                     if UnitItemInSlot(user, i).getTypeId() == RAIN_RING_VONGOLA
@@ -44,22 +62,6 @@ function rainEventCheck()
                         let rainPacifier = UnitItemInSlot(user, i)
                         rainDynamicTranslation(user, rainPacifier)
                 
-            rainAgi[user.getOwner().getId()] = user.getAgi(true)
+            rainAgi[id] = user.getAgi(true)
             // ━━━━━━━━━━━━ [RUNS TRANSLATION FOR ALL rain RINGS/ARCOS IN THE INVENTORY WHENEVER AGI CHANGES] ━━━━━━━━━━━━
-            
-            rainTimer[user.getOwner().getId()].doPeriodically(0.25) (CallbackPeriodic cb) ->
-                if  rainAgi[user.getOwner().getId()] != user.getAgi(true)    
-                    for i = 0 to 5
-                        if UnitItemInSlot(user, i).getTypeId() == RAIN_RING_VONGOLA
-                            rainAgi[user.getOwner().getId()] = user.getAgi(true)
-                            let rainRing = UnitItemInSlot(user, i)
-                            rainDynamicTranslation(user, rainRing)
-                                    
-                            
-                        if UnitItemInSlot(user, i).getTypeId() == RAIN_RING_ARCOBALENO
-                            rainAgi[user.getOwner().getId()] = user.getAgi(true)                      
-                            let rainPacifier = UnitItemInSlot(user, i)
-                            rainDynamicTranslation(user, rainPacifier)
-
-                if user.hasItemById(RAIN_RING_VONGOLA) == false and user.hasItemById(RAIN_RING_ARCOBALENO) == false
-                    rainTimer[user.getOwner().getId()].destr()
+            CreateTimer()..startPeriodic(0.25, function rainTranslationTimer).setData(id)

@@ -2,9 +2,10 @@ package GrayW
 import DamageEvent
 import AbilityGlobals
 import ACR_Pull
-import ClosureTimers
 
 location grayLoc
+location targetLoc
+location newTargetLoc
 
 init
     initTrig_GrayW()
@@ -183,6 +184,14 @@ function trig_GrayWFunc006T()
     TimerStart(_ydl_timer, 0.20, false, function trig_GrayWFunc006Func026T)
     FlushChildHashtable(YDLOC, GetHandleId(GetExpiredTimer()))
     DestroyTimer(GetExpiredTimer())
+
+function grayWFlush1()
+    RemoveLocation(newTargetLoc)
+
+function grayWFlush2()
+    RemoveLocation(grayLoc)    
+    RemoveLocation(targetLoc)
+
 function trig_GrayWActions()
     timer _ydl_timer
     integer trigger_ID = LoadInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 865)
@@ -190,19 +199,16 @@ function trig_GrayWActions()
     let caster = GetTriggerUnit()
     let spellPos = vec2(GetSpellTargetX(), GetSpellTargetY())
     grayLoc = GetUnitLoc(caster)
-    let targetLoc = GetSpellTargetLoc()
+    targetLoc = GetSpellTargetLoc()
     BlzSetUnitFacingEx(caster, caster.getPos().angleTo(spellPos).degrees())
     SaveInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 865, trigger_ID)
     if DistanceBetweenPoints(grayLoc, targetLoc) > 1350
-        let newTargetLoc = PolarProjectionBJ(grayLoc, 1350, AngleBetweenPoints(grayLoc, targetLoc))
+        newTargetLoc = PolarProjectionBJ(grayLoc, 1350, AngleBetweenPoints(grayLoc, targetLoc))
         SaveLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1108, newTargetLoc)
-        doAfter(5) ->             
-            RemoveLocation(newTargetLoc)
+        CreateTimer()..start(5, function grayWFlush1)
     else 
         SaveLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1108, GetSpellTargetLoc())
-    doAfter(5) ->             
-        RemoveLocation(grayLoc)    
-        RemoveLocation(targetLoc)        
+    CreateTimer()..start(5, function grayWFlush2)          
     SaveInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 1045, trigger_ID)
     PlaySoundBJ(gg_snd_Gray2)
     SaveUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594, GetSpellAbilityUnit())

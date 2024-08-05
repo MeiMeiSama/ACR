@@ -1,13 +1,18 @@
 package CameraFunctions
 
-import ClosureTimers
+import TimerUtils
+
+unit array acrCameraUnit
 
 public function acrCamera(unit u)
     let p = u.getOwner()
-    doPeriodically(0.1) (CallbackPeriodic cb) ->
-        if u.isPaused() == false
-            SetCameraFieldForPlayer(p, CAMERA_FIELD_TARGET_DISTANCE, 4000, 0)
-            SetCameraFieldForPlayer(p, CAMERA_FIELD_ANGLE_OF_ATTACK, 300, 0)
-            // if GetCameraField(CAMERA_FIELD_ANGLE_OF_ATTACK) != 5.306    
-            //     SetCameraFieldForPlayer(p, CAMERA_FIELD_ANGLE_OF_ATTACK, 5.306, 0)
+    let id = p.getId()
+    acrCameraUnit[id] = u
+    CreateTimer()..startPeriodic(0.1, function acrCameraUpdate).setData(id)
 
+function acrCameraUpdate()
+    let id = GetExpiredTimer().getData()
+    if acrCameraUnit[id].isPaused() == false
+        let p = acrCameraUnit[id].getOwner()
+        SetCameraFieldForPlayer(p, CAMERA_FIELD_TARGET_DISTANCE, 4000, 0)
+        SetCameraFieldForPlayer(p, CAMERA_FIELD_ANGLE_OF_ATTACK, 300, 0)

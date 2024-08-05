@@ -2,10 +2,10 @@ package AnziT___E___F_Orig
 import DamageEvent
 import AbilityGlobals
 import main
-import ClosureTimers
 import ClosureForGroups
 import ACR_Slow
 
+unit ainz
 boolean ainzFbool = false
 
 init
@@ -182,6 +182,16 @@ function trig_AnziT___E___FFunc004Func009T()
         DestroyGroup(LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 993))
         FlushChildHashtable(YDLOC, GetHandleId(GetExpiredTimer()))
         DestroyTimer(GetExpiredTimer())
+
+function ainzFFunctionStart()
+    let casterpos = ainz.getPos()
+    forUnitsInRange(casterpos, 925) (unit victim) ->
+        if ainz.isEnemyOf(victim) and victim.isInvulnerable() == false
+            acrSlow(ainz, victim, 70, 0.12)
+    if ainzFbool == false
+        ainz.setMoveSpeed(ainz.getDefaultMovespeed())
+        GetExpiredTimer().destr()   
+
 function trig_AnziT___E___FActions()
     timer _ydl_timer
     integer trigger_ID = LoadInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 865)
@@ -214,14 +224,10 @@ function trig_AnziT___E___FActions()
     else if GetSpellAbilityId() == 'A0V3'
         let caster = LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594)
         caster.disableAbility('A0V3', true, false)
+        caster.setMoveSpeed(522)
+        ainz = caster
         ainzFbool = true
-        doPeriodically(0.1) (CallbackPeriodic cb) ->
-            let casterpos = caster.getPos()
-            forUnitsInRange(casterpos, 925) (unit victim) ->
-                if caster.isEnemyOf(victim) and victim.isInvulnerable() == false
-                    acrSlow(caster, victim, 70, 0.12)
-            if ainzFbool == false
-                destroy cb        
+        CreateTimer()..startPeriodic(0.1, function ainzFFunctionStart) 
         caster.issueImmediateOrder("stop")            
         soundPlay("war3mapImported\\Anzi6-1.mp3", GetUnitX(udg_Unitsound), GetUnitY(udg_Unitsound))
         SaveLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 683, PolarProjectionBJ(LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1108), 200.00, GetUnitFacing(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594)) + 180.00))

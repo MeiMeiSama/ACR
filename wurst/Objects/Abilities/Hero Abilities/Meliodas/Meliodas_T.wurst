@@ -1,13 +1,14 @@
 package Meliodas_T
-import ClosureTimers
 import main
 import MusicPlaylist
 import AbilityGlobals
 // import ACR_TagSystem
 import ACR_Transformation
+import TimerUtils
 // import UpdateAbilityData
 
 boolean meliodasTactive = false
+unit meliodas
 
 init
 
@@ -20,6 +21,7 @@ function meliodasModoT()
     ..addAction() ->
         if ((GetSpellAbilityId() == 'A19G')) 
             let caster = GetTriggerUnit()
+            meliodas = caster
             let pid = caster.getOwner().getId()
             caster.disableAbility(SPELL_E[pid], true, true)
             caster.removeAbility('B065')
@@ -27,12 +29,24 @@ function meliodasModoT()
             StopMusic(false)
             PlaySoundBJ(gg_snd_MeliodasBGM)                
             acrTransformation(caster, 40, 'H02M', 'H036', 850, 4.0)
-            doPeriodically(0.01) (CallbackPeriodic cb) ->
-                if transformationActive[pid] == false
-                    caster.disableAbility(SPELL_E[pid], false, false)
-                    if gg_snd_MeliodasBGM.isPlaying()
-                        gg_snd_MeliodasBGM.stop(false, false) 
-                    destroy cb
+            CreateTimer()..startPeriodic(0.01, function meliodasModoTEnd).setData(pid)
+
+function meliodasModoTEnd()
+    let pid = GetExpiredTimer().getData()
+    if transformationActive[pid] == false
+        meliodas.disableAbility(SPELL_E[pid], false, false)
+        if gg_snd_MeliodasBGM.isPlaying()
+            gg_snd_MeliodasBGM.stop(false, false)  
+        GetExpiredTimer().destr() 
+
+
+
+
+
+
+
+
+
     // CreateTrigger()
     // ..registerAnyUnitEvent(EVENT_PLAYER_UNIT_SPELL_EFFECT)
     // ..addAction() ->

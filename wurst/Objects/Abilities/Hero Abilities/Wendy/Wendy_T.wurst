@@ -1,27 +1,31 @@
 package Wendy_T
 // import UpdateAbilityData
-import ClosureTimers
 import MusicPlaylist
 import AbilityGlobals
 // import ACR_TagSystem
 import ACR_Transformation
+import TimerUtils
 // import ObjectIds
 
 boolean wendyTActive = false
+unit wendy
+int wendyE
+int wendyELvl
 
 init
-    ichigoModoT()
+    wendyModoT()
 
-function ichigoModoT()
+function wendyModoT()
 
     CreateTrigger()
     ..registerAnyUnitEvent(EVENT_PLAYER_UNIT_SPELL_EFFECT)
     ..addAction() ->
         if ((GetSpellAbilityId() == 'A19I')) 
             let caster = GetTriggerUnit()
+            wendy = caster
             let pid = caster.getOwner().getId()
-            let wendyE = 'A0XB'
-            let wendyELvl = caster.getAbilityLevel(wendyE)
+            wendyE = 'A0XB'
+            wendyELvl = caster.getAbilityLevel(wendyE)
             caster.removeAbility(SPELL_G[pid])
             caster.removeAbility(wendyE)
             caster.removeAbility('B059')       
@@ -31,16 +35,19 @@ function ichigoModoT()
             StopMusic(false)
             PlaySoundBJ(gg_snd_WendyDragonForce)                
             acrTransformation(caster, 40, 'H006', 'H01D', 850, 4.0)
-            doPeriodically(0.01) (CallbackPeriodic cb) ->
-                if transformationActive[pid] == false
-                    AddUnitAnimationProperties(caster, "alternate", false)
-                    caster.addAbility(wendyE)
-                    caster.setAbilityLevel(wendyE, wendyELvl)
-                    caster.removeAbility('A0EA')
-                    caster.addAbility(SPELL_G[pid])
-                    if gg_snd_WendyDragonForce.isPlaying()
-                        gg_snd_WendyDragonForce.stop(false, false) 
-                    destroy cb
+            CreateTimer()..startPeriodic(0.01, function wendyModoTEnd).setData(pid)
+
+function wendyModoTEnd()
+    let pid = GetExpiredTimer().getData()
+    if transformationActive[pid] == false
+        AddUnitAnimationProperties(wendy, "alternate", false)
+        wendy.addAbility(wendyE)
+        wendy.setAbilityLevel(wendyE, wendyELvl)
+        wendy.removeAbility('A0EA')
+        wendy.addAbility(SPELL_G[pid])
+        if gg_snd_WendyDragonForce.isPlaying()
+            gg_snd_WendyDragonForce.stop(false, false) 
+        GetExpiredTimer().destr()  
 
 // init
 //     wendyModeT_init()

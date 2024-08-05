@@ -2,7 +2,6 @@ package Tokisaki_Kurumi
 import DamageEvent
 import AbilityGlobals
 import main
-import ClosureTimers
 import ACR_Stun
 init
     initTrig_Tokisaki_Kurumi()
@@ -132,6 +131,10 @@ function trig_Tokisaki_KurumiFunc004Func001Func001Func001Func021Func002Func010T(
     TimerStart(_ydl_timer, 0.50, true, function trig_Tokisaki_KurumiFunc004Func001Func001Func001Func021Func002Func010Func002T)
     FlushChildHashtable(YDLOC, GetHandleId(GetExpiredTimer()))
     DestroyTimer(GetExpiredTimer())
+
+function kurumiTSoundPlay()
+    PlaySoundBJ(gg_snd_kurumi5_3)
+
 function trig_Tokisaki_KurumiFunc004Func001Func001Func001Func021T()
     timer _ydl_timer
     PlaySoundBJ(gg_snd_kurumi5_2)
@@ -158,9 +161,7 @@ function trig_Tokisaki_KurumiFunc004Func001Func001Func001Func021T()
         SaveInteger(YDLOC, GetHandleId(_ydl_timer), 280, LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 280))
         TimerStart(_ydl_timer, 5.00, false, function trig_Tokisaki_KurumiFunc004Func001Func001Func001Func021Func002Func010T)
         bj_forLoopAIndex++
-    doAfter(9.9) ->
-        PlaySoundBJ(gg_snd_kurumi5_3)
-                         
+    CreateTimer()..start(9.9, function kurumiTSoundPlay)                        
     FlushChildHashtable(YDLOC, GetHandleId(GetExpiredTimer()))
     DestroyTimer(GetExpiredTimer())
 function trig_Tokisaki_KurumiFunc004Func001Func001Func001Func022Func003T()

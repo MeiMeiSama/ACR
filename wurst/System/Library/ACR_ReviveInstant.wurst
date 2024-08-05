@@ -1,24 +1,36 @@
 package ACR_ReviveInstant
 
-import ClosureTimers
 import ACR_TagSystem
+import TimerUtils
+
+unit array acrReviveUnit
+boolean array acrReviveBoolean
+vec2 array acrReviveUnitPos
+player array acrReviveUnitOwner
+real array acrReviveUnitHealth
+real array acrReviveUnitMana
+
+function acrReviveEnd()
+    let id = GetExpiredTimer().getData()
+    acrReviveUnit[id].revive(acrReviveUnitPos[id], false)
+    acrReviveUnit[id].setMana(acrReviveUnitMana[id])
+    acrReviveUnit[id].setHP(acrReviveUnitHealth[id])
+    if acrReviveUnit[id].hasTagRevive() == true
+        acrReviveUnit[id].removeTagRevive()
+    if acrReviveBoolean[id] == true
+        acrReviveUnitOwner[id].select(acrReviveUnit[id])    
 
 public function acrRevive(unit caster)
-    let casterpos = caster.getPos()
+    let id = caster.getOwner().getId()
     let p = caster.getOwner()
-    let hp = caster.getHP()
-    let mp = caster.getMana()
-    var selected = false
+    acrReviveUnit[id] = caster
+    acrReviveUnitPos[id] = caster.getPos()
+    acrReviveUnitOwner[id] = p
+    acrReviveUnitHealth[id] = caster.getHP()
+    acrReviveUnitMana[id] = caster.getMana()
+    acrReviveBoolean[id] = false
     if caster.hasTagRevive() == false
         caster.addTagRevive()
     if IsUnitSelected(caster, p)
-        selected = true   
+        acrReviveBoolean[id] = true   
     caster.setHP(0)
-    doAfter(0.001) ->        
-        caster.revive(casterpos, false)
-        caster.setMana(mp)
-        caster.setHP(hp)
-        if caster.hasTagRevive() == true
-            caster.removeTagRevive()
-        if selected == true
-            p.select(caster)

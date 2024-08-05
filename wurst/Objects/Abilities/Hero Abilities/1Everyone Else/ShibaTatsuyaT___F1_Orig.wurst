@@ -2,8 +2,10 @@ package ShibaTatsuyaT___F1_Orig
 import DamageEvent
 import AbilityGlobals
 import main
-import ClosureTimers
 import ClosureForGroups
+
+vec2 tatsuyaPos
+unit tatsuya
 
 init
     initTrig_ShibaTatsuyaT___F1_Orig()
@@ -453,20 +455,24 @@ function trig_ShibaTatsuyaT___F1Actions()
         else
             soundPlay("war3mapImported\\Tatsuya3-2.mp3", GetUnitX(udg_Unitsound), GetUnitY(udg_Unitsound))
         let caster = GetTriggerUnit()
-        let casterpos = caster.getPos()
+        tatsuya = caster
+        tatsuyaPos = caster.getPos()
         caster.pause()
         caster.setInvulnerable(true)
         caster.setAnimation(9)
-        doAfter(0.2) -> 
-            caster.unpause()
-            caster.setInvulnerable(false)
-            forUnitsInRange(casterpos, 500) (unit victim) ->
-                if caster.isEnemyOf(victim) and victim.isInvulnerable() == false
-                    DamageEvent.setNextDamageId(DAMAGE_ABILITY_E)
-                    DamageEvent.setNextDamageFromCode()
-                    UnitDamageTargetBJ(caster, victim, 100, ATTACK_TYPE_MAGIC, DAMAGE_TYPE_MAGIC)
-                    victim.issueImmediateOrder("stop")                    
+        CreateTimer()..start(0.2, function tatsuyaEEnd)                    
     FlushChildHashtable(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID)
+
+function tatsuyaEEnd() 
+    tatsuya.unpause()
+    tatsuya.setInvulnerable(false)
+    forUnitsInRange(tatsuyaPos, 500) (unit victim) ->
+        if tatsuya.isEnemyOf(victim) and victim.isInvulnerable() == false
+            DamageEvent.setNextDamageId(DAMAGE_ABILITY_E)
+            DamageEvent.setNextDamageFromCode()
+            UnitDamageTargetBJ(tatsuya, victim, 100, ATTACK_TYPE_MAGIC, DAMAGE_TYPE_MAGIC)
+            victim.issueImmediateOrder("stop")     
+
 function initTrig_ShibaTatsuyaT___F1_Orig()
     gg_trg_ShibaTatsuyaT___F1 = CreateTrigger()
     TriggerRegisterAnyUnitEventBJ(gg_trg_ShibaTatsuyaT___F1, EVENT_PLAYER_UNIT_SPELL_EFFECT)

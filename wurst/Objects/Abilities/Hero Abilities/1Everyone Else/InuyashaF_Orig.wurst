@@ -2,7 +2,7 @@ package InuyashaF_Orig
 import DamageEvent
 import AbilityGlobals
 import main
-import ClosureTimers
+import TimerUtils
 
 int array inuyashaFCount
 
@@ -13,11 +13,15 @@ function trig_InuyashaFConditions() returns boolean
     return GetSpellAbilityId() == 'A0O5'
 function trig_InuyashaFFunc015Func003Func019Func001Func010003003() returns boolean
     return IsUnitType(GetFilterUnit(), UNIT_TYPE_STRUCTURE) == false and IsUnitDeadBJ(GetFilterUnit()) == false and IsUnitInGroup(GetFilterUnit(), LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 744928215)) == false and GetUnitAbilityLevel(GetFilterUnit(), 'Avul') != 1 and IsUnitEnemy(GetFilterUnit(), LoadPlayerHandle(YDLOC, GetHandleId(GetExpiredTimer()), 603)) == true
+
+function inuyashaFFlush()
+    let id = GetExpiredTimer().getData()
+    inuyashaFCount[id] = 0
+
 function trig_InuyashaFFunc015Func003Func019Func001Func011A()
     let id = GetEnumUnit().getUserData()
     if inuyashaFCount[id] == 0
-        doAfter(5) ->
-            inuyashaFCount[id] = 0                
+        CreateTimer()..start(5, function inuyashaFFlush).setData(id)              
     if inuyashaFCount[id] < 3      
         DamageEvent.setNextDamageId(DAMAGE_ABILITY_INUYASHA_F)
         DamageEvent.setNextDamageFromCode()

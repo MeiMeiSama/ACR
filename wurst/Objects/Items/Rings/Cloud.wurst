@@ -3,16 +3,48 @@ package Cloud
 import ObjectDefinitions
 import DummyCaster
 import OrderIds
-import ClosureTimers
 import ACR_TagSystem
 import ACR_Effects
+import TimerUtils
 
 public real array cloudAbsorbValue
+effect array cloudSFX
+unit array cloudUser
+int array cloudCount
 
 init
     cloudActivate()
 
 // ━━━━━━━━━━━━ [Activate Ability] ━━━━━━━━━━━━
+
+
+function cloudRingEnd()
+    let id = GetExpiredTimer().getData()
+    if cloudUser[id].hasTagPauseEX() == false and cloudUser[id].isPaused() == false 
+        cloudCount[id]++
+    if cloudAbsorbValue[id] == 0                                        
+        cloudUser[id].removeAbility('B06K')
+        cloudSFX[id].destr()
+        GetExpiredTimer().destr()    
+    if cloudCount[id] == 300                
+        cloudUser[id].removeAbility('B06K')
+        cloudAbsorbValue[id] = 0
+        cloudSFX[id].destr()
+        GetExpiredTimer().destr()      
+
+function cloudArcoEnd()
+    let id = GetExpiredTimer().getData()
+    if cloudUser[id].hasTagPauseEX() == false and cloudUser[id].isPaused() == false 
+        cloudCount[id]++
+    if cloudAbsorbValue[id] == 0                                        
+        cloudUser[id].removeAbility('B06N')
+        cloudSFX[id].destr()
+        GetExpiredTimer().destr()    
+    if cloudCount[id] == 500                
+        cloudUser[id].removeAbility('B06N')
+        cloudAbsorbValue[id] = 0
+        cloudSFX[id].destr()
+        GetExpiredTimer().destr()        
 
 function cloudActivate ()
     CreateTrigger()
@@ -21,49 +53,23 @@ function cloudActivate ()
         if GetSpellAbilityId() == CLOUD_VONGOLA_ABILITY
             let caster = GetTriggerUnit()
             let id = caster.getUserData()
-            let sfx = AddSpecialEffectTarget(CLOUD_EFFECT, caster, "chest")
+            cloudUser[id] = caster
+            cloudSFX[id] = AddSpecialEffectTarget(CLOUD_EFFECT, caster, "chest")
             cloudAbsorbValue[id] = ((caster.getAgi(true) * 5) + ((caster.getArmor()) * 6))
             new DummyCaster()
             ..owner(caster.getOwner())
             ..origin(caster.getPos())
             ..castTarget(CLOUD_RING_DUMMY_SPELL, 1, OrderIds.bloodlust, caster)
-            var count = 0
-            doPeriodically(0.01) (CallbackPeriodic cb) ->
-                if caster.hasTagPauseEX() == false and caster.isPaused() == false 
-                    count++
-                if cloudAbsorbValue[id] == 0                                        
-                    caster.removeAbility('B06K')
-                    caster.removeAbility('B06N')
-                    sfx.destr()
-                    destroy cb    
-                if count == 300                
-                    caster.removeAbility('B06K')
-                    caster.removeAbility('B06N')
-                    cloudAbsorbValue[id] = 0
-                    sfx.destr()
-                    destroy cb 
+            CreateTimer()..startPeriodic(0.01, function cloudRingEnd).setData(id)
     
         else if GetSpellAbilityId() == CLOUD_ARCO_ABILITY
             let caster = GetTriggerUnit()
             let id = caster.getUserData()
-            let sfx = AddSpecialEffectTarget(CLOUD_EFFECT, caster, "chest")            
+            cloudUser[id] = caster
+            cloudSFX[id] = AddSpecialEffectTarget(CLOUD_EFFECT, caster, "chest")          
             cloudAbsorbValue[id] = ((caster.getAgi(true) * 8) + ((caster.getArmor()) * 6))
             new DummyCaster()
             ..owner(caster.getOwner())
             ..origin(caster.getPos())
             ..castTarget(CLOUD_ARCO_DUMMY_SPELL, 1, OrderIds.bloodlust, caster)
-            var count = 0
-            doPeriodically(0.01) (CallbackPeriodic cb) ->
-                if caster.hasTagPauseEX() == false and caster.isPaused() == false 
-                    count++
-                if cloudAbsorbValue[id] == 0                                    
-                    caster.removeAbility('B06N')
-                    caster.removeAbility('B06K')
-                    sfx.destr()
-                    destroy cb    
-                if count == 500            
-                    caster.removeAbility('B06N')
-                    caster.removeAbility('B06K')
-                    cloudAbsorbValue[id] = 0
-                    sfx.destr()
-                    destroy cb 
+            CreateTimer()..startPeriodic(0.01, function cloudArcoEnd).setData(id)

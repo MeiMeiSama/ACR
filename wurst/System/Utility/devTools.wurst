@@ -5,23 +5,27 @@
 // import ACR_TagSystem
 // import ACR_ReviveInstant
 // import ObjectDefinitions
-// import ClosureTimers
-// CallbackPeriodic acrTimer
 // int acrdevtimer
 // unit selectedUnit
+// timer acrTimer
 // bool array devTools
 // fogmodifier array acr_MH
 
 // init
 //     udg_PlayHero[4] = createUnit(Player(4), COBRA, vec2(0, 0))..setUserData(4)
 //     ..setStr(5000)
-//     udg_PlayHero[5] = createUnit(Player(5), 'H01N', vec2(0, 0))..setUserData(5)
+//     udg_PlayHero[5] = createUnit(Player(5), 'H01R', vec2(0, 0))..setUserData(5)
 //     ..setStr(5000)
-//     udg_PlayHero[6] = createUnit((Player(6)), 'H028', vec2(0, 0))..setUserData(6)
+//     udg_PlayHero[6] = createUnit((Player(6)), ICHIGO_STRENGTH, vec2(0, 0))..setUserData(6)
 //     ..setStr(500)
-//     udg_PlayHero[9] = createUnit((Player(9)), ITSUKA_KOTORI, vec2(-2000, -2000))..setUserData(9)
+//     udg_PlayHero[9] = createUnit((Player(9)), 'H006', vec2(-2000, -2000))..setUserData(9)
 //     ..setStr(5000)
 //     devTools()
+
+// function acrTimerFunc()
+//     acrdevtimer++
+//     print("ACR Timer: [|cffffd700"+acrdevtimer.toString()+"|r]")
+
 // function devTools ()
 //     teleport()
 //     for i = 0 to 12
@@ -76,12 +80,10 @@
 //             trig_TournamentFFAActions()
 //         else if input == "timer"
 //             acrdevtimer = 0
-//             acrTimer = doPeriodically(1) (CallbackPeriodic cb) ->                       
-//                 acrdevtimer++
-//                 print("ACR Timer: [|cffffd700"+acrdevtimer.toString()+"|r]")
+//             acrTimer = CreateTimer()..startPeriodic(1, function acrTimerFunc)
 //         else if input == "timerstop"
 //             print("Destroyed ACR Timer")
-//             destroy acrTimer
+//             acrTimer.destr()
 //         else if input == "revive"
 //             acrRevive(selectedUnit)
 

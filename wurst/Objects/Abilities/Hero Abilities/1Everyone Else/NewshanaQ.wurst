@@ -3,7 +3,10 @@ import DamageEvent
 import AbilityGlobals
 import AbilityQ_data
 import ObjectDefinitions
-import ClosureTimers
+
+location casterLoc
+location targetLoc
+location newTargetLoc
 
 init
     initTrig_NewshanaQ()
@@ -174,18 +177,15 @@ function trig_NewshanaQActions()
         SaveInteger(YDLOC, GetHandleId(_ydl_timer), 858, LoadInteger(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 858))
         TimerStart(_ydl_timer, 0.01, true, function trig_NewshanaQFunc003Func037T)
     else
-        let casterLoc = GetUnitLoc(caster)
-        let targetLoc = GetSpellTargetLoc()
+        casterLoc = GetUnitLoc(caster)
+        targetLoc = GetSpellTargetLoc()
         if DistanceBetweenPoints(casterLoc, targetLoc) > 1500
-            let newTargetLoc = PolarProjectionBJ(casterLoc, 1500, AngleBetweenPoints(casterLoc, targetLoc))
+            newTargetLoc = PolarProjectionBJ(casterLoc, 1500, AngleBetweenPoints(casterLoc, targetLoc))
             SaveLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 450813563, newTargetLoc)
-            doAfter(5) ->
-                RemoveLocation(newTargetLoc)                 
+            CreateTimer()..start(5, function shanaQFlush1)               
         else 
             SaveLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 450813563, GetSpellTargetLoc()) 
-        doAfter(5) -> 
-            RemoveLocation(casterLoc)
-            RemoveLocation(targetLoc)
+        CreateTimer()..start(5, function shanaQFlush2)    
                    
         PlaySoundBJ(gg_snd_shenpan)
         SaveUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 449, CreateUnitAtLoc(LoadPlayerHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 603), 'e028', LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 450813563), GetRandomDirectionDeg()))
@@ -226,6 +226,14 @@ function trig_NewshanaQActions()
         SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 594, LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594))
         TimerStart(_ydl_timer, 0.05, false, function trig_NewshanaQFunc003Func021T)
     FlushChildHashtable(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID)
+
+function shanaQFlush1()
+    RemoveLocation(newTargetLoc)
+
+function shanaQFlush2()    
+    RemoveLocation(casterLoc)
+    RemoveLocation(targetLoc)    
+
 function initTrig_NewshanaQ()
     gg_trg_NewshanaQ = CreateTrigger()
     TriggerRegisterAnyUnitEventBJ(gg_trg_NewshanaQ, EVENT_PLAYER_UNIT_SPELL_EFFECT)

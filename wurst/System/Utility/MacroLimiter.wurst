@@ -5,7 +5,7 @@ import TimerUtils
 
 // The time, 0.01 would be in normal x1 speed, but making it 0.08 speeds it up by 8 times, to prevent timer running too much. Afraid of performance issues.
 constant PERIODIC_TIME = 0.08 // 0.01 = x1 | 0.02 = x2 . . . | 0.08 = x8
-constant CLICK_COUNT_THRESHOLD = 5 // If CPS is determined by click count instead of time, then calculate every 5 clicks.
+constant CLICK_COUNT_THRESHOLD = 4 // If CPS is determined by click count instead of time, then calculate every 5 clicks.
 
 framehandle clickBlocker
 timer array inputTimer
@@ -112,7 +112,7 @@ function keyQ_timer()
         keyQ_count[pid] = 0
         keyQ_timer[pid].destr()
         keyQ_timer[pid] = null
-        if keyQ_count_cps[pid] >= 20
+        if keyQ_count_cps[pid] >= 15
             disableInput(Player(pid))
     
 function keyW_timer()
@@ -124,7 +124,7 @@ function keyW_timer()
         keyW_count[pid] = 0
         keyW_timer[pid].destr()
         keyW_timer[pid] = null
-        if keyW_count_cps[pid] >= 20
+        if keyW_count_cps[pid] >= 15
             disableInput(Player(pid))
     
 function keyE_timer()
@@ -136,7 +136,7 @@ function keyE_timer()
         keyE_count[pid] = 0
         keyE_timer[pid].destr()
         keyE_timer[pid] = null
-        if keyE_count_cps[pid] >= 20
+        if keyE_count_cps[pid] >= 15
             disableInput(Player(pid))
     
 function keyR_timer()
@@ -148,7 +148,7 @@ function keyR_timer()
         keyR_count[pid] = 0
         keyR_timer[pid].destr()
         keyR_timer[pid] = null
-        if keyR_count_cps[pid] >= 20
+        if keyR_count_cps[pid] >= 15
             disableInput(Player(pid))
     
 function keyT_timer()
@@ -160,7 +160,7 @@ function keyT_timer()
         keyT_count[pid] = 0
         keyT_timer[pid].destr()
         keyT_timer[pid] = null
-        if keyT_count_cps[pid] >= 20
+        if keyT_count_cps[pid] >= 15
             disableInput(Player(pid))
     
 function keyF_timer()
@@ -172,7 +172,7 @@ function keyF_timer()
         keyF_count[pid] = 0
         keyF_timer[pid].destr()
         keyF_timer[pid] = null
-        if keyF_count_cps[pid] >= 20
+        if keyF_count_cps[pid] >= 15
             disableInput(Player(pid))
     
 function keyG_timer()
@@ -184,7 +184,7 @@ function keyG_timer()
         keyG_count[pid] = 0
         keyG_timer[pid].destr()
         keyG_timer[pid] = null
-        if keyG_count_cps[pid] >= 20
+        if keyG_count_cps[pid] >= 15
             disableInput(Player(pid))
 
 function macroListener()

@@ -1,7 +1,7 @@
 package F_Rogue_T
 
-import ClosureTimers
 import MusicPlaylist
+import TimerUtils
 // import AbilityGlobals
 // import ACR_TagSystem
 import ACR_Transformation
@@ -9,6 +9,7 @@ import ACR_Transformation
 // import UpdateAbilityData
 
 boolean rogueTactive = false
+unit rogue
 
 init
     rogueModoT()
@@ -25,13 +26,14 @@ function rogueModoT ()
             StopMusic(false)
             PlaySoundBJ(gg_snd_FTrogue5)                
             acrTransformation(caster, 40, 'H005', 'H00I', 850, 4.0)
-            doPeriodically(0.01) (CallbackPeriodic cb) ->
-                if transformationActive[pid] == false
-                    if gg_snd_FTrogue5.isPlaying()
-                        gg_snd_FTrogue5.stop(false, false) 
-                    destroy cb
+            CreateTimer()..startPeriodic(0.01, function rogueModoTEnd).setData(pid)
 
-
+function rogueModoTEnd()
+    let pid = GetExpiredTimer().getData()
+    if transformationActive[pid] == false
+        if gg_snd_FTrogue5.isPlaying()
+            gg_snd_FTrogue5.stop(false, false) 
+        GetExpiredTimer().destr() 
 
 
 
