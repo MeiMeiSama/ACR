@@ -39,12 +39,9 @@ function saberStrGheal()
         saberStrDamageTaken = 0
         GetExpiredTimer().destr()
     flashEffect("HealBuff.mdx", saberStr, "origin")
-    print("healing stored pre heal: "+(saberStrhealingPerSecond * saberStrhealingDuration).toString())
-    print("healing for: "+ saberStrhealingPerSecond.toString())
     saberStr.addHP((saberStrhealingPerSecond))
     saberStrDamageTaken = saberStrDamageTaken - saberStrhealingPerSecond 
-    saberStrhealingDuration--
-    print("healing left post heal: "+(saberStrhealingPerSecond * saberStrhealingDuration).toString())        
+    saberStrhealingDuration--      
 
 
 public function saberStrG()

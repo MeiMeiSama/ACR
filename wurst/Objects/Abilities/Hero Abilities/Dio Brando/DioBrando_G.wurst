@@ -39,12 +39,9 @@ function dioGheal()
         dioDamageTaken = 0
         GetExpiredTimer().destr()
     flashEffect("HealBuff.mdx", dio, "origin")
-    print("healing stored pre heal: "+(diohealingPerSecond * diohealingDuration).toString())
-    print("healing for: "+ diohealingPerSecond.toString())
     dio.addHP((diohealingPerSecond))
     dioDamageTaken = dioDamageTaken - diohealingPerSecond 
-    diohealingDuration--
-    print("healing left post heal: "+(diohealingPerSecond * diohealingDuration).toString())        
+    diohealingDuration--       
 
 
 public function dioG()

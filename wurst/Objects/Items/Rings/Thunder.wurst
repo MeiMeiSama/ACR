@@ -49,7 +49,6 @@ function thunderDashRingHit()
 function thunderDashArcoStart()
     let id = GetExpiredTimer().getData()
     let dmg = ((thunderUser[id].getStr(true) * 4.0) + 200)
-    print(dmg)
     thunderCount[id]++
     if thunderUserPos[id].polarOffset(thunderUserPos[id].angleTo(thunderTargetPos[id]), 100).isTerrainPathable(PATHING_TYPE_WALKABILITY) == true and thunderUserPos[id].polarOffset(thunderUserPos[id].angleTo(thunderTargetPos[id]), 100).isTerrainPathable(PATHING_TYPE_FLYABILITY) == true// This one is weird, but it works this way: if playable area, and not boundary (black terrain) do
         if thunderUser[id].isInvulnerable()
@@ -103,7 +102,6 @@ function thunderDashArcoStart()
 function thunderDashRingStart()
     let id = GetExpiredTimer().getData()
     let dmg = ((thunderUser[id].getStr(true) * 2.5) + 100)
-    print(dmg)
     thunderCount[id]++
     if thunderUserPos[id].polarOffset(thunderUserPos[id].angleTo(thunderTargetPos[id]), 100).isTerrainPathable(PATHING_TYPE_WALKABILITY) == true and thunderUserPos[id].polarOffset(thunderUserPos[id].angleTo(thunderTargetPos[id]), 100).isTerrainPathable(PATHING_TYPE_FLYABILITY) == true// This one is weird, but it works this way: if playable area, and not boundary (black terrain) do
         if thunderUser[id].isInvulnerable()

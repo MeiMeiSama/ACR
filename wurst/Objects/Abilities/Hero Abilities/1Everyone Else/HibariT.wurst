@@ -166,7 +166,6 @@ function trig_HibariTFunc016T()
 
 function hibariTEnd()
     let i = GetExpiredTimer().getData()
-    print(udg_PlayHero[i].getName())
     if udg_PlayHero[i].isInvulnerable() == false
         udg_PlayHero[i].removeAbility('A19A')
         GetExpiredTimer().destr()
