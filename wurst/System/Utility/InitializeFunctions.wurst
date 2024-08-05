@@ -56,7 +56,6 @@ import Ryougi_Melty_G
 import Ryougi_Saber_G
 import Jack_F
 import Aizen_F
-import IchigoStrength_R
 import IchigoStrength_E
 import Byakuran_F
 import Kenjiro_F
@@ -201,7 +200,6 @@ public function initFunctions ()
             sasukeYoungE()                    
 
         if udg_PlayHero[i].getTypeId() == ICHIGO_STRENGTH
-            ichigoStrR()
             ichigoStrE()
 
         if udg_PlayHero[i].hasAbility('B06D')

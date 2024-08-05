@@ -2,7 +2,7 @@ package LanboR___T_Orig
 import DamageEvent
 import AbilityGlobals
 import main
-import ClosureTimers
+import TimerUtils
 
 int array lamboRCount
 
@@ -137,11 +137,15 @@ function trig_LanboR___TFunc003Func026Func001Func026T()
     DestroyTimer(GetExpiredTimer())
 function trig_LanboR___TFunc003Func026Func001Func027003003() returns boolean
     return IsUnitType(GetFilterUnit(), UNIT_TYPE_STRUCTURE) == false and GetUnitAbilityLevel(GetFilterUnit(), 'Avul') != 1 and IsUnitDeadBJ(GetFilterUnit()) == false and IsUnitEnemy(GetFilterUnit(), GetOwningPlayer(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594))) == true
+
+function hibariRFlush()
+    let id = GetExpiredTimer().getData()
+    lamboRCount[id] = 0
+
 function trig_LanboR___TFunc003Func026Func001Func028A()
     let id = GetEnumUnit().getUserData()
     if lamboRCount[id] == 0
-        doAfter(5) ->
-            lamboRCount[id] = 0                
+        CreateTimer()..start(5, function hibariRFlush).setData(id)                
     if lamboRCount[id] < 3    
         DamageEvent.setNextDamageId(DAMAGE_ABILITY_LAMBO_R)
         DamageEvent.setNextDamageFromCode()

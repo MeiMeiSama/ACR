@@ -4,10 +4,12 @@ import ObjectDefinitions
 import AbilityGlobals
 import main
 import ACR_TagSystem
-import ClosureTimers
 import MusicPlaylist
+
+unit abigail
 timer abigailTimer = null
 integer abigailCount = 0
+
 init
     initTrig_AbigailT___F___G___E_Orig()
 
@@ -421,18 +423,23 @@ function trig_AbigailT___F___G___EActions()
     //         soundPlay("war3mapImported\\Abigail7-2.mp3", GetUnitX(udg_Unitsound), GetUnitY(udg_Unitsound))
     else
         let caster = GetTriggerUnit()..addAbility(ABILITY_SPELLBLOCK)
+        abigail = caster
         soundPlay("war3mapImported\\Abigail3.mp3", GetUnitX(caster), GetUnitY(caster))
         abigailCount = 0
-        doPeriodically(0.1) (CallbackPeriodic cb) ->
-            if caster.isInvulnerable() == false and caster.isPaused() == false and caster.hasTagPauseEX() == false
-                abigailCount++
-            if abigailCount == 30 // 0.1 * 40 = 4 seconds
-                if caster.hasAbility(ABILITY_SPELLBLOCK)
-                    caster.removeAbility(ABILITY_SPELLBLOCK)
-                if caster.hasAbility('B052')
-                    caster.removeAbility('B052')
-                destroy cb
+        CreateTimer()..startPeriodic(0.1, function abigailEEnd)
+
     FlushChildHashtable(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID)
+
+function abigailEEnd()
+    if abigail.isInvulnerable() == false and abigail.isPaused() == false and abigail.hasTagPauseEX() == false
+        abigailCount++
+    if abigailCount == 30 // 0.1 * 30 = 3 seconds
+        if abigail.hasAbility(ABILITY_SPELLBLOCK)
+            abigail.removeAbility(ABILITY_SPELLBLOCK)
+        if abigail.hasAbility('B052')
+            abigail.removeAbility('B052')
+        GetExpiredTimer().destr()    
+
 function initTrig_AbigailT___F___G___E_Orig()
     gg_trg_AbigailT___F___G___E = CreateTrigger()
     TriggerRegisterAnyUnitEventBJ(gg_trg_AbigailT___F___G___E, EVENT_PLAYER_UNIT_SPELL_EFFECT)

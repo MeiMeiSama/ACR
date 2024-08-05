@@ -1,7 +1,7 @@
 package MadokaT
 import DamageEvent
 import AbilityGlobals
-import ClosureTimers
+import TimerUtils
 
 int array madokaTCount
 
@@ -71,12 +71,16 @@ function trig_MadokaTFunc033Func026Func001T()
         RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 608))
 function trig_MadokaTFunc033Func026Func002Func001Func008003003() returns boolean
     return IsUnitType(GetFilterUnit(), UNIT_TYPE_STRUCTURE) == false and IsUnitEnemy(GetFilterUnit(), LoadPlayerHandle(YDLOC, GetHandleId(GetExpiredTimer()), 603)) == true and IsUnitDeadBJ(GetFilterUnit()) == false
+
+function madokaTFlush()
+    let id = GetExpiredTimer().getData()
+    madokaTCount[id] = 0
+
 function trig_MadokaTFunc033Func026Func002Func001Func009A()    
     SaveLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 910691996, GetUnitLoc(GetEnumUnit()))
     let id = GetEnumUnit().getUserData()
     if madokaTCount[id] == 0
-        doAfter(5) ->
-            madokaTCount[id] = 0 
+        CreateTimer()..start(5, function madokaTFlush).setData(id) 
     if madokaTCount[id] < 3        
         DamageEvent.setNextDamageId(DAMAGE_ABILITY_MADOKA_T)
         DamageEvent.setNextDamageFromCode()

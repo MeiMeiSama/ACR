@@ -2,9 +2,12 @@ package XanxusT_Orig
 import DamageEvent
 import AbilityGlobals
 import main
-import ClosureTimers
+import TimerUtils
 
 int array xanxusTCount
+location casterLoc
+location targetLoc
+location newTargetLoc
 
 init
     initTrig_XanxusT_Orig()
@@ -13,11 +16,15 @@ function trig_XanxusTConditions() returns boolean
     return GetSpellAbilityId() == 'A0AX'
 function trig_XanxusTFunc027Func001Func039Func001Func014003003() returns boolean
     return IsUnitType(GetFilterUnit(), UNIT_TYPE_STRUCTURE) == false and IsUnitEnemy(GetFilterUnit(), LoadPlayerHandle(YDLOC, GetHandleId(GetExpiredTimer()), 603)) == true and IsUnitDeadBJ(GetFilterUnit()) == false and GetUnitAbilityLevel(GetFilterUnit(), 'Avul') != 1
+
+function xanxusTFlush()
+    let id = GetExpiredTimer().getData()
+    xanxusTCount[id] = 0
+
 function trig_XanxusTFunc027Func001Func039Func001Func015A()
     let id = GetEnumUnit().getUserData()
     if xanxusTCount[id] == 0
-        doAfter(5) ->
-            xanxusTCount[id] = 0                
+        CreateTimer()..start(5, function xanxusTFlush).setData(id)                
     if xanxusTCount[id] < 3    
         DamageEvent.setNextDamageId(DAMAGE_ABILITY_XANXUS_T)
         DamageEvent.setNextDamageFromCode()
@@ -135,18 +142,15 @@ function trig_XanxusTActions()
     SaveUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594, GetTriggerUnit())
     SavePlayerHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 603, GetOwningPlayer(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594)))
     let caster = GetTriggerUnit()
-    let casterLoc = GetUnitLoc(caster)
-    let targetLoc = GetSpellTargetLoc()
+    casterLoc = GetUnitLoc(caster)
+    targetLoc = GetSpellTargetLoc()
     if DistanceBetweenPoints(casterLoc, targetLoc) > 1150
-        let newTargetLoc = PolarProjectionBJ(casterLoc, 1150, AngleBetweenPoints(casterLoc, targetLoc))
+        newTargetLoc = PolarProjectionBJ(casterLoc, 1150, AngleBetweenPoints(casterLoc, targetLoc))
         SaveLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 549, newTargetLoc)
-        doAfter(5) ->             
-            RemoveLocation(newTargetLoc)
+        CreateTimer()..start(5, function xanxusTFlush1)
     else 
         SaveLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 549, GetSpellTargetLoc())
-    doAfter(5) ->             
-        RemoveLocation(casterLoc)    
-        RemoveLocation(targetLoc)
+    CreateTimer()..start(5, function xanxusTFlush2)
     SaveLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1108, GetUnitLoc(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594)))
     SaveLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 683, PolarProjectionBJ(LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 549), 1500.00, GetUnitFacing(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594)) + 180.00))
     SaveReal(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 758404681, AngleBetweenPoints(LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1108), LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 549)))
@@ -201,6 +205,14 @@ function trig_XanxusTActions()
     SaveInteger(YDLOC, GetHandleId(_ydl_timer), 858, LoadInteger(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 858))
     TimerStart(_ydl_timer, 0.03, true, function trig_XanxusTFunc027T)
     FlushChildHashtable(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID)
+
+function xanxusTFlush1()
+    RemoveLocation(newTargetLoc)
+
+function xanxusTFlush2()    
+    RemoveLocation(casterLoc)
+    RemoveLocation(targetLoc) 
+
 function initTrig_XanxusT_Orig()
     gg_trg_XanxusT = CreateTrigger()
     TriggerRegisterAnyUnitEventBJ(gg_trg_XanxusT, EVENT_PLAYER_UNIT_SPELL_EFFECT)

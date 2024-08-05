@@ -6,7 +6,7 @@ import ChannelAbilityPreset
 import UnitIds
 import DamageEvent
 import AbilityGlobals
-import ClosureTimers
+import TimerUtils
 
 int array enmaFCount
 integer array udg_KJsoundyt
@@ -76,12 +76,15 @@ function trig_EnmaAiQWERTFGFunc009Func010Func015Func009Func004Func010Func013Func
     FlushChildHashtable(YDLOC, GetHandleId(GetExpiredTimer()))
     DestroyTimer(GetExpiredTimer())
 
+function enmaFFlush()
+    let id = GetExpiredTimer().getData()
+    enmaFCount[id] = 0
+
 function trig_EnmaAiQWERTFGFunc009Func010Func015Func009Func004Func010Func013Func003Func003Func014Func006A()
     timer _ydl_timer
     let id = GetEnumUnit().getUserData()
     if enmaFCount[id] == 0
-        doAfter(5) ->
-            enmaFCount[id] = 0  
+        CreateTimer()..start(5, function enmaFFlush).setData(id)   
     if enmaFCount[id] < 3        
         DamageEvent.setNextDamageId(DAMAGE_ABILITY_ENMA_F)
         DamageEvent.setNextDamageFromCode()

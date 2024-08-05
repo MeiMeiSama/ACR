@@ -2,8 +2,9 @@ package TsunaQWERTFG_Orig
 import DamageEvent
 import AbilityGlobals
 import main
-import ClosureTimers
 import ACR_Stun
+
+int tsunaNatsuCount
 
 init
     initTrig_TsunaQWERTFG_Orig()
@@ -751,8 +752,8 @@ function trig_TsunaQWERTFGActions()
         UnitApplyTimedLife(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 486), 'BHwe', 20.00)
         let natsu = LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 486)
         natsu.setUserData(999)
-        doPeriodicallyCounted(0.1, 200) (CallbackCounted cb) ->
-            natsuTooltipUpdate()            
+        tsunaNatsuCount = 0
+        CreateTimer()..startPeriodic(0.1, function tsunaNatsuUpdate)          
         RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1108))
         RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 683))
         RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 310))
@@ -802,6 +803,13 @@ function trig_TsunaQWERTFGActions()
         SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 980, LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 980))
         TimerStart(_ydl_timer, 1.00, false, function trig_TsunaQWERTFGFunc006Func002Func001Func002Func002Func001Func001Func016T)
     FlushChildHashtable(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID)
+
+function tsunaNatsuUpdate()
+    tsunaNatsuCount++
+    natsuTooltipUpdate()
+    if tsunaNatsuCount >= 200
+        GetExpiredTimer().destr()     
+
 function initTrig_TsunaQWERTFG_Orig()
     gg_trg_TsunaQWERTFG = CreateTrigger()
     TriggerRegisterAnyUnitEventBJ(gg_trg_TsunaQWERTFG, EVENT_PLAYER_UNIT_SPELL_EFFECT)

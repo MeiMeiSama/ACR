@@ -1,5 +1,4 @@
 package MMD
-import ClosureTimers
 import ErrorHandling
 
 @configurable public constant bool SHOW_DEBUG_MESSAGES = true
@@ -508,6 +507,7 @@ class Emitter
 ///////////////////////////////////////////////////////////////
 
 /**Emits initialization data*/
+
 function init2()
   initialized = true
     
@@ -518,13 +518,13 @@ function init2()
     if GetPlayerController(p) == MAP_CONTROL_USER and GetPlayerSlotState(p) == PLAYER_SLOT_STATE_PLAYING
       emit("init pid " + I2S(i) + " " + pack(GetPlayerName(p)))
 
-  doPeriodically(0.37, cb -> tick())
+  CreateTimer()..startPeriodic(0.37, function tick)
 
   g_initializedTrigger.evaluate()
 
 ///Places init2 on a timer, initializes game cache, and translates constants*/
 init
-  nullTimer(() -> init2())
+  CreateTimer()..start(0, function init2)
   FlushGameCache(InitGameCache(FILENAME))
   gc = InitGameCache(FILENAME)
   TimerStart(clock, 999999999, false, null)

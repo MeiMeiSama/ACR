@@ -1,5 +1,4 @@
 package ACR_AbilityReset
-import ClosureTimers
 import ACR_CooldownTracker
 import AbilityGlobals
 import AbilityClassifications
@@ -20,146 +19,132 @@ public function acrAbilityReset(player p)
             let abil = SPELL_MODO_Q[id]
             let lvl = GetUnitAbilityLevel(caster, abil)                      
             UnitRemoveAbility(udg_PlayHero[id], abil)
-            doAfter(0.002) ->
-                UnitAddAbility(udg_PlayHero[id], abil)
-                SetUnitAbilityLevel(caster, abil, lvl)
-                BlzStartUnitAbilityCooldown(caster, abil, acrCooldownModoQ[id])
-                tooltip_Mode_Q(id)          
+            UnitAddAbility(udg_PlayHero[id], abil)
+            SetUnitAbilityLevel(caster, abil, lvl)
+            BlzStartUnitAbilityCooldown(caster, abil, acrCooldownModoQ[id])
+            tooltip_Mode_Q(id)          
 
         if udg_PlayHero[id].hasAbility(SPELL_MODO_Q2[id]) and SPELL_MODO_Q2[id].hasTagDisabled() == false
             let caster = udg_PlayHero[id] 
             let abil = SPELL_MODO_Q2[id]
             let lvl = GetUnitAbilityLevel(caster, abil)                      
             UnitRemoveAbility(udg_PlayHero[id], abil)
-            doAfter(0.002) ->
-                UnitAddAbility(udg_PlayHero[id], abil)
-                SetUnitAbilityLevel(caster, abil, lvl)
-                BlzStartUnitAbilityCooldown(caster, abil, acrCooldownModoQ2[id])        
+            UnitAddAbility(udg_PlayHero[id], abil)
+            SetUnitAbilityLevel(caster, abil, lvl)
+            BlzStartUnitAbilityCooldown(caster, abil, acrCooldownModoQ2[id])        
                 
         if udg_PlayHero[id].hasAbility(SPELL_MODO_W[id]) and SPELL_MODO_W[id].hasTagDisabled() == false
             let caster = udg_PlayHero[id] 
             let abil = SPELL_MODO_W[id]
             let lvl = GetUnitAbilityLevel(caster, abil)                      
             UnitRemoveAbility(udg_PlayHero[id], abil)
-            doAfter(0.002) ->
-                UnitAddAbility(udg_PlayHero[id], abil)
-                SetUnitAbilityLevel(caster, abil, lvl)
-                BlzStartUnitAbilityCooldown(caster, abil, acrCooldownModoW[id])
-                tooltip_Mode_W(id)        
+            UnitAddAbility(udg_PlayHero[id], abil)
+            SetUnitAbilityLevel(caster, abil, lvl)
+            BlzStartUnitAbilityCooldown(caster, abil, acrCooldownModoW[id])
+            tooltip_Mode_W(id)        
                 
         if udg_PlayHero[id].hasAbility(SPELL_MODO_W2[id]) and SPELL_MODO_W2[id].hasTagDisabled() == false
             let caster = udg_PlayHero[id] 
             let abil = SPELL_MODO_W2[id]
             let lvl = GetUnitAbilityLevel(caster, abil)                      
             UnitRemoveAbility(udg_PlayHero[id], abil)
-            doAfter(0.002) ->
-                UnitAddAbility(udg_PlayHero[id], abil)
-                SetUnitAbilityLevel(caster, abil, lvl)
-                BlzStartUnitAbilityCooldown(caster, abil, acrCooldownModoW2[id])       
+            UnitAddAbility(udg_PlayHero[id], abil)
+            SetUnitAbilityLevel(caster, abil, lvl)
+            BlzStartUnitAbilityCooldown(caster, abil, acrCooldownModoW2[id])       
                 
         if udg_PlayHero[id].hasAbility(SPELL_MODO_E[id]) and SPELL_MODO_E[id].hasTagDisabled() == false
             let caster = udg_PlayHero[id] 
             let abil = SPELL_MODO_E[id]
             let lvl = GetUnitAbilityLevel(caster, abil)                      
             UnitRemoveAbility(udg_PlayHero[id], abil)
-            doAfter(0.002) ->
-                UnitAddAbility(udg_PlayHero[id], abil)
-                SetUnitAbilityLevel(caster, abil, lvl)
-                BlzStartUnitAbilityCooldown(caster, abil, acrCooldownModoE[id])     
-                tooltip_Mode_E(id)    
+            UnitAddAbility(udg_PlayHero[id], abil)
+            SetUnitAbilityLevel(caster, abil, lvl)
+            BlzStartUnitAbilityCooldown(caster, abil, acrCooldownModoE[id])     
+            tooltip_Mode_E(id)    
                 
         if udg_PlayHero[id].hasAbility(SPELL_MODO_E2[id]) and SPELL_MODO_E2[id].hasTagDisabled() == false
             let caster = udg_PlayHero[id] 
             let abil = SPELL_MODO_E2[id]
             let lvl = GetUnitAbilityLevel(caster, abil)                      
             UnitRemoveAbility(udg_PlayHero[id], abil)
-            doAfter(0.002) ->
-                UnitAddAbility(udg_PlayHero[id], abil)
-                SetUnitAbilityLevel(caster, abil, lvl)
-                BlzStartUnitAbilityCooldown(caster, abil, acrCooldownModoE2[id])        
+            UnitAddAbility(udg_PlayHero[id], abil)
+            SetUnitAbilityLevel(caster, abil, lvl)
+            BlzStartUnitAbilityCooldown(caster, abil, acrCooldownModoE2[id])        
                 
         if udg_PlayHero[id].hasAbility(SPELL_MODO_R[id]) and SPELL_MODO_R[id].hasTagDisabled() == false
             let caster = udg_PlayHero[id] 
             let abil = SPELL_MODO_R[id]
             let lvl = GetUnitAbilityLevel(caster, abil)                      
             UnitRemoveAbility(udg_PlayHero[id], abil)
-            doAfter(0.002) ->
-                UnitAddAbility(udg_PlayHero[id], abil)
-                SetUnitAbilityLevel(caster, abil, lvl)
-                BlzStartUnitAbilityCooldown(caster, abil, acrCooldownModoR[id])     
-                tooltip_Mode_R(id)
+            UnitAddAbility(udg_PlayHero[id], abil)
+            SetUnitAbilityLevel(caster, abil, lvl)
+            BlzStartUnitAbilityCooldown(caster, abil, acrCooldownModoR[id])     
+            tooltip_Mode_R(id)
                 
         if udg_PlayHero[id].hasAbility(SPELL_MODO_R2[id]) and SPELL_MODO_R2[id].hasTagDisabled() == false
             let caster = udg_PlayHero[id] 
             let abil = SPELL_MODO_R2[id]
             let lvl = GetUnitAbilityLevel(caster, abil)                      
             UnitRemoveAbility(udg_PlayHero[id], abil)
-            doAfter(0.002) ->
-                UnitAddAbility(udg_PlayHero[id], abil)
-                SetUnitAbilityLevel(caster, abil, lvl)
-                BlzStartUnitAbilityCooldown(caster, abil, acrCooldownModoR2[id])       
+            UnitAddAbility(udg_PlayHero[id], abil)
+            SetUnitAbilityLevel(caster, abil, lvl)
+            BlzStartUnitAbilityCooldown(caster, abil, acrCooldownModoR2[id])       
                 
         if udg_PlayHero[id].hasAbility(SPELL_MODO_T[id]) and SPELL_MODO_T[id].hasTagDisabled() == false
             let caster = udg_PlayHero[id] 
             let abil = SPELL_MODO_T[id]
             let lvl = GetUnitAbilityLevel(caster, abil)                      
             UnitRemoveAbility(udg_PlayHero[id], abil)
-            doAfter(0.002) ->
-                UnitAddAbility(udg_PlayHero[id], abil)
-                SetUnitAbilityLevel(caster, abil, lvl)
-                BlzStartUnitAbilityCooldown(caster, abil, acrCooldownModoT[id])       
-                tooltip_Mode_T(id) 
+            UnitAddAbility(udg_PlayHero[id], abil)
+            SetUnitAbilityLevel(caster, abil, lvl)
+            BlzStartUnitAbilityCooldown(caster, abil, acrCooldownModoT[id])       
+            tooltip_Mode_T(id) 
                 
         if udg_PlayHero[id].hasAbility(SPELL_MODO_T2[id]) and SPELL_MODO_T2[id].hasTagDisabled() == false
             let caster = udg_PlayHero[id] 
             let abil = SPELL_MODO_T2[id]
             let lvl = GetUnitAbilityLevel(caster, abil)                      
             UnitRemoveAbility(udg_PlayHero[id], abil)
-            doAfter(0.002) ->
-                UnitAddAbility(udg_PlayHero[id], abil)
-                SetUnitAbilityLevel(caster, abil, lvl)
-                BlzStartUnitAbilityCooldown(caster, abil, acrCooldownModoT2[id])         
+            UnitAddAbility(udg_PlayHero[id], abil)
+            SetUnitAbilityLevel(caster, abil, lvl)
+            BlzStartUnitAbilityCooldown(caster, abil, acrCooldownModoT2[id])         
                 
         if udg_PlayHero[id].hasAbility(SPELL_MODO_F[id]) and udg_PlayHero[id].hasTagHasF() and SPELL_MODO_F[id].hasTagDisabled() == false
             let caster = udg_PlayHero[id] 
             let abil = SPELL_MODO_F[id]
             let lvl = GetUnitAbilityLevel(caster, abil)                      
             UnitRemoveAbility(udg_PlayHero[id], abil)
-            doAfter(0.002) ->
-                UnitAddAbility(udg_PlayHero[id], abil)
-                SetUnitAbilityLevel(caster, abil, lvl)
-                BlzStartUnitAbilityCooldown(caster, abil, acrCooldownModoF[id])   
+            UnitAddAbility(udg_PlayHero[id], abil)
+            SetUnitAbilityLevel(caster, abil, lvl)
+            BlzStartUnitAbilityCooldown(caster, abil, acrCooldownModoF[id])   
 
         if udg_PlayHero[id].hasAbility(SPELL_MODO_F2[id]) and udg_PlayHero[id].hasTagHasF() and SPELL_MODO_F2[id].hasTagDisabled() == false
             let caster = udg_PlayHero[id] 
             let abil = SPELL_MODO_F2[id]
             let lvl = GetUnitAbilityLevel(caster, abil)                      
             UnitRemoveAbility(udg_PlayHero[id], abil)
-            doAfter(0.002) ->
-                UnitAddAbility(udg_PlayHero[id], abil)
-                SetUnitAbilityLevel(caster, abil, lvl)
-                BlzStartUnitAbilityCooldown(caster, abil, acrCooldownModoF2[id])      
+            UnitAddAbility(udg_PlayHero[id], abil)
+            SetUnitAbilityLevel(caster, abil, lvl)
+            BlzStartUnitAbilityCooldown(caster, abil, acrCooldownModoF2[id])      
 
         if udg_PlayHero[id].hasAbility(SPELL_MODO_G[id]) and SPELL_MODO_G[id].hasTagDisabled() == false
             let caster = udg_PlayHero[id] 
             let abil = SPELL_MODO_G[id]
             let lvl = GetUnitAbilityLevel(caster, abil)                      
             UnitRemoveAbility(udg_PlayHero[id], abil)
-            doAfter(0.002) ->
-                UnitAddAbility(udg_PlayHero[id], abil)
-                SetUnitAbilityLevel(caster, abil, lvl)
-                BlzStartUnitAbilityCooldown(caster, abil, acrCooldownModoG[id])  
-                tooltip_Mode_G(id)
+            UnitAddAbility(udg_PlayHero[id], abil)
+            SetUnitAbilityLevel(caster, abil, lvl)
+            BlzStartUnitAbilityCooldown(caster, abil, acrCooldownModoG[id])  
+            tooltip_Mode_G(id)
 
         if udg_PlayHero[id].hasAbility(SPELL_MODO_G2[id]) and SPELL_MODO_G2[id].hasTagDisabled() == false
             let caster = udg_PlayHero[id] 
             let abil = SPELL_MODO_G2[id]
             let lvl = GetUnitAbilityLevel(caster, abil)                      
             UnitRemoveAbility(udg_PlayHero[id], abil)
-            doAfter(0.002) ->
-                UnitAddAbility(udg_PlayHero[id], abil)
-                SetUnitAbilityLevel(caster, abil, lvl)
-                BlzStartUnitAbilityCooldown(caster, abil, acrCooldownModoG2[id])  
+            UnitAddAbility(udg_PlayHero[id], abil)
+            SetUnitAbilityLevel(caster, abil, lvl)
+            BlzStartUnitAbilityCooldown(caster, abil, acrCooldownModoG2[id])  
 
     else 
         if udg_PlayHero[id].hasAbility(SPELL_Q[id]) and SPELL_Q[id].hasTagDisabled() == false
@@ -167,188 +152,172 @@ public function acrAbilityReset(player p)
             let abil = SPELL_Q[id]
             let lvl = GetUnitAbilityLevel(caster, abil)                      
             UnitRemoveAbility(udg_PlayHero[id], abil)
-            doAfter(0.002) ->
-                UnitAddAbility(udg_PlayHero[id], abil)
-                SetUnitAbilityLevel(caster, abil, lvl)
-                BlzStartUnitAbilityCooldown(caster, abil, acrCooldownQ[id]) 
-                if abil.isQDash()
-                    tooltip_Dash_Q(id)
-                else if abil.isQPoint()
-                    tooltip_Point_Q(id)
-                else if abil.isQTeleport()
-                    tooltip_Teleport_Q(id)
-                else if abil.isQProjectile()
-                    tooltip_Projectile_Q(id)
-                else 
-                    tooltip_Q(id)      
+            UnitAddAbility(udg_PlayHero[id], abil)
+            SetUnitAbilityLevel(caster, abil, lvl)
+            BlzStartUnitAbilityCooldown(caster, abil, acrCooldownQ[id]) 
+            if abil.isQDash()
+                tooltip_Dash_Q(id)
+            else if abil.isQPoint()
+                tooltip_Point_Q(id)
+            else if abil.isQTeleport()
+                tooltip_Teleport_Q(id)
+            else if abil.isQProjectile()
+                tooltip_Projectile_Q(id)
+            else 
+                tooltip_Q(id)      
 
         if udg_PlayHero[id].hasAbility(SPELL_Q2[id]) and SPELL_Q2[id].hasTagDisabled() == false
             let caster = udg_PlayHero[id] 
             let abil = SPELL_Q2[id]
             let lvl = GetUnitAbilityLevel(caster, abil)                      
             UnitRemoveAbility(udg_PlayHero[id], abil)
-            doAfter(0.002) ->
-                UnitAddAbility(udg_PlayHero[id], abil)
-                SetUnitAbilityLevel(caster, abil, lvl)
-                BlzStartUnitAbilityCooldown(caster, abil, acrCooldownQ2[id])       
-                tooltip_Q2(id)                     
+            UnitAddAbility(udg_PlayHero[id], abil)
+            SetUnitAbilityLevel(caster, abil, lvl)
+            BlzStartUnitAbilityCooldown(caster, abil, acrCooldownQ2[id])       
+            tooltip_Q2(id)                     
                 
         if udg_PlayHero[id].hasAbility(SPELL_W[id]) and SPELL_W[id].hasTagDisabled() == false
             let caster = udg_PlayHero[id] 
             let abil = SPELL_W[id]
             let lvl = GetUnitAbilityLevel(caster, abil)                      
             UnitRemoveAbility(udg_PlayHero[id], abil)
-            doAfter(0.002) ->
-                UnitAddAbility(udg_PlayHero[id], abil)
-                SetUnitAbilityLevel(caster, abil, lvl)
-                BlzStartUnitAbilityCooldown(caster, abil, acrCooldownW[id])
-                tooltip_W(id)     
+            UnitAddAbility(udg_PlayHero[id], abil)
+            SetUnitAbilityLevel(caster, abil, lvl)
+            BlzStartUnitAbilityCooldown(caster, abil, acrCooldownW[id])
+            tooltip_W(id)     
 
         if udg_PlayHero[id].hasAbility(SPELL_W2[id]) and SPELL_W2[id].hasTagDisabled() == false
             let caster = udg_PlayHero[id] 
             let abil = SPELL_W2[id]
             let lvl = GetUnitAbilityLevel(caster, abil)                      
             UnitRemoveAbility(udg_PlayHero[id], abil)
-            doAfter(0.002) ->
-                UnitAddAbility(udg_PlayHero[id], abil)
-                SetUnitAbilityLevel(caster, abil, lvl)
-                BlzStartUnitAbilityCooldown(caster, abil, acrCooldownW2[id])
-                tooltip_W2(id)       
+            UnitAddAbility(udg_PlayHero[id], abil)
+            SetUnitAbilityLevel(caster, abil, lvl)
+            BlzStartUnitAbilityCooldown(caster, abil, acrCooldownW2[id])
+            tooltip_W2(id)       
                 
         if udg_PlayHero[id].hasAbility(SPELL_E[id]) and SPELL_E[id].hasTagDisabled() == false
             let caster = udg_PlayHero[id] 
             let abil = SPELL_E[id]
             let lvl = GetUnitAbilityLevel(caster, abil)                      
             UnitRemoveAbility(udg_PlayHero[id], abil)
-            doAfter(0.002) ->
-                UnitAddAbility(udg_PlayHero[id], abil)
-                SetUnitAbilityLevel(caster, abil, lvl)
-                BlzStartUnitAbilityCooldown(caster, abil, acrCooldownE[id])  
-                if abil.isEDamaging()
-                    tooltip_Damaging_E(id)
-                else
-                    tooltip_E(id)        
+            UnitAddAbility(udg_PlayHero[id], abil)
+            SetUnitAbilityLevel(caster, abil, lvl)
+            BlzStartUnitAbilityCooldown(caster, abil, acrCooldownE[id])  
+            if abil.isEDamaging()
+                tooltip_Damaging_E(id)
+            else
+                tooltip_E(id)        
                 
         if udg_PlayHero[id].hasAbility(SPELL_E2[id]) and SPELL_E2[id].hasTagDisabled() == false
             let caster = udg_PlayHero[id] 
             let abil = SPELL_E2[id]
             let lvl = GetUnitAbilityLevel(caster, abil)                      
             UnitRemoveAbility(udg_PlayHero[id], abil)
-            doAfter(0.002) ->
-                UnitAddAbility(udg_PlayHero[id], abil)
-                SetUnitAbilityLevel(caster, abil, lvl)
-                BlzStartUnitAbilityCooldown(caster, abil, acrCooldownE2[id])  
-                tooltip_E2(id)      
+            UnitAddAbility(udg_PlayHero[id], abil)
+            SetUnitAbilityLevel(caster, abil, lvl)
+            BlzStartUnitAbilityCooldown(caster, abil, acrCooldownE2[id])  
+            tooltip_E2(id)      
                 
         if udg_PlayHero[id].hasAbility(SPELL_R[id]) and SPELL_R[id].hasTagDisabled() == false
             let caster = udg_PlayHero[id] 
             let abil = SPELL_R[id]
             let lvl = GetUnitAbilityLevel(caster, abil)                      
             UnitRemoveAbility(udg_PlayHero[id], abil)
-            doAfter(0.002) ->
-                UnitAddAbility(udg_PlayHero[id], abil)
-                SetUnitAbilityLevel(caster, abil, lvl)
-                BlzStartUnitAbilityCooldown(caster, abil, acrCooldownR[id])        
-                tooltip_R(id)
+            UnitAddAbility(udg_PlayHero[id], abil)
+            SetUnitAbilityLevel(caster, abil, lvl)
+            BlzStartUnitAbilityCooldown(caster, abil, acrCooldownR[id])        
+            tooltip_R(id)
             
         if udg_PlayHero[id].hasAbility(SPELL_R2[id]) and SPELL_R2[id].hasTagDisabled() == false
             let caster = udg_PlayHero[id] 
             let abil = SPELL_R2[id]
             let lvl = GetUnitAbilityLevel(caster, abil)                      
             UnitRemoveAbility(udg_PlayHero[id], abil)
-            doAfter(0.002) ->
-                UnitAddAbility(udg_PlayHero[id], abil)
-                SetUnitAbilityLevel(caster, abil, lvl)
-                BlzStartUnitAbilityCooldown(caster, abil, acrCooldownR2[id])      
-                tooltip_R2(id) 
+            UnitAddAbility(udg_PlayHero[id], abil)
+            SetUnitAbilityLevel(caster, abil, lvl)
+            BlzStartUnitAbilityCooldown(caster, abil, acrCooldownR2[id])      
+            tooltip_R2(id) 
             
         if udg_PlayHero[id].hasAbility(SPELL_R3[id]) and SPELL_R3[id].hasTagDisabled() == false
             let caster = udg_PlayHero[id] 
             let abil = SPELL_R3[id]
             let lvl = GetUnitAbilityLevel(caster, abil)                      
             UnitRemoveAbility(udg_PlayHero[id], abil)
-            doAfter(0.002) ->
-                UnitAddAbility(udg_PlayHero[id], abil)
-                SetUnitAbilityLevel(caster, abil, lvl)
-                BlzStartUnitAbilityCooldown(caster, abil, acrCooldownR3[id])    
-                tooltip_R3(id)     
+            UnitAddAbility(udg_PlayHero[id], abil)
+            SetUnitAbilityLevel(caster, abil, lvl)
+            BlzStartUnitAbilityCooldown(caster, abil, acrCooldownR3[id])    
+            tooltip_R3(id)     
                 
         if udg_PlayHero[id].hasAbility(SPELL_T[id]) and SPELL_T[id].hasTagDisabled() == false
             let caster = udg_PlayHero[id] 
             let abil = SPELL_T[id]
             let lvl = GetUnitAbilityLevel(caster, abil)                      
             UnitRemoveAbility(udg_PlayHero[id], abil)
-            doAfter(0.002) ->
-                UnitAddAbility(udg_PlayHero[id], abil)
-                SetUnitAbilityLevel(caster, abil, lvl)
-                BlzStartUnitAbilityCooldown(caster, abil, acrCooldownT[id])       
-                if abil.isTransform()
-                    tooltip_Transform_T(id)  
-                else 
-                    tooltip_T(id)    
+            UnitAddAbility(udg_PlayHero[id], abil)
+            SetUnitAbilityLevel(caster, abil, lvl)
+            BlzStartUnitAbilityCooldown(caster, abil, acrCooldownT[id])       
+            if abil.isTransform()
+                tooltip_Transform_T(id)  
+            else 
+                tooltip_T(id)    
                 
         if udg_PlayHero[id].hasAbility(SPELL_T2[id]) and SPELL_T2[id].hasTagDisabled() == false
             let caster = udg_PlayHero[id] 
             let abil = SPELL_T2[id]
             let lvl = GetUnitAbilityLevel(caster, abil)                      
             UnitRemoveAbility(udg_PlayHero[id], abil)
-            doAfter(0.002) ->
-                UnitAddAbility(udg_PlayHero[id], abil)
-                SetUnitAbilityLevel(caster, abil, lvl)
-                BlzStartUnitAbilityCooldown(caster, abil, acrCooldownT2[id])   
-                tooltip_T2(id)
+            UnitAddAbility(udg_PlayHero[id], abil)
+            SetUnitAbilityLevel(caster, abil, lvl)
+            BlzStartUnitAbilityCooldown(caster, abil, acrCooldownT2[id])   
+            tooltip_T2(id)
                 
         if udg_PlayHero[id].hasAbility(SPELL_F[id]) and udg_PlayHero[id].hasTagHasF() and SPELL_F[id].hasTagDisabled() == false
             let caster = udg_PlayHero[id] 
             let abil = SPELL_F[id]
             let lvl = GetUnitAbilityLevel(caster, abil)                      
             UnitRemoveAbility(udg_PlayHero[id], abil)
-            doAfter(0.002) ->
-                UnitAddAbility(udg_PlayHero[id], abil)
-                SetUnitAbilityLevel(caster, abil, lvl)
-                BlzStartUnitAbilityCooldown(caster, abil, acrCooldownF[id])    
-                tooltip_F(id)    
+            UnitAddAbility(udg_PlayHero[id], abil)
+            SetUnitAbilityLevel(caster, abil, lvl)
+            BlzStartUnitAbilityCooldown(caster, abil, acrCooldownF[id])    
+            tooltip_F(id)    
                 
         if udg_PlayHero[id].hasAbility(SPELL_F2[id]) and udg_PlayHero[id].hasTagHasF() and SPELL_F2[id].hasTagDisabled() == false
             let caster = udg_PlayHero[id] 
             let abil = SPELL_F2[id]
             let lvl = GetUnitAbilityLevel(caster, abil)                      
             UnitRemoveAbility(udg_PlayHero[id], abil)
-            doAfter(0.002) ->
-                UnitAddAbility(udg_PlayHero[id], abil)
-                SetUnitAbilityLevel(caster, abil, lvl)
-                BlzStartUnitAbilityCooldown(caster, abil, acrCooldownF2[id])      
-                tooltip_F2(id) 
+            UnitAddAbility(udg_PlayHero[id], abil)
+            SetUnitAbilityLevel(caster, abil, lvl)
+            BlzStartUnitAbilityCooldown(caster, abil, acrCooldownF2[id])      
+            tooltip_F2(id) 
                 
         if udg_PlayHero[id].hasAbility(SPELL_F3[id]) and udg_PlayHero[id].hasTagHasF() and SPELL_F3[id].hasTagDisabled() == false
             let caster = udg_PlayHero[id] 
             let abil = SPELL_F3[id]
             let lvl = GetUnitAbilityLevel(caster, abil)                      
             UnitRemoveAbility(udg_PlayHero[id], abil)
-            doAfter(0.002) ->
-                UnitAddAbility(udg_PlayHero[id], abil)
-                SetUnitAbilityLevel(caster, abil, lvl)
-                BlzStartUnitAbilityCooldown(caster, abil, acrCooldownF3[id])        
-                tooltip_F3(id)
+            UnitAddAbility(udg_PlayHero[id], abil)
+            SetUnitAbilityLevel(caster, abil, lvl)
+            BlzStartUnitAbilityCooldown(caster, abil, acrCooldownF3[id])        
+            tooltip_F3(id)
                 
         if udg_PlayHero[id].hasAbility(SPELL_G[id]) and SPELL_G[id].hasTagDisabled() == false
             let caster = udg_PlayHero[id] 
             let abil = SPELL_G[id]
             let lvl = GetUnitAbilityLevel(caster, abil)                      
             UnitRemoveAbility(udg_PlayHero[id], abil)
-            doAfter(0.002) ->
-                UnitAddAbility(udg_PlayHero[id], abil)
-                SetUnitAbilityLevel(caster, abil, lvl)
-                BlzStartUnitAbilityCooldown(caster, abil, acrCooldownG[id])     
-                tooltip_G(id)   
+            UnitAddAbility(udg_PlayHero[id], abil)
+            SetUnitAbilityLevel(caster, abil, lvl)
+            BlzStartUnitAbilityCooldown(caster, abil, acrCooldownG[id])     
+            tooltip_G(id)   
                         
         if udg_PlayHero[id].hasAbility(SPELL_G2[id]) and SPELL_G2[id].hasTagDisabled() == false
             let caster = udg_PlayHero[id] 
             let abil = SPELL_G2[id]
             let lvl = GetUnitAbilityLevel(caster, abil)                      
             UnitRemoveAbility(udg_PlayHero[id], abil)
-            doAfter(0.002) ->
-                UnitAddAbility(udg_PlayHero[id], abil)
-                SetUnitAbilityLevel(caster, abil, lvl)
-                BlzStartUnitAbilityCooldown(caster, abil, acrCooldownG2[id])             
-                tooltip_G2(id)              
+            UnitAddAbility(udg_PlayHero[id], abil)
+            SetUnitAbilityLevel(caster, abil, lvl)
+            BlzStartUnitAbilityCooldown(caster, abil, acrCooldownG2[id])             
+            tooltip_G2(id)              

@@ -2,9 +2,12 @@ package YamiW
 import DamageEvent
 import AbilityGlobals
 import main
-import ClosureTimers
 import ClosureForGroups
 import ACR_Stun
+
+unit yami
+vec2 yamiPos
+int yamiWCount
 
 init
     initTrig_YamiW()
@@ -215,15 +218,23 @@ function trig_YamiWActions()
         SaveInteger(YDLOC, GetHandleId(_ydl_timer), 343254876, LoadInteger(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 343254876))
         SaveInteger(YDLOC, GetHandleId(_ydl_timer), 551, LoadInteger(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 551))
         let caster = LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594)
-        doPeriodicallyCounted(0.1, 10) (CallbackCounted cb) ->
-            let casterpos = caster.getPos()
-            forUnitsInRange(casterpos, 500) (unit victim) ->
-                if caster.isEnemyOf(victim) and victim.isInvulnerable() == false
-                    DamageEvent.setNextDamageId(DAMAGE_ABILITY_YAMI_R)
-                    DamageEvent.setNextDamageFromCode()
-                    UnitDamageTargetBJ(caster, victim, 1, ATTACK_TYPE_MAGIC, DAMAGE_TYPE_MAGIC)                           
+        yami = caster
+        yamiWCount = 0
+        CreateTimer()..startPeriodic(0.1, function yamiWDamageFunc)                        
         TimerStart(_ydl_timer, 0.02, true, function trig_YamiWFunc004Func001Func013T)
     FlushChildHashtable(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID)
+
+function yamiWDamageFunc() 
+    yamiWCount++
+    if yamiWCount >= 10
+        GetExpiredTimer().destr()
+    yamiPos = yami.getPos()
+    forUnitsInRange(yamiPos, 500) (unit victim) ->
+        if yami.isEnemyOf(victim) and victim.isInvulnerable() == false
+            DamageEvent.setNextDamageId(DAMAGE_ABILITY_YAMI_R)
+            DamageEvent.setNextDamageFromCode()
+            UnitDamageTargetBJ(yami, victim, 1, ATTACK_TYPE_MAGIC, DAMAGE_TYPE_MAGIC)       
+
 function initTrig_YamiW()
     gg_trg_YamiW = CreateTrigger()
     TriggerRegisterAnyUnitEventBJ(gg_trg_YamiW, EVENT_PLAYER_UNIT_SPELL_EFFECT)

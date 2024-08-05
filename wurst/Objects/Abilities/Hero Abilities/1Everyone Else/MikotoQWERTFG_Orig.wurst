@@ -4,7 +4,7 @@ import AbilityGlobals
 import main
 import AbilityQ_data
 import ACR_Stun
-import ClosureTimers
+import TimerUtils
 
 int array misakaOldFCount
 
@@ -22,11 +22,15 @@ function trig_MikotoQWERTFGFunc005Func001Func001Func001Func001Func001Func014Func
     DestroyTimer(GetExpiredTimer())
 function trig_MikotoQWERTFGFunc005Func001Func001Func001Func001Func001Func014Func001Func023003003() returns boolean
     return IsUnitType(GetFilterUnit(), UNIT_TYPE_STRUCTURE) == false and IsUnitDeadBJ(GetFilterUnit()) == false and IsUnitEnemy(GetFilterUnit(), GetOwningPlayer(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594))) == true
+
+function misakaFFlush()
+    let id = GetExpiredTimer().getData()
+    misakaOldFCount[id] = 0
+
 function trig_MikotoQWERTFGFunc005Func001Func001Func001Func001Func001Func014Func001Func024A()
     let id = GetEnumUnit().getUserData()
     if misakaOldFCount[id] == 0
-        doAfter(5) ->
-            misakaOldFCount[id] = 0                
+        CreateTimer()..start(5, function misakaFFlush).setData(id)               
     if misakaOldFCount[id] < 3
         DamageEvent.setNextDamageId(DAMAGE_ABILITY_MISAKA_OLD_F)
         DamageEvent.setNextDamageFromCode()

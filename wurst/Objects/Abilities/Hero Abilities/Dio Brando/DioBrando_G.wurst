@@ -1,9 +1,8 @@
 package DioBrando_G
 
 import ClosureEvents
-import ClosureTimers
-import AbilityClassifications
-import AbilityGlobals
+// import AbilityClassifications
+// import AbilityGlobals
 import ObjectDefinitions
 
 int healing_amount
@@ -16,7 +15,7 @@ public function dioG()
 
             // ━━━━━━━━━━━━ [Variables] ━━━━━━━━━━━━
             
-            let hero = BlzGetEventDamageTarget()
+            // let hero = BlzGetEventDamageTarget()
             var dmgAmount = GetEventDamage().floor()
             if not dmgAmount.isEven()
                 dmgAmount++
@@ -27,32 +26,32 @@ public function dioG()
 
             // ━━━━━━━━━━━━ [Translation] ━━━━━━━━━━━━
 
-            doPeriodicallyCounted(0.1, 40) (CallbackCounted cb) ->
-                if healing_amount > 0
-                    let skill = DIO_BRANDO_ABILITY_G
-                    skill..setDescription(skill,
-                    GOLD+
-                    "Whenever Dio receives damage from a basic attack, he heals back a portion of that damage over the next few seconds."+
-                    "\n\nDuration: "+PINK+"4"+GOLD+
-                    "\nDamage Healed: "+PINK+"50%"+GOLD+
-                    "\nCurrent Healing Stored: "+PINK+healing_amount.toString()+GOLD)
-                else 
-                    let skill = DIO_BRANDO_ABILITY_G
-                    skill..setDescription(skill,
-                    GOLD+
-                    "Whenever Dio receives damage from a basic attack, he heals back a portion of that damage over the next few seconds."+
-                    "\n\nDuration: "+PINK+"4"+GOLD+
-                    "\nDamage Healed: "+PINK+"50%"+GOLD+
-                    "\nCurrent Healing Stored: "+PINK+"0"+GOLD)    
+            // doPeriodicallyCounted(0.1, 40) (CallbackCounted cb) ->
+            //     if healing_amount > 0
+            //         let skill = DIO_BRANDO_ABILITY_G
+            //         skill..setDescription(skill,
+            //         GOLD+
+            //         "Whenever Dio receives damage from a basic attack, he heals back a portion of that damage over the next few seconds."+
+            //         "\n\nDuration: "+PINK+"4"+GOLD+
+            //         "\nDamage Healed: "+PINK+"50%"+GOLD+
+            //         "\nCurrent Healing Stored: "+PINK+healing_amount.toString()+GOLD)
+            //     else 
+            //         let skill = DIO_BRANDO_ABILITY_G
+            //         skill..setDescription(skill,
+            //         GOLD+
+            //         "Whenever Dio receives damage from a basic attack, he heals back a portion of that damage over the next few seconds."+
+            //         "\n\nDuration: "+PINK+"4"+GOLD+
+            //         "\nDamage Healed: "+PINK+"50%"+GOLD+
+            //         "\nCurrent Healing Stored: "+PINK+"0"+GOLD)    
 
             // ━━━━━━━━━━━━ [Healing Part] ━━━━━━━━━━━━
 
             if heal_active == false
                 heal_active = true
-                doPeriodically(1) (CallbackPeriodic cb) ->
-                    flashEffect("HealBuff.mdx", hero, "origin")
-                    if healing_amount <= 0 or not hero.isAlive()
-                        heal_active = false
-                        destroy cb
-                    hero.addHP(healing_HoT)
-                    healing_amount -= (healing_HoT).toInt()
+                // doPeriodically(1) (CallbackPeriodic cb) ->
+                //     flashEffect("HealBuff.mdx", hero, "origin")
+                //     if healing_amount <= 0 or not hero.isAlive()
+                //         heal_active = false
+                //         destroy cb
+                //     hero.addHP(healing_HoT)
+                //     healing_amount -= (healing_HoT).toInt()

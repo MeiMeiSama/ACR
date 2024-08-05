@@ -1,32 +1,34 @@
 package Kenjiro_F
 
 import ClosureEvents
-import ClosureTimers
 import ACR_TagSystem
 int kenjiroFCount = 0
+int abilityF = 'A0ZO'
+int buffF = 'B05M'
+unit kenjiro
+
+function kenjiroFEnd()
+    if kenjiro.isPaused() == false
+        kenjiroFCount++
+
+    if kenjiro.hasAbility(buffF) == false
+        kenjiro.disableAbility(abilityF, false, false)
+        abilityF.removeTagDisabled()
+        kenjiro.startAbilityCooldown(abilityF)
+        GetExpiredTimer().destr() 
+
+    if kenjiroFCount == 100
+        kenjiro.removeAbility(buffF)
+        kenjiro.disableAbility(abilityF, false, false)
+        abilityF.removeTagDisabled()
+        kenjiro.startAbilityCooldown(abilityF)
+        GetExpiredTimer().destr() 
 
 public function kenjiroF ()
-    let abilityF = 'A0ZO'
-    let buffF = 'B05M'
-
     EventListener.onCast(abilityF) (unit caster) ->
         kenjiroFCount = 0
+        kenjiro = caster
         caster.disableAbility(abilityF, true, false)
         abilityF.addTagDisabled()
         caster.issueImmediateOrder("stop")
-        doPeriodically(0.03) (CallbackPeriodic cb) ->
-            if caster.isPaused() == false
-                kenjiroFCount++
- 
-            if caster.hasAbility(buffF) == false
-                caster.disableAbility(abilityF, false, false)
-                abilityF.removeTagDisabled()
-                caster.startAbilityCooldown(abilityF)
-                destroy cb
-
-            if kenjiroFCount == 100
-                caster.removeAbility(buffF)
-                caster.disableAbility(abilityF, false, false)
-                abilityF.removeTagDisabled()
-                caster.startAbilityCooldown(abilityF)
-                destroy cb
+        CreateTimer()..startPeriodic(0.03, function kenjiroFEnd)

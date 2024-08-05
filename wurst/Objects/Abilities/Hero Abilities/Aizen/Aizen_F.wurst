@@ -5,7 +5,6 @@ import DummyCaster
 import OrderIds
 import AbilityGlobals
 import AbilityClassifications
-import ClosureTimers
 
 unit aizenFMarkedUnit
 unit aizenFOwner
@@ -42,18 +41,21 @@ function aizenFTranslation(unit aizenFOwner)
         "\nDamage Output: "+GREEN+dmg.toString()+GOLD+
         "\n\nCurrently Marked Hero: "+PINK+"None"+GOLD)
 
+function aizenFTranslationTimer()
+    aizenFTranslation(aizenFOwner)
+
 
 public function aizenFTranslationEvents(unit caster)
-    doAfter(0.1) ->
-        aizenFTranslation(aizenFOwner)
+    CreateTimer()..start(0.1, function aizenFTranslationTimer)
     CreateTrigger()
     ..registerUnitEvent(caster, EVENT_UNIT_HERO_LEVEL)
     ..registerUnitEvent(caster, EVENT_UNIT_PICKUP_ITEM)
     ..registerUnitEvent(caster, EVENT_UNIT_DROP_ITEM)
     ..addAction() ->
-        doAfter(0.1) -> //idk how to explain but its whatever as long as u can reference aizen properly
-        // also, I deleted his F from here                
-            aizenFTranslation(aizenFOwner)
+        CreateTimer()..start(0.1, function aizenFTranslationTimer)
+
+function aizenFBooleanTimer()
+    aizenFBool = false
 
 public function aizenF ()
     aizenFBool = true
@@ -73,10 +75,8 @@ public function aizenF ()
         ..origin(aizenFMarkedUnit.getPos())
         ..castTarget(AIZEN_F_DEBUFF_ABILITY, 1, OrderIds.slow, aizenFMarkedUnit)
         aizenFTranslation(aizenFOwner)
-        doAfter(0.03) ->
-            aizenFBool = true 
+        CreateTimer()..start(0.03, function aizenFBooleanTimer)
                 
-
     CreateTrigger()    
     ..registerAnyUnitEvent(EVENT_PLAYER_UNIT_DEATH)
     ..addCondition(Condition(function aizenFDeathCond))
