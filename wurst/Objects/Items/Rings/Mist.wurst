@@ -8,8 +8,8 @@ unit array mistOwner
 timer array mistReviveTimer
 timer array mistDropTimer
 timer array mistPickUpTimer
-boolean array mistRingON
-boolean array mistArcoON
+public boolean array mistRingON
+public boolean array mistArcoON
 
 init
 

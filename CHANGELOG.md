@@ -18,8 +18,6 @@
 ### Deleted
 Nothing Deleted.
 
-# ━━━━━━━━━ Anime Carnage Reforged v2.0.3 ━━━━━━━━━ #
-
 # ━━━━━━━━━ Anime Carnage Reforged v2.0.4 ━━━━━━━━━ #
 
 ### Added
