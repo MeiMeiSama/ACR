@@ -27,14 +27,14 @@ function edoMadaraModoT ()
             StopMusic(false)
             PlaySoundBJ(gg_snd_edoMadaraBGM)                
             acrTransformation(caster, 40, MADARA_EDO, MADARA_EDO_MODO, 850, 4.0)
-            CreateTimer()..startPeriodic(0.01, function edoMadaraModoTEnd).setData(pid)
+            getTimer()..startPeriodic(0.01, function edoMadaraModoTEnd).setData(pid)
 
 function edoMadaraModoTEnd()
     let pid = GetExpiredTimer().getData()
     if transformationActive[pid] == false
         if gg_snd_edoMadaraBGM.isPlaying()
             gg_snd_edoMadaraBGM.stop(false, false) 
-        GetExpiredTimer().destr() 
+        GetExpiredTimer().release() 
 
 
 

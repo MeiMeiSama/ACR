@@ -13,6 +13,8 @@ int array rainCount
 group array rainGroup
 effect array rainEffect1
 effect array rainEffect2
+timer array rainRingEndTimer
+timer array rainArcoEndTimer
 
 init
     rainSilence()
@@ -33,7 +35,7 @@ function rainRingEnd()
         rainEffect1[id].destr()
         rainEffect2[id].destr()
         rainGroup[id].clear()
-        GetExpiredTimer().destr()    
+        rainRingEndTimer[id].release()   
 
 function rainArcoEnd()
     let id = GetExpiredTimer().getData()
@@ -51,7 +53,7 @@ function rainArcoEnd()
         rainEffect1[id].destr()
         rainEffect2[id].destr()
         rainGroup[id].clear()
-        GetExpiredTimer().destr() 
+        rainArcoEndTimer[id].release() 
 
 
 function rainSilence ()
@@ -71,7 +73,7 @@ function rainSilence ()
             rainCount[id] = 0
             rainEffect1[id].setScale(1.2)
             rainEffect2[id].setScale(1.2)   
-            CreateTimer()..startPeriodic(0.02, function rainRingEnd).setData(id)
+            rainRingEndTimer[id] = getTimer()..startPeriodic(0.02, function rainRingEnd)..setData(id)
 
         if GetSpellAbilityId() == RAIN_ARCO_ABILITY
             let caster = GetTriggerUnit()
@@ -86,4 +88,4 @@ function rainSilence ()
             rainCount[id] = 0
             rainEffect1[id].setScale(1.2)
             rainEffect2[id].setScale(1.2) 
-            CreateTimer()..startPeriodic(0.02, function rainArcoEnd).setData(id)
+            rainArcoEndTimer[id] = getTimer()..startPeriodic(0.02, function rainArcoEnd)..setData(id)

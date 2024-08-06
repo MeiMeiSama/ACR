@@ -2,6 +2,7 @@ package Nanaya_Normal_F
 
 import ClosureEvents
 import ACR_TagSystem
+import TimerUtils
 int nanayaFCount = 0
 int abilityF = 'A0YA'
 int buffF = 'B05J'
@@ -15,14 +16,14 @@ function nanayaFEnd()
         nanaya.disableAbility(abilityF, false, false)
         abilityF.removeTagDisabled()
         nanaya.startAbilityCooldown(abilityF)
-        GetExpiredTimer().destr() 
+        GetExpiredTimer().release() 
 
     if nanayaFCount == 100
         nanaya.removeAbility(buffF)
         nanaya.disableAbility(abilityF, false, false)
         abilityF.removeTagDisabled()
         nanaya.startAbilityCooldown(abilityF)
-        GetExpiredTimer().destr() 
+        GetExpiredTimer().release()
 
 public function nanayaNormalF()
     EventListener.onCast(abilityF) (unit caster) ->
@@ -31,4 +32,4 @@ public function nanayaNormalF()
         caster.disableAbility(abilityF, true, false)
         abilityF.addTagDisabled()
         caster.issueImmediateOrder("stop")
-        CreateTimer()..startPeriodic(0.03, function nanayaFEnd)
+        getTimer()..startPeriodic(0.03, function nanayaFEnd)

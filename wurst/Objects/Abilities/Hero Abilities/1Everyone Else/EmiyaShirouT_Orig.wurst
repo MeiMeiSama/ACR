@@ -30,7 +30,7 @@ function shiroTFlush()
 function trig_EmiyaShirouTFunc015Func001Func014Func001Func020Func001Func004A()
     let id = GetEnumUnit().getUserData()
     if shiroTCount2[id] == 0
-        CreateTimer()..start(10, function shiroTFlush).setData(id)                
+        getTimer()..start(10, function shiroTFlush).setData(id)                
     if shiroTCount2[id] < 3 and GetEnumUnit() != shiroTTarget    
         DamageEvent.setNextDamageId(DAMAGE_ABILITY_SHIRO_T)
         DamageEvent.setNextDamageFromCode()
@@ -122,7 +122,7 @@ function trig_EmiyaShirouTFunc015Func001Func014T()
 function shiroTEndUnpause()
     if shiro.isPaused() == false
         shiro.setInvulnerable(false)
-        GetExpiredTimer().destr() 
+        GetExpiredTimer().release()
 
 function shiroTEnd()
     let pid = GetExpiredTimer().getData()
@@ -141,16 +141,16 @@ function shiroTEnd()
         if shiro.isPaused() == false
             shiro.setInvulnerable(false)
         else
-            CreateTimer()..startPeriodic(0.01, function shiroTEndUnpause)                             
+            getTimer()..startPeriodic(0.01, function shiroTEndUnpause)                             
         shiro.removeAbility('A0PS')
         SetPlayerAbilityAvailable(shiro.getOwner(), SPELL_T[pid], true)
         shiro.startAbilityCooldown(SPELL_T[pid])
-        GetExpiredTimer().destr()
+        GetExpiredTimer().release()
     if shiro.isAlive() == false  
         shiro.removeAbility('A0PS')
         SetPlayerAbilityAvailable(shiro.getOwner(), SPELL_T[pid], true)
         shiro.startAbilityCooldown(SPELL_T[pid])
-        GetExpiredTimer().destr() 
+        GetExpiredTimer().release()
 
 
 function trig_EmiyaShirouTFunc015T()
@@ -202,7 +202,7 @@ function trig_EmiyaShirouTFunc015T()
         let pid = caster.getOwner().getId()
         SetPlayerAbilityAvailable(caster.getOwner(), SPELL_T[pid], false)
         caster.addAbility('A0PS')
-        CreateTimer()..startPeriodic(0.01, function shiroTEnd).setData(pid)
+        getTimer()..startPeriodic(0.01, function shiroTEnd).setData(pid)
 
         _ydl_timer = CreateTimer()
         SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 594, LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594))

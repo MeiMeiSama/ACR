@@ -30,7 +30,7 @@ function shalltearModoT_init()
             StopMusic(false)
             PlaySoundBJ(gg_snd_ShaltearBGM)                
             acrTransformation(caster, 40, 'H01B', 'H00B', 850, 4.0)
-            CreateTimer()..startPeriodic(0.01, function shalltearModoTEnd).setData(pid)
+            getTimer()..startPeriodic(0.01, function shalltearModoTEnd).setData(pid)
 
 function shalltearModoTEnd()
     let pid = GetExpiredTimer().getData()
@@ -40,7 +40,7 @@ function shalltearModoTEnd()
             SPELL_G[pid].removeTagHidden()
         if gg_snd_ShaltearBGM.isPlaying()
             gg_snd_ShaltearBGM.stop(false, false) 
-        GetExpiredTimer().destr() 
+        GetExpiredTimer().release()
 
 
 

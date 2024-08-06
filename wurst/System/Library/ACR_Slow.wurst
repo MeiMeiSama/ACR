@@ -53,10 +53,10 @@ public function acrSlow(unit caster, unit victim, real slowPercentage, real dura
             victim.addTagSlow()
         if victim.getMoveSpeed() > (victim.getDefaultMovespeed() - (victim.getDefaultMovespeed() * (slowPercentage / 100)))  
             victim.setMoveSpeed(victim.getDefaultMovespeed() - (victim.getDefaultMovespeed() * (slowPercentage / 100)))
-        acrSlowTimer[id] = CreateTimer()..startPeriodic(0.02, function acrSlowEnd)..setData(id)
+        acrSlowTimer[id] = getTimer()..startPeriodic(0.02, function acrSlowEnd)..setData(id)
 
         
-    // CreateTimer()..setData(id)..start(duration + 0.02) () ->
+    // getTimer()..setData(id)..start(duration + 0.02) () ->
     //     let id1 = GetExpiredTimer().getData()
     //     acrSlowAreaGroup[id1].forEachIn() (unit victim) ->
     //         if victim.hasTagSlow()                                 

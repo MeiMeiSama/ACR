@@ -14,6 +14,10 @@ real array acrSilenceAreaDuration
 unit array acrSilenceAreaCaster
 real array acrSilenceAreaStartCount
 real array acrSilenceAreaMiddleCount
+timer array acrSilenceAreaStartTimer
+timer array acrSilenceAreaMiddleTimer
+timer array acrSilenceAreaEndTimer
+
 
 function acrSilenceAreaStart()
     let id = GetExpiredTimer().getData()
@@ -29,7 +33,7 @@ function acrSilenceAreaStart()
                 ..castTarget(SILENCE_DUMMY_SPELL, 1, OrderIds.soulburn, victim)
                 victim.addTagSilence()      
     if acrSilenceAreaStartCount[id] >= acrSilenceAreaStartCount[id]
-        GetExpiredTimer().release()                 
+        acrSilenceAreaStartTimer[id].release()                 
            
 
 function acrSilenceAreaMiddle()
@@ -42,7 +46,7 @@ function acrSilenceAreaMiddle()
                 victim.removeTagSilence()
                 acrSilenceAreaGroup[id].remove(victim)    
     if acrSilenceAreaMiddleCount[id] >= acrSilenceAreaMiddleCount[id]
-        GetExpiredTimer().release()                  
+        acrSilenceAreaMiddleTimer[id].release()                  
 
 function acrSilenceAreaEnd()
     let id = GetExpiredTimer().getData()
@@ -50,7 +54,8 @@ function acrSilenceAreaEnd()
         if victim.hasTagSilence()                                 
             victim.removeAbility(SILENCE_DEBUFF)
             victim.removeTagSilence()
-        acrSilenceAreaGroup[id].remove(victim)     
+        acrSilenceAreaGroup[id].remove(victim)  
+    acrSilenceAreaEndTimer[id].release()       
 
 
 public function acrSilenceArea(unit caster, vec2 targetPoint, real aoe, real duration)
@@ -61,6 +66,6 @@ public function acrSilenceArea(unit caster, vec2 targetPoint, real aoe, real dur
     acrSilenceAreaDuration[id] = duration
     if acrSilenceAreaGroup[id] == null
         acrSilenceAreaGroup[id] = CreateGroup()    
-    CreateTimer()..startPeriodic(0.02, function acrSilenceAreaStart).setData(id)     
-    CreateTimer()..startPeriodic(0.02, function acrSilenceAreaMiddle).setData(id)  
-    CreateTimer()..start(duration + 0.02, function acrSilenceAreaEnd)..setData(id)                  
+    acrSilenceAreaStartTimer[id] = getTimer()..startPeriodic(0.02, function acrSilenceAreaStart)..setData(id)     
+    acrSilenceAreaMiddleTimer[id] = getTimer()..startPeriodic(0.02, function acrSilenceAreaMiddle)..setData(id)  
+    acrSilenceAreaEndTimer[id] = getTimer()..start(duration + 0.02, function acrSilenceAreaEnd)..setData(id)                  

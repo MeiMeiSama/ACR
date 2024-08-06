@@ -11,6 +11,9 @@ real array acrPauseAreaDuration
 unit array acrPauseAreaCaster
 real array acrPauseAreaStartCount
 real array acrPauseAreaMiddleCount
+timer array acrPauseAreaStartTimer
+timer array acrPauseAreaMiddleTimer
+timer array acrPauseAreaEndTimer
 
 function acrPauseAreaStart()
     let id = GetExpiredTimer().getData()
@@ -25,7 +28,7 @@ function acrPauseAreaStart()
             victim.unpauseEx()
             victim.removeTagPauseEX()   
     if acrPauseAreaStartCount[id] >= acrPauseAreaStartCount[id]
-        GetExpiredTimer().release()                 
+        acrPauseAreaStartTimer[id].release()                 
            
 
 function acrPauseAreaMiddle()
@@ -38,7 +41,7 @@ function acrPauseAreaMiddle()
                 victim.removeTagPauseEX()
                 acrPauseAreaGroup[id].remove(victim) 
     if acrPauseAreaMiddleCount[id] >= acrPauseAreaMiddleCount[id]
-        GetExpiredTimer().release()                  
+        acrPauseAreaMiddleTimer[id].release()                  
 
 function acrPauseAreaEnd()
     let id = GetExpiredTimer().getData()
@@ -46,7 +49,8 @@ function acrPauseAreaEnd()
         if victim.hasTagPauseEX()                                 
             victim.unpauseEx()
             victim.removeTagPauseEX()
-        acrPauseAreaGroup[id].remove(victim)     
+        acrPauseAreaGroup[id].remove(victim)
+    acrPauseAreaEndTimer[id].release()         
 
 public function acrPauseArea(unit caster, vec2 targetPoint, real aoe, real duration)
     let id = caster.getUserData() 
@@ -59,9 +63,9 @@ public function acrPauseArea(unit caster, vec2 targetPoint, real aoe, real durat
             IssueImmediateOrder(victim, "stop")
     if acrPauseAreaGroup[id] == null
         acrPauseAreaGroup[id] = CreateGroup()
-    CreateTimer()..startPeriodic(0.02, function acrPauseAreaStart).setData(id)     
-    CreateTimer()..startPeriodic(0.02, function acrPauseAreaMiddle).setData(id)  
-    CreateTimer()..start(duration + 0.02, function acrPauseAreaEnd)..setData(id)            
+    acrPauseAreaStartTimer[id] = getTimer()..startPeriodic(0.02, function acrPauseAreaStart)..setData(id)     
+    acrPauseAreaMiddleTimer[id] = getTimer()..startPeriodic(0.02, function acrPauseAreaMiddle)..setData(id)  
+    acrPauseAreaEndTimer[id] = getTimer()..start(duration + 0.02, function acrPauseAreaEnd)..setData(id)            
     // doPeriodicallyTimed(0.02, duration) (CallbackCounted cb) ->   
     //     forUnitsInRange(targetPoint, aoe) (unit victim) ->
     //         if caster.isEnemyOf(victim) and victim.isInvulnerable() == false and victim.hasTagPauseEX() == false

@@ -168,7 +168,7 @@ function hibariTEnd()
     let i = GetExpiredTimer().getData()
     if udg_PlayHero[i].isInvulnerable() == false
         udg_PlayHero[i].removeAbility('A19A')
-        GetExpiredTimer().destr()
+        GetExpiredTimer().release()
 
 
 function hibariTBeforeEnd()
@@ -178,7 +178,7 @@ function hibariTBeforeEnd()
                 if udg_PlayHero[i].isInvulnerable() == false
                     udg_PlayHero[i].removeAbility('A19A')
                 else
-                    CreateTimer()..startPeriodic(0.03, function hibariTEnd).setData(i)     
+                    getTimer()..startPeriodic(0.03, function hibariTEnd).setData(i)     
 
 
 function hibariTPeriodicFunc()
@@ -189,14 +189,13 @@ function hibariTPeriodicFunc()
     //     ..setAbilityAvailable('A0AU', true)
     //     hibari.startAbilityCooldown('A0AU')
     //     hibari.removeAbility('A19A')
-    //     GetExpiredTimer().destr()
     if hibariTCount >= 165    
         GetOwningPlayer(hibari)
         ..setAbilityAvailable('A0H3', false)
         ..setAbilityAvailable('A0AU', true)
         hibari.startAbilityCooldown('A0AU')
         hibariTBeforeEnd()
-        GetExpiredTimer().destr()   
+        GetExpiredTimer().release()   
 
 
 
@@ -250,7 +249,7 @@ function trig_HibariTActions()
     TimerStart(_ydl_timer, 0.02, true, function trig_HibariTFunc016T)
     caster.addAbility('A19A')
     hibari = caster
-    CreateTimer()..startPeriodic(0.1, function hibariTPeriodicFunc)                                          
+    getTimer()..startPeriodic(0.1, function hibariTPeriodicFunc)                                          
     SetPlayerAbilityAvailableBJ(false,'A0AU',GetOwningPlayer(caster))
     if GetUnitAbilityLevel(caster, 'A0H3') != 0
         SetPlayerAbilityAvailableBJ(true,'A0H3',GetOwningPlayer(caster)) 

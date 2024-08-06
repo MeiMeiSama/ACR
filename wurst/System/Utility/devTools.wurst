@@ -5,9 +5,11 @@
 // import ACR_TagSystem
 // import ACR_ReviveInstant
 // import ObjectDefinitions
+// import TimerUtils
 // int acrdevtimer
 // unit selectedUnit
 // timer acrTimer
+// timer testTimer
 // bool array devTools
 // fogmodifier array acr_MH
 
@@ -25,6 +27,12 @@
 // function acrTimerFunc()
 //     acrdevtimer++
 //     print("ACR Timer: [|cffffd700"+acrdevtimer.toString()+"|r]")
+
+// function testFunc()
+//     print("timer ended")
+
+// function testFunc2()
+//     testTimer.release()    
 
 // function devTools ()
 //     teleport()
@@ -78,9 +86,13 @@
 //             trig_VsBossBeginActions()
 //         else if input == "ffa"
 //             trig_TournamentFFAActions()
+//         else if input == "test"
+//             testTimer = getTimer()..start(5, function testFunc)     
+//         else if input == "release"
+//             testFunc2()                    
 //         else if input == "timer"
 //             acrdevtimer = 0
-//             acrTimer = CreateTimer()..startPeriodic(1, function acrTimerFunc)
+//             acrTimer = getTimer()..startPeriodic(1, function acrTimerFunc)
 //         else if input == "timerstop"
 //             print("Destroyed ACR Timer")
 //             acrTimer.destr()

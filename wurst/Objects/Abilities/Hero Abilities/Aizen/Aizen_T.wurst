@@ -29,7 +29,7 @@ function aizenModoT ()
             StopMusic(false)
             PlaySoundBJ(gg_snd_AizenBGM)                
             acrTransformation(caster, 40, 'H01R', 'H03Q', 850, 4.0)
-            CreateTimer()..startPeriodic(0.01, function aizenModoTEnd).setData(pid)
+            getTimer()..startPeriodic(0.01, function aizenModoTEnd).setData(pid)
 
 function aizenModoTEnd()
     let pid = GetExpiredTimer().getData()
@@ -39,7 +39,7 @@ function aizenModoTEnd()
             SPELL_G[pid].removeTagHidden()
         if gg_snd_AizenBGM.isPlaying()
             gg_snd_AizenBGM.stop(false, false) 
-        GetExpiredTimer().destr() 
+        GetExpiredTimer().release()
 
 
 

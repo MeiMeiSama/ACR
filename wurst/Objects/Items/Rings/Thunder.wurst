@@ -19,6 +19,11 @@ int array thunderCount
 int array thunderHitCount
 group array thunderGroup
 effect array thunderEffect
+timer array thunderDashEffectDestroyTimer
+timer array thunderDashRingHitTimer
+timer array thunderDashArcoHitTimer
+timer array thunderDashRingStartTimer
+timer array thunderDashArcoStartTimer
 
 
 
@@ -28,6 +33,7 @@ init
 function thunderDashEffectDestroy()
     let id = GetExpiredTimer().getData()
     thunderEffect[id].destr()
+    thunderDashEffectDestroyTimer[id].release()
 
 
 function thunderDashArcoHit()
@@ -36,7 +42,7 @@ function thunderDashArcoHit()
     thunderVictim[pid].issueImmediateOrder("stop")
     flashEffect(THUNDER_EFFECT, thunderVictim[pid], "origin")
     if thunderHitCount[pid] >= 20
-        GetExpiredTimer().destr()
+        thunderDashArcoHitTimer[pid].release()
 
 function thunderDashRingHit()
     let pid = GetExpiredTimer().getData()
@@ -44,7 +50,7 @@ function thunderDashRingHit()
     thunderVictim[pid].issueImmediateOrder("stop")
     flashEffect(THUNDER_EFFECT, thunderVictim[pid], "origin")
     if thunderHitCount[pid] >= 14
-        GetExpiredTimer().destr()
+        thunderDashRingHitTimer[pid].release()
 
 function thunderDashArcoStart()
     let id = GetExpiredTimer().getData()
@@ -57,7 +63,7 @@ function thunderDashArcoStart()
             thunderUser[id].unpauseEx()
             thunderUser[id].removeTagPauseEX()
             thunderGroup[id].clear()
-            GetExpiredTimer().destr()
+            thunderDashArcoStartTimer[id].release()
     else
         if thunderUserPos[id].distanceTo(thunderTargetPos[id]) >= 100 // if the distance where he wants to dash to is greater than 100, move him
             thunderUser[id].setInvulnerable(true)
@@ -79,7 +85,7 @@ function thunderDashArcoStart()
                     let pid = u.getUserData()
                     thunderVictim[pid] = u 
                     thunderHitCount[pid] = 0
-                    CreateTimer()..startPeriodic(0.05, function thunderDashArcoHit).setData(pid)
+                    thunderDashArcoHitTimer[pid] = getTimer()..startPeriodic(0.05, function thunderDashArcoHit)..setData(pid)
 
         else // if the distance is closer than 100, stop the dash
             if thunderUser[id].isInvulnerable()
@@ -88,7 +94,7 @@ function thunderDashArcoStart()
                 thunderUser[id].unpauseEx()
                 thunderUser[id].removeTagPauseEX()
                 thunderGroup[id].clear()
-                GetExpiredTimer().destr()
+                thunderDashArcoStartTimer[id].release()
     if thunderCount[id] >= 10
         if thunderUser[id].isInvulnerable()
             thunderUser[id].setInvulnerable(false) 
@@ -96,7 +102,7 @@ function thunderDashArcoStart()
             thunderUser[id].unpauseEx()
             thunderUser[id].removeTagPauseEX()
             thunderGroup[id].clear()
-            GetExpiredTimer().destr()  
+            thunderDashArcoStartTimer[id].release()
 
 
 function thunderDashRingStart()
@@ -110,7 +116,7 @@ function thunderDashRingStart()
             thunderUser[id].unpauseEx()
             thunderUser[id].removeTagPauseEX()
             thunderGroup[id].clear()
-            GetExpiredTimer().destr()
+            thunderDashRingStartTimer[id].release()
     else
         if thunderUserPos[id].distanceTo(thunderTargetPos[id]) >= 100 // if the distance where he wants to dash to is greater than 100, move him
             thunderUser[id].setInvulnerable(true)
@@ -132,7 +138,7 @@ function thunderDashRingStart()
                     let pid = u.getUserData()
                     thunderVictim[pid] = u 
                     thunderHitCount[pid] = 0
-                    CreateTimer()..startPeriodic(0.05, function thunderDashRingHit).setData(pid)
+                    thunderDashRingHitTimer[pid] = getTimer()..startPeriodic(0.05, function thunderDashRingHit)..setData(pid)
 
         else // if the distance is closer than 100, stop the dash
             if thunderUser[id].isInvulnerable()
@@ -141,7 +147,7 @@ function thunderDashRingStart()
                 thunderUser[id].unpauseEx()
                 thunderUser[id].removeTagPauseEX()
                 thunderGroup[id].clear()
-                GetExpiredTimer().destr()
+                thunderDashRingStartTimer[id].release()
     if thunderCount[id] >= 10
         if thunderUser[id].isInvulnerable()
             thunderUser[id].setInvulnerable(false) 
@@ -149,7 +155,7 @@ function thunderDashRingStart()
             thunderUser[id].unpauseEx()
             thunderUser[id].removeTagPauseEX()
             thunderGroup[id].clear()
-            GetExpiredTimer().destr()  
+            thunderDashRingStartTimer[id].release()  
 
 
 function thunderDash ()
@@ -184,8 +190,8 @@ function thunderDash ()
                     IssueImmediateOrder(caster, "stop")
                     caster.pauseEx()
                     caster.addTagPauseEX()
-                CreateTimer()..start(3, function thunderDashEffectDestroy).setData(id)    
-                CreateTimer()..startPeriodic(0.03, function thunderDashRingStart).setData(id)
+                thunderDashEffectDestroyTimer[id] = getTimer()..start(3, function thunderDashEffectDestroy)..setData(id)    
+                thunderDashRingStartTimer[id] = getTimer()..startPeriodic(0.03, function thunderDashRingStart)..setData(id)
 
         else if GetSpellAbilityId() == THUNDER_ARCO_ABILITY
             // Variables
@@ -215,5 +221,5 @@ function thunderDash ()
                     IssueImmediateOrder(caster, "stop")
                     caster.pauseEx()
                     caster.addTagPauseEX()
-                CreateTimer()..start(3, function thunderDashEffectDestroy).setData(id)    
-                CreateTimer()..startPeriodic(0.03, function thunderDashArcoStart).setData(id)
+                thunderDashEffectDestroyTimer[id] = getTimer()..start(3, function thunderDashEffectDestroy)..setData(id)    
+                thunderDashArcoStartTimer[id] = getTimer()..startPeriodic(0.03, function thunderDashArcoStart)..setData(id)
