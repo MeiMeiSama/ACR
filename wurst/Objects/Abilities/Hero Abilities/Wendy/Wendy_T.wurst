@@ -35,7 +35,7 @@ function wendyModoT()
             StopMusic(false)
             PlaySoundBJ(gg_snd_WendyDragonForce)                
             acrTransformation(caster, 40, 'H006', 'H01D', 850, 4.0)
-            CreateTimer()..startPeriodic(0.01, function wendyModoTEnd).setData(pid)
+            getTimer()..startPeriodic(0.01, function wendyModoTEnd).setData(pid)
 
 function wendyModoTEnd()
     let pid = GetExpiredTimer().getData()
@@ -47,7 +47,7 @@ function wendyModoTEnd()
         wendy.addAbility(SPELL_G[pid])
         if gg_snd_WendyDragonForce.isPlaying()
             gg_snd_WendyDragonForce.stop(false, false) 
-        GetExpiredTimer().destr()  
+        GetExpiredTimer().release()
 
 // init
 //     wendyModeT_init()

@@ -42,7 +42,7 @@ function normalNatsuModoT()
             StopMusic(false)
             PlaySoundBJ(gg_snd_Rnatsu5_1)                
             acrTransformation(caster, 40, 'H001', 'H00S', 850, 4.0)
-            CreateTimer()..startPeriodic(0.01, function natsuModoTEnd).setData(pid)
+            getTimer()..startPeriodic(0.01, function natsuModoTEnd).setData(pid)
 
 function natsuModoTEnd()
     let pid = GetExpiredTimer().getData()
@@ -53,7 +53,7 @@ function natsuModoTEnd()
         natsu.hideAbility(natsuEPassive, true) 
         if gg_snd_Rnatsu5_1.isPlaying()
             gg_snd_Rnatsu5_1.stop(false, false) 
-        GetExpiredTimer().destr() 
+        GetExpiredTimer().release()
 
 
 

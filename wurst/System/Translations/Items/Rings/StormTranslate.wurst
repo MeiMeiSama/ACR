@@ -6,6 +6,7 @@ import TimerUtils
 int array stormInt
 real array stormMana
 unit array stormUser
+timer array stormTranslationTimer
 
 init
     stormEventCheck()
@@ -22,7 +23,7 @@ function stormDynamicTranslation(unit user, item storm)
         let dmg = currentMana + currentInt
         BlzSetItemExtendedTooltip(storm, "|n|cff008080Active:|n|n|r|cffffd700Shoot a beam in a frontal cone in front of yourself, dealing damage to any enemies struck and stunning them for 2 seconds.|n|n|r|cffffd700Damage output:|r|cffc0c0c0|cff1e90ff "+dmg.toString()+" |n|r|cffffd700Damage Formula:|r|cffc0c0c0|cff1e90ff 10% of mana left + |cff1e90ff4x Intelligence  |r|n|cffffd700Cooldown: |cffff808045|r|n|n|cffc0c0c0Passive|r|r|r|n|n|cff1e90ffIntelligence +165|n|r|cffffd700Increases the user's mana by 825|n|r|cffffd700Increases the user's health by 1420")
 
-function stormTranslationTimer()
+function stormTranslationCheck()
     let id = GetExpiredTimer().getData()
     if  stormInt[id] != stormUser[id].getStr(true) or stormMana[id] != stormUser[id].getHP()           
         for i = 0 to 5
@@ -39,7 +40,7 @@ function stormTranslationTimer()
                 let stormPacifier = UnitItemInSlot(stormUser[id], i)
                 stormDynamicTranslation(stormUser[id], stormPacifier)    
     if stormUser[id].hasItemById(STORM_RING_VONGOLA) == false and stormUser[id].hasItemById(STORM_RING_ARCOBALENO) == false
-        GetExpiredTimer().destr()    
+        stormTranslationTimer[id].release()  
 
 function stormEventCheck()
 
@@ -65,4 +66,4 @@ function stormEventCheck()
                 
             stormInt[id] = user.getInt(true)
             stormMana[id] = user.getMana() 
-            CreateTimer()..startPeriodic(0.25, function stormTranslationTimer).setData(id)
+            stormTranslationTimer[id] = getTimer()..startPeriodic(0.25, function stormTranslationCheck)..setData(id)

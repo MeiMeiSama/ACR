@@ -2,6 +2,8 @@ package Ryougi_Kimono_T
 
 import ClosureEvents
 import ACR_TagSystem
+import TimerUtils
+
 int ryougiKimonoTCount = 0
 int abilityT = 'A0AQ'
 int buffT = 'B03A'
@@ -14,7 +16,7 @@ public function ryougiKimonoT()
         caster.disableAbility(abilityT, true, false)
         abilityT.addTagDisabled()
         caster.issueImmediateOrder("stop")
-        CreateTimer()..startPeriodic(0.03, function kimonoRyougiTEnd)
+        getTimer()..startPeriodic(0.03, function kimonoRyougiTEnd)
 
 function kimonoRyougiTEnd()
     if kimonoRyougi.isPaused() == false
@@ -24,11 +26,11 @@ function kimonoRyougiTEnd()
         kimonoRyougi.disableAbility(abilityT, false, false)
         abilityT.removeTagDisabled()
         kimonoRyougi.startAbilityCooldown(abilityT)
-        GetExpiredTimer().destr() 
+        GetExpiredTimer().release() 
 
     if ryougiKimonoTCount == 100
         kimonoRyougi.removeAbility(buffT)
         kimonoRyougi.disableAbility(abilityT, false, false)
         abilityT.removeTagDisabled()
         kimonoRyougi.startAbilityCooldown(abilityT)
-        GetExpiredTimer().destr() 
+        GetExpiredTimer().release()

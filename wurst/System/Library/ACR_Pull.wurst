@@ -46,4 +46,4 @@ public function acrPull(unit caster, unit victim, real distance)
         acrPullDistance[id] = distance
         if victim.hasTagPull() == false
             victim.addTagPull() 
-        acrPullTimer[id] = CreateTimer()..startPeriodic(0.02, function acrPullEnd)..setData(id)
+        acrPullTimer[id] = getTimer()..startPeriodic(0.02, function acrPullEnd)..setData(id)

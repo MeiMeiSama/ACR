@@ -44,4 +44,4 @@ public function acrKnockback(unit caster, unit victim, real distance)
             acrKnockbackTimer[id].release()
         if victim.hasTagKnockback() == false    
             victim.addTagKnockback()    
-        acrKnockbackTimer[id] = CreateTimer()..startPeriodic(0.02, function acrKnockbackEnd)..setData(id) 
+        acrKnockbackTimer[id] = getTimer()..startPeriodic(0.02, function acrKnockbackEnd)..setData(id) 

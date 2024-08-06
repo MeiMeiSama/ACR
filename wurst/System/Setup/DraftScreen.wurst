@@ -49,6 +49,8 @@ framehandle selected_icon
 framehandle selected_icon1
 int playingPlayers = 0
 int playerPickCount = 0
+timer array createHeroTimer
+timer array userDataAssignTimer
 
 SoundDefinition chooseOK = new SoundDefinition("war3mapImported\\ChooseOK.mp3")
 SoundDefinition chooseUNIT = new SoundDefinition("war3mapImported\\ChooseUnit.mp3")
@@ -253,7 +255,9 @@ function pickIcon_Cond() returns boolean
     return false
 
 function resetDoubleClick ()
-    canDoubleClick[GetExpiredTimer().getData()] = false
+    let id = GetExpiredTimer().getData()
+    canDoubleClick[id] = false
+    canDoubleClick_Timer[id].release()
     
 function pickIcon ()
     CreateTrigger()
@@ -263,7 +267,7 @@ function pickIcon ()
         let p = GetTriggerPlayer()
         canDoubleClick[p.getId()] = true
         canDoubleClick_Timer[p.getId()].destr()
-        canDoubleClick_Timer[p.getId()] = CreateTimer()..start(0.2, function resetDoubleClick)..setData(p.getId())
+        canDoubleClick_Timer[p.getId()] = getTimer()..start(0.2, function resetDoubleClick)..setData(p.getId())
         chooseUNIT.playForPlayer(GetTriggerPlayer())
         selectedUnit[p.getId()] = GetTriggerUnit()
         if GetTriggerPlayer() == GetLocalPlayer()
@@ -347,6 +351,7 @@ function userDataAssign()
     let pid = GetExpiredTimer().getData()
     if udg_PlayHero[pid].getUserData() == 0
         udg_PlayHero[pid].setUserData(pid+1)     
+    userDataAssignTimer[pid].release()    
 
 
 function createHero2()
@@ -358,7 +363,8 @@ function createHero2()
     else if draftPlayer[pid].isAllyOf(Player(11))
         udg_PlayHero[pid] = createUnit(draftPlayer[pid], draftHero[pid], team3Pos)..setUserData(pid+1)            
     draftPlayer[pid].panCamToTimed(udg_PlayHero[pid], 0)
-    CreateTimer()..startPeriodic(0.5, function userDataAssign).setData(pid)  
+    userDataAssignTimer[pid] = getTimer()..startPeriodic(0.5, function userDataAssign)..setData(pid) 
+    createHeroTimer[pid].release() 
 
 function createHero (player p)
     let pid = p.getId()
@@ -381,7 +387,7 @@ function createHero (player p)
     team1Pos = vec2(-10384, 9980)
     team2Pos = vec2(5389, 2246)
     team3Pos = vec2(-3436, -6244)
-    CreateTimer()..start(delayAfterCountdown, function createHero2)..setData(pid)
+    createHeroTimer[pid] = getTimer()..start(delayAfterCountdown, function createHero2)..setData(pid)
 
 function draftTime_End2()
     gg_trg_CameraLock.destr()
@@ -414,6 +420,7 @@ function draftTime_End2()
     selected_icon..setVisible(false)..disable()
     textArea..hide()..disable()
     initFunctions()    
+    GetExpiredTimer().release()    
 
 function draftTime_End ()
     draftTime_dialog.destr()
@@ -422,20 +429,21 @@ function draftTime_End ()
         if Player(i).getController() == MAP_CONTROL_USER and Player(i).getSlotState() == PLAYER_SLOT_STATE_PLAYING
             createHero(Player(i))  
 
-    CreateTimer()..start(delayAfterCountdown, function draftTime_End2)
+    getTimer()..start(delayAfterCountdown, function draftTime_End2)
+    GetExpiredTimer().release()
 
 function allPlayerPickedTimer()
     allPlayersPickedCount = allPlayersPickedCount + 0.06
     if allPlayersPickedCount >= draftTime
-        GetExpiredTimer().destr()
+        GetExpiredTimer().release()
     if playerPickCount == playingPlayers
         draftTime_End()
-        GetExpiredTimer().destr()    
+        GetExpiredTimer().release()    
 
 
 function allPlayersPicked()
     allPlayersPickedCount = 0.0
-    CreateTimer()..startPeriodic(0.06, function allPlayerPickedTimer)
+    getTimer()..startPeriodic(0.06, function allPlayerPickedTimer)
 
 public function draftTimeSetup ()
     playerCount = 0
@@ -443,6 +451,6 @@ public function draftTimeSetup ()
         if Player(i).getController() == MAP_CONTROL_USER and Player(i).getSlotState() == PLAYER_SLOT_STATE_PLAYING
             playerCount++
 
-    draftCountdown = CreateTimer()..start(draftTime, function draftTime_End)
+    draftCountdown = getTimer()..start(draftTime, function draftTime_End)
     draftTime_dialog = CreateTimerDialog(draftCountdown)..setTitle("|cffffd700Countdown|r")..display(true)
     allPlayersPicked()

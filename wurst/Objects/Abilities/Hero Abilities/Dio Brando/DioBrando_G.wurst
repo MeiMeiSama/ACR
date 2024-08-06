@@ -4,6 +4,7 @@ import ClosureEvents
 import AbilityClassifications
 import AbilityGlobals
 import ObjectDefinitions
+import TimerUtils
 
 unit dio
 real dioDamageTaken
@@ -32,12 +33,12 @@ function dioGTranslation()
         "\n\nDuration: "+PINK+"4"+GOLD+
         "\nDamage Healed: "+PINK+"50%"+GOLD+
         "\nCurrent Healing Stored: "+PINK+"0"+GOLD)
-        GetExpiredTimer().destr()     
+        GetExpiredTimer().release()     
 
 function dioGheal() 
     if diohealingDuration <= 1
         dioDamageTaken = 0
-        GetExpiredTimer().destr()
+        GetExpiredTimer().release()
     flashEffect("HealBuff.mdx", dio, "origin")
     dio.addHP((diohealingPerSecond))
     dioDamageTaken = dioDamageTaken - diohealingPerSecond 
@@ -56,6 +57,6 @@ public function dioG()
             dioHealingAmount = dioDamageTaken * 0.5
             diohealingPerSecond = dioHealingAmount / diohealingDuration
             if dioTranslationTimer.getRemaining() <= 0
-                dioTranslationTimer = CreateTimer()..startPeriodic(0.1, function dioGTranslation)    
+                dioTranslationTimer = getTimer()..startPeriodic(0.1, function dioGTranslation)    
             if dioHealTimer.getRemaining() <= 0 
-                dioHealTimer = CreateTimer()..startPeriodic(1, function dioGheal)  
+                dioHealTimer = getTimer()..startPeriodic(1, function dioGheal)  

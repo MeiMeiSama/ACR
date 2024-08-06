@@ -7,13 +7,15 @@ import TimerUtils
 unit array acrSpeedBoostUser
 vec2 array acrSpeedBoostStartPoint
 real array acrSpeedBoostDistance
+timer array acrSpeedBoostTimer
+timer array acrSpeedBoostRemovalTimer
 
 function acrSpeedBoostRemoval()
     let id = GetExpiredTimer().getData()
     let casterCurrentPos = acrSpeedBoostUser[id].getPos()     
     if acrSpeedBoostStartPoint[id].distanceTo(casterCurrentPos) > acrSpeedBoostDistance[id] or acrSpeedBoostUser[id].isAlive() == false
         acrSpeedBoostUser[id].removeAbility('B06S')
-        GetExpiredTimer().destr()   
+        acrSpeedBoostRemovalTimer[id].release()  
 
 function acrSpeedBoostRemovalTimer()
     let id = GetExpiredTimer().getData()
@@ -21,7 +23,8 @@ function acrSpeedBoostRemovalTimer()
     ..owner(acrSpeedBoostUser[id].getOwner())
     ..origin(acrSpeedBoostUser[id].getPos())
     ..castTarget(DUMMY_ACRSPEED_ABILITY, 1, OrderIds.bloodlust, acrSpeedBoostUser[id])
-    CreateTimer()..startPeriodic(0.03, function acrSpeedBoostRemoval)..setData(id)
+    acrSpeedBoostRemovalTimer[id] = getTimer()..startPeriodic(0.03, function acrSpeedBoostRemoval)..setData(id)
+    acrSpeedBoostTimer[id].release()
 
 
 function acrSpeedBoost(unit caster, vec2 startPoint, real distance)
@@ -29,7 +32,7 @@ function acrSpeedBoost(unit caster, vec2 startPoint, real distance)
     acrSpeedBoostUser[id] = caster
     acrSpeedBoostStartPoint[id] = startPoint
     acrSpeedBoostDistance[id] = distance
-    CreateTimer()..start(0.1, function acrSpeedBoostRemovalTimer)..setData(id)
+    acrSpeedBoostTimer[id] = getTimer()..start(0.1, function acrSpeedBoostRemovalTimer)..setData(id)
 
 function acrSpeedBoostBase()
     let team1StartPos = vec2(-10425, 10034)
@@ -55,7 +58,7 @@ function acrSpeedBoostBase()
                         acrSpeedBoost(udg_PlayHero[i], team3StartPos, 3800)     
 
 public function acrSpeedBoostTimer()
-    CreateTimer()..startPeriodic(0.1, function acrSpeedBoostBase)
+    getTimer()..startPeriodic(0.1, function acrSpeedBoostBase)
                                                            
 
             

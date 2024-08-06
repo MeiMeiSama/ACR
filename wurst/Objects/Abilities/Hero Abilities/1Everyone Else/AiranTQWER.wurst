@@ -16,7 +16,7 @@ init
 function aizenReset()
     let id = GetExpiredTimer().getData()
     aizenModeRCount[id] = 0
-    GetExpiredTimer().destr()
+    GetExpiredTimer().release()
 function trig_AiranTQWERConditions() returns boolean
     return GetSpellAbilityId() == 'A0XT' or GetSpellAbilityId() == 'A0XS' or GetSpellAbilityId() == 'A0XU' or GetSpellAbilityId() == 'A0HO' or GetSpellAbilityId() == 'A0HX'
 function trig_AiranTQWERFunc007Func002Func001Func002Func011Func003003003() returns boolean
@@ -29,7 +29,7 @@ function trig_AiranTQWERFunc007Func002Func001Func002Func011Func009Func002Func010
     SaveUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 1034, GetEnumUnit())
     let id = GetEnumUnit().getUserData()
     if aizenModeRCount[id] == 0
-        CreateTimer()..start(5, function aizenReset)..setData(id)               
+        getTimer()..start(5, function aizenReset)..setData(id)               
     if aizenModeRCount[id] < 3
         DamageEvent.setNextDamageId(DAMAGE_ABILITY_AIZEN_MODE_R)
         DamageEvent.setNextDamageFromCode()
@@ -94,7 +94,8 @@ function aizenModeEEnd()
         if u.hasTagPauseEX() == true
             u.unpauseEx()
             u.removeTagPauseEX()
-        aizenModeEgroup.remove(u)         
+        aizenModeEgroup.remove(u)     
+    GetExpiredTimer().release()        
         
     
 
@@ -114,7 +115,7 @@ function trig_AiranTQWERFunc007Func002Func001Func011Func005Func004A()
     if victim.isInvulnerable() == true and aizenModeEgroup.has(victim) == true and victim.hasTagPauseEX() == true 
         victim.unpauseEx()
         victim.removeTagPauseEX() 
-    CreateTimer()..start(0.7, function aizenModeEEnd)                     
+    getTimer()..start(0.7, function aizenModeEEnd)                     
             
 function trig_AiranTQWERFunc007Func002Func001Func011Func008Func009T()
     DestroyEffect(LoadEffectHandle(YDLOC, GetHandleId(GetExpiredTimer()), 328716641))

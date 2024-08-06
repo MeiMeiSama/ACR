@@ -5,18 +5,20 @@ import TimerUtils
 import AbilityGlobals
 import UpdateTooltipExceptions
 import AbilityClassifications
+timer array tooltipModoTimer
+timer array tooltipTimer
 
 integer count = 0
 
 public function updateTooltips_Mode ()
     let id = GetExpiredTimer().getData()
     updateTooltipMode(id)
-    GetExpiredTimer().destr()
+    tooltipModoTimer[id].release()
 
 public function updateTooltips () // ------------- Configurable ------------- //
     let id = GetExpiredTimer().getData()
     updateTooltipExceptions(id) 
-    GetExpiredTimer().destr()
+    tooltipTimer[id].release()
 
 function updateTooltipsOnceInitModeCond () returns boolean
     if GetSpellAbilityId().isTransform()
@@ -30,8 +32,7 @@ public function updateTooltipsOnceInit_Mode (unit playHero)
     ..addAction() ->
         let hero = GetTriggerUnit()
         let id = hero.getOwner().getId()
-        let tooltipTimer = CreateTimer()
-        tooltipTimer..start(0.1, function updateTooltips_Mode)..setData(id)
+        tooltipModoTimer[id] = getTimer()..start(0.1, function updateTooltips_Mode)..setData(id)
 
 function updateTooltipsInitModeCond () returns boolean
     if GetManipulatedItem().isUpgrade()
@@ -50,8 +51,7 @@ public function updateTooltipsInit_Mode (unit playHero)
     ..addAction() ->
         let hero = GetTriggerUnit()
         let id = hero.getOwner().getId()
-        let tooltipTimer = CreateTimer()
-        tooltipTimer..start(0.1, function updateTooltips_Mode)..setData(id)
+        tooltipModoTimer[id] = getTimer()..start(0.1, function updateTooltips_Mode)..setData(id)
 
 function updateTooltipsInitCond () returns boolean
     if GetManipulatedItem().isUpgrade()
@@ -69,11 +69,9 @@ function updateTooltipsInit_Base (unit playHero)
     ..addCondition(Condition(function updateTooltipsInitCond))
     ..addAction() ->
         let id = GetTriggerUnit().getOwner().getId()
-        let tooltipTimer = CreateTimer()
-        tooltipTimer..start(0.1, function updateTooltips)..setData(id)
+        tooltipTimer[id] = getTimer()..start(0.1, function updateTooltips)..setData(id)
     let pid = playHero.getOwner().getId()
-    let runOnce = CreateTimer()
-    runOnce..start(0.1, function updateTooltips)..setData(pid)
+    tooltipTimer[pid] = getTimer()..start(0.1, function updateTooltips)..setData(pid)
                 
 
 // --------- The ability list for the heroes --------- //

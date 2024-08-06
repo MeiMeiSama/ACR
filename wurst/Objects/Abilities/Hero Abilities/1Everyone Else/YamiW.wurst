@@ -4,6 +4,7 @@ import AbilityGlobals
 import main
 import ClosureForGroups
 import ACR_Stun
+import TimerUtils
 
 unit yami
 vec2 yamiPos
@@ -83,7 +84,7 @@ function trig_YamiWFunc004Func013Func003Func011A()
     acrStun(caster, victim, 0.7)
     yDWEFlyEnable(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 927))
     SetUnitFlyHeight(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 927), 450.00, 1400.00)
-    _ydl_timer = CreateTimer()
+    _ydl_timer = getTimer()
     SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 927, LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 927))
     TimerStart(_ydl_timer, 0.50, false, function trig_YamiWFunc004Func013Func003Func011Func009T)
 function trig_YamiWFunc004Func013Func003Func015T()
@@ -115,7 +116,7 @@ function trig_YamiWFunc004Func013T()
         GroupClear(LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 361))
         DestroyGroup(LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 361))
         RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 1108))
-        _ydl_timer = CreateTimer()
+        _ydl_timer = getTimer()
         SavePlayerHandle(YDLOC, GetHandleId(_ydl_timer), 603, LoadPlayerHandle(YDLOC, GetHandleId(GetExpiredTimer()), 603))
         SaveReal(YDLOC, GetHandleId(_ydl_timer), 1079, LoadReal(YDLOC, GetHandleId(GetExpiredTimer()), 1079))
         SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 449, LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 449))
@@ -142,7 +143,7 @@ function trig_YamiWActions()
         SaveReal(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1079, 0.00)
         SetUnitFlyHeight(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 449), 500.00, 0.00)
         SetUnitAnimationByIndex(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 449), 4)
-        _ydl_timer = CreateTimer()
+        _ydl_timer = getTimer()
         SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 36, LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 36))
         SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 1164, LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1164))
         SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 594, LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594))
@@ -184,7 +185,7 @@ function trig_YamiWActions()
         UnitApplyTimedLife(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 883641275), 'BHwe', 1.50)
         SaveUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 360264329, CreateUnit(LoadPlayerHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 603), 'e0JR', GetUnitX(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 549)), GetUnitY(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 549)), yDWEAngleBetweenUnits(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594), LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 549))))
         UnitApplyTimedLife(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 360264329), 'BHwe', 1.50)
-        _ydl_timer = CreateTimer()
+        _ydl_timer = getTimer()
         SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 594, LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594))
         SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 549, LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 549))
         SavePlayerHandle(YDLOC, GetHandleId(_ydl_timer), 603, LoadPlayerHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 603))
@@ -210,7 +211,7 @@ function trig_YamiWActions()
         SetUnitAnimationByIndex(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 449), 8)
         SetUnitUserData(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594), 990)
         UnitAddAbility(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594), 'A0TF')
-        _ydl_timer = CreateTimer()
+        _ydl_timer = getTimer()
         SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 594, LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594))
         SavePlayerHandle(YDLOC, GetHandleId(_ydl_timer), 603, LoadPlayerHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 603))
         SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 449, LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 449))
@@ -220,14 +221,14 @@ function trig_YamiWActions()
         let caster = LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594)
         yami = caster
         yamiWCount = 0
-        CreateTimer()..startPeriodic(0.1, function yamiWDamageFunc)                        
+        getTimer()..startPeriodic(0.1, function yamiWDamageFunc)                        
         TimerStart(_ydl_timer, 0.02, true, function trig_YamiWFunc004Func001Func013T)
     FlushChildHashtable(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID)
 
 function yamiWDamageFunc() 
     yamiWCount++
     if yamiWCount >= 10
-        GetExpiredTimer().destr()
+        GetExpiredTimer().release()
     yamiPos = yami.getPos()
     forUnitsInRange(yamiPos, 500) (unit victim) ->
         if yami.isEnemyOf(victim) and victim.isInvulnerable() == false

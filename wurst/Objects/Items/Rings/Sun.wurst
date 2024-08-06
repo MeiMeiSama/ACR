@@ -14,6 +14,8 @@ unit array sunArcoUser
 unit array sunHealedUnit
 group array sunRingGroup
 group array sunArcoGroup
+timer array sunRingHealOverTimeTimer
+timer array sunArcoHealOverTimeTimer
 
 init
     
@@ -35,7 +37,7 @@ init
                     ..origin(u.getPos())
                     u.addHP(heal)
                     sunRingGroup[id].add(u)
-            CreateTimer()..startPeriodic(1, function sunRingHealOverTime).setData(id)
+            sunRingHealOverTimeTimer[id] = getTimer()..startPeriodic(1, function sunRingHealOverTime)..setData(id)
 
         else if GetManipulatedItem().getTypeId() == SUN_RING_ARCOBALENO
             let caster = GetManipulatingUnit()
@@ -54,7 +56,7 @@ init
                     ..origin(caster.getPos())
                     u.addHP(heal)
                     sunArcoGroup[id].add(u)
-            CreateTimer()..startPeriodic(1, function sunArcoHealOverTime)
+            sunArcoHealOverTimeTimer[id] = getTimer()..startPeriodic(1, function sunArcoHealOverTime)..setData(id)
 
 function sunRingHealOverTime()
     let id = GetExpiredTimer().getData()
@@ -67,7 +69,7 @@ function sunRingHealOverTime()
     if sunRingCount[id] >= 3
         sunRingGroup[id].clear()
         sunRingCount[id] = 0
-        GetExpiredTimer().destr()  
+        sunRingHealOverTimeTimer[id].release() 
 
 
 function sunArcoHealOverTime()
@@ -81,5 +83,5 @@ function sunArcoHealOverTime()
     if sunArcoCount[id] >= 3
         sunArcoGroup[id].clear()
         sunArcoCount[id] = 0
-        GetExpiredTimer().destr()   
+        sunArcoHealOverTimeTimer[id].release()   
 

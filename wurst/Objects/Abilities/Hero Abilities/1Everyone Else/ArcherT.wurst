@@ -43,7 +43,7 @@ function archerTFlush()
 function trig_ArcherTFunc023Func001Func013Func001Func015Func001Func004A()
     let id = GetEnumUnit().getUserData()
     if archerTCount2[id] == 0
-        CreateTimer()..start(10, function archerTFlush).setData(id)               
+        getTimer()..start(10, function archerTFlush).setData(id)               
     if archerTCount2[id] < 3     
         DamageEvent.setNextDamageId(DAMAGE_ABILITY_ARCHER_T)
         DamageEvent.setNextDamageFromCode()
@@ -170,7 +170,7 @@ function trig_ArcherTFunc023T()
         let pid = caster.getOwner().getId()
         SetPlayerAbilityAvailable(caster.getOwner(), SPELL_T[pid], false)
         caster.addAbility('A199')
-        CreateTimer()..startPeriodic(0.01, function archerTEnd)                
+        getTimer()..startPeriodic(0.01, function archerTEnd)                
 
         TimerStart(_ydl_timer, 0.06, true, function trig_ArcherTFunc023Func001Func013T)
         FlushChildHashtable(YDLOC, GetHandleId(GetExpiredTimer()))
@@ -183,7 +183,7 @@ function trig_ArcherTFunc023T()
 function archerTEndUnpause()
     if archer.isPaused() == false
         archer.setInvulnerable(false)
-        GetExpiredTimer().destr()     
+        GetExpiredTimer().release()   
 
 
 function archerTEnd()
@@ -203,16 +203,16 @@ function archerTEnd()
         if archer.isPaused() == false
             archer.setInvulnerable(false)
         else
-            CreateTimer()..startPeriodic(0.01, function archerTEndUnpause)                             
+            getTimer()..startPeriodic(0.01, function archerTEndUnpause)                             
         archer.removeAbility('A199')
         SetPlayerAbilityAvailable(archer.getOwner(), SPELL_T[pid], true)
         archer.startAbilityCooldown(SPELL_T[pid])
-        GetExpiredTimer().destr()
+        GetExpiredTimer().release()
     if archer.isAlive() == false  
         archer.removeAbility('A199')
         SetPlayerAbilityAvailable(archer.getOwner(), SPELL_T[pid], true)
         archer.startAbilityCooldown(SPELL_T[pid])
-        GetExpiredTimer().destr()      
+        GetExpiredTimer().release()    
 
 
 function trig_ArcherTActions()

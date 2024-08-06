@@ -41,7 +41,7 @@ function tsunaRFlush()
 function xBurner_Middle()
     if tsunaCastingR == false
         tsunaRGroup.clear()
-        GetExpiredTimer().destr()
+        GetExpiredTimer().release()
     tsunaLocation = GetUnitLoc(tsuna_Caster)
     udg_XburnerPolar = PolarProjectionBJ(tsunaLocation, udg_XburnerCount, AngleBetweenPoints(tsunaLocation, burnerCastLocation))
     udg_XburnerDammy[69] = CreateUnitAtLoc(GetOwningPlayer(tsuna_Caster), 'e027', udg_XburnerPolar, GetRandomDirectionDeg())
@@ -62,7 +62,7 @@ function xBurner_Middle()
                     tsunaRGroup.add(u)
                 let id = u.getUserData()
                 if tsunaRCount[id] == 0
-                    CreateTimer()..start(5, function tsunaRFlush).setData(id)              
+                    getTimer()..start(5, function tsunaRFlush).setData(id)              
                 if tsunaRCount[id] < 3
                     DamageEvent.setNextDamageId(DAMAGE_ABILITY_TSUNA_R)
                     DamageEvent.setNextDamageFromCode()
@@ -75,7 +75,7 @@ function xBurner_Start()
         tsunaRGroup = CreateGroup()
     PlaySoundBJ(gg_snd_XBurner)
     udg_XburnerCount = 165
-    CreateTimer()..startPeriodic(0.065, function xBurner_Middle)
+    getTimer()..startPeriodic(0.065, function xBurner_Middle)
 
 function xBurner_Prep()
     if  tsunaCastingR == true
@@ -101,4 +101,4 @@ function xBurner_Setup()
                 udg_XburnerDammy[i] = CreateUnitAtLoc(GetOwningPlayer(tsuna_Caster), 'e028', udg_XburnerPointDamage, AngleBetweenPoints(tsunaLocation, burnerCastLocation))
                 udg_XburnerDamageCount += 165
                 RemoveLocation(udg_XburnerPointDamage)  
-            CreateTimer()..start(0.1, function xBurner_Prep)                 
+            getTimer()..start(0.1, function xBurner_Prep)                 

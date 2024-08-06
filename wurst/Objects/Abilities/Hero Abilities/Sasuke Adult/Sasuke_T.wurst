@@ -31,7 +31,7 @@ function sasukeModoT()
             StopMusic(false)
             PlaySoundBJ(gg_snd_Lastsasuke5)                
             acrTransformation(caster, 40, SASUKE_ADULT, SASUKE_ADULT_MODO, 850, 4.0)
-            CreateTimer()..startPeriodic(0.01, function shalltearModoTEnd).setData(pid)
+            getTimer()..startPeriodic(0.01, function shalltearModoTEnd).setData(pid)
                 
 function shalltearModoTEnd()
     let pid = GetExpiredTimer().getData()
@@ -39,7 +39,7 @@ function shalltearModoTEnd()
         sasukeAdult.removeAbility('A02Q')
         if gg_snd_Lastsasuke5.isPlaying()
             gg_snd_Lastsasuke5.stop(false, false) 
-        GetExpiredTimer().destr() 
+        GetExpiredTimer().release()
 
 
 
