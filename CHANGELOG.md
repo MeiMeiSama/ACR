@@ -1,3 +1,25 @@
+# ━━━━━━━━━ Anime Carnage Reforged v2.0.5 ━━━━━━━━━ #
+
+### Added
+1. Nothing Added.
+
+### Improved
+1. Mist ring and arco received some QoL updates.
+
+### Changed
+1. Nothing Changed.
+
+### Fixed
+1. Cloud ring does no longer last permanently.
+2. Sakuya's T now only deals damage to each enemy once. 
+3. Sakuya's W stun has been removed.
+4. Sakuya's R silence has been removed.
+
+### Deleted
+Nothing Deleted.
+
+# ━━━━━━━━━ Anime Carnage Reforged v2.0.3 ━━━━━━━━━ #
+
 # ━━━━━━━━━ Anime Carnage Reforged v2.0.4 ━━━━━━━━━ #
 
 ### Added
