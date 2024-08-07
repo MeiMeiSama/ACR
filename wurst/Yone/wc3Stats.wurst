@@ -30,7 +30,7 @@ function mmdSetup()
         // Set all players stat kill count & streak to 0
         player_KillCount[i] = 0
         unitLongestStreak[i] = 0
-        if Player(i).getSlotState() == PLAYER_SLOT_STATE_PLAYING
+        if Player(i).getSlotState() == PLAYER_SLOT_STATE_PLAYING and Player(i).getController() == MAP_CONTROL_USER
             playingPlayers++
     if playingPlayers >= minPlayers
         requiredPlayers = true
