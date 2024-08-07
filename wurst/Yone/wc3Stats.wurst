@@ -18,7 +18,7 @@ public integer array unitLongestStreak
 public int playingPlayers = 0
 public int minPlayers = 6 // Required number of players to make a game rated
 public bool rankMode = false // Can be set ingame from Dialog
-public bool requiredPlayers = false
+public bool requiredPlayers = false // Sets to true if minPlayers integer is met
 
 // Stat tracker for ACR to https://wc3stats.com
 
