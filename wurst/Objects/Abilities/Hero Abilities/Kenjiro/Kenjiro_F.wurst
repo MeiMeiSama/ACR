@@ -2,7 +2,6 @@ package Kenjiro_F
 
 import ClosureEvents
 import ACR_TagSystem
-import TimerUtils
 int kenjiroFCount = 0
 int abilityF = 'A0ZO'
 int buffF = 'B05M'
@@ -16,14 +15,14 @@ function kenjiroFEnd()
         kenjiro.disableAbility(abilityF, false, false)
         abilityF.removeTagDisabled()
         kenjiro.startAbilityCooldown(abilityF)
-        GetExpiredTimer().release()
+        GetExpiredTimer().destr()
 
     if kenjiroFCount == 100
         kenjiro.removeAbility(buffF)
         kenjiro.disableAbility(abilityF, false, false)
         abilityF.removeTagDisabled()
         kenjiro.startAbilityCooldown(abilityF)
-        GetExpiredTimer().release()
+        GetExpiredTimer().destr()
 
 public function kenjiroF ()
     EventListener.onCast(abilityF) (unit caster) ->
@@ -32,4 +31,4 @@ public function kenjiroF ()
         caster.disableAbility(abilityF, true, false)
         abilityF.addTagDisabled()
         caster.issueImmediateOrder("stop")
-        getTimer()..startPeriodic(0.03, function kenjiroFEnd)
+        CreateTimer()..startPeriodic(0.03, function kenjiroFEnd)

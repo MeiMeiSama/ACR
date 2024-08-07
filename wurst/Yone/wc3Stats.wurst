@@ -34,7 +34,7 @@ function mmdSetup()
             playingPlayers++
     if playingPlayers >= minPlayers
         requiredPlayers = true
-    getTimer()..start(1, function statsDefinitions)
+    CreateTimer()..start(1, function statsDefinitions)
 
 function statsDefinitions()
     // Define the stat events to use
@@ -46,7 +46,7 @@ function statsDefinitions()
     streakCount = MMD.defineValueInt("Best Kill Streak", Goal.None)
     Emitter.emitDefineVariable("ACR_MMD", ValueType.String, Goal.None, Suggestion.None)
     wc3Stat_Listener()
-    GetExpiredTimer().release()
+    GetExpiredTimer().destr()
 
 function wc3Stat_Listener()
     MMD.logCustom("ACR_MMD", "ACR MMD v1.0.0")
@@ -76,7 +76,7 @@ function victory_enable()
             RemovePlayer(Player(i), PLAYER_GAME_RESULT_VICTORY)
         else if Player(i).isEnemyOf(winner) and Player(i).getController() == MAP_CONTROL_USER
             RemovePlayer(Player(i), PLAYER_GAME_RESULT_DEFEAT)
-    GetExpiredTimer().release()
+    GetExpiredTimer().destr()
 
 function winningComputer (int t1_points, int t2_points, int t3_points) returns player
     if t1_points == targetPoints
@@ -115,4 +115,4 @@ public function victory_checker()
                 print(Player(i).getColor().toColor().toColorString()+Player(i).getName())
         print("|r- - - - - - - - - - - - - - - - - - - -|r")
 
-        getTimer()..start(2, function victory_enable)..setData(winner.getId())
+        CreateTimer()..start(2, function victory_enable)..setData(winner.getId())

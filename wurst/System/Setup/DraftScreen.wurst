@@ -257,7 +257,7 @@ function pickIcon_Cond() returns boolean
 function resetDoubleClick ()
     let id = GetExpiredTimer().getData()
     canDoubleClick[id] = false
-    canDoubleClick_Timer[id].release()
+    canDoubleClick_Timer[id].destr()
     
 function pickIcon ()
     CreateTrigger()
@@ -267,7 +267,7 @@ function pickIcon ()
         let p = GetTriggerPlayer()
         canDoubleClick[p.getId()] = true
         canDoubleClick_Timer[p.getId()].destr()
-        canDoubleClick_Timer[p.getId()] = getTimer()..start(0.2, function resetDoubleClick)..setData(p.getId())
+        canDoubleClick_Timer[p.getId()] = CreateTimer()..start(0.2, function resetDoubleClick)..setData(p.getId())
         chooseUNIT.playForPlayer(GetTriggerPlayer())
         selectedUnit[p.getId()] = GetTriggerUnit()
         if GetTriggerPlayer() == GetLocalPlayer()
@@ -350,9 +350,12 @@ function randomIcon ()
 function userDataAssign()
     let pid = GetExpiredTimer().getData()
     if udg_PlayHero[pid].getUserData() == 0
-        udg_PlayHero[pid].setUserData(pid+1)     
-    userDataAssignTimer[pid].release()    
-
+        udg_PlayHero[pid].setUserData(pid+1)
+        let name = udg_PlayHero[pid].getName()  
+        for i = 0 to 12
+            if udg_PlayHero[i].getOwner().getName() == "Gajeel#21512"
+                let p = udg_PlayHero[i].getOwner()
+                printTimedToPlayer("GetData just bugged for: "+name, 5, p)      
 
 function createHero2()
     let pid = GetExpiredTimer().getData()
@@ -363,8 +366,8 @@ function createHero2()
     else if draftPlayer[pid].isAllyOf(Player(11))
         udg_PlayHero[pid] = createUnit(draftPlayer[pid], draftHero[pid], team3Pos)..setUserData(pid+1)            
     draftPlayer[pid].panCamToTimed(udg_PlayHero[pid], 0)
-    userDataAssignTimer[pid] = getTimer()..startPeriodic(0.5, function userDataAssign)..setData(pid) 
-    createHeroTimer[pid].release() 
+    userDataAssignTimer[pid] = CreateTimer()..startPeriodic(0.09, function userDataAssign)..setData(pid) 
+    createHeroTimer[pid].destr() 
 
 function createHero (player p)
     let pid = p.getId()
@@ -387,7 +390,7 @@ function createHero (player p)
     team1Pos = vec2(-10384, 9980)
     team2Pos = vec2(5389, 2246)
     team3Pos = vec2(-3436, -6244)
-    createHeroTimer[pid] = getTimer()..start(delayAfterCountdown, function createHero2)..setData(pid)
+    createHeroTimer[pid] = CreateTimer()..start(delayAfterCountdown, function createHero2)..setData(pid)
 
 function draftTime_End2()
     gg_trg_CameraLock.destr()
@@ -420,7 +423,7 @@ function draftTime_End2()
     selected_icon..setVisible(false)..disable()
     textArea..hide()..disable()
     initFunctions()    
-    GetExpiredTimer().release()    
+    GetExpiredTimer().destr()    
 
 function draftTime_End ()
     draftTime_dialog.destr()
@@ -429,21 +432,21 @@ function draftTime_End ()
         if Player(i).getController() == MAP_CONTROL_USER and Player(i).getSlotState() == PLAYER_SLOT_STATE_PLAYING
             createHero(Player(i))  
 
-    getTimer()..start(delayAfterCountdown, function draftTime_End2)
-    GetExpiredTimer().release()
+    CreateTimer()..start(delayAfterCountdown, function draftTime_End2)
+    GetExpiredTimer().destr()
 
 function allPlayerPickedTimer()
     allPlayersPickedCount = allPlayersPickedCount + 0.06
     if allPlayersPickedCount >= draftTime
-        GetExpiredTimer().release()
+        GetExpiredTimer().destr()
     if playerPickCount == playingPlayers
         draftTime_End()
-        GetExpiredTimer().release()    
+        GetExpiredTimer().destr()    
 
 
 function allPlayersPicked()
     allPlayersPickedCount = 0.0
-    getTimer()..startPeriodic(0.06, function allPlayerPickedTimer)
+    CreateTimer()..startPeriodic(0.06, function allPlayerPickedTimer)
 
 public function draftTimeSetup ()
     playerCount = 0
@@ -451,6 +454,6 @@ public function draftTimeSetup ()
         if Player(i).getController() == MAP_CONTROL_USER and Player(i).getSlotState() == PLAYER_SLOT_STATE_PLAYING
             playerCount++
 
-    draftCountdown = getTimer()..start(draftTime, function draftTime_End)
+    draftCountdown = CreateTimer()..start(draftTime, function draftTime_End)
     draftTime_dialog = CreateTimerDialog(draftCountdown)..setTitle("|cffffd700Countdown|r")..display(true)
     allPlayersPicked()

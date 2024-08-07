@@ -4,7 +4,6 @@ import ClosureEvents
 import AbilityClassifications
 import AbilityGlobals
 import ObjectDefinitions
-import TimerUtils
 
 unit saberStr
 real saberStrDamageTaken
@@ -33,12 +32,14 @@ function saberStrGTranslation()
         "\n\nDuration: "+PINK+"4"+GOLD+
         "\nDamage Healed: "+PINK+"50%"+GOLD+
         "\nCurrent Healing Stored: "+PINK+"0"+GOLD)
-        GetExpiredTimer().release()     
+        saberStrTranslationTimer.destr() 
+        saberStrTranslationTimer = null   
 
 function saberStrGheal() 
     if saberStrhealingDuration <= 1
         saberStrDamageTaken = 0
-        GetExpiredTimer().release()
+        saberStrHealTimer.destr()
+        saberStrHealTimer = null
     flashEffect("HealBuff.mdx", saberStr, "origin")
     saberStr.addHP((saberStrhealingPerSecond))
     saberStrDamageTaken = saberStrDamageTaken - saberStrhealingPerSecond 
@@ -56,7 +57,7 @@ public function saberStrG()
             saberStrDamageTaken = saberStrDamageTaken + GetEventDamage()
             saberStrHealingAmount = saberStrDamageTaken * 0.5
             saberStrhealingPerSecond = saberStrHealingAmount / saberStrhealingDuration
-            if saberStrTranslationTimer.getRemaining() <= 0
-                saberStrTranslationTimer = getTimer()..startPeriodic(0.1, function saberStrGTranslation)    
-            if saberStrHealTimer.getRemaining() <= 0 
-                saberStrHealTimer = getTimer()..startPeriodic(1, function saberStrGheal)     
+            if saberStrTranslationTimer == null
+                saberStrTranslationTimer = CreateTimer()..startPeriodic(0.1, function saberStrGTranslation)    
+            if saberStrHealTimer == null 
+                saberStrHealTimer = CreateTimer()..startPeriodic(1, function saberStrGheal)     

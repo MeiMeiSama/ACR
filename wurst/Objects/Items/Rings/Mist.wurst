@@ -62,7 +62,7 @@ function mistActivate ()
             mistOwner[id] = caster
             mistRingON[id] = false
             mistArcoON[id] = false  
-            mistReviveTimer[id] = getTimer()..startPeriodic(0.01, function mistDrop)..setData(id)
+            mistReviveTimer[id] = CreateTimer()..startPeriodic(0.01, function mistDrop)..setData(id)
 
     CreateTrigger()
     ..registerAnyUnitEvent(EVENT_PLAYER_UNIT_PICKUP_ITEM)
@@ -77,7 +77,7 @@ function mistActivate ()
                 caster.removeAbility('B06O')
             mistRingON[id] = false
             mistArcoON[id] = false      
-            mistPickUpTimer[id] = getTimer()..startPeriodic(0.01, function mistDrop)..setData(id)                     
+            mistPickUpTimer[id] = CreateTimer()..startPeriodic(0.01, function mistDrop)..setData(id)                     
 
     CreateTrigger()
     ..registerAnyUnitEvent(EVENT_PLAYER_UNIT_DROP_ITEM)
@@ -91,11 +91,11 @@ function mistActivate ()
             if GetManipulatedItem().getTypeId() == MIST_RING_VONGOLA
                 if caster.hasAbility('B06M') == true
                     caster.removeAbility('B06M')
-                mistDropTimer[id] = getTimer()..startPeriodic(0.01, function mistDrop)..setData(id)     
+                mistDropTimer[id] = CreateTimer()..startPeriodic(0.01, function mistDrop)..setData(id)     
             else
                 if caster.hasAbility('B06O') == true
                     caster.removeAbility('B06O')            
-                mistDropTimer[id] = getTimer()..startPeriodic(0.01, function mistDrop)..setData(id)     
+                mistDropTimer[id] = CreateTimer()..startPeriodic(0.01, function mistDrop)..setData(id)     
 
 function mistDrop()
     let id = GetExpiredTimer().getData()
@@ -125,7 +125,7 @@ function mistDrop()
             mistRingON[id] = false
             mistArcoON[id] = true
             mistSkinSwap(mistOwner[id])                    
-        GetExpiredTimer().release()                       
+        GetExpiredTimer().destr()                       
 
 function mistSkinSwap(unit u)
     let id = u.getOwner().getId()

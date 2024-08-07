@@ -5,7 +5,6 @@
 // import ACR_TagSystem
 // import ACR_ReviveInstant
 // import ObjectDefinitions
-// import TimerUtils
 // int acrdevtimer
 // unit selectedUnit
 // timer acrTimer
@@ -32,7 +31,7 @@
 //     print("timer ended")
 
 // function testFunc2()
-//     testTimer.release()    
+//     testTimer.destr()          
 
 // function devTools ()
 //     teleport()
@@ -65,7 +64,7 @@
 //         else if input == "ms"
 //             print(selectedUnit.getMoveSpeed().toString())   
 //         else if input == "meta"
-//             selectedUnit.issueImmediateOrder("metamorphosis")
+//             selectedUnit.issueImmediateOrder("metamorphosis")        
 //         else if input == "pause"
 //             selectedUnit.pauseEx()   
 //             selectedUnit.addTagPauseEX()       
@@ -87,12 +86,12 @@
 //         else if input == "ffa"
 //             trig_TournamentFFAActions()
 //         else if input == "test"
-//             testTimer = getTimer()..start(5, function testFunc)     
+//             testTimer = CreateTimer()..start(5, function testFunc)     
 //         else if input == "release"
 //             testFunc2()                    
 //         else if input == "timer"
 //             acrdevtimer = 0
-//             acrTimer = getTimer()..startPeriodic(1, function acrTimerFunc)
+//             acrTimer = CreateTimer()..startPeriodic(1, function acrTimerFunc)
 //         else if input == "timerstop"
 //             print("Destroyed ACR Timer")
 //             acrTimer.destr()

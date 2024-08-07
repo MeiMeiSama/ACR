@@ -5,7 +5,6 @@ import AbilityGlobals
 import main
 import ACR_TagSystem
 import MusicPlaylist
-import TimerUtils
 
 unit abigail
 timer abigailTimer = null
@@ -427,7 +426,7 @@ function trig_AbigailT___F___G___EActions()
         abigail = caster
         soundPlay("war3mapImported\\Abigail3.mp3", GetUnitX(caster), GetUnitY(caster))
         abigailCount = 0
-        getTimer()..startPeriodic(0.1, function abigailEEnd)
+        CreateTimer()..startPeriodic(0.1, function abigailEEnd)
 
     FlushChildHashtable(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID)
 
@@ -439,7 +438,7 @@ function abigailEEnd()
             abigail.removeAbility(ABILITY_SPELLBLOCK)
         if abigail.hasAbility('B052')
             abigail.removeAbility('B052')
-        GetExpiredTimer().release()   
+        GetExpiredTimer().destr()   
 
 function initTrig_AbigailT___F___G___E_Orig()
     gg_trg_AbigailT___F___G___E = CreateTrigger()

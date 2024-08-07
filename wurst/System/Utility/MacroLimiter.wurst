@@ -283,7 +283,7 @@ function macroUI_Setup()
     clickBlocker..setSize(0.80, 0.60)..setAbsPoint(FRAMEPOINT_CENTER, 0.4, 0.3)..hide()
 
 function initialSetup()
-    getTimer()..start(0.3, function macroUI_Setup)
+    CreateTimer()..start(0.3, function macroUI_Setup)
 
 init
     initialSetup()

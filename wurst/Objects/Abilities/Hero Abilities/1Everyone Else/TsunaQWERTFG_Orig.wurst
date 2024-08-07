@@ -3,7 +3,6 @@ import DamageEvent
 import AbilityGlobals
 import main
 import ACR_Stun
-import TimerUtils
 
 int tsunaNatsuCount
 
@@ -754,7 +753,7 @@ function trig_TsunaQWERTFGActions()
         let natsu = LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 486)
         natsu.setUserData(999)
         tsunaNatsuCount = 0
-        getTimer()..startPeriodic(0.1, function tsunaNatsuUpdate)          
+        CreateTimer()..startPeriodic(0.1, function tsunaNatsuUpdate)          
         RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1108))
         RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 683))
         RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 310))
@@ -809,7 +808,7 @@ function tsunaNatsuUpdate()
     tsunaNatsuCount++
     natsuTooltipUpdate()
     if tsunaNatsuCount >= 200
-        GetExpiredTimer().release()  
+        GetExpiredTimer().destr()  
 
 function initTrig_TsunaQWERTFG_Orig()
     gg_trg_TsunaQWERTFG = CreateTrigger()

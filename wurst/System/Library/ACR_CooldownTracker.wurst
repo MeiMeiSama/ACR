@@ -69,210 +69,210 @@ function acrCooldownTrackerQ()
     let id = GetExpiredTimer().getData()
     acrCooldownQ[id] = acrCooldownTrackerUnit[id].getAbilityCooldownRemaining(SPELL_Q[id])
     if acrCooldownQ[id] <= 0.2
-        acrCooldownQTimer[id].release()
+        acrCooldownQTimer[id].destr()
         acrCooldownQ[id] = 0.0
 
 function acrCooldownTrackerQ2()
     let id = GetExpiredTimer().getData()
     acrCooldownQ2[id] = acrCooldownTrackerUnit[id].getAbilityCooldownRemaining(SPELL_Q2[id])
     if acrCooldownQ2[id] <= 0.2
-        acrCooldownQ2Timer[id].release()
+        acrCooldownQ2Timer[id].destr()
         acrCooldownQ2[id] = 0.0
 
 function acrCooldownTrackerModoQ()
     let id = GetExpiredTimer().getData()
     acrCooldownModoQ[id] = acrCooldownTrackerUnit[id].getAbilityCooldownRemaining(SPELL_MODO_Q[id])
     if acrCooldownModoQ[id] <= 0.2
-        acrCooldownModoQTimer[id].release()
+        acrCooldownModoQTimer[id].destr()
         acrCooldownModoQ[id] = 0.0        
 
 function acrCooldownTrackerModoQ2()
     let id = GetExpiredTimer().getData()
     acrCooldownModoQ2[id] = acrCooldownTrackerUnit[id].getAbilityCooldownRemaining(SPELL_MODO_Q2[id])
     if acrCooldownModoQ2[id] <= 0.2
-        acrCooldownModoQ2Timer[id].release()
+        acrCooldownModoQ2Timer[id].destr()
         acrCooldownModoQ2[id] = 0.0     
         
 function acrCooldownTrackerW()
     let id = GetExpiredTimer().getData()
     acrCooldownW[id] = acrCooldownTrackerUnit[id].getAbilityCooldownRemaining(SPELL_W[id])
     if acrCooldownW[id] <= 0.2
-        acrCooldownWTimer[id].release()
+        acrCooldownWTimer[id].destr()
         acrCooldownW[id] = 0.0     
         
 function acrCooldownTrackerW2()
     let id = GetExpiredTimer().getData()
     acrCooldownW2[id] = acrCooldownTrackerUnit[id].getAbilityCooldownRemaining(SPELL_W2[id])
     if acrCooldownW2[id] <= 0.2
-        acrCooldownW2Timer[id].release()
+        acrCooldownW2Timer[id].destr()
         acrCooldownW2[id] = 0.0     
         
 function acrCooldownTrackerModoW()
     let id = GetExpiredTimer().getData()
     acrCooldownModoW[id] = acrCooldownTrackerUnit[id].getAbilityCooldownRemaining(SPELL_MODO_W[id])
     if acrCooldownModoW[id] <= 0.2
-        acrCooldownModoWTimer[id].release()
+        acrCooldownModoWTimer[id].destr()
         acrCooldownModoW[id] = 0.0     
         
 function acrCooldownTrackerModoW2()
     let id = GetExpiredTimer().getData()
     acrCooldownModoW2[id] = acrCooldownTrackerUnit[id].getAbilityCooldownRemaining(SPELL_MODO_W2[id])
     if acrCooldownModoW2[id] <= 0.2
-        acrCooldownModoW2Timer[id].release()
+        acrCooldownModoW2Timer[id].destr()
         acrCooldownModoW2[id] = 0.0     
         
 function acrCooldownTrackerE()
     let id = GetExpiredTimer().getData()
     acrCooldownE[id] = acrCooldownTrackerUnit[id].getAbilityCooldownRemaining(SPELL_E[id])
     if acrCooldownE[id] <= 0.2
-        acrCooldownETimer[id].release()
+        acrCooldownETimer[id].destr()
         acrCooldownE[id] = 0.0     
         
 function acrCooldownTrackerE2()
     let id = GetExpiredTimer().getData()
     acrCooldownE2[id] = acrCooldownTrackerUnit[id].getAbilityCooldownRemaining(SPELL_E2[id])
     if acrCooldownE2[id] <= 0.2
-        acrCooldownE2Timer[id].release()
+        acrCooldownE2Timer[id].destr()
         acrCooldownE2[id] = 0.0     
         
 function acrCooldownTrackerModoE()
     let id = GetExpiredTimer().getData()
     acrCooldownModoE[id] = acrCooldownTrackerUnit[id].getAbilityCooldownRemaining(SPELL_MODO_E[id])
     if acrCooldownModoE[id] <= 0.2
-        acrCooldownModoETimer[id].release()
+        acrCooldownModoETimer[id].destr()
         acrCooldownModoE[id] = 0.0     
         
 function acrCooldownTrackerModoE2()
     let id = GetExpiredTimer().getData()
     acrCooldownModoE2[id] = acrCooldownTrackerUnit[id].getAbilityCooldownRemaining(SPELL_MODO_E2[id])
     if acrCooldownModoE2[id] <= 0.2
-        acrCooldownModoE2Timer[id].release()
+        acrCooldownModoE2Timer[id].destr()
         acrCooldownModoE2[id] = 0.0     
         
 function acrCooldownTrackerR()
     let id = GetExpiredTimer().getData()
     acrCooldownR[id] = acrCooldownTrackerUnit[id].getAbilityCooldownRemaining(SPELL_R[id])
     if acrCooldownR[id] <= 0.2
-        acrCooldownRTimer[id].release()
+        acrCooldownRTimer[id].destr()
         acrCooldownR[id] = 0.0     
         
 function acrCooldownTrackerR2()
     let id = GetExpiredTimer().getData()
     acrCooldownR2[id] = acrCooldownTrackerUnit[id].getAbilityCooldownRemaining(SPELL_R2[id])
     if acrCooldownR2[id] <= 0.2
-        acrCooldownR2Timer[id].release()
+        acrCooldownR2Timer[id].destr()
         acrCooldownR2[id] = 0.0     
         
 function acrCooldownTrackerR3()
     let id = GetExpiredTimer().getData()
     acrCooldownR3[id] = acrCooldownTrackerUnit[id].getAbilityCooldownRemaining(SPELL_R3[id])
     if acrCooldownR3[id] <= 0.2
-        acrCooldownR3Timer[id].release()
+        acrCooldownR3Timer[id].destr()
         acrCooldownR3[id] = 0.0      
 
 function acrCooldownTrackerModoR()
     let id = GetExpiredTimer().getData()
     acrCooldownModoR[id] = acrCooldownTrackerUnit[id].getAbilityCooldownRemaining(SPELL_MODO_R[id])
     if acrCooldownModoR[id] <= 0.2
-        acrCooldownModoRTimer[id].release()
+        acrCooldownModoRTimer[id].destr()
         acrCooldownModoR[id] = 0.0    
 
 function acrCooldownTrackerModoR2()
     let id = GetExpiredTimer().getData()
     acrCooldownModoR2[id] = acrCooldownTrackerUnit[id].getAbilityCooldownRemaining(SPELL_MODO_R2[id])
     if acrCooldownModoR2[id] <= 0.2
-        acrCooldownModoR2Timer[id].release()
+        acrCooldownModoR2Timer[id].destr()
         acrCooldownModoR2[id] = 0.0   
 
 function acrCooldownTrackerT()
     let id = GetExpiredTimer().getData()
     acrCooldownT[id] = acrCooldownTrackerUnit[id].getAbilityCooldownRemaining(SPELL_T[id])
     if acrCooldownT[id] <= 0.2
-        acrCooldownTTimer[id].release()
+        acrCooldownTTimer[id].destr()
         acrCooldownT[id] = 0.0    
 
 function acrCooldownTrackerT2()
     let id = GetExpiredTimer().getData()
     acrCooldownT2[id] = acrCooldownTrackerUnit[id].getAbilityCooldownRemaining(SPELL_T2[id])
     if acrCooldownT2[id] <= 0.2
-        acrCooldownT2Timer[id].release()
+        acrCooldownT2Timer[id].destr()
         acrCooldownT2[id] = 0.0     
 
 function acrCooldownTrackerModoT()
     let id = GetExpiredTimer().getData()
     acrCooldownModoT[id] = acrCooldownTrackerUnit[id].getAbilityCooldownRemaining(SPELL_MODO_T[id])
     if acrCooldownModoT[id] <= 0.2
-        acrCooldownModoTTimer[id].release()
+        acrCooldownModoTTimer[id].destr()
         acrCooldownModoT[id] = 0.0    
 
 function acrCooldownTrackerModoT2()
     let id = GetExpiredTimer().getData()
     acrCooldownModoT2[id] = acrCooldownTrackerUnit[id].getAbilityCooldownRemaining(SPELL_MODO_T2[id])
     if acrCooldownModoT2[id] <= 0.2
-        acrCooldownModoT2Timer[id].release()
+        acrCooldownModoT2Timer[id].destr()
         acrCooldownModoT2[id] = 0.0  
 
 function acrCooldownTrackerF()
     let id = GetExpiredTimer().getData()
     acrCooldownF[id] = acrCooldownTrackerUnit[id].getAbilityCooldownRemaining(SPELL_F[id])
     if acrCooldownF[id] <= 0.2
-        acrCooldownFTimer[id].release()
+        acrCooldownFTimer[id].destr()
         acrCooldownF[id] = 0.0  
 
 function acrCooldownTrackerF2()
     let id = GetExpiredTimer().getData()
     acrCooldownF2[id] = acrCooldownTrackerUnit[id].getAbilityCooldownRemaining(SPELL_F2[id])
     if acrCooldownF2[id] <= 0.2
-        acrCooldownF2Timer[id].release()
+        acrCooldownF2Timer[id].destr()
         acrCooldownF2[id] = 0.0 
 
 function acrCooldownTrackerF3()
     let id = GetExpiredTimer().getData()
     acrCooldownF3[id] = acrCooldownTrackerUnit[id].getAbilityCooldownRemaining(SPELL_F3[id])
     if acrCooldownF3[id] <= 0.2
-        acrCooldownF3Timer[id].release()
+        acrCooldownF3Timer[id].destr()
         acrCooldownF3[id] = 0.0
 
 function acrCooldownTrackerModoF()
     let id = GetExpiredTimer().getData()
     acrCooldownModoF[id] = acrCooldownTrackerUnit[id].getAbilityCooldownRemaining(SPELL_MODO_F[id])
     if acrCooldownModoF[id] <= 0.2
-        acrCooldownModoFTimer[id].release()
+        acrCooldownModoFTimer[id].destr()
         acrCooldownModoF[id] = 0.0  
 
 function acrCooldownTrackerModoF2()
     let id = GetExpiredTimer().getData()
     acrCooldownModoF2[id] = acrCooldownTrackerUnit[id].getAbilityCooldownRemaining(SPELL_MODO_F2[id])
     if acrCooldownModoF2[id] <= 0.2
-        acrCooldownModoF2Timer[id].release()
+        acrCooldownModoF2Timer[id].destr()
         acrCooldownModoF2[id] = 0.0  
 
 function acrCooldownTrackerG()
     let id = GetExpiredTimer().getData()
     acrCooldownG[id] = acrCooldownTrackerUnit[id].getAbilityCooldownRemaining(SPELL_G[id])
     if acrCooldownG[id] <= 0.2
-        acrCooldownGTimer[id].release()
+        acrCooldownGTimer[id].destr()
         acrCooldownG[id] = 0.0       
 
 function acrCooldownTrackerG2()
     let id = GetExpiredTimer().getData()
     acrCooldownG2[id] = acrCooldownTrackerUnit[id].getAbilityCooldownRemaining(SPELL_G2[id])
     if acrCooldownG2[id] <= 0.2
-        acrCooldownG2Timer[id].release()
+        acrCooldownG2Timer[id].destr()
         acrCooldownG2[id] = 0.0    
 
 function acrCooldownTrackerModoG()
     let id = GetExpiredTimer().getData()
     acrCooldownModoG[id] = acrCooldownTrackerUnit[id].getAbilityCooldownRemaining(SPELL_MODO_G[id])
     if acrCooldownModoG[id] <= 0.2
-        acrCooldownModoGTimer[id].release()
+        acrCooldownModoGTimer[id].destr()
         acrCooldownModoG[id] = 0.0     
 
 function acrCooldownTrackerModoG2()
     let id = GetExpiredTimer().getData()
     acrCooldownModoG2[id] = acrCooldownTrackerUnit[id].getAbilityCooldownRemaining(SPELL_MODO_G2[id])
     if acrCooldownModoG2[id] <= 0.2
-        acrCooldownModoG2Timer[id].release()
+        acrCooldownModoG2Timer[id].destr()
         acrCooldownModoG2[id] = 0.0 
 
 public function acrCooldownTracker()
@@ -285,91 +285,91 @@ public function acrCooldownTracker()
         acrCooldownTrackerUnit[id] = caster
         if GetSpellAbilityId() == SPELL_Q[id]
             acrCooldownQ[id] = 50.00
-            acrCooldownQTimer[id] = getTimer()..startPeriodic(0.2, function acrCooldownTrackerQ)
+            acrCooldownQTimer[id] = CreateTimer()..startPeriodic(0.2, function acrCooldownTrackerQ)
         else if GetSpellAbilityId() == SPELL_Q2[id]
             acrCooldownQ2[id] = 50.00
-            acrCooldownQ2Timer[id] = getTimer()..startPeriodic(0.2, function acrCooldownTrackerQ2)
+            acrCooldownQ2Timer[id] = CreateTimer()..startPeriodic(0.2, function acrCooldownTrackerQ2)
         else if GetSpellAbilityId() == SPELL_MODO_Q[id]
             acrCooldownModoQ[id] = 50.00
-            acrCooldownModoQTimer[id] = getTimer()..startPeriodic(0.2, function acrCooldownTrackerModoQ)
+            acrCooldownModoQTimer[id] = CreateTimer()..startPeriodic(0.2, function acrCooldownTrackerModoQ)
         else if GetSpellAbilityId() == SPELL_MODO_Q2[id]
             acrCooldownModoQ2[id] = 50.00
-            acrCooldownModoQ2Timer[id] = getTimer()..startPeriodic(0.2, function acrCooldownTrackerModoQ2)
+            acrCooldownModoQ2Timer[id] = CreateTimer()..startPeriodic(0.2, function acrCooldownTrackerModoQ2)
         else if GetSpellAbilityId() == SPELL_W[id]
             acrCooldownW[id] = 50.00
-            acrCooldownWTimer[id] = getTimer()..startPeriodic(0.2, function acrCooldownTrackerW)
+            acrCooldownWTimer[id] = CreateTimer()..startPeriodic(0.2, function acrCooldownTrackerW)
         else if GetSpellAbilityId() == SPELL_W2[id]
             acrCooldownW2[id] = 50.00
-            acrCooldownW2Timer[id] = getTimer()..startPeriodic(0.2, function acrCooldownTrackerW2)
+            acrCooldownW2Timer[id] = CreateTimer()..startPeriodic(0.2, function acrCooldownTrackerW2)
         else if GetSpellAbilityId() == SPELL_MODO_W[id]
             acrCooldownModoW[id] = 50.00
-            acrCooldownModoWTimer[id] = getTimer()..startPeriodic(0.2, function acrCooldownTrackerModoW)                                                                                              
+            acrCooldownModoWTimer[id] = CreateTimer()..startPeriodic(0.2, function acrCooldownTrackerModoW)                                                                                              
         else if GetSpellAbilityId() == SPELL_MODO_W2[id]
             acrCooldownModoW2[id] = 50.00
-            acrCooldownModoW2Timer[id] = getTimer()..startPeriodic(0.2, function acrCooldownTrackerModoW2)       
+            acrCooldownModoW2Timer[id] = CreateTimer()..startPeriodic(0.2, function acrCooldownTrackerModoW2)       
         else if GetSpellAbilityId() == SPELL_E[id]
             acrCooldownE[id] = 50.00
-            acrCooldownETimer[id] = getTimer()..startPeriodic(0.2, function acrCooldownTrackerE)
+            acrCooldownETimer[id] = CreateTimer()..startPeriodic(0.2, function acrCooldownTrackerE)
         else if GetSpellAbilityId() == SPELL_E2[id]
             acrCooldownE2[id] = 50.00
-            acrCooldownE2Timer[id] = getTimer()..startPeriodic(0.2, function acrCooldownTrackerE2)
+            acrCooldownE2Timer[id] = CreateTimer()..startPeriodic(0.2, function acrCooldownTrackerE2)
         else if GetSpellAbilityId() == SPELL_MODO_E[id]
             acrCooldownModoE[id] = 50.00
-            acrCooldownModoETimer[id] = getTimer()..startPeriodic(0.2, function acrCooldownTrackerModoE)
+            acrCooldownModoETimer[id] = CreateTimer()..startPeriodic(0.2, function acrCooldownTrackerModoE)
         else if GetSpellAbilityId() == SPELL_MODO_E2[id]
             acrCooldownModoE2[id] = 50.00
-            acrCooldownModoE2Timer[id] = getTimer()..startPeriodic(0.2, function acrCooldownTrackerModoE2)                                
+            acrCooldownModoE2Timer[id] = CreateTimer()..startPeriodic(0.2, function acrCooldownTrackerModoE2)                                
         else if GetSpellAbilityId() == SPELL_R[id]
             acrCooldownR[id] = 50.00
-            acrCooldownRTimer[id] = getTimer()..startPeriodic(0.2, function acrCooldownTrackerR)
+            acrCooldownRTimer[id] = CreateTimer()..startPeriodic(0.2, function acrCooldownTrackerR)
         else if GetSpellAbilityId() == SPELL_R2[id]
             acrCooldownR2[id] = 50.00
-            acrCooldownR2Timer[id] = getTimer()..startPeriodic(0.2, function acrCooldownTrackerR2)
+            acrCooldownR2Timer[id] = CreateTimer()..startPeriodic(0.2, function acrCooldownTrackerR2)
         else if GetSpellAbilityId() == SPELL_R3[id]
             acrCooldownR3[id] = 50.00
-            acrCooldownR3Timer[id] = getTimer()..startPeriodic(0.2, function acrCooldownTrackerR3)                 
+            acrCooldownR3Timer[id] = CreateTimer()..startPeriodic(0.2, function acrCooldownTrackerR3)                 
         else if GetSpellAbilityId() == SPELL_MODO_R[id]
             acrCooldownModoR[id] = 50.00
-            acrCooldownModoRTimer[id] = getTimer()..startPeriodic(0.2, function acrCooldownTrackerModoR)
+            acrCooldownModoRTimer[id] = CreateTimer()..startPeriodic(0.2, function acrCooldownTrackerModoR)
         else if GetSpellAbilityId() == SPELL_MODO_R2[id]
             acrCooldownModoR2[id] = 50.00
-            acrCooldownModoR2Timer[id] = getTimer()..startPeriodic(0.2, function acrCooldownTrackerModoR2)
+            acrCooldownModoR2Timer[id] = CreateTimer()..startPeriodic(0.2, function acrCooldownTrackerModoR2)
         else if GetSpellAbilityId() == SPELL_T[id]
             acrCooldownT[id] = 50.00
-            acrCooldownTTimer[id] = getTimer()..startPeriodic(0.2, function acrCooldownTrackerT)           
+            acrCooldownTTimer[id] = CreateTimer()..startPeriodic(0.2, function acrCooldownTrackerT)           
         else if GetSpellAbilityId() == SPELL_T2[id]
             acrCooldownT2[id] = 50.00
-            acrCooldownT2Timer[id] = getTimer()..startPeriodic(0.2, function acrCooldownTrackerT2)
+            acrCooldownT2Timer[id] = CreateTimer()..startPeriodic(0.2, function acrCooldownTrackerT2)
         else if GetSpellAbilityId() == SPELL_MODO_T[id]
             acrCooldownModoT[id] = 50.00
-            acrCooldownModoTTimer[id] = getTimer()..startPeriodic(0.2, function acrCooldownTrackerModoT)
+            acrCooldownModoTTimer[id] = CreateTimer()..startPeriodic(0.2, function acrCooldownTrackerModoT)
         else if GetSpellAbilityId() == SPELL_MODO_T2[id]
             acrCooldownModoT2[id] = 50.00
-            acrCooldownModoT2Timer[id] = getTimer()..startPeriodic(0.2, function acrCooldownTrackerModoT2)                 
+            acrCooldownModoT2Timer[id] = CreateTimer()..startPeriodic(0.2, function acrCooldownTrackerModoT2)                 
         else if GetSpellAbilityId() == SPELL_F[id]
             acrCooldownF[id] = 50.00
-            acrCooldownFTimer[id] = getTimer()..startPeriodic(0.2, function acrCooldownTrackerF)
+            acrCooldownFTimer[id] = CreateTimer()..startPeriodic(0.2, function acrCooldownTrackerF)
         else if GetSpellAbilityId() == SPELL_F2[id]
             acrCooldownF2[id] = 50.00
-            acrCooldownF2Timer[id] = getTimer()..startPeriodic(0.2, function acrCooldownTrackerF2)
+            acrCooldownF2Timer[id] = CreateTimer()..startPeriodic(0.2, function acrCooldownTrackerF2)
         else if GetSpellAbilityId() == SPELL_F3[id]
             acrCooldownF3[id] = 50.00
-            acrCooldownF3Timer[id] = getTimer()..startPeriodic(0.2, function acrCooldownTrackerF3)
+            acrCooldownF3Timer[id] = CreateTimer()..startPeriodic(0.2, function acrCooldownTrackerF3)
         else if GetSpellAbilityId() == SPELL_MODO_F[id]
             acrCooldownModoF[id] = 50.00
-            acrCooldownModoFTimer[id] = getTimer()..startPeriodic(0.2, function acrCooldownTrackerModoF)
+            acrCooldownModoFTimer[id] = CreateTimer()..startPeriodic(0.2, function acrCooldownTrackerModoF)
         else if GetSpellAbilityId() == SPELL_MODO_F2[id]
             acrCooldownModoF2[id] = 50.00
-            acrCooldownModoF2Timer[id] = getTimer()..startPeriodic(0.2, function acrCooldownTrackerModoF2)
+            acrCooldownModoF2Timer[id] = CreateTimer()..startPeriodic(0.2, function acrCooldownTrackerModoF2)
         else if GetSpellAbilityId() == SPELL_G[id]
             acrCooldownG[id] = 50.00
-            acrCooldownGTimer[id] = getTimer()..startPeriodic(0.2, function acrCooldownTrackerG)
+            acrCooldownGTimer[id] = CreateTimer()..startPeriodic(0.2, function acrCooldownTrackerG)
         else if GetSpellAbilityId() == SPELL_G2[id]
             acrCooldownG2[id] = 50.00
-            acrCooldownG2Timer[id] = getTimer()..startPeriodic(0.2, function acrCooldownTrackerG2)
+            acrCooldownG2Timer[id] = CreateTimer()..startPeriodic(0.2, function acrCooldownTrackerG2)
         else if GetSpellAbilityId() == SPELL_MODO_G[id]
             acrCooldownModoG[id] = 50.00
-            acrCooldownModoGTimer[id] = getTimer()..startPeriodic(0.2, function acrCooldownTrackerModoG)
+            acrCooldownModoGTimer[id] = CreateTimer()..startPeriodic(0.2, function acrCooldownTrackerModoG)
         else if GetSpellAbilityId() == SPELL_MODO_G2[id]
             acrCooldownModoG2[id] = 50.00
-            acrCooldownModoG2Timer[id] = getTimer()..startPeriodic(0.2, function acrCooldownTrackerModoG2)            
+            acrCooldownModoG2Timer[id] = CreateTimer()..startPeriodic(0.2, function acrCooldownTrackerModoG2)            

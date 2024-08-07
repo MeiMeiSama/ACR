@@ -15,7 +15,7 @@ init
         caster
         ..addAbility(ABILITY_SPELLBLOCK)
         ..addAbility(RINNEGAN_MODEL_EFFECT)
-        rinneganTimer = getTimer()..startPeriodic(0.1, function rinneganTimerFunction)..setData(caster.getOwner().getId())
+        rinneganTimer = CreateTimer()..startPeriodic(0.1, function rinneganTimerFunction)..setData(caster.getOwner().getId())
 
 function rinneganTimerFunction ()
     let pid = rinneganTimer.getData()
@@ -29,4 +29,4 @@ function rinneganTimerFunction ()
             caster.removeAbility(RINNEGAN_MODEL_EFFECT)
             caster.removeAbility(RINNEGAN_BUFF)
         rinneganCount = 0
-        rinneganTimer.release()
+        rinneganTimer.destr()

@@ -32,12 +32,12 @@ function blackFlame_Stop()
 
 function byakuranTMiddle()
     if byakuranTcount == 0
-        getTimer()..startPeriodic(0.02, function byakuranTPause)
+        CreateTimer()..startPeriodic(0.02, function byakuranTPause)
     byakuranTcount++    
     if byakuranCastingT == false
         udg_BFDummy4[69].remove()
         udg_BFDummy2[69].remove()
-        GetExpiredTimer().release()
+        GetExpiredTimer().destr()
     integer trigger_ID = LoadInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 865)
     trigger_ID += 3
     udg_BFLoop++
@@ -68,7 +68,7 @@ function byakuranTMiddle()
                 if byakuranTGroup.has(u) == false
                     byakuranTGroup.add(u)                 
                 if byakuranTCount2[id] == 0
-                    getTimer()..start(10, function byakuranTFlush).setData(id)
+                    CreateTimer()..start(10, function byakuranTFlush).setData(id)
                 if u.hasTagPauseEX() == false
                     IssueImmediateOrder(u, "stop")       
                 if byakuranTCount2[id] < 30  
@@ -84,7 +84,7 @@ function blackFlame_Start()
     udg_BFDummy4[69] = CreateUnitAtLoc(GetOwningPlayer(byakuranCaster), 'e0QX', byakuranLocation, AngleBetweenPoints(byakuranLocation, byakuranCastPoint))
     SetUnitVertexColorBJ(udg_BFDummy4[69], 100, 100.00, 100.00, 25.00) 
     byakuranTcount = 0
-    getTimer()..startPeriodic(0.065, function byakuranTMiddle)
+    CreateTimer()..startPeriodic(0.065, function byakuranTMiddle)
 
 function byakuranTPause()
     if byakuranCastingT == true
@@ -98,7 +98,7 @@ function byakuranTPause()
                 u.unpauseEx()
                 u.removeTagPauseEX()
         byakuranTGroup.clear()        
-        GetExpiredTimer().release()   
+        GetExpiredTimer().destr()   
 
 
 function byakuranTFlush()
@@ -148,4 +148,4 @@ function blackFlame_Setup()
                 udg_BFDummy2[i] = GetLastCreatedUnit()
                 udg_BFDamageCount += 165.00
                 RemoveLocation(udg_BFPointDamage)    
-            getTimer()..start(0.1, function byakuranTStart)      
+            CreateTimer()..start(0.1, function byakuranTStart)      

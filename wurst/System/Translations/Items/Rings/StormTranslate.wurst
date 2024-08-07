@@ -40,7 +40,7 @@ function stormTranslationCheck()
                 let stormPacifier = UnitItemInSlot(stormUser[id], i)
                 stormDynamicTranslation(stormUser[id], stormPacifier)    
     if stormUser[id].hasItemById(STORM_RING_VONGOLA) == false and stormUser[id].hasItemById(STORM_RING_ARCOBALENO) == false
-        stormTranslationTimer[id].release()  
+        stormTranslationTimer[id].destr()  
 
 function stormEventCheck()
 
@@ -66,4 +66,4 @@ function stormEventCheck()
                 
             stormInt[id] = user.getInt(true)
             stormMana[id] = user.getMana() 
-            stormTranslationTimer[id] = getTimer()..startPeriodic(0.25, function stormTranslationCheck)..setData(id)
+            stormTranslationTimer[id] = CreateTimer()..startPeriodic(0.25, function stormTranslationCheck)..setData(id)

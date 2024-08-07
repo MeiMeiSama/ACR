@@ -41,7 +41,7 @@ function acrTransformationEnd()
     if acrTransformationDurationCount[pid] <= 0 or user[pid].isAlive() == false
         transformationActive[pid] = false
         if user[pid].isAlive() == false
-            getTimer()..start(5, function acrTransformationDeath)..setData(pid)
+            CreateTimer()..start(5, function acrTransformationDeath)..setData(pid)
         else 
             BlzSetUnitSkin(user[pid], acrTransformationDefaultSkin[pid])        
         hpbar[pid].remove()
@@ -80,7 +80,7 @@ function acrTransformationEnd()
             SPELL_T[pid].removeTagDisabled()
             user[pid].startAbilityCooldown(SPELL_T[pid])
             acrCooldownT[pid] = 60                                                    
-        acrTransformationTimer[pid].release()
+        acrTransformationTimer[pid].destr()
 
 public function acrTransformation (unit caster, real duration, int defaultSkin, int transformSkin, real barHeight, real barScale)
     let pid = caster.getOwner().getId()
@@ -142,4 +142,4 @@ public function acrTransformation (unit caster, real duration, int defaultSkin, 
     acrTransformationElapsedTime[pid] = 0.0
     acrTransformationDefaultSkin[pid] = defaultSkin
     acrTransformationTransformSkin[pid] = transformSkin
-    acrTransformationTimer[pid] = getTimer()..startPeriodic(0.01, function acrTransformationEnd)..setData(pid)
+    acrTransformationTimer[pid] = CreateTimer()..startPeriodic(0.01, function acrTransformationEnd)..setData(pid)

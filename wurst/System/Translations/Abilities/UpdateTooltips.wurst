@@ -13,12 +13,12 @@ integer count = 0
 public function updateTooltips_Mode ()
     let id = GetExpiredTimer().getData()
     updateTooltipMode(id)
-    tooltipModoTimer[id].release()
+    tooltipModoTimer[id].destr()
 
 public function updateTooltips () // ------------- Configurable ------------- //
     let id = GetExpiredTimer().getData()
     updateTooltipExceptions(id) 
-    tooltipTimer[id].release()
+    tooltipTimer[id].destr()
 
 function updateTooltipsOnceInitModeCond () returns boolean
     if GetSpellAbilityId().isTransform()
@@ -32,7 +32,7 @@ public function updateTooltipsOnceInit_Mode (unit playHero)
     ..addAction() ->
         let hero = GetTriggerUnit()
         let id = hero.getOwner().getId()
-        tooltipModoTimer[id] = getTimer()..start(0.1, function updateTooltips_Mode)..setData(id)
+        tooltipModoTimer[id] = CreateTimer()..start(0.1, function updateTooltips_Mode)..setData(id)
 
 function updateTooltipsInitModeCond () returns boolean
     if GetManipulatedItem().isUpgrade()
@@ -51,7 +51,7 @@ public function updateTooltipsInit_Mode (unit playHero)
     ..addAction() ->
         let hero = GetTriggerUnit()
         let id = hero.getOwner().getId()
-        tooltipModoTimer[id] = getTimer()..start(0.1, function updateTooltips_Mode)..setData(id)
+        tooltipModoTimer[id] = CreateTimer()..start(0.1, function updateTooltips_Mode)..setData(id)
 
 function updateTooltipsInitCond () returns boolean
     if GetManipulatedItem().isUpgrade()
@@ -69,9 +69,9 @@ function updateTooltipsInit_Base (unit playHero)
     ..addCondition(Condition(function updateTooltipsInitCond))
     ..addAction() ->
         let id = GetTriggerUnit().getOwner().getId()
-        tooltipTimer[id] = getTimer()..start(0.1, function updateTooltips)..setData(id)
+        tooltipTimer[id] = CreateTimer()..start(0.1, function updateTooltips)..setData(id)
     let pid = playHero.getOwner().getId()
-    tooltipTimer[pid] = getTimer()..start(0.1, function updateTooltips)..setData(pid)
+    tooltipTimer[pid] = CreateTimer()..start(0.1, function updateTooltips)..setData(pid)
                 
 
 // --------- The ability list for the heroes --------- //

@@ -4,6 +4,23 @@
 1. Nothing Added.
 
 ### Improved
+1. Nothing Improved.
+
+### Changed
+1. Nothing Changed.
+
+### Fixed
+1. Seems like everything that made 2.0.4 and 2.0.5 unplayable is fixed.
+
+### Deleted
+Nothing Deleted.
+
+# ━━━━━━━━━ Anime Carnage Reforged v2.0.5 ━━━━━━━━━ #
+
+### Added
+1. Nothing Added.
+
+### Improved
 1. Mist ring and arco received some QoL updates.
 
 ### Changed

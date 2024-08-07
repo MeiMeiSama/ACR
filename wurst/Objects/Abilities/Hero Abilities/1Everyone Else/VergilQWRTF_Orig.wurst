@@ -1029,7 +1029,7 @@ function trig_VergilQWRTFActions()
     else if GetSpellAbilityId() == 'A0YD'
         let caster = GetTriggerUnit()
         vergil = caster
-        getTimer()..startPeriodic(0.03, function vergilREnd)         
+        CreateTimer()..startPeriodic(0.03, function vergilREnd)         
         RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 310))
         if IsUnitGroupEmptyBJ(LoadGroupHandle(YDHT, 1, 538958995)) == true and IsUnitGroupEmptyBJ(LoadGroupHandle(YDHT, 2, 538958995)) == true
             DoNothing()
@@ -1255,7 +1255,7 @@ function vergilREnd()
             UnitRemoveAbility(vergil, 'A0YD')
             SetPlayerAbilityAvailable(vergil.getOwner(), 'A0WQ', true)
             vergil.startAbilityCooldown('A0WQ')
-        GetExpiredTimer().release() 
+        GetExpiredTimer().destr() 
 function initTrig_VergilQWRTF_Orig()
     gg_trg_VergilQWRTF = CreateTrigger()
     TriggerRegisterAnyUnitEventBJ(gg_trg_VergilQWRTF, EVENT_PLAYER_UNIT_SPELL_EFFECT)

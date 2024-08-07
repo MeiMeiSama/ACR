@@ -4,7 +4,6 @@ import AbilityGlobals
 import main
 import ClosureForGroups
 import ACR_Slow
-import TimerUtils
 
 unit ainz
 boolean ainzFbool = false
@@ -191,7 +190,7 @@ function ainzFFunctionStart()
             acrSlow(ainz, victim, 70, 0.12)
     if ainzFbool == false
         ainz.setMoveSpeed(ainz.getDefaultMovespeed())
-        GetExpiredTimer().release()   
+        GetExpiredTimer().destr()   
 
 function trig_AnziT___E___FActions()
     timer _ydl_timer
@@ -228,7 +227,7 @@ function trig_AnziT___E___FActions()
         caster.setMoveSpeed(522)
         ainz = caster
         ainzFbool = true
-        getTimer()..startPeriodic(0.1, function ainzFFunctionStart) 
+        CreateTimer()..startPeriodic(0.1, function ainzFFunctionStart) 
         caster.issueImmediateOrder("stop")            
         soundPlay("war3mapImported\\Anzi6-1.mp3", GetUnitX(udg_Unitsound), GetUnitY(udg_Unitsound))
         SaveLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 683, PolarProjectionBJ(LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1108), 200.00, GetUnitFacing(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594)) + 180.00))

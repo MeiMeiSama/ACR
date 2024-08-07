@@ -14,7 +14,7 @@ init
         caster
         ..addAbility(ABILITY_SPELLBLOCK)
         ..addAbility(ICHIGO_STRENGTH_G_EFFECT)
-        spellblockTimer = getTimer()..startPeriodic(0.1, function spellblockTimerFunction)..setData(caster.getOwner().getId())
+        spellblockTimer = CreateTimer()..startPeriodic(0.1, function spellblockTimerFunction)..setData(caster.getOwner().getId())
 
 function spellblockTimerFunction ()
     let pid = spellblockTimer.getData()
@@ -27,4 +27,4 @@ function spellblockTimerFunction ()
             caster.removeAbility(ICHIGO_STRENGTH_G_EFFECT)
             caster.removeAbility(ICHIGO_STRENGTH_G_BUFF)
         spellblockCount = 0
-        spellblockTimer.release()        
+        spellblockTimer.destr()        

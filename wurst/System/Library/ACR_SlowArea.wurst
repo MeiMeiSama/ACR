@@ -35,7 +35,7 @@ function acrSlowAreaStart()
             else if victim.getMoveSpeed() > (victim.getDefaultMovespeed() - (victim.getDefaultMovespeed() * (acrSlowAreaSlowPercentage[id] / 100)))
                 victim.setMoveSpeed(victim.getDefaultMovespeed() - (victim.getDefaultMovespeed() * (acrSlowAreaSlowPercentage[id] / 100)))  
     if acrSlowAreaStartCount[id] >= acrSlowAreaDuration[id]
-        acrSlowAreaStartTimer[id].release()            
+        acrSlowAreaStartTimer[id].destr()            
 
 function acrSlowAreaMiddle()
     let id = GetExpiredTimer().getData()
@@ -48,7 +48,7 @@ function acrSlowAreaMiddle()
                 victim.removeTagSlow()
                 acrSlowAreaGroup[id].remove(victim)   
     if acrSlowAreaMiddleCount[id] >= acrSlowAreaDuration[id]
-        acrSlowAreaMiddleTimer[id].release()                
+        acrSlowAreaMiddleTimer[id].destr()                
 
 function acrSlowAreaEnd()
     let id = GetExpiredTimer().getData()
@@ -58,7 +58,7 @@ function acrSlowAreaEnd()
             victim.removeAbility('B06P')
             victim.removeTagSlow()
         acrSlowAreaGroup[id].remove(victim)
-    acrSlowAreaEndTimer[id].release()    
+    acrSlowAreaEndTimer[id].destr()    
 
 public function acrSlowArea(unit caster, vec2 targetPoint, real aoe, real slowPercentage, real duration)
     let id = caster.getUserData()
@@ -69,9 +69,9 @@ public function acrSlowArea(unit caster, vec2 targetPoint, real aoe, real slowPe
     acrSlowAreaDuration[id] = duration
     if acrSlowAreaGroup[id] == null
         acrSlowAreaGroup[id] = CreateGroup()      
-    acrSlowAreaStartTimer[id] = getTimer()..startPeriodic(0.02, function acrSlowAreaStart)..setData(id)     
-    acrSlowAreaMiddleTimer[id] = getTimer()..startPeriodic(0.02, function acrSlowAreaMiddle)..setData(id)  
-    acrSlowAreaEndTimer[id] = getTimer()..start(duration + 0.02, function acrSlowAreaEnd)..setData(id)  
+    acrSlowAreaStartTimer[id] = CreateTimer()..startPeriodic(0.02, function acrSlowAreaStart)..setData(id)     
+    acrSlowAreaMiddleTimer[id] = CreateTimer()..startPeriodic(0.02, function acrSlowAreaMiddle)..setData(id)  
+    acrSlowAreaEndTimer[id] = CreateTimer()..start(duration + 0.02, function acrSlowAreaEnd)..setData(id)  
     // doPeriodicallyTimed(0.02, duration) (CallbackCounted cb) ->      
     //     forUnitsInRange(targetPoint, aoe) (unit victim) ->
     //         if caster.isEnemyOf(victim) and victim.isInvulnerable() == false

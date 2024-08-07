@@ -2,7 +2,6 @@ package Sistine_F
 
 import ClosureEvents
 import DummyCaster
-import TimerUtils
 import ObjectDefinitions
 import OrderIds
 init
@@ -21,9 +20,9 @@ public function sistineF ()
         ..owner(caster.getOwner())
         ..origin(target.getPos())
         ..castTarget(SISTINE_F_DUMMY_ABILITY, 1, OrderIds.bloodlust, target)
-        getTimer()..startPeriodic(0.1, function sistineFEnd)        
+        CreateTimer()..startPeriodic(0.1, function sistineFEnd)        
 
 function sistineFEnd()
     if sistineFtarget.hasAbility('B068') == false
         sistineFSFX.destr()
-        GetExpiredTimer().release()      
+        GetExpiredTimer().destr()      

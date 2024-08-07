@@ -16,7 +16,7 @@ init
         ..addAbility(SHARINNEGAN_MODEL_EFFECT)
         ..addAbility(ATTACK_EVASION)
         ..addAbility(ABILITY_SPELLBLOCK)
-        sharinneganTimer = getTimer()..startPeriodic(0.1, function sharinneganTimerFunction)..setData(caster.getOwner().getId())
+        sharinneganTimer = CreateTimer()..startPeriodic(0.1, function sharinneganTimerFunction)..setData(caster.getOwner().getId())
 
 function sharinneganTimerFunction ()
     let pid = sharinneganTimer.getData()
@@ -32,4 +32,4 @@ function sharinneganTimerFunction ()
         if caster.hasAbility(ABILITY_SPELLBLOCK)
             caster.removeAbility(ABILITY_SPELLBLOCK)
         sharinneganCount = 0
-        sharinneganTimer.release()
+        sharinneganTimer.destr()

@@ -13,7 +13,7 @@ init
         caster
         ..addAbility(ATTACK_EVASION)
         ..addAbility(SHARINGAN_MODEL_EFFECT)
-        sharinganTimer = getTimer()..startPeriodic(0.1, function sharinganTimerFunction)..setData(caster.getOwner().getId())
+        sharinganTimer = CreateTimer()..startPeriodic(0.1, function sharinganTimerFunction)..setData(caster.getOwner().getId())
 
 function sharinganTimerFunction ()
     let pid = sharinganTimer.getData()
@@ -27,4 +27,4 @@ function sharinganTimerFunction ()
             caster.removeAbility(SHARINGAN_MODEL_EFFECT)
             caster.removeAbility(SHARINGAN_BUFF)
         sharinganCount = 0
-        sharinganTimer.release()
+        sharinganTimer.destr()
