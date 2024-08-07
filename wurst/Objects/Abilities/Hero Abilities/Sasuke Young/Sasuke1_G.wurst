@@ -15,13 +15,13 @@ init
         sharinganSound.play()
         caster.addAbility(ATTACK_EVASION)
         caster.addAbility(SHARINGAN_MODEL_EFFECT)
-        sharinganTimer = getTimer()..startPeriodic(0.1, function sharinganTimerFunction)..setData(caster.getOwner().getId())
+        sharinganTimer = CreateTimer()..startPeriodic(0.1, function sharinganTimerFunction)..setData(caster.getOwner().getId())
 
     EventListener.onCast(SASUKE_YOUNG_ABILITY_G_RINNEGAN) (unit caster) ->
         rinneganSound.play()
         caster.addAbility(ABILITY_SPELLBLOCK)
         caster.addAbility(RINNEGAN_MODEL_EFFECT)
-        rinneganTimer = getTimer()..startPeriodic(0.1, function rinneganTimerFunction)..setData(caster.getOwner().getId())
+        rinneganTimer = CreateTimer()..startPeriodic(0.1, function rinneganTimerFunction)..setData(caster.getOwner().getId())
 
 // Functions below was created because Mr. Gajeel wanted buffs not to disappear in animation lock
 function sharinganTimerFunction ()
@@ -36,7 +36,7 @@ function sharinganTimerFunction ()
             caster.removeAbility(SHARINGAN_MODEL_EFFECT)
             caster.removeAbility(SHARINGAN_BUFF)
         sharinganCount = 0
-        sharinganTimer.release()
+        sharinganTimer.destr()
 
 function rinneganTimerFunction ()
     let pid = rinneganTimer.getData()
@@ -50,4 +50,4 @@ function rinneganTimerFunction ()
             caster.removeAbility(RINNEGAN_MODEL_EFFECT)
             caster.removeAbility(RINNEGAN_BUFF)
         rinneganCount = 0
-        rinneganTimer.release()
+        rinneganTimer.destr()

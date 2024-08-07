@@ -19,17 +19,11 @@ real array acrStunCount
 
 function acrStunEnd()
     let id = GetExpiredTimer().getData()
-    // if acrStunnedUnit[id].isPaused() == true
-    //     if acrStunnedUnit[id].isInvulnerable() == true
-    //         DoNothing()
-    //     else        
-    //         acrStunCount[id] = acrStunCount[id] + 0.02
-    // else
     if acrStunnedUnit[id].hasTagStun() == false
         acrStunnedUnit[id].addTagStun()
     acrStunCount[id] = acrStunCount[id] + 0.02         
     if acrStunCount[id] >= acrStunDuration[id]
-        acrStunTimer[id].release()
+        acrStunTimer[id].destr()
         if acrStunnedUnit[id].hasTagStun()
             acrStunnedUnit[id].removeAbility('B06J')
             acrStunnedUnit[id].removeTagStun()        
@@ -43,14 +37,14 @@ public function acrStun(unit caster, unit victim, real duration)
         acrStunDuration[id] = duration
         acrStunCount[id] = 0.0
         if victim.hasTagStun()
-            acrStunTimer[id].release()
+            acrStunTimer[id].destr()
         else
             new DummyCaster()
             ..owner(caster.getOwner())
             ..origin(victim.getPos())
             ..castTarget('A193', 1, OrderIds.thunderbolt, victim)
             victim.addTagStun()      
-        acrStunTimer[id] = getTimer()..startPeriodic(0.02, function acrStunEnd)..setData(id)
+        acrStunTimer[id] = CreateTimer()..startPeriodic(0.02, function acrStunEnd)..setData(id)
 
         
 

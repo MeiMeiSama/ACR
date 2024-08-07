@@ -2,7 +2,6 @@ package Tohno_F
 
 import ClosureEvents
 import ACR_TagSystem
-import TimerUtils
 int tohnoFCount = 0
 int abilityF = 'A0Y9'
 int buffF = 'B05I'
@@ -16,14 +15,14 @@ function tohnoFEnd()
         tohno.disableAbility(abilityF, false, false)
         abilityF.removeTagDisabled()
         tohno.startAbilityCooldown(abilityF)
-        GetExpiredTimer().release() 
+        GetExpiredTimer().destr() 
 
     if tohnoFCount == 100
         tohno.removeAbility(buffF)
         tohno.disableAbility(abilityF, false, false)
         abilityF.removeTagDisabled()
         tohno.startAbilityCooldown(abilityF)
-        GetExpiredTimer().release()
+        GetExpiredTimer().destr()
 
 
 public function tohnoF()
@@ -33,4 +32,4 @@ public function tohnoF()
         caster.disableAbility(abilityF, true, false)
         abilityF.addTagDisabled()
         caster.issueImmediateOrder("stop")
-        getTimer()..startPeriodic(0.03, function tohnoFEnd)
+        CreateTimer()..startPeriodic(0.03, function tohnoFEnd)

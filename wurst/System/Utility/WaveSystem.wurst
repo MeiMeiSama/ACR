@@ -1,7 +1,5 @@
 package WaveSystem
 
-import TimerUtils
-
 int array waveUnit
 int waveCreepID = 100
 
@@ -85,7 +83,7 @@ function periodicSpawnTeam1Ranged()
         waveCreepID++
     else 
         waveCreepID = 100    
-    GetExpiredTimer().release()                   
+    GetExpiredTimer().destr()                   
 
 function periodicSpawnTeam1Balista()
     createUnit(Player(3), team1_Ballista, team1_waveCenter)..setUserData(waveCreepID)
@@ -106,7 +104,7 @@ function periodicSpawnTeam1Balista()
         waveCreepID++
     else 
         waveCreepID = 100     
-    GetExpiredTimer().release()        
+    GetExpiredTimer().destr()        
 
 function periodicSpawnTeam2Melee()
     for i = 1 to 4
@@ -148,7 +146,7 @@ function periodicSpawnTeam2Ranged()
         waveCreepID++
     else 
         waveCreepID = 100   
-    GetExpiredTimer().release()         
+    GetExpiredTimer().destr()         
 
 function periodicSpawnTeam2Balista()    
     createUnit(Player(7), team2_Ballista, team2_waveLeft)..setUserData(waveCreepID)
@@ -169,7 +167,7 @@ function periodicSpawnTeam2Balista()
         waveCreepID++
     else 
         waveCreepID = 100    
-    GetExpiredTimer().release()        
+    GetExpiredTimer().destr()        
 
 function periodicSpawnTeam3Melee()
     for i = 1 to 4
@@ -211,7 +209,7 @@ function periodicSpawnTeam3Ranged()
         waveCreepID++
     else 
         waveCreepID = 100       
-    GetExpiredTimer().release()        
+    GetExpiredTimer().destr()        
 
 function periodicSpawnTeam3Balista()
     createUnit(Player(11), team3_Ballista, team3_waveLeft)..setUserData(waveCreepID)
@@ -232,41 +230,41 @@ function periodicSpawnTeam3Balista()
         waveCreepID++
     else 
         waveCreepID = 100  
-    GetExpiredTimer().release()             
+    GetExpiredTimer().destr()             
 
 function waveSetup()
     periodicSpawnTeam1Melee()   
-    getTimer()..start(0.5, function periodicSpawnTeam1Ranged)
-    getTimer()..start(1.0, function periodicSpawnTeam1Balista) 
+    CreateTimer()..start(0.5, function periodicSpawnTeam1Ranged)
+    CreateTimer()..start(1.0, function periodicSpawnTeam1Balista) 
     periodicSpawnTeam2Melee()
-    getTimer()..start(0.5, function periodicSpawnTeam2Ranged)
-    getTimer()..start(1.0, function periodicSpawnTeam2Balista)   
+    CreateTimer()..start(0.5, function periodicSpawnTeam2Ranged)
+    CreateTimer()..start(1.0, function periodicSpawnTeam2Balista)   
     periodicSpawnTeam3Melee()       
-    getTimer()..start(0.5, function periodicSpawnTeam3Ranged)
-    getTimer()..start(1.0, function periodicSpawnTeam3Balista)                      
+    CreateTimer()..start(0.5, function periodicSpawnTeam3Ranged)
+    CreateTimer()..start(1.0, function periodicSpawnTeam3Balista)                      
 
 function waveTimer()
-    getTimer()..startPeriodic(30, function waveSetup)
+    CreateTimer()..startPeriodic(30, function waveSetup)
 
 function firstWaveSpawn()
-    GetExpiredTimer().release()
+    GetExpiredTimer().destr()
     waveTimer()
     periodicSpawnTeam1Melee()   
-    getTimer()..start(0.5, function periodicSpawnTeam1Ranged)
-    getTimer()..start(1.0, function periodicSpawnTeam1Balista) 
+    CreateTimer()..start(0.5, function periodicSpawnTeam1Ranged)
+    CreateTimer()..start(1.0, function periodicSpawnTeam1Balista) 
     periodicSpawnTeam2Melee()
-    getTimer()..start(0.5, function periodicSpawnTeam2Ranged)
-    getTimer()..start(1.0, function periodicSpawnTeam2Balista)   
+    CreateTimer()..start(0.5, function periodicSpawnTeam2Ranged)
+    CreateTimer()..start(1.0, function periodicSpawnTeam2Balista)   
     periodicSpawnTeam3Melee()       
-    getTimer()..start(0.5, function periodicSpawnTeam3Ranged)
-    getTimer()..start(1.0, function periodicSpawnTeam3Balista)    
+    CreateTimer()..start(0.5, function periodicSpawnTeam3Ranged)
+    CreateTimer()..start(1.0, function periodicSpawnTeam3Balista)    
 
 public function firstWave()
     waveEnterCenter()
     waveBottomRight()
     waveBottomLeft()
     waveTopRight()
-    getTimer()..start(10.0, function firstWaveSpawn)                     
+    CreateTimer()..start(10.0, function firstWaveSpawn)                     
 
 function isWaveUnit() returns boolean
     for i = 0 to 8

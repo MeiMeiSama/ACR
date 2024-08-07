@@ -20,7 +20,7 @@ function acrReviveEnd()
         acrReviveUnit[id].removeTagRevive()
     if acrReviveBoolean[id] == true
         acrReviveUnitOwner[id].select(acrReviveUnit[id])    
-    acrReviveTimer[id].release()        
+    acrReviveTimer[id].destr()        
 
 public function acrRevive(unit caster)
     let id = caster.getOwner().getId()
@@ -36,4 +36,4 @@ public function acrRevive(unit caster)
     if IsUnitSelected(caster, p)
         acrReviveBoolean[id] = true   
     caster.setHP(0)
-    acrReviveTimer[id] = getTimer()..start(0.001, function acrReviveEnd)..setData(id)
+    acrReviveTimer[id] = CreateTimer()..start(0.001, function acrReviveEnd)..setData(id)

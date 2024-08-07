@@ -33,7 +33,7 @@ function luffyModoF()
             StopMusic(false)
             PlaySoundBJ(gg_snd_Gear4luffy)                
             acrTransformation(caster, 40, MONKEYD_LUFFY, 'H00U', 850, 4.0)
-            getTimer()..startPeriodic(0.01, function luffyModoTEnd).setData(pid)
+            CreateTimer()..startPeriodic(0.01, function luffyModoTEnd).setData(pid)
 
 function luffyModoTEnd()
     let pid = GetExpiredTimer().getData()
@@ -43,7 +43,7 @@ function luffyModoTEnd()
         luffy.addAbility(SPELL_G[pid]) 
         if gg_snd_Gear4luffy.isPlaying()
             gg_snd_Gear4luffy.stop(false, false) 
-        GetExpiredTimer().release() 
+        GetExpiredTimer().destr() 
 
 
 

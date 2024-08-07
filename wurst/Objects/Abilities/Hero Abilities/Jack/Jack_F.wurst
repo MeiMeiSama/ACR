@@ -4,7 +4,6 @@ import ClosureEvents
 import DamageEvent
 import ObjectDefinitions
 import SoundUtils
-import TimerUtils
 import ACR_Stun
 
 constant jackFStart = new SoundDefinition("war3mapImported\\Jack6.mp3")
@@ -19,11 +18,11 @@ function jackFEnd()
     jackFCount++
     if not jack.hasAbility('B033')
         jack.removeAbility(EMPTY_DUMMY_PASSIVE_ABILITY)
-        GetExpiredTimer().release()
+        GetExpiredTimer().destr()
     if jackFCount >= 100
         jack.removeAbility('B033')
         jack.removeAbility(EMPTY_DUMMY_PASSIVE_ABILITY)
-        GetExpiredTimer().release()
+        GetExpiredTimer().destr()
 
 public function jackF ()
 
@@ -32,7 +31,7 @@ public function jackF ()
         jackFStart.play()
         jack = caster
         jackFCount = 0
-        getTimer()..startPeriodic(0.05, function jackFEnd)   
+        CreateTimer()..startPeriodic(0.05, function jackFEnd)   
 
     EventListener.add(EVENT_PLAYER_UNIT_DAMAGED) ->
         if DamageEvent.getSource().getTypeId() == 'H02K' and BlzGetEventAttackType() == ATTACK_TYPE_HERO and DamageEvent.getSource().hasAbility(EMPTY_DUMMY_PASSIVE_ABILITY)

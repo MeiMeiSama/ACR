@@ -5,7 +5,6 @@ import DamageEvent
 import ObjectDefinitions
 import SoundUtils
 import ACR_Stun
-import TimerUtils
 
 unit akame
 int akameFCount
@@ -18,11 +17,11 @@ function akameFEnd()
     akameFCount++
     if not akame.hasAbility('B033')
         akame.removeAbility(EMPTY_DUMMY_PASSIVE_ABILITY)
-        GetExpiredTimer().release()
+        GetExpiredTimer().destr()
     if akameFCount >= 100
         akame.removeAbility('B033')
         akame.removeAbility(EMPTY_DUMMY_PASSIVE_ABILITY)
-        GetExpiredTimer().release()         
+        GetExpiredTimer().destr()         
 
 public function akameF ()
 
@@ -30,7 +29,7 @@ public function akameF ()
         caster.addAbility(EMPTY_DUMMY_PASSIVE_ABILITY)
         akame = caster
         akameFCount = 0
-        getTimer()..startPeriodic(0.05, function akameFEnd)        
+        CreateTimer()..startPeriodic(0.05, function akameFEnd)        
 
     EventListener.add(EVENT_PLAYER_UNIT_DAMAGED) ->
         if DamageEvent.getSource().getTypeId() == AKAME_MURASAME and BlzGetEventAttackType() == ATTACK_TYPE_HERO and DamageEvent.getSource().hasAbility(EMPTY_DUMMY_PASSIVE_ABILITY)

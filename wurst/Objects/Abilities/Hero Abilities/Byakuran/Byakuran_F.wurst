@@ -2,7 +2,6 @@ package Byakuran_F
 
 import ClosureEvents
 import ACR_TagSystem
-import TimerUtils
 
 unit byakuran
 int byakuranFCount = 0
@@ -17,14 +16,14 @@ function byakuranFEnd()
         byakuran.disableAbility(abilityF, false, false)
         abilityF.removeTagDisabled()
         byakuran.startAbilityCooldown(abilityF)
-        GetExpiredTimer().release()
+        GetExpiredTimer().destr()
 
     if byakuranFCount == 100
         byakuran.removeAbility(buffF)
         byakuran.disableAbility(abilityF, false, false)
         abilityF.removeTagDisabled()
         byakuran.startAbilityCooldown(abilityF)
-        GetExpiredTimer().release()
+        GetExpiredTimer().destr()
 
 public function byakuranF ()
     EventListener.onCast(abilityF) (unit caster) ->
@@ -33,5 +32,5 @@ public function byakuranF ()
         caster.disableAbility(abilityF, true, false)
         abilityF.addTagDisabled()
         caster.issueImmediateOrder("stop")
-        getTimer()..startPeriodic(0.03, function byakuranFEnd)
+        CreateTimer()..startPeriodic(0.03, function byakuranFEnd)
             

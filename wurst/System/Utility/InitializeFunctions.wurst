@@ -80,7 +80,7 @@ import Cobra_G
 function initUI ()
     BlzFrameSetVisible(BlzFrameGetChild(BlzFrameGetChild(BlzGetOriginFrame(ORIGIN_FRAME_GAME_UI, 0), 5),0), false)
     MultiboardSuppressDisplay(true)
-    GetExpiredTimer().release()
+    GetExpiredTimer().destr()
 
 function heroG_delay2 ()
     let i = GetExpiredTimer().getData()
@@ -99,17 +99,17 @@ function heroG_delay2 ()
         if SPELL_F2[id].hasTagHidden() == false
             udg_PlayHero[i].hideAbility(SPELL_F2[id], true)
             SPELL_F2[id].addTagHidden()
-    GetExpiredTimer().release()
+    GetExpiredTimer().destr()
 
 function heroG_delay1 ()
     let i = GetExpiredTimer().getData()
     setTooltipTitleAll(udg_PlayHero[i])
     acrCamera(udg_PlayHero[i])
-    GetExpiredTimer().release()
+    GetExpiredTimer().destr()
 
 function updateSelection ()
     updateSelect()
-    GetExpiredTimer().release()
+    GetExpiredTimer().destr()
 
 public function initFunctions ()
     BlzChangeMinimapTerrainTex("MinimapPreview.blp")
@@ -134,16 +134,16 @@ public function initFunctions ()
     bgmExceptionList()
     createQuest()
     acrCooldownTracker()
-    getTimer()..start(0.1, function initUI)
+    CreateTimer()..start(0.1, function initUI)
 
     // ---- Hero G's ---- \\
     for i = 0 to 12
         if udg_PlayHero[i] != null
-            getTimer()..start(0.1, function heroG_delay1)..setData(i)
+            CreateTimer()..start(0.1, function heroG_delay1)..setData(i)
             Player(i)..select(udg_PlayHero[i])..panCameraToTimed(udg_PlayHero[i].getPos(), 1)
 
         if udg_PlayHero[i] != null
-            getTimer()..start(0.05, function heroG_delay2)..setData(i)
+            CreateTimer()..start(0.05, function heroG_delay2)..setData(i)
                
         if udg_PlayHero[i].isModeHeroBase()
             updateTooltipsInit_Mode(udg_PlayHero[i])
@@ -285,4 +285,4 @@ public function initFunctions ()
         if udg_PlayHero[i].getTypeId() == COBRA
             cobraDot()                                                         
 
-    getTimer().start(3, function updateSelection)
+    CreateTimer().start(3, function updateSelection)

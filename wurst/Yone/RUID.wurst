@@ -1,7 +1,6 @@
 package RUID
 
 import GetFrames
-import TimerUtils
 
 int array player_client_width
 
@@ -107,12 +106,12 @@ function hideFrame()
     // BlzFrameSetVisible(BlzGetFrameByName("ConsoleUIBackdrop",0), false)
     BlzFrameSetVisible(getFrameACR("ConsoleUIBackdrop", 0), false)
     BlzHideOriginFrames(true)
-    GetExpiredTimer().release()
+    GetExpiredTimer().destr()
 
 function tocMissing() 
     if not BlzLoadTOCFile( "war3mapImported\\ACR.toc" )
         print("|cffff0000COULD NOT LOAD TOC FILE, MEANING CUSTOM |cffffd700UI|cffff0000 WILL NOT LOAD|r", 3)       
 
 init
-    getTimer()..start(0, function tocMissing)
-    getTimer()..start(0.03, function hideFrame)        
+    CreateTimer()..start(0, function tocMissing)
+    CreateTimer()..start(0.03, function hideFrame)        

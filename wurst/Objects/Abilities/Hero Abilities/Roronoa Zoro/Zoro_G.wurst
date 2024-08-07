@@ -16,7 +16,7 @@ init
         caster
         ..addAbility(ABILITY_SPELLBLOCK)
         ..addAbility(RORONOA_ZORO_G_EFFECT)
-        spellblockTimer = getTimer()..startPeriodic(0.1, function spellblockTimerFunction)..setData(caster.getOwner().getId())
+        spellblockTimer = CreateTimer()..startPeriodic(0.1, function spellblockTimerFunction)..setData(caster.getOwner().getId())
 
 function spellblockTimerFunction ()
     let pid = spellblockTimer.getData()
@@ -29,4 +29,4 @@ function spellblockTimerFunction ()
             caster.removeAbility(RORONOA_ZORO_G_EFFECT)
             caster.removeAbility(RORONOA_ZORO_G_BUFF)
         spellblockCount = 0
-        spellblockTimer.release()         
+        spellblockTimer.destr()         

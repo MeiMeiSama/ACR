@@ -30,7 +30,7 @@ function stingModo()
             StopMusic(false)
             PlaySoundBJ(gg_snd_stingdragonfoce)                
             acrTransformation(caster, 40, 'H009', 'H01W', 850, 4.0)
-            getTimer()..startPeriodic(0.01, function stingModoTEnd).setData(pid)
+            CreateTimer()..startPeriodic(0.01, function stingModoTEnd).setData(pid)
 
 function stingModoTEnd()
     let pid = GetExpiredTimer().getData()
@@ -40,7 +40,7 @@ function stingModoTEnd()
             SPELL_G[pid].removeTagHidden()
         if gg_snd_stingdragonfoce.isPlaying()
             gg_snd_stingdragonfoce.stop(false, false) 
-        GetExpiredTimer().release()  
+        GetExpiredTimer().destr()  
 
 
 

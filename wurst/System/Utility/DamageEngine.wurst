@@ -1154,12 +1154,12 @@ init
                             target.setMana(0) // Sets mana to 0
                             mistRingON[mistID] = false
                             mistArcoON[mistID] = false
+                            target.removeAbility('B06M')                             
                             for i = 0 to 6
                                 if UnitItemInSlot(target, i).getTypeId() == MIST_RING_VONGOLA
                                     UnitItemInSlot(target, i).setIconPath("ReplaceableTextures\\CommandButtons\\BTNMistX.blp")
                                 if UnitItemInSlot(target, i).getTypeId() == MIST_RING_ARCOBALENO
                                     UnitItemInSlot(target, i).setIconPath("ReplaceableTextures\\CommandButtons\\BTNArcobalenoMist.blp")                                    
-                                    target.removeAbility('B06M') 
 
                     if DamageEvent.getTarget().hasAbility('B06O') // If target has (Mist Arco)
                         let mistID = target.getOwner().getId()
@@ -1169,14 +1169,14 @@ init
                         else if (DamageEvent.getAmount() * 0.4) >= target.getMana() //else if damage is higher than mana      
                             DamageEvent.setAmount(DamageEvent.getAmount() - target.getMana()) // Lowers damage
                             target.setMana(0) // Sets mana to 0
+                            target.removeAbility('B06O')                              
                             mistRingON[mistID] = false
                             mistArcoON[mistID] = false                            
                             for i = 0 to 6
                                 if UnitItemInSlot(target, i).getTypeId() == MIST_RING_VONGOLA
-                                    UnitItemInSlot(target, i).setIconPath("ReplaceableTextures\\CommandButtons\\BTNArcobalenoMist.blp")   
+                                    UnitItemInSlot(target, i).setIconPath("ReplaceableTextures\\CommandButtons\\BTNMistX.blp")   
                                 if UnitItemInSlot(target, i).getTypeId() == MIST_RING_ARCOBALENO
-                                    UnitItemInSlot(target, i).setIconPath("ReplaceableTextures\\CommandButtons\\BTNArcobalenoMist.blp")
-                                    target.removeAbility('B06O')                                                                                              
+                                    UnitItemInSlot(target, i).setIconPath("ReplaceableTextures\\CommandButtons\\BTNArcobalenoMist.blp")                                                                                             
                     if gracePeriod == true
                         DamageEvent.setAmount(0)
                         DamageEvent.abortCurrent()

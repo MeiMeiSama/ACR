@@ -29,7 +29,7 @@ function meliodasModoT()
             StopMusic(false)
             PlaySoundBJ(gg_snd_MeliodasBGM)                
             acrTransformation(caster, 40, 'H02M', 'H036', 850, 4.0)
-            getTimer()..startPeriodic(0.01, function meliodasModoTEnd).setData(pid)
+            CreateTimer()..startPeriodic(0.01, function meliodasModoTEnd).setData(pid)
 
 function meliodasModoTEnd()
     let pid = GetExpiredTimer().getData()
@@ -37,7 +37,7 @@ function meliodasModoTEnd()
         meliodas.disableAbility(SPELL_E[pid], false, false)
         if gg_snd_MeliodasBGM.isPlaying()
             gg_snd_MeliodasBGM.stop(false, false)  
-        GetExpiredTimer().release()
+        GetExpiredTimer().destr()
 
 
 

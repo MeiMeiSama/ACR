@@ -26,14 +26,14 @@ function rogueModoT ()
             StopMusic(false)
             PlaySoundBJ(gg_snd_FTrogue5)                
             acrTransformation(caster, 40, 'H005', 'H00I', 850, 4.0)
-            getTimer()..startPeriodic(0.01, function rogueModoTEnd).setData(pid)
+            CreateTimer()..startPeriodic(0.01, function rogueModoTEnd).setData(pid)
 
 function rogueModoTEnd()
     let pid = GetExpiredTimer().getData()
     if transformationActive[pid] == false
         if gg_snd_FTrogue5.isPlaying()
             gg_snd_FTrogue5.stop(false, false) 
-        GetExpiredTimer().release()
+        GetExpiredTimer().destr()
 
 
 

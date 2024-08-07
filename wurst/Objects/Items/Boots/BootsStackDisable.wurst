@@ -24,21 +24,12 @@ public function bootStack ()
     ..addAction() ->
         let user = GetTriggerUnit()
         let id = user.getOwner().getId()
-        for i = 0 to 12
-            if GetManipulatedItem().getTypeId() == boots[i]
+        bootsOwned[id] = 0
+        for i = 0 to 6
+            if UnitItemInSlot(user, i).getTypeId() == boots[0] or UnitItemInSlot(user, i).getTypeId() == boots[1] or UnitItemInSlot(user, i).getTypeId() == boots[2] or UnitItemInSlot(user, i).getTypeId() == boots[3] or UnitItemInSlot(user, i).getTypeId() == boots[4] or UnitItemInSlot(user, i).getTypeId() == boots[5] or UnitItemInSlot(user, i).getTypeId() == boots[6] or UnitItemInSlot(user, i).getTypeId() == boots[7] or UnitItemInSlot(user, i).getTypeId() == boots[8] or UnitItemInSlot(user, i).getTypeId() == boots[9] or UnitItemInSlot(user, i).getTypeId() == boots[10] or UnitItemInSlot(user, i).getTypeId() == boots[11] or UnitItemInSlot(user, i).getTypeId() == boots[12]
                 bootsOwned[id]++
-        if bootsOwned[id] >= 2
-            printTimedToPlayer("cannot stack boots, the item has been destroyed, next time read warnings on items dipshit", 2, user.getOwner())
-            GetManipulatedItem().remove()                  
-
-    CreateTrigger()
-    ..registerAnyUnitEvent(EVENT_PLAYER_UNIT_DROP_ITEM)
-    ..addAction() ->
-        let user = GetTriggerUnit()
-        let id = user.getOwner().getId()
-        for i = 0 to 12
-            if GetManipulatedItem().getTypeId() == boots[i]
-                bootsOwned[id]--
+            if bootsOwned[id] > 1
+                GetManipulatedItem().remove()    
 
 
 

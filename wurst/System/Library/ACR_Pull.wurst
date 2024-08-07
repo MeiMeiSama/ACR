@@ -16,21 +16,21 @@ function acrPullEnd()
     let victimPos = vec2(GetUnitX(acrPulledUnit[id]), GetUnitY(acrPulledUnit[id]))
     let dist = acrPullCasterBasePos[id].distanceTo(victimPos) - (acrPullDistance[id] / 35)
     let angle = acrPullCasterBasePos[id].angleTo(victimPos)
-    let polar = acrPullCasterBasePos[id].polarOffset(angle, dist)                
+    let polar = acrPullCasterBasePos[id].polarOffset(angle, dist)                     
     acrPulledUnit[id].setPos(polar)
     acrPullCount[id]++
     if acrPulledUnit[id].hasTagPull() == false    
         acrPulledUnit[id].addTagPull()   
     if acrPulledUnit[id].hasTagPauseEX() == false    
         acrPulledUnit[id].pauseEx()
-        acrPulledUnit[id].addTagPauseEX()
-    if acrPullCount[id] == 35 or casterPos.distanceTo(victimPos) <= 150
-        acrPullTimer[id].release()
+        acrPulledUnit[id].addTagPauseEX()        
+    if acrPullCount[id] >= 35 or casterPos.distanceTo(victimPos) <= 150
         if acrPulledUnit[id].hasTagPauseEX()
             acrPulledUnit[id].unpauseEx()
             acrPulledUnit[id].removeTagPauseEX()
         if acrPulledUnit[id].hasTagPull()     
-            acrPulledUnit[id].removeTagPull()                       
+            acrPulledUnit[id].removeTagPull()   
+        acrPullTimer[id].destr()            
 
 public function acrPull(unit caster, unit victim, real distance)
     if victim.isInvulnerable() == false
@@ -38,7 +38,8 @@ public function acrPull(unit caster, unit victim, real distance)
             IssueImmediateOrder(victim, "stop")   
         let id = victim.getUserData()
         if victim.hasTagPull()
-            acrPullTimer[id].release()
+            acrPullTimer[id].destr()
+            victim.removeTagPull()
         acrPullCaster[id] = caster
         acrPullCasterBasePos[id] = vec2(GetUnitX(caster), GetUnitY(caster))
         acrPullCount[id] = 0
@@ -46,4 +47,4 @@ public function acrPull(unit caster, unit victim, real distance)
         acrPullDistance[id] = distance
         if victim.hasTagPull() == false
             victim.addTagPull() 
-        acrPullTimer[id] = getTimer()..startPeriodic(0.02, function acrPullEnd)..setData(id)
+        acrPullTimer[id] = CreateTimer()..startPeriodic(0.02, function acrPullEnd)..setData(id)

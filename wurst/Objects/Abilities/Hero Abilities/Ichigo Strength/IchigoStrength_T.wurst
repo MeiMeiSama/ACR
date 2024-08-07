@@ -32,7 +32,7 @@ function ichigoModoT()
             StopMusic(false)
             PlaySoundBJ(gg_snd_IchigoBGM)                
             acrTransformation(caster, 40, ICHIGO_STRENGTH, ICHIGO_STRENGTH_MODO, 850, 4.0)
-            getTimer()..startPeriodic(0.01, function rogueModoTEnd).setData(pid)
+            CreateTimer()..startPeriodic(0.01, function rogueModoTEnd).setData(pid)
 
 function rogueModoTEnd()
     let pid = GetExpiredTimer().getData()
@@ -41,7 +41,7 @@ function rogueModoTEnd()
         ichigoStr.setAbilityLevel(ichigoStrE, ichigoStrELvl)
         if gg_snd_IchigoBGM.isPlaying()
             gg_snd_IchigoBGM.stop(false, false) 
-        GetExpiredTimer().release() 
+        GetExpiredTimer().destr() 
 
 
 

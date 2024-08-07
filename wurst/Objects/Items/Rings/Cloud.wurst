@@ -26,12 +26,12 @@ function cloudRingEnd()
     if cloudAbsorbValue[id] == 0                                        
         cloudUser[id].removeAbility('B06K')
         cloudSFX[id].destr()
-        cloudRingEndTimer[id].release()   
+        cloudRingEndTimer[id].destr()   
     if cloudCount[id] == 300                
         cloudUser[id].removeAbility('B06K')
         cloudAbsorbValue[id] = 0
         cloudSFX[id].destr()
-        cloudRingEndTimer[id].release()        
+        cloudRingEndTimer[id].destr()        
 
 function cloudArcoEnd()
     let id = GetExpiredTimer().getData()
@@ -40,12 +40,12 @@ function cloudArcoEnd()
     if cloudAbsorbValue[id] == 0                                        
         cloudUser[id].removeAbility('B06N')
         cloudSFX[id].destr()
-        cloudArcoEndTimer[id].release()    
+        cloudArcoEndTimer[id].destr()    
     if cloudCount[id] == 500                
         cloudUser[id].removeAbility('B06N')
         cloudAbsorbValue[id] = 0
         cloudSFX[id].destr()
-        cloudArcoEndTimer[id].release()        
+        cloudArcoEndTimer[id].destr()        
 
 function cloudActivate ()
     CreateTrigger()
@@ -62,7 +62,7 @@ function cloudActivate ()
             ..origin(caster.getPos())
             ..castTarget(CLOUD_RING_DUMMY_SPELL, 1, OrderIds.bloodlust, caster)
             cloudCount[id] = 0
-            cloudRingEndTimer[id] = getTimer()..startPeriodic(0.01, function cloudRingEnd)..setData(id)
+            cloudRingEndTimer[id] = CreateTimer()..startPeriodic(0.01, function cloudRingEnd)..setData(id)
     
         else if GetSpellAbilityId() == CLOUD_ARCO_ABILITY
             let caster = GetTriggerUnit()
@@ -75,4 +75,4 @@ function cloudActivate ()
             ..origin(caster.getPos())
             ..castTarget(CLOUD_ARCO_DUMMY_SPELL, 1, OrderIds.bloodlust, caster)
             cloudCount[id] = 0
-            cloudArcoEndTimer[id] = getTimer()..startPeriodic(0.01, function cloudArcoEnd)..setData(id)
+            cloudArcoEndTimer[id] = CreateTimer()..startPeriodic(0.01, function cloudArcoEnd)..setData(id)

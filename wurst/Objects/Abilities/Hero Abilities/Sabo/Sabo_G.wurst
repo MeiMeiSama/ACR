@@ -13,7 +13,7 @@ function saboDotEnd()
     let id = GetExpiredTimer().getData()
     if acrDotVictim[id].isAlive() == false or acrDotCount[id] == 30 or acrDotStack[id] >= 2
         acrDotStack[id]--
-        GetExpiredTimer().release()
+        GetExpiredTimer().destr()
     acrDotCount[id]++       
     if acrDotVictim[id].isType(UNIT_TYPE_HERO) == true
         let maxHP = acrDotVictim[id].getMaxHP()
@@ -56,4 +56,4 @@ public function saboDot()
                 acrDotVictim[id] = victim
                 acrDotCount[id] = 0
                 acrDotStack[id]++
-                getTimer()..startPeriodic(0.1, function saboDotEnd).setData(id)
+                CreateTimer()..startPeriodic(0.1, function saboDotEnd).setData(id)

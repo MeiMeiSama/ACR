@@ -5,7 +5,6 @@ import main
 import AbilityQ_data
 import MusicPlaylist
 import ACR_Stun
-import TimerUtils
 
 int enmaTDuration
 bool enmaTActive
@@ -459,7 +458,7 @@ function trig_EnmaAiQWERTFGActions()
         caster.disableAbility('A10U', true, false)
         DisplayTextToPlayer(caster.getOwner(), 0, 0, "Hell Communication duration: 5")
         enmaTDuration = 4
-        getTimer()..startPeriodic(1, function enmaTEnd)
+        CreateTimer()..startPeriodic(1, function enmaTEnd)
         SaveReal(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 248, 15.00 * I2R(GetHeroInt(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594), true)))
         SaveTimerHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 947400700, CreateTimer())
         StartTimerBJ(LoadTimerHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 947400700), false, 5.00)
@@ -548,7 +547,7 @@ function trig_EnmaAiQWERTFGActions()
 
 function enmaTEnd()
     if enmaTActive == false or enmaTDuration == 0
-        GetExpiredTimer().release()
+        GetExpiredTimer().destr()
     else                  
         DisplayTextToPlayer(enma.getOwner(), 0, 0, enmaTDuration.toString())
         enmaTDuration--

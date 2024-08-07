@@ -7,7 +7,6 @@ import wc3Stats
 import ClosureEvents
 import GoldIncome
 import ErrorHandling
-import TimerUtils
 
 string COLOR_GOLD = "|cffffd700"
 string COLOR_RED = "|cffff0000"
@@ -22,7 +21,7 @@ int team3PlayerCount = 0
 
 init
     // After 3 seconds, check how many players in each team, and reduce it by 1 in the event someone leaves for accurate representation
-    getTimer()..start(3, function bountyStart)
+    CreateTimer()..start(3, function bountyStart)
 
 function bountyStart()
     for i = 0 to 2
@@ -34,7 +33,7 @@ function bountyStart()
     for i = 8 to 10
         if Player(i).getSlotState() == PLAYER_SLOT_STATE_PLAYING
             team2PlayerCount++
-    GetExpiredTimer().release()        
+    GetExpiredTimer().destr()        
 
     EventListener.add(EVENT_PLAYER_LEAVE) -> 
         let leaver = GetTriggerPlayer()
