@@ -1,37 +1,28 @@
 package BootsStackDisable
 
 import ObjectDefinitions
+import HashSet
 
-int array boots
 int array bootsOwned
 
+var bootsList = new HashSet<int>
+
 public function bootStack ()
-    boots[0] = 'I01R' //boots lvl 1
-    boots[1] = 'I01W' //boots lvl 2
-    boots[2] = 'I01X' //boots lvl 3
-    boots[3] = 'I02I' // Blink boots
-    boots[4] = HASTE_BOOT //Haste boots
-    boots[5] = MANA_BOOT // Mana boots
-    boots[6] = 'I02K' // Teleportation boots
-    boots[7] = 'I02G' // Vitality boots
-    boots[8] = 'I06Z' // Blink boots of true sight
-    boots[9] = HASTE_BOOT_TRUESIGHT // Haste boots of true sight
-    boots[10] = MANA_BOOT_TRUESIGHT // Mana boots of true sight
-    boots[11] = 'I06Y' // Teleport boots of true sight
-    boots[12] = 'I071' // Vitality boots of true sight    
+
+    bootsList.add('I01R', 'I01W', 'I01X', 'I02I', HASTE_BOOT, MANA_BOOT, 'I02K', 
+    'I02G', 'I06Z', HASTE_BOOT_TRUESIGHT, MANA_BOOT_TRUESIGHT, 'I06Y', 'I071') 
+
     CreateTrigger()
     ..registerAnyUnitEvent(EVENT_PLAYER_UNIT_PICKUP_ITEM)
     ..addAction() ->
-        let user = GetTriggerUnit()
-        let id = user.getOwner().getId()
-        bootsOwned[id] = 0
-        for i = 0 to 6
-            if UnitItemInSlot(user, i).getTypeId() == boots[0] or UnitItemInSlot(user, i).getTypeId() == boots[1] or UnitItemInSlot(user, i).getTypeId() == boots[2] or UnitItemInSlot(user, i).getTypeId() == boots[3] or UnitItemInSlot(user, i).getTypeId() == boots[4] or UnitItemInSlot(user, i).getTypeId() == boots[5] or UnitItemInSlot(user, i).getTypeId() == boots[6] or UnitItemInSlot(user, i).getTypeId() == boots[7] or UnitItemInSlot(user, i).getTypeId() == boots[8] or UnitItemInSlot(user, i).getTypeId() == boots[9] or UnitItemInSlot(user, i).getTypeId() == boots[10] or UnitItemInSlot(user, i).getTypeId() == boots[11] or UnitItemInSlot(user, i).getTypeId() == boots[12]
-                bootsOwned[id]++
-            if bootsOwned[id] > 1
-                GetManipulatedItem().remove()    
-
-
-
-                
-
+        if bootsList.has(GetManipulatedItem().getTypeId())
+            let user = GetTriggerUnit()
+            let id = user.getOwner().getId()
+            bootsOwned[id] = 0
+            for i = 0 to 5
+                let itm = user.itemInSlot(i)
+                if bootsList.has(itm.getTypeId())
+                    bootsOwned[id]++
+                    if bootsOwned[id] >= 2
+                        GetManipulatedItem().remove()
+                        printTimedToPlayer("You can not stack boots, read the item description properly next time.", 2, user.getOwner())
