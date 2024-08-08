@@ -5,7 +5,7 @@ import TimerUtils
 
 // The time, 0.01 would be in normal x1 speed, but making it 0.08 speeds it up by 8 times, to prevent timer running too much. Afraid of performance issues.
 constant PERIODIC_TIME = 0.08 // 0.01 = x1 | 0.02 = x2 . . . | 0.08 = x8
-constant CLICK_COUNT_THRESHOLD = 4 // If CPS is determined by click count instead of time, then calculate every 5 clicks.
+constant CLICK_COUNT_THRESHOLD = 4 // If CPS is determined by click count instead of time, then calculate every 4 clicks.
 
 framehandle clickBlocker
 timer array inputTimer
