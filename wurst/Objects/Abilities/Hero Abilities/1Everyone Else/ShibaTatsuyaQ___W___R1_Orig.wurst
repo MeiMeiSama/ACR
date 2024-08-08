@@ -7,6 +7,7 @@ import ACR_Stun
 
 vec2 tatsuyaQTargetPoint
 vec2 tatsuyaCurrentPosition
+boolean tatsuyaQActive
 
 init
     initTrig_ShibaTatsuyaQ___W___R1_Orig()
@@ -393,8 +394,8 @@ function trig_ShibaTatsuyaQ___W___R1Func006Func049T()
     //group _ydl_group
     //unit _ydl_unit
     SaveInteger(YDLOC, GetHandleId(GetExpiredTimer()), 280, LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 280) + 1)
-    if LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 280) == 29 
-        SetUnitPathing(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), true)
+    if LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 280) == 29 or tatsuyaCurrentPosition.distanceTo(tatsuyaQTargetPoint) <= 50
+        // SetUnitPathing(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), true)
         UnitRemoveAbility(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), 'A0VP')
         // CameraClearNoiseForPlayer(LoadPlayerHandle(YDLOC, GetHandleId(GetExpiredTimer()), 603))
         DestroyEffect(LoadEffectHandle(YDLOC, GetHandleId(GetExpiredTimer()), 355740503))
@@ -425,7 +426,8 @@ function trig_ShibaTatsuyaQ___W___R1Func006Func049T()
         RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 608))
         RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 775))
         DestroyGroup(LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 744928215))
-    if LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 280) <= 28
+        tatsuyaQActive = false
+    if LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 280) <= 28 and tatsuyaCurrentPosition.distanceTo(tatsuyaQTargetPoint) > 50
         tatsuyaCurrentPosition = vec2(GetUnitX(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594)), GetUnitY(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594)))
         SaveLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 683, GetUnitLoc(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594)))
         SaveLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 48, PolarProjectionBJ(LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 683), RANGE_ABILITY_TATSUYA_Q, LoadReal(YDLOC, GetHandleId(GetExpiredTimer()), 758404681)))
@@ -449,10 +451,10 @@ function trig_ShibaTatsuyaQ___W___R1Func006Func049T()
             UnitApplyTimedLife(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 93353435), 'BHwe', 2.00)
         RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 683))
         RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 48))
-    if LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 280) >= 100 or tatsuyaCurrentPosition.distanceTo(tatsuyaQTargetPoint) <= 50
+    if LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 280) >= 30 or tatsuyaQActive == false
         DestroyEffect(LoadEffectHandle(YDLOC, GetHandleId(GetExpiredTimer()), 809))
         FlushChildHashtable(YDLOC, GetHandleId(GetExpiredTimer()))
-        DestroyTimer(GetExpiredTimer())
+        DestroyTimer(GetExpiredTimer())        
 function trig_ShibaTatsuyaQ___W___R1Actions()
     timer _ydl_timer
     integer trigger_ID = LoadInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 865)
@@ -475,6 +477,7 @@ function trig_ShibaTatsuyaQ___W___R1Actions()
         soundPlay("war3mapImported\\TatsuyaSE1.mp3", GetUnitX(udg_Unitsound), GetUnitY(udg_Unitsound))
         SetUnitTimeScalePercent(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594), 250.00)
         SetUnitAnimationByIndex(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594), 15)
+        tatsuyaQActive = true
         // CameraSetEQNoiseForPlayer(LoadPlayerHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 603), 35.00)
         SaveInteger(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 280, 0)
         SaveGroupHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 744928215, CreateGroup())
@@ -538,7 +541,7 @@ function trig_ShibaTatsuyaQ___W___R1Actions()
         SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 819, LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 819))
         SaveLocationHandle(YDLOC, GetHandleId(_ydl_timer), 310, LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 310))
         SaveInteger(YDLOC, GetHandleId(_ydl_timer), 280, LoadInteger(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 280))
-        SetUnitPathing(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594), false)
+        // SetUnitPathing(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594), false)
         TimerStart(_ydl_timer, 0.01, true, function trig_ShibaTatsuyaQ___W___R1Func006Func049T)
     else if GetSpellAbilityId() == 'A0W6'
         if GetRandomInt(1, 2) == 1

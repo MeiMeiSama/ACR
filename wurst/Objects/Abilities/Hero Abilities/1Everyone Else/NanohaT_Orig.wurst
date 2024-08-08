@@ -87,6 +87,7 @@ function trig_NanohaTFunc003Func035Func003Func001003003() returns boolean
 function trig_NanohaTFunc003Func035Func003Func002A()
     SaveUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 550, GetEnumUnit())
     SaveUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 1164, CreateUnit(LoadPlayerHandle(YDLOC, GetHandleId(GetExpiredTimer()), 603), 'e028', GetUnitX(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 550)), GetUnitY(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 550)), GetRandomDirectionDeg()))
+    KillUnit(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 1164))
 function trig_NanohaTFunc003Func035Func008Func013T()
     SaveReal(YDLOC, GetHandleId(GetExpiredTimer()), 204, LoadReal(YDLOC, GetHandleId(GetExpiredTimer()), 204) + 0.10)
     SetUnitScale(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 771), LoadReal(YDLOC, GetHandleId(GetExpiredTimer()), 204), LoadReal(YDLOC, GetHandleId(GetExpiredTimer()), 204), LoadReal(YDLOC, GetHandleId(GetExpiredTimer()), 204))

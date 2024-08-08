@@ -6,6 +6,7 @@ import TimerUtils
 vec2 hibariTLoc
 unit hibari
 real hibariTCount = 0
+timer array hibariTTimer
 
 init
     initTrig_HibariT()
@@ -168,7 +169,7 @@ function hibariTEnd()
     let i = GetExpiredTimer().getData()
     if udg_PlayHero[i].isInvulnerable() == false
         udg_PlayHero[i].removeAbility('A19A')
-        GetExpiredTimer().destr()
+        hibariTTimer[i].destr()
 
 
 function hibariTBeforeEnd()
@@ -178,7 +179,7 @@ function hibariTBeforeEnd()
                 if udg_PlayHero[i].isInvulnerable() == false
                     udg_PlayHero[i].removeAbility('A19A')
                 else
-                    CreateTimer()..startPeriodic(0.03, function hibariTEnd).setData(i)     
+                    hibariTTimer[i] = CreateTimer()..startPeriodic(0.03, function hibariTEnd)..setData(i)     
 
 
 function hibariTPeriodicFunc()
@@ -189,7 +190,7 @@ function hibariTPeriodicFunc()
     //     ..setAbilityAvailable('A0AU', true)
     //     hibari.startAbilityCooldown('A0AU')
     //     hibari.removeAbility('A19A')
-    if hibariTCount >= 165    
+    if hibariTCount >= 165   
         GetOwningPlayer(hibari)
         ..setAbilityAvailable('A0H3', false)
         ..setAbilityAvailable('A0AU', true)
@@ -200,6 +201,7 @@ function hibariTPeriodicFunc()
 
 
 function trig_HibariTActions()
+    hibariTCount = 0
     stopBgm()
     StopMusic(false)
     timer _ydl_timer

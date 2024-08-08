@@ -13,4 +13,4 @@ function debugCommands()
         let p = GetTriggerPlayer()
         if input == "-debug"
             acrAbilityReset(p)
-            printTimedToPlayer("abilities have been reset", 3, p)
+            printTimedToPlayer("|cffffd700Abilities has been |cff61c5ffreset.|r", 3, p)

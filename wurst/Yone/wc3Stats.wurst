@@ -5,6 +5,8 @@ import ClosureEvents
 import main
 import GoldIncome
 import TimerUtils
+import ACR_TagSystem
+import GameTimer
 
 IMMDEvent killEvent
 IMMDEvent deathEvent
@@ -18,7 +20,7 @@ public integer array unitLongestStreak
 public int playingPlayers = 0
 public int minPlayers = 6 // Required number of players to make a game rated
 public bool rankMode = false // Can be set ingame from Dialog
-public bool requiredPlayers = false
+public bool requiredPlayers = false // Sets to true if minPlayers integer is met
 
 // Stat tracker for ACR to https://wc3stats.com
 
@@ -26,15 +28,24 @@ init
     mmdSetup()
 
 function mmdSetup()
+    gracePeriodLeave()
     for i = 0 to 12
         // Set all players stat kill count & streak to 0
         player_KillCount[i] = 0
         unitLongestStreak[i] = 0
-        if Player(i).getSlotState() == PLAYER_SLOT_STATE_PLAYING
+        if Player(i).getSlotState() == PLAYER_SLOT_STATE_PLAYING and Player(i).getController() == MAP_CONTROL_USER
             playingPlayers++
     if playingPlayers >= minPlayers
         requiredPlayers = true
     CreateTimer()..start(1, function statsDefinitions)
+
+function gracePeriodLeave() // This will prevent a player from losing rating in the event they have a leaver before 20 minute mark
+    EventListener.add(EVENT_PLAYER_LEAVE) -> 
+        let leaver = GetTriggerPlayer()
+        if currentTime < 720 // 720 seconds equals 12 minutes
+            for i = 0 to 12
+                if Player(i).isAllyOf(leaver) and not Player(i).hasTagLeaverInTeam()
+                    Player(i).addTagLeaverInTeam()
 
 function statsDefinitions()
     // Define the stat events to use
@@ -101,8 +112,10 @@ public function victory_checker()
             for i = 0 to 12
                 if Player(i).getController() == MAP_CONTROL_USER and Player(i).isAllyOf(winner)
                     MMD.flagPlayer(Player(i), PlayerFlag.Winner)
-                else if Player(i).getController() == MAP_CONTROL_USER and Player(i).isEnemyOf(winner)
+                else if Player(i).getController() == MAP_CONTROL_USER and Player(i).isEnemyOf(winner) and not Player(i).hasTagLeaverInTeam()
                     MMD.flagPlayer(Player(i), PlayerFlag.Loser)
+                else if Player(i).getController() == MAP_CONTROL_USER and Player(i).isEnemyOf(winner) and Player(i).hasTagLeaverInTeam()
+                    MMD.flagPlayer(Player(i), PlayerFlag.Drawer)
         else
             for i = 0 to 12
                 MMD.flagPlayer(Player(i), PlayerFlag.Practicing)

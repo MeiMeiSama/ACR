@@ -11,6 +11,7 @@ constant silenceMap = new HashMap<unit, boolean>()
 constant abilityFMap = new HashMap<unit, boolean>()
 constant reviveMap = new HashMap<unit, boolean>()
 constant pickedMap = new HashMap<player, boolean>()
+constant hasLeaverMap = new HashMap<player, boolean>()
 
 constant hiddenAbilitiesMap = new HashMap<int, boolean>()
 constant disabledAbilitiesMap = new HashMap<int, boolean>()
@@ -122,6 +123,17 @@ public function unit.removeTagRevive()
 
 public function unit.hasTagRevive() returns boolean
     return reviveMap.get(this)
+
+
+
+public function player.addTagLeaverInTeam()
+    hasLeaverMap.put(this, true)
+
+public function player.removeTagLeaverInTeam()
+    hasLeaverMap.put(this, false)
+
+public function player.hasTagLeaverInTeam() returns boolean
+    return hasLeaverMap.get(this)
 
 
 
