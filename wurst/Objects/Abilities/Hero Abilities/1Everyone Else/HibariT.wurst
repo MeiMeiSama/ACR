@@ -191,7 +191,6 @@ function hibariTPeriodicFunc()
     //     hibari.startAbilityCooldown('A0AU')
     //     hibari.removeAbility('A19A')
     if hibariTCount >= 165   
-        print("hibari T ended") 
         GetOwningPlayer(hibari)
         ..setAbilityAvailable('A0H3', false)
         ..setAbilityAvailable('A0AU', true)
