@@ -42,6 +42,9 @@ function mmdSetup()
 function gracePeriodLeave() // This will prevent a player from losing rating in the event they have a leaver before 20 minute mark
     EventListener.add(EVENT_PLAYER_LEAVE) -> 
         let leaver = GetTriggerPlayer()
+        if requiredPlayers and rankMode and not leaver.hasTagMMDFlag()
+            MMD.flagPlayer(leaver, PlayerFlag.Loser)
+            leaver.addTagMMDFlag()
         if currentTime < 720 // 720 seconds equals 12 minutes
             for i = 0 to 12
                 if Player(i).isAllyOf(leaver) and not Player(i).hasTagLeaverInTeam()
@@ -110,15 +113,19 @@ public function victory_checker()
 
         if requiredPlayers and rankMode
             for i = 0 to 12
-                if Player(i).getController() == MAP_CONTROL_USER and Player(i).isAllyOf(winner)
+                if Player(i).getController() == MAP_CONTROL_USER and Player(i).isAllyOf(winner) and not Player(i).hasTagMMDFlag()
                     MMD.flagPlayer(Player(i), PlayerFlag.Winner)
-                else if Player(i).getController() == MAP_CONTROL_USER and Player(i).isEnemyOf(winner) and not Player(i).hasTagLeaverInTeam()
+                    Player(i).addTagMMDFlag()
+                else if Player(i).getController() == MAP_CONTROL_USER and Player(i).isEnemyOf(winner) and not Player(i).hasTagLeaverInTeam() and not Player(i).hasTagMMDFlag()
                     MMD.flagPlayer(Player(i), PlayerFlag.Loser)
-                else if Player(i).getController() == MAP_CONTROL_USER and Player(i).isEnemyOf(winner) and Player(i).hasTagLeaverInTeam()
+                    Player(i).addTagMMDFlag()
+                else if Player(i).getController() == MAP_CONTROL_USER and Player(i).isEnemyOf(winner) and Player(i).hasTagLeaverInTeam() and not Player(i).hasTagMMDFlag()
                     MMD.flagPlayer(Player(i), PlayerFlag.Drawer)
+                    Player(i).addTagMMDFlag()
         else
             for i = 0 to 12
-                MMD.flagPlayer(Player(i), PlayerFlag.Practicing)
+                if not Player(i).hasTagMMDFlag()
+                    MMD.flagPlayer(Player(i), PlayerFlag.Practicing)
 
         ClearTextMessages()
         print("|cffffd700Victory to following players:|r")

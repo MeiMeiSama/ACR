@@ -1,7 +1,7 @@
 # ━━━━━━━━━ Anime Carnage Reforged v2.0.7 ━━━━━━━━━ #
 
 ### Added
-1. Nothing Added.
+1. Added a system to prevent rating loss in the affected team with the leaver. Disabled after the 12-min mark. Leaver will lose rating.
 
 ### Improved
 1. Kotori's R/T "knockback" has been reduced by 50%.
