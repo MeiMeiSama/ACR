@@ -7,7 +7,7 @@
 1. Kotori's R/T "knockback" has been reduced by 50%.
 
 ### Changed
-1. Nothing Changed.
+1. Nothing Changed. 
 
 ### Fixed
 1. Tatsuya's Q no longer makes him stuck sometimes.
