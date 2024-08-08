@@ -1,4 +1,25 @@
-# ━━━━━━━━━ Anime Carnage Reforged v2.0.5 ━━━━━━━━━ #
+# ━━━━━━━━━ Anime Carnage Reforged v2.0.7 ━━━━━━━━━ #
+
+### Added
+1. Nothing Added.
+
+### Improved
+1. Kotori's R/T "knockback" has been reduced by 50%.
+
+### Changed
+1. Nothing Changed.
+
+### Fixed
+1. Tatsuya's Q no longer makes him stuck sometimes.
+2. Saber's Q no longer makes her stuck sometimes.
+3. Rentaro's Q no longer makes him able to walk over terrain.
+4. Nanoha's T no longer provides perma vision.
+5. Hibari's T is now fixed ... but like, actually.
+
+### Deleted
+Nothing Deleted.
+
+# ━━━━━━━━━ Anime Carnage Reforged v2.0.6 ━━━━━━━━━ #
 
 ### Added
 1. Nothing Added.
