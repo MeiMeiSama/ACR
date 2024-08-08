@@ -25,4 +25,4 @@ public function bootStack ()
                     bootsOwned[id]++
                     if bootsOwned[id] >= 2
                         GetManipulatedItem().remove()
-                        printTimedToPlayer("You can not stack boots, read the item description properly next time.", 2, user.getOwner())
+                        printTimedToPlayer("|cffffd700You can not stack boots, read the |cffff0000item description |cffffd700properly next time.|r", 5, user.getOwner())
