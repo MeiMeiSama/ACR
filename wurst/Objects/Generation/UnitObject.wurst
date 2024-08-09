@@ -29,7 +29,7 @@ import ObjectIds
     ..setTooltipExtended("Provides various Arcobaleno Pacifiers that will strengthen your hero.")
     ..setIconGameInterface("ReplaceableTextures\\CommandButtons\\BTNMerchant.blp")
     ..setNormalAbilities("Avul,Apit,Aneu")
-    ..setItemsSold(commaList(CLOUD_ARCOBALENO_RECIPE_TOME, MIST_ARCOBALENO_RECIPE_TOME, RAIN_ARCOBALENO_RECIPE_TOME, STORM_ARCOBALENO_RECIPE_TOME, SUN_ARCOBALENO_RECIPE_TOME, THUNDER_ARCOBALENO_RECIPE_TOME))
+    ..setItemsSold(commaList(CLOUD_ARCOBALENO_RECIPE_TOME, MIST_ARCOBALENO_RECIPE_TOME, RAIN_ARCOBALENO_RECIPE_TOME, STORM_ARCOBALENO_RECIPE_TOME, SUN_ARCOBALENO_RECIPE_TOME, THUNDER_ARCOBALENO_RECIPE_TOME)) // add ANTI_REGEN_ITEM_RECIPE here
     ..setUnitSoundSet("")
     ..setAcquisitionRange(1200)
     ..setModelFile("war3mapImported\\AFBChino2.mdl")

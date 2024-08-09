@@ -1084,6 +1084,24 @@ init
                         //printTimedToPlayer (R2S(_dmg) , 1, caster.getOwner())
                         //printTimedToPlayer("RAIN ARCO", 1, caster.getOwner())
 
+
+
+                    // ━━━━━━━━━━━━━━━ [BOSS] ━━━━━━━━━━━━━━━━━━ //
+
+
+
+                    else if id == DAMAGE_ABILITY_BOSS_1
+                        _dmg = (100.00 + (1.5 * stat))                                                  // aoe 1
+                        DamageEvent.setAmount(_dmg)    
+                    else if id == DAMAGE_ABILITY_BOSS_2
+                        _dmg = (300.00 + (1.5 * stat))                                                  // aoe 2
+                        DamageEvent.setAmount(_dmg)                                                                 
+                    else if id == DAMAGE_ABILITY_BOSS_3
+                        _dmg = (400.00 + (3.5 * stat))                                                  // single target 
+                        DamageEvent.setAmount(_dmg)                                               
+
+
+
                     // ━━━━━━━━━━━━━━━ [SPECIAL CASES: SUPER EXCEPTIONS] ━━━━━━━━━━━━━━━━━━ //
 
                     if caster.hasAbility('B068')                                                        // Sistine's F buff

@@ -9,6 +9,19 @@ import Objects
 
 @compiletime function itemRecipes()
 
+    new ItemDefinition(ANTI_REGEN_ITEM_RECIPE, 'rnsp') // Vongola Ring Upgrade
+    ..setAbilities("")
+    ..setName("|cffffd700Recipe: |cffff8080Anti-Regen Item Recipe")
+    ..setDescription("|n|r|cffffd700Temp Desc|r")
+    ..setTooltipBasic("|cffffd700Recipe: |cffff8080Anti-Regen Item Recipe")
+    ..setTooltipExtended("|n|r|cffffd700Temp Desc|r")
+    ..setGoldCost(1500)..setLumberCost(0)
+    ..setDroppedWhenCarrierDies(false)..setStockReplenishInterval(0)
+    ..setButtonPositionX(1)..setButtonPositionY(0)
+    ..setModelUsed(Objects.treasurechest1)
+    ..setInterfaceIcon("ReplaceableTextures\\CommandButtons\\BTNAnimalRing.blp")
+
+
     new ItemDefinition(VONGOLA_RING_UPGRADE_TOME, ItemIds.manualofHealth) // Vongola Ring Tome Recipe
     ..setAbilities("")
     ..setHitPoints(0)
@@ -26,9 +39,9 @@ import Objects
     new ItemDefinition(VONGOLA_RING_UPGRADE, 'rnsp') // Vongola Ring Upgrade
     ..setAbilities("A000,A100,A200,A300,A400,A500")
     ..setName("|cffff8080Ring Upgrade")
-    ..setDescription("|n|cff03cf64Agility +10|n|cffffd700Increases the user's armor by 5|n|cffffd700Increases the user's health by 200")
-    ..setTooltipBasic("|cffff8080Cloud Ring Level 1")
-    ..setTooltipExtended("|n|cff03cf64Agility +10|n|cffffd700Increases the user's armor by 5|n|cffffd700Increases the user's health by 200")
+    ..setDescription("|n|r|cffffd700Upgrades any Vongola Ring from |cff1e90ff[Level 1]|r |r|cffffd700to |cff1e90ff[Level X]|r")
+    ..setTooltipBasic("|cffffd700Recipe: |cffff8080Ring Upgrade")
+    ..setTooltipExtended("|n|r|cffffd700Upgrades any Vongola Ring from |cff1e90ff[Level 1]|r |r|cffffd700to |cff1e90ff[Level X]|r")
     ..setGoldCost(1500)..setLumberCost(0)
     ..setDroppedWhenCarrierDies(false)..setStockReplenishInterval(0)
     ..setButtonPositionX(1)..setButtonPositionY(0)
@@ -664,6 +677,19 @@ import Objects
     ..setDescription("|n|cff008080Active:|n|n|r|cffffd700Dash towards the targeted location, dealing damage to enemies struck and electrifying them, making them stop their actions every 0.09 seconds for 2 seconds.|n|n|r|cffffd700Damage output:|r|cffc0c0c0 |cffff0000100% of user's attack + 7x Strength  |r|n|n|cffffd700Cooldown: |cffff808045|r|n|n|cffff0000Strength + 165|n|r|cffffd700Increases the user's attack by 165|n|r|cffffd700Increases the user's health by 66")
     ..setTooltipBasic("|cffff8080Thunder Pacifier")
     ..setTooltipExtended("|n|cff008080Active:|n|n|r|cffffd700Dash towards the targeted location, dealing damage to enemies struck and slowing them by 85% for 4 seconds.|n|n|r|cffffd700Damage output:|r|cffc0c0c0 |cffff0000100% of user's attack + 7x Strength  |r|n|n|cffffd700Cooldown: |cffff808045|r|n|n|cffff0000Strength + 165|n|r|cffffd700Increases the user's attack by 165|n|r|cffffd700Increases the user's health by 66")
+    ..setGoldCost(17000)..setLumberCost(0)
+    ..setDroppedWhenCarrierDies(false)..setStockReplenishInterval(0)
+    ..setModelUsed(Objects.treasurechest1)
+    ..setInterfaceIcon("ReplaceableTextures\\CommandButtons\\BTNArcobalenoThunder.blp")
+
+@compiletime function newItems()  
+
+    new ItemDefinition(ANTI_REGEN_ITEM, ItemIds.hornoftheClouds)
+    ..setAbilities(commaList(ANTI_REGEN_ABILITY, 'A15M', 'A15G', 'A165'))
+    ..setCooldownGroup(commaList(ANTI_REGEN_ABILITY))
+    ..setName("|cffff8080Thunder Pacifier")
+    ..setDescription("temp descr")
+    ..setTooltipExtended("temp desc")
     ..setGoldCost(17000)..setLumberCost(0)
     ..setDroppedWhenCarrierDies(false)..setStockReplenishInterval(0)
     ..setModelUsed(Objects.treasurechest1)

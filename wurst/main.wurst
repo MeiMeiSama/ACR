@@ -2,6 +2,7 @@ package main
 import ObjectDefinitions
 import ReviveHeroes
 import DamageEvent
+import AbilityGlobals
 public hashtable ACR_TABLE
 public sound characterBGM
 public sound gg_snd_edoMadaraBGM
@@ -7480,6 +7481,7 @@ function trig_VsBossBeginFunc016Func040Func011Func002Func002Func002T()
     DestroyGroup(LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 1110))
     SetUnitInvulnerable(gg_unit_O005_0043, false)
     PauseUnit(gg_unit_O005_0043, false)
+    gg_unit_O005_0043.setUserData(998)
     EnableTrigger(gg_trg_VsBossdeath)
     EnableTrigger(gg_trg_Kaguya1)
     ExecuteFunc("initTrig_Boss_Skill_Orig")
@@ -8885,6 +8887,7 @@ function trig_Kaguya1Func010Func003003003() returns boolean
     return IsUnitType(GetFilterUnit(), UNIT_TYPE_STRUCTURE) == false and IsUnitEnemy(GetFilterUnit(), LoadPlayerHandle(YDLOC, GetHandleId(GetExpiredTimer()), 603)) == true and I2R(GetUnitAbilityLevelSwapped('Avul', GetFilterUnit())) != 1.00 and IsUnitDeadBJ(GetFilterUnit()) == false
 
 function trig_Kaguya1Func010Func004A()
+    DamageEvent.setNextDamageId(DAMAGE_ABILITY_BOSS_2)
     DamageEvent.setNextDamageFromCode()
     UnitDamageTargetBJ(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), GetEnumUnit(), I2R(GetHeroStr(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), true)) * 4.50, ATTACK_TYPE_MAGIC, DAMAGE_TYPE_MAGIC)
     
@@ -8950,6 +8953,7 @@ function trig_Kaguya2Func008Func014003003() returns boolean
     return IsUnitType(GetFilterUnit(), UNIT_TYPE_STRUCTURE) == false and IsUnitEnemy(GetFilterUnit(), LoadPlayerHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * LoadInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 1045), 603)) == true and I2R(GetUnitAbilityLevelSwapped('Avul', GetFilterUnit())) != 1.00 and IsUnitAliveBJ(GetFilterUnit()) == true and IsUnitInGroup(GetFilterUnit(), LoadGroupHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * LoadInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 1045), 744928215)) == false
 
 function trig_Kaguya2Func008Func015A()
+    DamageEvent.setNextDamageId(DAMAGE_ABILITY_BOSS_1)
     DamageEvent.setNextDamageFromCode()
     UnitDamageTargetBJ(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * LoadInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 1045), 594), GetEnumUnit(), 750, ATTACK_TYPE_MAGIC, DAMAGE_TYPE_MAGIC)
     GroupAddUnit(LoadGroupHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * LoadInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 1045), 744928215), GetEnumUnit())
@@ -9363,6 +9367,7 @@ function trig_Kaguya4Func011T()
         // CameraClearNoiseForPlayer(LoadPlayerHandle(YDLOC, GetHandleId(GetExpiredTimer()), 603))
         // CameraClearNoiseForPlayer(LoadPlayerHandle(YDLOC, GetHandleId(GetExpiredTimer()), 636889825))
         SetUnitInvulnerable(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 549), false)
+        DamageEvent.setNextDamageId(DAMAGE_ABILITY_BOSS_3)
         DamageEvent.setNextDamageFromCode()
         UnitDamageTargetBJ(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 549), 800, ATTACK_TYPE_MAGIC, DAMAGE_TYPE_MAGIC)
         PauseUnit(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 549), false)
