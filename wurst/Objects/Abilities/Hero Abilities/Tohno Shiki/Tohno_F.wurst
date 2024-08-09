@@ -1,32 +1,35 @@
 package Tohno_F
 
 import ClosureEvents
-import ClosureTimers
 import ACR_TagSystem
 int tohnoFCount = 0
+int abilityF = 'A0Y9'
+int buffF = 'B05I'
+unit tohno
+
+function tohnoFEnd()
+    if tohno.isPaused() == false
+        tohnoFCount++
+
+    if tohno.hasAbility(buffF) == false
+        tohno.disableAbility(abilityF, false, false)
+        abilityF.removeTagDisabled()
+        tohno.startAbilityCooldown(abilityF)
+        GetExpiredTimer().destr() 
+
+    if tohnoFCount == 100
+        tohno.removeAbility(buffF)
+        tohno.disableAbility(abilityF, false, false)
+        abilityF.removeTagDisabled()
+        tohno.startAbilityCooldown(abilityF)
+        GetExpiredTimer().destr()
+
 
 public function tohnoF()
-    let abilityF = 'A0Y9'
-    let buffF = 'B05I'
-
     EventListener.onCast(abilityF) (unit caster) ->
+        tohno = caster
         tohnoFCount = 0
         caster.disableAbility(abilityF, true, false)
         abilityF.addTagDisabled()
         caster.issueImmediateOrder("stop")
-        doPeriodically(0.03) (CallbackPeriodic cb) ->
-            if caster.isPaused() == false
-                tohnoFCount++
- 
-            if caster.hasAbility(buffF) == false
-                caster.disableAbility(abilityF, false, false)
-                abilityF.removeTagDisabled()
-                caster.startAbilityCooldown(abilityF)
-                destroy cb
-
-            if tohnoFCount == 100
-                caster.removeAbility(buffF)
-                caster.disableAbility(abilityF, false, false)
-                abilityF.removeTagDisabled()
-                caster.startAbilityCooldown(abilityF)
-                destroy cb
+        CreateTimer()..startPeriodic(0.03, function tohnoFEnd)

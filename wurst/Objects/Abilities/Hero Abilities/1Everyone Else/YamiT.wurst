@@ -2,7 +2,7 @@ package YamiT
 import DamageEvent
 import AbilityGlobals
 import main
-import ClosureTimers
+import TimerUtils
 
 int array yamiFCount
 
@@ -18,11 +18,15 @@ function trig_YamiTFunc005Func016Func027T()
     DestroyTimer(GetExpiredTimer())
 function trig_YamiTFunc005Func016Func032Func005003003() returns boolean
     return IsUnitType(GetFilterUnit(), UNIT_TYPE_STRUCTURE) == false and IsUnitEnemy(GetFilterUnit(), LoadPlayerHandle(YDLOC, GetHandleId(GetExpiredTimer()), 603)) == true and IsUnitAliveBJ(GetFilterUnit()) == true and IsUnitInGroup(GetFilterUnit(), LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 744928215)) == false and GetUnitAbilityLevel(GetFilterUnit(), 'Avul') != 1
+
+function yamiFFlush()
+    let id = GetExpiredTimer().getData()
+    yamiFCount[id] = 0
+
 function trig_YamiTFunc005Func016Func032Func006A()
     let id = GetEnumUnit().getUserData()
     if yamiFCount[id] == 0
-        doAfter(5) ->
-            yamiFCount[id] = 0
+        CreateTimer()..start(5, function yamiFFlush).setData(id)  
     if yamiFCount[id] < 3         
         DamageEvent.setNextDamageId(DAMAGE_ABILITY_YAMI_F)
         DamageEvent.setNextDamageFromCode()

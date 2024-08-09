@@ -15,7 +15,7 @@ init
         caster
         ..addAbility(ABILITY_SPELLBLOCK)
         ..addAbility(IZANAMI_MODEL_EFFECT)
-        izanamiTimer = getTimer()..startPeriodic(0.1, function izanamiTimerFunction)..setData(caster.getOwner().getId())
+        izanamiTimer = CreateTimer()..startPeriodic(0.1, function izanamiTimerFunction)..setData(caster.getOwner().getId())
 
 function izanamiTimerFunction ()
     let pid = izanamiTimer.getData()
@@ -29,4 +29,4 @@ function izanamiTimerFunction ()
             caster.removeAbility(IZANAMI_MODEL_EFFECT)
             caster.removeAbility(IZANAMI_BUFF)
         izanamiCount = 0
-        izanamiTimer.release()
+        izanamiTimer.destr()

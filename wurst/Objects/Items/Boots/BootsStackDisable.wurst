@@ -1,0 +1,28 @@
+package BootsStackDisable
+
+import ObjectDefinitions
+import HashSet
+
+int array bootsOwned
+
+var bootsList = new HashSet<int>
+
+public function bootStack ()
+
+    bootsList.add('I01R', 'I01W', 'I01X', 'I02I', HASTE_BOOT, MANA_BOOT, 'I02K', 
+    'I02G', 'I06Z', HASTE_BOOT_TRUESIGHT, MANA_BOOT_TRUESIGHT, 'I06Y', 'I071') 
+
+    CreateTrigger()
+    ..registerAnyUnitEvent(EVENT_PLAYER_UNIT_PICKUP_ITEM)
+    ..addAction() ->
+        if bootsList.has(GetManipulatedItem().getTypeId())
+            let user = GetTriggerUnit()
+            let id = user.getOwner().getId()
+            bootsOwned[id] = 0
+            for i = 0 to 5
+                let itm = user.itemInSlot(i)
+                if bootsList.has(itm.getTypeId())
+                    bootsOwned[id]++
+                    if bootsOwned[id] >= 2
+                        GetManipulatedItem().remove()
+                        printTimedToPlayer("|cffffd700You can not stack boots, read the |cffff0000item description |cffffd700properly next time.|r", 5, user.getOwner())

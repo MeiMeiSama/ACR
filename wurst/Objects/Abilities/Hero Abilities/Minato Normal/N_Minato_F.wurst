@@ -1,12 +1,19 @@
 package N_Minato_F
 
-import ClosureTimers
 import MusicPlaylist
 import AbilityGlobals
+import TimerUtils
 // import ACR_TagSystem
 import ACR_Transformation
 // import Translate_F
 // import UpdateAbilityData
+
+unit dummy1
+unit dummy2
+unit dummy3
+unit minato
+int minatoE = 'A03N'
+int minatoELvl
 
 init
     normalMinatoModoF()
@@ -18,12 +25,9 @@ function normalMinatoModoF ()
     ..addAction() ->
         if ((GetSpellAbilityId() == 'A19K')) 
             let caster = GetTriggerUnit()
+            minato = caster
             let pid = caster.getOwner().getId()
-            let minatoE = 'A03N'
-            let minatoELvl = caster.getAbilityLevel(minatoE)
-            unit dummy1
-            unit dummy2
-            unit dummy3
+            minatoELvl = caster.getAbilityLevel(minatoE)
             let p = caster.getOwner()
             dummy1 = CreateUnit(p, 'e0LN', caster.getX(), caster.getY(), GetRandomDirectionDeg())
             UnitApplyTimedLife(dummy1, 'BHwe', 1.20)
@@ -31,10 +35,7 @@ function normalMinatoModoF ()
             UnitApplyTimedLife(dummy2, 'BHwe', 1.20)
             dummy3 = CreateUnit(p, 'e066', caster.getX(), caster.getY(), GetRandomDirectionDeg())
             UnitApplyTimedLife(dummy3, 'BHwe', 1.20)
-            doAfter(2) -> 
-                dummy1.remove()
-                dummy2.remove()
-                dummy3.remove()            
+            CreateTimer()..start(2, function minatoModoTDummyRemove)       
             caster.removeAbility(SPELL_G[pid])
             caster.removeAbility(minatoE)
             caster.removeAbility('B00P')      
@@ -43,17 +44,23 @@ function normalMinatoModoF ()
             StopMusic(false)
             PlaySoundBJ(gg_snd_MinatoKyubiChakra)                
             acrTransformation(caster, 40, 'H00M', 'H01P', 850, 4.0)
-            doPeriodically(0.01) (CallbackPeriodic cb) ->
-                if transformationActive[pid] == false
-                    AddUnitAnimationProperties(caster, "alternate", false) 
-                    caster.addAbility(minatoE)
-                    caster.setAbilityLevel(minatoE, minatoELvl)
-                    caster.addAbility(SPELL_G[pid])    
-                    if gg_snd_MinatoKyubiChakra.isPlaying()
-                        gg_snd_MinatoKyubiChakra.stop(false, false) 
-                    destroy cb
+            CreateTimer()..startPeriodic(0.01, function minatoModoTEnd).setData(pid)
 
+function minatoModoTDummyRemove()
+    dummy1.remove()
+    dummy2.remove()
+    dummy3.remove()    
 
+function minatoModoTEnd()
+    let pid = GetExpiredTimer().getData()
+    if transformationActive[pid] == false
+        AddUnitAnimationProperties(minato, "alternate", false) 
+        minato.addAbility(minatoE)
+        minato.setAbilityLevel(minatoE, minatoELvl)
+        minato.addAbility(SPELL_G[pid])    
+        if gg_snd_MinatoKyubiChakra.isPlaying()
+            gg_snd_MinatoKyubiChakra.stop(false, false) 
+        GetExpiredTimer().destr()
 
 
 

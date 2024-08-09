@@ -220,7 +220,7 @@ public function int.isModeRProjectile () returns boolean
 
 
 public function int.isQDash () returns boolean
-    if (this == 'A11T') or (this == 'A0ZL') or (this == 'A0Y2') or (this == 'A0XY') or (this == 'A0W5') or (this == 'A0VR')or (this == 'A0U0') or (this == 'A0TN') or (this == 'A0TG') or (this == 'A0SV') or (this == 'A0RF') or (this == 'A0ON') or (this == 'A0K1') or (this == 'A0J2') or (this == 'A0IQ') or (this == 'A0HR') or (this == 'A0F6') or (this == 'A0DY') or (this == 'A0CQ') or (this == 'A0BA') or (this == 'A04B') or (this == 'A01X') or (this == 'A01O') or (this == 'A007') or (this == 'A0VH') 
+    if (this == 'A11T') or (this == 'A0ZL') or (this == 'A0Y2') or (this == 'A0XY') or (this == 'A0W5') or (this == 'A0VR') or (this == 'A0TN') or (this == 'A0TG') or (this == 'A0SV') or (this == 'A0RF') or (this == 'A0ON') or (this == 'A0K1') or (this == 'A0J2') or (this == 'A0IQ') or (this == 'A0HR') or (this == 'A0F6') or (this == 'A0DY') or (this == 'A0CQ') or (this == 'A0BA') or (this == 'A04B') or (this == 'A01X') or (this == 'A01O') or (this == 'A007') or (this == 'A0VH') 
         return true
     return false
 
@@ -357,7 +357,7 @@ public function int.isModeEAoe () returns boolean
 
 
 public function int.isQTeleport () returns boolean
-    if (this == 'A119') or (this == 'A0Z7') or (this == 'A0OY') or (this == 'A0NO') or (this == 'A0NN') or (this == 'A0I6') or (this == 'A08V') or (this == 'A04R') or (this == 'A02H') or (this == 'A122') or (this == 'A0RP') or (this == 'A0EI') or (this == 'A09S') or (this == 'A0MB') or (this == 'A0P5') or (this == 'A0N4') or (this == 'A0Q6') or (this == 'A09U')
+    if (this == 'A119') or (this == 'A0Z7') or (this == 'A0OY') or (this == 'A0NO') or (this == 'A0NN') or (this == 'A0I6') or (this == 'A08V') or (this == 'A04R') or (this == 'A02H') or (this == 'A122') or (this == 'A0RP') or (this == 'A0EI') or (this == 'A09S') or (this == 'A0MB') or (this == 'A0P5') or (this == 'A0N4') or (this == 'A0Q6') or (this == 'A09U') or (this == 'A0U0')
         return true
     return false
 

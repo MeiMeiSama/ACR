@@ -2,9 +2,13 @@ package EmiyaShirouT_Orig
 import DamageEvent
 import AbilityGlobals
 import main
-import ClosureTimers
+import TimerUtils
 
+int array shiroTCount2
 int array shiroTCount
+int shiroTCount1
+boolean shiroInsideT
+unit shiro
 unit shiroTTarget
 vec2 shiroTTargetPoint
 vec2 shiroCurrentPosition
@@ -18,16 +22,20 @@ function trig_EmiyaShirouTFunc015Func001Func014Func001Func004A()
     RemoveUnit(GetEnumUnit())
 function trig_EmiyaShirouTFunc015Func001Func014Func001Func020Func001Func003003003() returns boolean
     return IsUnitType(GetFilterUnit(), UNIT_TYPE_STRUCTURE) == false and IsUnitDeadBJ(GetFilterUnit()) == false and IsUnitInGroup(GetFilterUnit(), LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 744928215)) == false and GetUnitAbilityLevel(GetFilterUnit(), 'Avul') != 1 and IsUnitEnemy(GetFilterUnit(), LoadPlayerHandle(YDLOC, GetHandleId(GetExpiredTimer()), 603)) == true
+
+function shiroTFlush()
+    let id = GetExpiredTimer().getData()
+    shiroTCount2[id] = 0
+
 function trig_EmiyaShirouTFunc015Func001Func014Func001Func020Func001Func004A()
     let id = GetEnumUnit().getUserData()
-    if shiroTCount[id] == 0
-        doAfter(10) ->
-            shiroTCount[id] = 0                
-    if shiroTCount[id] < 3 and GetEnumUnit() != shiroTTarget    
+    if shiroTCount2[id] == 0
+        CreateTimer()..start(10, function shiroTFlush).setData(id)                
+    if shiroTCount2[id] < 3 and GetEnumUnit() != shiroTTarget    
         DamageEvent.setNextDamageId(DAMAGE_ABILITY_SHIRO_T)
         DamageEvent.setNextDamageFromCode()
         UnitDamageTargetBJ(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), GetEnumUnit(), 0.75 * I2R(GetHeroAgi(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), true)), ATTACK_TYPE_MAGIC, DAMAGE_TYPE_MAGIC)
-        shiroTCount[id]++       
+        shiroTCount2[id]++       
     GroupAddUnit(LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 744928215), GetEnumUnit())
 function trig_EmiyaShirouTFunc015Func001Func014Func001Func020T()
     //group _ydl_group
@@ -110,6 +118,41 @@ function trig_EmiyaShirouTFunc015Func001Func014T()
         SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 933, LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 933))
         SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 498, LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 498))
         TimerStart(_ydl_timer, 0.01, true, function trig_EmiyaShirouTFunc015Func001Func014Func001Func020T)
+
+function shiroTEndUnpause()
+    if shiro.isPaused() == false
+        shiro.setInvulnerable(false)
+        GetExpiredTimer().destr()
+
+function shiroTEnd()
+    let pid = GetExpiredTimer().getData()
+    shiroTCount1++
+    shiroCurrentPosition = vec2(GetUnitX(shiro), GetUnitY(shiro))
+    if shiroCurrentPosition.distanceTo(shiroTTargetPoint) <= 1000 
+        shiro.setInvulnerable(true)
+        shiroInsideT = true
+    if shiroCurrentPosition.distanceTo(shiroTTargetPoint) > 1000 and shiroInsideT == true 
+        shiroInsideT = false
+        if shiro.isPaused() == false
+            shiro.setInvulnerable(false)   
+    if shiroInsideT == false
+        DoNothing()         
+    if shiroTCount1 >= 600
+        if shiro.isPaused() == false
+            shiro.setInvulnerable(false)
+        else
+            CreateTimer()..startPeriodic(0.01, function shiroTEndUnpause)                             
+        shiro.removeAbility('A0PS')
+        SetPlayerAbilityAvailable(shiro.getOwner(), SPELL_T[pid], true)
+        shiro.startAbilityCooldown(SPELL_T[pid])
+        GetExpiredTimer().destr()
+    if shiro.isAlive() == false  
+        shiro.removeAbility('A0PS')
+        SetPlayerAbilityAvailable(shiro.getOwner(), SPELL_T[pid], true)
+        shiro.startAbilityCooldown(SPELL_T[pid])
+        GetExpiredTimer().destr()
+
+
 function trig_EmiyaShirouTFunc015T()
     //group _ydl_group
     //unit _ydl_unit
@@ -150,43 +193,17 @@ function trig_EmiyaShirouTFunc015T()
             bj_forLoopAIndex++
         SaveInteger(YDLOC, GetHandleId(GetExpiredTimer()), 280, 0)
         let caster = LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594)
+        shiro = caster
         caster.startAbilityCooldown('A0PR')
         PauseUnit(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), false)
         SetUnitInvulnerable(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), false)
-        var count = 0
-        var shiroInsideT = false
+        shiroTCount1 = 0
+        shiroInsideT = false
         let pid = caster.getOwner().getId()
         SetPlayerAbilityAvailable(caster.getOwner(), SPELL_T[pid], false)
         caster.addAbility('A0PS')
-        doPeriodically(0.01) (CallbackPeriodic cb) ->
-            count++
-            shiroCurrentPosition = vec2(GetUnitX(caster), GetUnitY(caster))
-            if shiroCurrentPosition.distanceTo(shiroTTargetPoint) <= 1000 
-                caster.setInvulnerable(true)
-                shiroInsideT = true
-            if shiroCurrentPosition.distanceTo(shiroTTargetPoint) > 1000 and shiroInsideT == true 
-                shiroInsideT = false
-                if caster.isPaused() == false
-                    caster.setInvulnerable(false)   
-            if shiroInsideT == false
-                DoNothing()         
-            if count >= 600
-                if caster.isPaused() == false
-                    caster.setInvulnerable(false)
-                else
-                    doPeriodically(0.01) (CallbackPeriodic cb) ->
-                        if caster.isPaused() == false
-                            caster.setInvulnerable(false)
-                            destroy cb                             
-                caster.removeAbility('A0PS')
-                SetPlayerAbilityAvailable(caster.getOwner(), SPELL_T[pid], true)
-                caster.startAbilityCooldown(SPELL_T[pid])
-                destroy cb 
-            if caster.isAlive() == false   
-                caster.removeAbility('A0PS')
-                SetPlayerAbilityAvailable(caster.getOwner(), SPELL_T[pid], true)
-                caster.startAbilityCooldown(SPELL_T[pid])
-                destroy cb                 
+        CreateTimer()..startPeriodic(0.01, function shiroTEnd).setData(pid)
+
         _ydl_timer = CreateTimer()
         SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 594, LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594))
         SaveLocationHandle(YDLOC, GetHandleId(_ydl_timer), 549, LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 549))

@@ -1,39 +1,71 @@
 package ACR_SilenceArea
 
-import ClosureTimers
 import ACR_TagSystem
 import DummyCaster
 import OrderIds
 import ObjectDefinitions
 import ClosureForGroups
+import TimerUtils
 
 group array acrSilenceAreaGroup
+vec2 array acrSilenceAreaTargetPoint
+real array acrSilenceAreaAOE
+real array acrSilenceAreaDuration
+unit array acrSilenceAreaCaster
+real array acrSilenceAreaStartCount
+real array acrSilenceAreaMiddleCount
+timer array acrSilenceAreaStartTimer
+timer array acrSilenceAreaMiddleTimer
+timer array acrSilenceAreaEndTimer
 
-public function acrSilenceArea(unit caster, vec2 targetPoint, real aoe, real duration)
-    let id = caster.getUserData()
-    if acrSilenceAreaGroup[id] == null
-        acrSilenceAreaGroup[id] = CreateGroup()            
-    doPeriodicallyTimed(0.02, duration) (CallbackCounted cb) ->      
-        forUnitsInRange(targetPoint, aoe) (unit victim) ->
-            if caster.isEnemyOf(victim) and victim.isInvulnerable() == false
-                if acrSilenceAreaGroup[id].has(victim) == false
-                    acrSilenceAreaGroup[id].add(victim)
-                if victim.hasTagSilence() == false
-                    new DummyCaster()
-                    ..owner(caster.getOwner())
-                    ..origin(victim.getPos())
-                    ..castTarget(SILENCE_DUMMY_SPELL, 1, OrderIds.soulburn, victim)
-                    victim.addTagSilence()  
-    doPeriodicallyTimed(0.02, duration) (CallbackCounted cb) ->       
-        acrSilenceAreaGroup[id].forEachIn() (unit victim) ->
-            if targetPoint.distanceTo(vec2(GetUnitX(victim), GetUnitY(victim))) > aoe
-                if victim.hasTagSilence()                                 
-                    victim.removeAbility(SILENCE_DEBUFF)
-                    victim.removeTagSilence()
-                    acrSilenceAreaGroup[id].remove(victim)
-    doAfter(duration + 0.02) ->
-        acrSilenceAreaGroup[id].forEachIn() (unit victim) ->
+
+function acrSilenceAreaStart()
+    let id = GetExpiredTimer().getData()
+    acrSilenceAreaStartCount[id] = acrSilenceAreaStartCount[id] + 0.02
+    forUnitsInRange(acrSilenceAreaTargetPoint[id], acrSilenceAreaAOE[id]) (unit victim) ->
+        if acrSilenceAreaCaster[id].isEnemyOf(victim) and victim.isInvulnerable() == false
+            if acrSilenceAreaGroup[id].has(victim) == false
+                acrSilenceAreaGroup[id].add(victim)
+            if victim.hasTagSilence() == false
+                new DummyCaster()
+                ..owner(acrSilenceAreaCaster[id].getOwner())
+                ..origin(victim.getPos())
+                ..castTarget(SILENCE_DUMMY_SPELL, 1, OrderIds.soulburn, victim)
+                victim.addTagSilence()      
+    if acrSilenceAreaStartCount[id] >= acrSilenceAreaStartCount[id]
+        acrSilenceAreaStartTimer[id].destr()                 
+           
+
+function acrSilenceAreaMiddle()
+    let id = GetExpiredTimer().getData()
+    acrSilenceAreaStartCount[id] = acrSilenceAreaMiddleCount[id] + 0.02
+    acrSilenceAreaGroup[id].forEachIn() (unit victim) ->
+        if acrSilenceAreaTargetPoint[id].distanceTo(vec2(GetUnitX(victim), GetUnitY(victim))) > acrSilenceAreaAOE[id]
             if victim.hasTagSilence()                                 
                 victim.removeAbility(SILENCE_DEBUFF)
                 victim.removeTagSilence()
-            acrSilenceAreaGroup[id].remove(victim) 
+                acrSilenceAreaGroup[id].remove(victim)    
+    if acrSilenceAreaMiddleCount[id] >= acrSilenceAreaMiddleCount[id]
+        acrSilenceAreaMiddleTimer[id].destr()                  
+
+function acrSilenceAreaEnd()
+    let id = GetExpiredTimer().getData()
+    acrSilenceAreaGroup[id].forEachIn() (unit victim) ->
+        if victim.hasTagSilence()                                 
+            victim.removeAbility(SILENCE_DEBUFF)
+            victim.removeTagSilence()
+        acrSilenceAreaGroup[id].remove(victim)  
+    acrSilenceAreaEndTimer[id].destr()       
+
+
+public function acrSilenceArea(unit caster, vec2 targetPoint, real aoe, real duration)
+    let id = caster.getUserData()
+    acrSilenceAreaTargetPoint[id] = targetPoint
+    acrSilenceAreaAOE[id] = aoe
+    acrSilenceAreaCaster[id] = caster
+    acrSilenceAreaDuration[id] = duration
+    if acrSilenceAreaGroup[id] == null
+        acrSilenceAreaGroup[id] = CreateGroup()    
+    acrSilenceAreaStartTimer[id] = CreateTimer()..startPeriodic(0.02, function acrSilenceAreaStart)..setData(id)     
+    acrSilenceAreaMiddleTimer[id] = CreateTimer()..startPeriodic(0.02, function acrSilenceAreaMiddle)..setData(id)  
+    acrSilenceAreaEndTimer[id] = CreateTimer()..start(duration + 0.02, function acrSilenceAreaEnd)..setData(id)                  

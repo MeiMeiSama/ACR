@@ -29,7 +29,7 @@ function acrSlowEnd()
         acrSlowedUnit[id].addTagSlow()
     acrSlowCount[id] = acrSlowCount[id] + 0.02               
     if acrSlowCount[id] >= acrSlowDuration[id]
-        GetExpiredTimer().release()
+        GetExpiredTimer().destr()
         if acrSlowedUnit[id].hasTagSlow()
             acrSlowedUnit[id].setMoveSpeed(acrSlowedUnit[id].getDefaultMovespeed())
             acrSlowedUnit[id].removeAbility('B06P')
@@ -44,7 +44,7 @@ public function acrSlow(unit caster, unit victim, real slowPercentage, real dura
         acrSlowDuration[id] = duration
         acrSlowCount[id] = 0.0
         if victim.hasTagSlow()
-            acrSlowTimer[id].release()
+            acrSlowTimer[id].destr()
         else     
             new DummyCaster()
             ..owner(caster.getOwner())

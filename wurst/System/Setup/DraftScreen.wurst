@@ -6,7 +6,6 @@ import HashSet
 import LinkedList
 import TimerUtils
 import InitializeFunctions
-import ClosureTimers
 import MusicPlaylist
 import GoldIncome
 
@@ -30,6 +29,8 @@ int playerCount = 0
 unit array pickDummyUnit
 unit OK_BUTTON_UNIT
 unit RANDOM_BUTTON_UNIT
+int array draftHero
+player array draftPlayer
 destructable array PICK_ICON_DESTRUCTABLE
 destructable array TEAM_ICON
 destructable array CONFIRMED_PICK
@@ -39,11 +40,17 @@ destructable RANDOM_BUTTON_DESTRUCTABLE
 unit array selectedUnit
 bool array playerPicked
 bool array canDoubleClick
+real allPlayersPickedCount
+vec2 team1Pos
+vec2 team2Pos
+vec2 team3Pos
 timer array canDoubleClick_Timer
 framehandle selected_icon
 framehandle selected_icon1
 int playingPlayers = 0
 int playerPickCount = 0
+timer array createHeroTimer
+timer array userDataAssignTimer
 
 SoundDefinition chooseOK = new SoundDefinition("war3mapImported\\ChooseOK.mp3")
 SoundDefinition chooseUNIT = new SoundDefinition("war3mapImported\\ChooseUnit.mp3")
@@ -248,7 +255,9 @@ function pickIcon_Cond() returns boolean
     return false
 
 function resetDoubleClick ()
-    canDoubleClick[GetExpiredTimer().getData()] = false
+    let id = GetExpiredTimer().getData()
+    canDoubleClick[id] = false
+    canDoubleClick_Timer[id].destr()
     
 function pickIcon ()
     CreateTrigger()
@@ -338,11 +347,33 @@ function randomIcon ()
         if GetTriggerPlayer() == GetLocalPlayer()
             selected_icon.setTexture(BlzGetAbilityIcon(heroTotalList.get(selectedUnit[p.getId()].getUserData()-1)), 0, false)
 
+function userDataAssign()
+    let pid = GetExpiredTimer().getData()
+    if udg_PlayHero[pid].getUserData() == 0
+        udg_PlayHero[pid].setUserData(pid+1)
+        let name = udg_PlayHero[pid].getName()  
+        for i = 0 to 12
+            if udg_PlayHero[i].getOwner().getName() == "Gajeel#21512"
+                let p = udg_PlayHero[i].getOwner()
+                printTimedToPlayer("GetData just bugged for: "+name, 5, p)      
+
+function createHero2()
+    let pid = GetExpiredTimer().getData()
+    if draftPlayer[pid].isAllyOf(Player(3))
+        udg_PlayHero[pid] = createUnit(draftPlayer[pid], draftHero[pid], team1Pos)..setUserData(pid+1)
+    else if draftPlayer[pid].isAllyOf(Player(7))
+        udg_PlayHero[pid] = createUnit(draftPlayer[pid], draftHero[pid], team2Pos)..setUserData(pid+1)    
+    else if draftPlayer[pid].isAllyOf(Player(11))
+        udg_PlayHero[pid] = createUnit(draftPlayer[pid], draftHero[pid], team3Pos)..setUserData(pid+1)            
+    draftPlayer[pid].panCamToTimed(udg_PlayHero[pid], 0)
+    userDataAssignTimer[pid] = CreateTimer()..startPeriodic(0.09, function userDataAssign)..setData(pid) 
+    createHeroTimer[pid].destr() 
+
 function createHero (player p)
     let pid = p.getId()
-    vec2 teamPos = vec2(0, 0)
-    var hero = heroTotalList.get(selectedUnit[pid].getUserData()-1)
-    if hero == 0 or playerPicked[pid] == false
+    draftPlayer[pid] = p
+    draftHero[pid] = heroTotalList.get(selectedUnit[pid].getUserData()-1)
+    if draftHero[pid] == 0 or playerPicked[pid] == false
         p.addGold(300)
         totalGoldEarnt[p.getId()] += 300
         playerPicked[pid] = true
@@ -350,27 +381,49 @@ function createHero (player p)
         while pickDummyUnit[randomID].hasAbility('Aloc') or pickDummyUnit[randomID] == null
             randomID = GetRandomInt(0, heroTotalList.size())
         chooseOK.playForPlayer(p)
-        hero = heroTotalList.get(pickDummyUnit[randomID].getUserData()-1)
+        draftHero[pid] = heroTotalList.get(pickDummyUnit[randomID].getUserData()-1)
         CONFIRMED_PICK[p.getId()] = createDestructable(heroPickIconList.get(randomID), TEAM_ICON[pid].getPos(), (0).asAngleDegrees(), 1, 0)
         TEAM_ICON[pid].remove()
-        BlzFrameAddText(textArea, "|cff00a9ff["+p.getColor().toColor().toColorString()+p.getName()+"|cff00a9ff] |cffffd700Selected |cff5ccf58"+GetObjectName(hero)+"|r")
+        BlzFrameAddText(textArea, "|cff00a9ff["+p.getColor().toColor().toColorString()+p.getName()+"|cff00a9ff] |cffffd700Selected |cff5ccf58"+GetObjectName(draftHero[pid])+"|r")
         if p == GetLocalPlayer()
-            selected_icon.setTexture(BlzGetAbilityIcon(hero), 0, false)
-        
-    if p.isAllyOf(Player(3))
-        teamPos = vec2(-10384, 9980)
-    else if p.isAllyOf(Player(7))
-        teamPos = vec2(5389, 2246)
-    else if p.isAllyOf(Player(11))
-        teamPos = vec2(-3436, -6244)
+            selected_icon.setTexture(BlzGetAbilityIcon(draftHero[pid]), 0, false)       
+    team1Pos = vec2(-10384, 9980)
+    team2Pos = vec2(5389, 2246)
+    team3Pos = vec2(-3436, -6244)
+    createHeroTimer[pid] = CreateTimer()..start(delayAfterCountdown, function createHero2)..setData(pid)
 
-    doAfter(delayAfterCountdown) ->
-        // print("pid: "+pid.toString()) 
-        udg_PlayHero[pid] = createUnit(p, hero, teamPos)..setUserData(pid+1)
-        p.panCamToTimed(udg_PlayHero[pid], 0)
-        doPeriodically(0.5) (CallbackPeriodic cb) ->
-            if udg_PlayHero[pid].getUserData() == 0
-                udg_PlayHero[pid].setUserData(pid+1)
+function draftTime_End2()
+    gg_trg_CameraLock.destr()
+    createMusic()
+    for i = 0 to 12
+        if Player(i).getController() == MAP_CONTROL_USER and Player(i).getSlotState() == PLAYER_SLOT_STATE_PLAYING
+            Player(i)..resetToGameCamera(0)..setCameraField(CAMERA_FIELD_TARGET_DISTANCE, 4000, 0)
+    for i = 0 to heroTotalList.size()
+        if pickDummyUnit[i] != null
+            pickDummyUnit[i].remove()
+        if PICK_ICON_DESTRUCTABLE[i] != null
+            PICK_ICON_DESTRUCTABLE[i].remove()
+
+    for i = 0 to 12
+        if TEAM_ICON[i] != null
+            TEAM_ICON[i].remove()
+        if CONFIRMED_DISABLE_PICK[i] != null
+            CONFIRMED_DISABLE_PICK[i].remove()
+
+        if CONFIRMED_PICK[i] != null
+            CONFIRMED_PICK[i].remove()
+
+    for i = 0 to 5
+        text[i].destr()
+
+    OK_BUTTON_UNIT.remove()
+    RANDOM_BUTTON_UNIT.remove()
+    OK_BUTTON_DESTRUCTABLE.remove()
+    RANDOM_BUTTON_DESTRUCTABLE.remove()
+    selected_icon..setVisible(false)..disable()
+    textArea..hide()..disable()
+    initFunctions()    
+    GetExpiredTimer().destr()    
 
 function draftTime_End ()
     draftTime_dialog.destr()
@@ -379,43 +432,21 @@ function draftTime_End ()
         if Player(i).getController() == MAP_CONTROL_USER and Player(i).getSlotState() == PLAYER_SLOT_STATE_PLAYING
             createHero(Player(i))  
 
-    doAfter(delayAfterCountdown) -> 
-        gg_trg_CameraLock.destr()
-        createMusic()
-        for i = 0 to 12
-            if Player(i).getController() == MAP_CONTROL_USER and Player(i).getSlotState() == PLAYER_SLOT_STATE_PLAYING
-                Player(i)..resetToGameCamera(0)..setCameraField(CAMERA_FIELD_TARGET_DISTANCE, 3500, 0)
-        for i = 0 to heroTotalList.size()
-            if pickDummyUnit[i] != null
-                pickDummyUnit[i].remove()
-            if PICK_ICON_DESTRUCTABLE[i] != null
-                PICK_ICON_DESTRUCTABLE[i].remove()
+    CreateTimer()..start(delayAfterCountdown, function draftTime_End2)
+    GetExpiredTimer().destr()
 
-        for i = 0 to 12
-            if TEAM_ICON[i] != null
-                TEAM_ICON[i].remove()
-            if CONFIRMED_DISABLE_PICK[i] != null
-                CONFIRMED_DISABLE_PICK[i].remove()
+function allPlayerPickedTimer()
+    allPlayersPickedCount = allPlayersPickedCount + 0.06
+    if allPlayersPickedCount >= draftTime
+        GetExpiredTimer().destr()
+    if playerPickCount == playingPlayers
+        draftTime_End()
+        GetExpiredTimer().destr()    
 
-            if CONFIRMED_PICK[i] != null
-                CONFIRMED_PICK[i].remove()
 
-        for i = 0 to 5
-            text[i].destr()
-
-        OK_BUTTON_UNIT.remove()
-        RANDOM_BUTTON_UNIT.remove()
-        OK_BUTTON_DESTRUCTABLE.remove()
-        RANDOM_BUTTON_DESTRUCTABLE.remove()
-        selected_icon..setVisible(false)..disable()
-        textArea..hide()..disable()
-        initFunctions()
-            
 function allPlayersPicked()
-    doPeriodicallyTimed(0.06, draftTime) (CallbackCounted cb) ->
-        if playerPickCount == playingPlayers
-            draftTime_End()
-            destroy cb
+    allPlayersPickedCount = 0.0
+    CreateTimer()..startPeriodic(0.06, function allPlayerPickedTimer)
 
 public function draftTimeSetup ()
     playerCount = 0

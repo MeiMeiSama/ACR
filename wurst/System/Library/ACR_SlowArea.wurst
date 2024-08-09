@@ -1,43 +1,103 @@
 package ACR_SlowArea
 
-import ClosureTimers
 import ACR_TagSystem
 import ClosureForGroups
 import DummyCaster
 import OrderIds
+import TimerUtils
 
+unit array acrSlowAreaCaster
 group array acrSlowAreaGroup
+real array acrSlowAreaSlowPercentage
+real array acrSlowAreaAOE
+vec2 array acrSlowAreaTargetPoint
+real array acrSlowAreaDuration
+real array acrSlowAreaStartCount
+real array acrSlowAreaMiddleCount
+timer array acrSlowAreaStartTimer
+timer array acrSlowAreaMiddleTimer
+timer array acrSlowAreaEndTimer
 
-public function acrSlowArea(unit caster, vec2 targetPoint, real aoe, real slowPercentage, real duration)
-    let id = caster.getUserData()
-    if acrSlowAreaGroup[id] == null
-        acrSlowAreaGroup[id] = CreateGroup()            
-    doPeriodicallyTimed(0.02, duration) (CallbackCounted cb) ->      
-        forUnitsInRange(targetPoint, aoe) (unit victim) ->
-            if caster.isEnemyOf(victim) and victim.isInvulnerable() == false
-                if acrSlowAreaGroup[id].has(victim) == false
-                    acrSlowAreaGroup[id].add(victim)
-                if victim.hasTagSlow() == false
-                    new DummyCaster()
-                    ..owner(caster.getOwner())
-                    ..origin(victim.getPos())
-                    ..castTarget('A18Y', 1, OrderIds.slow, victim)
-                    victim.setMoveSpeed(victim.getDefaultMovespeed() - (victim.getDefaultMovespeed() * (slowPercentage / 100)))
-                    victim.addTagSlow()
-                else if victim.getMoveSpeed() > (victim.getDefaultMovespeed() - (victim.getDefaultMovespeed() * (slowPercentage / 100)))
-                    victim.setMoveSpeed(victim.getDefaultMovespeed() - (victim.getDefaultMovespeed() * (slowPercentage / 100)))
-    doPeriodicallyTimed(0.02, duration) (CallbackCounted cb) ->       
-        acrSlowAreaGroup[id].forEachIn() (unit victim) ->
-            if targetPoint.distanceTo(vec2(GetUnitX(victim), GetUnitY(victim))) > aoe
-                if victim.hasTagSlow()                                 
-                    victim.setMoveSpeed(victim.getDefaultMovespeed())
-                    victim.removeAbility('B06P')
-                    victim.removeTagSlow()
-                    acrSlowAreaGroup[id].remove(victim)
-    doAfter(duration + 0.02) ->
-        acrSlowAreaGroup[id].forEachIn() (unit victim) ->
+function acrSlowAreaStart()
+    let id = GetExpiredTimer().getData()
+    acrSlowAreaStartCount[id] = acrSlowAreaStartCount[id] + 0.02
+    forUnitsInRange(acrSlowAreaTargetPoint[id], acrSlowAreaAOE[id]) (unit victim) ->
+        if acrSlowAreaCaster[id].isEnemyOf(victim) and victim.isInvulnerable() == false
+            if acrSlowAreaGroup[id].has(victim) == false
+                acrSlowAreaGroup[id].add(victim)
+            if victim.hasTagSlow() == false
+                new DummyCaster()
+                ..owner(acrSlowAreaCaster[id].getOwner())
+                ..origin(victim.getPos())
+                ..castTarget('A18Y', 1, OrderIds.slow, victim)
+                victim.setMoveSpeed(victim.getDefaultMovespeed() - (victim.getDefaultMovespeed() * (acrSlowAreaSlowPercentage[id] / 100)))
+                victim.addTagSlow()
+            else if victim.getMoveSpeed() > (victim.getDefaultMovespeed() - (victim.getDefaultMovespeed() * (acrSlowAreaSlowPercentage[id] / 100)))
+                victim.setMoveSpeed(victim.getDefaultMovespeed() - (victim.getDefaultMovespeed() * (acrSlowAreaSlowPercentage[id] / 100)))  
+    if acrSlowAreaStartCount[id] >= acrSlowAreaDuration[id]
+        acrSlowAreaStartTimer[id].destr()            
+
+function acrSlowAreaMiddle()
+    let id = GetExpiredTimer().getData()
+    acrSlowAreaMiddleCount[id] = acrSlowAreaMiddleCount[id] + 0.02
+    acrSlowAreaGroup[id].forEachIn() (unit victim) ->
+        if acrSlowAreaTargetPoint[id].distanceTo(vec2(GetUnitX(victim), GetUnitY(victim))) > acrSlowAreaAOE[id]
             if victim.hasTagSlow()                                 
                 victim.setMoveSpeed(victim.getDefaultMovespeed())
                 victim.removeAbility('B06P')
                 victim.removeTagSlow()
-            acrSlowAreaGroup[id].remove(victim)
+                acrSlowAreaGroup[id].remove(victim)   
+    if acrSlowAreaMiddleCount[id] >= acrSlowAreaDuration[id]
+        acrSlowAreaMiddleTimer[id].destr()                
+
+function acrSlowAreaEnd()
+    let id = GetExpiredTimer().getData()
+    acrSlowAreaGroup[id].forEachIn() (unit victim) ->
+        if victim.hasTagSlow()                                 
+            victim.setMoveSpeed(victim.getDefaultMovespeed())
+            victim.removeAbility('B06P')
+            victim.removeTagSlow()
+        acrSlowAreaGroup[id].remove(victim)
+    acrSlowAreaEndTimer[id].destr()    
+
+public function acrSlowArea(unit caster, vec2 targetPoint, real aoe, real slowPercentage, real duration)
+    let id = caster.getUserData()
+    acrSlowAreaCaster[id] = caster
+    acrSlowAreaSlowPercentage[id] = slowPercentage
+    acrSlowAreaAOE[id] = aoe
+    acrSlowAreaTargetPoint[id] = targetPoint
+    acrSlowAreaDuration[id] = duration
+    if acrSlowAreaGroup[id] == null
+        acrSlowAreaGroup[id] = CreateGroup()      
+    acrSlowAreaStartTimer[id] = CreateTimer()..startPeriodic(0.02, function acrSlowAreaStart)..setData(id)     
+    acrSlowAreaMiddleTimer[id] = CreateTimer()..startPeriodic(0.02, function acrSlowAreaMiddle)..setData(id)  
+    acrSlowAreaEndTimer[id] = CreateTimer()..start(duration + 0.02, function acrSlowAreaEnd)..setData(id)  
+    // doPeriodicallyTimed(0.02, duration) (CallbackCounted cb) ->      
+    //     forUnitsInRange(targetPoint, aoe) (unit victim) ->
+    //         if caster.isEnemyOf(victim) and victim.isInvulnerable() == false
+    //             if acrSlowAreaGroup[id].has(victim) == false
+    //                 acrSlowAreaGroup[id].add(victim)
+    //             if victim.hasTagSlow() == false
+    //                 new DummyCaster()
+    //                 ..owner(caster.getOwner())
+    //                 ..origin(victim.getPos())
+    //                 ..castTarget('A18Y', 1, OrderIds.slow, victim)
+    //                 victim.setMoveSpeed(victim.getDefaultMovespeed() - (victim.getDefaultMovespeed() * (slowPercentage / 100)))
+    //                 victim.addTagSlow()
+    //             else if victim.getMoveSpeed() > (victim.getDefaultMovespeed() - (victim.getDefaultMovespeed() * (slowPercentage / 100)))
+    //                 victim.setMoveSpeed(victim.getDefaultMovespeed() - (victim.getDefaultMovespeed() * (slowPercentage / 100)))
+    // doPeriodicallyTimed(0.02, duration) (CallbackCounted cb) ->       
+    //     acrSlowAreaGroup[id].forEachIn() (unit victim) ->
+    //         if targetPoint.distanceTo(vec2(GetUnitX(victim), GetUnitY(victim))) > aoe
+    //             if victim.hasTagSlow()                                 
+    //                 victim.setMoveSpeed(victim.getDefaultMovespeed())
+    //                 victim.removeAbility('B06P')
+    //                 victim.removeTagSlow()
+    //                 acrSlowAreaGroup[id].remove(victim)
+    // doAfter(duration + 0.02) ->
+    //     acrSlowAreaGroup[id].forEachIn() (unit victim) ->
+    //         if victim.hasTagSlow()                                 
+    //             victim.setMoveSpeed(victim.getDefaultMovespeed())
+    //             victim.removeAbility('B06P')
+    //             victim.removeTagSlow()
+    //         acrSlowAreaGroup[id].remove(victim)

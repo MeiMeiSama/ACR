@@ -23,8 +23,8 @@ function acrKnockbackEnd()
         acrKnockbackedVictim[id].addTagPauseEX()  
     if acrKnockbackedVictim[id].hasTagKnockback() == false
         acrKnockbackedVictim[id].addTagKnockback()
-    if acrKnockbackCount[id] == 35
-        acrKnockbackTimer[id].release()
+    if acrKnockbackCount[id] >= 35
+        acrKnockbackTimer[id].destr()
         if acrKnockbackedVictim[id].hasTagPauseEX()
             acrKnockbackedVictim[id].unpauseEx()
             acrKnockbackedVictim[id].removeTagPauseEX()
@@ -41,7 +41,7 @@ public function acrKnockback(unit caster, unit victim, real distance)
         acrKnockbackedVictim[id] = victim
         acrKnockbackDistance[id] = distance 
         if victim.hasTagKnockback()
-            acrKnockbackTimer[id].release()
+            acrKnockbackTimer[id].destr()
         if victim.hasTagKnockback() == false    
             victim.addTagKnockback()    
         acrKnockbackTimer[id] = CreateTimer()..startPeriodic(0.02, function acrKnockbackEnd)..setData(id) 

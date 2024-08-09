@@ -1,100 +1,145 @@
 package ACR_Transformation
-import ClosureTimers
 import AbilityGlobals
 import ACR_TagSystem
 import ACR_CooldownTracker
+import TimerUtils
 
 public boolean array transformationActive 
+unit array hpbar
+unit array user
+real array duration
+real array acrTransformationDurationCount
+real array acrTransformationDuration
+int array acrTransformationAnimationCount
+real array acrTransformationElapsedTime
+int array acrTransformationDefaultSkin
+int array acrTransformationTransformSkin
+real array acrTransformationBarHeight
+timer array acrTransformationTimer
 
+function acrTransformationDeath()
+    let pid = GetExpiredTimer().getData()
+    BlzSetUnitSkin(user[pid], acrTransformationDefaultSkin[pid])
+
+
+function acrTransformationEnd()
+    let pid = GetExpiredTimer().getData()
+    let p = user[pid].getOwner()
+    hpbar[pid].setPosFly(vec3(user[pid].getX(), user[pid].getY(), acrTransformationBarHeight[pid]))
+    hpbar[pid].setAnimation(acrTransformationAnimationCount[pid])
+    // if hpbar.isAlive() == false
+    //     print("hp bar: dead")
+    // if hpbar.isAlive() == true
+    //     print("hp bar: alive")            
+    if user[pid].hasTagPauseEX() == false and user[pid].isPaused() == false
+        // print(animationCount)
+        acrTransformationElapsedTime[pid] += 0.01
+        acrTransformationDurationCount[pid]--
+        acrTransformationAnimationCount[pid] = (((acrTransformationDuration[pid] - acrTransformationElapsedTime[pid]) / acrTransformationDuration[pid]) * 100).floor()
+    if acrTransformationAnimationCount[pid] == 50
+        DoNothing()                  
+    if acrTransformationDurationCount[pid] <= 0 or user[pid].isAlive() == false
+        transformationActive[pid] = false
+        if user[pid].isAlive() == false
+            CreateTimer()..start(5, function acrTransformationDeath)..setData(pid)
+        else 
+            BlzSetUnitSkin(user[pid], acrTransformationDefaultSkin[pid])        
+        hpbar[pid].remove()
+        if user[pid].hasAbility(SPELL_MODO_Q[pid]) == true
+            SetPlayerAbilityAvailable(p, SPELL_MODO_Q[pid], false)
+            SPELL_MODO_Q[pid].addTagDisabled()
+        if user[pid].hasAbility(SPELL_MODO_W[pid]) == true
+            SetPlayerAbilityAvailable(p, SPELL_MODO_W[pid], false)
+            SPELL_MODO_W[pid].addTagDisabled()
+        if user[pid].hasAbility(SPELL_MODO_E[pid]) == true
+            SetPlayerAbilityAvailable(p, SPELL_MODO_E[pid], false)
+            SPELL_MODO_E[pid].addTagDisabled()
+        if user[pid].hasAbility(SPELL_MODO_R[pid]) == true
+            SetPlayerAbilityAvailable(p, SPELL_MODO_R[pid], false)
+            SPELL_MODO_R[pid].addTagDisabled()
+        if user[pid].hasAbility(SPELL_MODO_T[pid]) == true
+            SetPlayerAbilityAvailable(p, SPELL_MODO_T[pid], false)
+            SPELL_MODO_T[pid].addTagDisabled()
+        if user[pid].hasAbility(SPELL_MODO_G[pid]) == true
+            SetPlayerAbilityAvailable(p, SPELL_MODO_G[pid], false) 
+            SPELL_MODO_G[pid].addTagDisabled()               
+        if user[pid].hasAbility(SPELL_Q[pid])
+            SetPlayerAbilityAvailable(p, SPELL_Q[pid], true) 
+            SPELL_Q[pid].removeTagDisabled()
+        if user[pid].hasAbility(SPELL_W[pid])
+            SetPlayerAbilityAvailable(p, SPELL_W[pid], true)  
+            SPELL_W[pid].removeTagDisabled()
+        if user[pid].hasAbility(SPELL_E[pid])
+            SetPlayerAbilityAvailable(p, SPELL_E[pid], true) 
+            SPELL_E[pid].removeTagDisabled()
+        if user[pid].hasAbility(SPELL_R[pid])
+            SetPlayerAbilityAvailable(p, SPELL_R[pid], true)  
+            SPELL_R[pid].removeTagDisabled()  
+        if user[pid].hasAbility(SPELL_T[pid])
+            SetPlayerAbilityAvailable(p, SPELL_T[pid], true)
+            SPELL_T[pid].removeTagDisabled()
+            user[pid].startAbilityCooldown(SPELL_T[pid])
+            acrCooldownT[pid] = 60                                                    
+        acrTransformationTimer[pid].destr()
 
 public function acrTransformation (unit caster, real duration, int defaultSkin, int transformSkin, real barHeight, real barScale)
-    let p = caster.getOwner()
-    let pid = p.getId()
+    let pid = caster.getOwner().getId()
+    user[pid] = caster
+    let p = user[pid].getOwner()
     transformationActive[pid] = true
-    let hpbar = createUnitZ(caster.getOwner(), 'e11X', vec3(caster.getX(), caster.getY(), barHeight), angle(0))
+    hpbar[pid] = createUnitZ(user[pid].getOwner(), 'e11X', vec3(user[pid].getX(), user[pid].getY(), barHeight), angle(0))
     ..setScale(barScale)..setAnimation(100)
-    BlzSetUnitSkin(caster, transformSkin)
-    if caster.hasAbility(SPELL_Q[pid])
+    BlzSetUnitSkin(user[pid], transformSkin)
+    if user[pid].hasAbility(SPELL_Q[pid])
         SetPlayerAbilityAvailable(p, SPELL_Q[pid], false) 
-    if caster.hasAbility(SPELL_W[pid])
-        SetPlayerAbilityAvailable(p, SPELL_W[pid], false)  
-    if caster.hasAbility(SPELL_E[pid])
+        SPELL_Q[pid].addTagDisabled()
+    if user[pid].hasAbility(SPELL_W[pid])
+        SetPlayerAbilityAvailable(p, SPELL_W[pid], false) 
+        SPELL_W[pid].addTagDisabled() 
+    if user[pid].hasAbility(SPELL_E[pid])
         SetPlayerAbilityAvailable(p, SPELL_E[pid], false) 
-    if caster.hasAbility(SPELL_R[pid])
+        SPELL_E[pid].addTagDisabled()
+    if user[pid].hasAbility(SPELL_R[pid])
         SetPlayerAbilityAvailable(p, SPELL_R[pid], false)    
-    if caster.hasAbility(SPELL_T[pid])
+        SPELL_R[pid].addTagDisabled()
+    if user[pid].hasAbility(SPELL_T[pid])
         SetPlayerAbilityAvailable(p, SPELL_T[pid], false)
-    if caster.hasAbility(SPELL_MODO_Q[pid]) == true
-        SetPlayerAbilityAvailable(p, SPELL_MODO_Q[pid], true)          
-    if caster.hasAbility(SPELL_MODO_Q[pid]) == false and SPELL_MODO_Q[pid] != 0
-        caster.addAbility(SPELL_MODO_Q[pid])   
-    if caster.hasAbility(SPELL_MODO_W[pid]) == true
-        SetPlayerAbilityAvailable(p, SPELL_MODO_W[pid], true)          
-    if caster.hasAbility(SPELL_MODO_W[pid]) == false and SPELL_MODO_W[pid] != 0
-        caster.addAbility(SPELL_MODO_W[pid]) 
-    if caster.hasAbility(SPELL_MODO_E[pid]) == true
-        SetPlayerAbilityAvailable(p, SPELL_MODO_E[pid], true)          
-    if caster.hasAbility(SPELL_MODO_E[pid]) == false and SPELL_MODO_E[pid] != 0
-        caster.addAbility(SPELL_MODO_E[pid]) 
-    if caster.hasAbility(SPELL_MODO_R[pid]) == true
-        SetPlayerAbilityAvailable(p, SPELL_MODO_R[pid], true)          
-    if caster.hasAbility(SPELL_MODO_R[pid]) == false and SPELL_MODO_R[pid] != 0
-        caster.addAbility(SPELL_MODO_R[pid]) 
-    if caster.hasAbility(SPELL_MODO_T[pid]) == true
+        SPELL_T[pid].addTagDisabled()
+    if user[pid].hasAbility(SPELL_MODO_Q[pid]) == true
+        SetPlayerAbilityAvailable(p, SPELL_MODO_Q[pid], true) 
+        SPELL_MODO_Q[pid].removeTagDisabled()         
+    if user[pid].hasAbility(SPELL_MODO_Q[pid]) == false and SPELL_MODO_Q[pid] != 0
+        user[pid].addAbility(SPELL_MODO_Q[pid])   
+    if user[pid].hasAbility(SPELL_MODO_W[pid]) == true
+        SetPlayerAbilityAvailable(p, SPELL_MODO_W[pid], true) 
+        SPELL_MODO_W[pid].removeTagDisabled()          
+    if user[pid].hasAbility(SPELL_MODO_W[pid]) == false and SPELL_MODO_W[pid] != 0
+        user[pid].addAbility(SPELL_MODO_W[pid]) 
+    if user[pid].hasAbility(SPELL_MODO_E[pid]) == true
+        SetPlayerAbilityAvailable(p, SPELL_MODO_E[pid], true) 
+        SPELL_MODO_E[pid].removeTagDisabled()          
+    if user[pid].hasAbility(SPELL_MODO_E[pid]) == false and SPELL_MODO_E[pid] != 0
+        user[pid].addAbility(SPELL_MODO_E[pid]) 
+    if user[pid].hasAbility(SPELL_MODO_R[pid]) == true
+        SetPlayerAbilityAvailable(p, SPELL_MODO_R[pid], true)  
+        SPELL_MODO_R[pid].removeTagDisabled()         
+    if user[pid].hasAbility(SPELL_MODO_R[pid]) == false and SPELL_MODO_R[pid] != 0
+        user[pid].addAbility(SPELL_MODO_R[pid]) 
+    if user[pid].hasAbility(SPELL_MODO_T[pid]) == true
+        SPELL_MODO_T[pid].removeTagDisabled() 
         SetPlayerAbilityAvailable(p, SPELL_MODO_T[pid], true)          
-    if caster.hasAbility(SPELL_MODO_T[pid]) == false and SPELL_MODO_T[pid] != 0
-        caster.addAbility(SPELL_MODO_T[pid])      
-    if caster.hasAbility(SPELL_MODO_G[pid]) == true
+    if user[pid].hasAbility(SPELL_MODO_T[pid]) == false and SPELL_MODO_T[pid] != 0
+        user[pid].addAbility(SPELL_MODO_T[pid])      
+    if user[pid].hasAbility(SPELL_MODO_G[pid]) == true
+        SPELL_MODO_T[pid].removeTagDisabled() 
         SetPlayerAbilityAvailable(p, SPELL_MODO_G[pid], true)          
-    if caster.hasAbility(SPELL_MODO_G[pid]) == false and SPELL_MODO_G[pid] != 0
-        caster.addAbility(SPELL_MODO_G[pid])                                                                                                                 
-    var durationCount = (duration * 100)
-    var animationCount = 100
-    var elapsedTime = 0.0
-    doPeriodically(0.01) (CallbackPeriodic cb) ->
-        hpbar.setPosFly(vec3(caster.getX(), caster.getY(), barHeight))
-        hpbar.setAnimation(animationCount)
-        // if hpbar.isAlive() == false
-        //     print("hp bar: dead")
-        // if hpbar.isAlive() == true
-        //     print("hp bar: alive")            
-        if caster.hasTagPauseEX() == false and caster.isPaused() == false
-            // print(animationCount)
-            elapsedTime += 0.01
-            durationCount--
-            animationCount = (((duration - elapsedTime) / duration) * 100).floor()
-        if animationCount == 50
-            DoNothing()                  
-        if durationCount <= 0 or caster.isAlive() == false
-            transformationActive[pid] = false
-            if caster.isAlive() == false
-                doAfter(5) ->                     
-                    BlzSetUnitSkin(caster, defaultSkin)
-            else 
-                BlzSetUnitSkin(caster, defaultSkin)        
-            hpbar.remove()
-            if caster.hasAbility(SPELL_MODO_Q[pid]) == true
-                SetPlayerAbilityAvailable(p, SPELL_MODO_Q[pid], false)
-            if caster.hasAbility(SPELL_MODO_W[pid]) == true
-                SetPlayerAbilityAvailable(p, SPELL_MODO_W[pid], false)
-            if caster.hasAbility(SPELL_MODO_E[pid]) == true
-                SetPlayerAbilityAvailable(p, SPELL_MODO_E[pid], false)
-            if caster.hasAbility(SPELL_MODO_R[pid]) == true
-                SetPlayerAbilityAvailable(p, SPELL_MODO_R[pid], false)
-            if caster.hasAbility(SPELL_MODO_T[pid]) == true
-                SetPlayerAbilityAvailable(p, SPELL_MODO_T[pid], false)
-            if caster.hasAbility(SPELL_MODO_G[pid]) == true
-                SetPlayerAbilityAvailable(p, SPELL_MODO_G[pid], false)                
-            if caster.hasAbility(SPELL_Q[pid])
-                SetPlayerAbilityAvailable(p, SPELL_Q[pid], true) 
-            if caster.hasAbility(SPELL_W[pid])
-                SetPlayerAbilityAvailable(p, SPELL_W[pid], true)  
-            if caster.hasAbility(SPELL_E[pid])
-                SetPlayerAbilityAvailable(p, SPELL_E[pid], true) 
-            if caster.hasAbility(SPELL_R[pid])
-                SetPlayerAbilityAvailable(p, SPELL_R[pid], true)    
-            if caster.hasAbility(SPELL_T[pid])
-                SetPlayerAbilityAvailable(p, SPELL_T[pid], true)
-                caster.startAbilityCooldown(SPELL_T[pid])
-                acrCooldownT[pid] = 60                                                    
-            destroy cb
+    if user[pid].hasAbility(SPELL_MODO_G[pid]) == false and SPELL_MODO_G[pid] != 0
+        user[pid].addAbility(SPELL_MODO_G[pid]) 
+    acrTransformationBarHeight[pid] = barHeight    
+    acrTransformationDuration[pid] = duration                                                                                                                
+    acrTransformationDurationCount[pid] = (duration * 100)
+    acrTransformationAnimationCount[pid] = 100
+    acrTransformationElapsedTime[pid] = 0.0
+    acrTransformationDefaultSkin[pid] = defaultSkin
+    acrTransformationTransformSkin[pid] = transformSkin
+    acrTransformationTimer[pid] = CreateTimer()..startPeriodic(0.01, function acrTransformationEnd)..setData(pid)

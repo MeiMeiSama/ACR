@@ -5,6 +5,8 @@ import ClosureEvents
 import main
 import GoldIncome
 import TimerUtils
+import ACR_TagSystem
+import GameTimer
 
 IMMDEvent killEvent
 IMMDEvent deathEvent
@@ -18,7 +20,7 @@ public integer array unitLongestStreak
 public int playingPlayers = 0
 public int minPlayers = 6 // Required number of players to make a game rated
 public bool rankMode = false // Can be set ingame from Dialog
-public bool requiredPlayers = false
+public bool requiredPlayers = false // Sets to true if minPlayers integer is met
 
 // Stat tracker for ACR to https://wc3stats.com
 
@@ -26,15 +28,27 @@ init
     mmdSetup()
 
 function mmdSetup()
+    gracePeriodLeave()
     for i = 0 to 12
         // Set all players stat kill count & streak to 0
         player_KillCount[i] = 0
         unitLongestStreak[i] = 0
-        if Player(i).getSlotState() == PLAYER_SLOT_STATE_PLAYING
+        if Player(i).getSlotState() == PLAYER_SLOT_STATE_PLAYING and Player(i).getController() == MAP_CONTROL_USER
             playingPlayers++
     if playingPlayers >= minPlayers
         requiredPlayers = true
-    getTimer()..start(1, function statsDefinitions)
+    CreateTimer()..start(1, function statsDefinitions)
+
+function gracePeriodLeave() // This will prevent a player from losing rating in the event they have a leaver before 20 minute mark
+    EventListener.add(EVENT_PLAYER_LEAVE) -> 
+        let leaver = GetTriggerPlayer()
+        if requiredPlayers and rankMode and not leaver.hasTagMMDFlag()
+            MMD.flagPlayer(leaver, PlayerFlag.Loser)
+            leaver.addTagMMDFlag()
+        if currentTime < 720 // 720 seconds equals 12 minutes
+            for i = 0 to 12
+                if Player(i).isAllyOf(leaver) and not Player(i).hasTagLeaverInTeam()
+                    Player(i).addTagLeaverInTeam()
 
 function statsDefinitions()
     // Define the stat events to use
@@ -46,7 +60,7 @@ function statsDefinitions()
     streakCount = MMD.defineValueInt("Best Kill Streak", Goal.None)
     Emitter.emitDefineVariable("ACR_MMD", ValueType.String, Goal.None, Suggestion.None)
     wc3Stat_Listener()
-    GetExpiredTimer().release()
+    GetExpiredTimer().destr()
 
 function wc3Stat_Listener()
     MMD.logCustom("ACR_MMD", "ACR MMD v1.0.0")
@@ -76,7 +90,7 @@ function victory_enable()
             RemovePlayer(Player(i), PLAYER_GAME_RESULT_VICTORY)
         else if Player(i).isEnemyOf(winner) and Player(i).getController() == MAP_CONTROL_USER
             RemovePlayer(Player(i), PLAYER_GAME_RESULT_DEFEAT)
-    GetExpiredTimer().release()
+    GetExpiredTimer().destr()
 
 function winningComputer (int t1_points, int t2_points, int t3_points) returns player
     if t1_points == targetPoints
@@ -99,13 +113,19 @@ public function victory_checker()
 
         if requiredPlayers and rankMode
             for i = 0 to 12
-                if Player(i).getController() == MAP_CONTROL_USER and Player(i).isAllyOf(winner)
+                if Player(i).getController() == MAP_CONTROL_USER and Player(i).isAllyOf(winner) and not Player(i).hasTagMMDFlag()
                     MMD.flagPlayer(Player(i), PlayerFlag.Winner)
-                else if Player(i).getController() == MAP_CONTROL_USER and Player(i).isEnemyOf(winner)
+                    Player(i).addTagMMDFlag()
+                else if Player(i).getController() == MAP_CONTROL_USER and Player(i).isEnemyOf(winner) and not Player(i).hasTagLeaverInTeam() and not Player(i).hasTagMMDFlag()
                     MMD.flagPlayer(Player(i), PlayerFlag.Loser)
+                    Player(i).addTagMMDFlag()
+                else if Player(i).getController() == MAP_CONTROL_USER and Player(i).isEnemyOf(winner) and Player(i).hasTagLeaverInTeam() and not Player(i).hasTagMMDFlag()
+                    MMD.flagPlayer(Player(i), PlayerFlag.Drawer)
+                    Player(i).addTagMMDFlag()
         else
             for i = 0 to 12
-                MMD.flagPlayer(Player(i), PlayerFlag.Practicing)
+                if not Player(i).hasTagMMDFlag()
+                    MMD.flagPlayer(Player(i), PlayerFlag.Practicing)
 
         ClearTextMessages()
         print("|cffffd700Victory to following players:|r")
@@ -115,4 +135,4 @@ public function victory_checker()
                 print(Player(i).getColor().toColor().toColorString()+Player(i).getName())
         print("|r- - - - - - - - - - - - - - - - - - - -|r")
 
-        getTimer()..start(2, function victory_enable)..setData(winner.getId())
+        CreateTimer()..start(2, function victory_enable)..setData(winner.getId())

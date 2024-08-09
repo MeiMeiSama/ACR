@@ -2,8 +2,6 @@ package Thunder
 
 import ClosureForGroups
 import ObjectDefinitions
-import ClosureTimers
-import GroupUtils
 import TerrainUtils
 import DummyCaster
 import OrderIds
@@ -11,24 +9,154 @@ import ACR_Effects
 import AbilityGlobals
 import DamageEvent
 import ACR_TagSystem
+import TimerUtils
+
+vec2 array thunderTargetPos
+vec2 array thunderUserPos
+unit array thunderUser
+unit array thunderVictim
+int array thunderCount
+int array thunderHitCount
+group array thunderGroup
+effect array thunderEffect
+timer array thunderDashEffectDestroyTimer
+timer array thunderDashRingHitTimer
+timer array thunderDashArcoHitTimer
+timer array thunderDashRingStartTimer
+timer array thunderDashArcoStartTimer
+
+
 
 init
     thunderDash ()
 
-function trueDash(unit caster, vec2 pos, vec2 spellPos)
-    BlzSetUnitFacingEx(caster, pos.angleTo(spellPos).degrees())
-    caster.setAnimation(1)
-    caster.setInvulnerable(true)
-    if caster.hasTagPauseEX() == false
-        IssueImmediateOrder(caster, "stop")
-        caster.pauseEx()
-        caster.addTagPauseEX()
+function thunderDashEffectDestroy()
+    let id = GetExpiredTimer().getData()
+    thunderEffect[id].destr()
+    thunderDashEffectDestroyTimer[id].destr()
 
-function falseDash(unit caster)
-    caster.setInvulnerable(false)    
-    if caster.hasTagPauseEX()
-        caster.unpauseEx()
-        caster.removeTagPauseEX()
+
+function thunderDashArcoHit()
+    let pid = GetExpiredTimer().getData()
+    thunderHitCount[pid]++
+    thunderVictim[pid].issueImmediateOrder("stop")
+    flashEffect(THUNDER_EFFECT, thunderVictim[pid], "origin")
+    if thunderHitCount[pid] >= 20
+        thunderDashArcoHitTimer[pid].destr()
+
+function thunderDashRingHit()
+    let pid = GetExpiredTimer().getData()
+    thunderHitCount[pid]++
+    thunderVictim[pid].issueImmediateOrder("stop")
+    flashEffect(THUNDER_EFFECT, thunderVictim[pid], "origin")
+    if thunderHitCount[pid] >= 14
+        thunderDashRingHitTimer[pid].destr()
+
+function thunderDashArcoStart()
+    let id = GetExpiredTimer().getData()
+    let dmg = ((thunderUser[id].getStr(true) * 4.0) + 200)
+    thunderCount[id]++
+    if thunderUserPos[id].polarOffset(thunderUserPos[id].angleTo(thunderTargetPos[id]), 100).isTerrainPathable(PATHING_TYPE_WALKABILITY) == true and thunderUserPos[id].polarOffset(thunderUserPos[id].angleTo(thunderTargetPos[id]), 100).isTerrainPathable(PATHING_TYPE_FLYABILITY) == true// This one is weird, but it works this way: if playable area, and not boundary (black terrain) do
+        if thunderUser[id].isInvulnerable()
+            thunderUser[id].setInvulnerable(false)  
+        if thunderUser[id].hasTagPauseEX()
+            thunderUser[id].unpauseEx()
+            thunderUser[id].removeTagPauseEX()
+            thunderGroup[id].clear()
+            thunderDashArcoStartTimer[id].destr()
+    else
+        if thunderUserPos[id].distanceTo(thunderTargetPos[id]) >= 100 // if the distance where he wants to dash to is greater than 100, move him
+            thunderUser[id].setInvulnerable(true)
+            if thunderUser[id].hasTagPauseEX() == false
+                thunderUser[id].pauseEx()
+                thunderUser[id].addTagPauseEX()
+            thunderUser[id].setXY(thunderUserPos[id].polarOffset(thunderUserPos[id].angleTo(thunderTargetPos[id]), 100)) // Polar offset moves "position coordinates" a certain distance with given angle
+            thunderUserPos[id] = thunderUser[id].getPos()
+            forUnitsInRange(thunderUserPos[id], 250) (unit u) -> // Damage units once in range
+                if thunderUser[id].isEnemyOf(u) and thunderGroup[id].has(u) == false and u.isInvulnerable() == false
+                    DamageEvent.setNextDamageId(DAMAGE_ABILITY_THUNDER_ARCO)
+                    DamageEvent.setNextDamageFromCode()
+                    thunderUser[id].damageTarget(u, dmg, ATTACK_TYPE_MAGIC)
+                    thunderGroup[id].add(u)
+                    new DummyCaster()
+                    ..owner(thunderUser[id].getOwner())
+                    ..origin(thunderUser[id].getPos())
+                    ..castTarget(THUNDER_VONGOLA_SLOW_DUMMY_SPELL, 1, OrderIds.slow, u)
+                    let pid = u.getUserData()
+                    thunderVictim[pid] = u 
+                    thunderHitCount[pid] = 0
+                    thunderDashArcoHitTimer[pid] = CreateTimer()..startPeriodic(0.05, function thunderDashArcoHit)..setData(pid)
+
+        else // if the distance is closer than 100, stop the dash
+            if thunderUser[id].isInvulnerable()
+                thunderUser[id].setInvulnerable(false) 
+            if thunderUser[id].hasTagPauseEX()
+                thunderUser[id].unpauseEx()
+                thunderUser[id].removeTagPauseEX()
+                thunderGroup[id].clear()
+                thunderDashArcoStartTimer[id].destr()
+    if thunderCount[id] >= 10
+        if thunderUser[id].isInvulnerable()
+            thunderUser[id].setInvulnerable(false) 
+        if thunderUser[id].hasTagPauseEX()
+            thunderUser[id].unpauseEx()
+            thunderUser[id].removeTagPauseEX()
+            thunderGroup[id].clear()
+            thunderDashArcoStartTimer[id].destr()
+
+
+function thunderDashRingStart()
+    let id = GetExpiredTimer().getData()
+    let dmg = ((thunderUser[id].getStr(true) * 2.5) + 100)
+    thunderCount[id]++
+    if thunderUserPos[id].polarOffset(thunderUserPos[id].angleTo(thunderTargetPos[id]), 100).isTerrainPathable(PATHING_TYPE_WALKABILITY) == true and thunderUserPos[id].polarOffset(thunderUserPos[id].angleTo(thunderTargetPos[id]), 100).isTerrainPathable(PATHING_TYPE_FLYABILITY) == true// This one is weird, but it works this way: if playable area, and not boundary (black terrain) do
+        if thunderUser[id].isInvulnerable()
+            thunderUser[id].setInvulnerable(false)  
+        if thunderUser[id].hasTagPauseEX()
+            thunderUser[id].unpauseEx()
+            thunderUser[id].removeTagPauseEX()
+            thunderGroup[id].clear()
+            thunderDashRingStartTimer[id].destr()
+    else
+        if thunderUserPos[id].distanceTo(thunderTargetPos[id]) >= 100 // if the distance where he wants to dash to is greater than 100, move him
+            thunderUser[id].setInvulnerable(true)
+            if thunderUser[id].hasTagPauseEX() == false
+                thunderUser[id].pauseEx()
+                thunderUser[id].addTagPauseEX()
+            thunderUser[id].setXY(thunderUserPos[id].polarOffset(thunderUserPos[id].angleTo(thunderTargetPos[id]), 100)) // Polar offset moves "position coordinates" a certain distance with given angle
+            thunderUserPos[id] = thunderUser[id].getPos()
+            forUnitsInRange(thunderUserPos[id], 250) (unit u) -> // Damage units once in range
+                if thunderUser[id].isEnemyOf(u) and thunderGroup[id].has(u) == false and u.isInvulnerable() == false
+                    DamageEvent.setNextDamageId(DAMAGE_ABILITY_THUNDER_RING)
+                    DamageEvent.setNextDamageFromCode()
+                    thunderUser[id].damageTarget(u, dmg, ATTACK_TYPE_MAGIC)
+                    thunderGroup[id].add(u)
+                    new DummyCaster()
+                    ..owner(thunderUser[id].getOwner())
+                    ..origin(thunderUser[id].getPos())
+                    ..castTarget(THUNDER_VONGOLA_SLOW_DUMMY_SPELL, 1, OrderIds.slow, u)
+                    let pid = u.getUserData()
+                    thunderVictim[pid] = u 
+                    thunderHitCount[pid] = 0
+                    thunderDashRingHitTimer[pid] = CreateTimer()..startPeriodic(0.05, function thunderDashRingHit)..setData(pid)
+
+        else // if the distance is closer than 100, stop the dash
+            if thunderUser[id].isInvulnerable()
+                thunderUser[id].setInvulnerable(false) 
+            if thunderUser[id].hasTagPauseEX()
+                thunderUser[id].unpauseEx()
+                thunderUser[id].removeTagPauseEX()
+                thunderGroup[id].clear()
+                thunderDashRingStartTimer[id].destr()
+    if thunderCount[id] >= 10
+        if thunderUser[id].isInvulnerable()
+            thunderUser[id].setInvulnerable(false) 
+        if thunderUser[id].hasTagPauseEX()
+            thunderUser[id].unpauseEx()
+            thunderUser[id].removeTagPauseEX()
+            thunderGroup[id].clear()
+            thunderDashRingStartTimer[id].destr()  
+
 
 function thunderDash ()
     CreateTrigger()
@@ -37,112 +165,61 @@ function thunderDash ()
         if GetSpellAbilityId() == THUNDER_VONGOLA_ABILITY
             // Variables
             let caster = GetTriggerUnit()
+            let id = caster.getOwner().getId()
             let castX = GetSpellTargetX()
             let castY = GetSpellTargetY()
             var spellPos = vec2(castX, castY)
-            let dmg = ((caster.getStr(true) * 2.5) + 100)
-            let damaged = CreateGroup()
-            var pos = caster.getPos()
-            let eff1 = addEffect("war3mapImported\\a_new_k3.mdx", pos)
-            eff1..setYaw(pos.angleTo(spellPos))..setScale(1.5)
-            doAfter(3) -> 
-                eff1.destr()
+            if thunderGroup[id] == null
+                thunderGroup[id] = CreateGroup()
+            let pos = caster.getPos()
+            thunderUser[id] = caster
+            thunderUserPos[id] = pos
+            thunderTargetPos[id] = spellPos
+            thunderCount[id] = 0
             // Code
             caster.setAnimation("spell")
-            if pos.distanceTo(spellPos) > 1000 // If cast range is greater than 1500, set it to 1500
+            if pos.distanceTo(spellPos) > 1000 // If cast range is greater than 1000, set it to 1000
                 spellPos = pos.polarOffset(pos.angleTo(spellPos), 1000)
-            trueDash(caster, pos, spellPos)
-            // Loop
-            var dashCount = 0
-            doPeriodicallyCounted(0.03, 100) (CallbackCounted cb) ->
-                dashCount++
-                if pos.polarOffset(pos.angleTo(spellPos), 100).isTerrainPathable(PATHING_TYPE_WALKABILITY) == true and pos.polarOffset(pos.angleTo(spellPos), 100).isTerrainPathable(PATHING_TYPE_FLYABILITY) == true// This one is weird, but it works this way: if playable area, and not boundary (black terrain) do 
-                    falseDash(caster)
-                    damaged.release()
-                    destroy cb
-                else
-                    if pos.distanceTo(spellPos) > 100 // if the distance where he wants to dash to is greater than 100, move him
-                        caster.setInvulnerable(true)
-                        if caster.hasTagPauseEX() == false
-                            caster.pauseEx()
-                            caster.addTagPauseEX()
-                        caster.setXY(pos.polarOffset(pos.angleTo(spellPos), 100)) // Polar offset moves "position coordinates" a certain distance with given angle
-                        pos = caster.getPos()
-                        forUnitsInRange(pos, 250) (unit u) -> // Damage units once in range
-                            if caster.isEnemyOf(u) and damaged.has(u) == false and u.isInvulnerable() == false
-                                DamageEvent.setNextDamageId(DAMAGE_ABILITY_THUNDER_RING)
-                                DamageEvent.setNextDamageFromCode()
-                                caster.damageTarget(u, dmg, ATTACK_TYPE_MAGIC)
-                                damaged.add(u)
-                                new DummyCaster()
-                                ..owner(caster.getOwner())
-                                ..origin(caster.getPos())
-                                ..castTarget(THUNDER_VONGOLA_SLOW_DUMMY_SPELL, 1, OrderIds.slow, u)
-                                doPeriodicallyCounted(0.05, 14) (CallbackCounted cb) ->
-                                    IssueImmediateOrder(u, "stop")
-                                    flashEffect(THUNDER_EFFECT, u, "origin")
-
-                    else // if the distance is closer than 100, stop the dash
-                        falseDash(caster)
-                        damaged.release()
-                        destroy cb
-                if dashCount == 10
-                    falseDash(caster)
-                    damaged.release()
-                    destroy cb        
+            if pos.distanceTo(spellPos) >= 100 
+                thunderEffect[id] = addEffect("war3mapImported\\a_new_k3.mdx", pos)
+                thunderEffect[id]..setYaw(pos.angleTo(spellPos))..setScale(1.5)
+                BlzSetUnitFacingEx(caster, pos.angleTo(spellPos).degrees())
+                caster.setAnimation(1)
+                caster.setInvulnerable(true)
+                if caster.hasTagPauseEX() == false
+                    IssueImmediateOrder(caster, "stop")
+                    caster.pauseEx()
+                    caster.addTagPauseEX()
+                thunderDashEffectDestroyTimer[id] = CreateTimer()..start(3, function thunderDashEffectDestroy)..setData(id)    
+                thunderDashRingStartTimer[id] = CreateTimer()..startPeriodic(0.03, function thunderDashRingStart)..setData(id)
 
         else if GetSpellAbilityId() == THUNDER_ARCO_ABILITY
             // Variables
             let caster = GetTriggerUnit()
+            let id = caster.getOwner().getId()
             let castX = GetSpellTargetX()
             let castY = GetSpellTargetY()
             var spellPos = vec2(castX, castY)
-            let dmg = ((caster.getStr(true) * 4.0) + 200)
-            let damaged = CreateGroup()
-            var pos = caster.getPos()
+            if thunderGroup[id] == null
+                thunderGroup[id] = CreateGroup()
+            let pos = caster.getPos()
+            thunderUser[id] = caster
+            thunderUserPos[id] = pos
+            thunderTargetPos[id] = spellPos
+            thunderCount[id] = 0
             // Code
-            let eff2 = addEffect("war3mapImported\\a_new_k3.mdx", pos)
-            eff2..setYaw(pos.angleTo(spellPos))..setScale(1.5)
-            doAfter(3) -> 
-                eff2.destr()
-            caster.setAnimation("walk")
-            if pos.distanceTo(spellPos) > 1000 // If cast range is greater than 1500, set it to 1500
+            caster.setAnimation("spell")
+            if pos.distanceTo(spellPos) > 1000 // If cast range is greater than 1000, set it to 1000
                 spellPos = pos.polarOffset(pos.angleTo(spellPos), 1000)
-            trueDash(caster, pos, spellPos)
-            // Loop
-            var dashCount = 0
-            doPeriodicallyCounted(0.03, 100) (CallbackCounted cb) ->
-                dashCount++
-                if pos.polarOffset(pos.angleTo(spellPos), 100).isTerrainPathable(PATHING_TYPE_WALKABILITY) == true and pos.polarOffset(pos.angleTo(spellPos), 100).isTerrainPathable(PATHING_TYPE_FLYABILITY) == true // This one is weird, but it works this way: if playable area, and not boundary (black terrain) do 
-                    falseDash(caster)
-                    damaged.release()
-                    destroy cb
-                else
-                    if pos.distanceTo(spellPos) > 100 // if the distance where he wants to dash to is greater than 100, move him
-                        caster.setInvulnerable(true)
-                        if caster.hasTagPauseEX() == false
-                            caster.pauseEx()
-                            caster.addTagPauseEX()                        
-                        caster.setXY(pos.polarOffset(pos.angleTo(spellPos), 100)) // Polar offset moves "position coordinates" a certain distance with given angle
-                        pos = caster.getPos()
-                        forUnitsInRange(pos, 250) (unit u) -> // Damage units once in range
-                            if caster.isEnemyOf(u) and damaged.has(u) == false and u.isInvulnerable() == false
-                                DamageEvent.setNextDamageId(DAMAGE_ABILITY_THUNDER_ARCO)
-                                DamageEvent.setNextDamageFromCode()
-                                caster.damageTarget(u, dmg, ATTACK_TYPE_MAGIC)
-                                damaged.add(u)
-                                new DummyCaster()
-                                ..owner(caster.getOwner())
-                                ..origin(caster.getPos())
-                                ..castTarget(THUNDER_ARCO_SLOW_DUMMY_SPELL, 1, OrderIds.slow, u)
-                                doPeriodicallyCounted(0.05, 20) (CallbackCounted cb) ->
-                                    IssueImmediateOrder(u, "stop")
-                                    flashEffect(THUNDER_EFFECT, u, "origin")
-                    else // if the distance is closer than 100, stop the dash
-                        falseDash(caster)
-                        damaged.release()
-                        destroy cb
-                if dashCount == 10
-                    falseDash(caster)
-                    damaged.release()
-                    destroy cb   
+            if pos.distanceTo(spellPos) >= 100 
+                thunderEffect[id] = addEffect("war3mapImported\\a_new_k3.mdx", pos)
+                thunderEffect[id]..setYaw(pos.angleTo(spellPos))..setScale(1.5)
+                BlzSetUnitFacingEx(caster, pos.angleTo(spellPos).degrees())
+                caster.setAnimation(1)
+                caster.setInvulnerable(true)
+                if caster.hasTagPauseEX() == false
+                    IssueImmediateOrder(caster, "stop")
+                    caster.pauseEx()
+                    caster.addTagPauseEX()
+                thunderDashEffectDestroyTimer[id] = CreateTimer()..start(3, function thunderDashEffectDestroy)..setData(id)    
+                thunderDashArcoStartTimer[id] = CreateTimer()..startPeriodic(0.03, function thunderDashArcoStart)..setData(id)

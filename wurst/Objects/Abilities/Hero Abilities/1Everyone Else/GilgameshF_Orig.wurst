@@ -2,7 +2,7 @@ package GilgameshF_Orig
 import DamageEvent
 import AbilityGlobals
 import main
-import ClosureTimers
+import TimerUtils
 
 int array gilgameshFCount
 
@@ -13,11 +13,17 @@ function trig_GilgameshFConditions() returns boolean
     return GetSpellAbilityId() == 'A0NG'
 function trig_GilgameshFFunc016Func001Func027Func001Func011003003() returns boolean
     return IsUnitType(GetFilterUnit(), UNIT_TYPE_STRUCTURE) == false and IsUnitDeadBJ(GetFilterUnit()) == false and IsUnitInGroup(GetFilterUnit(), LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 744928215)) == false and GetUnitAbilityLevel(GetFilterUnit(), 'Avul') != 1 and IsUnitEnemy(GetFilterUnit(), LoadPlayerHandle(YDLOC, GetHandleId(GetExpiredTimer()), 603)) == true
+
+function gilgaFFlush()
+    let id = GetExpiredTimer().getData()
+    gilgameshFCount[id] = 0 
+
+
+
 function trig_GilgameshFFunc016Func001Func027Func001Func012A()
     let id = GetEnumUnit().getUserData()
     if gilgameshFCount[id] == 0
-        doAfter(5) ->
-            gilgameshFCount[id] = 0                
+        CreateTimer()..start(10, function gilgaFFlush)..setData(id)             
     if gilgameshFCount[id] < 3
         DamageEvent.setNextDamageId(DAMAGE_ABILITY_GILGAMESH_F)
         DamageEvent.setNextDamageFromCode()

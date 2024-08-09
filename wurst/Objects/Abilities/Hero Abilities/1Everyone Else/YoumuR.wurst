@@ -1,7 +1,6 @@
 package YoumuR
 import DamageEvent
 import AbilityGlobals
-import ClosureTimers
 
 init
     initTrig_YoumuR()
@@ -110,6 +109,10 @@ function trig_YoumuRFunc021T()
     else
         PauseUnit(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 549), true)
         PauseUnit(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), true)
+
+function youmuRSoundPlay()
+    PlaySoundBJ(gg_snd_Youmu4_2)
+
 function trig_YoumuRActions()
     timer _ydl_timer
     integer trigger_ID = LoadInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 865)
@@ -117,8 +120,7 @@ function trig_YoumuRActions()
     SaveInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 865, trigger_ID)
     SaveInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 1045, trigger_ID)
     PlaySoundBJ(gg_snd_Youmu4_1)
-    doAfter(2) ->
-        PlaySoundBJ(gg_snd_Youmu4_2)
+    CreateTimer()..start(2, function youmuRSoundPlay)
     SaveUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594, GetTriggerUnit())
     SaveUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 549, GetSpellTargetUnit())
     SavePlayerHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 603, GetOwningPlayer(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594)))

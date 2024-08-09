@@ -1,9 +1,12 @@
 package ReviveHeroes
+
 import TimerUtils
 import ACR_TagSystem
+
 public timer array heroDeathTimer
 public timerdialog array heroDeathTimerDialog
 real array reviveTime
+timer array reviveTimer
 
 init
     reviveHeroSetup()
@@ -13,7 +16,7 @@ init
 function afterRevive()
     let pid = GetExpiredTimer().getData()
     udg_PlayHero[pid]..setInvulnerable(false)
-    GetExpiredTimer().destr()
+    reviveTimer[pid].destr()
 
 public function unit.reviveHero()
     let pid = this.getOwner().getId()
@@ -38,7 +41,7 @@ public function unit.reviveHero()
     SetUnitTimeScalePercent(udg_PlayHero[pid], 100)
     udg_PlayHero[pid].getOwner()
     ..cameraClearNoise()..panCameraToTimed(udg_PlayHero[pid].getPos(), 0)
-    CreateTimer()..start(2, function afterRevive)..setData(pid)      
+    reviveTimer[pid] = CreateTimer()..start(2, function afterRevive)..setData(pid)      
 
 function reviveHeroInternal()
     let pid = GetExpiredTimer().getData()
@@ -63,7 +66,7 @@ function reviveHeroInternal()
     SetUnitTimeScalePercent(udg_PlayHero[pid], 100)
     udg_PlayHero[pid].getOwner()
     ..cameraClearNoise()..panCameraToTimed(udg_PlayHero[pid].getPos(), 0)
-    CreateTimer()..start(2, function afterRevive)..setData(pid)    
+    reviveTimer[pid] = CreateTimer()..start(2, function afterRevive)..setData(pid)    
     heroDeathTimerDialog[pid].destr()
     heroDeathTimer[pid].destr()
 

@@ -1,18 +1,20 @@
 package N_Natsu_T
 
-import ClosureTimers
 import MusicPlaylist
 import ObjectDefinitions
 import AbilityGlobals
 // import ACR_TagSystem
 import ACR_Transformation
+import TimerUtils
 
+unit natsu
 int natsuEPassive = 'A187'
 int natsuEPassiveBuff = 'B01P'
 int natsuT = 'A19L'
 int natsuModoBuff = 'B00Y'
 int natsuModoGBuff = 'B00Z'
 int natsuModelEffectBuff = 'B001'
+int natsuEPassiveLvl
 
 init
     normalNatsuModoT()
@@ -24,8 +26,9 @@ function normalNatsuModoT()
     ..addAction() ->
         if ((GetSpellAbilityId() == 'A19L')) 
             let caster = GetTriggerUnit()
+            natsu = caster
             let pid = caster.getOwner().getId()
-            let natsuEPassiveLvl = GetUnitAbilityLevel(caster, natsuEPassive)
+            natsuEPassiveLvl = GetUnitAbilityLevel(caster, natsuEPassive)
             caster.removeAbility(FIRE_SURROUND_MODEL_EFFECT)
             caster.removeAbility(natsuModelEffectBuff)
             caster.removeAbility(SPELL_G[pid])
@@ -39,16 +42,18 @@ function normalNatsuModoT()
             StopMusic(false)
             PlaySoundBJ(gg_snd_Rnatsu5_1)                
             acrTransformation(caster, 40, 'H001', 'H00S', 850, 4.0)
-            doPeriodically(0.01) (CallbackPeriodic cb) ->
-                if transformationActive[pid] == false
-                    caster.addAbility(SPELL_G[pid])
-                    caster.addAbility(natsuEPassive)
-                    caster.setAbilityLevel(natsuEPassive, natsuEPassiveLvl)
-                    caster.hideAbility(natsuEPassive, true) 
-                    if gg_snd_Rnatsu5_1.isPlaying()
-                        gg_snd_Rnatsu5_1.stop(false, false) 
-                    destroy cb
+            CreateTimer()..startPeriodic(0.01, function natsuModoTEnd).setData(pid)
 
+function natsuModoTEnd()
+    let pid = GetExpiredTimer().getData()
+    if transformationActive[pid] == false
+        natsu.addAbility(SPELL_G[pid])
+        natsu.addAbility(natsuEPassive)
+        natsu.setAbilityLevel(natsuEPassive, natsuEPassiveLvl)
+        natsu.hideAbility(natsuEPassive, true) 
+        if gg_snd_Rnatsu5_1.isPlaying()
+            gg_snd_Rnatsu5_1.stop(false, false) 
+        GetExpiredTimer().destr()
 
 
 

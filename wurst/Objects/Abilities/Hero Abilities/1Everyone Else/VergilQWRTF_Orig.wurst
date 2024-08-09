@@ -4,10 +4,10 @@ import AbilityGlobals
 import main
 import ACR_Stun
 import TimerUtils
-import ClosureTimers
 import UpdateTooltips
 import ACR_PauseArea
 
+unit vergil
 vec2 vergilTTargetPoint
 
 init
@@ -1027,14 +1027,9 @@ function trig_VergilQWRTFActions()
         SaveInteger(YDLOC, GetHandleId(_ydl_timer), 280, LoadInteger(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 280))
         TimerStart(_ydl_timer, 0.01, true, function trig_VergilQWRTFFunc007Func001Func002Func001Func046T)
     else if GetSpellAbilityId() == 'A0YD'
-        doPeriodically(0.03) (CallbackPeriodic cb) ->
-            if IsUnitGroupEmptyBJ(LoadGroupHandle(YDHT, 1, 538958995)) == true and IsUnitGroupEmptyBJ(LoadGroupHandle(YDHT, 2, 538958995)) == true
-                let caster = GetTriggerUnit()
-                if caster.hasAbility('A0YD')
-                    UnitRemoveAbility(caster, 'A0YD')
-                    SetPlayerAbilityAvailable(caster.getOwner(), 'A0WQ', true)
-                    caster.startAbilityCooldown('A0WQ')
-                destroy cb           
+        let caster = GetTriggerUnit()
+        vergil = caster
+        CreateTimer()..startPeriodic(0.03, function vergilREnd)         
         RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 310))
         if IsUnitGroupEmptyBJ(LoadGroupHandle(YDHT, 1, 538958995)) == true and IsUnitGroupEmptyBJ(LoadGroupHandle(YDHT, 2, 538958995)) == true
             DoNothing()
@@ -1253,6 +1248,14 @@ function trig_VergilQWRTFActions()
         SaveInteger(YDLOC, GetHandleId(_ydl_timer), 943, LoadInteger(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 943))
         TimerStart(_ydl_timer, 0.01, true, function trig_VergilQWRTFFunc007Func001Func002Func001Func002Func002Func001Func016T)
     FlushChildHashtable(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID)
+
+function vergilREnd()
+    if IsUnitGroupEmptyBJ(LoadGroupHandle(YDHT, 1, 538958995)) == true and IsUnitGroupEmptyBJ(LoadGroupHandle(YDHT, 2, 538958995)) == true
+        if vergil.hasAbility('A0YD')
+            UnitRemoveAbility(vergil, 'A0YD')
+            SetPlayerAbilityAvailable(vergil.getOwner(), 'A0WQ', true)
+            vergil.startAbilityCooldown('A0WQ')
+        GetExpiredTimer().destr() 
 function initTrig_VergilQWRTF_Orig()
     gg_trg_VergilQWRTF = CreateTrigger()
     TriggerRegisterAnyUnitEventBJ(gg_trg_VergilQWRTF, EVENT_PLAYER_UNIT_SPELL_EFFECT)

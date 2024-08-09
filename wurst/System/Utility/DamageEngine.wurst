@@ -7,6 +7,7 @@ import AbilityClassifications
 import SoundUtils
 import main
 import Cloud
+import Mist
 constant izanamiSound_proc = new SoundDefinition("war3mapImported\\Izanami_proc.mp3")
 constant abigailSound_proc = new SoundDefinition("war3mapImported\\AbigailSE3.mp3")
 constant rinneganSound_proc = new SoundDefinition("war3mapImported\\Rinnegan_proc.mp3")
@@ -1053,35 +1054,53 @@ init
                     // ━━━━━━━━━━━━━━━ [SPECIAL CASES: ITEMS] ━━━━━━━━━━━━━━━━━━ //        
 
                     else if id == DAMAGE_ABILITY_THUNDER_RING
-                        _dmg = (100.00 + (2.5 * stat))                                                   // 350 dmg in testing environment 
+                        _dmg = (100.00 + (2.5 * caster.getStr(true)))                                                   // 350 dmg in testing environment 
                         DamageEvent.setAmount(_dmg)
-                        //printTimedToPlayer (R2S(_dmg) , 1, caster.getOwner())
-                        //printTimedToPlayer("THUNDER RING", 1, caster.getOwner())                
+                        // printTimedToPlayer (R2S(_dmg) , 1, caster.getOwner())
+                        // printTimedToPlayer("THUNDER RING", 1, caster.getOwner())                
                     else if id == DAMAGE_ABILITY_THUNDER_ARCO
-                        _dmg = (200.00 + (4.0 * stat))                                                   // 600 dmg in testing environment
+                        _dmg = (200.00 + (4.0 * caster.getStr(true)))                                                   // 600 dmg in testing environment
                         DamageEvent.setAmount(_dmg)
-                        //printTimedToPlayer (R2S(_dmg) , 1, caster.getOwner())
-                        //printTimedToPlayer("THUNDER ARCO", 1, caster.getOwner())
+                        // printTimedToPlayer (R2S(_dmg) , 1, caster.getOwner())
+                        // printTimedToPlayer("THUNDER ARCO", 1, caster.getOwner())
                     else if id == DAMAGE_ABILITY_STORM_RING
-                        _dmg = (100.00 + (2.5 * stat))                                                   // 350 dmg in testing environment 
+                        _dmg = (100.00 + (2.5 * caster.getInt(true)))                                                   // 350 dmg in testing environment 
                         DamageEvent.setAmount(_dmg)
                         //printTimedToPlayer (R2S(_dmg) , 1, caster.getOwner())
                         //printTimedToPlayer("STORM RING", 1, caster.getOwner())                
                     else if id == DAMAGE_ABILITY_STORM_ARCO
-                        _dmg = (200.00 + (4.0 * stat))                                                   // 600 dmg in testing environment
+                        _dmg = (200.00 + (4.0 * caster.getInt(true)))                                                   // 600 dmg in testing environment
                         DamageEvent.setAmount(_dmg)
                         //printTimedToPlayer (R2S(_dmg) , 1, caster.getOwner())
                         //printTimedToPlayer("STORM ARCO", 1, caster.getOwner())
                     else if id == DAMAGE_ABILITY_RAIN_RING
-                        _dmg = (100.00 + (2.5 * stat))                                                   // 350 dmg in testing environment 
+                        _dmg = (100.00 + (2.5 * caster.getAgi(true)))                                                   // 350 dmg in testing environment 
                         DamageEvent.setAmount(_dmg)
                         //printTimedToPlayer (R2S(_dmg) , 1, caster.getOwner())
                         //printTimedToPlayer("RAIN RING", 1, caster.getOwner())                
                     else if id == DAMAGE_ABILITY_RAIN_ARCO
-                        _dmg = (200.00 + (4.0 * stat))                                                   // 600 dmg in testing environment
+                        _dmg = (200.00 + (4.0 * caster.getAgi(true)))                                                   // 600 dmg in testing environment
                         DamageEvent.setAmount(_dmg)
                         //printTimedToPlayer (R2S(_dmg) , 1, caster.getOwner())
                         //printTimedToPlayer("RAIN ARCO", 1, caster.getOwner())
+
+
+
+                    // ━━━━━━━━━━━━━━━ [BOSS] ━━━━━━━━━━━━━━━━━━ //
+
+
+
+                    else if id == DAMAGE_ABILITY_BOSS_1
+                        _dmg = (100.00 + (1.5 * stat))                                                  // aoe 1
+                        DamageEvent.setAmount(_dmg)    
+                    else if id == DAMAGE_ABILITY_BOSS_2
+                        _dmg = (300.00 + (1.5 * stat))                                                  // aoe 2
+                        DamageEvent.setAmount(_dmg)                                                                 
+                    else if id == DAMAGE_ABILITY_BOSS_3
+                        _dmg = (400.00 + (3.5 * stat))                                                  // single target 
+                        DamageEvent.setAmount(_dmg)                                               
+
+
 
                     // ━━━━━━━━━━━━━━━ [SPECIAL CASES: SUPER EXCEPTIONS] ━━━━━━━━━━━━━━━━━━ //
 
@@ -1144,28 +1163,38 @@ init
                             cloudAbsorbValue[cloudID] = 0 // Sets absorb value to 0
 
                     if DamageEvent.getTarget().hasAbility('B06M') // If target has (Mist Ring)
+                        let mistID = target.getOwner().getId()
                         if (DamageEvent.getAmount() * 0.2) < target.getMana() // If damage is lower than current mana
                             DamageEvent.setAmount(DamageEvent.getAmount() * 0.8) // Sets damage to 80%
                             target.setMana(target.getMana() - (DamageEvent.getAmount() * 0.4)) // drains mana equal to 40% of damage
                         else if (DamageEvent.getAmount() * 0.2) >= target.getMana() //else if damage is higher than mana      
                             DamageEvent.setAmount(DamageEvent.getAmount() - target.getMana()) // Lowers damage
                             target.setMana(0) // Sets mana to 0
-                            for i = 0 to 5
+                            mistRingON[mistID] = false
+                            mistArcoON[mistID] = false
+                            target.removeAbility('B06M')                             
+                            for i = 0 to 6
                                 if UnitItemInSlot(target, i).getTypeId() == MIST_RING_VONGOLA
                                     UnitItemInSlot(target, i).setIconPath("ReplaceableTextures\\CommandButtons\\BTNMistX.blp")
-                                    target.removeAbility('B06M') 
+                                if UnitItemInSlot(target, i).getTypeId() == MIST_RING_ARCOBALENO
+                                    UnitItemInSlot(target, i).setIconPath("ReplaceableTextures\\CommandButtons\\BTNArcobalenoMist.blp")                                    
 
                     if DamageEvent.getTarget().hasAbility('B06O') // If target has (Mist Arco)
+                        let mistID = target.getOwner().getId()
                         if (DamageEvent.getAmount() * 0.4) < target.getMana() // If damage is lower than current mana
                             DamageEvent.setAmount(DamageEvent.getAmount() * 0.6) // Sets damage to 60%
                             target.setMana(target.getMana() - (DamageEvent.getAmount() * 0.8)) // drains mana equal to 80% of damage
                         else if (DamageEvent.getAmount() * 0.4) >= target.getMana() //else if damage is higher than mana      
                             DamageEvent.setAmount(DamageEvent.getAmount() - target.getMana()) // Lowers damage
                             target.setMana(0) // Sets mana to 0
-                            for i = 0 to 5
+                            target.removeAbility('B06O')                              
+                            mistRingON[mistID] = false
+                            mistArcoON[mistID] = false                            
+                            for i = 0 to 6
+                                if UnitItemInSlot(target, i).getTypeId() == MIST_RING_VONGOLA
+                                    UnitItemInSlot(target, i).setIconPath("ReplaceableTextures\\CommandButtons\\BTNMistX.blp")   
                                 if UnitItemInSlot(target, i).getTypeId() == MIST_RING_ARCOBALENO
-                                    UnitItemInSlot(target, i).setIconPath("ReplaceableTextures\\CommandButtons\\BTNArcobalenoMist.blp")
-                                    target.removeAbility('B06O')                                                                
+                                    UnitItemInSlot(target, i).setIconPath("ReplaceableTextures\\CommandButtons\\BTNArcobalenoMist.blp")                                                                                             
                     if gracePeriod == true
                         DamageEvent.setAmount(0)
                         DamageEvent.abortCurrent()

@@ -1,7 +1,7 @@
 package HibariR
 import DamageEvent
 import AbilityGlobals
-import ClosureTimers
+import TimerUtils
 
 int array hibariRCount
 
@@ -12,12 +12,16 @@ function trig_HibariRConditions() returns boolean
     return GetSpellAbilityId() == 'A0AF'
 function trig_HibariRFunc017Func001Func012003003() returns boolean
     return IsUnitType(GetFilterUnit(), UNIT_TYPE_STRUCTURE) == false and GetUnitAbilityLevel(GetFilterUnit(), 'Avul') != 1 and IsUnitDeadBJ(GetFilterUnit()) == false and IsUnitEnemy(GetFilterUnit(), LoadPlayerHandle(YDLOC, GetHandleId(GetExpiredTimer()), 603)) == true
+
+function hibariRFlush()
+    let id = GetExpiredTimer().getData()
+    hibariRCount[id] = 0
+
 function trig_HibariRFunc017Func001Func014A()
     GroupAddUnit(LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 1153), GetEnumUnit())
     let id = GetEnumUnit().getUserData()
     if hibariRCount[id] == 0
-        doAfter(5) ->
-            hibariRCount[id] = 0                
+        CreateTimer()..start(5, function hibariRFlush).setData(id)               
     if hibariRCount[id] < 3        
         DamageEvent.setNextDamageId(DAMAGE_ABILITY_HIBARI_R)
         DamageEvent.setNextDamageFromCode()

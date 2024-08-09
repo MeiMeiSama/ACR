@@ -21,7 +21,7 @@ function acrSilenceEnd()
         acrSilencedUnit[id].addTagSilence()
     acrSilenceCount[id] = acrSilenceCount[id] + 0.02         
     if acrSilenceCount[id] >= acrSilenceDuration[id]
-        GetExpiredTimer().release()
+        acrSilenceTimer[id].destr()
         if acrSilencedUnit[id].hasTagSilence()
             acrSilencedUnit[id].removeAbility(SILENCE_DEBUFF)
             acrSilencedUnit[id].removeTagSilence()      
@@ -33,7 +33,7 @@ public function acrSilence(unit caster, unit victim, real duration)
         acrSilenceDuration[id] = duration
         acrSilenceCount[id] = 0.0
         if victim.hasTagSilence()
-            acrSilenceTimer[id].release()
+            acrSilenceTimer[id].destr()
         else
             new DummyCaster()
             ..owner(caster.getOwner())

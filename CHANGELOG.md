@@ -1,3 +1,84 @@
+# ━━━━━━━━━ Anime Carnage Reforged v2.0.7 ━━━━━━━━━ #
+
+### Added
+1. Added a system to prevent rating loss in the affected team with the leaver. Disabled after the 12-min mark. Leaver will lose rating.
+
+### Improved
+1. Kotori's R/T "knockback" has been reduced by 50%.
+
+### Changed
+1. Nothing Changed. 
+
+### Fixed
+1. Tatsuya's Q no longer makes him stuck sometimes.
+2. Saber's Q no longer makes her stuck sometimes.
+3. Rentaro's Q no longer makes him able to walk over terrain.
+4. Nanoha's T no longer provides perma vision.
+5. Hibari's T is now fixed ... but like, actually.
+
+### Deleted
+Nothing Deleted.
+
+# ━━━━━━━━━ Anime Carnage Reforged v2.0.6 ━━━━━━━━━ #
+
+### Added
+1. Nothing Added.
+
+### Improved
+1. Nothing Improved.
+
+### Changed
+1. Nothing Changed.
+
+### Fixed
+1. Seems like everything that made 2.0.4 and 2.0.5 unplayable is fixed.
+
+### Deleted
+Nothing Deleted.
+
+# ━━━━━━━━━ Anime Carnage Reforged v2.0.5 ━━━━━━━━━ #
+
+### Added
+1. Nothing Added.
+
+### Improved
+1. Mist ring and arco received some QoL updates.
+
+### Changed
+1. Nothing Changed.
+
+### Fixed
+1. Cloud ring does no longer last permanently.
+2. Sakuya's T now only deals damage to each enemy once. 
+3. Sakuya's W stun has been removed.
+4. Sakuya's R silence has been removed.
+
+### Deleted
+Nothing Deleted.
+
+# ━━━━━━━━━ Anime Carnage Reforged v2.0.4 ━━━━━━━━━ #
+
+### Added
+1. Added new icons for all characters.
+
+### Improved
+1. Altera's F cast time has been reduced by approximately 66%.
+2. Hibari's T now makes allies immune to magic damage along with enemies.
+3. Ainz's F now grants him maximum movement speed for its duration.
+
+### Changed
+1. Players can now only carry one boots item at a time.
+
+### Fixed
+1. Hibari's T now properly removes magic immunity from affected characters after it ends.
+2. Dio's/Saber Lily's passives now properly heal for 50% of basic attack damage receieved. 
+3. Gajeel's/Mashu's/Luffy's passives now properly reduce incoming basic attack damage by 35%.
+4. Aqua's F1 now properly deals damage to non-hero enemy units.
+5. Modos should now properly change abilities back to normal after they end.
+
+### Deleted
+Nothing Deleted.
+
 # ━━━━━━━━━ Anime Carnage Reforged v2.0.3 ━━━━━━━━━ #
 
 ### Added

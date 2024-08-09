@@ -1,14 +1,17 @@
 package Luffy_F
 
-import ClosureTimers
 import MusicPlaylist
 import AbilityGlobals
 // import ACR_TagSystem
 import ObjectDefinitions
 import ACR_Transformation
+import TimerUtils
 // import Translate_F
 // import UpdateAbilityData
 
+unit luffy
+int luffyE = 'A047'
+int luffyELvl
 
 init
     luffyModoF()
@@ -20,9 +23,9 @@ function luffyModoF()
     ..addAction() ->
         if ((GetSpellAbilityId() == 'A19N')) 
             let caster = GetTriggerUnit()
+            luffy = caster
             let pid = caster.getOwner().getId()
-            let luffyE = 'A047'
-            let luffyELvl = caster.getAbilityLevel(luffyE) 
+            luffyELvl = caster.getAbilityLevel(luffyE) 
             caster.removeAbility(SPELL_G[pid])
             caster.removeAbility(luffyE)
             caster.removeAbility('B00U')                
@@ -30,16 +33,17 @@ function luffyModoF()
             StopMusic(false)
             PlaySoundBJ(gg_snd_Gear4luffy)                
             acrTransformation(caster, 40, MONKEYD_LUFFY, 'H00U', 850, 4.0)
-            doPeriodically(0.01) (CallbackPeriodic cb) ->
-                if transformationActive[pid] == false
-                    caster.addAbility(luffyE)
-                    caster.setAbilityLevel(luffyE, luffyELvl)
-                    caster.addAbility(SPELL_G[pid]) 
-                    if gg_snd_Gear4luffy.isPlaying()
-                        gg_snd_Gear4luffy.stop(false, false) 
-                    destroy cb
+            CreateTimer()..startPeriodic(0.01, function luffyModoTEnd).setData(pid)
 
-
+function luffyModoTEnd()
+    let pid = GetExpiredTimer().getData()
+    if transformationActive[pid] == false
+        luffy.addAbility(luffyE)
+        luffy.setAbilityLevel(luffyE, luffyELvl)
+        luffy.addAbility(SPELL_G[pid]) 
+        if gg_snd_Gear4luffy.isPlaying()
+            gg_snd_Gear4luffy.stop(false, false) 
+        GetExpiredTimer().destr() 
 
 
 

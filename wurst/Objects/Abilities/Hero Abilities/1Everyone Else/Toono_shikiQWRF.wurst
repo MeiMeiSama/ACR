@@ -4,7 +4,6 @@ import AbilityGlobals
 import main
 import AbilityQ_data
 import SoundUtils
-import ClosureTimers
 import ACR_Knockback
 
 constant tohnoQ = new SoundDefinition("war3mapImported\\TohnoQ.mp3")
@@ -464,6 +463,13 @@ function trig_Toono_shikiQWRFFunc007Func042T()
             DestroyGroup(LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 993))
             FlushChildHashtable(YDLOC, GetHandleId(GetExpiredTimer()))
             DestroyTimer(GetExpiredTimer())
+
+function tohnoWSoundPlay1()
+    tohnoW12.play()
+
+function tohnoWSoundPlay2()
+    tohnoW22.play()
+
 function trig_Toono_shikiQWRFActions()
     timer _ydl_timer
     integer trigger_ID = LoadInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 865)
@@ -545,13 +551,11 @@ function trig_Toono_shikiQWRFActions()
     else if GetSpellAbilityId() == 'A0HS'
         if GetRandomInt(1, 2) == 1
             tohnoW11.play()
-            doAfter(1.0) -> 
-                tohnoW12.play()
+            CreateTimer()..start(1.0, function tohnoWSoundPlay1)
                 
         else 
             tohnoW21.play()
-            doAfter(1.0) -> 
-                tohnoW22.play()
+            CreateTimer()..start(1.0, function tohnoWSoundPlay2)
         PauseUnitBJ(true, LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594))
         SetUnitInvulnerable(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594), true)
         PauseUnitBJ(true, LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 549))

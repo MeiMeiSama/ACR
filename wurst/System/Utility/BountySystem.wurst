@@ -1,4 +1,5 @@
 package BountySystem
+
 import Scoreboard
 import main
 import AbilityGlobals
@@ -6,6 +7,7 @@ import wc3Stats
 import ClosureEvents
 import GoldIncome
 import ErrorHandling
+
 string COLOR_GOLD = "|cffffd700"
 string COLOR_RED = "|cffff0000"
 string COLOR_LIGHTBLUE = "|cff63ceff"

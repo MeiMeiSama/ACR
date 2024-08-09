@@ -2,7 +2,6 @@ package HSaberQ_Orig
 import DamageEvent
 import AbilityGlobals
 import main
-// import ClosureTimers
 init
     initTrig_HSaberQ_Orig()
 

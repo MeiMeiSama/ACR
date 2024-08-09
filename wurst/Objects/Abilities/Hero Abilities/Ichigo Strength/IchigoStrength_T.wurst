@@ -1,13 +1,17 @@
 package IchigoStrength_T
-import ClosureTimers
 import main
 import MusicPlaylist
 import ObjectDefinitions
 // import AbilityGlobals
 // import ACR_TagSystem
 import ACR_Transformation
+import TimerUtils
 // import Translate_F
 // import UpdateAbilityData
+
+unit ichigoStr
+int ichigoStrE = 'A0X9'
+int ichigoStrELvl
 
 init
     ichigoModoT()
@@ -19,23 +23,25 @@ function ichigoModoT()
     ..addAction() ->
         if ((GetSpellAbilityId() == ICHIGO_STRENGTH_T)) 
             let caster = GetTriggerUnit()
+            ichigoStr = caster
             let pid = caster.getOwner().getId()
-            let ichigoStrE = 'A0X9'
-            let ichigoStrELvl = caster.getAbilityLevel(ichigoStrE)
+            ichigoStrELvl = caster.getAbilityLevel(ichigoStrE)
             caster.removeAbility(ichigoStrE)
             caster.removeAbility('B058')            
             stopBgm()
             StopMusic(false)
             PlaySoundBJ(gg_snd_IchigoBGM)                
             acrTransformation(caster, 40, ICHIGO_STRENGTH, ICHIGO_STRENGTH_MODO, 850, 4.0)
-            doPeriodically(0.01) (CallbackPeriodic cb) ->
-                if transformationActive[pid] == false
-                    caster.addAbility(ichigoStrE)
-                    caster.setAbilityLevel(ichigoStrE, ichigoStrELvl)
-                    if gg_snd_IchigoBGM.isPlaying()
-                        gg_snd_IchigoBGM.stop(false, false) 
-                    destroy cb
+            CreateTimer()..startPeriodic(0.01, function rogueModoTEnd).setData(pid)
 
+function rogueModoTEnd()
+    let pid = GetExpiredTimer().getData()
+    if transformationActive[pid] == false
+        ichigoStr.addAbility(ichigoStrE)
+        ichigoStr.setAbilityLevel(ichigoStrE, ichigoStrELvl)
+        if gg_snd_IchigoBGM.isPlaying()
+            gg_snd_IchigoBGM.stop(false, false) 
+        GetExpiredTimer().destr() 
 
 
 

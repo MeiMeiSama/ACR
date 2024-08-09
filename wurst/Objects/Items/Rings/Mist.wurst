@@ -2,6 +2,14 @@ package Mist
 import ObjectDefinitions
 import DummyCaster
 import OrderIds
+import TimerUtils
+
+unit array mistOwner
+timer array mistReviveTimer
+timer array mistDropTimer
+timer array mistPickUpTimer
+public boolean array mistRingON
+public boolean array mistArcoON
 
 init
 
@@ -11,53 +19,135 @@ function mistActivate ()
     CreateTrigger()
     ..registerAnyUnitEvent(EVENT_PLAYER_UNIT_USE_ITEM)
     ..addAction() ->
-        let mist = GetManipulatedItem()
         if GetManipulatedItem().getTypeId() == MIST_RING_VONGOLA or GetManipulatedItem().getTypeId() == MIST_RING_ARCOBALENO
             let caster = GetTriggerUnit()
-            if GetManipulatedItem().getTypeId() == MIST_RING_VONGOLA
-                if not caster.hasAbility('B06M')
-                    caster.getItemById(MIST_RING_ARCOBALENO).setIconPath("ReplaceableTextures\\CommandButtons\\BTNArcobalenoMist.blp")
-                    caster.removeAbility('B06O')     
-                    mist.setIconPath("ReplaceableTextures\\CommandButtons\\BTNNeutralManaShieldOff.blp")
+            let id = caster.getOwner().getId()
+            if caster.hasAbility('B06M') 
+                caster.removeAbility('B06M') 
+            if caster.hasAbility('B06O')
+                caster.removeAbility('B06O')             
+            if GetManipulatedItem().getTypeId() == MIST_RING_VONGOLA    
+                if mistRingON[id] == true
+                    mistRingON[id] = false
+                    mistArcoON[id] = false
+                    mistSkinSwap(caster)
+                else
+                    mistRingON[id] = true
+                    mistArcoON[id] = false
                     new DummyCaster()
                     ..owner(caster.getOwner())
                     ..origin(caster.getPos())
                     ..castTarget(MIST_RING_DUMMY_SPELL, 1, OrderIds.bloodlust, caster)
-                else
-                    caster.removeAbility('B06M')     
-                    mist.setIconPath("ReplaceableTextures\\CommandButtons\\BTNMistX.blp") 
-
+                    mistSkinSwap(caster)                                         
             else
-                if not caster.hasAbility('B06O')
-                    caster.getItemById(MIST_RING_VONGOLA).setIconPath("ReplaceableTextures\\CommandButtons\\BTNMistX.blp")
-                    caster.removeAbility('B06M')   
-                    mist.setIconPath("ReplaceableTextures\\CommandButtons\\BTNNeutralManaShieldOff.blp")
+                if mistArcoON[id] == true
+                    mistRingON[id] = false
+                    mistArcoON[id] = false    
+                    mistSkinSwap(caster)                              
+                else
+                    mistRingON[id] = false
+                    mistArcoON[id] = true     
                     new DummyCaster()
                     ..owner(caster.getOwner())
                     ..origin(caster.getPos())
-                    ..castTarget(MIST_ARCO_DUMMY_SPELL, 1, OrderIds.bloodlust, caster) 
-                else
-                    caster.removeAbility('B06O')     
-                    mist.setIconPath("ReplaceableTextures\\CommandButtons\\BTNArcobalenoMist.blp")     
+                    ..castTarget(MIST_ARCO_DUMMY_SPELL, 1, OrderIds.bloodlust, caster)
+                    mistSkinSwap(caster)
 
     CreateTrigger()
     ..registerAnyUnitEvent(EVENT_PLAYER_UNIT_DEATH)
     ..addAction() -> 
         if GetDyingUnit().hasItemById(MIST_RING_VONGOLA) or GetDyingUnit().hasItemById(MIST_RING_ARCOBALENO)
             let caster = GetDyingUnit()
-            caster.getItemById(MIST_RING_VONGOLA).setIconPath("ReplaceableTextures\\CommandButtons\\BTNMistX.blp")
-            caster.getItemById(MIST_RING_ARCOBALENO).setIconPath("ReplaceableTextures\\CommandButtons\\BTNArcobalenoMist.blp")
-    
-            // for i = 0 to 5
-            //     if UnitItemInSlot(caster, i).getTypeId() == MIST_RING_VONGOLA
-            //         UnitItemInSlot(caster, i).setIconPath("ReplaceableTextures\\CommandButtons\\BTNMistX.blp")
-            //         caster.removeAbility('B06M')
-            //     if UnitItemInSlot(caster, i).getTypeId() == MIST_RING_ARCOBALENO
-            //         UnitItemInSlot(caster, i).setIconPath("ReplaceableTextures\\CommandButtons\\BTNArcobalenoMist.blp")
-            //         caster.removeAbility('B06O')                      
+            let id = caster.getOwner().getId()
+            mistOwner[id] = caster
+            mistRingON[id] = false
+            mistArcoON[id] = false  
+            mistReviveTimer[id] = CreateTimer()..startPeriodic(0.01, function mistDrop)..setData(id)
 
+    CreateTrigger()
+    ..registerAnyUnitEvent(EVENT_PLAYER_UNIT_PICKUP_ITEM)
+    ..addAction() ->
+        if GetManipulatedItem().getTypeId() == MIST_RING_VONGOLA or GetManipulatedItem().getTypeId() == MIST_RING_ARCOBALENO
+            let caster = GetTriggerUnit()
+            let id = caster.getOwner().getId()
+            mistOwner[id] = caster
+            if caster.hasAbility('B06M') == true
+                caster.removeAbility('B06M')
+            if caster.hasAbility('B06O') == true
+                caster.removeAbility('B06O')
+            mistRingON[id] = false
+            mistArcoON[id] = false      
+            mistPickUpTimer[id] = CreateTimer()..startPeriodic(0.01, function mistDrop)..setData(id)                     
 
-            
+    CreateTrigger()
+    ..registerAnyUnitEvent(EVENT_PLAYER_UNIT_DROP_ITEM)
+    ..addAction() ->
+        if GetManipulatedItem().getTypeId() == MIST_RING_VONGOLA or GetManipulatedItem().getTypeId() == MIST_RING_ARCOBALENO 
+            let caster = GetTriggerUnit()
+            let id = caster.getOwner().getId()
+            mistOwner[id] = caster
+            mistRingON[id] = false
+            mistArcoON[id] = false    
+            if GetManipulatedItem().getTypeId() == MIST_RING_VONGOLA
+                if caster.hasAbility('B06M') == true
+                    caster.removeAbility('B06M')
+                mistDropTimer[id] = CreateTimer()..startPeriodic(0.01, function mistDrop)..setData(id)     
+            else
+                if caster.hasAbility('B06O') == true
+                    caster.removeAbility('B06O')            
+                mistDropTimer[id] = CreateTimer()..startPeriodic(0.01, function mistDrop)..setData(id)     
+
+function mistDrop()
+    let id = GetExpiredTimer().getData()
+    if mistOwner[id].isAlive() == true
+        if mistOwner[id].hasItemById(MIST_RING_VONGOLA) == true and mistOwner[id].hasItemById(MIST_RING_ARCOBALENO) == false
+            new DummyCaster()
+            ..owner(mistOwner[id].getOwner())
+            ..origin(mistOwner[id].getPos())
+            ..castTarget(MIST_RING_DUMMY_SPELL, 1, OrderIds.bloodlust, mistOwner[id])
+            mistRingON[id] = true
+            mistArcoON[id] = false
+            mistSkinSwap(mistOwner[id])
+        if mistOwner[id].hasItemById(MIST_RING_VONGOLA) == false and mistOwner[id].hasItemById(MIST_RING_ARCOBALENO) == true
+            new DummyCaster()
+            ..owner(mistOwner[id].getOwner())
+            ..origin(mistOwner[id].getPos())
+            ..castTarget(MIST_ARCO_DUMMY_SPELL, 1, OrderIds.bloodlust, mistOwner[id]) 
+            mistRingON[id] = false
+            mistArcoON[id] = true     
+            mistSkinSwap(mistOwner[id])
+        if mistOwner[id].hasItemById(MIST_RING_VONGOLA) == true and mistOwner[id].hasItemById(MIST_RING_ARCOBALENO) == true 
+            mistOwner[id].getItemById(MIST_RING_VONGOLA).setIconPath("ReplaceableTextures\\CommandButtons\\BTNMistX.blp") 
+            new DummyCaster()
+            ..owner(mistOwner[id].getOwner())
+            ..origin(mistOwner[id].getPos())
+            ..castTarget(MIST_ARCO_DUMMY_SPELL, 1, OrderIds.bloodlust, mistOwner[id])  
+            mistRingON[id] = false
+            mistArcoON[id] = true
+            mistSkinSwap(mistOwner[id])                    
+        GetExpiredTimer().destr()                       
+
+function mistSkinSwap(unit u)
+    let id = u.getOwner().getId()
+    if mistRingON[id] == true and mistArcoON[id] == false
+        for i = 0 to 6
+            if UnitItemInSlot(mistOwner[id], i).getTypeId() == MIST_RING_VONGOLA
+                UnitItemInSlot(mistOwner[id], i).setIconPath("ReplaceableTextures\\CommandButtons\\BTNNeutralManaShieldOff.blp")                
+            if UnitItemInSlot(mistOwner[id], i).getTypeId() == MIST_RING_ARCOBALENO
+                UnitItemInSlot(mistOwner[id], i).setIconPath("ReplaceableTextures\\CommandButtons\\BTNArcobalenoMist.blp")        
+
+    if mistRingON[id] == false and mistArcoON[id] == true    
+        for i = 0 to 6
+            if UnitItemInSlot(mistOwner[id], i).getTypeId() == MIST_RING_VONGOLA
+                UnitItemInSlot(mistOwner[id], i).setIconPath("ReplaceableTextures\\CommandButtons\\BTNMistX.blp")                
+            if UnitItemInSlot(mistOwner[id], i).getTypeId() == MIST_RING_ARCOBALENO
+                UnitItemInSlot(mistOwner[id], i).setIconPath("ReplaceableTextures\\CommandButtons\\BTNNeutralManaShieldOff.blp")     
+    if mistRingON[id] == false and mistArcoON[id] == false    
+        for i = 0 to 6
+            if UnitItemInSlot(mistOwner[id], i).getTypeId() == MIST_RING_VONGOLA
+                UnitItemInSlot(mistOwner[id], i).setIconPath("ReplaceableTextures\\CommandButtons\\BTNMistX.blp")                
+            if UnitItemInSlot(mistOwner[id], i).getTypeId() == MIST_RING_ARCOBALENO
+                UnitItemInSlot(mistOwner[id], i).setIconPath("ReplaceableTextures\\CommandButtons\\BTNArcobalenoMist.blp")                         
       
 
 

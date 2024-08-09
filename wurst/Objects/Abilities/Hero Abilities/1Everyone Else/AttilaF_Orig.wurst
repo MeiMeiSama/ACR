@@ -108,9 +108,9 @@ function trig_AttilaFFunc016T()
         SaveGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 1153, yDWEGetUnitsInRectMatchingNull(GetPlayableMapRect(), null))
         GroupClear(LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 1153))
         DestroyGroup(LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 1153))
-    if LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 280) == 38
+    if LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 280) == 13
         SetUnitTimeScalePercent(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), 0.00)
-    if LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 280) >= 1 and LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 280) <= 399
+    if LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 280) >= 1 and LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 280) <= 149
         SetCameraTargetControllerNoZForPlayer(LoadPlayerHandle(YDLOC, GetHandleId(GetExpiredTimer()), 603), LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 132), 0, 0, false)
         SetCameraFieldForPlayer(LoadPlayerHandle(YDLOC, GetHandleId(GetExpiredTimer()), 603), CAMERA_FIELD_TARGET_DISTANCE, 2000.00, 0.15)
         SetCameraFieldForPlayer(LoadPlayerHandle(YDLOC, GetHandleId(GetExpiredTimer()), 603), CAMERA_FIELD_ZOFFSET, 3000.00, 0.15)
@@ -123,17 +123,17 @@ function trig_AttilaFFunc016T()
         SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 132, LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 132))
         SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 558, LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 558))
         TimerStart(_ydl_timer, 0.04, true, function trig_AttilaFFunc016Func005Func001T)
-    if LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 280) == 50
+    if LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 280) == 17
         SaveLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 1108, GetUnitLoc(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 132)))
         SaveUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 192186159, CreateUnitAtLoc(LoadPlayerHandle(YDLOC, GetHandleId(GetExpiredTimer()), 603), 'e0TY', LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 1108), GetRandomDirectionDeg()))
         GroupAddUnit(LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 993), LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 192186159))
         SetUnitFlyHeight(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 192186159), 3000.00, 0.00)
         SetUnitScalePercent(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 192186159), 550.00, 550.00, 550.00)
         RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 1108))
-    if LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 280) == 70
+    if LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 280) == 24
         SetUnitFlyHeight(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 192186159), 3300.00, 300.00)
-    if LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 280) == 100
-        soundPlay("war3mapImported\\Attila6-2.mp3", GetUnitX(udg_Unitsound), GetUnitY(udg_Unitsound))
+    if LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 280) == 34
+        // soundPlay("war3mapImported\\Attila6-2.mp3", GetUnitX(udg_Unitsound), GetUnitY(udg_Unitsound))
         SaveLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 1108, GetUnitLoc(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 132)))
         SaveLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 683, PolarProjectionBJ(LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 1108), 300.00, 0.00))
         SaveLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 48, PolarProjectionBJ(LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 1108), 300.00, 180.00))
@@ -151,7 +151,7 @@ function trig_AttilaFFunc016T()
     // if LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 280) == 140
         // SetUnitFlyHeight(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 484243712), 3100.00, 300.00)
         // SetUnitFlyHeight(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 198), 3100.00, 300.00)
-    if LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 280) == 170
+    if LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 280) == 57
         SaveLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 1108, GetUnitLoc(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 132)))
         // SaveUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 168190597, CreateUnitAtLoc(LoadPlayerHandle(YDLOC, GetHandleId(GetExpiredTimer()), 603), 'e0TX', LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 1108), GetRandomDirectionDeg()))
         // GroupAddUnit(LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 993), LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 168190597))
@@ -161,7 +161,7 @@ function trig_AttilaFFunc016T()
         RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 1108))
     // if LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 280) == 180
         // SetUnitFlyHeight(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 168190597), 3000.00, 450.00)
-    if LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 280) == 370
+    if LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 280) == 140
         // CameraSetEQNoiseForPlayer(LoadPlayerHandle(YDLOC, GetHandleId(GetExpiredTimer()), 603), 45.00)
         _ydl_timer = CreateTimer()
         SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 1164, LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 1164))
@@ -177,7 +177,7 @@ function trig_AttilaFFunc016T()
         SaveGroupHandle(YDLOC, GetHandleId(_ydl_timer), 993, LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 993))
         SaveLocationHandle(YDLOC, GetHandleId(_ydl_timer), 450813563, LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 450813563))
         TimerStart(_ydl_timer, 0.01, true, function trig_AttilaFFunc016Func012Func002T)
-    if LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 280) == 400
+    if LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 280) == 150
         ResetToGameCameraForPlayer(LoadPlayerHandle(YDLOC, GetHandleId(GetExpiredTimer()), 603), 0.15)
         SetCameraFieldForPlayer(LoadPlayerHandle(YDLOC, GetHandleId(GetExpiredTimer()), 603), CAMERA_FIELD_TARGET_DISTANCE, 3300.00, 0.15)
         udg_MHtime--
@@ -224,7 +224,7 @@ function trig_AttilaFActions()
         SaveInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 865, trigger_ID)
         SaveInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 1045, trigger_ID)
         udg_MHtime++
-        soundPlay("war3mapImported\\Attila6-1.mp3", GetUnitX(udg_Unitsound), GetUnitY(udg_Unitsound))
+        soundPlay("war3mapImported\\Attila6-2.mp3", GetUnitX(udg_Unitsound), GetUnitY(udg_Unitsound))
         SetSkyModel("Environment\\Sky\\LordaeronSummerSky\\LordaeronSummerSky.mdl")
         SaveUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594, GetSpellAbilityUnit())
         SaveLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 549, GetSpellTargetLoc())

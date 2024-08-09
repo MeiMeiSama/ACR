@@ -1,67 +1,64 @@
 package ACR_SpeedBoost
-import ClosureTimers
 import DummyCaster
 import OrderIds
 import ObjectDefinitions
+import TimerUtils
 
-boolean array doubleClicked
-integer array numberofClicks
-CallbackSingle array clickBack
+unit array acrSpeedBoostUser
+vec2 array acrSpeedBoostStartPoint
+real array acrSpeedBoostDistance
+timer array acrSpeedBoostTimer
+timer array acrSpeedBoostRemovalTimer
 
-public function acrSpeedBoost(unit caster, vec2 startPoint, real distance)
-    doAfter(0.1) ->                      
-        new DummyCaster()
-        ..owner(caster.getOwner())
-        ..origin(caster.getPos())
-        ..castTarget(DUMMY_ACRSPEED_ABILITY, 1, OrderIds.bloodlust, caster)
-        doPeriodically(0.03) (CallbackPeriodic cb) ->
-            let casterCurrentPos = caster.getPos()     
-            if startPoint.distanceTo(casterCurrentPos) > distance or caster.isAlive() == false
-                caster.removeAbility('B06S')
-                destroy cb
+function acrSpeedBoostRemoval()
+    let id = GetExpiredTimer().getData()
+    let casterCurrentPos = acrSpeedBoostUser[id].getPos()     
+    if acrSpeedBoostStartPoint[id].distanceTo(casterCurrentPos) > acrSpeedBoostDistance[id] or acrSpeedBoostUser[id].isAlive() == false
+        acrSpeedBoostUser[id].removeAbility('B06S')
+        acrSpeedBoostRemovalTimer[id].destr()  
 
-public function acrSpeedBoostBase ()
+function acrSpeedBoostRemovalTimer()
+    let id = GetExpiredTimer().getData()
+    new DummyCaster()
+    ..owner(acrSpeedBoostUser[id].getOwner())
+    ..origin(acrSpeedBoostUser[id].getPos())
+    ..castTarget(DUMMY_ACRSPEED_ABILITY, 1, OrderIds.bloodlust, acrSpeedBoostUser[id])
+    acrSpeedBoostRemovalTimer[id] = CreateTimer()..startPeriodic(0.03, function acrSpeedBoostRemoval)..setData(id)
+    acrSpeedBoostTimer[id].destr()
+
+
+function acrSpeedBoost(unit caster, vec2 startPoint, real distance)
+    let id = caster.getOwner().getId()
+    acrSpeedBoostUser[id] = caster
+    acrSpeedBoostStartPoint[id] = startPoint
+    acrSpeedBoostDistance[id] = distance
+    acrSpeedBoostTimer[id] = CreateTimer()..start(0.1, function acrSpeedBoostRemovalTimer)..setData(id)
+
+function acrSpeedBoostBase()
     let team1StartPos = vec2(-10425, 10034)
     let team2StartPos = vec2(5291, 2241)
-    let team3StartPos = vec2(-3385, -6178) 
-    doPeriodically(0.1) (CallbackPeriodic cb) ->
-        for i = 0 to 12
-            if udg_PlayHero[i] != null
-                let pid = udg_PlayHero[i].getOwner().getId()
-                if pid <= 2
-                    let casterloc = udg_PlayHero[i].getPos()
-                    if  gg_rct_Team1BaseArea.contains(casterloc) == true
-                        if udg_PlayHero[i].hasAbility('B06S') == false
-                            acrSpeedBoost(udg_PlayHero[i], team1StartPos, 6200)
-                else if pid <= 6
-                    let casterloc = udg_PlayHero[i].getPos()
-                    if  gg_rct_Team2BaseArea.contains(casterloc) == true
-                        if udg_PlayHero[i].hasAbility('B06S') == false
-                            acrSpeedBoost(udg_PlayHero[i], team2StartPos, 3800)
-                else if pid <= 10
-                    let casterloc = udg_PlayHero[i].getPos()
-                    if  gg_rct_Team3BaseArea.contains(casterloc) == true
-                        if udg_PlayHero[i].hasAbility('B06S') == false
-                            acrSpeedBoost(udg_PlayHero[i], team3StartPos, 3800)                                                        
+    let team3StartPos = vec2(-3385, -6178)     
+    for i = 0 to 12
+        if udg_PlayHero[i] != null
+            let pid = udg_PlayHero[i].getOwner().getId()
+            if pid <= 2
+                let casterloc = udg_PlayHero[i].getPos()
+                if  gg_rct_Team1BaseArea.contains(casterloc) == true
+                    if udg_PlayHero[i].hasAbility('B06S') == false
+                        acrSpeedBoost(udg_PlayHero[i], team1StartPos, 6200)
+            else if pid <= 6
+                let casterloc = udg_PlayHero[i].getPos()
+                if  gg_rct_Team2BaseArea.contains(casterloc) == true
+                    if udg_PlayHero[i].hasAbility('B06S') == false
+                        acrSpeedBoost(udg_PlayHero[i], team2StartPos, 3800)
+            else if pid <= 10
+                let casterloc = udg_PlayHero[i].getPos()
+                if  gg_rct_Team3BaseArea.contains(casterloc) == true
+                    if udg_PlayHero[i].hasAbility('B06S') == false
+                        acrSpeedBoost(udg_PlayHero[i], team3StartPos, 3800)     
 
-// public function acrAntiCheat()
-//     EventListener.add(EVENT_PLAYER_MOUSE_DOWN) ->
-//         let p = GetTriggerPlayer()
-//         printTimedToPlayer("click registered", 2, p)
-//         let id = p.getId()
-//         numberofClicks[id]++
-//         doAfter(0.11) ->
-//             numberofClicks[id] = 0
-//         if numberofClicks[id] >= 2
-//             printTimedToPlayer("double click detected", 2, p)
-//             doubleClicked[id] = true
-//             doPeriodically(0.055) (CallbackPeriodic cb) ->
-//                 if numberofClicks[id] == 0 and doubleClicked[id] == true
-//                     doubleClicked[id] = false 
-//     EventListener.add(EVENT_PLAYER_UNIT_SPELL_CAST) ->
-//         let caster = GetTriggerUnit() 
-//         let id = caster.getOwner().getId()
-//         if doubleClicked[id] == true
-//             caster.issueImmediateOrder("stop")           
+public function acrSpeedBoostTimer()
+    CreateTimer()..startPeriodic(0.1, function acrSpeedBoostBase)
+                                                           
 
             

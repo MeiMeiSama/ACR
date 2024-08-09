@@ -1,14 +1,15 @@
 package Shalltear_T
 
 import main
-import ClosureTimers
 import MusicPlaylist
 import AbilityGlobals
 import ACR_TagSystem
 import ACR_Transformation
+import TimerUtils
 // import UpdateAbilityData
 
 boolean shalltearTactive = false
+unit shalltear
 
 init
     shalltearModoT_init()
@@ -20,6 +21,7 @@ function shalltearModoT_init()
     ..addAction() ->
         if ((GetSpellAbilityId() == 'A19C')) 
             let caster = GetTriggerUnit()
+            shalltear = caster
             let pid = caster.getOwner().getId()
             if SPELL_G[pid].hasTagHidden() == false
                 caster.hideAbility(SPELL_G[pid], true)
@@ -28,15 +30,17 @@ function shalltearModoT_init()
             StopMusic(false)
             PlaySoundBJ(gg_snd_ShaltearBGM)                
             acrTransformation(caster, 40, 'H01B', 'H00B', 850, 4.0)
-            doPeriodically(0.01) (CallbackPeriodic cb) ->
-                if transformationActive[pid] == false
-                    if SPELL_G[pid].hasTagHidden() == true
-                        caster.hideAbility(SPELL_G[pid], false)
-                        SPELL_G[pid].removeTagHidden()
-                    if gg_snd_ShaltearBGM.isPlaying()
-                        gg_snd_ShaltearBGM.stop(false, false) 
-                    destroy cb
+            CreateTimer()..startPeriodic(0.01, function shalltearModoTEnd).setData(pid)
 
+function shalltearModoTEnd()
+    let pid = GetExpiredTimer().getData()
+    if transformationActive[pid] == false
+        if SPELL_G[pid].hasTagHidden() == true
+            shalltear.hideAbility(SPELL_G[pid], false)
+            SPELL_G[pid].removeTagHidden()
+        if gg_snd_ShaltearBGM.isPlaying()
+            gg_snd_ShaltearBGM.stop(false, false) 
+        GetExpiredTimer().destr()
 
 
 

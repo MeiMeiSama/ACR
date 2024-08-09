@@ -2,9 +2,12 @@ package ArcherT
 import DamageEvent
 import AbilityGlobals
 import main
-import ClosureTimers
+import TimerUtils
 
-int array archerTCount
+int array archerTCount2
+int archerTCount1
+boolean archerInsideT
+unit archer
 vec2 archerTTargetPoint
 vec2 archerCurrentPosition
 
@@ -31,16 +34,21 @@ function trig_ArcherTFunc023Func001Func013Func001Func001A()
     RemoveUnit(GetEnumUnit())
 function trig_ArcherTFunc023Func001Func013Func001Func015Func001Func003003003() returns boolean
     return IsUnitType(GetFilterUnit(), UNIT_TYPE_STRUCTURE) == false and IsUnitDeadBJ(GetFilterUnit()) == false and IsUnitInGroup(GetFilterUnit(), LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 744928215)) == false and GetUnitAbilityLevel(GetFilterUnit(), 'Avul') != 1 and IsUnitEnemy(GetFilterUnit(), LoadPlayerHandle(YDLOC, GetHandleId(GetExpiredTimer()), 603)) == true
+
+function archerTFlush()
+    let id = GetExpiredTimer().getData()
+    archerTCount2[id] = 0
+
+
 function trig_ArcherTFunc023Func001Func013Func001Func015Func001Func004A()
     let id = GetEnumUnit().getUserData()
-    if archerTCount[id] == 0
-        doAfter(5) ->
-            archerTCount[id] = 0                
-    if archerTCount[id] < 3     
+    if archerTCount2[id] == 0
+        CreateTimer()..start(10, function archerTFlush).setData(id)               
+    if archerTCount2[id] < 3     
         DamageEvent.setNextDamageId(DAMAGE_ABILITY_ARCHER_T)
         DamageEvent.setNextDamageFromCode()
         UnitDamageTargetBJ(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), GetEnumUnit(), 1.30 * I2R(GetHeroAgi(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), true)), ATTACK_TYPE_MAGIC, DAMAGE_TYPE_MAGIC)
-        archerTCount[id]++       
+        archerTCount2[id]++       
     GroupAddUnit(LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 744928215), GetEnumUnit())
     SaveInteger(YDLOC, GetHandleId(GetExpiredTimer()), 234, GetRandomInt(1, 2))
 function trig_ArcherTFunc023Func001Func013Func001Func015T()
@@ -156,40 +164,13 @@ function trig_ArcherTFunc023T()
         SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 498, LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 498))
         SaveLocationHandle(YDLOC, GetHandleId(_ydl_timer), 632, LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 632))
         SaveInteger(YDLOC, GetHandleId(_ydl_timer), 280, LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 280))
-        var count = 0
-        var archerInsideT = false
+        archerTCount1 = 0
+        archerInsideT = false
+        archer = caster
         let pid = caster.getOwner().getId()
         SetPlayerAbilityAvailable(caster.getOwner(), SPELL_T[pid], false)
         caster.addAbility('A199')
-        doPeriodically(0.01) (CallbackPeriodic cb) ->
-            count++
-            archerCurrentPosition = vec2(GetUnitX(caster), GetUnitY(caster))
-            if archerCurrentPosition.distanceTo(archerTTargetPoint) <= 940 
-                caster.setInvulnerable(true)
-                archerInsideT = true
-            if archerCurrentPosition.distanceTo(archerTTargetPoint) > 940 and archerInsideT == true 
-                archerInsideT = false
-                if caster.isPaused() == false
-                    caster.setInvulnerable(false)   
-            if archerInsideT == false
-                DoNothing()         
-            if count >= 625
-                if caster.isPaused() == false
-                    caster.setInvulnerable(false)
-                else
-                    doPeriodically(0.01) (CallbackPeriodic cb) ->
-                        if caster.isPaused() == false
-                            caster.setInvulnerable(false)
-                            destroy cb                             
-                caster.removeAbility('A199')
-                SetPlayerAbilityAvailable(caster.getOwner(), SPELL_T[pid], true)
-                caster.startAbilityCooldown(SPELL_T[pid])
-                destroy cb
-            if caster.isAlive() == false  
-                caster.removeAbility('A199')
-                SetPlayerAbilityAvailable(caster.getOwner(), SPELL_T[pid], true)
-                caster.startAbilityCooldown(SPELL_T[pid])
-                destroy cb                          
+        CreateTimer()..startPeriodic(0.01, function archerTEnd)                
 
         TimerStart(_ydl_timer, 0.06, true, function trig_ArcherTFunc023Func001Func013T)
         FlushChildHashtable(YDLOC, GetHandleId(GetExpiredTimer()))
@@ -198,6 +179,42 @@ function trig_ArcherTFunc023T()
         SaveInteger(YDLOC, GetHandleId(GetExpiredTimer()), 280, LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 280) + 1)
         PauseUnit(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), true)
         SetUnitInvulnerable(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), true)
+
+function archerTEndUnpause()
+    if archer.isPaused() == false
+        archer.setInvulnerable(false)
+        GetExpiredTimer().destr()   
+
+
+function archerTEnd()
+    let pid = GetExpiredTimer().getData()
+    archerTCount1++
+    archerCurrentPosition = vec2(GetUnitX(archer), GetUnitY(archer))
+    if archerCurrentPosition.distanceTo(archerTTargetPoint) <= 940 
+        archer.setInvulnerable(true)
+        archerInsideT = true
+    if archerCurrentPosition.distanceTo(archerTTargetPoint) > 940 and archerInsideT == true 
+        archerInsideT = false
+        if archer.isPaused() == false
+            archer.setInvulnerable(false)   
+    if archerInsideT == false
+        DoNothing()         
+    if archerTCount1 >= 625
+        if archer.isPaused() == false
+            archer.setInvulnerable(false)
+        else
+            CreateTimer()..startPeriodic(0.01, function archerTEndUnpause)                             
+        archer.removeAbility('A199')
+        SetPlayerAbilityAvailable(archer.getOwner(), SPELL_T[pid], true)
+        archer.startAbilityCooldown(SPELL_T[pid])
+        GetExpiredTimer().destr()
+    if archer.isAlive() == false  
+        archer.removeAbility('A199')
+        SetPlayerAbilityAvailable(archer.getOwner(), SPELL_T[pid], true)
+        archer.startAbilityCooldown(SPELL_T[pid])
+        GetExpiredTimer().destr()    
+
+
 function trig_ArcherTActions()
     //group _ydl_group
     //unit _ydl_unit

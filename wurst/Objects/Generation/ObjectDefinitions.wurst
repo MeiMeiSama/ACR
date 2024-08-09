@@ -86,6 +86,7 @@ public constant SUN_VONGOLA_HOT_DUMMY_SPELL = compiletime(ABIL_ID_GEN.next())
 public constant SUN_ARCO_HOT_DUMMY_SPELL = compiletime(ABIL_ID_GEN.next())
 public constant THUNDER_VONGOLA_SLOW_DUMMY_SPELL = compiletime(ABIL_ID_GEN.next())
 public constant THUNDER_ARCO_SLOW_DUMMY_SPELL = compiletime(ABIL_ID_GEN.next())
+public constant ANTI_REGEN_ABILITY = compiletime(ABIL_ID_GEN.next())
 
 // ------------------------------ Heroes ------------------------------
 public let PORTGASD_ACE = compiletime(HERO_ID_GEN.next())
@@ -150,6 +151,11 @@ public constant SUN_ARCOBALENO_RECIPE = compiletime(ITEM_ID_GEN.next())
 public constant SUN_ARCOBALENO_RECIPE_TOME = compiletime(ITEM_ID_GEN.next())
 public constant THUNDER_ARCOBALENO_RECIPE = compiletime(ITEM_ID_GEN.next())
 public constant THUNDER_ARCOBALENO_RECIPE_TOME = compiletime(ITEM_ID_GEN.next())
+public constant ANTI_REGEN_ITEM_RECIPE = compiletime(ITEM_ID_GEN.next())
+
+// ------------------------------ New Items ------------------------------
+
+public constant ANTI_REGEN_ITEM = compiletime(ITEM_ID_GEN.next())
 
 // ------------------------------ Rings ------------------------------
 public constant CLOUD_RING_1 = compiletime(ITEM_ID_GEN.next())

@@ -1,32 +1,19 @@
 package Black_Flame
 import DamageEvent
 import AbilityGlobals
-import ClosureTimers
 import ClosureForGroups
-import GroupUtils
 import ACR_TagSystem
+import TimerUtils
 boolean byakuranCastingT
 unit byakuranCaster
+group byakuranTGroup
 location byakuranCastPoint
 location byakuranLocation
-int array byakuranTCount
+int byakuranTcount
+int array byakuranTCount2
 
 init
     blackFlame_Setup()
-
-function blackFlameStopCommand(unit u)
-    doPeriodically(0.02) (CallbackPeriodic cb) ->
-        if byakuranCastingT == true
-            if u.hasTagPauseEX() == false
-                u.pauseEx()
-                u.addTagPauseEX()
-        else
-            if u.hasTagPauseEX()
-                u.unpauseEx()
-                u.removeTagPauseEX()
-            destroy cb  
-        
-
 
 function blackFlame_Stop()
     CreateTrigger()
@@ -43,59 +30,85 @@ function blackFlame_Stop()
             udg_BFDummy2[69].remove()
             udg_BFDummy4[69].remove()
 
+function byakuranTMiddle()
+    if byakuranTcount == 0
+        CreateTimer()..startPeriodic(0.02, function byakuranTPause)
+    byakuranTcount++    
+    if byakuranCastingT == false
+        udg_BFDummy4[69].remove()
+        udg_BFDummy2[69].remove()
+        GetExpiredTimer().destr()
+    integer trigger_ID = LoadInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 865)
+    trigger_ID += 3
+    udg_BFLoop++
+    SaveInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 865, trigger_ID)
+    SaveInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 1045, trigger_ID)
+    byakuranLocation = GetUnitLoc(byakuranCaster)
+    udg_BFPolar = PolarProjectionBJ(byakuranLocation, udg_BFCount, AngleBetweenPoints(byakuranLocation, byakuranCastPoint))
+    SaveEffectHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 223, AddSpecialEffectLoc("Objects\\Spawnmodels\\Other\\NeutralBuildingExplosion\\NeutralBuildingExplosion.mdl", udg_BFPolar))
+    DestroyEffect(LoadEffectHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 223))
+    udg_BFDummy2[69] = CreateUnitAtLoc(GetOwningPlayer(byakuranCaster), 'e0QY', udg_BFPolar, AngleBetweenPoints(byakuranLocation, byakuranCastPoint))
+    UnitApplyTimedLifeBJ(0.5, 'BTLF', udg_BFDummy2[69])
+    SetUnitTimeScalePercent(udg_BFDummy2[69], 40.00)
+    if udg_BFLoop % 20 == 0
+        udg_BFDummy4[69].remove()
+        udg_BFDummy4[69] = CreateUnitAtLoc(GetOwningPlayer(byakuranCaster), 'e0QX', byakuranLocation, AngleBetweenPoints(byakuranLocation, byakuranCastPoint))
+        SetUnitVertexColorBJ(udg_BFDummy4[69], 100, 100.00, 100.00, 25.00)
+    if udg_BFCount >= 1150.00
+        udg_BFCount = 165.00
+    else
+        udg_BFCount += 165.00
+    RemoveLocation(byakuranLocation)
+    RemoveLocation(udg_BFPolar)
+    FlushChildHashtable(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID)   
+    for i = 0 to 6
+        forUnitsInRange(udg_BFDummy2[i].getPos(), 165) (unit u) ->
+            if byakuranCaster.isEnemyOf(u) and u.isInvulnerable() == false
+                let id = u.getUserData()
+                if byakuranTGroup.has(u) == false
+                    byakuranTGroup.add(u)                 
+                if byakuranTCount2[id] == 0
+                    CreateTimer()..start(10, function byakuranTFlush).setData(id)
+                if u.hasTagPauseEX() == false
+                    IssueImmediateOrder(u, "stop")       
+                if byakuranTCount2[id] < 30  
+                    DamageEvent.setNextDamageId(DAMAGE_ABILITY_BYAKURAN_T)
+                    DamageEvent.setNextDamageFromCode()
+                    byakuranCaster.damageTarget(u, 1, ATTACK_TYPE_MAGIC)
+                    byakuranTCount2[id]++      
+
 function blackFlame_Start()
     PlaySoundBJ(gg_snd_Byakuran5)
-    let damagedUnit = getGroup()
+    if byakuranTGroup == null
+        byakuranTGroup = CreateGroup()
     udg_BFDummy4[69] = CreateUnitAtLoc(GetOwningPlayer(byakuranCaster), 'e0QX', byakuranLocation, AngleBetweenPoints(byakuranLocation, byakuranCastPoint))
     SetUnitVertexColorBJ(udg_BFDummy4[69], 100, 100.00, 100.00, 25.00) 
-    doPeriodically(0.065) (CallbackPeriodic cb) ->
-        if byakuranCastingT == false
-            udg_BFDummy4[69].remove()
-            udg_BFDummy2[69].remove()
-            damagedUnit.release()
-            destroy cb
-        integer trigger_ID = LoadInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 865)
-        trigger_ID += 3
-        udg_BFLoop++
-        SaveInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 865, trigger_ID)
-        SaveInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 1045, trigger_ID)
-        byakuranLocation = GetUnitLoc(byakuranCaster)
-        udg_BFPolar = PolarProjectionBJ(byakuranLocation, udg_BFCount, AngleBetweenPoints(byakuranLocation, byakuranCastPoint))
-        SaveEffectHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 223, AddSpecialEffectLoc("Objects\\Spawnmodels\\Other\\NeutralBuildingExplosion\\NeutralBuildingExplosion.mdl", udg_BFPolar))
-        DestroyEffect(LoadEffectHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 223))
-        udg_BFDummy2[69] = CreateUnitAtLoc(GetOwningPlayer(byakuranCaster), 'e0QY', udg_BFPolar, AngleBetweenPoints(byakuranLocation, byakuranCastPoint))
-        UnitApplyTimedLifeBJ(0.5, 'BTLF', udg_BFDummy2[69])
-        SetUnitTimeScalePercent(udg_BFDummy2[69], 40.00)
-        if udg_BFLoop % 20 == 0
-            udg_BFDummy4[69].remove()
-            udg_BFDummy4[69] = CreateUnitAtLoc(GetOwningPlayer(byakuranCaster), 'e0QX', byakuranLocation, AngleBetweenPoints(byakuranLocation, byakuranCastPoint))
-            SetUnitVertexColorBJ(udg_BFDummy4[69], 100, 100.00, 100.00, 25.00)
-        if udg_BFCount >= 1150.00
-            udg_BFCount = 165.00
-        else
-            udg_BFCount += 165.00
-        RemoveLocation(byakuranLocation)
-        RemoveLocation(udg_BFPolar)
-        FlushChildHashtable(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID)   
-        for i = 0 to 6
-            forUnitsInRange(udg_BFDummy2[i].getPos(), 165) (unit u) ->
-                if byakuranCaster.isEnemyOf(u) and u.isInvulnerable() == false
-                    if damagedUnit.has(u) == false
-                        damagedUnit.add(u)
-                    let id = u.getUserData()
-                    if byakuranTCount[id] == 0
-                        doAfter(10) ->
-                            byakuranTCount[id] = 0 
-                    if u.hasTagPauseEX() == false
-                        IssueImmediateOrder(u, "stop")
-                    blackFlameStopCommand(u)    
-                    if byakuranTCount[id] < 30    
-                        DamageEvent.setNextDamageId(DAMAGE_ABILITY_BYAKURAN_T)
-                        DamageEvent.setNextDamageFromCode()
-                        byakuranCaster.damageTarget(u, 1, ATTACK_TYPE_MAGIC)
-                        byakuranTCount[id]++   
-            if i == 6
-                damagedUnit.clear()
+    byakuranTcount = 0
+    CreateTimer()..startPeriodic(0.065, function byakuranTMiddle)
+
+function byakuranTPause()
+    if byakuranCastingT == true
+        byakuranTGroup.forEachIn() (unit u) ->            
+            if u.hasTagPauseEX() == false
+                u.pauseEx()
+                u.addTagPauseEX()
+    else
+        byakuranTGroup.forEachIn() (unit u) ->
+            if u.hasTagPauseEX()
+                u.unpauseEx()
+                u.removeTagPauseEX()
+        byakuranTGroup.clear()        
+        GetExpiredTimer().destr()   
+
+
+function byakuranTFlush()
+    let id = GetExpiredTimer().getData()
+    byakuranTCount2[id] = 0
+
+
+function byakuranTStart()
+    if byakuranCastingT == true
+        blackFlame_Start()    
 
 function blackFlame_Setup()
     blackFlame_Stop()
@@ -134,7 +147,5 @@ function blackFlame_Setup()
                 CreateNUnitsAtLoc(1, 'e028', GetOwningPlayer(byakuranCaster), udg_BFPointDamage, AngleBetweenPoints(byakuranLocation, byakuranCastPoint))
                 udg_BFDummy2[i] = GetLastCreatedUnit()
                 udg_BFDamageCount += 165.00
-                RemoveLocation(udg_BFPointDamage)      
-            doAfter(0.1) ->
-                if byakuranCastingT == true
-                    blackFlame_Start()
+                RemoveLocation(udg_BFPointDamage)    
+            CreateTimer()..start(0.1, function byakuranTStart)      

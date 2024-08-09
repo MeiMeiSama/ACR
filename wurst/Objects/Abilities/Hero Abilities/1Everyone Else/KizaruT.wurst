@@ -2,9 +2,12 @@ package KizaruT
 import DamageEvent
 import AbilityGlobals
 import main
-import ClosureTimers
+import TimerUtils
 
 int array kizaruTCount
+location casterLoc
+location targetLoc
+location newTargetLoc
 
 init
     initTrig_KizaruT()
@@ -13,11 +16,15 @@ function trig_KizaruTConditions() returns boolean
     return GetSpellAbilityId() == 'A0LG'
 function trig_KizaruTFunc027Func001Func038Func001Func006003003() returns boolean
     return IsUnitType(GetFilterUnit(), UNIT_TYPE_STRUCTURE) == false and IsUnitEnemy(GetFilterUnit(), LoadPlayerHandle(YDLOC, GetHandleId(GetExpiredTimer()), 603)) == true and IsUnitDeadBJ(GetFilterUnit()) == false and GetUnitAbilityLevel(GetFilterUnit(), 'Avul') != 1
+
+function kizaruTFlush()
+    let id = GetExpiredTimer().getData()
+    kizaruTCount[id] = 0
+
 function trig_KizaruTFunc027Func001Func038Func001Func007A()
     let id = GetEnumUnit().getUserData()
     if kizaruTCount[id] == 0
-        doAfter(5) ->
-            kizaruTCount[id] = 0                
+        CreateTimer()..start(5, function kizaruTFlush).setData(id)                 
     if kizaruTCount[id] < 3    
         DamageEvent.setNextDamageId(DAMAGE_ABILITY_KIZARU_T)
         DamageEvent.setNextDamageFromCode()
@@ -126,6 +133,15 @@ function trig_KizaruTFunc028T()
         UnitApplyTimedLife(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 247901081), 'BHwe', 1.00)
         RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 532205493))
         RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 651365530))
+
+function kizaruTFlush2()
+    RemoveLocation(newTargetLoc)
+
+function kizaruTFlush3()
+    RemoveLocation(casterLoc)    
+    RemoveLocation(targetLoc)    
+
+
 function trig_KizaruTActions()
     timer _ydl_timer
     integer trigger_ID = LoadInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 865)
@@ -135,18 +151,15 @@ function trig_KizaruTActions()
     soundPlay("war3mapImported\\Kizaru5.mp3", GetUnitX(udg_Unitsound), GetUnitY(udg_Unitsound))
     SaveUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594, GetTriggerUnit())
     let caster = GetTriggerUnit()
-    let casterLoc = GetUnitLoc(caster)
-    let targetLoc = GetSpellTargetLoc()
+    casterLoc = GetUnitLoc(caster)
+    targetLoc = GetSpellTargetLoc()
     if DistanceBetweenPoints(casterLoc, targetLoc) > 1150
-        let newTargetLoc = PolarProjectionBJ(casterLoc, 1150, AngleBetweenPoints(casterLoc, targetLoc))
+        newTargetLoc = PolarProjectionBJ(casterLoc, 1150, AngleBetweenPoints(casterLoc, targetLoc))
         SaveLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 549, newTargetLoc)
-        doAfter(5) ->             
-            RemoveLocation(newTargetLoc)
+        CreateTimer()..start(5, function kizaruTFlush2) 
     else 
         SaveLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 549, GetSpellTargetLoc())
-    doAfter(5) ->             
-        RemoveLocation(casterLoc)    
-        RemoveLocation(targetLoc)
+    CreateTimer()..start(5, function kizaruTFlush3)     
     SavePlayerHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 603, GetOwningPlayer(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594)))
     SaveLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1108, GetUnitLoc(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594)))
     SaveLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 683, PolarProjectionBJ(LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 549), 1500.00, GetUnitFacing(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594)) + 180.00))

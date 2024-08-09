@@ -5,12 +5,13 @@ import main
 import AbilityQ_data
 import ObjectDefinitions
 import MusicPlaylist
-import ACR_Stun
 import ACR_PauseArea
 
 vec2 sakuyaETargetPoint
 vec2 sakuyaWTargetPoint
 vec2 sakuyaCurrentPos
+unit sakuyaTVictim
+group sakuyaTGroup
 
 init
     initTrig_SakuyaQWERTFG_Orig()
@@ -31,9 +32,7 @@ function trig_SakuyaQWERTFGFunc007Func001Func015Func004Func005A()
     DamageEvent.setNextDamageId(DAMAGE_ABILITY_W)
     DamageEvent.setNextDamageFromCode()
     UnitDamageTargetBJ(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), GetEnumUnit(), LoadReal(YDLOC, GetHandleId(GetExpiredTimer()), 248), ATTACK_TYPE_MAGIC, DAMAGE_TYPE_MAGIC)
-    let caster = LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594)
-    let victim = GetEnumUnit()
-    acrStun(caster, victim, 0.7)
+    GetEnumUnit().issueImmediateOrder("stop")
     SaveUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 649, CreateUnit(LoadPlayerHandle(YDLOC, GetHandleId(GetExpiredTimer()), 603), 'e028', GetUnitX(GetEnumUnit()), GetUnitY(GetEnumUnit()), GetRandomDirectionDeg()))
     GroupAddUnit(LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 1016), LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 649))
     SetUnitTimeScale(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 649), 100.00)
@@ -481,10 +480,11 @@ function trig_SakuyaQWERTFGFunc007Func001Func016Func003Func002Func038Func008Func
     DestroyTimer(GetExpiredTimer())
 function trig_SakuyaQWERTFGFunc007Func001Func016Func003Func002Func038Func008Func001Func005A()
     timer _ydl_timer
-    DamageEvent.setNextDamageId(DAMAGE_ABILITY_SAKUYA_T)
-    DamageEvent.setNextDamageFromCode()
-    UnitDamageTargetBJ(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), GetEnumUnit(), I2R(GetHeroInt(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), true)) * 8.00, ATTACK_TYPE_MAGIC, DAMAGE_TYPE_MAGIC)
-
+    if GetEnumUnit() != sakuyaTVictim and sakuyaTGroup.has(GetEnumUnit()) == false
+        DamageEvent.setNextDamageId(DAMAGE_ABILITY_SAKUYA_T)
+        DamageEvent.setNextDamageFromCode()
+        UnitDamageTargetBJ(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), GetEnumUnit(), I2R(GetHeroInt(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), true)) * 8.00, ATTACK_TYPE_MAGIC, DAMAGE_TYPE_MAGIC)
+        sakuyaTGroup.add(GetEnumUnit())
     SaveUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 649, CreateUnit(LoadPlayerHandle(YDLOC, GetHandleId(GetExpiredTimer()), 603), 'e028', GetUnitX(GetEnumUnit()), GetUnitY(GetEnumUnit()), GetRandomDirectionDeg()))
     GroupAddUnit(LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 1016), LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 649))
     SetUnitTimeScale(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 649), 100.00)
@@ -937,12 +937,12 @@ function trig_SakuyaQWERTFGActions()
         SaveInteger(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 280, 0)
         SaveGroupHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1016, CreateGroup())
         SaveReal(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 758404681, yDWEAngleBetweenUnits(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594), LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 549)))
-        if IsUnitType(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 549), UNIT_TYPE_STRUCTURE) == false and IsUnitEnemy(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 549), LoadPlayerHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 603)) == true
-            SaveUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 721667141, CreateUnit(LoadPlayerHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 603), 'e000', GetUnitX(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 549)), GetUnitY(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 549)), GetRandomDirectionDeg()))
-            GroupAddUnit(LoadGroupHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1016), LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 721667141))
-            UnitAddAbility(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 721667141), 'A0ZS')
-            IssueTargetOrder(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 721667141), "doom", LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 549))
-            UnitApplyTimedLife(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 721667141), 'BHwe', 1.00)
+        // if IsUnitType(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 549), UNIT_TYPE_STRUCTURE) == false and IsUnitEnemy(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 549), LoadPlayerHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 603)) == true
+        //     SaveUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 721667141, CreateUnit(LoadPlayerHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 603), 'e000', GetUnitX(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 549)), GetUnitY(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 549)), GetRandomDirectionDeg()))
+        //     GroupAddUnit(LoadGroupHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1016), LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 721667141))
+        //     UnitAddAbility(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 721667141), 'A0ZS')
+        //     IssueTargetOrder(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 721667141), "doom", LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 549))
+        //     UnitApplyTimedLife(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 721667141), 'BHwe', 1.00)
         _ydl_timer = CreateTimer()
         SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 594, LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594))
         SaveGroupHandle(YDLOC, GetHandleId(_ydl_timer), 1016, LoadGroupHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1016))
@@ -997,6 +997,10 @@ function trig_SakuyaQWERTFGActions()
             PauseUnitBJ(true, LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 549))
             SetUnitInvulnerable(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594), true)
             SetUnitInvulnerable(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 549), true)
+            sakuyaTVictim = LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 549)
+            if sakuyaTGroup == null
+                sakuyaTGroup = CreateGroup()
+            CreateTimer().start(10, function sakuyaTFlush) 
             SetUnitAnimationByIndex(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594), 17)
             SaveLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 596788346, GetUnitLoc(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594)))
             SaveLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 24, GetUnitLoc(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 549)))
@@ -1153,6 +1157,11 @@ function trig_SakuyaQWERTFGActions()
         SaveInteger(YDLOC, GetHandleId(_ydl_timer), 280, LoadInteger(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 280))
         TimerStart(_ydl_timer, 0.02, true, function trig_SakuyaQWERTFGFunc007Func001Func016Func003Func001Func001Func001Func004T)
     FlushChildHashtable(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID)
+
+function sakuyaTFlush()
+    sakuyaTGroup.clear()
+    GetExpiredTimer().destr() 
+
 function initTrig_SakuyaQWERTFG_Orig()
     gg_trg_SakuyaQWERTFG = CreateTrigger()
     TriggerRegisterAnyUnitEventBJ(gg_trg_SakuyaQWERTFG, EVENT_PLAYER_UNIT_SPELL_EFFECT)

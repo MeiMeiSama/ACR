@@ -20,6 +20,7 @@ import CameraFunctions
 import ACR_SpeedBoost
 import GetFrames
 import TimerUtils
+import BootsStackDisable
 
 import Aqua_G
 import Yato_G
@@ -56,7 +57,6 @@ import Ryougi_Melty_G
 import Ryougi_Saber_G
 import Jack_F
 import Aizen_F
-import IchigoStrength_R
 import IchigoStrength_E
 import Byakuran_F
 import Kenjiro_F
@@ -66,6 +66,12 @@ import Tohno_F
 import Nanaya_Normal_F
 import Ryougi_Kimono_T
 import Ryougi_Kimono_G
+import Kotori_G
+import Ace_G
+import Sabo_G
+import N_Natsu_G
+import S_Natsu_G
+import Cobra_G
 /*
 
     - Iniitalize functions after the game has started, when most data is "valid" such as udg_Playhero
@@ -74,7 +80,7 @@ import Ryougi_Kimono_G
 function initUI ()
     BlzFrameSetVisible(BlzFrameGetChild(BlzFrameGetChild(BlzGetOriginFrame(ORIGIN_FRAME_GAME_UI, 0), 5),0), false)
     MultiboardSuppressDisplay(true)
-    GetExpiredTimer().release()
+    GetExpiredTimer().destr()
 
 function heroG_delay2 ()
     let i = GetExpiredTimer().getData()
@@ -93,17 +99,17 @@ function heroG_delay2 ()
         if SPELL_F2[id].hasTagHidden() == false
             udg_PlayHero[i].hideAbility(SPELL_F2[id], true)
             SPELL_F2[id].addTagHidden()
-    GetExpiredTimer().release()
+    GetExpiredTimer().destr()
 
 function heroG_delay1 ()
     let i = GetExpiredTimer().getData()
     setTooltipTitleAll(udg_PlayHero[i])
     acrCamera(udg_PlayHero[i])
-    GetExpiredTimer().release()
+    GetExpiredTimer().destr()
 
 function updateSelection ()
     updateSelect()
-    GetExpiredTimer().release()
+    GetExpiredTimer().destr()
 
 public function initFunctions ()
     BlzChangeMinimapTerrainTex("MinimapPreview.blp")
@@ -114,9 +120,10 @@ public function initFunctions ()
     BlzFrameSetVisible(getFrameACR("ConsoleUIBackdrop", 0), true)
     BlzHideOriginFrames(false)
     moonUI()
-    acrSpeedBoostBase()
+    acrSpeedBoostTimer()
     scoreboardMain()
     scoreboardTab()
+    bootStack()
     scoreboardValues()
     goldIncome()
     goldIncomeShared()
@@ -127,16 +134,16 @@ public function initFunctions ()
     bgmExceptionList()
     createQuest()
     acrCooldownTracker()
-    getTimer()..start(0.1, function initUI)
+    CreateTimer()..start(0.1, function initUI)
 
     // ---- Hero G's ---- \\
     for i = 0 to 12
         if udg_PlayHero[i] != null
-            getTimer()..start(0.1, function heroG_delay1)..setData(i)
+            CreateTimer()..start(0.1, function heroG_delay1)..setData(i)
             Player(i)..select(udg_PlayHero[i])..panCameraToTimed(udg_PlayHero[i].getPos(), 1)
 
         if udg_PlayHero[i] != null
-            getTimer()..start(0.05, function heroG_delay2)..setData(i)
+            CreateTimer()..start(0.05, function heroG_delay2)..setData(i)
                
         if udg_PlayHero[i].isModeHeroBase()
             updateTooltipsInit_Mode(udg_PlayHero[i])
@@ -195,7 +202,6 @@ public function initFunctions ()
             sasukeYoungE()                    
 
         if udg_PlayHero[i].getTypeId() == ICHIGO_STRENGTH
-            ichigoStrR()
             ichigoStrE()
 
         if udg_PlayHero[i].hasAbility('B06D')
@@ -266,5 +272,17 @@ public function initFunctions ()
     
         if udg_PlayHero[i].getTypeId() == ARTURIA_STRENGTH
             saberStrG()
+        if udg_PlayHero[i].getTypeId() == ITSUKA_KOTORI
+            kotoriDot()        
+        if udg_PlayHero[i].getTypeId() == PORTGASD_ACE
+            aceDot()      
+        if udg_PlayHero[i].getTypeId() == SABO
+            saboDot()          
+        if udg_PlayHero[i].getTypeId() == 'H001'
+            natsuDot()    
+        if udg_PlayHero[i].getTypeId() == 'H00Y'
+            natsu2Dot()     
+        if udg_PlayHero[i].getTypeId() == COBRA
+            cobraDot()                                                         
 
-    getTimer().start(3, function updateSelection)
+    CreateTimer().start(3, function updateSelection)

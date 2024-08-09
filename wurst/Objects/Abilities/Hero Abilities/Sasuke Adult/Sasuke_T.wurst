@@ -1,15 +1,15 @@
 package Sasuke_T
 
-import ClosureTimers
 import ObjectDefinitions
 import MusicPlaylist
 // import AbilityGlobals
 // import ACR_TagSystem
 import ACR_Transformation
 // import Translate_F
+import TimerUtils
 
 boolean sasukeTactive = false
-CallbackPeriodic sasukeCB
+unit sasukeAdult
 
 init
     sasukeModoT()
@@ -20,6 +20,7 @@ function sasukeModoT()
     ..addAction() ->
         if ((GetSpellAbilityId() == SASUKE_ADULT_T)) 
             let caster = GetTriggerUnit()
+            sasukeAdult = caster
             let pid = caster.getOwner().getId()
             caster.addAbility('A02Q')
             if caster.hasAbility('A0MR')
@@ -30,14 +31,15 @@ function sasukeModoT()
             StopMusic(false)
             PlaySoundBJ(gg_snd_Lastsasuke5)                
             acrTransformation(caster, 40, SASUKE_ADULT, SASUKE_ADULT_MODO, 850, 4.0)
-            doPeriodically(0.01) (CallbackPeriodic cb) ->
-                if transformationActive[pid] == false
-                    caster.removeAbility('A02Q')
-                    if gg_snd_Lastsasuke5.isPlaying()
-                        gg_snd_Lastsasuke5.stop(false, false) 
-                    destroy cb
+            CreateTimer()..startPeriodic(0.01, function shalltearModoTEnd).setData(pid)
                 
-
+function shalltearModoTEnd()
+    let pid = GetExpiredTimer().getData()
+    if transformationActive[pid] == false
+        sasukeAdult.removeAbility('A02Q')
+        if gg_snd_Lastsasuke5.isPlaying()
+            gg_snd_Lastsasuke5.stop(false, false) 
+        GetExpiredTimer().destr()
 
 
 

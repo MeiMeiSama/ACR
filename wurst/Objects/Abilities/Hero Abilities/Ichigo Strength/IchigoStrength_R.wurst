@@ -1,71 +1,70 @@
-package IchigoStrength_R
+// package IchigoStrength_R
 
-import ClosureEvents
-import ClosureTimers
-import UpdateTooltips
-import TimerUtils
-import AbilityGlobals
+// import ClosureEvents
+// import UpdateTooltips
+// import TimerUtils
+// import AbilityGlobals
 
-init
-public int debugIchigoCount = 0
-public boolean ichigoRModeON = false
+// init
+// public int debugIchigoCount = 0
+// public boolean ichigoRModeON = false
 
-public function ichigoStrR()
+// public function ichigoStrR()
         
 
-    // let original_Q = 'A0WW'
-    // let alternative_Q = 'A0WZ'
-    // let original_W = 'A0WX'
-    // let alternative_W = 'A0X0'
-    let R = 'A0WY'
+//     // let original_Q = 'A0WW'
+//     // let alternative_Q = 'A0WZ'
+//     // let original_W = 'A0WX'
+//     // let alternative_W = 'A0X0'
+//     let R = 'A0WY'
 
 
-    EventListener.onCast(R) (unit caster) ->
-        doAfter(0.06) -> 
-            let pid = caster.getOwner().getId()
-            if ichigoRModeON == false
-                BlzSetAbilityIcon(R, "ReplaceableTextures\\CommandButtons\\BTNneutralManaShieldOff.blp")
-                // Hiding Origianl Spells
-                ichigoRModeON = true
+//     EventListener.onCast(R) (unit caster) ->
+//         doAfter(0.06) -> 
+//             let pid = caster.getOwner().getId()
+//             if ichigoRModeON == false
+//                 BlzSetAbilityIcon(R, "ReplaceableTextures\\CommandButtons\\BTNneutralManaShieldOff.blp")
+//                 // Hiding Origianl Spells
+//                 ichigoRModeON = true
 
-                caster.hideAbility(SPELL_Q[pid], true)
-                caster.hideAbility(SPELL_W[pid], true)
+//                 caster.hideAbility(SPELL_Q[pid], true)
+//                 caster.hideAbility(SPELL_W[pid], true)
 
-                // Showing Alternative Spells
-                debugIchigoCount--
-                caster.hideAbility(SPELL_Q2[pid], false)
-                caster.hideAbility(SPELL_W2[pid], false)
+//                 // Showing Alternative Spells
+//                 debugIchigoCount--
+//                 caster.hideAbility(SPELL_Q2[pid], false)
+//                 caster.hideAbility(SPELL_W2[pid], false)
 
-            else if ichigoRModeON == true
-                BlzSetAbilityIcon(R, "ReplaceableTextures\\CommandButtons\\BTNDeathPact.blp")
-                // Showing Original Spells
-                ichigoRModeON = false
+//             else if ichigoRModeON == true
+//                 BlzSetAbilityIcon(R, "ReplaceableTextures\\CommandButtons\\BTNDeathPact.blp")
+//                 // Showing Original Spells
+//                 ichigoRModeON = false
                 
-                caster.hideAbility(SPELL_Q[pid], false)
-                caster.hideAbility(SPELL_W[pid], false)
+//                 caster.hideAbility(SPELL_Q[pid], false)
+//                 caster.hideAbility(SPELL_W[pid], false)
 
-                // Hiding Original Spells
-                debugIchigoCount++
-                caster.hideAbility(SPELL_Q2[pid], true)
-                caster.hideAbility(SPELL_W2[pid], true)
+//                 // Hiding Original Spells
+//                 debugIchigoCount++
+//                 caster.hideAbility(SPELL_Q2[pid], true)
+//                 caster.hideAbility(SPELL_W2[pid], true)
 
                  
-            let id = GetTriggerUnit().getOwner().getId()
-            let tooltipTimer = CreateTimer()
-            tooltipTimer..start(0.02, function updateTooltips)..setData(id)    
+//             let id = GetTriggerUnit().getOwner().getId()
+//             let tooltipTimer = CreateTimer()
+//             tooltipTimer..start(0.02, function updateTooltips)..setData(id)    
 
-    EventListener.add(EVENT_PLAYER_HERO_SKILL) ->
-        let caster = GetTriggerUnit()
-        let pid = caster.getOwner().getId()
-        if GetLearnedSkill() == R
-            if GetUnitAbilityLevel(caster, R) == 1
-                caster.addAbility(SPELL_Q2[pid])
-                caster.addAbility(SPELL_W2[pid])
-                caster.hideAbility(SPELL_Q2[pid], true)
-                caster.hideAbility(SPELL_W2[pid], true)
-            let id = GetTriggerUnit().getOwner().getId()
-            let tooltipTimer = CreateTimer()
-            tooltipTimer..start(0.02, function updateTooltips)..setData(id)    
+//     EventListener.add(EVENT_PLAYER_HERO_SKILL) ->
+//         let caster = GetTriggerUnit()
+//         let pid = caster.getOwner().getId()
+//         if GetLearnedSkill() == R
+//             if GetUnitAbilityLevel(caster, R) == 1
+//                 caster.addAbility(SPELL_Q2[pid])
+//                 caster.addAbility(SPELL_W2[pid])
+//                 caster.hideAbility(SPELL_Q2[pid], true)
+//                 caster.hideAbility(SPELL_W2[pid], true)
+//             let id = GetTriggerUnit().getOwner().getId()
+//             let tooltipTimer = CreateTimer()
+//             tooltipTimer..start(0.02, function updateTooltips)..setData(id)    
 
 
 

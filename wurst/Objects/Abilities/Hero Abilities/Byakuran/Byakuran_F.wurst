@@ -1,33 +1,36 @@
 package Byakuran_F
 
 import ClosureEvents
-import ClosureTimers
 import ACR_TagSystem
+
+unit byakuran
 int byakuranFCount = 0
+int abilityF = 'A0KT'
+int buffF = 'B03I'
+
+function byakuranFEnd()
+    if byakuran.isPaused() == false
+        byakuranFCount++
+
+    if byakuran.hasAbility(buffF) == false
+        byakuran.disableAbility(abilityF, false, false)
+        abilityF.removeTagDisabled()
+        byakuran.startAbilityCooldown(abilityF)
+        GetExpiredTimer().destr()
+
+    if byakuranFCount == 100
+        byakuran.removeAbility(buffF)
+        byakuran.disableAbility(abilityF, false, false)
+        abilityF.removeTagDisabled()
+        byakuran.startAbilityCooldown(abilityF)
+        GetExpiredTimer().destr()
 
 public function byakuranF ()
-    let abilityF = 'A0KT'
-    let buffF = 'B03I'
-
     EventListener.onCast(abilityF) (unit caster) ->
+        byakuran = caster
         byakuranFCount = 0
         caster.disableAbility(abilityF, true, false)
         abilityF.addTagDisabled()
         caster.issueImmediateOrder("stop")
-        doPeriodically(0.03) (CallbackPeriodic cb) ->
-            if caster.isPaused() == false
-                byakuranFCount++
- 
-            if caster.hasAbility(buffF) == false
-                caster.disableAbility(abilityF, false, false)
-                abilityF.removeTagDisabled()
-                caster.startAbilityCooldown(abilityF)
-                destroy cb
-
-            if byakuranFCount == 100
-                caster.removeAbility(buffF)
-                caster.disableAbility(abilityF, false, false)
-                abilityF.removeTagDisabled()
-                caster.startAbilityCooldown(abilityF)
-                destroy cb
+        CreateTimer()..startPeriodic(0.03, function byakuranFEnd)
             

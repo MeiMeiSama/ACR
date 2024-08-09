@@ -5,6 +5,7 @@ init
 
     ringsUpgrade ()
     bootsUpgrade ()
+    newUpgrade ()
     generalUpgrade ()
     onVongolaUpgradeBuy_init ()
 
@@ -184,7 +185,7 @@ function bootsUpgrade ()
 
     // ------------------------- Haste of True Sight  ------------------------- //
     let hasteSight = new ItemRecipe(HASTE_BOOT_TRUESIGHT, 0, false, true, true) // Haste of True Sight
-    hasteSight.addItem('I02M') // Haste Boots
+    hasteSight.addItem(HASTE_BOOT) // Haste Boots
     hasteSight.addItem('gemt') // Gem of True Sight
 
     // ------------------------- Mana of True Sight  ------------------------- //
@@ -201,6 +202,12 @@ function bootsUpgrade ()
     let vitalitySight = new ItemRecipe('I071', 0, false, true, true) // Vitality of True Sight
     vitalitySight.addItem('I02G') // Vitality Boots
     vitalitySight.addItem('gemt') // Gem of True Sight
+
+function newUpgrade ()    
+    // ------------------------- Anti-Regen Item ------------------------- //
+    let antiRegenItem = new ItemRecipe(ANTI_REGEN_ITEM, 0, false, true, true) // Boots Lv. 2
+    antiRegenItem.addItem(ANTI_REGEN_ITEM_RECIPE) // anti-regen item recipe   
+    antiRegenItem.addItem('I01R') //boots of speed
 
 function generalUpgrade ()
     // -------------------------- Greater Strength -------------------------- //
