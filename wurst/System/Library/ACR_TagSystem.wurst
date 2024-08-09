@@ -12,6 +12,7 @@ constant abilityFMap = new HashMap<unit, boolean>()
 constant reviveMap = new HashMap<unit, boolean>()
 constant pickedMap = new HashMap<player, boolean>()
 constant hasLeaverMap = new HashMap<player, boolean>()
+constant mmdFlagMap = new HashMap<player, boolean>()
 
 constant hiddenAbilitiesMap = new HashMap<int, boolean>()
 constant disabledAbilitiesMap = new HashMap<int, boolean>()
@@ -134,6 +135,17 @@ public function player.removeTagLeaverInTeam()
 
 public function player.hasTagLeaverInTeam() returns boolean
     return hasLeaverMap.get(this)
+
+
+
+public function player.addTagMMDFlag()
+    mmdFlagMap.put(this, true)
+
+public function player.removeTagMMDFlag()
+    mmdFlagMap.put(this, false)
+
+public function player.hasTagMMDFlag() returns boolean
+    return mmdFlagMap.get(this)
 
 
 
