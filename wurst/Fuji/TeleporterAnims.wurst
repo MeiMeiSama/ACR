@@ -1,0 +1,33 @@
+package TeleporterAnims
+
+/*
+
+So we want a function that will play, from what I see
+animation stand for teleporters? yea ok so, to initialize in wurst, we do it this way, then we write our functionthere
+now at init, this will call our function, in here, we want to play the animation for the doodads
+
+btw, never edit war3map.j, now we place the doodads in the map, so idk what name or how to fetch them     the names i SS at discord chat
+
+open world editor and go in here, do u have those triggers left? no i deleted the trigger, but i got the regions on the map, can u open world editor i will teach u something
+
+there u go   
+u only had these 4 right? yep 
+
+Did you need to do anything else with triggers? no
+
+Good tip is when u dont know how to do something, just try write in the code, it will bring up everything u can do, eg with doodad
+its loading, java, need to wait a bit, see?
+
+if you want to run a function after X time and not at initialization, you can do
+
+*/
+
+init
+    teleporterAnimations()
+
+
+function teleporterAnimations ()
+    SetDoodadAnimationRect(gg_rct_TeleportBossesLeft, 'D029', "stand", false)
+    SetDoodadAnimationRect(gg_rct_TeleportBossesRight, 'D029', "stand", false)
+    SetDoodadAnimationRect(gg_rct_TeleportBossesBottom, 'D029', "stand", false)
+    SetDoodadAnimationRect(gg_rct_TeleportBossesMain, 'D029', "stand", false)
