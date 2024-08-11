@@ -1,0 +1,37 @@
+package magicshield
+
+import ObjectDefinitions
+import TimerUtils
+// import ACR_TagSystem
+import DummyCaster
+import OrderIds
+// import ObjectIds
+
+public real array magicShieldValue
+unit array magicShieldUser
+timer array magicShieldTimer
+
+init
+    magicShield()
+function magicShield ()
+    CreateTrigger()
+    ..registerAnyUnitEvent(EVENT_PLAYER_UNIT_DAMAGED)
+    ..addAction() ->
+        if BlzGetEventAttackType() == ATTACK_TYPE_MAGIC
+            let caster = BlzGetEventDamageTarget()
+            let id = caster.getOwner().getId()
+            magicShieldUser[id] = caster
+            magicShieldValue[id] = magicShieldValue[id] + (caster.getHP() * 0.15)
+            if caster.hasAbility('B07K') == false
+                new DummyCaster()
+                ..owner(caster.getOwner())
+                ..origin(caster.getPos())
+                ..castTarget(MAGIC_SHIELD_DUMMY_SPELL, 1, OrderIds.bloodlust, caster)
+                magicShieldTimer[id] = CreateTimer()..startPeriodic(0.01, function magicShieldEnd)..setData(id)
+
+function magicShieldEnd()
+    let id = GetExpiredTimer().getData()
+    if magicShieldValue[id] <= 0
+        magicShieldUser[id].removeAbility('B07K')
+        magicShieldTimer[id].destr()
+        
