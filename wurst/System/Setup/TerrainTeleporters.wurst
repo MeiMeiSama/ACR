@@ -1,16 +1,19 @@
-package TeleporterAnims
+package TerrainTeleporters
 
 /*
 So we want a function that will play Doodad animations. You know how initialization works, so simply call a function you want to use, and write your code in there.
 
 In the function, for example now we want to play a certain Doodad (D029) animation.
 In the function, simply write "Doodad", it's gonna bring up all API starting with Doodad (might take time if java has not loaded properly yet) 
-When writing Doodad, it brought up an API called "SetDoodadAnimationRect". You can use this to set the animation for all doodads of type X in this region.
-SetDoodadAnimationRect(theRegion, doodadType, animName, idkThisJustSetAsFalse)
+When writing Doodad, it brought up an API called "SetDoodadAnimationRect":
 
-So the following code:
+    SetDoodadAnimationRect(theRegion, doodadType, animName, idkThisJustSetAsFalse)
 
-SetDoodadAnimationRect(gg_rct_TeleportBossesLeft, 'D029', "stand", false)
+You can use this to set the animation for all doodads of type X in this region.
+
+So using this API with the following code:
+
+    SetDoodadAnimationRect(gg_rct_TeleportBossesLeft, 'D029', "stand", false)
 
 Will set all Doodads of type D029 as "stand" in the region gg_rct_TeleportBossesLeft.
 
