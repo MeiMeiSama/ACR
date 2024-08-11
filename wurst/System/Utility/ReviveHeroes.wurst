@@ -2,6 +2,7 @@ package ReviveHeroes
 
 import TimerUtils
 import ACR_TagSystem
+import ACR_Variables
 
 public timer array heroDeathTimer
 public timerdialog array heroDeathTimerDialog
@@ -20,18 +21,15 @@ function afterRevive()
 
 public function unit.reviveHero()
     let pid = this.getOwner().getId()
-    let team1_base = vec2(-10425, 10034)
-    let team2_base = vec2(5291, 2241)
-    let team3_base = vec2(-3385, -6178)
     if pid <= 2
         udg_PlayHero[pid]
-        ..revive(team1_base, true)
+        ..revive(team1Pos, true)
     else if pid <= 6
         udg_PlayHero[pid]
-        ..revive(team2_base, true)
+        ..revive(team2Pos, true)
     else if pid <= 10
         udg_PlayHero[pid]
-        ..revive(team3_base, true)
+        ..revive(team3Pos, true)
     udg_PlayHero[pid]
     ..addAbility('Arav')..setFlyHeight(0, 0)..removeAbility('Arav') // Arav makes unit count as a flying unit, set height to 0, remove Arav (reset height)
     ..setMoveSpeed(GetUnitDefaultMoveSpeed(udg_PlayHero[pid]))
@@ -45,18 +43,15 @@ public function unit.reviveHero()
 
 function reviveHeroInternal()
     let pid = GetExpiredTimer().getData()
-    let team1_base = vec2(-10425, 10034)
-    let team2_base = vec2(5291, 2241)
-    let team3_base = vec2(-3385, -6178)
     if pid <= 2
         udg_PlayHero[pid]
-        ..revive(team1_base, true)
+        ..revive(team1Pos, true)
     else if pid <= 6
         udg_PlayHero[pid]
-        ..revive(team2_base, true)
+        ..revive(team2Pos, true)
     else if pid <= 10
         udg_PlayHero[pid]
-        ..revive(team3_base, true)
+        ..revive(team3Pos, true)
     udg_PlayHero[pid]
     ..addAbility('Arav')..setFlyHeight(0, 0)..removeAbility('Arav') // Arav makes unit count as a flying unit, set height to 0, remove Arav (reset height)
     ..setMoveSpeed(GetUnitDefaultMoveSpeed(udg_PlayHero[pid]))

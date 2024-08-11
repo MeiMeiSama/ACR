@@ -1,0 +1,103 @@
+package ACR_Variables
+
+// Coordinates for each team revivePoint, startPoint, spawnPoint, etc.
+
+public vec2 team1Pos = vec2(-10029, 1102)
+public vec2 team2Pos = vec2(3164, 1514)
+public vec2 team3Pos = vec2(-3329, -7264)
+
+// Coordinates for each team's jungle camps
+
+public vec2 team1Neutrals = vec2(-7225, -1479)
+public vec2 team2Neutrals = vec2(-946, 1215)
+public vec2 team3Neutrals = vec2(-903, -2566)
+
+// Coordinates for Kiara boss and Sistine Dummy Hero
+
+public vec2 kiaraPos = vec2(-4723, -10018)
+public vec2 sistinePos = vec2(9755, 794)
+
+// Coordinates for Team 1 Shops
+
+public vec2 team1Shop1Pos = vec2(-10191, 1440)
+public vec2 team1Shop2Pos = vec2(-10191, 1568)
+public vec2 team1Shop3Pos = vec2(-10191, 1696)
+public vec2 team1Shop4Pos = vec2(-10191, 1824)
+
+public vec2 team1Shop5Pos = vec2(-10191, 783)
+public vec2 team1Shop6Pos = vec2(-10191, 655)
+public vec2 team1Shop7Pos = vec2(-10191, 527)
+public vec2 team1Shop8Pos = vec2(-10191, 399)
+
+// Coordinates for Team 1 Base & Towers
+
+public vec2 team1BasePos = vec2(-8814, 1063)
+
+public vec2 team1BaseTowerTop = vec2(-8310, 1224)
+public vec2 team1BaseTowerMid = vec2(-8490, 720)
+public vec2 team1BaseTowerBot = vec2(-9124, 694)
+
+public vec2 team1TopTowerInner = vec2(-7874, 2554)
+public vec2 team1MidTowerInner = vec2(-8003, 304)
+public vec2 team1BotTowerInner = vec2(-9334, -354)
+
+public vec2 team1TopTowerOuter = vec2(-5787, 2560)
+public vec2 team1MidTowerOuter = vec2(-6411, -307)
+public vec2 team1BotTowerOuter = vec2(-8709, -1866)
+
+
+// Coordinates for Team 2 Shops
+
+public vec2 team2Shop1Pos = vec2(3330, 1880)
+public vec2 team2Shop2Pos = vec2(3330, 2008)
+public vec2 team2Shop3Pos = vec2(3330, 2136)
+public vec2 team2Shop4Pos = vec2(3330, 2264)
+
+public vec2 team2Shop5Pos = vec2(3330, 1192)
+public vec2 team2Shop6Pos = vec2(3330, 1064)
+public vec2 team2Shop7Pos = vec2(3330, 936)
+public vec2 team2Shop8Pos = vec2(3330, 808)
+
+// Coordinates for Team 2 Base & Towers
+
+public vec2 team2BasePos = vec2(2234, 1512)
+
+public vec2 team2BaseTowerTop = vec2(1919, 1830)
+public vec2 team2BaseTowerMid = vec2(1801, 1110)
+public vec2 team2BaseTowerBot = vec2(2263, 1021)
+
+public vec2 team2TopTowerInner = vec2(1187, 2561)
+public vec2 team2MidTowerInner = vec2(1433, 334)
+public vec2 team2BotTowerInner = vec2(2226, 0)
+
+public vec2 team2TopTowerOuter = vec2(-849, 2540)
+public vec2 team2MidTowerOuter = vec2(-374, -218)
+public vec2 team2BotTowerOuter = vec2(1839, -1790)
+
+// Coordinates for Team 3 Shops
+
+public vec2 team3Shop1Pos = vec2(-3657, -7512)
+public vec2 team3Shop2Pos = vec2(-3785, -7512)
+public vec2 team3Shop3Pos = vec2(-3913, -7512)
+public vec2 team3Shop4Pos = vec2(-4041, -7512)
+
+public vec2 team3Shop5Pos = vec2(-2994, -7512)
+public vec2 team3Shop6Pos = vec2(-2866, -7512)
+public vec2 team3Shop7Pos = vec2(-2738, -7512)
+public vec2 team3Shop8Pos = vec2(-2610, -7512)
+
+// Coordinates for Team 3 Base & Towers
+
+public vec2 team3BasePos = vec2(-3353, -5883)
+
+public vec2 team3BaseTowerTop = vec2(-3827, -5906)
+public vec2 team3BaseTowerMid = vec2(-3331, -5333)
+public vec2 team3BaseTowerBot = vec2(-2809, -5906)
+
+public vec2 team3TopTowerInner = vec2(-4743, -5124)
+public vec2 team3MidTowerInner = vec2(-3328, -4487)
+public vec2 team3BotTowerInner = vec2(-1678, -4871)
+
+public vec2 team3TopTowerOuter = vec2(-6145, -4347)
+public vec2 team3MidTowerOuter = vec2(-3321, -3305)
+public vec2 team3BotTowerOuter = vec2(-499, -4215)

@@ -8,6 +8,7 @@ import TimerUtils
 import InitializeFunctions
 import MusicPlaylist
 import GoldIncome
+import ACR_Variables
 
 public var heroList_STR = new HashSet<int>
 public var canPick_Icon_STR = new HashSet<int>
@@ -41,9 +42,6 @@ unit array selectedUnit
 bool array playerPicked
 bool array canDoubleClick
 real allPlayersPickedCount
-vec2 team1Pos
-vec2 team2Pos
-vec2 team3Pos
 timer array canDoubleClick_Timer
 framehandle selected_icon
 framehandle selected_icon1
@@ -387,9 +385,6 @@ function createHero (player p)
         BlzFrameAddText(textArea, "|cff00a9ff["+p.getColor().toColor().toColorString()+p.getName()+"|cff00a9ff] |cffffd700Selected |cff5ccf58"+GetObjectName(draftHero[pid])+"|r")
         if p == GetLocalPlayer()
             selected_icon.setTexture(BlzGetAbilityIcon(draftHero[pid]), 0, false)       
-    team1Pos = vec2(-10384, 9980)
-    team2Pos = vec2(5389, 2246)
-    team3Pos = vec2(-3436, -6244)
     createHeroTimer[pid] = CreateTimer()..start(delayAfterCountdown, function createHero2)..setData(pid)
 
 function draftTime_End2()

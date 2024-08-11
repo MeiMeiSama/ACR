@@ -13,13 +13,13 @@ bool array devTools
 fogmodifier array acr_MH
 
 init
-    udg_PlayHero[4] = createUnit(Player(4), COBRA, vec2(0, 0))..setUserData(4)
+    udg_PlayHero[4] = createUnit(Player(4), COBRA, vec2(-8868, -11456))..setUserData(4)
     ..setStr(5000)
-    udg_PlayHero[5] = createUnit(Player(5), 'H01R', vec2(0, 0))..setUserData(5)
+    udg_PlayHero[5] = createUnit(Player(5), 'H01R', vec2(-8868, -11456))..setUserData(5)
     ..setStr(5000)
-    udg_PlayHero[6] = createUnit((Player(6)), ICHIGO_STRENGTH, vec2(0, 0))..setUserData(6)
+    udg_PlayHero[6] = createUnit((Player(6)), ICHIGO_STRENGTH, vec2(-8868, -11456))..setUserData(6)
     ..setStr(500)
-    udg_PlayHero[9] = createUnit((Player(9)), 'H006', vec2(-2000, -2000))..setUserData(9)
+    udg_PlayHero[9] = createUnit((Player(9)), 'H006', vec2(-10223, -9559))..setUserData(9)
     ..setStr(5000)
     devTools()
 
