@@ -1,30 +1,26 @@
 package TeleporterAnims
 
 /*
+So we want a function that will play Doodad animations. You know how initialization works, so simply call a function you want to use, and write your code in there.
 
-So we want a function that will play, from what I see
-animation stand for teleporters? yea ok so, to initialize in wurst, we do it this way, then we write our functionthere
-now at init, this will call our function, in here, we want to play the animation for the doodads
+In the function, for example now we want to play a certain Doodad (D029) animation.
+In the function, simply write "Doodad", it's gonna bring up all API starting with Doodad (might take time if java has not loaded properly yet) 
+When writing Doodad, it brought up an API called "SetDoodadAnimationRect". You can use this to set the animation for all doodads of type X in this region.
+SetDoodadAnimationRect(theRegion, doodadType, animName, idkThisJustSetAsFalse)
 
-btw, never edit war3map.j, now we place the doodads in the map, so idk what name or how to fetch them     the names i SS at discord chat
+So the following code:
 
-open world editor and go in here, do u have those triggers left? no i deleted the trigger, but i got the regions on the map, can u open world editor i will teach u something
+SetDoodadAnimationRect(gg_rct_TeleportBossesLeft, 'D029', "stand", false)
 
-there u go   
-u only had these 4 right? yep 
+Will set all Doodads of type D029 as "stand" in the region gg_rct_TeleportBossesLeft.
 
-Did you need to do anything else with triggers? no
-
-Good tip is when u dont know how to do something, just try write in the code, it will bring up everything u can do, eg with doodad
-its loading, java, need to wait a bit, see?
-
-if you want to run a function after X time and not at initialization, you can do
-
+Remember, that you can also make triggers in GUI in the World Editor, and when you done what you want, convert it to JASS:
+(Edit -> Convert to Custom Text)
+You can use this converted JASS to use as inspiration and code it in Wurst, it is almost similar, same API.
 */
 
 init
     teleporterAnimations()
-
 
 function teleporterAnimations ()
     SetDoodadAnimationRect(gg_rct_TeleportBossesLeft, 'D029', "stand", false)
