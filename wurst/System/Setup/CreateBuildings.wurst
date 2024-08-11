@@ -26,6 +26,7 @@ function createBuildingsForPlayer3()
     gg_unit_n003_0051 = CreateUnit(p, VONGOLA_SHOP, -10624.0, 10432.0, 270.000)..setInvulnerable(true)
     CreateUnit(p, 'n006', -10816.0, 9856.0, 270.000)..setInvulnerable(true)
     CreateUnit(p, ARCOBALENO_SHOP, -10816.0, 9600.0, 270.000)..setInvulnerable(true)
+    CreateUnit(p, NEW_ITEM_SHOP, -10816.0, 9400.0, 270.000)..setInvulnerable(true)
 
 function createBuildingsForPlayer7()
     let p = Player(7)

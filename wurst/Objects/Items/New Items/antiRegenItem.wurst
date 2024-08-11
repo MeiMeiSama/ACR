@@ -40,7 +40,7 @@ function antiRegenItemUseEnd()
         let heal = antiRegenVictim[id].getHP() - antiRegenVictimHealth[id]
         antiRegenCaster[id].addHP(heal)
         antiRegenVictim[id].setHP(antiRegenVictimHealth[id])
-    if antiRegenCount[id] >= 1000 or antiRegenVictim[id].isAlive() == false
+    if antiRegenCount[id] >= 300 or antiRegenVictim[id].isAlive() == false
         antiRegenTimer[id].destr()
         antiRegenTimer[id] = null
 

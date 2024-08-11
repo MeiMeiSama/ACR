@@ -8,6 +8,7 @@ import SoundUtils
 import main
 import Cloud
 import Mist
+import magicshield
 constant izanamiSound_proc = new SoundDefinition("war3mapImported\\Izanami_proc.mp3")
 constant abigailSound_proc = new SoundDefinition("war3mapImported\\AbigailSE3.mp3")
 constant rinneganSound_proc = new SoundDefinition("war3mapImported\\Rinnegan_proc.mp3")
@@ -1152,6 +1153,15 @@ init
                         if DamageEvent.getAmount() < target.getHP()// If damage is lower than remaining health
                             target.addHP(DamageEvent.getAmount() / 2) // Heals target for 50% of damage
                             DamageEvent.setAmount(0) //Sets damage to 0                                               
+
+                    if DamageEvent.getTarget().hasAbility('B07K')// If target has (magic shield)
+                        let magicShieldID = target.getUserData()
+                        if DamageEvent.getAmount() < magicShieldValue[magicShieldID] // If damage is lower than absorb value
+                            magicShieldValue[magicShieldID] = magicShieldValue[magicShieldID] - DamageEvent.getAmount() // Lowers absorb
+                            DamageEvent.setAmount(0) // Sets damage to 0
+                        else if DamageEvent.getAmount() >= magicShieldValue[magicShieldID] //else if damage is higher than absorb value         
+                            DamageEvent.setAmount(DamageEvent.getAmount() - magicShieldValue[magicShieldID]) // Lowers damage
+                            magicShieldValue[magicShieldID] = 0 // Sets absorb value to 0
 
                     if DamageEvent.getTarget().hasAbility('B06K') or DamageEvent.getTarget().hasAbility('B06N')// If target has (Cloud)
                         let cloudID = target.getUserData()
