@@ -1,3 +1,22 @@
+# ━━━━━━━━━ Anime Carnage Reforged v2.1.0 ━━━━━━━━━ #
+
+### Added
+1. Added a new Terrain Area, reachable through the teleporters in the middle lane.
+
+### Improved
+1. Improved Terrain Layout.
+3. Improved Terrain Coordinates, all team should have equal distances.
+4. Improved Shop locations, should be concise now, and more easily clickable.
+
+### Changed
+Nothing Changed. 
+
+### Fixed
+Nothing Fixed.
+
+### Deleted
+Nothing Deleted.
+
 # ━━━━━━━━━ Anime Carnage Reforged v2.0.7 ━━━━━━━━━ #
 
 ### Added
@@ -17,7 +36,7 @@
 5. Hibari's T is now fixed ... but like, actually.
 
 ### Deleted
-Nothing Deleted.
+1. Nothing Deleted.
 
 # ━━━━━━━━━ Anime Carnage Reforged v2.0.6 ━━━━━━━━━ #
 
