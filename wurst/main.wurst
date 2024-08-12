@@ -10004,6 +10004,45 @@ function trig_shuayeFunc003Func002Func002T()
     FlushChildHashtable(YDLOC, GetHandleId(GetExpiredTimer()))
     DestroyTimer(GetExpiredTimer())
 
+function trig_shuayeFunc004Func002Func002T()
+    bj_forLoopAIndex = 1
+    bj_forLoopAIndexEnd = 1
+    while true
+        if bj_forLoopAIndex > bj_forLoopAIndexEnd
+            break
+        SaveLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 48, GetRandomLocInRect(gg_rct_ColorfullBuffMonsterLeft))
+        SaveUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 582544290, CreateUnitAtLoc(Player(PLAYER_NEUTRAL_AGGRESSIVE), 'O008', LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 48), GetRandomDirectionDeg()))
+        RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 48))
+        bj_forLoopAIndex++
+    FlushChildHashtable(YDLOC, GetHandleId(GetExpiredTimer()))
+    DestroyTimer(GetExpiredTimer())
+
+function trig_shuayeFunc005Func002Func002T()
+    bj_forLoopAIndex = 1
+    bj_forLoopAIndexEnd = 1
+    while true
+        if bj_forLoopAIndex > bj_forLoopAIndexEnd
+            break
+        SaveLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 48, GetRandomLocInRect(gg_rct_ColorfullBuffMonsterRight))
+        SaveUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 582544290, CreateUnitAtLoc(Player(PLAYER_NEUTRAL_AGGRESSIVE), 'O009', LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 48), GetRandomDirectionDeg()))
+        RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 48))
+        bj_forLoopAIndex++
+    FlushChildHashtable(YDLOC, GetHandleId(GetExpiredTimer()))
+    DestroyTimer(GetExpiredTimer())    
+
+function trig_shuayeFunc006Func002Func002T()
+    bj_forLoopAIndex = 1
+    bj_forLoopAIndexEnd = 1
+    while true
+        if bj_forLoopAIndex > bj_forLoopAIndexEnd
+            break
+        SaveLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 48, GetRandomLocInRect(gg_rct_ColorfullBuffMonsterTop))
+        SaveUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 582544290, CreateUnitAtLoc(Player(PLAYER_NEUTRAL_AGGRESSIVE), 'O00A', LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 48), GetRandomDirectionDeg()))
+        RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 48))
+        bj_forLoopAIndex++
+    FlushChildHashtable(YDLOC, GetHandleId(GetExpiredTimer()))
+    DestroyTimer(GetExpiredTimer())
+
 function trig_shuayeActions()
     timer _ydl_timer
     if GetUnitTypeId(GetDyingUnit()) == 'e0PB'
@@ -10027,6 +10066,27 @@ function trig_shuayeActions()
             _ydl_timer = CreateTimer()
             SaveLocationHandle(YDLOC, GetHandleId(_ydl_timer), 48, LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * LoadInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 1045), 48))
             TimerStart(_ydl_timer, 300.00, false, function trig_shuayeFunc003Func002Func002T)
+    if GetUnitTypeId(GetDyingUnit()) == 'O008'
+        udg_shuaye[4]++
+        if udg_shuaye[4] >= 1
+            udg_shuaye[4] = 0
+            _ydl_timer = CreateTimer()
+            SaveLocationHandle(YDLOC, GetHandleId(_ydl_timer), 48, LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * LoadInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 1045), 48))
+            TimerStart(_ydl_timer, 2.00, false, function trig_shuayeFunc004Func002Func002T)
+    if GetUnitTypeId(GetDyingUnit()) == 'O009'
+        udg_shuaye[5]++
+        if udg_shuaye[5] >= 1
+            udg_shuaye[5] = 0
+            _ydl_timer = CreateTimer()
+            SaveLocationHandle(YDLOC, GetHandleId(_ydl_timer), 48, LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * LoadInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 1045), 48))
+            TimerStart(_ydl_timer, 2.00, false, function trig_shuayeFunc005Func002Func002T)
+    if GetUnitTypeId(GetDyingUnit()) == 'O00A'
+        udg_shuaye[6]++
+        if udg_shuaye[6] >= 1
+            udg_shuaye[6] = 0
+            _ydl_timer = CreateTimer()
+            SaveLocationHandle(YDLOC, GetHandleId(_ydl_timer), 48, LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * LoadInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 1045), 48))
+            TimerStart(_ydl_timer, 2.00, false, function trig_shuayeFunc006Func002Func002T)
 
 function initTrig_shuaye()
     gg_trg_shuaye = CreateTrigger()

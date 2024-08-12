@@ -147,6 +147,21 @@ function createNeutralHostile()
         forestCreepID++
     else 
         forestCreepID = 900     
+    createUnit(p, 'O008', colorfullBuffMonsterLeft)..setUserData(forestCreepID)
+    if forestCreepID < 950
+        forestCreepID++
+    else 
+        forestCreepID = 900
+    createUnit(p, 'O009', colorfullBuffMonsterRight)..setUserData(forestCreepID)
+    if forestCreepID < 950
+        forestCreepID++
+    else 
+        forestCreepID = 900
+    createUnit(p, 'O00A', colorfullBuffMonsterTop)..setUserData(forestCreepID)
+    if forestCreepID < 950
+        forestCreepID++
+    else 
+        forestCreepID = 900
 
 function createNeutralPassive()
     DoNothing()

@@ -12,6 +12,12 @@ public vec2 team1Neutrals = vec2(-7225, -1479)
 public vec2 team2Neutrals = vec2(-946, 1215)
 public vec2 team3Neutrals = vec2(-903, -2566)
 
+// Coordinates for each team's Colorfullbuffs
+
+public vec2 colorfullBuffMonsterLeft = vec2(-9073, -4042)
+public vec2 colorfullBuffMonsterRight = vec2(2325, -4216)
+public vec2 colorfullBuffMonsterTop = vec2(-3343, 4009) 
+
 // Coordinates for Kiara boss and Sistine Dummy Hero
 
 public vec2 kiaraPos = vec2(-4723, -10018)
