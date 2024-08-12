@@ -11,9 +11,9 @@ import Objects
 
     new ItemDefinition(ANTI_REGEN_ITEM_RECIPE, 'rnsp') // Vongola Ring Upgrade
     ..setAbilities("")
-    ..setName("|cffffd700Recipe: |cffff8080Hogyoinku Item Recipe")
-    ..setDescription("|n|r|cffffd700Hogyoiku|r")
-    ..setTooltipBasic("|cffffd700Recipe: |cffff8080small health orb + lesser catalyst=medium health orb|n3 medium orbs + greater catalyst=big health orb|n2 big health orbs + anti regen item recipe= hogyoinku")
+    ..setName("|cffff8080Hogyoinku Item Recipe")
+    ..setDescription("|n|r|cffffd700Hogyoinku|r")
+    ..setTooltipBasic("|cffffd700Hogyoinku Recipe:|n|n|cffff8080small health orb + lesser catalyst=medium health orb|n3 medium orbs + greater catalyst=big health orb|n2 big health orbs + hogyoinku item recipe= hogyoinku")
     ..setTooltipExtended("|n|r|cffffd700For the next 3 seconds, transfers any healing received by the target to you instead.|r|n|cffffd700Cooldown: |cffff808090|r|n|n|cffc0c0c0Passive|r|r|r|n|n|cffffd700Increases the user's health regen by 15|n|cffffd700Increases the user's health by 600|r")
     ..setGoldCost(1000)..setLumberCost(0)
     ..setDroppedWhenCarrierDies(false)..setStockReplenishInterval(0)
