@@ -31,7 +31,7 @@ function meleeBonusDamage ()
             let id = caster.getOwner().getId() 
             if meleeBonusDamage[id] > 0
                 DamageEvent.setNextDamageFromCode()
-                caster.damageTarget(victim, meleeBonusDamage[id], ATTACK_TYPE_MAGIC) 
+                caster.damageTarget(victim, meleeBonusDamage[id], ATTACK_TYPE_CHAOS) 
                 meleeBonusDamage[id] = 0  
 
 
