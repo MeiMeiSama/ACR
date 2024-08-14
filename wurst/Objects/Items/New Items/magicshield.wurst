@@ -17,7 +17,7 @@ function magicShield ()
     CreateTrigger()
     ..registerAnyUnitEvent(EVENT_PLAYER_UNIT_DAMAGED)
     ..addAction() ->
-        if BlzGetEventAttackType() == ATTACK_TYPE_MAGIC and BlzGetEventDamageTarget().isType(UNIT_TYPE_HERO) and BlzGetEventDamageTarget().hasItemById('PUT YOUR AMAZING ITEM NAMING SKILLS TO USE HERE')
+        if BlzGetEventAttackType() == ATTACK_TYPE_MAGIC and BlzGetEventDamageTarget().hasItemById('PUT YOUR AMAZING ITEM NAMING SKILLS TO USE HERE')
             let caster = BlzGetEventDamageTarget()
             let id = caster.getOwner().getId()
             magicShieldUser[id] = caster
