@@ -94,11 +94,13 @@ public constant HEALTH_ABILITY_75 = compiletime(ABIL_ID_GEN.next())
 public constant HEALTH_ABILITY_150 = compiletime(ABIL_ID_GEN.next())
 public constant HEALTH_ABILITY_225 = compiletime(ABIL_ID_GEN.next())
 public constant HEALTH_ABILITY_600 = compiletime(ABIL_ID_GEN.next())
+public constant HEALTH_ABILITY_220 = compiletime(ABIL_ID_GEN.next())
 public constant HEALTH_REGEN_ABILITY_2 = compiletime(ABIL_ID_GEN.next())
 public constant HEALTH_REGEN_ABILITY_4 = compiletime(ABIL_ID_GEN.next())
 public constant HEALTH_REGEN_ABILITY_6 = compiletime(ABIL_ID_GEN.next())
 public constant HEALTH_REGEN_ABILITY_15 = compiletime(ABIL_ID_GEN.next())
 public constant STRENGTH_ABILITY_25 = compiletime(ABIL_ID_GEN.next())
+public constant AGILITY_ABILITY_25 = compiletime(ABIL_ID_GEN.next())
 
 // ------------------------------ Heroes ------------------------------
 public let PORTGASD_ACE = compiletime(HERO_ID_GEN.next())
@@ -165,6 +167,7 @@ public constant SUN_ARCOBALENO_RECIPE_TOME = compiletime(ITEM_ID_GEN.next())
 public constant THUNDER_ARCOBALENO_RECIPE = compiletime(ITEM_ID_GEN.next())
 public constant THUNDER_ARCOBALENO_RECIPE_TOME = compiletime(ITEM_ID_GEN.next())
 public constant ANTI_REGEN_ITEM_RECIPE = compiletime(ITEM_ID_GEN.next())
+public constant SWORD_OF_PEW_ITEM_RECIPE = compiletime(ITEM_ID_GEN.next())
 
 // ------------------------------ New Items ------------------------------
 
@@ -172,6 +175,7 @@ public constant ANTI_REGEN_ITEM = compiletime(ITEM_ID_GEN.next())
 public constant HEALTH_ORB_SMALL = compiletime(ITEM_ID_GEN.next())
 public constant HEALTH_ORB_MEDIUM = compiletime(ITEM_ID_GEN.next())
 public constant HEALTH_ORB_BIG = compiletime(ITEM_ID_GEN.next())
+public constant SWORD_OF_PEW = compiletime(ITEM_ID_GEN.next())
 
 // ------------------------------ Rings ------------------------------
 public constant CLOUD_RING_1 = compiletime(ITEM_ID_GEN.next())

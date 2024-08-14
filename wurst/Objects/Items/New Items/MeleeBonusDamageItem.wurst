@@ -3,6 +3,7 @@ package MeleeBonusDamageItem
 import TimerUtils
 import DamageEvent
 import ACR_TagSystem
+import ObjectDefinitions
 
 int array meleeBonusDamageCount
 unit array meleeBonusDamageUser
@@ -15,7 +16,7 @@ function meleeBonusDamage ()
     CreateTrigger()
     ..registerAnyUnitEvent(EVENT_PLAYER_UNIT_DAMAGED)
     ..addAction() ->
-        if BlzGetEventAttackType() == ATTACK_TYPE_MAGIC and GetEventDamageSource().hasItemById('PUT ITEM ID HERE')
+        if BlzGetEventAttackType() == ATTACK_TYPE_MAGIC and GetEventDamageSource().hasItemById(SWORD_OF_PEW)
             let caster = GetEventDamageSource()
             let id = caster.getOwner().getId()
             let dmg = GetEventDamage()
@@ -25,7 +26,7 @@ function meleeBonusDamage ()
             if meleeBonusDamageTimer[id] == null
                 meleeBonusDamageTimer[id] = CreateTimer()..startPeriodic(0.01, function meleeBonusDamageEnd)..setData(id)
 
-        if BlzGetEventAttackType() == ATTACK_TYPE_HERO and GetEventDamageSource().hasItemById('PUT ITEM ID HERE')
+        if BlzGetEventAttackType() == ATTACK_TYPE_HERO and GetEventDamageSource().hasItemById(SWORD_OF_PEW)
             let caster = GetEventDamageSource()
             let victim = BlzGetEventDamageTarget()
             let id = caster.getOwner().getId() 

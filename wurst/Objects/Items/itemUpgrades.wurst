@@ -6,6 +6,7 @@ init
     ringsUpgrade ()
     bootsUpgrade ()
     newUpgrade ()
+    pewpewUpgrade ()
     generalUpgrade ()
     onVongolaUpgradeBuy_init ()
 
@@ -219,6 +220,15 @@ function newUpgrade ()
     bigHealthOrb.addItem(HEALTH_ORB_MEDIUM) // medium health orb  
     bigHealthOrb.addItem(HEALTH_ORB_MEDIUM) // medium health orb      
     bigHealthOrb.addItem('I06O') // greater upgrade catalyst
+
+function pewpewUpgrade ()    
+    // ------------------------- Sword of pew pew power Item ------------------------- //
+    let swordOfPewItem = new ItemRecipe(SWORD_OF_PEW, 0, false, true, true) // Boots Lv. 2
+    swordOfPewItem.addItem(SWORD_OF_PEW_ITEM_RECIPE) // sword of pew item recipe   
+    swordOfPewItem.addItem(HEALTH_ORB_SMALL) //small health orb
+    swordOfPewItem.addItem(HEALTH_ORB_SMALL) //small health orb
+    swordOfPewItem.addItem(HEALTH_ORB_SMALL) //small health orb
+    swordOfPewItem.addItem(RAIN_RING_2) //rain ring level 2
 
 function generalUpgrade ()
     // -------------------------- Greater Strength -------------------------- //

@@ -2,6 +2,9 @@
 
 ### Added
 1. Added a new Terrain Area, reachable through the teleporters in the middle lane.
+2. Added brand new items.
+3. Added skin system.
+4. Added new side mini-bosses for team buffs.
 
 ### Improved
 1. Improved Terrain Layout.
@@ -9,7 +12,7 @@
 4. Improved Shop locations, should be concise now, and more easily clickable.
 
 ### Changed
-Nothing Changed. 
+Overall rework on items icons.
 
 ### Fixed
 Nothing Fixed.

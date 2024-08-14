@@ -1391,6 +1391,14 @@ import AbilityGlobals
     ..setTooltipNormalExtended(1, "Gives 500 hp")
     ..setIconNormal("ReplaceableTextures\\CommandButtons\\BTNArcobalenoThunder.blp")    
 
+    new AbilityDefinitionMaxLifeBonusGreater(HEALTH_ABILITY_220)
+    ..setItemAbility(false)
+    ..setMaxLifeGained(1, 220)
+    ..setName("HP bonus")
+    ..setTooltipNormal(1, "Gives 220 hp")
+    ..setTooltipNormalExtended(1, "Gives 220 hp")
+    ..setIconNormal("ReplaceableTextures\\CommandButtons\\BTNArcobalenoThunder.blp")
+
     new AbilityDefinitionMaxLifeBonusGreater(HEALTH_ABILITY_225)
     ..setItemAbility(false)
     ..setMaxLifeGained(1, 225)
@@ -1450,6 +1458,16 @@ import AbilityGlobals
     ..setTooltipNormalExtended(1, "Gives Str")
     ..setIconNormal("ReplaceableTextures\\CommandButtons\\BTNArcobalenoThunder.blp")
 
+    new AbilityDefinitionAgilityBonusPlus3(AGILITY_ABILITY_25)
+    ..setHideButton(1, true)
+    ..setItemAbility(true)
+    ..setStrengthBonus(1, 0)
+    ..setAgilityBonus(1, 25)
+    ..setIntelligenceBonus(1, 0)
+    ..setName("Agi Bonus")
+    ..setTooltipNormal(1, "Gives Agi")
+    ..setTooltipNormalExtended(1, "Gives Agi")
+    ..setIconNormal("ReplaceableTextures\\CommandButtons\\BTNArcobalenoThunder.blp")
 
 @compiletime function dummyAbilities ()
     new AbilityDefinitionSlow(BURNDOT_DUMMY_ABILITY)

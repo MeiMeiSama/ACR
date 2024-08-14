@@ -21,6 +21,17 @@ import Objects
     ..setModelUsed(Objects.treasurechest1)
     ..setInterfaceIcon("ReplaceableTextures\\CommandButtons\\BTNAnimalRing.blp")
 
+    new ItemDefinition(SWORD_OF_PEW_ITEM_RECIPE, 'rnsp') // Vongola Ring Upgrade
+    ..setAbilities("")
+    ..setName("|cffff8080Sword of Pew Pew Power Item Recipe")
+    ..setDescription("|n|r|cffffd700Sword of Pew Pew Power|r")
+    ..setTooltipBasic("|cffffd700Sword of Pew Pew Power Recipe:|n|cffff80803 small health orbs + rain ring level 2 + Sword of Pew Pew Power item recipe= Sword of Pew Pew Power")
+    ..setTooltipExtended("|n|r|cffffd700Dealing damage with abilities supercharges your next basic attack, dealing bonus damage based on the amount of damage dealt with your abilities.|r|n|n|cffc0c0c0Passive|r|r|r|n|n||cffffd700Increases the user's health by 220|n|cffffd700Increases the user's agility by 25|r")
+    ..setGoldCost(2000)..setLumberCost(0)
+    ..setDroppedWhenCarrierDies(false)..setStockReplenishInterval(0)
+    ..setButtonPositionX(1)..setButtonPositionY(0)
+    ..setModelUsed(Objects.treasurechest1)
+    ..setInterfaceIcon("ReplaceableTextures\\CommandButtons\\BTNAnimalRing.blp")
 
     new ItemDefinition(VONGOLA_RING_UPGRADE_TOME, ItemIds.manualofHealth) // Vongola Ring Tome Recipe
     ..setAbilities("")
@@ -730,4 +741,15 @@ import Objects
     ..setGoldCost(1500)..setLumberCost(0)
     ..setDroppedWhenCarrierDies(false)..setStockReplenishInterval(0)
     ..setModelUsed(Objects.treasurechest1)
-    ..setInterfaceIcon("ReplaceableTextures\\CommandButtons\\BTNhealthorbbig.blp")  
+    ..setInterfaceIcon("ReplaceableTextures\\CommandButtons\\BTNhealthorbbig.blp")
+
+    new ItemDefinition(SWORD_OF_PEW, ItemIds.hornoftheClouds)
+    ..setAbilities(commaList(AGILITY_ABILITY_25, HEALTH_ABILITY_220))
+    ..setName("|cffff8080Sword of Pew Pew Power")
+    ..setTooltipBasic("|cffff8080AA item")
+    ..setDescription("|n|cff008080APassive:|n|n|r|cffffd700Dealing damage with abilities supercharges your next basic attack, dealing bonus damage based on the amount of damage dealt with your abilities. Stacks and lasts for 3 seconds.|r|n|cffffd700Cooldown: |cffff808090|r|n|n|cffc0c0c0Passive|r|r|r|n|n|cffffd700Increases the user's agility by 25|n|cffffd700Increases the user's health by 220")
+    ..setTooltipExtended("|n|cff008080Passive:|n|n|r|cffffd700Dealing damage with abilities supercharges your next basic attack, dealing bonus damage based on the amount of damage dealt with your abilities. Stacks and lasts for 3 seconds.|r|n|n|cffc0c0c0Passive|r|r|r|n|n|cffffd700Increases the user's agility by 25|n|cffffd700Increases the user's health by 220")
+    ..setGoldCost(4000)..setLumberCost(0)
+    ..setDroppedWhenCarrierDies(false)..setStockReplenishInterval(0)
+    ..setModelUsed(Objects.treasurechest1)
+    ..setInterfaceIcon("ReplaceableTextures\\CommandButtons\\BTNpewsword.blp")  
