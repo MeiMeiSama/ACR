@@ -46,7 +46,7 @@ import ObjectIds
     ..setTooltipExtended("Provides various advanced items.")
     ..setIconGameInterface("ReplaceableTextures\\CommandButtons\\BTNMerchant.blp")
     ..setNormalAbilities("Avul,Apit,Aneu")
-    ..setItemsSold(commaList(ANTI_REGEN_ITEM_RECIPE, SWORD_OF_PEW_ITEM_RECIPE, HEALTH_ORB_SMALL))
+    ..setItemsSold(commaList(ANTI_REGEN_ITEM_RECIPE, SWORD_OF_PEW_ITEM_RECIPE, COMFY_PILLOW_ITEM_RECIPE, HEALTH_ORB_SMALL))
     ..setUnitSoundSet("")
     ..setAcquisitionRange(1200)
     ..setModelFile("war3mapImported\\AFBChino2.mdl")

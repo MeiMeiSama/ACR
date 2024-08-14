@@ -1411,8 +1411,8 @@ import AbilityGlobals
     ..setItemAbility(false)
     ..setMaxLifeGained(1, 600)
     ..setName("HP bonus")
-    ..setTooltipNormal(1, "Gives 500 hp")
-    ..setTooltipNormalExtended(1, "Gives 500 hp")
+    ..setTooltipNormal(1, "Gives 600 hp")
+    ..setTooltipNormalExtended(1, "Gives 600 hp")
     ..setIconNormal("ReplaceableTextures\\CommandButtons\\BTNArcobalenoThunder.blp")   
 
     new AbilityDefinitionRegenLifeArll(HEALTH_REGEN_ABILITY_2)

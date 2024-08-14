@@ -7,6 +7,7 @@ init
     bootsUpgrade ()
     newUpgrade ()
     pewpewUpgrade ()
+    comfypillowUpgrade ()
     generalUpgrade ()
     onVongolaUpgradeBuy_init ()
 
@@ -228,7 +229,15 @@ function pewpewUpgrade ()
     swordOfPewItem.addItem(HEALTH_ORB_SMALL) //small health orb
     swordOfPewItem.addItem(HEALTH_ORB_SMALL) //small health orb
     swordOfPewItem.addItem(HEALTH_ORB_SMALL) //small health orb
-    swordOfPewItem.addItem(RAIN_RING_2) //rain ring level 2
+    swordOfPewItem.addItem('I06L') //Superior Agility
+
+function comfypillowUpgrade ()    
+    // ------------------------- comfy pillow Item ------------------------- //
+    let comfyPillowItem = new ItemRecipe(COMFY_PILLOW, 0, false, true, true) // Boots Lv. 2
+    comfyPillowItem.addItem(COMFY_PILLOW_ITEM_RECIPE) // comfy pillow item recipe   
+    comfyPillowItem.addItem(HEALTH_ORB_BIG) //big health orb
+    comfyPillowItem.addItem(HEALTH_ORB_BIG) //big health orb
+    comfyPillowItem.addItem('I02R') //Greater Strenght
 
 function generalUpgrade ()
     // -------------------------- Greater Strength -------------------------- //

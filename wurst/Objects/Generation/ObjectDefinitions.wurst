@@ -168,6 +168,7 @@ public constant THUNDER_ARCOBALENO_RECIPE = compiletime(ITEM_ID_GEN.next())
 public constant THUNDER_ARCOBALENO_RECIPE_TOME = compiletime(ITEM_ID_GEN.next())
 public constant ANTI_REGEN_ITEM_RECIPE = compiletime(ITEM_ID_GEN.next())
 public constant SWORD_OF_PEW_ITEM_RECIPE = compiletime(ITEM_ID_GEN.next())
+public constant COMFY_PILLOW_ITEM_RECIPE = compiletime(ITEM_ID_GEN.next())
 
 // ------------------------------ New Items ------------------------------
 
@@ -176,6 +177,7 @@ public constant HEALTH_ORB_SMALL = compiletime(ITEM_ID_GEN.next())
 public constant HEALTH_ORB_MEDIUM = compiletime(ITEM_ID_GEN.next())
 public constant HEALTH_ORB_BIG = compiletime(ITEM_ID_GEN.next())
 public constant SWORD_OF_PEW = compiletime(ITEM_ID_GEN.next())
+public constant COMFY_PILLOW = compiletime(ITEM_ID_GEN.next())
 
 // ------------------------------ Rings ------------------------------
 public constant CLOUD_RING_1 = compiletime(ITEM_ID_GEN.next())
