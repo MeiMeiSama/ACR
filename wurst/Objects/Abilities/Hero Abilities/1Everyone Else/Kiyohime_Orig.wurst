@@ -16,6 +16,10 @@ function trig_KiyohimeConditions() returns boolean
     return GetSpellAbilityId() == 'A128' or GetSpellAbilityId() == 'A129' or GetSpellAbilityId() == 'A12A' or GetSpellAbilityId() == 'A12B' or GetSpellAbilityId() == 'A12D' or GetSpellAbilityId() == 'A12E'
 function trig_KiyohimeFunc006Func001Func001Func001Func001Func002Func008T()
     SaveInteger(YDLOC, GetHandleId(GetExpiredTimer()), 280, LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 280) + 1)
+    if LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 280) <= 74
+        let caster = LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594)
+        caster.issueImmediateOrder("stop") 
+
     if LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 280) == 14
         soundPlay("war3mapImported\\LancerKiyohimeEffect1.mp3", GetUnitX(udg_Unitsound), GetUnitY(udg_Unitsound))
         SetUnitTimeScalePercent(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 968215392), 0.00)
