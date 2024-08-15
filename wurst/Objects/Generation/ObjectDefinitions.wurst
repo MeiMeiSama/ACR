@@ -288,3 +288,6 @@ public let MISOGI_THAI_F_DUMMY_4 = compiletime(UNIT_ID_GEN.next())
 public let MISOGI_THAI_F_DUMMY_5 = compiletime(UNIT_ID_GEN.next())
 
 public let MISOGI_THAI_E_DUMMY_1 = compiletime(UNIT_ID_GEN.next())
+
+///////////////////// Dummies for skins/////////////////////////
+public let natsu_skin = compiletime(UNIT_ID_GEN.next())

@@ -5,6 +5,7 @@ import ClosureFrames
 import FramehandleNames
 import TimerUtils
 import Abilities
+import ObjectDefinitions
 
 // map<unittype, Skin> skins = map<unittype, Skin>
 var skins = new HashMap<int, Skin> 
@@ -28,10 +29,10 @@ public class Skin
 public function registerSkins()
     // Universal skin for unit type H03D
     skins.put('H03D', new Skin('h04E', true, "")) // h04E is the skin ID
-
+    skins.put('H001', new Skin(natsu_skin, true, ""))
     
     // Restricted skin for unit type H008, only for a specific player
-    skins.put('H008', new Skin('h04F', false, "ReusxMarina")) // h04F is the skin ID
+    skins.put('H008', new Skin('h04F', false, "ReusXMarina")) // h04F is the skin ID
 
 public function applySkin(unit u, player p)
     let unitType = u.getTypeId()
