@@ -8,6 +8,7 @@ init
     newUpgrade ()
     pewpewUpgrade ()
     comfypillowUpgrade ()
+    cubesipsUpgrade ()
     generalUpgrade ()
     onVongolaUpgradeBuy_init ()
 
@@ -238,6 +239,15 @@ function comfypillowUpgrade ()
     comfyPillowItem.addItem(HEALTH_ORB_BIG) //big health orb
     comfyPillowItem.addItem(HEALTH_ORB_BIG) //big health orb
     comfyPillowItem.addItem('I02R') //Greater Strenght
+
+function cubesipsUpgrade ()    
+    // ------------------------- cube sips Item ------------------------- //
+    let cubeSipsItem = new ItemRecipe(CUBE_SIPS, 0, false, true, true) // Boots Lv. 2
+    cubeSipsItem.addItem(CUBE_SIPS_ITEM_RECIPE) // comfy pillow item recipe   
+    cubeSipsItem.addItem(HEALTH_ORB_SMALL) //small health orb
+    cubeSipsItem.addItem(HEALTH_ORB_SMALL) //small health orb
+    cubeSipsItem.addItem(HEALTH_ORB_SMALL) //small health orb
+    cubeSipsItem.addItem('I06X') //Superior Intelligence
 
 function generalUpgrade ()
     // -------------------------- Greater Strength -------------------------- //

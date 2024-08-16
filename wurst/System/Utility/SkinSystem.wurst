@@ -28,11 +28,11 @@ public class Skin
 
 public function registerSkins()
     // Universal skin for unit type H03D
-    skins.put('H03D', new Skin('h04E', true, "")) // h04E is the skin ID
-    skins.put('H001', new Skin(natsu_skin, true, ""))
+    skins.put('H016', new Skin(RIN_SKIN, true, ""))
     
     // Restricted skin for unit type H008, only for a specific player
-    skins.put('H008', new Skin('h04F', false, "ReusXMarina")) // h04F is the skin ID
+    skins.put('H008', new Skin('h04F', false, "ReusXMarina")) // Misaka old
+    skins.put('H03D', new Skin('h04E', false, "Whippie")) //Ainz
 
 public function applySkin(unit u, player p)
     let unitType = u.getTypeId()

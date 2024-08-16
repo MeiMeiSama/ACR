@@ -1469,6 +1469,17 @@ import AbilityGlobals
     ..setTooltipNormalExtended(1, "Gives Agi")
     ..setIconNormal("ReplaceableTextures\\CommandButtons\\BTNArcobalenoThunder.blp")
 
+    new AbilityDefinitionAgilityBonusPlus3(INTELLIGENCE_ABILITY_25)
+    ..setHideButton(1, true)
+    ..setItemAbility(true)
+    ..setStrengthBonus(1, 0)
+    ..setAgilityBonus(1, 0)
+    ..setIntelligenceBonus(1, 25)
+    ..setName("Int Bonus")
+    ..setTooltipNormal(1, "Gives Int")
+    ..setTooltipNormalExtended(1, "Gives Int")
+    ..setIconNormal("ReplaceableTextures\\CommandButtons\\BTNArcobalenoThunder.blp")
+
 @compiletime function dummyAbilities ()
     new AbilityDefinitionSlow(BURNDOT_DUMMY_ABILITY)
     ..setLevels(1)

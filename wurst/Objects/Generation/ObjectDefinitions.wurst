@@ -101,6 +101,7 @@ public constant HEALTH_REGEN_ABILITY_6 = compiletime(ABIL_ID_GEN.next())
 public constant HEALTH_REGEN_ABILITY_15 = compiletime(ABIL_ID_GEN.next())
 public constant STRENGTH_ABILITY_25 = compiletime(ABIL_ID_GEN.next())
 public constant AGILITY_ABILITY_25 = compiletime(ABIL_ID_GEN.next())
+public constant INTELLIGENCE_ABILITY_25 = compiletime(ABIL_ID_GEN.next())
 
 // ------------------------------ Heroes ------------------------------
 public let PORTGASD_ACE = compiletime(HERO_ID_GEN.next())
@@ -169,6 +170,7 @@ public constant THUNDER_ARCOBALENO_RECIPE_TOME = compiletime(ITEM_ID_GEN.next())
 public constant ANTI_REGEN_ITEM_RECIPE = compiletime(ITEM_ID_GEN.next())
 public constant SWORD_OF_PEW_ITEM_RECIPE = compiletime(ITEM_ID_GEN.next())
 public constant COMFY_PILLOW_ITEM_RECIPE = compiletime(ITEM_ID_GEN.next())
+public constant CUBE_SIPS_ITEM_RECIPE = compiletime(ITEM_ID_GEN.next())
 
 // ------------------------------ New Items ------------------------------
 
@@ -178,6 +180,7 @@ public constant HEALTH_ORB_MEDIUM = compiletime(ITEM_ID_GEN.next())
 public constant HEALTH_ORB_BIG = compiletime(ITEM_ID_GEN.next())
 public constant SWORD_OF_PEW = compiletime(ITEM_ID_GEN.next())
 public constant COMFY_PILLOW = compiletime(ITEM_ID_GEN.next())
+public constant CUBE_SIPS = compiletime(ITEM_ID_GEN.next())
 
 // ------------------------------ Rings ------------------------------
 public constant CLOUD_RING_1 = compiletime(ITEM_ID_GEN.next())
@@ -290,4 +293,4 @@ public let MISOGI_THAI_F_DUMMY_5 = compiletime(UNIT_ID_GEN.next())
 public let MISOGI_THAI_E_DUMMY_1 = compiletime(UNIT_ID_GEN.next())
 
 ///////////////////// Dummies for skins/////////////////////////
-public let natsu_skin = compiletime(UNIT_ID_GEN.next())
+public let RIN_SKIN = compiletime(UNIT_ID_GEN.next())
