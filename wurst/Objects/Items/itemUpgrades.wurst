@@ -9,6 +9,10 @@ init
     pewpewUpgrade ()
     comfypillowUpgrade ()
     cubesipsUpgrade ()
+    umbrellaJokesUpgrade ()
+    statSwitcheroUpgrade ()
+    lollipopManaUpgrade ()
+    hurtNotUpgrade ()
     generalUpgrade ()
     onVongolaUpgradeBuy_init ()
 
@@ -248,6 +252,51 @@ function cubesipsUpgrade ()
     cubeSipsItem.addItem(HEALTH_ORB_SMALL) //small health orb
     cubeSipsItem.addItem(HEALTH_ORB_SMALL) //small health orb
     cubeSipsItem.addItem('I06X') //Superior Intelligence
+
+function umbrellaJokesUpgrade ()    
+    // ------------------------- umbrella jokes Item ------------------------- //
+    let umbrellaJokesItem = new ItemRecipe(UMBRELLA_JOKES, 0, false, true, true) // Boots Lv. 2
+    umbrellaJokesItem.addItem(UMBRELLA_JOKES_ITEM_RECIPE) // umbrella of jokes item recipe   
+    umbrellaJokesItem.addItem(HEALTH_ORB_MEDIUM) //medium health orb
+    umbrellaJokesItem.addItem(HEALTH_ORB_BIG) //big health orb
+    umbrellaJokesItem.addItem(HEALTH_ORB_BIG) //big health orb
+
+function statSwitcheroUpgrade ()    
+    // ------------------------- stat switchero Item ------------------------- //
+    let statSwitcheroItem = new ItemRecipe(STAT_SWITCHEROO, 0, false, true, true) // Boots Lv. 2
+    statSwitcheroItem.addItem(STAT_SWITCHEROO_ITEM_RECIPE) // umbrella of jokes item recipe   
+    statSwitcheroItem.addItem(HEALTH_ORB_MEDIUM) //medium health orb
+    statSwitcheroItem.addItem(HEALTH_ORB_MEDIUM) //medium health orb
+    statSwitcheroItem.addItem(HEALTH_ORB_BIG) //big health orb
+    statSwitcheroItem.addItem('I02O') //lesser str
+    statSwitcheroItem.addItem('I02P') //lesser agi
+    statSwitcheroItem.addItem('I02Q') //lesser int
+
+function lollipopManaUpgrade ()    
+    // -------------------------  lollipop mana Item ------------------------- //
+    let lollipopManaItem = new ItemRecipe(LOLLIPOP_MANA, 0, false, true, true) // Boots Lv. 2
+    lollipopManaItem.addItem(LOLLIPOP_MANA_ITEM_RECIPE) //lollipop mana item recipe   
+    lollipopManaItem.addItem(HEALTH_ORB_MEDIUM) //medium mana orb
+    lollipopManaItem.addItem(HEALTH_ORB_BIG) //big mana orb
+    lollipopManaItem.addItem(HEALTH_ORB_BIG) //big mana orb
+
+    let mediumManaOrb = new ItemRecipe(MANA_ORB_MEDIUM, 0, false, true, true) // Boots Lv. 2
+    mediumManaOrb.addItem(MANA_ORB_SMALL) // small health orb
+    mediumManaOrb.addItem('I02U') //lesser upgrade catalyst
+
+    let bigManaOrb = new ItemRecipe(MANA_ORB_BIG, 0, false, true, true) // Boots Lv. 2
+    bigManaOrb.addItem(MANA_ORB_MEDIUM) // medium mana orb  
+    bigManaOrb.addItem(MANA_ORB_MEDIUM) // medium mana orb  
+    bigManaOrb.addItem(MANA_ORB_MEDIUM) // medium mana orb      
+    bigManaOrb.addItem('I06O') // greater upgrade catalyst
+
+function hurtNotUpgrade ()    
+    // ------------------------- Hurt Not Item ------------------------- //
+    let hurtNotItem = new ItemRecipe(HURT_NOT, 0, false, true, true) // Boots Lv. 2
+    hurtNotItem.addItem(HURT_NOT_ITEM_RECIPE) //hurt not item recipe   
+    hurtNotItem.addItem(RE_MEDUSA) //re-medusa skin
+    hurtNotItem.addItem(HEALTH_ORB_BIG) //big health orb
+    hurtNotItem.addItem(HEALTH_ORB_BIG) //big health orb
 
 function generalUpgrade ()
     // -------------------------- Greater Strength -------------------------- //
