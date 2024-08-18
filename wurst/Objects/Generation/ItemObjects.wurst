@@ -105,6 +105,18 @@ import Objects
     ..setModelUsed(Objects.treasurechest1)
     ..setInterfaceIcon("ReplaceableTextures\\CommandButtons\\BTNAnimalRing.blp")
 
+    new ItemDefinition(CHING_GPS_ITEM_RECIPE, 'rnsp') // Vongola Ring Upgrade
+    ..setAbilities("")
+    ..setName("|cffff8080Ching Chong Gps Item Recipe")
+    ..setDescription("|n|r|cffffd700Ching Chong Gps|r")
+    ..setTooltipBasic("|cffffd700Ching Chong Gps Recipe:|n|cffff8080knight's tiara + assassin's crest + archmage's cloak + ching chong wealth + ching chong gps item recipe= Ching Chong Gps")
+    ..setTooltipExtended("|n|r|cffffd700Creeps give +5 bonus gold, a random target and periodical pings are given to the item yielder and on a successful kill gives bonus gold.|r|n|n|cffc0c0c0Passive|r|r|r|n|n|cffffd700Increases the user's allstats by 10|n||r")
+    ..setGoldCost(1000)..setLumberCost(0)
+    ..setDroppedWhenCarrierDies(false)..setStockReplenishInterval(0)
+    ..setButtonPositionX(1)..setButtonPositionY(0)
+    ..setModelUsed(Objects.treasurechest1)
+    ..setInterfaceIcon("ReplaceableTextures\\CommandButtons\\BTNAnimalRing.blp")
+
     new ItemDefinition(VONGOLA_RING_UPGRADE_TOME, ItemIds.manualofHealth) // Vongola Ring Tome Recipe
     ..setAbilities("")
     ..setHitPoints(0)
@@ -932,7 +944,6 @@ import Objects
 
     new ItemDefinition(RE_MEDUSA, ItemIds.hornoftheClouds)
     ..setAbilities(commaList(HEALTH_ABILITY_400, ARMOR_ABILITY_20))
-    ..setCooldownGroup(commaList(ANTI_REGEN_ABILITY))
     ..setName("|cffff8080Re-Medusa Skin")
     ..setTooltipBasic("|cffff8080Re-Medusa Skin")    
     ..setDescription("|n|cffc0c0c0Passive|r|r|r|n|n|cffffd700Increases the user's armor by 20")
@@ -941,3 +952,24 @@ import Objects
     ..setDroppedWhenCarrierDies(false)..setStockReplenishInterval(0)
     ..setModelUsed(Objects.treasurechest1)
     ..setInterfaceIcon("ReplaceableTextures\\CommandButtons\\BTNMedusaskin.blp")
+
+    new ItemDefinition(CHING_WEALTH, ItemIds.hornoftheClouds)
+    ..setName("|cffff8080Re-Ching Chong Wealth")
+    ..setTooltipBasic("|cffff8080Ching Chong Wealth")    
+    ..setDescription("|n|cffc0c0c0Passive|r|r|r|n|n|cffffd700Gives user +2 bonus gold from creeps")
+    ..setTooltipExtended("|n|cffc0c0c0Passive|r|r|r|n|n|cffffd700Gives user +2 bonus gold from creeps")
+    ..setGoldCost(1000)..setLumberCost(0)
+    ..setDroppedWhenCarrierDies(false)..setStockReplenishInterval(0)
+    ..setModelUsed(Objects.treasurechest1)
+    ..setInterfaceIcon("ReplaceableTextures\\CommandButtons\\BTNchingwealth.blp")
+
+    new ItemDefinition(CHING_GPS, ItemIds.hornoftheClouds)
+    ..setAbilities(commaList(ALLSTAT_ABILITY_10))
+    ..setName("|cffff8080Re-Ching Chong GPS")
+    ..setTooltipBasic("|cffff8080Ching Chong GPS")    
+    ..setDescription("|n|cffc0c0c0Passive|r|r|r|n|n|cffffd700Creeps give +5 bonus gold, a random target and periodical pings are given to the item yielder and on a successful kill gives bonus gold")
+    ..setTooltipExtended("|n|cffc0c0c0Passive|r|r|r|n|n|cffffd700Creeps give +5 bonus gold, a random target and periodical pings are given to the item yielder and on a successful kill gives bonus gold")
+    ..setGoldCost(1000)..setLumberCost(0)
+    ..setDroppedWhenCarrierDies(false)..setStockReplenishInterval(0)
+    ..setModelUsed(Objects.treasurechest1)
+    ..setInterfaceIcon("ReplaceableTextures\\CommandButtons\\BTNchinggps.blp")

@@ -13,6 +13,7 @@ init
     statSwitcheroUpgrade ()
     lollipopManaUpgrade ()
     hurtNotUpgrade ()
+    chingGpsUpgrade ()
     generalUpgrade ()
     onVongolaUpgradeBuy_init ()
 
@@ -297,6 +298,15 @@ function hurtNotUpgrade ()
     hurtNotItem.addItem(RE_MEDUSA) //re-medusa skin
     hurtNotItem.addItem(HEALTH_ORB_BIG) //big health orb
     hurtNotItem.addItem(HEALTH_ORB_BIG) //big health orb
+
+function chingGpsUpgrade ()    
+    // ------------------------- ching gps Item ------------------------- //
+    let chingGpsItem = new ItemRecipe(CHING_GPS, 0, false, true, true) // Boots Lv. 2
+    chingGpsItem.addItem(CHING_GPS_ITEM_RECIPE) //ching gps item recipe   
+    chingGpsItem.addItem('I06M') //superior str
+    chingGpsItem.addItem('I06L') //superior agi
+    chingGpsItem.addItem('I06X') //superior int   
+    chingGpsItem.addItem(CHING_WEALTH) //ching chong wealth   
 
 function generalUpgrade ()
     // -------------------------- Greater Strength -------------------------- //

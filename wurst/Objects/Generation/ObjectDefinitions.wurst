@@ -110,6 +110,7 @@ public constant MANA_ABILITY_75 = compiletime(ABIL_ID_GEN.next())
 public constant MANA_ABILITY_150 = compiletime(ABIL_ID_GEN.next())
 public constant MANA_ABILITY_225 = compiletime(ABIL_ID_GEN.next())
 public constant ARMOR_ABILITY_20 = compiletime(ABIL_ID_GEN.next())
+public constant ALLSTAT_ABILITY_10 = compiletime(ABIL_ID_GEN.next())
 
 // ------------------------------ Heroes ------------------------------
 public let PORTGASD_ACE = compiletime(HERO_ID_GEN.next())
@@ -183,6 +184,7 @@ public constant UMBRELLA_JOKES_ITEM_RECIPE = compiletime(ITEM_ID_GEN.next())
 public constant STAT_SWITCHEROO_ITEM_RECIPE = compiletime(ITEM_ID_GEN.next())
 public constant LOLLIPOP_MANA_ITEM_RECIPE = compiletime(ITEM_ID_GEN.next())
 public constant HURT_NOT_ITEM_RECIPE = compiletime(ITEM_ID_GEN.next())
+public constant CHING_GPS_ITEM_RECIPE = compiletime(ITEM_ID_GEN.next())
 
 // ------------------------------ New Items ------------------------------
 
@@ -201,6 +203,8 @@ public constant MANA_ORB_MEDIUM = compiletime(ITEM_ID_GEN.next())
 public constant MANA_ORB_BIG = compiletime(ITEM_ID_GEN.next())
 public constant HURT_NOT = compiletime(ITEM_ID_GEN.next())
 public constant RE_MEDUSA = compiletime(ITEM_ID_GEN.next())
+public constant CHING_WEALTH = compiletime(ITEM_ID_GEN.next())
+public constant CHING_GPS = compiletime(ITEM_ID_GEN.next())
 
 // ------------------------------ Rings ------------------------------
 public constant CLOUD_RING_1 = compiletime(ITEM_ID_GEN.next())
