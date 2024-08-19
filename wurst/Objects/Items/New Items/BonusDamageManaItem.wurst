@@ -3,11 +3,7 @@ package BonusDamageManaItem
 import DamageEvent
 import ObjectDefinitions
 
-////////////////////IDK HOW TO PROPERLY USE ARRAYS IN THIS SEND SOME HALP///////////////////////
-
 constant BONUS_DAMAGE_FACTOR = 0.1
-real array currentMana
-real array bonusDmg
 
 init
     abilityBonusDamage()
@@ -17,9 +13,8 @@ function abilityBonusDamage ()
     ..addAction() ->
         if BlzGetEventAttackType() == ATTACK_TYPE_MAGIC and GetEventDamageSource().hasItemById(CUBE_SIPS)
             let caster = GetEventDamageSource()
-            let id = caster.getOwner().getId()
             let victim = BlzGetEventDamageTarget()
-            let currentMana[id] = caster.getMana()
-            let bonusDmg[id] = currentMana[id] * BONUS_DAMAGE_FACTOR
+            let currentMana = caster.getMana()
+            let bonusDmg = currentMana * BONUS_DAMAGE_FACTOR
             DamageEvent.setNextDamageFromCode()
-            caster.damageTarget(victim, bonusDmg[id], ATTACK_TYPE_MAGIC)
+            caster.damageTarget(victim, bonusDmg, ATTACK_TYPE_CHAOS)
