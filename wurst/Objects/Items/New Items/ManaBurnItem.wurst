@@ -1,31 +1,46 @@
 package ManaBurnItem
 
 import ObjectDefinitions
+import TimerUtils
+import ACR_TagSystem
 
-constant LOLLIPOP = LOLLIPOP_MANA
-constant MANA_BURN_PERCENT = 0.35
-constant DAMAGE_PER_MANA_BURNED = 1.0 / 3.0
-constant MANA_REGEN_DISABLE_DURATION = 3.0
+int array manaBurnCount
+unit array manaBurnCaster
+unit array manaBurnVictim
+real array manaBurnVictimMana
+timer array manaBurnTimer
 
 init
-    onCastManaBurn ()
-function onCastManaBurn ()
+    manaBurnItemUse()
+function manaBurnItemUse()
     CreateTrigger()
     ..registerAnyUnitEvent(EVENT_PLAYER_UNIT_SPELL_EFFECT)
     ..addAction() ->
-        if GetSpellAbilityId() == LOLLIPOP
-            let caster = GetTriggerUnit()
+        if GetSpellAbilityId() == MANA_BURN_ABILITY
             let victim = GetSpellTargetUnit()
-            if victim.isAlive() and victim.isType(UNIT_TYPE_HERO)
-                let maxMana = victim.getMaxMana()
-                let manaToBurn = maxMana * MANA_BURN_PERCENT
-                let damage = manaToBurn * DAMAGE_PER_MANA_BURNED
-                victim.setMana(victim.getMana() - manaToBurn)
-                caster.damageTarget(victim, damage, ATTACK_TYPE_MAGIC)
-                disableManaRegen(victim, MANA_REGEN_DISABLE_DURATION)
+            let id = victim.getOwner().getId()
+            let caster = GetTriggerUnit()
+            let maxMana = victim.getMaxMana()
+            let manaToBurn = maxMana * 0.35
+            let damage = manaToBurn / 3.0
+            victim.setMana(victim.getMana() - manaToBurn)
+            caster.damageTarget(victim, damage, ATTACK_TYPE_MAGIC)
+            manaBurnCount[id] = 0
+            manaBurnCaster[id] = caster
+            manaBurnVictim[id] = victim
+            manaBurnVictimMana[id] = victim.getMana()
+            if manaBurnTimer[id] == null
+                manaBurnTimer[id] = CreateTimer()..startPeriodic(0.01, function manaBurnItemUseEnd)..setData(id)
 
-function disableManaRegen(unit u, real duration)
-    let regenRate = u.getField(UNIT_RF_MANA_REGENERATION)
-    u.setField(UNIT_RF_MANA_REGENERATION, 0)
-    timerStart= CreateTimer()..startPeriodic(duration, false) -> u.setField(UNIT_RF_MANA_REGENERATION, regenRate))
-/////NEEED HELP TO FINISH THIS GAJEEEL////////
+function manaBurnItemUseEnd()
+    let id = GetExpiredTimer().getData()
+    if manaBurnVictim[id].isPaused() == false and manaBurnVictim[id].hasTagPauseEX() == false
+        manaBurnCount[id]++
+        if manaBurnVictim[id].getMana() > manaBurnVictimMana[id]
+            manaBurnVictim[id].setMana(manaBurnVictimMana[id])
+        if manaBurnCount[id] >= 300 or manaBurnVictim[id].isAlive() == false
+            manaBurnTimer[id].destr()
+            manaBurnTimer[id] = null
+
+
+   

@@ -884,8 +884,8 @@ import Objects
     ..setInterfaceIcon("ReplaceableTextures\\CommandButtons\\BTNstatswitcheroo.blp")
 
     new ItemDefinition(LOLLIPOP_MANA, ItemIds.hornoftheClouds)
-    ..setAbilities(commaList(ANTI_REGEN_ABILITY, MANA_ABILITY_350))
-    ..setCooldownGroup(commaList(ANTI_REGEN_ABILITY))
+    ..setAbilities(commaList(MANA_BURN_ABILITY, MANA_ABILITY_350))
+    ..setCooldownGroup(commaList(MANA_BURN_ABILITY))
     ..setName("|cffff8080Lollipop Of No-Mana-Ness")
     ..setTooltipBasic("|cffff8080Int Item")
     ..setDescription("|n|cff008080Active:|n|n|r|cffffd700Burn 35% of your opponent's max mana, dealing 1 damage for every 3 points of mana burned, additionally, their mana will not be able to regenerate for 3 seconds.|r|n|cffffd700Cooldown: |cffff808090|r|n|n|cffc0c0c0Passive|r|r|r|n|n|cffffd700Increases the user's mana by 350")

@@ -277,9 +277,8 @@ function lollipopManaUpgrade ()
     // -------------------------  lollipop mana Item ------------------------- //
     let lollipopManaItem = new ItemRecipe(LOLLIPOP_MANA, 0, false, true, true) // Boots Lv. 2
     lollipopManaItem.addItem(LOLLIPOP_MANA_ITEM_RECIPE) //lollipop mana item recipe   
-    lollipopManaItem.addItem(HEALTH_ORB_MEDIUM) //medium mana orb
-    lollipopManaItem.addItem(HEALTH_ORB_BIG) //big mana orb
-    lollipopManaItem.addItem(HEALTH_ORB_BIG) //big mana orb
+    lollipopManaItem.addItem(MANA_ORB_BIG) //big mana orb
+    lollipopManaItem.addItem(MANA_ORB_BIG) //big mana orb
 
     let mediumManaOrb = new ItemRecipe(MANA_ORB_MEDIUM, 0, false, true, true) // Boots Lv. 2
     mediumManaOrb.addItem(MANA_ORB_SMALL) // small health orb

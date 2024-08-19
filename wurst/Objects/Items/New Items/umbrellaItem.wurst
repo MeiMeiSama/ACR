@@ -2,7 +2,6 @@ package umbrellaItem
 
 import ObjectDefinitions
 
-constant umbrella = UMBRELLA_JOKES
 timer timerStart
 
 init
@@ -10,7 +9,7 @@ init
 
 function handleRegen()
     for u in GetUnitsInRectAll(GetPlayableMapRect())
-        if u.hasAbility(umbrella) and u.isAlive()
+        if u.hasItemById(UMBRELLA_JOKES) and u.isAlive()
             let maxHP = u.getMaxHP()
             let currentHP = u.getHP()
             if currentHP >= maxHP
