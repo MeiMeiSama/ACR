@@ -1,18 +1,40 @@
 package umbrellaItem
 
 import ObjectDefinitions
+import TimerUtils
+
+timer array umbrellaTimer
+unit array umbrellaOwner
 
 init
-    handleRegen ()
-function handleRegen()
+    umbrellaItemFunc()
+
+function umbrellaItemFunc()
     CreateTrigger()
     ..registerAnyUnitEvent(EVENT_PLAYER_UNIT_PICKUP_ITEM)
     ..addAction() ->
-        if GetManipulatedItem().getTypeId() == UMBRELLA_JOKES
-            CreateTimer()..startPeriodic(0.01,
-            let caster = GetTriggerUnit()
-            let maxHP = caster.getMaxHP()
-            let currentHP = caster.getHP()
-            if currentHP >= maxHP
-                let regenAmount = caster.getField(UNIT_RF_HIT_POINTS_REGENERATION_RATE)
-                caster.setMana(caster.getMana() + regenAmount)
+        let id = GetTriggerUnit().getOwner().getId()
+        umbrellaOwner[id] = GetTriggerUnit()
+        if umbrellaTimer[id] == null
+            umbrellaTimer[id] = CreateTimer()..startPeriodic(0.01, function umbrellaTimer)..setData(id)
+
+    CreateTrigger()
+    ..registerAnyUnitEvent(EVENT_PLAYER_UNIT_DROP_ITEM)
+    ..addAction() ->
+        let id = GetTriggerUnit().getOwner().getId()
+        if umbrellaTimer[id] != null
+            umbrellaTimer[id].destr()
+            umbrellaTimer[id] = null
+            
+
+
+function umbrellaTimer()
+    let id = GetExpiredTimer().getData()
+    if umbrellaOwner[id].hasItemById(UMBRELLA_JOKES) and umbrellaOwner[id].isAlive()
+        let maxHP = umbrellaOwner[id].getMaxHP()
+        let currentHP = umbrellaOwner[id].getHP()
+        if currentHP >= maxHP
+            let regen = currentHP - maxHP
+            umbrellaOwner[id].addMana(regen)
+
+
