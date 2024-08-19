@@ -34,7 +34,5 @@ function umbrellaTimer()
         let maxHP = umbrellaOwner[id].getMaxHP()
         let currentHP = umbrellaOwner[id].getHP()
         if currentHP >= maxHP
-            let regen = currentHP - maxHP
+            let regen = umbrellaOwner[id].getField(UNIT_RF_HIT_POINTS_REGENERATION_RATE)
             umbrellaOwner[id].addMana(regen)
-
-
