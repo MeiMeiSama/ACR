@@ -1,0 +1,31 @@
+package ManaBurnItem
+
+import ObjectDefinitions
+
+constant LOLLIPOP = LOLLIPOP_MANA
+constant MANA_BURN_PERCENT = 0.35
+constant DAMAGE_PER_MANA_BURNED = 1.0 / 3.0
+constant MANA_REGEN_DISABLE_DURATION = 3.0
+
+init
+    onCastManaBurn ()
+function onCastManaBurn ()
+    CreateTrigger()
+    ..registerAnyUnitEvent(EVENT_PLAYER_UNIT_SPELL_EFFECT)
+    ..addAction() ->
+        if GetSpellAbilityId() == LOLLIPOP
+            let caster = GetTriggerUnit()
+            let victim = GetSpellTargetUnit()
+            if victim.isAlive() and victim.isType(UNIT_TYPE_HERO)
+                let maxMana = victim.getMaxMana()
+                let manaToBurn = maxMana * MANA_BURN_PERCENT
+                let damage = manaToBurn * DAMAGE_PER_MANA_BURNED
+                victim.setMana(victim.getMana() - manaToBurn)
+                caster.damageTarget(victim, damage, ATTACK_TYPE_MAGIC)
+                disableManaRegen(victim, MANA_REGEN_DISABLE_DURATION)
+
+function disableManaRegen(unit u, real duration)
+    let regenRate = u.getField(UNIT_RF_MANA_REGENERATION)
+    u.setField(UNIT_RF_MANA_REGENERATION, 0)
+    timerStart= CreateTimer()..startPeriodic(duration, false) -> u.setField(UNIT_RF_MANA_REGENERATION, regenRate))
+/////NEEED HELP TO FINISH THIS GAJEEEL////////

@@ -1,0 +1,19 @@
+package umbrellaItem
+
+import ObjectDefinitions
+
+constant umbrella = UMBRELLA_JOKES
+timer timerStart
+
+init
+    timerStart= CreateTimer()..startPeriodic(1.0, function handleRegen)
+
+function handleRegen()
+    for u in GetUnitsInRectAll(GetPlayableMapRect())
+        if u.hasAbility(umbrella) and u.isAlive()
+            let maxHP = u.getMaxHP()
+            let currentHP = u.getHP()
+            if currentHP >= maxHP
+                let regenAmount = u.getField(UNIT_RF_HIT_POINTS_REGENERATION_RATE)
+                u.setMana(u.getMana() + regenAmount)
+                
