@@ -2,17 +2,17 @@ package umbrellaItem
 
 import ObjectDefinitions
 
-timer timerStart
-
 init
-    timerStart= CreateTimer()..startPeriodic(1.0, function handleRegen)
-
+    handleRegen ()
 function handleRegen()
-    for u in GetUnitsInRectAll(GetPlayableMapRect())
-        if u.hasItemById(UMBRELLA_JOKES) and u.isAlive()
-            let maxHP = u.getMaxHP()
-            let currentHP = u.getHP()
+    CreateTrigger()
+    ..registerAnyUnitEvent(EVENT_PLAYER_UNIT_PICKUP_ITEM)
+    ..addAction() ->
+        if GetManipulatedItem().getTypeId() == UMBRELLA_JOKES
+            CreateTimer()..startPeriodic(0.01,
+            let caster = GetTriggerUnit()
+            let maxHP = caster.getMaxHP()
+            let currentHP = caster.getHP()
             if currentHP >= maxHP
-                let regenAmount = u.getField(UNIT_RF_HIT_POINTS_REGENERATION_RATE)
-                u.setMana(u.getMana() + regenAmount)
-                
+                let regenAmount = caster.getField(UNIT_RF_HIT_POINTS_REGENERATION_RATE)
+                caster.setMana(caster.getMana() + regenAmount)
