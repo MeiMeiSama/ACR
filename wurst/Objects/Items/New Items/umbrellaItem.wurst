@@ -13,7 +13,7 @@ function umbrellaItemFunc()
     CreateTrigger()
     ..registerAnyUnitEvent(EVENT_PLAYER_UNIT_PICKUP_ITEM)
     ..addAction() ->
-        if GetManipulatedItem().getTypeId() == 'GUESS_WHICH_ITEM_GOES_HERE'
+        if GetManipulatedItem().getTypeId() == UMBRELLA_JOKES
             let id = GetTriggerUnit().getOwner().getId()
             umbrellaOwner[id] = GetTriggerUnit()
             if umbrellaTimer[id] == null
@@ -22,7 +22,7 @@ function umbrellaItemFunc()
     CreateTrigger()
     ..registerAnyUnitEvent(EVENT_PLAYER_UNIT_DROP_ITEM)
     ..addAction() ->
-        if GetManipulatedItem().getTypeId() == 'GUESS_WHICH_ITEM_GOES_HERE'
+        if GetManipulatedItem().getTypeId() == UMBRELLA_JOKES
             let id = GetTriggerUnit().getOwner().getId()
             if umbrellaTimer[id] != null
                 umbrellaTimer[id].destr()
