@@ -1,0 +1,18 @@
+package meeleReflectItem
+
+import ObjectDefinitions
+
+init
+    hurtME()
+function hurtME ()
+    CreateTrigger()
+    ..registerAnyUnitEvent(EVENT_PLAYER_UNIT_DAMAGED)
+    ..addAction() ->
+        if BlzGetEventDamageTarget().hasItemById(HURT_NOT) and BlzGetEventAttackType() == ATTACK_TYPE_MAGIC == false and BlzGetEventAttackType() == ATTACK_TYPE_CHAOS == false
+            let dmgValue = GetEventDamage()
+            let attacker = GetEventDamageSource()
+            let victim = BlzGetEventDamageTarget()
+            let reflect = (dmgValue * 0.35)
+            victim.damageTarget(attacker, reflect, ATTACK_TYPE_CHAOS)
+          
+              
