@@ -320,3 +320,16 @@ public let MISOGI_THAI_E_DUMMY_1 = compiletime(UNIT_ID_GEN.next())
 
 ///////////////////// Dummies for skins/////////////////////////
 public let RIN_SKIN = compiletime(UNIT_ID_GEN.next())
+public let KIARA_SKIN = compiletime(UNIT_ID_GEN.next())
+public let SHANA_SKIN = compiletime(UNIT_ID_GEN.next())
+public let ASUNA_SKIN = compiletime(UNIT_ID_GEN.next())
+public let ILLYA_SKIN = compiletime(UNIT_ID_GEN.next())
+public let NANAYA_SKIN = compiletime(UNIT_ID_GEN.next())
+public let SHIROU_SKIN = compiletime(UNIT_ID_GEN.next())
+public let MORDRED_SKIN = compiletime(UNIT_ID_GEN.next())
+public let GILGAMESH_SKIN = compiletime(UNIT_ID_GEN.next())
+public let YOMI_SKIN = compiletime(UNIT_ID_GEN.next())
+public let EMILLIA_SKIN = compiletime(UNIT_ID_GEN.next())
+
+///////////////////// Dummy for TeamBuffs/////////////////////////
+public let DUMMY_BUFFS = compiletime(UNIT_ID_GEN.next())

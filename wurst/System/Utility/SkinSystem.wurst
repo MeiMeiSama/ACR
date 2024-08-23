@@ -27,12 +27,22 @@ public class Skin
         this.playerName = playerName
 
 public function registerSkins()
-    // Universal skin for unit type H03D
-    skins.put('H016', new Skin(RIN_SKIN, true, ""))
-    
-    // Restricted skin for unit type H008, only for a specific player
-    skins.put('H008', new Skin('h04F', false, "ReusXMarina")) // Misaka old
+    // Universal skin
+    skins.put('H02E', new Skin(GILGAMESH_SKIN, true, ""))//Gilgamesh
+    skins.put('H019', new Skin(YOMI_SKIN, true, ""))//Yomi
+
+    // Restricted skin
+    skins.put('H008', new Skin('h04F', false, "ReusXMarina")) //Misaka old
     skins.put('H03D', new Skin('h04E', false, "Whippie")) //Ainz
+    skins.put('H016', new Skin(RIN_SKIN, false, "Requiem"))//Rin Tohsaka
+    skins.put('H03E', new Skin(KIARA_SKIN, false, "Gajeel"))//Kiara
+    skins.put('H020', new Skin(SHANA_SKIN, false, "Yami"))//Shana New
+    skins.put('H00V', new Skin(ASUNA_SKIN, false, "tebssstss"))//Asuna
+    skins.put('H02W', new Skin(ILLYA_SKIN, false, "Deathstar699"))//Illya
+    skins.put('H01E', new Skin(NANAYA_SKIN, false, "null"))//Nanaya
+    skins.put('H02P', new Skin(SHIROU_SKIN, false, "Wuru"))//Shirou
+    skins.put('H021', new Skin(MORDRED_SKIN, false, "Morpheus"))//Mordred
+    skins.put('H02Y', new Skin(EMILLIA_SKIN, false, "MEI"))//Emillia
 
 public function applySkin(unit u, player p)
     let unitType = u.getTypeId()
