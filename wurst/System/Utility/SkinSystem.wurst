@@ -30,6 +30,9 @@ public function registerSkins()
     // Universal skin
     skins.put('H02E', new Skin(GILGAMESH_SKIN, true, ""))//Gilgamesh
     skins.put('H019', new Skin(YOMI_SKIN, true, ""))//Yomi
+    skins.put('H00H', new Skin(MADOKA_SKIN, true, ""))//Madoka
+    skins.put('H02D', new Skin(KIRITO_SKIN, true, ""))//Kirito New
+    skins.put('H007', new Skin(SHANAOLD_SKIN, true, ""))//Shana Old
 
     // Restricted skin
     skins.put('H008', new Skin('h04F', false, "ReusXMarina")) //Misaka old
