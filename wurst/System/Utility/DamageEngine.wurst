@@ -1113,6 +1113,9 @@ init
                         target.removeAbility('B04P')
                         target.setHP(target.getMaxHP() * 0.2)    
 
+                    if DamageEvent.getTarget().hasAbility('B00K') or DamageEvent.getTarget().hasAbility('B007') // Sting/Rogue G
+                        DamageEvent.setAmount(DamageEvent.getAmount()*0.95)  
+
                     if DamageEvent.getTarget().hasAbility(ABILITY_SPELLBLOCK) // If target has (Spellblock)
                         if DamageEvent.getAmount() >= GetUnitState(DamageEvent.getTarget(), UNIT_STATE_MAX_LIFE) * 0.20 // if incoming damage is equal or more than 20% of max health
                             DamageEvent.getTarget().removeAbility(ABILITY_SPELLBLOCK) // remove spellblock

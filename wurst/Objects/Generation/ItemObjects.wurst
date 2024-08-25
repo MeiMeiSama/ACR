@@ -896,8 +896,8 @@ import Objects
     ..setInterfaceIcon("ReplaceableTextures\\CommandButtons\\BTNumbrellaofjokes.blp")
 
     new ItemDefinition(STAT_SWAP_ITEM_STR, ItemIds.hornoftheClouds)
-    ..setAbilities(commaList(STAT_SWAP_ABILITY ,STRENGTH_ABILITY_20, HEALTH_ABILITY_220))
-    ..setCooldownGroup(commaList(STAT_SWAP_ABILITY))
+    ..setAbilities(commaList(STAT_SWAP_ABILITY_STR ,STRENGTH_ABILITY_20, HEALTH_ABILITY_220))
+    ..setCooldownGroup(commaList(STAT_SWAP_ABILITY_STR))
     ..setName("|cffff8080Stat Switcheroo")
     ..setTooltipBasic("|cffff8080Stat Switch Item")
     ..setDescription("|n|cff008080Active:|n|n|r|cffffd700Using this item switches its primary stat.|r|n|cffffd700Cooldown: |cffff808090|r|n|n|cffc0c0c0Passive|r|r|r|n|n|cffffd700Grant 5%  bonus primary stat but lose 10% of other stats|n|cffffd700Increases the user's health by 300")
@@ -908,8 +908,8 @@ import Objects
     ..setInterfaceIcon("ReplaceableTextures\\CommandButtons\\BTNstatswitcheroo.blp")
 
     new ItemDefinition(STAT_SWAP_ITEM_AGI, ItemIds.hornoftheClouds)
-    ..setAbilities(commaList(STAT_SWAP_ABILITY, AGILITY_ABILITY_20, HEALTH_ABILITY_350))
-    ..setCooldownGroup(commaList(STAT_SWAP_ABILITY))
+    ..setAbilities(commaList(STAT_SWAP_ABILITY_AGI, AGILITY_ABILITY_20, HEALTH_ABILITY_350))
+    ..setCooldownGroup(commaList(STAT_SWAP_ABILITY_STR))
     ..setName("|cffff8080Stat Switcheroo")
     ..setTooltipBasic("|cffff8080Stat Switch Item")
     ..setDescription("|n|cff008080Active:|n|n|r|cffffd700Using this item switches its primary stat.|r|n|cffffd700Cooldown: |cffff808090|r|n|n|cffc0c0c0Passive|r|r|r|n|n|cffffd700Grant 5%  bonus primary stat but lose 10% of other stats|n|cffffd700Increases the user's health by 300")
@@ -920,8 +920,8 @@ import Objects
     ..setInterfaceIcon("ReplaceableTextures\\CommandButtons\\BTNstatswitcheroo.blp")
 
     new ItemDefinition(STAT_SWAP_ITEM_INT, ItemIds.hornoftheClouds)
-    ..setAbilities(commaList(STAT_SWAP_ABILITY, INTELLIGENCE_ABILITY_20, HEALTH_ABILITY_350))
-    ..setCooldownGroup(commaList(STAT_SWAP_ABILITY))
+    ..setAbilities(commaList(STAT_SWAP_ABILITY_INT, INTELLIGENCE_ABILITY_20, HEALTH_ABILITY_350))
+    ..setCooldownGroup(commaList(STAT_SWAP_ABILITY_STR))
     ..setName("|cffff8080Stat Switcheroo")
     ..setTooltipBasic("|cffff8080Stat Switch Item")
     ..setDescription("|n|cff008080Active:|n|n|r|cffffd700Using this item switches its primary stat.|r|n|cffffd700Cooldown: |cffff808090|r|n|n|cffc0c0c0Passive|r|r|r|n|n|cffffd700Grant 5%  bonus primary stat but lose 10% of other stats|n|cffffd700Increases the user's health by 300")

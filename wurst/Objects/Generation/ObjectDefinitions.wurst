@@ -89,7 +89,9 @@ public constant THUNDER_ARCO_SLOW_DUMMY_SPELL = compiletime(ABIL_ID_GEN.next())
 public constant ANTI_REGEN_ABILITY = compiletime(ABIL_ID_GEN.next())
 public constant MAGIC_SHIELD_DUMMY_SPELL = compiletime(ABIL_ID_GEN.next())
 public constant MANA_BURN_ABILITY = compiletime(ABIL_ID_GEN.next())
-public constant STAT_SWAP_ABILITY = compiletime(ABIL_ID_GEN.next())
+public constant STAT_SWAP_ABILITY_STR = compiletime(ABIL_ID_GEN.next())
+public constant STAT_SWAP_ABILITY_AGI = compiletime(ABIL_ID_GEN.next())
+public constant STAT_SWAP_ABILITY_INT = compiletime(ABIL_ID_GEN.next())
 
 
 // ------------------------------ Item Stat Abilities ------------------------------
