@@ -264,14 +264,17 @@ function umbrellaJokesUpgrade ()
 
 function statSwitcheroUpgrade ()    
     // ------------------------- stat switchero Item ------------------------- //
-    let statSwitcheroItem = new ItemRecipe(STAT_SWITCHEROO, 0, false, true, true) // Boots Lv. 2
-    statSwitcheroItem.addItem(STAT_SWITCHEROO_ITEM_RECIPE) // umbrella of jokes item recipe   
-    statSwitcheroItem.addItem(HEALTH_ORB_MEDIUM) //medium health orb
-    statSwitcheroItem.addItem(HEALTH_ORB_MEDIUM) //medium health orb
-    statSwitcheroItem.addItem(HEALTH_ORB_BIG) //big health orb
-    statSwitcheroItem.addItem('I02O') //lesser str
-    statSwitcheroItem.addItem('I02P') //lesser agi
-    statSwitcheroItem.addItem('I02Q') //lesser int
+    let statSwapStrItem = new ItemRecipe(STAT_SWAP_ITEM_STR, 0, false, true, true) // stat swap item str
+    statSwapStrItem.addItem(STAT_SWAP_ITEM_STR_RECIPE) // stat swap item str recipe    
+    statSwapStrItem.addItem('I06M') //superior strength
+
+    let statSwapAgiItem = new ItemRecipe(STAT_SWAP_ITEM_AGI, 0, false, true, true) // stat swap item agi
+    statSwapAgiItem.addItem(STAT_SWAP_ITEM_AGI_RECIPE) // stat swap item agi recipe      
+    statSwapAgiItem.addItem('I06L') //superior agility
+
+    let statSwapIntItem = new ItemRecipe(STAT_SWAP_ITEM_INT, 0, false, true, true) // stat swap item int
+    statSwapIntItem.addItem(STAT_SWAP_ITEM_INT_RECIPE) // stat swap item int recipe  
+    statSwapIntItem.addItem('I06X') //superior intelligence    
 
 function lollipopManaUpgrade ()    
     // -------------------------  lollipop mana Item ------------------------- //

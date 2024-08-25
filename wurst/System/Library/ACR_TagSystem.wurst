@@ -13,6 +13,10 @@ constant reviveMap = new HashMap<unit, boolean>()
 constant pickedMap = new HashMap<player, boolean>()
 constant hasLeaverMap = new HashMap<player, boolean>()
 constant mmdFlagMap = new HashMap<player, boolean>()
+constant statSwapStrMap = new HashMap<unit, boolean>()
+constant statSwapAgiMap = new HashMap<unit, boolean>()
+constant statSwapIntMap = new HashMap<unit, boolean>()
+constant statSwapDropMap = new HashMap<unit, boolean>()
 
 constant hiddenAbilitiesMap = new HashMap<int, boolean>()
 constant disabledAbilitiesMap = new HashMap<int, boolean>()
@@ -157,3 +161,47 @@ public function player.removeTagPicked()
 
 public function player.hasTagPicked() returns boolean
     return pickedMap.get(this)
+
+
+
+public function unit.addTagStatSwapStr()
+    statSwapStrMap.put(this, true)
+
+public function unit.removeTagStatSwapStr()
+    statSwapStrMap.put(this, false)
+
+public function unit.hasTagStatSwapStr() returns boolean
+    return statSwapStrMap.get(this)
+
+
+
+public function unit.addTagStatSwapAgi()
+    statSwapAgiMap.put(this, true)
+
+public function unit.removeTagStatSwapAgi()
+    statSwapAgiMap.put(this, false)
+
+public function unit.hasTagStatSwapAgi() returns boolean
+    return statSwapAgiMap.get(this)
+
+
+
+public function unit.addTagStatSwapInt()
+    statSwapIntMap.put(this, true)
+
+public function unit.removeTagStatSwapInt()
+    statSwapIntMap.put(this, false)
+
+public function unit.hasTagStatSwapInt() returns boolean
+    return statSwapIntMap.get(this)
+
+
+
+public function unit.addTagStatSwapDrop()
+    statSwapDropMap.put(this, true)
+
+public function unit.removeTagStatSwapDrop()
+    statSwapDropMap.put(this, false)
+
+public function unit.hasTagStatSwapDrop() returns boolean
+    return statSwapDropMap.get(this)

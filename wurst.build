@@ -4,3 +4,4 @@ dependencies:
 - https://github.com/wurstscript/wurstStdlib2
 - https://github.com/null15/InventoryUtils
 - https://github.com/Frotty/wurst-table-layout
+- https://github.com/Frotty/wurst-bonus-handler

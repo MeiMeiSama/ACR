@@ -7,6 +7,7 @@ import ACR_Stun
 
 vec2 natsuWTargetPoint
 vec2 natsuCurrentPosition
+group meltWGroup
 
 init
     initTrig_MeltlilithQ()
@@ -14,7 +15,7 @@ init
 function trig_MeltlilithQConditions() returns boolean
     return GetSpellAbilityId() == 'A0TG' or GetSpellAbilityId() == 'A0TH'
 function trig_MeltlilithQFunc005Func022Func004Func008Func002Func006003003() returns boolean
-    return IsUnitType(GetFilterUnit(), UNIT_TYPE_STRUCTURE) == false and GetUnitAbilityLevel(GetFilterUnit(), 'Avul') != 1 and IsUnitEnemy(GetFilterUnit(), LoadPlayerHandle(YDLOC, GetHandleId(GetExpiredTimer()), 603)) == true and IsUnitInGroup(GetFilterUnit(), LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 744928215)) == false and IsUnitDeadBJ(GetFilterUnit()) == false
+    return IsUnitType(GetFilterUnit(), UNIT_TYPE_STRUCTURE) == false and GetUnitAbilityLevel(GetFilterUnit(), 'Avul') != 1 and IsUnitEnemy(GetFilterUnit(), LoadPlayerHandle(YDLOC, GetHandleId(GetExpiredTimer()), 603)) == true and IsUnitInGroup(GetFilterUnit(), LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 744928215)) == false and IsUnitDeadBJ(GetFilterUnit()) == false and meltWGroup.has(GetFilterUnit()) == false
 function trig_MeltlilithQFunc005Func022Func004Func008Func002Func007Func007T()
     SaveInteger(YDLOC, GetHandleId(GetExpiredTimer()), 686, LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 686) + 1)
     if LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 686) >= 5
@@ -32,6 +33,7 @@ function trig_MeltlilithQFunc005Func022Func004Func008Func002Func007A()
     SaveUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 927, GetEnumUnit())
     DamageEvent.setNextDamageId(DAMAGE_ABILITY_DELAYED_W)
     DamageEvent.setNextDamageFromCode()
+    meltWGroup.add(GetEnumUnit())
     UnitDamageTargetBJ(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 927), (LoadReal(YDLOC, GetHandleId(GetExpiredTimer()), 248) + LoadReal(YDLOC, GetHandleId(GetExpiredTimer()), 248) * 0.35) / 2.00, ATTACK_TYPE_MAGIC, DAMAGE_TYPE_MAGIC)
     let caster = LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594)
     let victim = LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 927)
@@ -65,7 +67,7 @@ function trig_MeltlilithQFunc005Func022Func004Func008T()
         RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 48))
         RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 377))
 function trig_MeltlilithQFunc005Func022Func006Func013Func002Func011003003() returns boolean
-    return IsUnitType(GetFilterUnit(), UNIT_TYPE_STRUCTURE) == false and GetUnitAbilityLevel(GetFilterUnit(), 'Avul') != 1 and IsUnitEnemy(GetFilterUnit(), LoadPlayerHandle(YDLOC, GetHandleId(GetExpiredTimer()), 603)) == true and IsUnitInGroup(GetFilterUnit(), LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 554761195)) == false and IsUnitDeadBJ(GetFilterUnit()) == false
+    return IsUnitType(GetFilterUnit(), UNIT_TYPE_STRUCTURE) == false and GetUnitAbilityLevel(GetFilterUnit(), 'Avul') != 1 and IsUnitEnemy(GetFilterUnit(), LoadPlayerHandle(YDLOC, GetHandleId(GetExpiredTimer()), 603)) == true and IsUnitInGroup(GetFilterUnit(), LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 554761195)) == false and IsUnitDeadBJ(GetFilterUnit()) == false and meltWGroup.has(GetFilterUnit()) == false
 function trig_MeltlilithQFunc005Func022Func006Func013Func002Func012Func007T()
     SaveInteger(YDLOC, GetHandleId(GetExpiredTimer()), 948587692, LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 948587692) + 1)
     if LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 948587692) >= 5
@@ -83,6 +85,7 @@ function trig_MeltlilithQFunc005Func022Func006Func013Func002Func012A()
     SaveUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 533, GetEnumUnit())
     DamageEvent.setNextDamageId(DAMAGE_ABILITY_W)
     DamageEvent.setNextDamageFromCode()
+    meltWGroup.add(GetEnumUnit())
     UnitDamageTargetBJ(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 533), (LoadReal(YDLOC, GetHandleId(GetExpiredTimer()), 248) + LoadReal(YDLOC, GetHandleId(GetExpiredTimer()), 248) * 0.20) / 2.00, ATTACK_TYPE_MAGIC, DAMAGE_TYPE_MAGIC)
     let caster = LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594)
     let victim = LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 533)
@@ -342,6 +345,9 @@ function trig_MeltlilithQActions()
         SetUnitPathing(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594), false)
         TimerStart(_ydl_timer, 0.01, true, function trig_MeltlilithQFunc005Func038T)
     else
+        if meltWGroup == null
+            meltWGroup = CreateGroup()
+        CreateTimer()..start(5, function meltWFlush)    
         soundPlay("war3mapImported\\Meltlilith2.mp3", GetUnitX(udg_Unitsound), GetUnitY(udg_Unitsound))
         soundPlay("war3mapImported\\MeltlilithSE2.mp3", GetUnitX(udg_Unitsound), GetUnitY(udg_Unitsound))
         SaveInteger(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 280, 0)
@@ -397,6 +403,10 @@ function trig_MeltlilithQActions()
         SaveInteger(YDLOC, GetHandleId(_ydl_timer), 948587692, LoadInteger(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 948587692))
         TimerStart(_ydl_timer, 0.02, true, function trig_MeltlilithQFunc005Func022T)
     FlushChildHashtable(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID)
+
+function meltWFlush()
+    meltWGroup.clear()
+
 function initTrig_MeltlilithQ()
     gg_trg_MeltlilithQ = CreateTrigger()
     TriggerRegisterAnyUnitEventBJ(gg_trg_MeltlilithQ, EVENT_PLAYER_UNIT_SPELL_EFFECT)

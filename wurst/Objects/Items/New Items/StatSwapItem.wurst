@@ -1,0 +1,248 @@
+package StatSwapItem
+
+import ObjectDefinitions
+import HashSet
+import TimerUtils
+import ACR_TagSystem
+import BonusHandler
+
+unit array statSwapItemOwner
+int array statSwapItemOwned
+int array statSwapItemOwnerStrBonus
+int array statSwapItemOwnerStrBase
+int array statSwapItemOwnerAgiBonus
+int array statSwapItemOwnerAgiBase
+int array statSwapItemOwnerIntBonus
+int array statSwapItemOwnerIntBase
+timer array statSwapItemTimer
+
+var statSwapItemList = new HashSet<int>
+
+init
+    statSwapAntiStack()
+
+function statSwapAntiStack ()
+    statSwapItemList.add(STAT_SWAP_ITEM_STR,STAT_SWAP_ITEM_AGI, STAT_SWAP_ITEM_INT) 
+    CreateTrigger()
+    ..registerAnyUnitEvent(EVENT_PLAYER_UNIT_PICKUP_ITEM)
+    ..addAction() ->
+        if statSwapItemList.has(GetManipulatedItem().getTypeId())
+            let user = GetTriggerUnit()
+            let id = user.getOwner().getId()
+            statSwapItemOwner[id] = user
+            statSwapItemOwned[id] = 0
+            for i = 0 to 5
+                let itm = user.itemInSlot(i)
+                if statSwapItemList.has(itm.getTypeId())
+                    statSwapItemOwned[id]++
+                    if statSwapItemOwned[id] >= 2
+                        GetManipulatedItem().remove()
+                        user.addTagStatSwapDrop()
+                        CreateTimer()..start(0.02, function statSwapItemAntiStack)..setData(id)   
+            CreateTimer()..start(0.01, function statSwap)..setData(id)   
+
+    CreateTrigger()          
+    ..registerAnyUnitEvent(EVENT_PLAYER_UNIT_DROP_ITEM)
+    ..addAction() ->
+        if statSwapItemList.has(GetManipulatedItem().getTypeId())    
+            let id = GetTriggerUnit().getOwner().getId()
+            let itm = GetManipulatedItem()
+            if itm.getTypeId() == STAT_SWAP_ITEM_STR and statSwapItemOwner[id].hasTagStatSwapStr()
+                print("dropped str item")
+                statSwapItemOwner[id].addBonus(Bonus.STRENGTH, (statSwapItemOwnerStrBonus[id] * -1).toReal()) 
+                statSwapItemOwner[id].addBonus(Bonus.AGILITY, (statSwapItemOwnerAgiBonus[id] * -1).toReal()) 
+                statSwapItemOwner[id].addBonus(Bonus.INTELLIGENCE, (statSwapItemOwnerIntBonus[id] * -1).toReal())              
+                if statSwapItemTimer[id] != null
+                    statSwapItemTimer[id].destr()
+                    statSwapItemTimer[id] = null
+            else if itm.getTypeId() == STAT_SWAP_ITEM_AGI and statSwapItemOwner[id].hasTagStatSwapAgi()
+                statSwapItemOwner[id].addBonus(Bonus.STRENGTH, (statSwapItemOwnerStrBonus[id] * -1).toReal()) 
+                statSwapItemOwner[id].addBonus(Bonus.AGILITY, (statSwapItemOwnerAgiBonus[id] * -1).toReal()) 
+                statSwapItemOwner[id].addBonus(Bonus.INTELLIGENCE, (statSwapItemOwnerIntBonus[id] * -1).toReal())             
+                if statSwapItemTimer[id] != null
+                    statSwapItemTimer[id].destr()
+                    statSwapItemTimer[id] = null                
+            else if itm.getTypeId() == STAT_SWAP_ITEM_INT and statSwapItemOwner[id].hasTagStatSwapInt()
+                statSwapItemOwner[id].addBonus(Bonus.STRENGTH, (statSwapItemOwnerStrBonus[id] * -1).toReal()) 
+                statSwapItemOwner[id].addBonus(Bonus.AGILITY, (statSwapItemOwnerAgiBonus[id] * -1).toReal()) 
+                statSwapItemOwner[id].addBonus(Bonus.INTELLIGENCE, (statSwapItemOwnerIntBonus[id] * -1).toReal())            
+                if statSwapItemTimer[id] != null
+                    statSwapItemTimer[id].destr()
+                    statSwapItemTimer[id] = null                    
+    CreateTrigger()          
+    ..registerAnyUnitEvent(EVENT_PLAYER_UNIT_SPELL_EFFECT)
+    ..addAction() ->
+        if GetSpellAbilityId() == STAT_SWAP_ABILITY
+            print("ability used")
+            let id = GetTriggerUnit().getOwner().getId()
+            statSwapItemOwner[id] = GetTriggerUnit()
+            if statSwapItemOwner[id].hasTagStatSwapStr()
+                for i = 0 to 6 
+                    if statSwapItemOwner[id].itemInSlot(i).getTypeId() == STAT_SWAP_ITEM_STR
+                        print("str changed to agi")
+                        statSwapItemOwner[id].addTagStatSwapDrop()
+                        let itm = statSwapItemOwner[id].itemInSlot(i)
+                        itm.remove()   
+                        statSwapItemOwner[id].removeTagStatSwapStr() 
+                        print("str tag removed")
+                        CreateTimer()..start(0.02, function statSwapItemAntiStack)..setData(id)
+                        statSwapItemOwner[id].addItemToSlot(STAT_SWAP_ITEM_AGI, i)
+                        statSwapItemOwner[id].addTagStatSwapAgi()
+            else if statSwapItemOwner[id].hasTagStatSwapAgi()
+                for i = 0 to 6 
+                    if statSwapItemOwner[id].itemInSlot(i).getTypeId() == STAT_SWAP_ITEM_AGI
+                        print("agi changed to int")
+                        statSwapItemOwner[id].addTagStatSwapDrop()
+                        let itm = statSwapItemOwner[id].itemInSlot(i)
+                        itm.remove()   
+                        statSwapItemOwner[id].removeTagStatSwapAgi()
+                        CreateTimer()..start(0.02, function statSwapItemAntiStack)..setData(id)
+                        statSwapItemOwner[id].addItemToSlot(STAT_SWAP_ITEM_INT, i)    
+                        statSwapItemOwner[id].addTagStatSwapInt()  
+            else if statSwapItemOwner[id].hasTagStatSwapInt()
+                for i = 0 to 6 
+                    if statSwapItemOwner[id].itemInSlot(i).getTypeId() == STAT_SWAP_ITEM_INT
+                        print("int changed to str")
+                        statSwapItemOwner[id].addTagStatSwapDrop()
+                        let itm = statSwapItemOwner[id].itemInSlot(i)
+                        itm.remove()  
+                        statSwapItemOwner[id].removeTagStatSwapInt() 
+                        CreateTimer()..start(0.02, function statSwapItemAntiStack)..setData(id)
+                        statSwapItemOwner[id].addItemToSlot(STAT_SWAP_ITEM_STR, i)    
+                        statSwapItemOwner[id].addTagStatSwapStr()
+
+function statSwapPeriodic()
+    let id = GetExpiredTimer().getData()
+    if statSwapItemOwner[id].hasTagStatSwapStr()
+        if statSwapItemOwner[id].getStr(true) != statSwapItemOwnerStrBase[id] + statSwapItemOwnerStrBonus[id] or statSwapItemOwner[id].getAgi(true) != statSwapItemOwnerAgiBase[id] + statSwapItemOwnerAgiBonus[id] or statSwapItemOwner[id].getInt(true) != statSwapItemOwnerIntBase[id] + statSwapItemOwnerIntBonus[id]
+            statSwapItemOwner[id].addBonus(Bonus.STRENGTH, (statSwapItemOwnerStrBonus[id] * -1).toReal()) 
+            statSwapItemOwner[id].addBonus(Bonus.AGILITY, (statSwapItemOwnerAgiBonus[id] * -1).toReal()) 
+            statSwapItemOwner[id].addBonus(Bonus.INTELLIGENCE, (statSwapItemOwnerIntBonus[id] * -1).toReal()) 
+            statSwapItemOwnerStrBase[id] = statSwapItemOwner[id].getStr(true)
+            statSwapItemOwnerAgiBase[id] = statSwapItemOwner[id].getAgi(true)
+            statSwapItemOwnerIntBase[id] = statSwapItemOwner[id].getInt(true)
+            statSwapItemOwnerStrBonus[id] = (statSwapItemOwnerStrBase[id] * 0.05).floor()
+            if statSwapItemOwnerStrBonus[id].isOdd()
+                statSwapItemOwnerStrBonus[id]++  
+            statSwapItemOwnerAgiBonus[id] = (statSwapItemOwnerAgiBase[id] * -0.1).floor()
+            if statSwapItemOwnerAgiBonus[id].isOdd()
+                statSwapItemOwnerAgiBonus[id]++              
+            statSwapItemOwnerIntBonus[id] = (statSwapItemOwnerIntBase[id] * -0.1).floor()
+            if statSwapItemOwnerIntBonus[id].isOdd()
+                statSwapItemOwnerIntBonus[id]++               
+            statSwapItemOwner[id].addBonus(Bonus.STRENGTH, statSwapItemOwnerStrBonus[id].toReal()) 
+            statSwapItemOwner[id].addBonus(Bonus.AGILITY, statSwapItemOwnerAgiBonus[id].toReal()) 
+            statSwapItemOwner[id].addBonus(Bonus.INTELLIGENCE, statSwapItemOwnerIntBonus[id].toReal()) 
+
+    else if statSwapItemOwner[id].hasTagStatSwapAgi()
+        if statSwapItemOwner[id].getStr(true) != statSwapItemOwnerStrBase[id] + statSwapItemOwnerStrBonus[id] or statSwapItemOwner[id].getAgi(true) != statSwapItemOwnerAgiBase[id] + statSwapItemOwnerAgiBonus[id] or statSwapItemOwner[id].getInt(true) != statSwapItemOwnerIntBase[id] + statSwapItemOwnerIntBonus[id]
+            statSwapItemOwner[id].addBonus(Bonus.STRENGTH, (statSwapItemOwnerStrBonus[id] * -1).toReal()) 
+            statSwapItemOwner[id].addBonus(Bonus.AGILITY, (statSwapItemOwnerAgiBonus[id] * -1).toReal()) 
+            statSwapItemOwner[id].addBonus(Bonus.INTELLIGENCE, (statSwapItemOwnerIntBonus[id] * -1).toReal()) 
+            statSwapItemOwnerStrBase[id] = statSwapItemOwner[id].getStr(true)
+            statSwapItemOwnerAgiBase[id] = statSwapItemOwner[id].getAgi(true)
+            statSwapItemOwnerIntBase[id] = statSwapItemOwner[id].getInt(true)
+            statSwapItemOwnerStrBonus[id] = (statSwapItemOwnerStrBase[id] * -0.1).floor()
+            if statSwapItemOwnerStrBonus[id].isOdd()
+                statSwapItemOwnerStrBonus[id]++  
+            statSwapItemOwnerAgiBonus[id] = (statSwapItemOwnerAgiBase[id] * 0.05).floor()
+            if statSwapItemOwnerAgiBonus[id].isOdd()
+                statSwapItemOwnerAgiBonus[id]++              
+            statSwapItemOwnerIntBonus[id] = (statSwapItemOwnerIntBase[id] * -0.1).floor()
+            if statSwapItemOwnerIntBonus[id].isOdd()
+                statSwapItemOwnerIntBonus[id]++   
+            statSwapItemOwner[id].addBonus(Bonus.STRENGTH, statSwapItemOwnerStrBonus[id].toReal()) 
+            statSwapItemOwner[id].addBonus(Bonus.AGILITY, statSwapItemOwnerAgiBonus[id].toReal()) 
+            statSwapItemOwner[id].addBonus(Bonus.INTELLIGENCE, statSwapItemOwnerIntBonus[id].toReal()) 
+    else if statSwapItemOwner[id].hasTagStatSwapInt()
+        if statSwapItemOwner[id].getStr(true) != statSwapItemOwnerStrBase[id] + statSwapItemOwnerStrBonus[id] or statSwapItemOwner[id].getAgi(true) != statSwapItemOwnerAgiBase[id] + statSwapItemOwnerAgiBonus[id] or statSwapItemOwner[id].getInt(true) != statSwapItemOwnerIntBase[id] + statSwapItemOwnerIntBonus[id]
+            statSwapItemOwner[id].addBonus(Bonus.STRENGTH, (statSwapItemOwnerStrBonus[id] * -1).toReal()) 
+            statSwapItemOwner[id].addBonus(Bonus.AGILITY, (statSwapItemOwnerAgiBonus[id] * -1).toReal()) 
+            statSwapItemOwner[id].addBonus(Bonus.INTELLIGENCE, (statSwapItemOwnerIntBonus[id] * -1).toReal()) 
+            statSwapItemOwnerStrBase[id] = statSwapItemOwner[id].getStr(true)
+            statSwapItemOwnerAgiBase[id] = statSwapItemOwner[id].getAgi(true)
+            statSwapItemOwnerIntBase[id] = statSwapItemOwner[id].getInt(true)
+            statSwapItemOwnerStrBonus[id] = (statSwapItemOwnerStrBase[id] * -0.1).floor()
+            if statSwapItemOwnerStrBonus[id].isOdd()
+                statSwapItemOwnerStrBonus[id]++  
+            statSwapItemOwnerAgiBonus[id] = (statSwapItemOwnerAgiBase[id] * -0.1).floor()
+            if statSwapItemOwnerAgiBonus[id].isOdd()
+                statSwapItemOwnerAgiBonus[id]++              
+            statSwapItemOwnerIntBonus[id] = (statSwapItemOwnerIntBase[id] * 0.05).floor()
+            if statSwapItemOwnerIntBonus[id].isOdd()
+                statSwapItemOwnerIntBonus[id]++   
+            statSwapItemOwner[id].addBonus(Bonus.STRENGTH, statSwapItemOwnerStrBonus[id].toReal()) 
+            statSwapItemOwner[id].addBonus(Bonus.AGILITY, statSwapItemOwnerAgiBonus[id].toReal()) 
+            statSwapItemOwner[id].addBonus(Bonus.INTELLIGENCE, statSwapItemOwnerIntBonus[id].toReal())           
+
+
+function statSwap()
+    let id = GetExpiredTimer().getData()
+    if statSwapItemOwnerStrBase[id] == 0
+        statSwapItemOwnerStrBase[id] = statSwapItemOwner[id].getStr(true)
+        statSwapItemOwnerAgiBase[id] = statSwapItemOwner[id].getAgi(true)
+        statSwapItemOwnerIntBase[id] = statSwapItemOwner[id].getInt(true)
+    for i = 0 to 5
+        let itm = statSwapItemOwner[id].itemInSlot(i)
+        if itm.getTypeId() == STAT_SWAP_ITEM_STR
+            print("1")                                          
+            statSwapItemOwnerStrBonus[id] = (statSwapItemOwnerStrBase[id] * 0.05).floor()
+            if statSwapItemOwnerStrBonus[id].isOdd()
+                statSwapItemOwnerStrBonus[id]++  
+            statSwapItemOwnerAgiBonus[id] = (statSwapItemOwnerAgiBase[id] * -0.1).floor()
+            if statSwapItemOwnerAgiBonus[id].isOdd()
+                statSwapItemOwnerAgiBonus[id]++              
+            statSwapItemOwnerIntBonus[id] = (statSwapItemOwnerIntBase[id] * -0.1).floor()
+            if statSwapItemOwnerIntBonus[id].isOdd()
+                statSwapItemOwnerIntBonus[id]++ 
+            if statSwapItemOwner[id].getStr(true) != statSwapItemOwnerStrBase[id] + statSwapItemOwnerStrBonus[id] or statSwapItemOwner[id].getAgi(true) != statSwapItemOwnerAgiBase[id] + statSwapItemOwnerAgiBonus[id] or statSwapItemOwner[id].getInt(true) != statSwapItemOwnerIntBase[id] + statSwapItemOwnerIntBonus[id]               
+                statSwapItemOwner[id].addBonus(Bonus.STRENGTH, statSwapItemOwnerStrBonus[id].toReal()) 
+                statSwapItemOwner[id].addBonus(Bonus.AGILITY, statSwapItemOwnerAgiBonus[id].toReal()) 
+                statSwapItemOwner[id].addBonus(Bonus.INTELLIGENCE, statSwapItemOwnerIntBonus[id].toReal()) 
+            if statSwapItemOwner[id].hasTagStatSwapStr() == false
+                statSwapItemOwner[id].addTagStatSwapStr()            
+            if statSwapItemTimer[id] == null
+                statSwapItemTimer[id] = CreateTimer()..startPeriodic(0.01, function statSwapPeriodic)..setData(id)    
+        else if itm.getTypeId() == STAT_SWAP_ITEM_AGI              
+            print("2")      
+            statSwapItemOwnerStrBonus[id] = (statSwapItemOwnerStrBase[id] * -0.1).floor()
+            if statSwapItemOwnerStrBonus[id].isOdd()
+                statSwapItemOwnerStrBonus[id]++  
+            statSwapItemOwnerAgiBonus[id] = (statSwapItemOwnerAgiBase[id] * 0.05).floor()
+            if statSwapItemOwnerAgiBonus[id].isOdd()
+                statSwapItemOwnerAgiBonus[id]++              
+            statSwapItemOwnerIntBonus[id] = (statSwapItemOwnerIntBase[id] * -0.1).floor()
+            if statSwapItemOwnerIntBonus[id].isOdd()
+                statSwapItemOwnerIntBonus[id]++ 
+            if statSwapItemOwner[id].getStr(true) != statSwapItemOwnerStrBase[id] + statSwapItemOwnerStrBonus[id] or statSwapItemOwner[id].getAgi(true) != statSwapItemOwnerAgiBase[id] + statSwapItemOwnerAgiBonus[id] or statSwapItemOwner[id].getInt(true) != statSwapItemOwnerIntBase[id] + statSwapItemOwnerIntBonus[id]                    
+                statSwapItemOwner[id].addBonus(Bonus.STRENGTH, statSwapItemOwnerStrBonus[id].toReal()) 
+                statSwapItemOwner[id].addBonus(Bonus.AGILITY, statSwapItemOwnerAgiBonus[id].toReal()) 
+                statSwapItemOwner[id].addBonus(Bonus.INTELLIGENCE, statSwapItemOwnerIntBonus[id].toReal()) 
+            if statSwapItemOwner[id].hasTagStatSwapAgi() == false
+                statSwapItemOwner[id].addTagStatSwapAgi()            
+            if statSwapItemTimer[id] == null
+                statSwapItemTimer[id] = CreateTimer()..startPeriodic(0.01, function statSwapPeriodic)..setData(id)            
+        else if itm.getTypeId() == STAT_SWAP_ITEM_INT 
+            print("3")                   
+            statSwapItemOwnerStrBonus[id] = (statSwapItemOwnerStrBase[id] * -0.1).floor()
+            if statSwapItemOwnerStrBonus[id].isOdd()
+                statSwapItemOwnerStrBonus[id]++  
+            statSwapItemOwnerAgiBonus[id] = (statSwapItemOwnerAgiBase[id] * -0.1).floor()
+            if statSwapItemOwnerAgiBonus[id].isOdd()
+                statSwapItemOwnerAgiBonus[id]++              
+            statSwapItemOwnerIntBonus[id] = (statSwapItemOwnerIntBase[id] * 0.05).floor()
+            if statSwapItemOwnerIntBonus[id].isOdd()
+                statSwapItemOwnerIntBonus[id]++ 
+            if statSwapItemOwner[id].getStr(true) != statSwapItemOwnerStrBase[id] + statSwapItemOwnerStrBonus[id] or statSwapItemOwner[id].getAgi(true) != statSwapItemOwnerAgiBase[id] + statSwapItemOwnerAgiBonus[id] or statSwapItemOwner[id].getInt(true) != statSwapItemOwnerIntBase[id] + statSwapItemOwnerIntBonus[id]                    
+                statSwapItemOwner[id].addBonus(Bonus.STRENGTH, statSwapItemOwnerStrBonus[id].toReal()) 
+                statSwapItemOwner[id].addBonus(Bonus.AGILITY, statSwapItemOwnerAgiBonus[id].toReal()) 
+                statSwapItemOwner[id].addBonus(Bonus.INTELLIGENCE, statSwapItemOwnerIntBonus[id].toReal()) 
+            if statSwapItemOwner[id].hasTagStatSwapInt() == false
+                statSwapItemOwner[id].addTagStatSwapInt()            
+            if statSwapItemTimer[id] == null
+                statSwapItemTimer[id] = CreateTimer()..startPeriodic(0.01, function statSwapPeriodic)..setData(id)                             
+
+function statSwapItemAntiStack()
+    let id = GetExpiredTimer().getData()
+    if statSwapItemOwner[id].hasTagStatSwapDrop()
+        statSwapItemOwner[id].removeTagStatSwapDrop()
