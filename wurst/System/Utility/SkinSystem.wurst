@@ -9,7 +9,7 @@ import ObjectDefinitions
 
 // map<unittype, Skin> skins = map<unittype, Skin>
 var skins = new HashMap<int, Skin> 
-bool array skinEquipped
+public bool array skinEquipped
 bool array skinCooldown
 
 // Skin data structure
