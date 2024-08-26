@@ -2,7 +2,8 @@ package KizaruW
 import DamageEvent
 import AbilityGlobals
 import main
-import ACR_Stun
+import ACR_Knockback
+
 init
     initTrig_KizaruW()
 
@@ -78,7 +79,7 @@ function trig_KizaruWFunc040Func001Func009Func001Func014Func001Func015T()
     UnitDamageTargetBJ(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 549), (I2R(GetUnitAbilityLevel(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), 'A0LE')) + 1) * I2R(GetHeroAgi(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), true)), ATTACK_TYPE_MAGIC, DAMAGE_TYPE_MAGIC)
     let caster = LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594)
     let victim = LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 549)
-    acrStun(caster, victim, 0.7)
+    acrKnockback(caster, victim, 700)
     soundPlay("war3mapImported\\KizaruEffect1.mp3", GetUnitX(udg_Unitsound), GetUnitY(udg_Unitsound))
     _ydl_timer = CreateTimer()
     SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 549, LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 549))
