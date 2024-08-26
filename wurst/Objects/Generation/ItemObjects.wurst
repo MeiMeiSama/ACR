@@ -19,7 +19,7 @@ import Objects
     ..setDroppedWhenCarrierDies(false)..setStockReplenishInterval(0)
     ..setButtonPositionX(1)..setButtonPositionY(0)
     ..setModelUsed(Objects.treasurechest1)
-    ..setInterfaceIcon("ReplaceableTextures\\CommandButtons\\BTNAnimalRing.blp")
+    ..setInterfaceIcon("ReplaceableTextures\\CommandButtons\\BTNhogyoinku.blp")
 
     new ItemDefinition(SWORD_OF_PEW_ITEM_RECIPE, 'rnsp') // Vongola Ring Upgrade
     ..setAbilities("")
@@ -31,7 +31,7 @@ import Objects
     ..setDroppedWhenCarrierDies(false)..setStockReplenishInterval(0)
     ..setButtonPositionX(1)..setButtonPositionY(0)
     ..setModelUsed(Objects.treasurechest1)
-    ..setInterfaceIcon("ReplaceableTextures\\CommandButtons\\BTNAnimalRing.blp")
+    ..setInterfaceIcon("ReplaceableTextures\\CommandButtons\\BTNpewsword.blp")
 
     new ItemDefinition(COMFY_PILLOW_ITEM_RECIPE, 'rnsp') // Vongola Ring Upgrade
     ..setAbilities("")
@@ -43,7 +43,7 @@ import Objects
     ..setDroppedWhenCarrierDies(false)..setStockReplenishInterval(0)
     ..setButtonPositionX(1)..setButtonPositionY(0)
     ..setModelUsed(Objects.treasurechest1)
-    ..setInterfaceIcon("ReplaceableTextures\\CommandButtons\\BTNAnimalRing.blp")
+    ..setInterfaceIcon("ReplaceableTextures\\CommandButtons\\BTNcomfypillow.blp")
 
     new ItemDefinition(CUBE_SIPS_ITEM_RECIPE, 'rnsp') // Vongola Ring Upgrade
     ..setAbilities("")
@@ -55,7 +55,7 @@ import Objects
     ..setDroppedWhenCarrierDies(false)..setStockReplenishInterval(0)
     ..setButtonPositionX(1)..setButtonPositionY(0)
     ..setModelUsed(Objects.treasurechest1)
-    ..setInterfaceIcon("ReplaceableTextures\\CommandButtons\\BTNAnimalRing.blp")
+    ..setInterfaceIcon("ReplaceableTextures\\CommandButtons\\BTNCubesips.blp")
 
     new ItemDefinition(UMBRELLA_JOKES_ITEM_RECIPE, 'rnsp') // Vongola Ring Upgrade
     ..setAbilities("")
@@ -67,19 +67,19 @@ import Objects
     ..setDroppedWhenCarrierDies(false)..setStockReplenishInterval(0)
     ..setButtonPositionX(1)..setButtonPositionY(0)
     ..setModelUsed(Objects.treasurechest1)
-    ..setInterfaceIcon("ReplaceableTextures\\CommandButtons\\BTNAnimalRing.blp")
+    ..setInterfaceIcon("ReplaceableTextures\\CommandButtons\\BTNumbrellaofjokes.blp")
 
     new ItemDefinition(STAT_SWAP_ITEM_STR_RECIPE, 'rnsp') // stat swap item str
     ..setAbilities("")
     ..setName("|cffff8080Stat Switcheroo Item Recipe")
     ..setDescription("|n|r|cffffd700Stat Switcheroo|r")
-    ..setTooltipBasic("|cffffd700Stat Switcheroo Recipe:|n|cffff80802 medium health orbs + big orb + gloves of strenght + slippers of agility+ cloak of intelligence + stat switcheroo item recipe= Stat Switcheroo")
+    ..setTooltipBasic("|cffffd700Stat Switcheroo Recipe:|n|cffff8080Medium health orb + big orb + gloves of strenght + slippers of agility+ cloak of intelligence + stat switcheroo item recipe= Stat Switcheroo")
     ..setTooltipExtended("|n|r|cffffd700Using this item switches its primary stat.|r|n|cffffd700Cooldown: |cffff808090|r|n|n|cffc0c0c0Passive|r|r|r|n|n|cffffd700Grant 5%  bonus primary stat but lose 10% of other stats|n|cffffd700Increases the user's health by 300|r")
     ..setGoldCost(1750)..setLumberCost(0)
     ..setDroppedWhenCarrierDies(false)..setStockReplenishInterval(0)
     ..setButtonPositionX(1)..setButtonPositionY(0)
     ..setModelUsed(Objects.treasurechest1)
-    ..setInterfaceIcon("ReplaceableTextures\\CommandButtons\\BTNAnimalRing.blp")
+    ..setInterfaceIcon("ReplaceableTextures\\CommandButtons\\BTNstatswitcheroo.blp")
 
     new ItemDefinition(STAT_SWAP_ITEM_AGI_RECIPE, 'rnsp') // stat swap item agi
     ..setAbilities("")
@@ -91,7 +91,7 @@ import Objects
     ..setDroppedWhenCarrierDies(false)..setStockReplenishInterval(0)
     ..setButtonPositionX(1)..setButtonPositionY(0)
     ..setModelUsed(Objects.treasurechest1)
-    ..setInterfaceIcon("ReplaceableTextures\\CommandButtons\\BTNAnimalRing.blp")
+    ..setInterfaceIcon("ReplaceableTextures\\CommandButtons\\BTNstatswitcheroo.blp")
 
     new ItemDefinition(STAT_SWAP_ITEM_INT_RECIPE, 'rnsp') // stat swap item int
     ..setAbilities("")
@@ -103,7 +103,7 @@ import Objects
     ..setDroppedWhenCarrierDies(false)..setStockReplenishInterval(0)
     ..setButtonPositionX(1)..setButtonPositionY(0)
     ..setModelUsed(Objects.treasurechest1)
-    ..setInterfaceIcon("ReplaceableTextures\\CommandButtons\\BTNAnimalRing.blp")
+    ..setInterfaceIcon("ReplaceableTextures\\CommandButtons\\BTNstatswitcheroo.blp")
 
     new ItemDefinition(LOLLIPOP_MANA_ITEM_RECIPE, 'rnsp') // Vongola Ring Upgrade
     ..setAbilities("")
@@ -115,7 +115,7 @@ import Objects
     ..setDroppedWhenCarrierDies(false)..setStockReplenishInterval(0)
     ..setButtonPositionX(1)..setButtonPositionY(0)
     ..setModelUsed(Objects.treasurechest1)
-    ..setInterfaceIcon("ReplaceableTextures\\CommandButtons\\BTNAnimalRing.blp")
+    ..setInterfaceIcon("ReplaceableTextures\\CommandButtons\\BTNlollipop.blp")
 
     new ItemDefinition(HURT_NOT_ITEM_RECIPE, 'rnsp') // Vongola Ring Upgrade
     ..setAbilities("")
@@ -127,7 +127,7 @@ import Objects
     ..setDroppedWhenCarrierDies(false)..setStockReplenishInterval(0)
     ..setButtonPositionX(1)..setButtonPositionY(0)
     ..setModelUsed(Objects.treasurechest1)
-    ..setInterfaceIcon("ReplaceableTextures\\CommandButtons\\BTNAnimalRing.blp")
+    ..setInterfaceIcon("ReplaceableTextures\\CommandButtons\\BTNHurtnot.blp")
 
     new ItemDefinition(CHING_GPS_ITEM_RECIPE, 'rnsp') // Vongola Ring Upgrade
     ..setAbilities("")
@@ -139,7 +139,7 @@ import Objects
     ..setDroppedWhenCarrierDies(false)..setStockReplenishInterval(0)
     ..setButtonPositionX(1)..setButtonPositionY(0)
     ..setModelUsed(Objects.treasurechest1)
-    ..setInterfaceIcon("ReplaceableTextures\\CommandButtons\\BTNAnimalRing.blp")
+    ..setInterfaceIcon("ReplaceableTextures\\CommandButtons\\BTNchinggps.blp")
 
     new ItemDefinition(VONGOLA_RING_UPGRADE_TOME, ItemIds.manualofHealth) // Vongola Ring Tome Recipe
     ..setAbilities("")
