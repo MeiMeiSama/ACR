@@ -2,6 +2,8 @@ package SaoKiritoR_Orig
 import DamageEvent
 import AbilityGlobals
 import main
+import SkinSystem
+
 init
     initTrig_SaoKiritoR_Orig()
 
@@ -93,13 +95,18 @@ function trig_SaoKiritoRFunc019Func007Func010T()
         RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 48))
 function trig_SaoKiritoRFunc019T()
     timer _ydl_timer
-    
+     // We want the player ID for the caster
+    let caster = LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594)
+    let pid = caster.getOwner().getId() // The Player ID
     PauseUnit(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), true)
     PauseUnit(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 549), true)
     if LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 280) == 0
         soundPlay("war3mapImported\\SaoKirito4-1.mp3", GetUnitX(udg_Unitsound), GetUnitY(udg_Unitsound))
         SetUnitTimeScalePercent(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), 75.00)
-        SetUnitAnimationByIndex(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), 12)
+        if skinEquipped[pid] == true
+            SetUnitAnimationByIndex(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), 10)
+        else
+            SetUnitAnimationByIndex(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), 12)
     if IsUnitDeadBJ(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 449)) == true
         FlushChildHashtable(YDLOC, GetHandleId(GetExpiredTimer()))
         DestroyTimer(GetExpiredTimer())
@@ -107,7 +114,10 @@ function trig_SaoKiritoRFunc019T()
     if LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 280) == 100
         UnitAddAbility(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), 'A0MW')
         SetUnitTimeScalePercent(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), 175.00)
-        SetUnitAnimationByIndex(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), 27)
+        if skinEquipped[pid] == true
+            SetUnitAnimationByIndex(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), 12)
+        else
+            SetUnitAnimationByIndex(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), 27)
         SaveLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 1108, GetUnitLoc(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594)))
         SaveLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 683, GetUnitLoc(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 549)))
         SaveReal(YDLOC, GetHandleId(GetExpiredTimer()), 689, DistanceBetweenPoints(LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 1108), LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 683)))

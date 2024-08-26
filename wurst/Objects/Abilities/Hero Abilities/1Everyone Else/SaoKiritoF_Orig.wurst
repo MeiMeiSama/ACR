@@ -2,6 +2,8 @@ package SaoKiritoF_Orig
 import DamageEvent
 import AbilityGlobals
 import main
+import SkinSystem
+
 init
     initTrig_SaoKiritoF_Orig()
 
@@ -168,9 +170,14 @@ function trig_SaoKiritoFFunc032Func022Func009Func001Func002Func009T()
         RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 608))
 function trig_SaoKiritoFFunc032Func022Func009Func001Func002T()
     timer _ydl_timer
+    let caster = LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594)
+    let pid = caster.getOwner().getId() // The Player ID
     SetUnitTimeScalePercent(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), 100)
     SetUnitTimeScalePercent(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 549), 100)
-    SetUnitAnimationByIndex(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), 27)
+    if skinEquipped[pid] == true
+        SetUnitAnimationByIndex(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), 11)
+    else
+        SetUnitAnimationByIndex(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), 27)
     SaveLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 688, GetUnitLoc(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594)))
     SaveLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 526, GetUnitLoc(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 549)))
     SaveReal(YDLOC, GetHandleId(GetExpiredTimer()), 689, DistanceBetweenPoints(LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 688), LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 526)))
@@ -227,7 +234,9 @@ function trig_SaoKiritoFFunc032Func022Func009T()
         RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 608))
 function trig_SaoKiritoFFunc032T()
     timer _ydl_timer
-    
+    // We want the player ID for the caster
+    let caster = LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594)
+    let pid = caster.getOwner().getId() // The Player ID
     PauseUnit(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), true)
     PauseUnit(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 549), true)
     SaveInteger(YDLOC, GetHandleId(GetExpiredTimer()), 280, LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 280) + 1)
@@ -292,66 +301,125 @@ function trig_SaoKiritoFFunc032T()
         SaveLocationHandle(YDLOC, GetHandleId(_ydl_timer), 450813563, LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 450813563))
         SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 1130, LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 1130))
         TimerStart(_ydl_timer, 0.35, true, function trig_SaoKiritoFFunc032Func009Func020T)
-    if LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 280) == 495
-        SetUnitTimeScalePercent(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), 100.00)
-        SetUnitAnimationByIndex(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), 20)
-    if LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 280) == 545
-        SetUnitAnimationByIndex(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), 21)
-    if LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 280) == 565
-        SetUnitAnimationByIndex(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), 1)
-    if LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 280) == 585
-        SetUnitAnimationByIndex(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), 2)
-    if LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 280) == 605
-        SetUnitAnimationByIndex(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), 14)
-    if LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 280) == 625
-        SetUnitAnimationByIndex(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), 15)
-    if LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 280) == 645
-        SetUnitAnimationByIndex(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), 3)
-    if LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 280) == 665
-        SetUnitAnimationByIndex(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), 15)
-    if LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 280) == 685
-        SetUnitAnimationByIndex(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), 16)
-    if LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 280) == 725
-        SetUnitAnimationByIndex(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), 12)
-    if LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 280) == 750
-        // CameraSetEQNoiseForPlayer(LoadPlayerHandle(YDLOC, GetHandleId(GetExpiredTimer()), 603), 35.00)
-        KillUnit(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 1130))
-        SetUnitTimeScalePercent(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), 150.00)
-        SetUnitAnimationByIndex(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), 11)
-        _ydl_timer = CreateTimer()
-        SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 594, LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594))
-        SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 549, LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 549))
-        SaveLocationHandle(YDLOC, GetHandleId(_ydl_timer), 1108, LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 1108))
-        SaveLocationHandle(YDLOC, GetHandleId(_ydl_timer), 683, LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 683))
-        SaveLocationHandle(YDLOC, GetHandleId(_ydl_timer), 48, LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 48))
-        SaveLocationHandle(YDLOC, GetHandleId(_ydl_timer), 377, LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 377))
-        SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 229, LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 229))
-        SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 997, LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 997))
-        SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 624725945, LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 624725945))
-        SaveReal(YDLOC, GetHandleId(_ydl_timer), 620086162, LoadReal(YDLOC, GetHandleId(GetExpiredTimer()), 620086162))
-        SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 586, LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 586))
-        TimerStart(_ydl_timer, 0.05, true, function trig_SaoKiritoFFunc032Func020Func007T)
-        _ydl_timer = CreateTimer()
-        SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 36, LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 36))
-        SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 929, LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 929))
-        SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 843, LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 843))
-        SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 803, LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 803))
-        SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 349230650, LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 349230650))
-        SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 479, LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 479))
-        SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 594, LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594))
-        SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 549, LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 549))
-        SavePlayerHandle(YDLOC, GetHandleId(_ydl_timer), 603, LoadPlayerHandle(YDLOC, GetHandleId(GetExpiredTimer()), 603))
-        SaveReal(YDLOC, GetHandleId(_ydl_timer), 689, LoadReal(YDLOC, GetHandleId(GetExpiredTimer()), 689))
-        SaveLocationHandle(YDLOC, GetHandleId(_ydl_timer), 632, LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 632))
-        SaveLocationHandle(YDLOC, GetHandleId(_ydl_timer), 450813563, LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 450813563))
-        SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 586, LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 586))
-        TimerStart(_ydl_timer, 0.10, true, function trig_SaoKiritoFFunc032Func020Func008T)
+    if skinEquipped[pid] == true
+        if LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 280) == 495
+            SetUnitTimeScalePercent(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), 100.00)
+            SetUnitAnimationByIndex(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), 10)
+        if LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 280) == 545
+            SetUnitAnimationByIndex(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), 5)
+        if LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 280) == 565
+            SetUnitAnimationByIndex(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), 1)
+        if LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 280) == 585
+            SetUnitAnimationByIndex(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), 2)
+        if LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 280) == 605
+            SetUnitAnimationByIndex(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), 6)
+        if LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 280) == 625
+            SetUnitAnimationByIndex(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), 3)
+        if LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 280) == 645
+            SetUnitAnimationByIndex(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), 3)
+        if LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 280) == 665
+            SetUnitAnimationByIndex(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), 4)
+        if LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 280) == 685
+            SetUnitAnimationByIndex(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), 2)
+        if LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 280) == 725
+            SetUnitAnimationByIndex(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), 1)
+        if LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 280) == 750
+            // CameraSetEQNoiseForPlayer(LoadPlayerHandle(YDLOC, GetHandleId(GetExpiredTimer()), 603), 35.00)
+            KillUnit(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 1130))
+            SetUnitTimeScalePercent(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), 150.00)
+            SetUnitAnimationByIndex(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), 11)
+            _ydl_timer = CreateTimer()
+            SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 594, LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594))
+            SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 549, LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 549))
+            SaveLocationHandle(YDLOC, GetHandleId(_ydl_timer), 1108, LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 1108))
+            SaveLocationHandle(YDLOC, GetHandleId(_ydl_timer), 683, LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 683))
+            SaveLocationHandle(YDLOC, GetHandleId(_ydl_timer), 48, LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 48))
+            SaveLocationHandle(YDLOC, GetHandleId(_ydl_timer), 377, LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 377))
+            SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 229, LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 229))
+            SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 997, LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 997))
+            SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 624725945, LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 624725945))
+            SaveReal(YDLOC, GetHandleId(_ydl_timer), 620086162, LoadReal(YDLOC, GetHandleId(GetExpiredTimer()), 620086162))
+            SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 586, LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 586))
+            TimerStart(_ydl_timer, 0.05, true, function trig_SaoKiritoFFunc032Func020Func007T)
+            _ydl_timer = CreateTimer()
+            SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 36, LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 36))
+            SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 929, LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 929))
+            SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 843, LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 843))
+            SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 803, LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 803))
+            SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 349230650, LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 349230650))
+            SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 479, LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 479))
+            SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 594, LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594))
+            SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 549, LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 549))
+            SavePlayerHandle(YDLOC, GetHandleId(_ydl_timer), 603, LoadPlayerHandle(YDLOC, GetHandleId(GetExpiredTimer()), 603))
+            SaveReal(YDLOC, GetHandleId(_ydl_timer), 689, LoadReal(YDLOC, GetHandleId(GetExpiredTimer()), 689))
+            SaveLocationHandle(YDLOC, GetHandleId(_ydl_timer), 632, LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 632))
+            SaveLocationHandle(YDLOC, GetHandleId(_ydl_timer), 450813563, LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 450813563))
+            SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 586, LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 586))
+            TimerStart(_ydl_timer, 0.10, true, function trig_SaoKiritoFFunc032Func020Func008T)
+    else
+        if LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 280) == 495
+            SetUnitTimeScalePercent(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), 100.00)
+            SetUnitAnimationByIndex(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), 20)
+        if LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 280) == 545
+            SetUnitAnimationByIndex(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), 21)
+        if LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 280) == 565
+            SetUnitAnimationByIndex(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), 1)
+        if LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 280) == 585
+            SetUnitAnimationByIndex(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), 2)
+        if LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 280) == 605
+            SetUnitAnimationByIndex(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), 14)
+        if LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 280) == 625
+            SetUnitAnimationByIndex(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), 15)
+        if LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 280) == 645
+            SetUnitAnimationByIndex(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), 3)
+        if LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 280) == 665
+            SetUnitAnimationByIndex(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), 15)
+        if LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 280) == 685
+            SetUnitAnimationByIndex(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), 16)
+        if LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 280) == 725
+            SetUnitAnimationByIndex(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), 12)
+        if LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 280) == 750
+            // CameraSetEQNoiseForPlayer(LoadPlayerHandle(YDLOC, GetHandleId(GetExpiredTimer()), 603), 35.00)
+            KillUnit(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 1130))
+            SetUnitTimeScalePercent(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), 150.00)
+            SetUnitAnimationByIndex(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), 11)
+            _ydl_timer = CreateTimer()
+            SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 594, LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594))
+            SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 549, LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 549))
+            SaveLocationHandle(YDLOC, GetHandleId(_ydl_timer), 1108, LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 1108))
+            SaveLocationHandle(YDLOC, GetHandleId(_ydl_timer), 683, LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 683))
+            SaveLocationHandle(YDLOC, GetHandleId(_ydl_timer), 48, LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 48))
+            SaveLocationHandle(YDLOC, GetHandleId(_ydl_timer), 377, LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 377))
+            SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 229, LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 229))
+            SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 997, LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 997))
+            SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 624725945, LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 624725945))
+            SaveReal(YDLOC, GetHandleId(_ydl_timer), 620086162, LoadReal(YDLOC, GetHandleId(GetExpiredTimer()), 620086162))
+            SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 586, LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 586))
+            TimerStart(_ydl_timer, 0.05, true, function trig_SaoKiritoFFunc032Func020Func007T)
+            _ydl_timer = CreateTimer()
+            SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 36, LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 36))
+            SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 929, LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 929))
+            SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 843, LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 843))
+            SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 803, LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 803))
+            SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 349230650, LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 349230650))
+            SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 479, LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 479))
+            SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 594, LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594))
+            SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 549, LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 549))
+            SavePlayerHandle(YDLOC, GetHandleId(_ydl_timer), 603, LoadPlayerHandle(YDLOC, GetHandleId(GetExpiredTimer()), 603))
+            SaveReal(YDLOC, GetHandleId(_ydl_timer), 689, LoadReal(YDLOC, GetHandleId(GetExpiredTimer()), 689))
+            SaveLocationHandle(YDLOC, GetHandleId(_ydl_timer), 632, LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 632))
+            SaveLocationHandle(YDLOC, GetHandleId(_ydl_timer), 450813563, LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 450813563))
+            SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 586, LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 586))
+            TimerStart(_ydl_timer, 0.10, true, function trig_SaoKiritoFFunc032Func020Func008T)
     if LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 280) == 780
         SetUnitTimeScalePercent(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), 225.00)
     if LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 280) == 920
         // CameraClearNoiseForPlayer(LoadPlayerHandle(YDLOC, GetHandleId(GetExpiredTimer()), 603))
         KillUnit(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 586))
-        SetUnitAnimationByIndex(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), 28)
+        if skinEquipped[pid] == true
+            SetUnitAnimationByIndex(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), 11)
+        else
+            SetUnitAnimationByIndex(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), 28)
         SaveLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 1108, GetUnitLoc(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594)))
         SaveLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 683, GetUnitLoc(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 549)))
         SaveReal(YDLOC, GetHandleId(GetExpiredTimer()), 758404681, AngleBetweenPoints(LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 683), LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 1108)))
@@ -380,6 +448,8 @@ function trig_SaoKiritoFActions()
     timer _ydl_timer
     integer trigger_ID = LoadInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 865)
     trigger_ID += 3
+    let caster = LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594)
+    let pid = caster.getOwner().getId() // The Player ID
     SaveInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 865, trigger_ID)
     SaveInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 1045, trigger_ID)
     soundPlay("war3mapImported\\SaoKirito6.mp3", GetUnitX(udg_Unitsound), GetUnitY(udg_Unitsound))
@@ -395,7 +465,10 @@ function trig_SaoKiritoFActions()
     PauseUnit(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 549), true)
     SetUnitInvulnerable(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594), true)
     SetUnitInvulnerable(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 549), true)
-    SetUnitAnimationByIndex(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594), 8)
+    if skinEquipped[pid] == true
+        SetUnitAnimationByIndex(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594), 11)
+    else
+        SetUnitAnimationByIndex(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594), 8)
     UnitAddAbility(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594), 'A0MV')
     SaveLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1108, GetUnitLoc(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594)))
     SaveLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 683, GetUnitLoc(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 549)))
