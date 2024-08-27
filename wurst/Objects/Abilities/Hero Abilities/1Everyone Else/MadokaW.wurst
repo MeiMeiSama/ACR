@@ -2,6 +2,7 @@ package MadokaW
 import DamageEvent
 import AbilityGlobals
 import ACR_Stun
+import SkinSystem
 
 init
     initTrig_MadokaW()
@@ -128,6 +129,8 @@ function trig_MadokaWActions()
     timer _ydl_timer
     integer trigger_ID = LoadInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 865)
     trigger_ID += 3
+    let caster = LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594)
+    let pid = caster.getOwner().getId() // The Player ID
     SaveInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 865, trigger_ID)
     SaveInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 1045, trigger_ID)
     PlaySoundBJ(gg_snd_Madoka2)
@@ -139,7 +142,10 @@ function trig_MadokaWActions()
     SetUnitInvulnerable(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 549), true)
     PauseUnit(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594), true)
     PauseUnit(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 549), true)
-    SetUnitAnimationByIndex(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594), 9)
+    if skinEquipped[pid] == true
+        SetUnitAnimationByIndex(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594), 5)
+    else
+        SetUnitAnimationByIndex(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594), 9)
     SaveLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1108, GetUnitLoc(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594)))
     SaveUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 433, CreateUnitAtLoc(LoadPlayerHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 603), 'e03W', LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1108), GetRandomDirectionDeg()))
     SetUnitScale(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 433), 1.00, 1.00, 1.00)

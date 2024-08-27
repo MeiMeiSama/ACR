@@ -345,6 +345,7 @@ public let MADOKA_SKIN = compiletime(UNIT_ID_GEN.next())
 public let KIRITO_SKIN = compiletime(UNIT_ID_GEN.next())
 public let SHANAOLD_SKIN = compiletime(UNIT_ID_GEN.next())
 public let KIRITOW_SKIN = compiletime(UNIT_ID_GEN.next())
+public let MADOKAR_SKIN = compiletime(UNIT_ID_GEN.next())
 
 ///////////////////// Dummy for TeamBuffs/////////////////////////
 public let DUMMY_BUFFS = compiletime(UNIT_ID_GEN.next())

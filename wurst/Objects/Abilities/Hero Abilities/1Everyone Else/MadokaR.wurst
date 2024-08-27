@@ -1,6 +1,8 @@
 package MadokaR
 import DamageEvent
 import AbilityGlobals
+import SkinSystem
+import ObjectDefinitions
 
 location casterLoc
 location targetLoc
@@ -125,7 +127,11 @@ function trig_MadokaRActions()
     SaveUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 449, CreateUnitAtLoc(LoadPlayerHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 603), 'e028', LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 678), GetRandomDirectionDeg()))
     SaveLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 683, GetUnitLoc(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 449)))
     SaveLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 48, PolarProjectionBJ(LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 683), 1000.00, AngleBetweenPoints(LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 678), LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1108))))
-    SaveUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1101, CreateUnitAtLoc(LoadPlayerHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 603), 'e0Q4', LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 48), AngleBetweenPoints(LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1108), LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 678))))
+    let pid = caster.getOwner().getId() // The Player ID
+    if skinEquipped[pid] == true
+        SaveUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1101, CreateUnitAtLoc(LoadPlayerHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 603), MADOKAR_SKIN, LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 48), AngleBetweenPoints(LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1108), LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 678))))
+    else
+        SaveUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1101, CreateUnitAtLoc(LoadPlayerHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 603), 'e0Q4', LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 48), AngleBetweenPoints(LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1108), LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 678))))
     SetUnitTimeScalePercent(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1101), 135.00)
     SaveLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 377, GetUnitLoc(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1101)))
     SaveUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 433, CreateUnitAtLoc(LoadPlayerHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 603), 'e03W', LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 377), GetRandomDirectionDeg()))
