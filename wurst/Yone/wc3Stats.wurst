@@ -3,7 +3,7 @@ package wc3Stats
 import MMD
 import ClosureEvents
 import main
-import GoldIncome
+// import GoldIncome
 import TimerUtils
 import ACR_TagSystem
 import GameTimer
@@ -25,7 +25,7 @@ public bool requiredPlayers = false // Sets to true if minPlayers integer is met
 // Stat tracker for ACR to https://wc3stats.com
 
 init
-    mmdSetup()
+    // mmdSetup()
 
 function mmdSetup()
     gracePeriodLeave()
@@ -104,28 +104,28 @@ function winningComputer (int t1_points, int t2_points, int t3_points) returns p
 public function victory_checker()
     if team1_Kills == targetPoints or team2_Kills == targetPoints or team3_Kills == targetPoints
         let winner = winningComputer(team1_Kills, team2_Kills, team3_Kills)
-        for i = 0 to 12
-            if Player(i).getController() == MAP_CONTROL_USER
-                killCount.set(Player(i), player_KillCount[i])
-                deathCount.set(Player(i), player_DeathCount[i])
-                goldCount.set(Player(i), totalGoldEarnt[i])
-                streakCount.set(Player(i), unitLongestStreak[i])
+        // for i = 0 to 12
+        //     if Player(i).getController() == MAP_CONTROL_USER
+        //         killCount.set(Player(i), player_KillCount[i])
+        //         deathCount.set(Player(i), player_DeathCount[i])
+        //         goldCount.set(Player(i), totalGoldEarnt[i])
+        //         streakCount.set(Player(i), unitLongestStreak[i])
 
-        if requiredPlayers and rankMode
-            for i = 0 to 12
-                if Player(i).getController() == MAP_CONTROL_USER and Player(i).isAllyOf(winner) and not Player(i).hasTagMMDFlag()
-                    MMD.flagPlayer(Player(i), PlayerFlag.Winner)
-                    Player(i).addTagMMDFlag()
-                else if Player(i).getController() == MAP_CONTROL_USER and Player(i).isEnemyOf(winner) and not Player(i).hasTagLeaverInTeam() and not Player(i).hasTagMMDFlag()
-                    MMD.flagPlayer(Player(i), PlayerFlag.Loser)
-                    Player(i).addTagMMDFlag()
-                else if Player(i).getController() == MAP_CONTROL_USER and Player(i).isEnemyOf(winner) and Player(i).hasTagLeaverInTeam() and not Player(i).hasTagMMDFlag()
-                    MMD.flagPlayer(Player(i), PlayerFlag.Drawer)
-                    Player(i).addTagMMDFlag()
-        else
-            for i = 0 to 12
-                if not Player(i).hasTagMMDFlag()
-                    MMD.flagPlayer(Player(i), PlayerFlag.Practicing)
+        // if requiredPlayers and rankMode
+        //     for i = 0 to 12
+        //         if Player(i).getController() == MAP_CONTROL_USER and Player(i).isAllyOf(winner) and not Player(i).hasTagMMDFlag()
+        //             MMD.flagPlayer(Player(i), PlayerFlag.Winner)
+        //             Player(i).addTagMMDFlag()
+        //         else if Player(i).getController() == MAP_CONTROL_USER and Player(i).isEnemyOf(winner) and not Player(i).hasTagLeaverInTeam() and not Player(i).hasTagMMDFlag()
+        //             MMD.flagPlayer(Player(i), PlayerFlag.Loser)
+        //             Player(i).addTagMMDFlag()
+        //         else if Player(i).getController() == MAP_CONTROL_USER and Player(i).isEnemyOf(winner) and Player(i).hasTagLeaverInTeam() and not Player(i).hasTagMMDFlag()
+        //             MMD.flagPlayer(Player(i), PlayerFlag.Drawer)
+        //             Player(i).addTagMMDFlag()
+        // else
+        //     for i = 0 to 12
+        //         if not Player(i).hasTagMMDFlag()
+        //             MMD.flagPlayer(Player(i), PlayerFlag.Practicing)
 
         ClearTextMessages()
         print("|cffffd700Victory to following players:|r")

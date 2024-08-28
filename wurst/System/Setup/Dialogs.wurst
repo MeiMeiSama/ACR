@@ -2,7 +2,7 @@ package Dialogs
 import main
 import DialogBox
 import DraftScreen
-import wc3Stats
+// import wc3Stats
 init
     CreateTimer()..start(0.2, function dialogStart)
 
@@ -97,20 +97,21 @@ function dialog_choosePoints (player p)
 function dialog_chooseMode ()
     let chooseMode = new DialogBox("Mode")
     chooseMode.addButton("Normal") ->
-        BlzFrameAddText(textArea, "|cff00a9ff[Normal] |cffffd700You will not earn rating or lose from this game|r")
+        // BlzFrameAddText(textArea, "|cff00a9ff[Normal] |cffffd700You will not earn rating or lose from this game|r")
+        BlzFrameAddText(textArea, "|cff00a9ff[Normal] |cffffd700Kill enemies to earn points! Get enough to win the game.|r")
         chooseMode.display(GetTriggerPlayer(), false)
         dialog_choosePoints(GetTriggerPlayer())
         destroy chooseMode
-    chooseMode.addButton("Ranked") ->
-        if requiredPlayers == false
-            rankMode = false
-            BlzFrameAddText(textArea, "|cff00a9ff[Normal] |cffffd700Not enough players for Ranked, defaulting to Normal|r")
-        else if requiredPlayers
-            rankMode = true
-            BlzFrameAddText(textArea, "|cff00a9ff[Ranked] |cffffd700You will earn rating from this game|r")
-        chooseMode.display(GetTriggerPlayer(), false)
-        dialog_choosePoints(GetTriggerPlayer())
-        destroy chooseMode
+    // chooseMode.addButton("Ranked") ->
+    //     if requiredPlayers == false
+    //         rankMode = false
+    //         BlzFrameAddText(textArea, "|cff00a9ff[Normal] |cffffd700Not enough players for Ranked, defaulting to Normal|r")
+    //     else if requiredPlayers
+    //         rankMode = true
+    //         BlzFrameAddText(textArea, "|cff00a9ff[Ranked] |cffffd700You will earn rating from this game|r")
+    //     chooseMode.display(GetTriggerPlayer(), false)
+    //     dialog_choosePoints(GetTriggerPlayer())
+    //     destroy chooseMode
 
     for i = 0 to 12
         if Player(i).getController() == MAP_CONTROL_USER and Player(i).getSlotState() == PLAYER_SLOT_STATE_PLAYING
