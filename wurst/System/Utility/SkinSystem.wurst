@@ -6,9 +6,11 @@ import FramehandleNames
 import TimerUtils
 import Abilities
 import ObjectDefinitions
+import HashSet
 
 // map<unittype, Skin> skins = map<unittype, Skin>
-var skins = new HashMap<int, Skin> 
+var skins = new HashMap<int, Skin>
+var VIP = new HashSet<string>
 public bool array skinEquipped
 bool array skinCooldown
 
@@ -17,47 +19,49 @@ public class Skin
     // Store the skin unit type ID (or skin ID)
     integer skinId
     // Determine if the skin is universal or restricted
-    bool isUniversal
-    // Store the player name if the skin is restricted
-    string playerName = ""
+    bool vip
 
-    construct(integer skinId, bool isUniversal, string playerName)
+    construct(integer skinId, bool vip)
         this.skinId = skinId
-        this.isUniversal = isUniversal
-        this.playerName = playerName
+        this.vip = vip
+
+function registerVips()
+    VIP.add("ReusXMarina", "Whippie", "Requiem", "Gajeel", "Yami")
+    VIP.add("tebssstss", "Deathstar699", "null", "Wuru", "Morpheus")
+    VIP.add("MEI")
 
 public function registerSkins()
-    // Universal skin
-    skins.put('H02E', new Skin(GILGAMESH_SKIN, true, ""))//Gilgamesh
-    skins.put('H019', new Skin(YOMI_SKIN, true, ""))//Yomi
-    skins.put('H00H', new Skin(MADOKA_SKIN, true, ""))//Madoka
-    skins.put('H02D', new Skin(KIRITO_SKIN, true, ""))//Kirito New
-    skins.put('H007', new Skin(SHANAOLD_SKIN, true, ""))//Shana Old
-    skins.put('H03D', new Skin('h04E', true, "")) //Ainz
+    // Non-VIP
+    skins.put('H02E', new Skin(GILGAMESH_SKIN, false))         // Gilgamesh
+    skins.put('H019', new Skin(YOMI_SKIN, false))              // Yomi
+    skins.put('H00H', new Skin(MADOKA_SKIN, false))            // Madoka
+    skins.put('H02D', new Skin(KIRITO_SKIN, false))            // Kirito New
+    skins.put('H007', new Skin(SHANAOLD_SKIN, false))          // Shana Old
+    skins.put('H03D', new Skin('h04E', false))                 // Ainz
 
-    // Restricted skin
-    skins.put('H008', new Skin('h04F', false, "ReusXMarina")) //Misaka old
-    skins.put('H016', new Skin(RIN_SKIN, false, "Requiem"))//Rin Tohsaka
-    skins.put('H03E', new Skin(KIARA_SKIN, false, "Gajeel"))//Kiara
-    skins.put('H020', new Skin(SHANA_SKIN, false, "Yami"))//Shana New
-    skins.put('H00V', new Skin(ASUNA_SKIN, false, "tebssstss"))//Asuna
-    skins.put('H02W', new Skin(ILLYA_SKIN, false, "Deathstar699"))//Illya
-    skins.put('H01E', new Skin(NANAYA_SKIN, false, "null"))//Nanaya
-    skins.put('H02P', new Skin(SHIROU_SKIN, false, "Wuru"))//Shirou
-    skins.put('H021', new Skin(MORDRED_SKIN, false, "Morpheus"))//Mordred
-    skins.put('H02Y', new Skin(EMILLIA_SKIN, false, "MEI"))//Emillia
+    // VIP
+    skins.put('H008', new Skin('h04F', true))                  // Misaka old
+    skins.put('H016', new Skin(RIN_SKIN, true))                // Rin Tohsaka
+    skins.put('H03E', new Skin(KIARA_SKIN, true))              // Kiara
+    skins.put('H020', new Skin(SHANA_SKIN, true))              // Shana New
+    skins.put('H00V', new Skin(ASUNA_SKIN, true))              // Asuna
+    skins.put('H02W', new Skin(ILLYA_SKIN, true))              // Illya
+    skins.put('H01E', new Skin(NANAYA_SKIN, true))             // Nanaya
+    skins.put('H02P', new Skin(SHIROU_SKIN, true))             // Shirou
+    skins.put('H021', new Skin(MORDRED_SKIN, true))            // Mordred
+    skins.put('H02Y', new Skin(EMILLIA_SKIN, true))            // Emillia
 
 public function applySkin(unit u, player p)
     let unitType = u.getTypeId()
     if skins.has(unitType)
         let skin = skins.get(unitType)
-        if skin.isUniversal
-            // Apply the universal skin
+        if not skin.vip
+            // Apply the skin as VIP is not required
             BlzSetUnitSkin(u, skin.skinId)
             skinEquipped[p.getId()] = true
         else
-            // Check if the player's name matches the restricted skin's player name
-            if p.getName() == skin.playerName
+            if VIP.has(p.getName(true)) // "true" parameter in getName means whether we want to remove hashtag and the numbers in a players name eg: ("null#14140" to "null")
+                // Check if the player's name is included in the VIP list
                 BlzSetUnitSkin(u, skin.skinId)
                 skinEquipped[p.getId()] = true
 
@@ -70,8 +74,12 @@ public function createSkinButton()
     let skinButton = BlzCreateFrameByType(FramehandleTypeNames.buttonframe, "skinBTN", GAME_UI, FramehandleNames.scriptDialogButton, 0)
     ..setAbsPoint(FRAMEPOINT_CENTER, 0.007, 0.027)
     ..setSize(0.06, 0.05)
-    skinButton..getChild(0)..setTexture("UI\\SkinButton.blp", 0, false)
-    skinButton..getChild(1)..setTexture("UI\\SkinButtonClick.blp", 0, false)
+    ..setTexture("UI\\SkinButton.blp", 0, false)
+    ..getChild(0)..setTexture("UI\\SkinButton.blp", 0, false)
+    ..getChild(1)..setTexture("UI\\SkinButtonClick.blp", 0, false)
+
+    // I have not tested this line before, if the button position looks wrong, comment out this line
+    ..clearAllPoints()..setAbsPoint(FRAMEPOINT_CENTER, SCREEN_CENTER)..setSize(0.02, 0.02)
 
     skinButton.onClick() ->
         let pid = GetTriggerPlayer().getId()
@@ -97,4 +105,3 @@ function initSkinSystem ()
     registerSkins()
     createSkinButton()
     GetExpiredTimer().destr()
-
