@@ -78,9 +78,6 @@ public function createSkinButton()
     ..getChild(0)..setTexture("UI\\SkinButton.blp", 0, false)
     ..getChild(1)..setTexture("UI\\SkinButtonClick.blp", 0, false)
 
-    // I have not tested this line before, if the button position looks wrong, comment out this line
-    ..clearAllPoints()..setAbsPoint(FRAMEPOINT_CENTER, SCREEN_CENTER)..setSize(0.02, 0.02)
-
     skinButton.onClick() ->
         let pid = GetTriggerPlayer().getId()
         if skinCooldown[pid] == false
