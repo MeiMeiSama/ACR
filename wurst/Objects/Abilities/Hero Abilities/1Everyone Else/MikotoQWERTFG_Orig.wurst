@@ -6,8 +6,10 @@ import AbilityQ_data
 import ACR_Stun
 import TimerUtils
 import SkinSystem
+import ACR_SoundCreation
 
 int array misakaOldFCount
+constant biribiri = acrCreateSound("pjrbgm2.mp3")
 
 init
     initTrig_MikotoQWERTFG_Orig()
@@ -420,10 +422,12 @@ function trig_MikotoQWERTFGActions()
     SavePlayerHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 603, GetOwningPlayer(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594)))
     if GetSpellAbilityId() == 'A012'
         let caster = LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594)
-        let pid = caster.getOwner().getId() 
+        let pid = caster.getOwner().getId()
+        let playerr = caster.getOwner() 
         if skinEquipped[pid] == true
             PlaySoundBJ(gg_snd_railgun1)
-            soundPlay("war3mapImported\\pjrbgm2.mp3", 0, 0)
+            if playerr == GetLocalPlayer()
+                biribiri.play() 
         else
             PlaySoundBJ(gg_snd_railgun1)
         SaveLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1108, GetUnitLoc(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594)))
@@ -687,4 +691,4 @@ function initTrig_MikotoQWERTFG_Orig()
     gg_trg_MikotoQWERTFG = CreateTrigger()
     TriggerRegisterAnyUnitEventBJ(gg_trg_MikotoQWERTFG, EVENT_PLAYER_UNIT_SPELL_EFFECT)
     TriggerAddCondition(gg_trg_MikotoQWERTFG, Condition(function trig_MikotoQWERTFGConditions))
-    TriggerAddAction(gg_trg_MikotoQWERTFG, function trig_MikotoQWERTFGActions)
+    TriggerAddAction(gg_trg_MikotoQWERTFG, function trig_MikotoQWERTFGActions)   

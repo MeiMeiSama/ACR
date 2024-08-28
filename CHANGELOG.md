@@ -8,7 +8,7 @@
 
 ### Improved
 1. Improved Terrain Layout.
-3. Improved Terrain Coordinates, all team should have equal distances.
+3. Improved Terrain Coordinates, all teams should have equal distances.
 4. Improved Shop locations, should be concise now, and more easily clickable.
 
 ### Changed
@@ -18,8 +18,8 @@ Overall rework on items icons.
 Madoka and Kiara T cinematic planets fixed.
 Melt W doing double damage.
 Kizaru R knockback removed.
-Ainz R stun removed.
 Kiyohime STR E should now be bug free.
+Dante model.
 
 ### Deleted
 Nothing Deleted.
