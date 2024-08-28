@@ -99,6 +99,7 @@ init
     CreateTimer()..start(0.5, function initSkinSystem)   
 
 function initSkinSystem ()
+    registerVips()
     registerSkins()
     createSkinButton()
     GetExpiredTimer().destr()
