@@ -28,7 +28,7 @@ public class Skin
 function registerVips()
     VIP.add("ReusXMarina", "Whippie", "Requiem", "Gajeel", "Yami")
     VIP.add("tebssstss", "Deathstar699", "null", "Wuru", "Morpheus")
-    VIP.add("MEI")
+    VIP.add("MEI", "Vrendal")
 
 public function registerSkins()
     // Non-VIP
