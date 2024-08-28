@@ -2,6 +2,9 @@ package EmiyaShirouR_Orig
 import DamageEvent
 import AbilityGlobals
 import main
+import ObjectDefinitions
+import SkinSystem
+
 init
     initTrig_EmiyaShirouR_Orig()
 
@@ -203,6 +206,8 @@ function trig_EmiyaShirouRFunc017Func006Func029Func001Func018Func022Func001Func0
     DestroyTimer(GetExpiredTimer())
 function trig_EmiyaShirouRFunc017Func006Func029Func001Func018Func022T()
     timer _ydl_timer
+    let caster = LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594)
+    let pid = caster.getOwner().getId()
     if LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 943) >= 12
         SaveReal(YDLOC, GetHandleId(GetExpiredTimer()), 758404681, GetRandomDirectionDeg())
         RemoveUnit(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 1130))
@@ -210,7 +215,10 @@ function trig_EmiyaShirouRFunc017Func006Func029Func001Func018Func022T()
         SaveLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 683, GetUnitLoc(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 549)))
         SaveLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 48, PolarProjectionBJ(LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 683), -150.00, LoadReal(YDLOC, GetHandleId(GetExpiredTimer()), 758404681)))
         SetUnitPositionLocFacingBJ(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 48), AngleBetweenPoints(LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 48), LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 683)))
-        SaveUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 586, CreateUnitAtLoc(LoadPlayerHandle(YDLOC, GetHandleId(GetExpiredTimer()), 603), 'e0V3', LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 48), AngleBetweenPoints(LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 48), LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 683))))
+        if skinEquipped[pid] == true
+            SaveUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 586, CreateUnitAtLoc(LoadPlayerHandle(YDLOC, GetHandleId(GetExpiredTimer()), 603), SHIROURF_SKIN, LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 48), AngleBetweenPoints(LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 48), LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 683))))
+        else
+            SaveUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 586, CreateUnitAtLoc(LoadPlayerHandle(YDLOC, GetHandleId(GetExpiredTimer()), 603), 'e0V3', LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 48), AngleBetweenPoints(LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 48), LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 683))))
         SaveReal(YDLOC, GetHandleId(GetExpiredTimer()), 758404681, AngleBetweenPoints(LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 48), LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 683)))
         SaveUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 903, CreateUnitAtLoc(LoadPlayerHandle(YDLOC, GetHandleId(GetExpiredTimer()), 603), 'e0JQ', LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 1108), GetRandomDirectionDeg()))
         UnitApplyTimedLife(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 903), 'BHwe', 2.00)
@@ -332,6 +340,8 @@ function trig_EmiyaShirouRFunc017Func006Func029Func001Func018T()
     DestroyTimer(GetExpiredTimer())
 function trig_EmiyaShirouRFunc017Func006Func029T()
     timer _ydl_timer
+    let caster = LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594)
+    let pid = caster.getOwner().getId()
     if LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 943) >= 12
         SaveReal(YDLOC, GetHandleId(GetExpiredTimer()), 758404681, GetRandomDirectionDeg())
         SaveInteger(YDLOC, GetHandleId(GetExpiredTimer()), 252, GetRandomInt(1, 360))
@@ -341,7 +351,10 @@ function trig_EmiyaShirouRFunc017Func006Func029T()
         SaveLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 683, GetUnitLoc(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 549)))
         SaveLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 48, PolarProjectionBJ(LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 683), 150.00, LoadReal(YDLOC, GetHandleId(GetExpiredTimer()), 758404681)))
         SetUnitPositionLocFacingBJ(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 48), AngleBetweenPoints(LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 48), LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 683)))
-        SaveUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 1130, CreateUnitAtLoc(LoadPlayerHandle(YDLOC, GetHandleId(GetExpiredTimer()), 603), 'e0V3', LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 48), AngleBetweenPoints(LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 48), LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 683))))
+        if skinEquipped[pid] == true
+            SaveUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 1130, CreateUnitAtLoc(LoadPlayerHandle(YDLOC, GetHandleId(GetExpiredTimer()), 603), SHIROURF_SKIN, LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 48), AngleBetweenPoints(LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 48), LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 683))))
+        else
+            SaveUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 1130, CreateUnitAtLoc(LoadPlayerHandle(YDLOC, GetHandleId(GetExpiredTimer()), 603), 'e0V3', LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 48), AngleBetweenPoints(LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 48), LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 683))))
         SaveUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 903, CreateUnitAtLoc(LoadPlayerHandle(YDLOC, GetHandleId(GetExpiredTimer()), 603), 'e0JQ', LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 1108), GetRandomDirectionDeg()))
         UnitApplyTimedLife(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 903), 'BHwe', 2.00)
         RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 1108))

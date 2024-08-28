@@ -3,6 +3,7 @@ import DamageEvent
 import AbilityGlobals
 import AbilityQ_data
 import ACR_Knockback
+import SkinSystem
 
 init
     initTrig_Yuuki_Asuna()
@@ -105,6 +106,8 @@ function trig_Yuuki_AsunaFunc005Func001Func001Func001Func001Func015Func004Func01
         RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 244809593))
 function trig_Yuuki_AsunaFunc005Func001Func001Func001Func001Func015T()
     timer _ydl_timer
+    let caster = LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594)
+    let pid = caster.getOwner().getId()
     PauseUnit(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), true)
     PauseUnit(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 549), true)
     SaveInteger(YDLOC, GetHandleId(GetExpiredTimer()), 280, LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 280) + 1)
@@ -117,7 +120,10 @@ function trig_Yuuki_AsunaFunc005Func001Func001Func001Func001Func015T()
         SaveLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 48, PolarProjectionBJ(LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 683), -150.00, AngleBetweenPoints(LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 1108), LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 683))))
         SaveReal(YDLOC, GetHandleId(GetExpiredTimer()), 92975974, AngleBetweenPoints(LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 1108), LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 683)))
         SetUnitPositionLoc(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 48))
-        SetUnitAnimationByIndex(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), 9)
+        if skinEquipped[pid] == true
+            SetUnitAnimationByIndex(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), 7)
+        else
+            SetUnitAnimationByIndex(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), 9)
         SaveUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 450813563, CreateUnitAtLoc(LoadPlayerHandle(YDLOC, GetHandleId(GetExpiredTimer()), 603), 'e05P', LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 48), GetRandomDirectionDeg()))
         SetUnitFlyHeight(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 450813563), 300.00, 0.00)
         SetUnitTimeScalePercent(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 247), 75.00)

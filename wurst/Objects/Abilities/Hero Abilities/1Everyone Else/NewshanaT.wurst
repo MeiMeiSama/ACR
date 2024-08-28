@@ -2,6 +2,8 @@ package NewshanaT
 import DamageEvent
 import AbilityGlobals
 import main
+import SkinSystem
+
 init
     initTrig_NewshanaT()
 
@@ -136,9 +138,14 @@ function trig_NewshanaTFunc027Func001Func009Func001Func015Func012Func010Func011T
     DestroyTimer(GetExpiredTimer())
 function trig_NewshanaTFunc027Func001Func009Func001Func015Func012Func010T()
     timer _ydl_timer
+    let caster = LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594)
+    let pid = caster.getOwner().getId()
     SetUnitTimeScalePercent(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 576), 100.00)
     soundPlay("war3mapImported\\shana5-5.mp3", GetUnitX(udg_soundplayunit[25]), GetUnitY(udg_soundplayunit[25]))
-    SetUnitAnimationByIndex(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), 13)
+    if skinEquipped[pid] == true
+        SetUnitAnimationByIndex(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), 1)
+    else
+        SetUnitAnimationByIndex(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), 13)
     SaveInteger(YDLOC, GetHandleId(GetExpiredTimer()), 280, 0)
     SaveLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 1108, GetUnitLoc(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594)))
     SaveLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 683, GetUnitLoc(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 549)))
@@ -169,6 +176,8 @@ function trig_NewshanaTFunc027Func001Func009Func001Func015Func012Func010T()
     DestroyTimer(GetExpiredTimer())
 function trig_NewshanaTFunc027Func001Func009Func001Func015Func012T()
     timer _ydl_timer
+    let caster = LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594)
+    let pid = caster.getOwner().getId()
     SaveLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 683, GetUnitLoc(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594)))
     SaveLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 48, PolarProjectionBJ(LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 683), 200.00, GetUnitFacing(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594)) + 180.00))
     SaveUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 321, CreateUnitAtLoc(LoadPlayerHandle(YDLOC, GetHandleId(GetExpiredTimer()), 603), 'e0Q7', LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 48), GetUnitFacing(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594))))
@@ -176,7 +185,10 @@ function trig_NewshanaTFunc027Func001Func009Func001Func015Func012T()
     RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 683))
     RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 48))
     SetUnitTimeScalePercent(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), 80.00)
-    SetUnitAnimationByIndex(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), 18)
+    if skinEquipped[pid] == true
+        SetUnitAnimationByIndex(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), 2)
+    else
+        SetUnitAnimationByIndex(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), 18)
     soundPlay("war3mapImported\\shana5-4.mp3", GetUnitX(udg_soundplayunit[25]), GetUnitY(udg_soundplayunit[25]))
     _ydl_timer = CreateTimer()
     SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 594, LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594))
@@ -203,6 +215,8 @@ function trig_NewshanaTFunc027Func001Func009Func001Func015Func012T()
     DestroyTimer(GetExpiredTimer())
 function trig_NewshanaTFunc027Func001Func009Func001Func015T()
     timer _ydl_timer
+    let caster = LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594)
+    let pid = caster.getOwner().getId() 
     SaveUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 1130, CreateUnitAtLoc(LoadPlayerHandle(YDLOC, GetHandleId(GetExpiredTimer()), 603), 'e03D', LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 1108), GetRandomDirectionDeg()))
     SetUnitScale(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 1130), 1.65, 1.65, 1.65)
     UnitApplyTimedLife(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 1130), 'BHwe', 1.50)
@@ -211,7 +225,10 @@ function trig_NewshanaTFunc027Func001Func009Func001Func015T()
     SaveUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 349, CreateUnitAtLoc(LoadPlayerHandle(YDLOC, GetHandleId(GetExpiredTimer()), 603), 'e0JJ', LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 1108), GetRandomDirectionDeg()))
     UnitApplyTimedLife(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 349), 'BHwe', 1.50)
     SetUnitTimeScalePercent(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), 120.00)
-    SetUnitAnimationByIndex(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), 5)
+    if skinEquipped[pid] == true
+        SetUnitAnimationByIndex(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), 1)
+    else
+        SetUnitAnimationByIndex(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), 5)
     soundPlay("war3mapImported\\shana5-3.mp3", GetUnitX(udg_soundplayunit[25]), GetUnitY(udg_soundplayunit[25]))
     soundPlay("war3mapImported\\Mukuro1-1.mp3", GetUnitX(udg_soundplayunit[25]), GetUnitY(udg_soundplayunit[25]))
     _ydl_timer = CreateTimer()
@@ -239,6 +256,8 @@ function trig_NewshanaTFunc027Func001Func009Func001Func015T()
     DestroyTimer(GetExpiredTimer())
 function trig_NewshanaTFunc027Func001Func009T()
     timer _ydl_timer
+    let caster = LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594)
+    let pid = caster.getOwner().getId() 
     if LoadReal(YDLOC, GetHandleId(GetExpiredTimer()), 689) <= 350.00
         SetUnitPathing(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), true)
         soundPlay("war3mapImported\\shana5-2.mp3", GetUnitX(udg_soundplayunit[25]), GetUnitY(udg_soundplayunit[25]))
@@ -252,7 +271,10 @@ function trig_NewshanaTFunc027Func001Func009T()
         SaveUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 613, CreateUnitAtLoc(LoadPlayerHandle(YDLOC, GetHandleId(GetExpiredTimer()), 603), 'e0JJ', LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 1108), GetRandomDirectionDeg()))
         UnitApplyTimedLife(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 613), 'BHwe', 1.50)
         SetUnitTimeScalePercent(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), 175.00)
-        SetUnitAnimationByIndex(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), 4)
+        if skinEquipped[pid] == true
+            SetUnitAnimationByIndex(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), 1)
+        else
+            SetUnitAnimationByIndex(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), 4)
         _ydl_timer = CreateTimer()
         SavePlayerHandle(YDLOC, GetHandleId(_ydl_timer), 603, LoadPlayerHandle(YDLOC, GetHandleId(GetExpiredTimer()), 603))
         SaveLocationHandle(YDLOC, GetHandleId(_ydl_timer), 1108, LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 1108))
@@ -299,6 +321,8 @@ function trig_NewshanaTFunc027Func001Func009T()
         RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 48))
 function trig_NewshanaTFunc027T()
     timer _ydl_timer
+    let caster = LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594)
+    let pid = caster.getOwner().getId()
     if LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 280) >= 40
         SaveLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 1108, GetUnitLoc(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594)))
         SaveLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 683, GetUnitLoc(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 549)))
@@ -306,7 +330,10 @@ function trig_NewshanaTFunc027T()
         RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 1108))
         RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 683))
         SetUnitTimeScalePercent(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), 175.00)
-        SetUnitAnimationByIndex(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), 2)
+        if skinEquipped[pid] == true
+            SetUnitAnimationByIndex(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), 1)
+        else
+            SetUnitAnimationByIndex(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), 2)
         SetUnitPathing(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), false)
         _ydl_timer = CreateTimer()
         SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 594, LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594))
@@ -346,6 +373,8 @@ function trig_NewshanaTActions()
     timer _ydl_timer
     integer trigger_ID = LoadInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 865)
     trigger_ID += 3
+    let caster = LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594)
+    let pid = caster.getOwner().getId()
     SaveInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 865, trigger_ID)
     SaveInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 1045, trigger_ID)
     udg_soundplayunit[25] = GetTriggerUnit()
@@ -360,7 +389,10 @@ function trig_NewshanaTActions()
     PauseUnit(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 549), true)
     SetUnitInvulnerable(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594), true)
     SetUnitInvulnerable(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 549), true)
-    SetUnitAnimationByIndex(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594), 14)
+    if skinEquipped[pid] == true
+        SetUnitAnimationByIndex(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594), 1)
+    else
+        SetUnitAnimationByIndex(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594), 14)
     SetUnitFacing(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 549), GetUnitFacing(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594)) + 180.00)
     SaveLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1108, GetUnitLoc(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594)))
     SaveUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 36, CreateUnitAtLoc(LoadPlayerHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 603), 'e0LP', LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1108), GetRandomDirectionDeg()))

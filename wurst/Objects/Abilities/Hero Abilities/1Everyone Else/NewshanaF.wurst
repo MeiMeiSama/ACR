@@ -2,6 +2,8 @@ package NewshanaF
 import DamageEvent
 import AbilityGlobals
 import main
+import SkinSystem
+
 init
     initTrig_NewshanaF()
 
@@ -109,8 +111,13 @@ function trig_NewshanaFFunc022Func015Func009Func003Func015Func009Func003T()
     DestroyTimer(GetExpiredTimer())
 function trig_NewshanaFFunc022Func015Func009Func003Func015Func009T()
     timer _ydl_timer
+    let caster = LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594)
+    let pid = caster.getOwner().getId()
     soundPlay("war3mapImported\\ShanaKimono6-3.mp3", GetUnitX(udg_Unitsound), GetUnitY(udg_Unitsound))
-    SetUnitAnimationByIndex(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), 8)
+    if skinEquipped[pid] == true
+        SetUnitAnimationByIndex(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), 2)
+    else
+        SetUnitAnimationByIndex(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), 8)
     _ydl_timer = CreateTimer()
     SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 594, LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594))
     SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 549, LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 549))
@@ -202,8 +209,13 @@ function trig_NewshanaFFunc022Func015Func009Func003T()
     DestroyTimer(GetExpiredTimer())
 function trig_NewshanaFFunc022Func015Func009T()
     timer _ydl_timer
+    let caster = LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594)
+    let pid = caster.getOwner().getId()
     soundPlay("war3mapImported\\ShanaKimono6-2.mp3", GetUnitX(udg_Unitsound), GetUnitY(udg_Unitsound))
-    SetUnitAnimationByIndex(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), 7)
+    if skinEquipped[pid] == true
+        SetUnitAnimationByIndex(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), 1)
+    else
+        SetUnitAnimationByIndex(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), 7)
     _ydl_timer = CreateTimer()
     SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 594, LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594))
     SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 549, LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 549))
@@ -306,6 +318,8 @@ function trig_NewshanaFActions()
     timer _ydl_timer
     integer trigger_ID = LoadInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 865)
     trigger_ID += 3
+    let caster = LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594)
+    let pid = caster.getOwner().getId()
     SaveInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 865, trigger_ID)
     SaveInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 1045, trigger_ID)
     soundPlay("war3mapImported\\ShanaKimono6-1.mp3", GetUnitX(udg_Unitsound), GetUnitY(udg_Unitsound))
@@ -324,7 +338,10 @@ function trig_NewshanaFActions()
     PauseUnitBJ(true, LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 549))
     SetUnitInvulnerable(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594), true)
     SetUnitInvulnerable(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 549), true)
-    SetUnitAnimationByIndex(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594), 4)
+    if skinEquipped[pid] == true
+        SetUnitAnimationByIndex(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594), 1)
+    else
+        SetUnitAnimationByIndex(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594), 4)
     SetUnitTimeScalePercent(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594), 125.00)
     RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1108))
     RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 683))

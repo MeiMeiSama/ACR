@@ -346,6 +346,11 @@ public let KIRITO_SKIN = compiletime(UNIT_ID_GEN.next())
 public let SHANAOLD_SKIN = compiletime(UNIT_ID_GEN.next())
 public let KIRITOW_SKIN = compiletime(UNIT_ID_GEN.next())
 public let MADOKAR_SKIN = compiletime(UNIT_ID_GEN.next())
+public let SHIROURF_SKIN = compiletime(UNIT_ID_GEN.next())
+public let NANAYAWRTF_SKIN = compiletime(UNIT_ID_GEN.next())
+public let ILLYAT_SKIN = compiletime(UNIT_ID_GEN.next())
+public let KIARAWT_SKIN = compiletime(UNIT_ID_GEN.next())
+public let AINZE_SKIN = compiletime(UNIT_ID_GEN.next())
 
 ///////////////////// Dummy for TeamBuffs/////////////////////////
 public let DUMMY_BUFFS = compiletime(UNIT_ID_GEN.next())

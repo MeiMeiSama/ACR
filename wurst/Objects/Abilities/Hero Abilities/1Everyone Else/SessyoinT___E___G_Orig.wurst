@@ -3,6 +3,9 @@ import DamageEvent
 import AbilityGlobals
 import main
 import MusicPlaylist
+import ObjectDefinitions
+import SkinSystem
+
 init
     initTrig_SessyoinT___E___G_Orig()
 
@@ -203,11 +206,19 @@ function trig_SessyoinT___E___GFunc006Func019T()
             SetUnitFlyHeight(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 'MUFV'), 0.00, 0.00)
             UnitApplyTimedLife(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 'MUFV'), 'BHwe', 1.00)
     if LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 280) == 250
-        SaveUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 944545158, CreateUnit(LoadPlayerHandle(YDLOC, GetHandleId(GetExpiredTimer()), 603), 'e0YY', GetUnitX(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594)), GetUnitY(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594)), LoadReal(YDLOC, GetHandleId(GetExpiredTimer()), 758404681)))
+        let caster = LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594)
+        let pid = caster.getOwner().getId()
+        if skinEquipped[pid] == true
+            SaveUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 944545158, CreateUnit(LoadPlayerHandle(YDLOC, GetHandleId(GetExpiredTimer()), 603), KIARAWT_SKIN, GetUnitX(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594)), GetUnitY(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594)), LoadReal(YDLOC, GetHandleId(GetExpiredTimer()), 758404681)))
+        else
+            SaveUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 944545158, CreateUnit(LoadPlayerHandle(YDLOC, GetHandleId(GetExpiredTimer()), 603), 'e0YY', GetUnitX(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594)), GetUnitY(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594)), LoadReal(YDLOC, GetHandleId(GetExpiredTimer()), 758404681)))
         SetUnitScale(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 944545158), 3.55, 3.55, 3.55)
         SetUnitFlyHeight(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 944545158), 2285.00, 0.00)
         SetUnitTimeScalePercent(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 944545158), 50.00)
-        SetUnitAnimationByIndex(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 944545158), 6)
+        if skinEquipped[pid] == true
+            SetUnitAnimationByIndex(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 944545158), 6)
+        else
+            SetUnitAnimationByIndex(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 944545158), 6)
         GroupAddUnit(LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 993), LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 944545158))
         SaveLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 500697875, GetUnitLoc(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 944545158)))
         SaveLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 876, PolarProjectionBJ(LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 500697875), 500.00, 25.00))
@@ -219,21 +230,21 @@ function trig_SessyoinT___E___GFunc006Func019T()
         SetUnitFlyHeight(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 192186159), 2500.00, 0.00)
         SetUnitScale(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 192186159), 1.00, 1.00, 1.00)
         SetUnitAnimationByIndex(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 192186159), 1)
-        SaveEffectHandle(YDLOC, GetHandleId(GetExpiredTimer()), 227, AddSpecialEffectTarget("war3mapImported\\planetr.mdl", LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 192186159), "origin"))
+        SaveEffectHandle(YDLOC, GetHandleId(GetExpiredTimer()), 227, AddSpecialEffectTarget("war3mapImported\\PlanetF.mdl", LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 192186159), "origin"))
         SaveUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 484243712, CreateUnitAtLoc(LoadPlayerHandle(YDLOC, GetHandleId(GetExpiredTimer()), 603), 'e028', LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 122), LoadReal(YDLOC, GetHandleId(GetExpiredTimer()), 758404681) + 360.00))
         GroupAddUnit(LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 993), LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 484243712))
         SetUnitTimeScale(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 484243712), 100.00)
         SetUnitFlyHeight(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 484243712), 2500.00, 0.00)
         SetUnitScale(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 484243712), 2.25, 2.25, 2.25)
         SetUnitAnimationByIndex(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 484243712), 1)
-        SaveEffectHandle(YDLOC, GetHandleId(GetExpiredTimer()), 37, AddSpecialEffectTarget("war3mapImported\\PlanetD.mdl", LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 484243712), "origin"))
+        SaveEffectHandle(YDLOC, GetHandleId(GetExpiredTimer()), 37, AddSpecialEffectTarget("war3mapImported\\BluePlanetV4.mdl", LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 484243712), "origin"))
         SaveUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 198, CreateUnitAtLoc(LoadPlayerHandle(YDLOC, GetHandleId(GetExpiredTimer()), 603), 'e028', LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 475637349), LoadReal(YDLOC, GetHandleId(GetExpiredTimer()), 758404681) + 180.00))
         GroupAddUnit(LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 993), LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 198))
         SetUnitTimeScale(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 198), 100.00)
         SetUnitFlyHeight(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 198), 2300.00, 0.00)
         SetUnitScale(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 198), 2.25, 2.25, 2.25)
         SetUnitAnimationByIndex(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 198), 1)
-        SaveEffectHandle(YDLOC, GetHandleId(GetExpiredTimer()), 1151, AddSpecialEffectTarget("war3mapImported\\PlanetM.mdl", LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 198), "origin"))
+        SaveEffectHandle(YDLOC, GetHandleId(GetExpiredTimer()), 1151, AddSpecialEffectTarget("war3mapImported\\PlanetG.mdl", LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 198), "origin"))
         RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 500697875))
         RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 876))
         RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 122))
@@ -247,7 +258,12 @@ function trig_SessyoinT___E___GFunc006Func019T()
     if LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 280) == 420
         soundPlay("war3mapImported\\Sessyoin5-4.mp3", GetUnitX(udg_Unitsound), GetUnitY(udg_Unitsound))
         SetUnitTimeScalePercent(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 944545158), 100.00)
-        SetUnitAnimationByIndex(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 944545158), 7)
+        let caster = LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594)
+        let pid = caster.getOwner().getId() 
+        if skinEquipped[pid] == true
+            SetUnitAnimationByIndex(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 944545158), 6)
+        else
+            SetUnitAnimationByIndex(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 944545158), 7)
         SaveUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 743, CreateUnit(LoadPlayerHandle(YDLOC, GetHandleId(GetExpiredTimer()), 603), 'e0P2', GetUnitX(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 944545158)), GetUnitY(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 944545158)), LoadReal(YDLOC, GetHandleId(GetExpiredTimer()), 758404681)))
         GroupAddUnit(LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 993), LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 743))
         SetUnitFlyHeight(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 743), 2700.00, 0.00)
@@ -357,7 +373,12 @@ function trig_SessyoinT___E___GActions()
         PauseUnit(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594), true)
         SetUnitInvulnerable(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594), true)
         SetUnitTimeScalePercent(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594), 175.00)
-        SetUnitAnimationByIndex(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594), 3)
+        let caster = LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594)
+        let pid = caster.getOwner().getId() 
+        if skinEquipped[pid] == true
+            SetUnitAnimationByIndex(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594), 5)
+        else
+            SetUnitAnimationByIndex(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594), 3)
         //DamageEvent.setNextDamageId(DAMAGE_ABILITY_W)
         SaveReal(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 248, (I2R(GetUnitAbilityLevel(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594), 'A0VG')) + 1.00) * 10.00 + I2R(GetHeroInt(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594), true)) * (I2R(GetUnitAbilityLevel(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594), 'A0VG')) + 0.50))
         _ydl_timer = CreateTimer()

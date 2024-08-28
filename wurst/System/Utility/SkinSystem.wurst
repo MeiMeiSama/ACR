@@ -33,10 +33,10 @@ public function registerSkins()
     skins.put('H00H', new Skin(MADOKA_SKIN, true, ""))//Madoka
     skins.put('H02D', new Skin(KIRITO_SKIN, true, ""))//Kirito New
     skins.put('H007', new Skin(SHANAOLD_SKIN, true, ""))//Shana Old
+    skins.put('H03D', new Skin('h04E', true, "")) //Ainz
 
     // Restricted skin
     skins.put('H008', new Skin('h04F', false, "ReusXMarina")) //Misaka old
-    skins.put('H03D', new Skin('h04E', false, "Whippie")) //Ainz
     skins.put('H016', new Skin(RIN_SKIN, false, "Requiem"))//Rin Tohsaka
     skins.put('H03E', new Skin(KIARA_SKIN, false, "Gajeel"))//Kiara
     skins.put('H020', new Skin(SHANA_SKIN, false, "Yami"))//Shana New

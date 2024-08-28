@@ -2,6 +2,9 @@ package EmiyaShirouF_Orig
 import DamageEvent
 import AbilityGlobals
 import main
+import ObjectDefinitions
+import SkinSystem
+
 init
     initTrig_EmiyaShirouF_Orig()
 
@@ -251,6 +254,8 @@ function trig_EmiyaShirouFActions()
     timer _ydl_timer
     integer trigger_ID = LoadInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 865)
     trigger_ID += 3
+    let caster = LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594)
+    let pid = caster.getOwner().getId()
     SaveInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 865, trigger_ID)
     SaveInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 1045, trigger_ID)
     udg_MHtime++
@@ -271,7 +276,10 @@ function trig_EmiyaShirouFActions()
     CreateFogModifierRectBJ(true, LoadPlayerHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 636889825), FOG_OF_WAR_VISIBLE, gg_rct______________073)
     SaveLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1108, GetRectCenter(gg_rct______________074))
     SaveLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 683, GetRectCenter(gg_rct______________075))
-    SaveUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 449, CreateUnitAtLoc(LoadPlayerHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 603), 'e0V3', LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1108), 180.00))
+    if skinEquipped[pid] == true
+        SaveUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 449, CreateUnitAtLoc(LoadPlayerHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 603), SHIROURF_SKIN, LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1108), 180.00))
+    else
+        SaveUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 449, CreateUnitAtLoc(LoadPlayerHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 603), 'e0V3', LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1108), 180.00))
     SaveReal(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 637, GetUnitFacing(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 449)) + 180.00)
     SaveReal(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 309, 800.00)
     SaveReal(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 770, 350.00)

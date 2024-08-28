@@ -15,7 +15,11 @@
 Overall rework on items icons.
 
 ### Fixed
-Nothing Fixed.
+Madoka and Kiara T cinematic planets fixed.
+Melt W doing double damage.
+Kizaru R knockback removed.
+Ainz R stun removed.
+Kiyohime STR E should now be bug free.
 
 ### Deleted
 Nothing Deleted.

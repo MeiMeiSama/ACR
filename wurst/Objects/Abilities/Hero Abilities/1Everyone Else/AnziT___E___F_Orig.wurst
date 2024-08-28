@@ -4,6 +4,8 @@ import AbilityGlobals
 import main
 import ClosureForGroups
 import ACR_Slow
+import ObjectDefinitions
+import SkinSystem
 
 unit ainz
 boolean ainzFbool = false
@@ -39,7 +41,12 @@ function trig_AnziT___E___FFunc004Func001Func005T()
             DoNothing()
         else
             SetUnitPositionLocFacingBJ(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 683), GetUnitFacing(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594)))
-        SaveUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 843857024, CreateUnitAtLoc(LoadPlayerHandle(YDLOC, GetHandleId(GetExpiredTimer()), 603), 'e0YX', LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 1108), GetUnitFacing(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594))))
+        let caster = LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594)
+        let pid = caster.getOwner().getId()
+        if skinEquipped[pid] == true
+            SaveUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 843857024, CreateUnitAtLoc(LoadPlayerHandle(YDLOC, GetHandleId(GetExpiredTimer()), 603), AINZE_SKIN, LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 1108), GetUnitFacing(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594))))
+        else
+            SaveUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 843857024, CreateUnitAtLoc(LoadPlayerHandle(YDLOC, GetHandleId(GetExpiredTimer()), 603), 'e0YX', LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 1108), GetUnitFacing(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594))))
         SetUnitVertexColorBJ(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 843857024), 100, 100, 100, 70.00)
         SetUnitAnimationByIndex(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 843857024), 1)
         SetUnitTimeScalePercent(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 843857024), 500.00)

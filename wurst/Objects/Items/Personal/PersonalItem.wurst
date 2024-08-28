@@ -10,6 +10,7 @@ import AbilityGlobals
 import Aizen_F
 import ACR_TagSystem
 import Translate_F
+import SkinSystem
 // Personal items for the heroes that grants a new ability (in most cases?)
 
 init
@@ -798,7 +799,12 @@ function trig_NewSPActions()
             GetTriggerUnit().hideAbility(SPELL_F[id], false)
             SPELL_F[id].removeTagHidden()
     else if GetUnitTypeId(GetTriggerUnit()) == 'H008' and yDWEUnitHasItemOfTypeBJNull(GetTriggerUnit(), 'I006') == false //Misaka Old
-        soundPlay("war3mapImported\\MisakiSP.mp3", GetUnitX(udg_soundplayunit[7]), GetUnitY(udg_soundplayunit[7]))
+        let caster = GetTriggerUnit()
+        let pid = caster.getOwner().getId()
+        if skinEquipped[pid] == true
+            soundPlay("war3mapImported\\xpjok.mp3", 0, 0)
+        else
+            soundPlay("war3mapImported\\MisakiSP.mp3", GetUnitX(udg_soundplayunit[7]), GetUnitY(udg_soundplayunit[7]))
         RemoveItem(GetManipulatedItem())
         SaveLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * ydl_localvar_step, 1108, GetUnitLoc(GetTriggerUnit()))
         SaveUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * ydl_localvar_step, 36, CreateUnitAtLoc(GetOwningPlayer(GetTriggerUnit()), 'e03X', LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * ydl_localvar_step, 1108), GetRandomDirectionDeg()))
