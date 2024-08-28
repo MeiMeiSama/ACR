@@ -3,6 +3,9 @@ import DamageEvent
 import AbilityGlobals
 import main
 import MusicPlaylist
+import ObjectDefinitions
+import SkinSystem
+
 init
     initTrig_Nanaya23()
 
@@ -237,7 +240,12 @@ function trig_Nanaya23Func062Func004Func025T()
             else if LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 1109) == 9
                 SetUnitAnimationByIndex(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 198), 10)
                 SaveInteger(YDLOC, GetHandleId(GetExpiredTimer()), 1109, 0)
-            SaveUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 168190597, CreateUnitAtLoc(LoadPlayerHandle(YDLOC, GetHandleId(GetExpiredTimer()), 603), 'e0JX', LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 601), 180.00))
+            let caster = LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594)
+            let pid = caster.getOwner().getId()
+            if skinEquipped[pid] == true
+                SaveUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 168190597, CreateUnitAtLoc(LoadPlayerHandle(YDLOC, GetHandleId(GetExpiredTimer()), 603), NANAYAWRTF_SKIN, LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 601), 180.00))
+            else
+                SaveUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 168190597, CreateUnitAtLoc(LoadPlayerHandle(YDLOC, GetHandleId(GetExpiredTimer()), 603), 'e0JX', LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 601), 180.00))
             GroupAddUnit(LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 655), LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 168190597))
             SetUnitTimeScalePercent(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 168190597), 1000.00)
             SetUnitFlyHeight(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 168190597), 3500.00, 0.00)
@@ -381,7 +389,12 @@ function trig_Nanaya23Func062Func004Func025T()
         GroupAddUnit(LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 655), LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 509))
         GroupAddUnit(LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 96898301), LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 509))
         SetUnitFlyHeight(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 509), 3500.00, 0.00)
-        SaveUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 332, CreateUnitAtLoc(LoadPlayerHandle(YDLOC, GetHandleId(GetExpiredTimer()), 603), 'e0JX', LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 596788346), 180.00))
+        let caster = LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594)
+        let pid = caster.getOwner().getId()
+        if skinEquipped[pid] == true
+            SaveUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 332, CreateUnitAtLoc(LoadPlayerHandle(YDLOC, GetHandleId(GetExpiredTimer()), 603), NANAYAWRTF_SKIN, LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 596788346), 180.00))
+        else
+            SaveUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 332, CreateUnitAtLoc(LoadPlayerHandle(YDLOC, GetHandleId(GetExpiredTimer()), 603), 'e0JX', LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 596788346), 180.00))
         GroupAddUnit(LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 655), LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 332))
         SetUnitFlyHeight(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 332), 3500.00, 0.00)
         GroupAddUnit(LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 96898301), LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 332))
@@ -474,7 +487,12 @@ function trig_Nanaya23Func062T()
         GroupAddUnit(LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 655), LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 192186159))
         GroupAddUnit(LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 96898301), LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 192186159))
         SetUnitFlyHeight(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 192186159), 3500.00, 0.00)
-        SaveUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 484243712, CreateUnitAtLoc(LoadPlayerHandle(YDLOC, GetHandleId(GetExpiredTimer()), 603), 'e0JX', LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 601), 360.00))
+        let caster = LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594)
+        let pid = caster.getOwner().getId()
+        if skinEquipped[pid] == true
+            SaveUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 484243712, CreateUnitAtLoc(LoadPlayerHandle(YDLOC, GetHandleId(GetExpiredTimer()), 603), NANAYAWRTF_SKIN, LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 601), 360.00))
+        else
+            SaveUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 484243712, CreateUnitAtLoc(LoadPlayerHandle(YDLOC, GetHandleId(GetExpiredTimer()), 603), 'e0JX', LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 601), 360.00))
         GroupAddUnit(LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 655), LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 484243712))
         GroupAddUnit(LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 96898301), LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 484243712))
         SetUnitFlyHeight(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 484243712), 3500.00, 0.00)
@@ -609,7 +627,12 @@ function trig_Nanaya23Actions()
     SetUnitFlyHeight(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 192186159), 3500.00, 0.00)
     SetUnitAnimationByIndex(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 192186159), 18)
     GroupAddUnit(LoadGroupHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 655), LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 192186159))
-    SaveUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 484243712, CreateUnitAtLoc(LoadPlayerHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 603), 'e0JX', LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 601), 360.00))
+    let caster = LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594)
+    let pid = caster.getOwner().getId()
+    if skinEquipped[pid] == true
+        SaveUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 484243712, CreateUnitAtLoc(LoadPlayerHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 603), NANAYAWRTF_SKIN, LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 601), 360.00))
+    else
+        SaveUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 484243712, CreateUnitAtLoc(LoadPlayerHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 603), 'e0JX', LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 601), 360.00))
     GroupAddUnit(LoadGroupHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 655), LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 484243712))
     SetUnitVertexColorBJ(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 484243712), 100, 100, 100, 100.00)
     SetUnitFlyHeight(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 484243712), 3500.00, 0.00)
