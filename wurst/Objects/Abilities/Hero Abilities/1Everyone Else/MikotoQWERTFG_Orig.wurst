@@ -9,10 +9,19 @@ import SkinSystem
 import ACR_SoundCreation
 
 int array misakaOldFCount
-constant biribiri = acrCreateSound("pjrbgm2.mp3")
+constant biribiri = acrCreateSound("war3mapImported\\pjrbgm2.mp3")
+constant biri = acrCreateSound("war3mapImported\\xpjr2.mp3")
+constant biriri = acrCreateSound("war3mapImported\\pjjump.mp3")
+constant biriririri = acrCreateSound("war3mapImported\\xpjr1.mp3")
+timer mktTimer
 
 init
     initTrig_MikotoQWERTFG_Orig()
+
+function mkt()
+    DisplayCineFilter(false)
+    FlushChildHashtable(YDLOC, GetHandleId(GetExpiredTimer()))
+    DestroyTimer(GetExpiredTimer())
 
 function trig_MikotoQWERTFGConditions() returns boolean
     return GetSpellAbilityId() == 'A012' or GetSpellAbilityId() == 'A013' or GetSpellAbilityId() == 'A00Z' or GetSpellAbilityId() == 'A02T' or GetSpellAbilityId() == 'A011' or GetSpellAbilityId() == 'A05L'
@@ -421,13 +430,22 @@ function trig_MikotoQWERTFGActions()
     SaveUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 549, GetSpellTargetUnit())
     SavePlayerHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 603, GetOwningPlayer(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594)))
     if GetSpellAbilityId() == 'A012'
-        let caster = LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594)
-        let pid = caster.getOwner().getId()
-        let playerr = caster.getOwner() 
+        let caster = LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594)
+        let victim = LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 549)
+        let playerr = caster.getOwner()
+        let playerrr = victim.getOwner()
+        let pid = caster.getOwner().getId() 
         if skinEquipped[pid] == true
             PlaySoundBJ(gg_snd_railgun1)
-            if playerr == GetLocalPlayer()
-                biribiri.play() 
+            if GetLocalPlayer() == playerr
+                biribiri.play()
+                CinematicFilterGenericBJ(5., BLEND_MODE_BLEND, "war3mapImported\\xpjtst.blp", 100, 100., 100, .0, 100., 100., 100., 30.)
+            if GetLocalPlayer() == playerrr    
+                CinematicFilterGenericBJ(5., BLEND_MODE_BLEND, "war3mapImported\\xpjtst.blp", 100, 100., 100, .0, 100., 100., 100., 30.)   
+            mktTimer = CreateTimer()
+            TimerStart(mktTimer, 3.5, false, function mkt)
+            FlushChildHashtable(YDLOC, GetHandleId(GetExpiredTimer()))
+            DestroyTimer(GetExpiredTimer())
         else
             PlaySoundBJ(gg_snd_railgun1)
         SaveLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1108, GetUnitLoc(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594)))
@@ -495,7 +513,23 @@ function trig_MikotoQWERTFGActions()
         SaveInteger(YDLOC, GetHandleId(_ydl_timer), 73782792, LoadInteger(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 73782792))
         TimerStart(_ydl_timer, 0.003, true, function trig_MikotoQWERTFGFunc005Func023T)
     else if GetSpellAbilityId() == 'A013'
-        PlaySoundBJ(gg_snd_mikoto4_1)
+        let caster = LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594)
+        let victim = LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 549)
+        let playerr = caster.getOwner()
+        let playerrr = victim.getOwner()
+        let pid = caster.getOwner().getId() 
+        if skinEquipped[pid] == true
+            PlaySoundBJ(biri)
+            if GetLocalPlayer() == playerr
+                CinematicFilterGenericBJ(5., BLEND_MODE_BLEND, "war3mapImported\\xpjfst.blp", 100, 100., 100, .0, 100., 100., 100., 30.)
+            if GetLocalPlayer() == playerrr    
+                CinematicFilterGenericBJ(5., BLEND_MODE_BLEND, "war3mapImported\\xpjfst.blp", 100, 100., 100, .0, 100., 100., 100., 30.)   
+            mktTimer = CreateTimer()
+            TimerStart(mktTimer, 2.5, false, function mkt)
+            FlushChildHashtable(YDLOC, GetHandleId(GetExpiredTimer()))
+            DestroyTimer(GetExpiredTimer())
+        else
+            PlaySoundBJ(gg_snd_mikoto4_1)
         SaveGroupHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 993, CreateGroup())
         SaveInteger(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 858, 0)
         SaveInteger(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 943, 0)
@@ -562,7 +596,12 @@ function trig_MikotoQWERTFGActions()
         RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1108))
         RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 683))
     else if GetSpellAbilityId() == 'A02T'
-        PlaySoundBJ(gg_snd_mikoto2)
+        let caster = LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594)
+        let pid = caster.getOwner().getId() 
+        if skinEquipped[pid] == true
+            PlaySoundBJ(biriri) 
+        else
+            PlaySoundBJ(gg_snd_mikoto2)
         SaveLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1108, GetUnitLoc(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594)))
         SaveUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 221, CreateUnitAtLoc(LoadPlayerHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 603), 'e028', LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1108), GetRandomDirectionDeg()))
         SaveLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 48, GetUnitLoc(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 221)))
@@ -651,9 +690,24 @@ function trig_MikotoQWERTFGActions()
         SaveInteger(YDLOC, GetHandleId(_ydl_timer), 858, LoadInteger(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 858))
         TimerStart(_ydl_timer, 0.01, true, function trig_MikotoQWERTFGFunc005Func001Func001Func001Func001Func021T)
     else if GetSpellAbilityId() == 'A05L'
-        PlaySoundBJ(gg_snd_mikoto6)
-        let caster = LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594)
+        let caster = LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594)
+        let victim = LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 549)
+        let playerr = caster.getOwner()
+        let playerrr = victim.getOwner()
         let pid = caster.getOwner().getId()
+        if skinEquipped[pid] == true
+            PlaySoundBJ(biriririri)
+            if GetLocalPlayer() == playerr
+                CinematicFilterGenericBJ(5., BLEND_MODE_BLEND, "war3mapImported\\pjswst.blp", 100, 100., 100, .0, 100., 100., 100., 30.)
+            if GetLocalPlayer() == playerrr    
+                CinematicFilterGenericBJ(5., BLEND_MODE_BLEND, "war3mapImported\\pjswst.blp", 100, 100., 100, .0, 100., 100., 100., 30.)   
+            mktTimer = CreateTimer()
+            TimerStart(mktTimer, 2., false, function mkt)
+            FlushChildHashtable(YDLOC, GetHandleId(GetExpiredTimer()))
+            DestroyTimer(GetExpiredTimer())
+
+        else
+            PlaySoundBJ(gg_snd_mikoto6)
         SaveLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1108, GetSpellTargetLoc())
         SaveLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 683, GetUnitLoc(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594)))
         SaveInteger(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 280, 0)
