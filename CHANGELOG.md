@@ -20,6 +20,8 @@ Melt W doing double damage.
 Kizaru R knockback removed.
 Kiyohime STR E should now be bug free.
 Dante model.
+Akame and Jack F to Max MS. (not yet)
+Sting, Rogue and Rentarou G fixed.
 
 ### Deleted
 Nothing Deleted.

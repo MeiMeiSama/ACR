@@ -439,9 +439,9 @@ function trig_MikotoQWERTFGActions()
             PlaySoundBJ(gg_snd_railgun1)
             if GetLocalPlayer() == playerr
                 biribiri.play()
-                CinematicFilterGenericBJ(5., BLEND_MODE_BLEND, "war3mapImported\\xpjtst.blp", 100, 100., 100, .0, 100., 100., 100., 30.)
+                CinematicFilterGenericBJ(5., BLEND_MODE_BLEND, "war3mapImported\\xpjtst.blp", 100, 100., 100, 30., 100., 100., 100., 30.)
             if GetLocalPlayer() == playerrr    
-                CinematicFilterGenericBJ(5., BLEND_MODE_BLEND, "war3mapImported\\xpjtst.blp", 100, 100., 100, .0, 100., 100., 100., 30.)   
+                CinematicFilterGenericBJ(5., BLEND_MODE_BLEND, "war3mapImported\\xpjtst.blp", 100, 100., 100, 30., 100., 100., 100., 30.)   
             mktTimer = CreateTimer()
             TimerStart(mktTimer, 3.5, false, function mkt)
             FlushChildHashtable(YDLOC, GetHandleId(GetExpiredTimer()))
@@ -521,9 +521,9 @@ function trig_MikotoQWERTFGActions()
         if skinEquipped[pid] == true
             PlaySoundBJ(biri)
             if GetLocalPlayer() == playerr
-                CinematicFilterGenericBJ(5., BLEND_MODE_BLEND, "war3mapImported\\xpjfst.blp", 100, 100., 100, .0, 100., 100., 100., 30.)
+                CinematicFilterGenericBJ(5., BLEND_MODE_BLEND, "war3mapImported\\xpjfst.blp", 100, 100., 100, 30., 100., 100., 100., 30.)
             if GetLocalPlayer() == playerrr    
-                CinematicFilterGenericBJ(5., BLEND_MODE_BLEND, "war3mapImported\\xpjfst.blp", 100, 100., 100, .0, 100., 100., 100., 30.)   
+                CinematicFilterGenericBJ(5., BLEND_MODE_BLEND, "war3mapImported\\xpjfst.blp", 100, 100., 100, 30., 100., 100., 100., 30.)   
             mktTimer = CreateTimer()
             TimerStart(mktTimer, 2.5, false, function mkt)
             FlushChildHashtable(YDLOC, GetHandleId(GetExpiredTimer()))
@@ -698,9 +698,9 @@ function trig_MikotoQWERTFGActions()
         if skinEquipped[pid] == true
             PlaySoundBJ(biriririri)
             if GetLocalPlayer() == playerr
-                CinematicFilterGenericBJ(5., BLEND_MODE_BLEND, "war3mapImported\\pjswst.blp", 100, 100., 100, .0, 100., 100., 100., 30.)
+                CinematicFilterGenericBJ(5., BLEND_MODE_BLEND, "war3mapImported\\pjswst.blp", 100, 100., 100, 30., 100., 100., 100., 30.)
             if GetLocalPlayer() == playerrr    
-                CinematicFilterGenericBJ(5., BLEND_MODE_BLEND, "war3mapImported\\pjswst.blp", 100, 100., 100, .0, 100., 100., 100., 30.)   
+                CinematicFilterGenericBJ(5., BLEND_MODE_BLEND, "war3mapImported\\pjswst.blp", 100, 100., 100, 30., 100., 100., 100., 30.)   
             mktTimer = CreateTimer()
             TimerStart(mktTimer, 2., false, function mkt)
             FlushChildHashtable(YDLOC, GetHandleId(GetExpiredTimer()))

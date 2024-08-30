@@ -1,0 +1,27 @@
+package MbossSpell1
+
+import ACR_SoundCreation
+import ClosureEvents
+
+constant boss1 = 'O008'
+constant boss2 = 'O009'
+constant boss3 = 'O00A'
+constant snd1 = acrCreateSound("war3mapImported\\xxx.mp3")
+constant sfx1 = "Abilities\\Spells\\Other\\Volcano\\VolcanoDeath.mdl"
+constant real damage1 = 800
+constant real radius1 = 600
+vec2 boss
+
+init
+    miniBoss1()
+    
+
+function miniBoss1()   
+    EventListener.add(EVENT_UNIT_DAMAGED) ->
+        if BlzGetEventDamageTarget().getTypeId() == boss1 or BlzGetEventDamageTarget().getTypeId() == boss2 or BlzGetEventDamageTarget().getTypeId() == boss3 == true
+            let bossu = GetTriggerUnit()
+            boss = vec2(GetUnitX(bossu), GetUnitY(bossu))
+            for victim in bossu.GetUnitsInRange(radius1)
+                if victim.isAlive() and victim.isEnemy(bossu)
+                    bossu.damageTarget(victim, damage1, ATTACK_TYPE_MAGIC) 
+           
