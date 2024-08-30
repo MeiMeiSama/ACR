@@ -3,31 +3,49 @@ package MbossSpell1
 import ACR_SoundCreation
 import ClosureEvents
 import ClosureForGroups
+import TimerUtils
 
 constant snd1 = acrCreateSound("war3mapImported\\xxx.mp3")
-int spellCount = 0
-effect effect1
-effect effect2
+int array spellCount
+effect array effect1
+effect array effect2
 
 init
     miniBoss1()
     
 function miniBoss1()   
     EventListener.add(EVENT_UNIT_DAMAGED) ->
-        if BlzGetEventDamageTarget().getTypeId() == 'O008' or BlzGetEventDamageTarget().getTypeId() == 'O009' or BlzGetEventDamageTarget().getTypeId() == 'O00A' == true and BlzGetEventDamageTarget().getHP() <= 2000 == true and spellCount == 0 //basically want it to fire only when a set hp value is reached
-            snd1.play()
-            let bossu = GetTriggerUnit()
-            forUnitsInRange(bossu.getPos(), 600) (unit victim) ->
-                if victim.isAlive() and victim.isEnemyOf(bossu)
-                    bossu.damageTarget(victim, 800, ATTACK_TYPE_MAGIC)
-                    effect1 = addEffect("war3mapImported\\shuimian1.mdx", bossu.getPos())
-                    effect2 = addEffect("war3mapImported\\Water Spout.mdx", victim.getPos()) ///ideally want this on a random pos x2/3, i think as it is will just spawn on each enemy unit hit
-                    spellCount = 200 ///think thats how it works? on 0 it gets cd back???
-                    CreateTimer()..startPeriodic(1.5, function miniBoss1End)// i assume it destroys the effects on the next part??? after this 1.5 timer
+        if BlzGetEventDamageTarget().getTypeId() == 'O008' or BlzGetEventDamageTarget().getTypeId() == 'O009' or BlzGetEventDamageTarget().getTypeId() == 'O00A'
+            if BlzGetEventDamageTarget().getTypeId() == 'O008'
+                if BlzGetEventDamageTarget().getUserData() != 997
+                    BlzGetEventDamageTarget().setUserData(997)
+            if BlzGetEventDamageTarget().getTypeId() == 'O009'
+                if BlzGetEventDamageTarget().getUserData() != 996
+                    BlzGetEventDamageTarget().setUserData(996)
+            if BlzGetEventDamageTarget().getTypeId() == 'O00A'
+                if BlzGetEventDamageTarget().getUserData() != 995
+                    BlzGetEventDamageTarget().setUserData(995)                                        
+            let id = BlzGetEventDamageTarget().getUserData()
+            if BlzGetEventDamageTarget().getHP() <= 2000 and spellCount[id] >= 0 //basically want it to fire only when a set hp value is reached
+                snd1.play()
+                let bossu = GetTriggerUnit()
+                forUnitsInRange(bossu.getPos(), 600) (unit victim) ->
+                    if victim.isAlive() and victim.isEnemyOf(bossu)
+                        bossu.damageTarget(victim, 800, ATTACK_TYPE_MAGIC)
+                        effect1[id] = addEffect("war3mapImported\\shuimian1.mdx", bossu.getPos())
+                        effect2[id] = addEffect("war3mapImported\\Water Spout.mdx", victim.getPos()) ///ideally want this on a random pos x2/3, i think as it is will just spawn on each enemy unit hit
+                        spellCount[id] = 200 ///think thats how it works? on 0 it gets cd back???
+                        CreateTimer()..startPeriodic(0.1, function miniBoss1End)..setData(id)// this will lower spellCount by 1 every 0.1 second, making the cooldown 20 seconds
+                        CreateTimer()..start(1.5, function miniBossFlush)..setData(id)// its better to create another timer just to destroy the effects
+
 
 function miniBoss1End()
-    spellCount--
-    effect1.destr()
-    effect2.destr() 
-    if spellCount == 0
-        GetExpiredTimer().destr()                      
+    let id = GetExpiredTimer().getData()
+    spellCount[id]--
+    if spellCount[id] >= 0       
+        GetExpiredTimer().destr()             
+
+function miniBossFlush()
+    let id = GetExpiredTimer().getData()
+    effect1[id].destr()
+    effect2[id].destr()     
