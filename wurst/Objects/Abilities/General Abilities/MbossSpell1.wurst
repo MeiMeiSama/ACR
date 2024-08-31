@@ -26,26 +26,30 @@ function miniBoss1()
                 if BlzGetEventDamageTarget().getUserData() != 995
                     BlzGetEventDamageTarget().setUserData(995)                                        
             let id = BlzGetEventDamageTarget().getUserData()
-            if BlzGetEventDamageTarget().getHP() <= 2000 and spellCount[id] >= 0 //basically want it to fire only when a set hp value is reached
+            if BlzGetEventDamageTarget().getHP() <= 2000 and spellCount[id] <= 0 
                 snd1.play()
                 let bossu = GetTriggerUnit()
                 forUnitsInRange(bossu.getPos(), 600) (unit victim) ->
                     if victim.isAlive() and victim.isEnemyOf(bossu)
                         bossu.damageTarget(victim, 800, ATTACK_TYPE_MAGIC)
                         effect1[id] = addEffect("war3mapImported\\shuimian1.mdx", bossu.getPos())
-                        effect2[id] = addEffect("war3mapImported\\Water Spout.mdx", victim.getPos()) ///ideally want this on a random pos x2/3, i think as it is will just spawn on each enemy unit hit
-                        spellCount[id] = 200 ///think thats how it works? on 0 it gets cd back???
-                        CreateTimer()..startPeriodic(0.1, function miniBoss1End)..setData(id)// this will lower spellCount by 1 every 0.1 second, making the cooldown 20 seconds
-                        CreateTimer()..start(1.5, function miniBossFlush)..setData(id)// its better to create another timer just to destroy the effects
+                        ..setScale(0.50)
+                        effect2[id] = addEffect("war3mapImported\\Water Spout.mdx", victim.getPos())
+                        ..setScale(0.60)
+                        spellCount[id] = 200 
+                        CreateTimer()..startPeriodic(0.1, function miniBoss1End)..setData(id)
+                        CreateTimer()..start(1.5, function miniBossFlush)..setData(id)
 
 
 function miniBoss1End()
     let id = GetExpiredTimer().getData()
     spellCount[id]--
-    if spellCount[id] >= 0       
+    if spellCount[id] <= 0       
         GetExpiredTimer().destr()             
 
 function miniBossFlush()
     let id = GetExpiredTimer().getData()
     effect1[id].destr()
-    effect2[id].destr()     
+    effect2[id].destr()
+
+//currently both effects "stays"(doesnt get destroyed) if more than unit is hit.     
