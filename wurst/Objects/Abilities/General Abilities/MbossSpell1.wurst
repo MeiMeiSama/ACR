@@ -16,10 +16,10 @@ init
 function miniBoss1()   
     EventListener.add(EVENT_UNIT_DAMAGED) ->
         if BlzGetEventDamageTarget().getTypeId() == 'O008' or BlzGetEventDamageTarget().getTypeId() == 'O009' or BlzGetEventDamageTarget().getTypeId() == 'O00A'                                        
-            let id = BlzGetEventDamageTarget().getUserData()
-            if BlzGetEventDamageTarget().getHP() <= 2000 and spellCount[id] <= 0
-                PlaySoundOnUnitBJ(snd1, 100, GetTriggerUnit())
-                let bossu = GetTriggerUnit()
+            let bossu = BlzGetEventDamageTarget()
+            let id = bossu.getUserData()
+            if bossu.getHP() <= 2000 and spellCount[id] <= 0
+                PlaySoundOnUnitBJ(snd1, 100, bossu)
                 SetUnitAnimation(bossu, "Spell 2-1")
                 effect1[id] = addEffect("war3mapImported\\shuimian1.mdx", bossu.getPos())
                 ..setScale(0.50)
