@@ -17,22 +17,22 @@ function miniBoss1()
     EventListener.add(EVENT_UNIT_DAMAGED) ->
         if BlzGetEventDamageTarget().getTypeId() == 'O008' or BlzGetEventDamageTarget().getTypeId() == 'O009' or BlzGetEventDamageTarget().getTypeId() == 'O00A'                                        
             let id = BlzGetEventDamageTarget().getUserData()
-            if BlzGetEventDamageTarget().getHP() <= 2000 and spellCount[id] <= 0 
+            if BlzGetEventDamageTarget().getHP() <= 2000 and spellCount[id] <= 0
                 PlaySoundOnUnitBJ(snd1, 100, GetTriggerUnit())
                 let bossu = GetTriggerUnit()
                 SetUnitAnimation(bossu, "Spell 2-1")
                 effect1[id] = addEffect("war3mapImported\\shuimian1.mdx", bossu.getPos())
                 ..setScale(0.50)
                 ..setHeight(1000)
+                spellCount[id] = 200
+                CreateTimer()..startPeriodic(0.1, function miniBoss1End)..setData(id)  
+                CreateTimer()..start(1.2, function miniBossFlush)..setData(id)              
                 forUnitsInRange(bossu.getPos(), 600) (unit victim) ->
                     if victim.isAlive() and victim.isEnemyOf(bossu)
                         let pid = victim.getUserData()
                         bossu.damageTarget(victim, 800, ATTACK_TYPE_MAGIC)
                         effect2[pid] = addEffect("war3mapImported\\Water Spout.mdx", victim.getPos())
                         ..setScale(0.60)
-                        spellCount[id] = 200
-                        CreateTimer()..startPeriodic(0.1, function miniBoss1End)..setData(id)
-                        CreateTimer()..start(1.2, function miniBossFlush)..setData(id)
                         CreateTimer()..start(1.2, function miniBossFlush2)..setData(pid)
                         
 function miniBoss1End()
