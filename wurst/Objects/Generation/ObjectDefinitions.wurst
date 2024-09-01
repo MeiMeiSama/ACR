@@ -353,4 +353,5 @@ public let KIARAWT_SKIN = compiletime(UNIT_ID_GEN.next())
 public let AINZE_SKIN = compiletime(UNIT_ID_GEN.next())
 
 ///////////////////// Dummy for TeamBuffs/////////////////////////
+public let DUMMY_AMANO = compiletime(UNIT_ID_GEN.next())
 public let DUMMY_BUFFS = compiletime(UNIT_ID_GEN.next())
