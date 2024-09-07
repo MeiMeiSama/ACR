@@ -1423,7 +1423,13 @@ import AbilityGlobals
     ..setTooltipNormalExtended(1, "Cloud Ability Dummy|r")   
 
    // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ ITEM STAT ABILITIES ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
+    new AbilityDefinitionMaxLifeBonusGreater(HEALTH_ABILITY_14)
+    ..setItemAbility(false)
+    ..setMaxLifeGained(1, 14)
+    ..setName("HP bonus")
+    ..setTooltipNormal(1, "Gives 14 hp")
+    ..setTooltipNormalExtended(1, "Gives 14 hp")
+    ..setIconNormal("ReplaceableTextures\\CommandButtons\\BTNArcobalenoThunder.blp")
 
     new AbilityDefinitionMaxLifeBonusGreater(HEALTH_ABILITY_75)
     ..setItemAbility(false)

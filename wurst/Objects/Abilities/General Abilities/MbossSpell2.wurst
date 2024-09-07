@@ -57,8 +57,17 @@ init
 function miniBoss2()   
     EventListener.add(EVENT_UNIT_DAMAGED) ->
         if BlzGetEventDamageTarget().getTypeId() == 'O008' or BlzGetEventDamageTarget().getTypeId() == 'O009' or BlzGetEventDamageTarget().getTypeId() == 'O00A'        
-            let bossu = BlzGetEventDamageTarget()                                
-            let id = bossu.getUserData()  
+            if BlzGetEventDamageTarget().getTypeId() == 'O008'
+                if BlzGetEventDamageTarget().getUserData() != 997
+                    BlzGetEventDamageTarget().setUserData(997)
+            if BlzGetEventDamageTarget().getTypeId() == 'O009'
+                if BlzGetEventDamageTarget().getUserData() != 996
+                    BlzGetEventDamageTarget().setUserData(996)
+            if BlzGetEventDamageTarget().getTypeId() == 'O00A'
+                if BlzGetEventDamageTarget().getUserData() != 995
+                    BlzGetEventDamageTarget().setUserData(995)
+            let id = BlzGetEventDamageTarget().getUserData()
+            let bossu = BlzGetEventDamageTarget()                                 
             if GetEventDamageSource().isType(UNIT_TYPE_HERO) and spellCount[id] <= 0
                 spellCount[id] = 100    
                 PlaySoundOnUnitBJ(snd2, 100, GetTriggerUnit())
@@ -67,7 +76,7 @@ function miniBoss2()
                 spellvictim[id] = victim
                 spellcasterpos[id] = bossu.getPos()
                 spellvictimpos[id] = victim.getPos()
-                SetUnitAnimation(bossu, "Spell 1-1")
+                SetUnitAnimation(spellcaster[id], "Spell 1-1")
                 dummyUnit = createUnit(DUMMY_AMANO, spellcasterpos[id])
                 SetUnitScale(dummyUnit,2.5,2.5,2.5)
                 SetUnitTimeScalePercent(dummyUnit,80)
@@ -81,14 +90,12 @@ function dummyDashStart()
     spellvictimpos[id] = spellvictim[id].getPos()
     if dummyUnit.getPos().distanceTo(spellvictimpos[id]) <= 100
         spellcaster[id].damageTarget(spellvictim[id], 700)
-        SetUnitAnimation(spellcaster[id], "Stand") 
         dummyUnit.remove()
         GetExpiredTimer().destr()
     else
         dummyUnit.setFacing(dummyUnit.getPos().angleTo(spellvictimpos[id]))
         dummyUnit.setPos(dummyUnit.getPos().polarOffset(spellcasterpos[id].angleTo(spellvictimpos[id]), 100))      
 
- 
 function miniBoss2End()
     let id = GetExpiredTimer().getData()
     spellCount[id]--

@@ -95,6 +95,7 @@ public constant STAT_SWAP_ABILITY_INT = compiletime(ABIL_ID_GEN.next())
 
 
 // ------------------------------ Item Stat Abilities ------------------------------
+public constant HEALTH_ABILITY_14 = compiletime(ABIL_ID_GEN.next())
 public constant HEALTH_ABILITY_75 = compiletime(ABIL_ID_GEN.next())
 public constant HEALTH_ABILITY_150 = compiletime(ABIL_ID_GEN.next())
 public constant HEALTH_ABILITY_225 = compiletime(ABIL_ID_GEN.next())
@@ -159,6 +160,7 @@ public let RANDOM_BUTTON = compiletime(UNIT_ID_GEN.next())
 public let VONGOLA_SHOP = compiletime(UNIT_ID_GEN.next())
 public let ARCOBALENO_SHOP = compiletime(UNIT_ID_GEN.next())
 public let NEW_ITEM_SHOP = compiletime(UNIT_ID_GEN.next())
+public let ACCESSORY_SHOP = compiletime(UNIT_ID_GEN.next())
 
 // ------------------------------ Ring Buffs ------------------------------
 public constant CLOUD_VONGOLA_ARCO_ANTIMAGIC_BUFF = compiletime(BUFF_ID_GEN.next())

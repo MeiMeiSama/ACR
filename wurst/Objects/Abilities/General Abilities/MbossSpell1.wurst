@@ -16,14 +16,22 @@ init
 function miniBoss1()   
     EventListener.add(EVENT_UNIT_DAMAGED) ->
         if BlzGetEventDamageTarget().getTypeId() == 'O008' or BlzGetEventDamageTarget().getTypeId() == 'O009' or BlzGetEventDamageTarget().getTypeId() == 'O00A'                                        
-            let bossu = BlzGetEventDamageTarget()
-            let id = bossu.getUserData()
-            if bossu.getHP() <= 2000 and spellCount[id] <= 0
+            if BlzGetEventDamageTarget().getTypeId() == 'O008'
+                if BlzGetEventDamageTarget().getUserData() != 997
+                    BlzGetEventDamageTarget().setUserData(997)
+            if BlzGetEventDamageTarget().getTypeId() == 'O009'
+                if BlzGetEventDamageTarget().getUserData() != 996
+                    BlzGetEventDamageTarget().setUserData(996)
+            if BlzGetEventDamageTarget().getTypeId() == 'O00A'
+                if BlzGetEventDamageTarget().getUserData() != 995
+                    BlzGetEventDamageTarget().setUserData(995)
+            let id = BlzGetEventDamageTarget().getUserData()
+            if BlzGetEventDamageTarget().getHP() <= 2000 and spellCount[id] <= 0
+                let bossu = BlzGetEventDamageTarget()
                 PlaySoundOnUnitBJ(snd1, 100, bossu)
                 SetUnitAnimation(bossu, "Spell 2-1")
                 effect1[id] = addEffect("war3mapImported\\shuimian1.mdx", bossu.getPos())
                 ..setScale(0.50)
-                ..setHeight(1000)
                 spellCount[id] = 200
                 CreateTimer()..startPeriodic(0.1, function miniBoss1End)..setData(id)  
                 CreateTimer()..start(1.2, function miniBossFlush)..setData(id)              
@@ -32,13 +40,12 @@ function miniBoss1()
                         let pid = victim.getUserData()
                         bossu.damageTarget(victim, 800, ATTACK_TYPE_MAGIC)
                         effect2[pid] = addEffect("war3mapImported\\Water Spout.mdx", victim.getPos())
-                        ..setScale(0.60)
+                        ..setScale(0.70)
                         CreateTimer()..start(1.2, function miniBossFlush2)..setData(pid)
                         
 function miniBoss1End()
     let id = GetExpiredTimer().getData()
     spellCount[id]--
-    print(spellCount[id])
     if spellCount[id] <= 0       
         GetExpiredTimer().destr()             
 

@@ -1,7 +1,7 @@
 # ━━━━━━━━━ Anime Carnage Reforged v2.1.0 ━━━━━━━━━ #
 
 ### Added
-1. Added a new Terrain Area, reachable through the teleporters in the middle lane.
+1. Added a new Terrain Area, reachable through the teleporters in the middle lane.(WIP)
 2. Added brand new items.
 3. Added skin system.
 4. Added new side mini-bosses for team buffs.
@@ -20,7 +20,7 @@ Melt W doing double damage.
 Kizaru R knockback removed.
 Kiyohime STR E should now be bug free.
 Dante model.
-Akame and Jack F to Max MS. (not yet)
+Akame and Jack F to Max MS.
 Sting, Rogue and Rentarou G fixed.
 
 ### Deleted
