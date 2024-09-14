@@ -103,7 +103,7 @@ function devTools ()
     EventListener.add(EVENT_PLAYER_UNIT_SELECTED) ->
         selectedUnit = GetTriggerUnit()
         print("Name: "+selectedUnit.getName())
-        print("Type: "+selectedUnit.getTypeId())
+        print("Type: "+selectedUnit.getTypeId().toString())
         print("ID: "+selectedUnit.getUserData().toString())
         // let pid = selectedUnit.getHandleId()
         // print("original id: "+pid.toString())
