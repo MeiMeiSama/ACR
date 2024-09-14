@@ -1,6 +1,7 @@
 package CreateBuildings
 import ObjectDefinitions
 import ACR_Variables
+import ClosureTimers
 
 int forestCreepID = 900
 public unit array miniboss
@@ -152,6 +153,13 @@ function createNeutralHostile()
     miniboss[0] = createUnit(p, 'O008', colorfullBuffMonsterLeft)..setUserData(993)
     miniboss[1] = createUnit(p, 'O009', colorfullBuffMonsterRight)..setUserData(994)
     miniboss[2] = createUnit(p, 'O00A', colorfullBuffMonsterTop)..setUserData(995)
+    CreateTimer()..start(3, function stupidAssPieceOfShitBuggedGarbage)
+
+function stupidAssPieceOfShitBuggedGarbage()
+    KillUnit(miniboss[0])
+    KillUnit(miniboss[1])
+    KillUnit(miniboss[2])    
+
 
 function createNeutralPassive()
     DoNothing()
