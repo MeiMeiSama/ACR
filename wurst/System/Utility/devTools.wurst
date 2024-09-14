@@ -1,6 +1,7 @@
 package devTools
 import ClosureEvents
 import Orders
+import ObjectIds
 import main
 import ACR_TagSystem
 import ACR_ReviveInstant
@@ -103,7 +104,7 @@ function devTools ()
     EventListener.add(EVENT_PLAYER_UNIT_SELECTED) ->
         selectedUnit = GetTriggerUnit()
         print("Name: "+selectedUnit.getName())
-        print("Type: "+selectedUnit.getTypeId().toString())
+        print("Type: "+selectedUnit.getTypeId().toRawCode())
         print("ID: "+selectedUnit.getUserData().toString())
         // let pid = selectedUnit.getHandleId()
         // print("original id: "+pid.toString())
