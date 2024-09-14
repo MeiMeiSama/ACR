@@ -1101,9 +1101,7 @@ function trig_NewSPActions()
         UnitAddItemByIdSwapped('I05Y', GetTriggerUnit())
         UnitAddAbility(GetTriggerUnit(), 'A0S7')
         UnitAddAbility(GetTriggerUnit(), 'A08D')
-        if SPELL_F[id].hasTagHidden()
-            GetTriggerUnit().hideAbility(SPELL_F[id], false)
-            SPELL_F[id].removeTagHidden()
+        UnitAddAbility(GetTriggerUnit(), 'A0VA')
     else if GetUnitTypeId(GetTriggerUnit()) == 'H01B' or GetUnitTypeId(GetTriggerUnit()) == 'H00B' 
         if yDWEUnitHasItemOfTypeBJNull(GetTriggerUnit(), 'I03W') == false //Shaltear
             RemoveItem(GetManipulatedItem())

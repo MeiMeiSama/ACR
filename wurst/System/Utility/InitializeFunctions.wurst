@@ -88,17 +88,18 @@ function heroG_delay2 ()
         udg_PlayHero[i].addAbility('A18V')
         udg_PlayHero[i].makeAbilityPermanent('A18V', true)
     let id = udg_PlayHero[i].getOwner().getId()
-    udg_PlayHero[i].addAbility(SPELL_F[id])
-    udg_PlayHero[i].makeAbilityPermanent(SPELL_F[id], true)
-    if SPELL_F[id].hasTagHidden() == false
-        SPELL_F[id].addTagHidden()
-        udg_PlayHero[i].hideAbility(SPELL_F[id], true)
-    if udg_PlayHero[i].getTypeId() == 'H02M'
-        udg_PlayHero[i].addAbility(SPELL_F2[id])
-        udg_PlayHero[i].makeAbilityPermanent(SPELL_F2[id], true)
-        if SPELL_F2[id].hasTagHidden() == false
-            udg_PlayHero[i].hideAbility(SPELL_F2[id], true)
-            SPELL_F2[id].addTagHidden()
+    if udg_PlayHero[i].getTypeId() != 'H03E'
+        udg_PlayHero[i].addAbility(SPELL_F[id])
+        udg_PlayHero[i].makeAbilityPermanent(SPELL_F[id], true)
+        if SPELL_F[id].hasTagHidden() == false
+            SPELL_F[id].addTagHidden()
+            udg_PlayHero[i].hideAbility(SPELL_F[id], true)
+        if udg_PlayHero[i].getTypeId() == 'H02M'
+            udg_PlayHero[i].addAbility(SPELL_F2[id])
+            udg_PlayHero[i].makeAbilityPermanent(SPELL_F2[id], true)
+            if SPELL_F2[id].hasTagHidden() == false
+                udg_PlayHero[i].hideAbility(SPELL_F2[id], true)
+                SPELL_F2[id].addTagHidden()        
     GetExpiredTimer().destr()
 
 function heroG_delay1 ()
