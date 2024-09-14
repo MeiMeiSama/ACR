@@ -21,6 +21,8 @@ import ACR_SpeedBoost
 import GetFrames
 import TimerUtils
 import BootsStackDisable
+import MbossSpell1
+import MbossSpell2
 
 import Aqua_G
 import Yato_G
@@ -128,6 +130,8 @@ public function initFunctions ()
     scoreboardValues()
     goldIncome()
     goldIncomeShared()
+    miniBoss1()
+    miniBoss2()
     expDistr()
     bgmList()
     killSoundDatabase()

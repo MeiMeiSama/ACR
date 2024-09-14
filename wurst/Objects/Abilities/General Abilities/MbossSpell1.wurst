@@ -10,11 +10,8 @@ constant snd1 = acrCreateSound("war3mapImported\\xxx.mp3")
 int array spellCount
 effect array effect1
 effect array effect2
-
-init
-    miniBoss1()
     
-function miniBoss1()   
+public function miniBoss1()   
     EventListener.add(EVENT_UNIT_DAMAGED) ->
         if BlzGetEventDamageTarget() == miniboss[0] or BlzGetEventDamageTarget() == miniboss[1] or BlzGetEventDamageTarget() == miniboss[2]          
             if BlzGetEventDamageTarget() == miniboss[0]

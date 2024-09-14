@@ -52,10 +52,7 @@ vec2 array spellvictimpos
         ..setTooltipBasic("_")
         ..setTooltipExtended("_")
 
-init
-    miniBoss2()
-    
-function miniBoss2()   
+public function miniBoss2()   
     EventListener.add(EVENT_UNIT_DAMAGED) ->
         print("event was listened to")
         if BlzGetEventDamageTarget() == miniboss[0] or BlzGetEventDamageTarget() == miniboss[1] or BlzGetEventDamageTarget() == miniboss[2]       
