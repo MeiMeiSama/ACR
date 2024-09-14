@@ -21,10 +21,13 @@ Kizaru R knockback removed.
 Kiyohime STR E should now be bug free.
 Dante model.
 Akame and Jack F to Max MS.
-Sting, Rogue and Rentarou G fixed.
+Sting, Rogue and Rentaro G fixed.
+Saber Ryougi perma w vision fixed.
+Levi crash W fixed.
+Kiara F ms passive fixed (no longer from lvl 1).
 
 ### Deleted
-Nothing Deleted.
+MDD removed.
 
 # ━━━━━━━━━ Anime Carnage Reforged v2.0.7 ━━━━━━━━━ #
 

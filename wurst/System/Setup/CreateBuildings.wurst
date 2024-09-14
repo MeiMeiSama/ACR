@@ -93,6 +93,7 @@ function createNeutralHostile()
     ..addItemToSlot('I035', 0)
     ..addItemToSlot('I028', 1)
     ..addItemToSlot('I02G', 2)
+    ..addItemToSlot(LOLLIPOP_MANA, 3)
     
     gg_unit_O007_0139 = createUnit(p, 'O007', sistinePos)
     gg_unit_O007_0139

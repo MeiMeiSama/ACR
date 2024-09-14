@@ -17,11 +17,11 @@ function miniBoss1()
     EventListener.add(EVENT_UNIT_DAMAGED) ->
         if BlzGetEventDamageTarget().getTypeId() == 'O008' or BlzGetEventDamageTarget().getTypeId() == 'O009' or BlzGetEventDamageTarget().getTypeId() == 'O00A'                                        
             if BlzGetEventDamageTarget().getTypeId() == 'O008'
-                if BlzGetEventDamageTarget().getUserData() != 997
-                    BlzGetEventDamageTarget().setUserData(997)
+                if BlzGetEventDamageTarget().getUserData() != 993
+                    BlzGetEventDamageTarget().setUserData(993)
             if BlzGetEventDamageTarget().getTypeId() == 'O009'
-                if BlzGetEventDamageTarget().getUserData() != 996
-                    BlzGetEventDamageTarget().setUserData(996)
+                if BlzGetEventDamageTarget().getUserData() != 994
+                    BlzGetEventDamageTarget().setUserData(994)
             if BlzGetEventDamageTarget().getTypeId() == 'O00A'
                 if BlzGetEventDamageTarget().getUserData() != 995
                     BlzGetEventDamageTarget().setUserData(995)
