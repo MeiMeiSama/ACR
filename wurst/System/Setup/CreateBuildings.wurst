@@ -3,6 +3,7 @@ import ObjectDefinitions
 import ACR_Variables
 
 int forestCreepID = 900
+public unit array miniboss
 
 init
     createCameras()
@@ -148,9 +149,9 @@ function createNeutralHostile()
         forestCreepID++
     else 
         forestCreepID = 900     
-    createUnit(p, 'O008', colorfullBuffMonsterLeft)..setUserData(993)
-    createUnit(p, 'O009', colorfullBuffMonsterRight)..setUserData(994)
-    createUnit(p, 'O00A', colorfullBuffMonsterTop)..setUserData(995)
+    miniboss[0] = createUnit(p, 'O008', colorfullBuffMonsterLeft)..setUserData(993)
+    miniboss[1] = createUnit(p, 'O009', colorfullBuffMonsterRight)..setUserData(994)
+    miniboss[2] = createUnit(p, 'O00A', colorfullBuffMonsterTop)..setUserData(995)
 
 function createNeutralPassive()
     DoNothing()

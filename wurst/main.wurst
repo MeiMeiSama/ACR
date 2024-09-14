@@ -3,6 +3,7 @@ import ObjectDefinitions
 import ReviveHeroes
 import DamageEvent
 import AbilityGlobals
+import CreateBuildings
 public hashtable ACR_TABLE
 public sound characterBGM
 public sound gg_snd_edoMadaraBGM
@@ -10011,7 +10012,7 @@ function trig_shuayeFunc004Func002Func002T()
         if bj_forLoopAIndex > bj_forLoopAIndexEnd
             break
         SaveLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 48, GetRandomLocInRect(gg_rct_ColorfullBuffMonsterLeft))
-        SaveUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 582544290, CreateUnitAtLoc(Player(PLAYER_NEUTRAL_AGGRESSIVE), 'O008', LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 48), GetRandomDirectionDeg()))
+        miniboss[0] = CreateUnitAtLoc(Player(PLAYER_NEUTRAL_AGGRESSIVE), 'O008', LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 48), GetRandomDirectionDeg())
         RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 48))
         bj_forLoopAIndex++
     FlushChildHashtable(YDLOC, GetHandleId(GetExpiredTimer()))
@@ -10024,7 +10025,7 @@ function trig_shuayeFunc005Func002Func002T()
         if bj_forLoopAIndex > bj_forLoopAIndexEnd
             break
         SaveLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 48, GetRandomLocInRect(gg_rct_ColorfullBuffMonsterRight))
-        SaveUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 582544290, CreateUnitAtLoc(Player(PLAYER_NEUTRAL_AGGRESSIVE), 'O009', LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 48), GetRandomDirectionDeg()))
+        miniboss[1] = CreateUnitAtLoc(Player(PLAYER_NEUTRAL_AGGRESSIVE), 'O009', LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 48), GetRandomDirectionDeg())
         RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 48))
         bj_forLoopAIndex++
     FlushChildHashtable(YDLOC, GetHandleId(GetExpiredTimer()))
@@ -10037,7 +10038,7 @@ function trig_shuayeFunc006Func002Func002T()
         if bj_forLoopAIndex > bj_forLoopAIndexEnd
             break
         SaveLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 48, GetRandomLocInRect(gg_rct_ColorfullBuffMonsterTop))
-        SaveUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 582544290, CreateUnitAtLoc(Player(PLAYER_NEUTRAL_AGGRESSIVE), 'O00A', LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 48), GetRandomDirectionDeg()))
+        miniboss[2] = CreateUnitAtLoc(Player(PLAYER_NEUTRAL_AGGRESSIVE), 'O00A', LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 48), GetRandomDirectionDeg())
         RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 48))
         bj_forLoopAIndex++
     FlushChildHashtable(YDLOC, GetHandleId(GetExpiredTimer()))

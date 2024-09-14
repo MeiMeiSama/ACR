@@ -3,6 +3,7 @@ package MbossSpell2
 import ACR_SoundCreation
 import ClosureEvents
 import TimerUtils
+import CreateBuildings
 import ObjectDefinitions
 import ChannelAbilityPreset
 import UnitIds
@@ -57,15 +58,15 @@ init
 function miniBoss2()   
     EventListener.add(EVENT_UNIT_DAMAGED) ->
         print("event was listened to")
-        if BlzGetEventDamageTarget().getTypeId() == 'O008' or BlzGetEventDamageTarget().getTypeId() == 'O009' or BlzGetEventDamageTarget().getTypeId() == 'O00A'        
+        if BlzGetEventDamageTarget() == miniboss[0] or BlzGetEventDamageTarget() == miniboss[1] or BlzGetEventDamageTarget() == miniboss[2]       
             print("is this the brick?")
-            if BlzGetEventDamageTarget().getTypeId() == 'O008'
+            if BlzGetEventDamageTarget() == miniboss[0]
                 if BlzGetEventDamageTarget().getUserData() != 993
                     BlzGetEventDamageTarget().setUserData(993)
-            if BlzGetEventDamageTarget().getTypeId() == 'O009'
+            if BlzGetEventDamageTarget() == miniboss[1]
                 if BlzGetEventDamageTarget().getUserData() != 994
                     BlzGetEventDamageTarget().setUserData(994)
-            if BlzGetEventDamageTarget().getTypeId() == 'O00A'
+            if BlzGetEventDamageTarget() == miniboss[2] 
                 if BlzGetEventDamageTarget().getUserData() != 995
                     BlzGetEventDamageTarget().setUserData(995)
             let id = BlzGetEventDamageTarget().getUserData()
