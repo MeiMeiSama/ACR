@@ -5,6 +5,7 @@ import ObjectIds
 import main
 import ACR_TagSystem
 import ACR_ReviveInstant
+import CreateBuildings
 import ObjectDefinitions
 int acrdevtimer
 unit selectedUnit
@@ -106,6 +107,12 @@ function devTools ()
         print("Name: "+selectedUnit.getName())
         print("Type: "+selectedUnit.getTypeId().toRawCode())
         print("ID: "+selectedUnit.getUserData().toString())
+        if selectedUnit == miniboss[0]
+            print("boss 0 selected")
+        if selectedUnit == miniboss[1]
+            print("boss 1 selected")  
+        if selectedUnit == miniboss[2]
+            print("boss 1 selected")                        
         // let pid = selectedUnit.getHandleId()
         // print("original id: "+pid.toString())
         // let id = selectedUnit.getHandleId().toString().substring(3, 7).toInt()
