@@ -10,7 +10,7 @@ init
 function trig_LeviWConditions() returns boolean
     return GetSpellAbilityId() == 'A0Q7'
 function trig_LeviWFunc019003003() returns boolean
-    return IsUnitType(GetFilterUnit(), UNIT_TYPE_STRUCTURE) == false and IsUnitDeadBJ(GetFilterUnit()) == false and IsUnitEnemy(GetFilterUnit(), LoadPlayerHandle(YDLOC, GetHandleId(GetExpiredTimer()) * LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 1045), 603)) == true and GetUnitAbilityLevel(GetFilterUnit(), 'Avul') != 1
+    return IsUnitType(GetFilterUnit(), UNIT_TYPE_STRUCTURE) == false and IsUnitDeadBJ(GetFilterUnit()) == false and IsUnitEnemy(GetFilterUnit(), LoadPlayerHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * LoadInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 1045), 603)) == true and GetUnitAbilityLevel(GetFilterUnit(), 'Avul') != 1
 function trig_LeviWFunc020A()
     DamageEvent.setNextDamageId(DAMAGE_ABILITY_W)
     DamageEvent.setNextDamageFromCode()
