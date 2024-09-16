@@ -1,2 +1,103 @@
 package TeamBuffs
 
+import ObjectDefinitions
+import CreateBuildings
+import ClosureEvents
+import DummyCaster
+import OrderIds
+import TimerUtils
+
+boolean teambuff
+unit array killer
+int  teamBuffType
+
+init
+    onBossDeath()
+
+function onBossDeath()
+    EventListener.add(EVENT_UNIT_DEATH) ->
+        if GetDyingUnit() == miniboss[0] or GetDyingUnit() == miniboss[1] or GetDyingUnit() == miniboss[2]
+            let killer = GetKillingUnit()
+            let pid = killer.getOwner().getId()
+            let randomBuff = GetRandomInt(1, 6)
+            switch randomBuff
+                case 1
+                    teamBuffType = 1 //red
+                case 2
+                    teamBuffType = 2 //blue
+                case 3
+                    teamBuffType = 3 //yellow
+                case 4
+                    teamBuffType = 4 //white
+                case 5
+                    teamBuffType = 5 //black
+                case 6
+                    teamBuffType = 6 //green
+            teambuff = true        
+            CreateTimer()..start(1, function applyBuffs)..setData(pid)
+                    
+function applyBuffs()
+    let pid = GetExpiredTimer().getData()
+    for i = 0 to 12
+        if udg_PlayHero[i].getOwner().isAllyOf(killer[pid].getOwner())
+            if  teambuff == true
+                if teamBuffType == 1 //red 
+                    new DummyCaster()
+                    ..owner(udg_PlayHero[i].getOwner())
+                    ..origin(udg_PlayHero[i].getPos())
+                    ..castTarget(DUMMY_REDBUFF_ABILITY, 1, OrderIds.innerfire, udg_PlayHero[i]) 
+                if teamBuffType == 2 //blue
+                    let id = udg_PlayHero[i].getOwner().getId()
+                    UnitAddAbility(udg_PlayHero[id], DUMMY_BLUEBUFF_ABILITY)
+                    CreateTimer()..start(180, function removeBlue)..setData(id) 
+                if teamBuffType == 3 //yellow
+                    new DummyCaster()
+                    ..owner(udg_PlayHero[i].getOwner())
+                    ..origin(udg_PlayHero[i].getPos())
+                    ..castTarget(DUMMY_YELLOWBUFF_ABILITY, 1, OrderIds.bloodlust, udg_PlayHero[i]) 
+                if teamBuffType == 4 //white
+                    let id = udg_PlayHero[i].getOwner().getId()
+                    UnitAddAbility(udg_PlayHero[id], DUMMY_WHITEBUFF_ABILITY)
+                    CreateTimer()..start(180, function removeWhite)..setData(id)
+                if teamBuffType == 5 //black
+                    let id = udg_PlayHero[i].getOwner().getId()
+                    UnitAddAbility(udg_PlayHero[id], DUMMY_BLACKBUFF_ABILITY)
+                    CreateTimer()..start(180, function removeBlack)..setData(id)
+                if teamBuffType == 6 //green           
+                    let id = udg_PlayHero[i].getOwner().getId()
+                    UnitAddAbility(udg_PlayHero[id], DUMMY_GREENBUFF_ABILITY)
+                    UnitAddAbility(udg_PlayHero[id], DUMMY_GREENBUFF2_ABILITY)
+                    CreateTimer()..start(180, function removeGreen)..setData(id)
+    CreateTimer()..start(180, function removeBuffs)..setData(pid)
+    GetExpiredTimer().destr() 
+
+function removeBuffs()
+    teambuff = false //mark that the team/unit no longer has an active buff????
+    teamBuffType = 0 //reset the buff type?????
+    GetExpiredTimer().destr()
+
+function removeBlue()
+    let id = GetExpiredTimer().getData()
+    if udg_PlayHero[id].hasAbility(DUMMY_BLUEBUFF_ABILITY)
+        UnitRemoveAbility(udg_PlayHero[id], DUMMY_BLUEBUFF_ABILITY)       
+    GetExpiredTimer().destr()    
+
+function removeWhite()
+    let id = GetExpiredTimer().getData()
+    if udg_PlayHero[id].hasAbility(DUMMY_WHITEBUFF_ABILITY)
+        UnitRemoveAbility(udg_PlayHero[id], DUMMY_WHITEBUFF_ABILITY)    
+    GetExpiredTimer().destr()    
+
+function removeBlack()
+    let id = GetExpiredTimer().getData()
+    if udg_PlayHero[id].hasAbility(DUMMY_BLACKBUFF_ABILITY)
+        UnitRemoveAbility(udg_PlayHero[id], DUMMY_BLACKBUFF_ABILITY)     
+    GetExpiredTimer().destr()   
+
+function removeGreen()
+    let id = GetExpiredTimer().getData()
+    if udg_PlayHero[id].hasAbility(DUMMY_GREENBUFF_ABILITY)
+        UnitRemoveAbility(udg_PlayHero[id], DUMMY_GREENBUFF_ABILITY)
+    if udg_PlayHero[id].hasAbility(DUMMY_GREENBUFF2_ABILITY)
+        UnitRemoveAbility(udg_PlayHero[id], DUMMY_GREENBUFF2_ABILITY)     
+    GetExpiredTimer().destr()                                                    

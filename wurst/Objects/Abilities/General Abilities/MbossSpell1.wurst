@@ -5,8 +5,9 @@ import ClosureEvents
 import ClosureForGroups
 import TimerUtils
 import CreateBuildings
+import ClosureTimers
 
-constant snd1 = acrCreateSound("war3mapImported\\xxx.mp3")
+constant snd1 = acrCreateSound("war3mapImported\\hina2.mp3")
 int array spellCount
 effect array effect1
 effect array effect2
@@ -26,6 +27,8 @@ public function miniBoss1()
             let id = BlzGetEventDamageTarget().getUserData()
             if BlzGetEventDamageTarget().getHP() <= 2000 and spellCount[id] <= 0
                 let bossu = BlzGetEventDamageTarget()
+                bossu.setInvulnerable(true)
+                bossu.pause()
                 PlaySoundOnUnitBJ(snd1, 100, bossu)
                 SetUnitAnimation(bossu, "Spell 2-1")
                 effect1[id] = addEffect("war3mapImported\\shuimian1.mdx", bossu.getPos())
@@ -40,7 +43,11 @@ public function miniBoss1()
                         effect2[pid] = addEffect("war3mapImported\\Water Spout.mdx", victim.getPos())
                         ..setScale(0.70)
                         CreateTimer()..start(1.2, function miniBossFlush2)..setData(pid)
-                        
+                doAfter(2) -> 
+                    if bossu.isInvulnerable()
+                        bossu.setInvulnerable(false)
+                        bossu.unpause()         
+
 function miniBoss1End()
     let id = GetExpiredTimer().getData()
     spellCount[id]--
