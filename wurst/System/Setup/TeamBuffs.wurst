@@ -7,9 +7,15 @@ import DummyCaster
 import OrderIds
 import TimerUtils
 
-boolean teambuff
+boolean array teambuff
 unit array killer
 int  teamBuffType
+effect array red
+effect array blue
+effect array yellow
+effect array white
+effect array black
+effect array green
 
 init
     onBossDeath()
@@ -32,66 +38,90 @@ function onBossDeath()
                 case 5
                     teamBuffType = 5 //black
                 case 6
-                    teamBuffType = 6 //green
-            teambuff = true        
+                    teamBuffType = 6 //green     
+            teambuff[pid] = true        
             CreateTimer()..start(1, function applyBuffs)..setData(pid)
                     
 function applyBuffs()
     let pid = GetExpiredTimer().getData()
     for i = 0 to 12
         if udg_PlayHero[i].getOwner().isAllyOf(killer[pid].getOwner())
-            if  teambuff == true
+            if  teambuff[pid] == true
                 if teamBuffType == 1 //red 
+                    let id = udg_PlayHero[i].getOwner().getId()
                     new DummyCaster()
                     ..owner(udg_PlayHero[i].getOwner())
                     ..origin(udg_PlayHero[i].getPos())
-                    ..castTarget(DUMMY_REDBUFF_ABILITY, 1, OrderIds.innerfire, udg_PlayHero[i]) 
+                    ..castTarget(DUMMY_REDBUFF_ABILITY, 1, OrderIds.innerfire, udg_PlayHero[i])
+                    red[id] = addEffect("war3mapImported\\xxx.mdx", udg_PlayHero[i], "foot")
+                    CreateTimer()..start(180, function removeRed)..setData(id) 
                 if teamBuffType == 2 //blue
                     let id = udg_PlayHero[i].getOwner().getId()
                     UnitAddAbility(udg_PlayHero[id], DUMMY_BLUEBUFF_ABILITY)
-                    CreateTimer()..start(180, function removeBlue)..setData(id) 
+                    blue[id] = addEffect("war3mapImported\\xxx.mdx", udg_PlayHero[i], "foot")
+                    CreateTimer()..start(180, function removeBlue)..setData(id)
                 if teamBuffType == 3 //yellow
+                    let id = udg_PlayHero[i].getOwner().getId()
                     new DummyCaster()
                     ..owner(udg_PlayHero[i].getOwner())
                     ..origin(udg_PlayHero[i].getPos())
-                    ..castTarget(DUMMY_YELLOWBUFF_ABILITY, 1, OrderIds.bloodlust, udg_PlayHero[i]) 
+                    ..castTarget(DUMMY_YELLOWBUFF_ABILITY, 1, OrderIds.bloodlust, udg_PlayHero[i])
+                    yellow[id] = addEffect("war3mapImported\\xxx.mdx", udg_PlayHero[i], "foot")
+                    CreateTimer()..start(180, function removeYellow)..setData(id)
                 if teamBuffType == 4 //white
                     let id = udg_PlayHero[i].getOwner().getId()
                     UnitAddAbility(udg_PlayHero[id], DUMMY_WHITEBUFF_ABILITY)
+                    white[id] = addEffect("war3mapImported\\xxx.mdx", udg_PlayHero[i], "foot")
                     CreateTimer()..start(180, function removeWhite)..setData(id)
                 if teamBuffType == 5 //black
                     let id = udg_PlayHero[i].getOwner().getId()
                     UnitAddAbility(udg_PlayHero[id], DUMMY_BLACKBUFF_ABILITY)
+                    black[id] = addEffect("war3mapImported\\xxx.mdx", udg_PlayHero[i], "foot")
                     CreateTimer()..start(180, function removeBlack)..setData(id)
                 if teamBuffType == 6 //green           
                     let id = udg_PlayHero[i].getOwner().getId()
                     UnitAddAbility(udg_PlayHero[id], DUMMY_GREENBUFF_ABILITY)
                     UnitAddAbility(udg_PlayHero[id], DUMMY_GREENBUFF2_ABILITY)
+                    green[id] = addEffect("war3mapImported\\xxx.mdx", udg_PlayHero[i], "foot")
                     CreateTimer()..start(180, function removeGreen)..setData(id)
-    CreateTimer()..start(180, function removeBuffs)..setData(pid)
+    CreateTimer()..start(180, function checkBuffs)..setData(pid)
     GetExpiredTimer().destr() 
 
-function removeBuffs()
-    teambuff = false //mark that the team/unit no longer has an active buff????
+function checkBuffs()
+    let pid = GetExpiredTimer().getData()
+    teambuff[pid] = false //mark that the team/unit no longer has an active buff????
     teamBuffType = 0 //reset the buff type?????
     GetExpiredTimer().destr()
+
+function removeRed()
+    let id = GetExpiredTimer().getData()   
+    red[id].destr()        
+    GetExpiredTimer().destr()    
 
 function removeBlue()
     let id = GetExpiredTimer().getData()
     if udg_PlayHero[id].hasAbility(DUMMY_BLUEBUFF_ABILITY)
-        UnitRemoveAbility(udg_PlayHero[id], DUMMY_BLUEBUFF_ABILITY)       
-    GetExpiredTimer().destr()    
+        UnitRemoveAbility(udg_PlayHero[id], DUMMY_BLUEBUFF_ABILITY)    
+    blue[id].destr()        
+    GetExpiredTimer().destr()
+
+function removeYellow()
+    let id = GetExpiredTimer().getData()   
+    yellow[id].destr()        
+    GetExpiredTimer().destr()        
 
 function removeWhite()
     let id = GetExpiredTimer().getData()
     if udg_PlayHero[id].hasAbility(DUMMY_WHITEBUFF_ABILITY)
-        UnitRemoveAbility(udg_PlayHero[id], DUMMY_WHITEBUFF_ABILITY)    
+        UnitRemoveAbility(udg_PlayHero[id], DUMMY_WHITEBUFF_ABILITY)
+    white[id].destr()            
     GetExpiredTimer().destr()    
 
 function removeBlack()
     let id = GetExpiredTimer().getData()
     if udg_PlayHero[id].hasAbility(DUMMY_BLACKBUFF_ABILITY)
-        UnitRemoveAbility(udg_PlayHero[id], DUMMY_BLACKBUFF_ABILITY)     
+        UnitRemoveAbility(udg_PlayHero[id], DUMMY_BLACKBUFF_ABILITY)  
+    black[id].destr()           
     GetExpiredTimer().destr()   
 
 function removeGreen()
@@ -99,5 +129,6 @@ function removeGreen()
     if udg_PlayHero[id].hasAbility(DUMMY_GREENBUFF_ABILITY)
         UnitRemoveAbility(udg_PlayHero[id], DUMMY_GREENBUFF_ABILITY)
     if udg_PlayHero[id].hasAbility(DUMMY_GREENBUFF2_ABILITY)
-        UnitRemoveAbility(udg_PlayHero[id], DUMMY_GREENBUFF2_ABILITY)     
+        UnitRemoveAbility(udg_PlayHero[id], DUMMY_GREENBUFF2_ABILITY)
+    green[id].destr()             
     GetExpiredTimer().destr()                                                    
