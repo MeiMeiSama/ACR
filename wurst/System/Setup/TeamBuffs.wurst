@@ -14,7 +14,7 @@ effect array red
 effect array blue
 effect array yellow
 effect array white
-effect array black
+effect array orange
 effect array green
 
 init
@@ -34,9 +34,9 @@ function onBossDeath()
                 case 3
                     teamBuffType = 3 //yellow
                 case 4
-                    teamBuffType = 4 //white
+                    teamBuffType = 4 //orange
                 case 5
-                    teamBuffType = 5 //black
+                    teamBuffType = 5 //white
                 case 6
                     teamBuffType = 6 //green     
             teambuff[pid] = true        
@@ -53,12 +53,12 @@ function applyBuffs()
                     ..owner(udg_PlayHero[i].getOwner())
                     ..origin(udg_PlayHero[i].getPos())
                     ..castTarget(DUMMY_REDBUFF_ABILITY, 1, OrderIds.innerfire, udg_PlayHero[i])
-                    red[id] = addEffect("war3mapImported\\xxx.mdx", udg_PlayHero[i], "foot")
+                    red[id] = addEffect("war3mapImported\\IlluminaRing_red.mdx", udg_PlayHero[i], "foot")
                     CreateTimer()..start(180, function removeRed)..setData(id) 
                 if teamBuffType == 2 //blue
                     let id = udg_PlayHero[i].getOwner().getId()
                     UnitAddAbility(udg_PlayHero[id], DUMMY_BLUEBUFF_ABILITY)
-                    blue[id] = addEffect("war3mapImported\\xxx.mdx", udg_PlayHero[i], "foot")
+                    blue[id] = addEffect("war3mapImported\\IlluminaRing_blue.mdx", udg_PlayHero[i], "foot")
                     CreateTimer()..start(180, function removeBlue)..setData(id)
                 if teamBuffType == 3 //yellow
                     let id = udg_PlayHero[i].getOwner().getId()
@@ -66,23 +66,23 @@ function applyBuffs()
                     ..owner(udg_PlayHero[i].getOwner())
                     ..origin(udg_PlayHero[i].getPos())
                     ..castTarget(DUMMY_YELLOWBUFF_ABILITY, 1, OrderIds.bloodlust, udg_PlayHero[i])
-                    yellow[id] = addEffect("war3mapImported\\xxx.mdx", udg_PlayHero[i], "foot")
+                    yellow[id] = addEffect("war3mapImported\\IlluminaRing_yellow.mdx", udg_PlayHero[i], "foot")
                     CreateTimer()..start(180, function removeYellow)..setData(id)
-                if teamBuffType == 4 //white
+                if teamBuffType == 4 //orange
+                    let id = udg_PlayHero[i].getOwner().getId()
+                    UnitAddAbility(udg_PlayHero[id], DUMMY_ORANGEBUFF_ABILITY)
+                    orange[id] = addEffect("war3mapImported\\IlluminaRing_orange.mdx", udg_PlayHero[i], "foot")
+                    CreateTimer()..start(180, function removeOrange)..setData(id)
+                if teamBuffType == 5 //white
                     let id = udg_PlayHero[i].getOwner().getId()
                     UnitAddAbility(udg_PlayHero[id], DUMMY_WHITEBUFF_ABILITY)
-                    white[id] = addEffect("war3mapImported\\xxx.mdx", udg_PlayHero[i], "foot")
+                    white[id] = addEffect("war3mapImported\\IlluminaRing_white.mdx", udg_PlayHero[i], "foot")
                     CreateTimer()..start(180, function removeWhite)..setData(id)
-                if teamBuffType == 5 //black
-                    let id = udg_PlayHero[i].getOwner().getId()
-                    UnitAddAbility(udg_PlayHero[id], DUMMY_BLACKBUFF_ABILITY)
-                    black[id] = addEffect("war3mapImported\\xxx.mdx", udg_PlayHero[i], "foot")
-                    CreateTimer()..start(180, function removeBlack)..setData(id)
                 if teamBuffType == 6 //green           
                     let id = udg_PlayHero[i].getOwner().getId()
                     UnitAddAbility(udg_PlayHero[id], DUMMY_GREENBUFF_ABILITY)
                     UnitAddAbility(udg_PlayHero[id], DUMMY_GREENBUFF2_ABILITY)
-                    green[id] = addEffect("war3mapImported\\xxx.mdx", udg_PlayHero[i], "foot")
+                    green[id] = addEffect("war3mapImported\\IlluminaRing_green.mdx", udg_PlayHero[i], "foot")
                     CreateTimer()..start(180, function removeGreen)..setData(id)
     CreateTimer()..start(180, function checkBuffs)..setData(pid)
     GetExpiredTimer().destr() 
@@ -117,11 +117,11 @@ function removeWhite()
     white[id].destr()            
     GetExpiredTimer().destr()    
 
-function removeBlack()
+function removeOrange()
     let id = GetExpiredTimer().getData()
-    if udg_PlayHero[id].hasAbility(DUMMY_BLACKBUFF_ABILITY)
-        UnitRemoveAbility(udg_PlayHero[id], DUMMY_BLACKBUFF_ABILITY)  
-    black[id].destr()           
+    if udg_PlayHero[id].hasAbility(DUMMY_ORANGEBUFF_ABILITY)
+        UnitRemoveAbility(udg_PlayHero[id], DUMMY_ORANGEBUFF_ABILITY)  
+    orange[id].destr()           
     GetExpiredTimer().destr()   
 
 function removeGreen()

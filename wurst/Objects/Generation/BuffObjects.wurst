@@ -143,15 +143,15 @@ import ObjectDefinitions
     ..setTooltipNormalExtended(1, "This unit have increased MS and AS")
     ..setIcon("ReplaceableTextures\\CommandButtons\\BTNArcobalenoSun.blp")
 
-    new BuffDefinition(WHITEBUFF_BUFF, AbilityIds.avatar)
-    ..setName("White Buff")
-    ..setTooltipNormal(1, "White Buff")
+    new BuffDefinition(ORANGEBUFF_BUFF, AbilityIds.avatar)
+    ..setName("Orange Buff")
+    ..setTooltipNormal(1, "Orange Buff")
     ..setTooltipNormalExtended(1, "This unit have increased armor, magic resistance and hp")
     ..setIcon("ReplaceableTextures\\CommandButtons\\BTNArcobalenoSun.blp")
 
-    new BuffDefinition(BLACKBUFF_BUFF, AbilityIds.itemPotionVampirism)
-    ..setName("Black Buff")
-    ..setTooltipNormal(1, "Black Buff")
+    new BuffDefinition(WHITEBUFF_BUFF, AbilityIds.itemPotionVampirism)
+    ..setName("White Buff")
+    ..setTooltipNormal(1, "White Buff")
     ..setTooltipNormalExtended(1, "This unit have increased DMG and Lifesteal")
     ..setIcon("ReplaceableTextures\\CommandButtons\\BTNArcobalenoSun.blp")
 
