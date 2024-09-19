@@ -21,12 +21,12 @@ init
     onBossDeath()
 
 function onBossDeath()
-    EventListener.add(EVENT_UNIT_DEATH) ->
+    EventListener.add(EVENT_PLAYER_UNIT_DEATH) ->
         if GetDyingUnit() == miniboss[0] or GetDyingUnit() == miniboss[1] or GetDyingUnit() == miniboss[2]
             let killer = GetKillingUnit()
             let pid = killer.getOwner().getId()
             let randomBuff = GetRandomInt(1, 6)
-            switch randomBuff
+            switch randomBuff    // this probably is not how it works, but i tried
                 case 1
                     teamBuffType = 1 //red
                 case 2

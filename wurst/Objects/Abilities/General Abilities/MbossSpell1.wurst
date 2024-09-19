@@ -13,7 +13,7 @@ effect array effect1
 effect array effect2
     
 public function miniBoss1()   
-    EventListener.add(EVENT_UNIT_DAMAGED) ->
+    EventListener.add(EVENT_PLAYER_UNIT_DAMAGED) ->
         if BlzGetEventDamageTarget() == miniboss[0] or BlzGetEventDamageTarget() == miniboss[1] or BlzGetEventDamageTarget() == miniboss[2]          
             if BlzGetEventDamageTarget() == miniboss[0]
                 if BlzGetEventDamageTarget().getUserData() != 993

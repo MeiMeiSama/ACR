@@ -53,7 +53,7 @@ vec2 array spellvictimpos
         ..setTooltipExtended("_")
 
 public function miniBoss2()   
-    EventListener.add(EVENT_UNIT_DAMAGED) ->
+    EventListener.add(EVENT_PLAYER_UNIT_DAMAGED) ->
         if BlzGetEventDamageTarget() == miniboss[0] or BlzGetEventDamageTarget() == miniboss[1] or BlzGetEventDamageTarget() == miniboss[2]       
             if BlzGetEventDamageTarget() == miniboss[0]
                 if BlzGetEventDamageTarget().getUserData() != 993
@@ -92,7 +92,7 @@ function dummyDashStart()
         GetExpiredTimer().destr()
     else
         dummyUnit.setFacing(dummyUnit.getPos().angleTo(spellvictimpos[id]))
-        dummyUnit.setPos(dummyUnit.getPos().polarOffset(spellcasterpos[id].angleTo(spellvictimpos[id]), 20))      
+        dummyUnit.setPos(dummyUnit.getPos().polarOffset(spellcasterpos[id].angleTo(spellvictimpos[id]), 60))      
 
 function miniBoss2End()
     let id = GetExpiredTimer().getData()
