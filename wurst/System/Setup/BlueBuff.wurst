@@ -1,0 +1,24 @@
+package BlueBuff
+/*
+import ObjectDefinitions
+
+int array mana
+
+function blueMana()
+    CreateTrigger()
+    ..registerAnyUnitEvent(EVENT_PLAYER_UNIT_SPELL_CAST)
+    ..addAction() ->
+        if GetTriggerUnit().hasAbility(BLUEBUFF_BUFF) and GetTriggerUnit().isType(UNIT_TYPE_HERO)
+            let u = GetTriggerUnit()
+            let sp = GetSpellAbilityId()
+            let currentMana = BlzGetUnitAbilityManaCost(u, sp, 1)
+            
+            let mana = currentMana / 0.20
+            let mana1 = R2I(mana)
+            BlzSetUnitAbilityManaCost(u, sp, 1, mana1)
+
+function blueManaRemove()            
+
+function blueManaTimer()
+    CreateTimer()..startPeriodic(0.1, function blueMana)
+*/               
