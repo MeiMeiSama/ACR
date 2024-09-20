@@ -143,17 +143,17 @@ import ObjectDefinitions
     ..setTooltipNormalExtended(1, "This unit have increased MS and AS")
     ..setIcon("ReplaceableTextures\\CommandButtons\\BTNSunX.blp")
 
-    new BuffDefinition(ORANGEBUFF_BUFF, AbilityIds.avatar)
+    new BuffDefinition(ORANGEBUFF_BUFF, AbilityIds.innerFire)
     ..setName("Orange Buff")
     ..setTooltipNormal(1, "Orange Buff")
     ..setTooltipNormalExtended(1, "This unit have increased armor, magic resistance and hp")
     ..setIcon("ReplaceableTextures\\CommandButtons\\PASBTNMarkOfFire.blp")
 
-    new BuffDefinition(WHITEBUFF_BUFF, AbilityIds.itemPotionVampirism)
+    new BuffDefinition(WHITEBUFF_BUFF, AbilityIds.innerFire)
     ..setName("White Buff")
     ..setTooltipNormal(1, "White Buff")
     ..setTooltipNormalExtended(1, "This unit have increased DMG and Lifesteal")
-    ..setIcon("ReplaceableTextures\\CommandButtons\\BTNArcobalenoSun.blp")
+    ..setIcon("ReplaceableTextures\\CommandButtons\\BTNArcobalenoSky.blp")
 
     new BuffDefinition(GREENBUFF_BUFF, AbilityIds.unholyAura)
     ..setName("Green Buff")
@@ -161,8 +161,8 @@ import ObjectDefinitions
     ..setTooltipNormalExtended(1, "This unit have increased hp regeneration")
     ..setIcon("ReplaceableTextures\\CommandButtons\\BTNThunderX.blp")
 
-    new BuffDefinition(GREENBUFF2_BUFF, AbilityIds.maxLifeBonusGreater)
+    new BuffDefinition(GREENBUFF2_BUFF, AbilityIds.innerFire)
     ..setName("Green Buff")
     ..setTooltipNormal(1, "Green Buff")
     ..setTooltipNormalExtended(1, "This unit have increased health")
-    ..setIcon("ReplaceableTextures\\CommandButtons\\BTNThunderX.blp")
+    ..setIcon("ReplaceableTextures\\CommandButtons\\BTNArcobalenoThunder.blp")

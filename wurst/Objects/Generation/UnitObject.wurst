@@ -29,7 +29,7 @@ import ObjectIds
     ..setTooltipExtended("Provides various accessories that will strengthen your hero.")
     ..setIconGameInterface("ReplaceableTextures\\CommandButtons\\BTNMerchant.blp")
     ..setNormalAbilities("Avul,Apit,Aneu")
-    ..setItemsSold(commaList('I02U', 'I06O', 'I01R', 'I02O', 'I02P', 'I02Q', 'I03D', RE_MEDUSA))
+    ..setItemsSold(commaList('I02U', 'I06O', 'I01R', 'I02O', 'I02P', 'I02Q', 'I03D', RE_MEDUSA, 'I03F', 'I029', 'I024'))
     ..setUnitSoundSet("")
     ..setAcquisitionRange(1200)
     ..setModelFile("war3mapImported\\Kurumi.mdl")
