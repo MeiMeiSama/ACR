@@ -1,0 +1,30 @@
+package Buster
+
+import TimerUtils
+import ObjectDefinitions
+
+unit array user
+
+init
+    busters() 
+
+function busters()
+    CreateTrigger()
+    ..registerAnyUnitEvent(EVENT_PLAYER_UNIT_SPELL_EFFECT)
+    ..addAction() ->
+        if GetSpellAbilityId() == 'A0TV'
+            let caster = GetTriggerUnit()
+            let id = caster.getOwner().getId()
+            user[id] = caster
+            user[id].addAbility(STRENGTH_ABILITY_10)
+            CreateTimer()..start(30, function removeBuster)..setData(id)
+
+function removeBuster()
+    let id = GetExpiredTimer().getData()
+    if user[id].hasAbility(STRENGTH_ABILITY_10)
+        user[id].removeAbility(STRENGTH_ABILITY_10)
+    GetExpiredTimer().destr()
+    
+
+
+    

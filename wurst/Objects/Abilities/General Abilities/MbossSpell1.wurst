@@ -1,7 +1,6 @@
 package MbossSpell1
 
 import ACR_SoundCreation
-import ClosureEvents
 import ClosureForGroups
 import TimerUtils
 import CreateBuildings
@@ -12,8 +11,13 @@ int array spellCount
 effect array effect1
 effect array effect2
     
+init
+    miniBoss1()
+
 public function miniBoss1()   
-    EventListener.add(EVENT_PLAYER_UNIT_DAMAGED) ->
+    CreateTrigger()
+    ..registerAnyUnitEvent(EVENT_PLAYER_UNIT_DAMAGED)
+    ..addAction() ->
         if BlzGetEventDamageTarget() == miniboss[0] or BlzGetEventDamageTarget() == miniboss[1] or BlzGetEventDamageTarget() == miniboss[2]          
             if BlzGetEventDamageTarget() == miniboss[0]
                 if BlzGetEventDamageTarget().getUserData() != 993

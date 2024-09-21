@@ -143,13 +143,13 @@ import ObjectDefinitions
     ..setTooltipNormalExtended(1, "This unit have increased MS and AS")
     ..setIcon("ReplaceableTextures\\CommandButtons\\BTNSunX.blp")
 
-    new BuffDefinition(ORANGEBUFF_BUFF, AbilityIds.innerFire)
+    new BuffDefinition(ORANGEBUFF_BUFF, AbilityIds.frostArmor)
     ..setName("Orange Buff")
     ..setTooltipNormal(1, "Orange Buff")
     ..setTooltipNormalExtended(1, "This unit have increased armor, magic resistance and hp")
     ..setIcon("ReplaceableTextures\\CommandButtons\\PASBTNMarkOfFire.blp")
 
-    new BuffDefinition(WHITEBUFF_BUFF, AbilityIds.innerFire)
+    new BuffDefinition(WHITEBUFF_BUFF, AbilityIds.unholyFrenzy)
     ..setName("White Buff")
     ..setTooltipNormal(1, "White Buff")
     ..setTooltipNormalExtended(1, "This unit have increased DMG and Lifesteal")
@@ -161,7 +161,7 @@ import ObjectDefinitions
     ..setTooltipNormalExtended(1, "This unit have increased hp regeneration")
     ..setIcon("ReplaceableTextures\\CommandButtons\\BTNThunderX.blp")
 
-    new BuffDefinition(GREENBUFF2_BUFF, AbilityIds.innerFire)
+    new BuffDefinition(GREENBUFF2_BUFF, AbilityIds.enduranceAura)
     ..setName("Green Buff")
     ..setTooltipNormal(1, "Green Buff")
     ..setTooltipNormalExtended(1, "This unit have increased health")

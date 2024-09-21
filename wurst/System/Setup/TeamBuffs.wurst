@@ -2,7 +2,6 @@ package TeamBuffs
 
 import ObjectDefinitions
 import CreateBuildings
-import ClosureEvents
 import DummyCaster
 import OrderIds
 import TimerUtils
@@ -21,7 +20,9 @@ init
     onBossDeath()
 
 function onBossDeath()
-    EventListener.add(EVENT_PLAYER_UNIT_DEATH) ->
+    CreateTrigger()
+    ..registerAnyUnitEvent(EVENT_PLAYER_UNIT_DEATH)
+    ..addAction() ->
         if GetDyingUnit() == miniboss[0] or GetDyingUnit() == miniboss[1] or GetDyingUnit() == miniboss[2]
             let killer = GetKillingUnit()
             let pid = killer.getOwner().getId()

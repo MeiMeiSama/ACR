@@ -1,7 +1,6 @@
 package MbossSpell2
 
 import ACR_SoundCreation
-import ClosureEvents
 import TimerUtils
 import CreateBuildings
 import ObjectDefinitions
@@ -52,8 +51,13 @@ vec2 array spellvictimpos
         ..setTooltipBasic("_")
         ..setTooltipExtended("_")
 
+init
+    miniBoss2()
+
 public function miniBoss2()   
-    EventListener.add(EVENT_PLAYER_UNIT_DAMAGED) ->
+    CreateTrigger()
+    ..registerAnyUnitEvent(EVENT_PLAYER_UNIT_DAMAGED)
+    ..addAction() ->
         if BlzGetEventDamageTarget() == miniboss[0] or BlzGetEventDamageTarget() == miniboss[1] or BlzGetEventDamageTarget() == miniboss[2]       
             if BlzGetEventDamageTarget() == miniboss[0]
                 if BlzGetEventDamageTarget().getUserData() != 993

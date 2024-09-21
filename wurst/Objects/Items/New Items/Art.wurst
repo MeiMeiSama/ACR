@@ -1,0 +1,26 @@
+package Art
+
+import TimerUtils
+import ObjectDefinitions
+
+unit array user
+
+init
+    art() 
+
+function art()
+    CreateTrigger()
+    ..registerAnyUnitEvent(EVENT_PLAYER_UNIT_SPELL_EFFECT)
+    ..addAction() ->
+        if GetSpellAbilityId() == 'A0UI'
+            let caster = GetTriggerUnit()
+            let id = caster.getOwner().getId()
+            user[id] = caster
+            user[id].addAbility(INTELLIGENCE_ABILITY_10)
+            CreateTimer()..start(30, function removeArt)..setData(id)
+
+function removeArt()
+    let id = GetExpiredTimer().getData()
+    if user[id].hasAbility(INTELLIGENCE_ABILITY_10)
+        user[id].removeAbility(INTELLIGENCE_ABILITY_10)
+    GetExpiredTimer().destr()

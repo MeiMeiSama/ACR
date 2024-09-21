@@ -121,6 +121,9 @@ public constant MANA_ABILITY_150 = compiletime(ABIL_ID_GEN.next())
 public constant MANA_ABILITY_225 = compiletime(ABIL_ID_GEN.next())
 public constant ARMOR_ABILITY_20 = compiletime(ABIL_ID_GEN.next())
 public constant ALLSTAT_ABILITY_10 = compiletime(ABIL_ID_GEN.next())
+public constant STRENGTH_ABILITY_10 = compiletime(ABIL_ID_GEN.next())
+public constant INTELLIGENCE_ABILITY_10 = compiletime(ABIL_ID_GEN.next())
+public constant AGILITY_ABILITY_10 = compiletime(ABIL_ID_GEN.next())
 
 // ------------------------------ Heroes ------------------------------
 public let PORTGASD_ACE = compiletime(HERO_ID_GEN.next())
