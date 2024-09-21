@@ -21,12 +21,43 @@ Remember, that you can also make triggers in GUI in the World Editor, and when y
 (Edit -> Convert to Custom Text)
 You can use this converted JASS to use as inspiration and code it in Wurst, it is almost similar, same API.
 */
-
+/*
+region tpright
+region tpleft
+region tpbottom
+region tpmain
+*/
 init
     teleporterAnimations()
-
+    /*teleporterTp()
+    regions()
+    */ 
 function teleporterAnimations ()
     SetDoodadAnimationRect(gg_rct_TeleportBossesLeft, 'D029', "stand", false)
     SetDoodadAnimationRect(gg_rct_TeleportBossesRight, 'D029', "stand", false)
     SetDoodadAnimationRect(gg_rct_TeleportBossesBottom, 'D029', "stand", false)
     SetDoodadAnimationRect(gg_rct_TeleportBossesMain, 'D029', "stand", false)
+/*
+function teleporterTp()
+    CreateTrigger()
+    ..registerGameEvent(EVENT_GAME_ENTER_REGION)
+    ..addAction() ->
+        if GetTriggeringRegion() == tpleft and GetEnteringUnit().isType(UNIT_TYPE_HERO)
+            let u = GetEnteringUnit()
+            u.setPos(GetRectCenterX(gg_rct_TeleportBossesMain), GetRectCenterY(gg_rct_TeleportBossesMain))
+        if GetTriggeringRegion() == tpright and GetEnteringUnit().isType(UNIT_TYPE_HERO)
+            let u = GetEnteringUnit()
+            u.setPos(GetRectCenterX(gg_rct_TeleportBossesMain), GetRectCenterY(gg_rct_TeleportBossesMain))    
+        if GetTriggeringRegion() == tpbottom and GetEnteringUnit().isType(UNIT_TYPE_HERO)
+            let u = GetEnteringUnit()
+            u.setPos(GetRectCenterX(gg_rct_TeleportBossesMain), GetRectCenterY(gg_rct_TeleportBossesMain))
+        if GetTriggeringRegion() == tpmain and GetEnteringUnit().isType(UNIT_TYPE_HERO)
+            let u = GetEnteringUnit()
+            u.setPos(GetRectCenterX(gg_rct_CenterOfMap), GetRectCenterY(gg_rct_CenterOfMap))
+
+function regions()
+    RegionAddRect(tpleft, gg_rct_TeleportBossesLeft)
+    RegionAddRect(tpright, gg_rct_TeleportBossesRight)
+    RegionAddRect(tpbottom, gg_rct_TeleportBossesBottom) 
+    RegionAddRect(tpmain, gg_rct_TeleportBossesMain)
+*/              
