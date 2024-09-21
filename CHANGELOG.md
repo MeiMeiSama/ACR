@@ -12,22 +12,22 @@
 4. Improved Shop locations, should be concise now, and more easily clickable.
 
 ### Changed
-Overall rework on items icons.
+1. Overall rework on items icons.
 
 ### Fixed
-Madoka and Kiara T cinematic planets fixed.
-Melt W doing double damage.
-Kizaru R knockback removed.
-Kiyohime STR E should now be bug free.
-Dante model.
-Akame and Jack F to Max MS.
-Sting, Rogue and Rentaro G fixed.
-Saber Ryougi perma w vision fixed.
-Levi crash W fixed.
-Kiara F ms passive fixed (no longer from lvl 1).
+1. Madoka and Kiara T cinematic planets fixed.
+2. Melt W doing double damage.
+3. Kizaru R knockback removed.
+4. Kiyohime STR E should now be bug free.
+5. Dante model.
+6. Akame and Jack F to Max MS.
+7. Sting, Rogue and Rentaro G fixed.
+8. Saber Ryougi perma w vision fixed.
+9. Levi crash W fixed.
+10. Kiara F ms passive fixed (no longer from lvl 1).
 
 ### Deleted
-MDD removed.
+1. MDD removed.
 
 # ━━━━━━━━━ Anime Carnage Reforged v2.0.7 ━━━━━━━━━ #
 
