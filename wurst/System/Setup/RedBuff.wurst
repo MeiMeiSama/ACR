@@ -12,7 +12,7 @@ function redBonusDamage()
     CreateTrigger()
     ..registerAnyUnitEvent(EVENT_PLAYER_UNIT_DAMAGED)
     ..addAction() ->
-        if GetEventDamageSource().hasAbility(REDBUFF_BUFF) and BlzGetEventAttackType() == ATTACK_TYPE_MAGIC
+        if GetEventDamageSource().hasAbility(REDBUFF_BUFF) and BlzGetEventAttackType() == ATTACK_TYPE_MAGIC == false and BlzGetEventAttackType() == ATTACK_TYPE_CHAOS == false
             let caster = GetEventDamageSource()
             let victim = BlzGetEventDamageTarget()
             let currentDamage = GetEventDamage()

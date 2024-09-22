@@ -1107,7 +1107,11 @@ init
                     // ━━━━━━━━━━━━━━━ [SPECIAL CASES: SUPER EXCEPTIONS] ━━━━━━━━━━━━━━━━━━ //
 
                     if caster.hasAbility('B068')                                                        // Sistine's F buff
-                        DamageEvent.setAmount(DamageEvent.getAmount()*1.30)                         
+                        DamageEvent.setAmount(DamageEvent.getAmount()*1.30)
+
+                    if caster.hasAbility(REDBUFF_BUFF)
+                        DamageEvent.setAmount(DamageEvent.getAmount()*1.10)
+                             
 
                     if target.hasAbility('B04P') and DamageEvent.getAmount() >= target.getHP()          // SAber Lily's F buff
                         DamageEvent.setAmount(0)

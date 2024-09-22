@@ -12,8 +12,6 @@ int  randomBuff
 effect array red
 effect array blue
 effect array yellow
-effect array white
-effect array orange
 effect array green
 
 init
@@ -26,16 +24,13 @@ function onBossDeath()
         if GetDyingUnit() == miniboss[0] or GetDyingUnit() == miniboss[1] or GetDyingUnit() == miniboss[2]
             let killer = GetKillingUnit()
             let pid = killer.getOwner().getId()
-            let randomBuff = GetRandomInt(1, 6)
+            let randomBuff = GetRandomInt(1, 4)
             switch randomBuff    
                 case 1 //red
                     for i = 0 to 12
                         if udg_PlayHero[i].getOwner().isAllyOf(killer.getOwner())
                             let id = udg_PlayHero[i].getOwner().getId()
-                            new DummyCaster()
-                            ..owner(udg_PlayHero[i].getOwner())
-                            ..origin(udg_PlayHero[i].getPos())
-                            ..castTarget(DUMMY_REDBUFF_ABILITY, 1, OrderIds.innerfire, udg_PlayHero[i])
+                            UnitAddAbility(udg_PlayHero[id], DUMMY_REDBUFF_ABILITY)
                             red[id] = addEffect("war3mapImported\\IlluminaRing_red.mdx", udg_PlayHero[i], "origin")
                             CreateTimer()..start(180, function removeRed)..setData(id) 
                 case 2 //blue
@@ -55,21 +50,7 @@ function onBossDeath()
                             ..castTarget(DUMMY_YELLOWBUFF_ABILITY, 1, OrderIds.bloodlust, udg_PlayHero[i])
                             yellow[id] = addEffect("war3mapImported\\IlluminaRing_yellow.mdx", udg_PlayHero[i], "origin")
                             CreateTimer()..start(180, function removeYellow)..setData(id)
-                case 4 //orange
-                    for i = 0 to 12
-                        if udg_PlayHero[i].getOwner().isAllyOf(killer.getOwner())
-                            let id = udg_PlayHero[i].getOwner().getId()
-                            UnitAddAbility(udg_PlayHero[id], DUMMY_ORANGEBUFF_ABILITY)
-                            orange[id] = addEffect("war3mapImported\\IlluminaRing_orange.mdx", udg_PlayHero[i], "origin")
-                            CreateTimer()..start(180, function removeOrange)..setData(id)
-                case 5 //white
-                    for i = 0 to 12
-                        if udg_PlayHero[i].getOwner().isAllyOf(killer.getOwner())
-                            let id = udg_PlayHero[i].getOwner().getId()
-                            UnitAddAbility(udg_PlayHero[id], DUMMY_WHITEBUFF_ABILITY)
-                            white[id] = addEffect("war3mapImported\\IlluminaRing_white.mdx", udg_PlayHero[i], "origin")
-                            CreateTimer()..start(180, function removeWhite)..setData(id)
-                case 6 //green
+                case 4 //green
                     for i = 0 to 12
                         if udg_PlayHero[i].getOwner().isAllyOf(killer.getOwner())
                             let id = udg_PlayHero[i].getOwner().getId()
@@ -87,7 +68,9 @@ function checkBuffs()
     GetExpiredTimer().destr()
 
 function removeRed()
-    let id = GetExpiredTimer().getData()   
+    let id = GetExpiredTimer().getData()
+    if udg_PlayHero[id].hasAbility(DUMMY_REDBUFF_ABILITY)
+        UnitRemoveAbility(udg_PlayHero[id], DUMMY_REDBUFF_ABILITY)    
     red[id].destr()        
     GetExpiredTimer().destr()    
 
@@ -102,20 +85,6 @@ function removeYellow()
     let id = GetExpiredTimer().getData()   
     yellow[id].destr()        
     GetExpiredTimer().destr()        
-
-function removeWhite()
-    let id = GetExpiredTimer().getData()
-    if udg_PlayHero[id].hasAbility(DUMMY_WHITEBUFF_ABILITY)
-        UnitRemoveAbility(udg_PlayHero[id], DUMMY_WHITEBUFF_ABILITY)
-    white[id].destr()            
-    GetExpiredTimer().destr()    
-
-function removeOrange()
-    let id = GetExpiredTimer().getData()
-    if udg_PlayHero[id].hasAbility(DUMMY_ORANGEBUFF_ABILITY)
-        UnitRemoveAbility(udg_PlayHero[id], DUMMY_ORANGEBUFF_ABILITY)  
-    orange[id].destr()           
-    GetExpiredTimer().destr()   
 
 function removeGreen()
     let id = GetExpiredTimer().getData()
