@@ -1,6 +1,5 @@
 package RedBuff
 
-import ObjectDefinitions
 import DamageEvent
 
 constant BONUS_DAMAGE_FACTOR = 0.10
@@ -12,7 +11,7 @@ function redBonusDamage()
     CreateTrigger()
     ..registerAnyUnitEvent(EVENT_PLAYER_UNIT_DAMAGED)
     ..addAction() ->
-        if GetEventDamageSource().hasAbility(REDBUFF_BUFF) and BlzGetEventAttackType() == ATTACK_TYPE_MAGIC == false and BlzGetEventAttackType() == ATTACK_TYPE_CHAOS == false
+        if GetEventDamageSource().hasAbility('A19P') and BlzGetEventAttackType() == ATTACK_TYPE_MAGIC == false and BlzGetEventAttackType() == ATTACK_TYPE_CHAOS == false
             let caster = GetEventDamageSource()
             let victim = BlzGetEventDamageTarget()
             let currentDamage = GetEventDamage()

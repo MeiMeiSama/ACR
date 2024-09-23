@@ -125,12 +125,6 @@ import ObjectDefinitions
     ..setTooltipNormalExtended(1, "Empty")
     ..setIcon("Empty")
 
-    new BuffDefinition(REDBUFF_BUFF, AbilityIds.trueshotAura)
-    ..setName("Red Buff")
-    ..setTooltipNormal(1, "Red Buff")
-    ..setTooltipNormalExtended(1, "This unit have increased DMG")
-    ..setIcon("ReplaceableTextures\\CommandButtons\\BTNStormX.blp")
-
     new BuffDefinition(BLUEBUFF_BUFF, AbilityIds.manaRegenerationAura)
     ..setName("Blue Buff")
     ..setTooltipNormal(1, "Blue Buff")

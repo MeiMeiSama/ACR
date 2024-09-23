@@ -30,7 +30,7 @@ function onBossDeath()
                     for i = 0 to 12
                         if udg_PlayHero[i].getOwner().isAllyOf(killer.getOwner())
                             let id = udg_PlayHero[i].getOwner().getId()
-                            UnitAddAbility(udg_PlayHero[id], DUMMY_REDBUFF_ABILITY)
+                            UnitAddAbility(udg_PlayHero[id], 'A19P')
                             red[id] = addEffect("war3mapImported\\IlluminaRing_red.mdx", udg_PlayHero[i], "origin")
                             CreateTimer()..start(180, function removeRed)..setData(id) 
                 case 2 //blue
@@ -69,8 +69,8 @@ function checkBuffs()
 
 function removeRed()
     let id = GetExpiredTimer().getData()
-    if udg_PlayHero[id].hasAbility(DUMMY_REDBUFF_ABILITY)
-        UnitRemoveAbility(udg_PlayHero[id], DUMMY_REDBUFF_ABILITY)    
+    if udg_PlayHero[id].hasAbility('A19P')
+        UnitRemoveAbility(udg_PlayHero[id], 'A19P')    
     red[id].destr()        
     GetExpiredTimer().destr()    
 

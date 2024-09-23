@@ -359,8 +359,6 @@ public let AINZE_SKIN = compiletime(UNIT_ID_GEN.next())
 
 ///////////////////// Dummy and abilities for TeamBuffs/////////////////////////
 public let DUMMY_AMANO = compiletime(UNIT_ID_GEN.next())
-public constant DUMMY_REDBUFF_ABILITY = compiletime(ABIL_ID_GEN.next())
-public constant REDBUFF_BUFF = compiletime(BUFF_ID_GEN.next())
 public constant DUMMY_BLUEBUFF_ABILITY = compiletime(ABIL_ID_GEN.next())
 public constant BLUEBUFF_BUFF = compiletime(BUFF_ID_GEN.next())
 public constant DUMMY_YELLOWBUFF_ABILITY = compiletime(ABIL_ID_GEN.next())
