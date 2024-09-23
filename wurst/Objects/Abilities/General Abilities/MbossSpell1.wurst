@@ -43,7 +43,7 @@ public function miniBoss1()
                 forUnitsInRange(bossu.getPos(), 600) (unit victim) ->
                     if victim.isAlive() and victim.isEnemyOf(bossu)
                         let pid = victim.getUserData()
-                        bossu.damageTarget(victim, 800, ATTACK_TYPE_MAGIC)
+                        bossu.damageTarget(victim, 1000, ATTACK_TYPE_MAGIC)
                         effect2[pid] = addEffect("war3mapImported\\Water Spout.mdx", victim.getPos())
                         ..setScale(0.70)
                         CreateTimer()..start(1.2, function miniBossFlush2)..setData(pid)

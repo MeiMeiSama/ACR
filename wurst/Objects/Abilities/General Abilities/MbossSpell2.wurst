@@ -91,7 +91,7 @@ function dummyDashStart()
     spellcasterpos[id] = spellcaster[id].getPos()
     spellvictimpos[id] = spellvictim[id].getPos()
     if dummyUnit.getPos().distanceTo(spellvictimpos[id]) <= 100
-        spellcaster[id].damageTarget(spellvictim[id], 700)
+        spellcaster[id].damageTarget(spellvictim[id], 800)
         dummyUnit.remove()
         GetExpiredTimer().destr()
     else
