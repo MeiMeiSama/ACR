@@ -129,19 +129,19 @@ import ObjectDefinitions
     ..setName("Blue Buff")
     ..setTooltipNormal(1, "Blue Buff")
     ..setTooltipNormalExtended(1, "This unit have increased mana regeneration")
-    ..setIcon("ReplaceableTextures\\CommandButtons\\BTNSoulBurn.blp")
+    ..setIcon("ReplaceableTextures\\PassiveButtons\\PASBTNANA_BlueButterfly.blp")
 
     new BuffDefinition(YELLOWBUFF_BUFF, AbilityIds.bloodlust)
     ..setName("Yellow Buff")
     ..setTooltipNormal(1, "Yellow Buff")
     ..setTooltipNormalExtended(1, "This unit have increased MS and AS")
-    ..setIcon("ReplaceableTextures\\CommandButtons\\BTNSunX.blp")
+    ..setIcon("ReplaceableTextures\\PassiveButtons\\PASBTNYellowSeal.blp")
 
     new BuffDefinition(GREENBUFF_BUFF, AbilityIds.unholyAura)
     ..setName("Green Buff")
     ..setTooltipNormal(1, "Green Buff")
     ..setTooltipNormalExtended(1, "This unit have increased hp regeneration")
-    ..setIcon("ReplaceableTextures\\CommandButtons\\BTNThunderX.blp")
+    ..setIcon("ReplaceableTextures\\PassiveButtons\\PASBTNTortured SoulGreen.blp")
 
     new BuffDefinition(GREENBUFF2_BUFF, AbilityIds.enduranceAura)
     ..setName("Green Buff")
