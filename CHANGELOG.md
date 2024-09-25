@@ -13,6 +13,8 @@
 
 ### Changed
 1. Overall rework on items icons.
+2. Wards nerfed.
+3. Vergil R changed to the previous 2nd T (dante T).
 
 ### Fixed
 1. Madoka and Kiara T cinematic planets fixed.
