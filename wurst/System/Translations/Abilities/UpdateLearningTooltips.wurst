@@ -854,7 +854,7 @@ public function unit.updateLearningTooltips ()
             "\n"+cd+cooldown+
             "\n"+dmg+damageabil+plus+bracketleft+damagestat+multiply+stat+bracketright+CR)  
 
-        else if SPELL_R[id] == 'A19Q'
+        /*else if SPELL_R[id] == 'A19Q'
             lvl = (SPELL_R[id].getSkillLearnLvl(id))
             damageabil = (70 * lvl).toString()
             damagestat = (2 + (1 * lvl)).toString()
@@ -863,11 +863,11 @@ public function unit.updateLearningTooltips ()
             cooldown = (30 + (lvl * 5)).toString()
             SPELL_R[id]..setLearningTitle(BLUE+BlzGetAbilityResearchTooltip(SPELL_R[id], this.getAbilityLevel(SPELL_R[id]) - 1))
             ..setLearningDescription(GOLD+
-            "Vergil creates 8 projectiles. This ability becomes R2 for up to 8 seconds."+
+            "Vergil teleports to the targeted area and deals damage to enemies around him afterwards."+
             "\n\n"+range+rangenumber+
             "\n"+mana+manacost+
             "\n"+cd+cooldown+
-            "\n"+dmg+damageabil+plus+bracketleft+damagestat+multiply+stat+bracketright+CR)
+            "\n"+dmg+damageabil+plus+bracketleft+damagestat+multiply+stat+bracketright+CR)*/
 
         else
             lvl = (SPELL_R[id].getSkillLearnLvl(id))

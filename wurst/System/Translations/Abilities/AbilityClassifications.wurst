@@ -372,7 +372,7 @@ public function int.isETeleport () returns boolean
     return false
 
 public function int.isRTeleport () returns boolean
-    if (this == 'A01G') or (this == 'A0ZF') or (this == 'A0PG') or (this == 'A0DE') or (this == 'A0TI') or (this == 'A03T') or (this == 'A0JI') or (this == 'A0CS')
+    if (this == 'A01G') or (this == 'A0ZF') or (this == 'A0PG') or (this == 'A0DE') or (this == 'A0TI') or (this == 'A03T') or (this == 'A0JI') or (this == 'A0CS') or (this == 'A19Q')
         return true
     return false
 

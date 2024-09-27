@@ -15,7 +15,7 @@
 ### Changed
 1. Overall rework on items icons.
 2. Wards harshly nerfed.
-3. Vergil R changed to the previous 2nd T (dante T). (not yet)
+3. Vergil R changed to the previous 2nd T (dante T).
 4. Sakuya G now have mana cost.
 5. Karna and Mashu (shielder) W now puts them next to their target.
 

@@ -173,7 +173,7 @@ function trig_VergilQWRTFFunc007Func001Func002Func001Func002Func002Func002Func00
     return IsUnitType(GetFilterUnit(), UNIT_TYPE_STRUCTURE) == false and IsUnitInGroup(GetFilterUnit(), LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 744928215)) == false and IsUnitEnemy(GetFilterUnit(), LoadPlayerHandle(YDLOC, GetHandleId(GetExpiredTimer()), 603)) == true and IsUnitDeadBJ(GetFilterUnit()) == false and I2R(GetUnitAbilityLevelSwapped('Avul', GetFilterUnit())) != 1.00
 function trig_VergilQWRTFFunc007Func001Func002Func001Func002Func002Func002Func002Func009Func010Func013A()
     SaveUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 550, GetEnumUnit())
-    DamageEvent.setNextDamageId(DAMAGE_ABILITY_T)
+    DamageEvent.setNextDamageId(DAMAGE_ABILITY_R)
     DamageEvent.setNextDamageFromCode()
     UnitDamageTargetBJ(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 550), I2R(GetHeroAgi(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), true)) * 15.00, ATTACK_TYPE_MAGIC, DAMAGE_TYPE_MAGIC)
     GroupAddUnit(LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 744928215), GetEnumUnit())
@@ -1093,7 +1093,7 @@ function trig_VergilQWRTFActions()
             SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 550, LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 550))
             SaveLocationHandle(YDLOC, GetHandleId(_ydl_timer), 310, LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 310))
             SaveInteger(YDLOC, GetHandleId(_ydl_timer), 280, LoadInteger(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 280))
-            TimerStart(_ydl_timer, 0.01, true, function trig_VergilQWRTFFunc007Func001Func002Func001Func002Func002Func002Func002Func009T)
+            TimerStart(_ydl_timer, 0.0040, true, function trig_VergilQWRTFFunc007Func001Func002Func001Func002Func002Func002Func002Func009T)
     else if GetSpellAbilityId() == 'A0HW'
         vergilTTargetPoint = vec2(GetSpellTargetX(), GetSpellTargetY())
         soundPlay("war3mapImported\\Vergil5.wav", GetUnitX(udg_Unitsound), GetUnitY(udg_Unitsound))
