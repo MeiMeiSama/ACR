@@ -256,7 +256,7 @@ public function tooltip_R (int pid)
         ..setField(ABILITY_RLF_CAST_RANGE, hero.getAbilityLevel(skill) - 1, range.toReal())
         ..setField(ABILITY_RLF_COOLDOWN, hero.getAbilityLevel(skill) - 1, cd.toReal()) 
 
-    else if skill == 'A0WQ' //Vergil    
+    else if skill == 'A19Q' //Vergil    
         spellLvl = skill.getSkillLvl(id)
         dmg = (70 * spellLvl) + ((2 + spellLvl) * stat)
         cd = (30 + (spellLvl * 5))

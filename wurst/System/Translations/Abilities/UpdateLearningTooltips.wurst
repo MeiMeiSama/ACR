@@ -854,7 +854,7 @@ public function unit.updateLearningTooltips ()
             "\n"+cd+cooldown+
             "\n"+dmg+damageabil+plus+bracketleft+damagestat+multiply+stat+bracketright+CR)  
 
-        else if SPELL_R[id] == 'A0WQ'
+        else if SPELL_R[id] == 'A19Q'
             lvl = (SPELL_R[id].getSkillLearnLvl(id))
             damageabil = (70 * lvl).toString()
             damagestat = (2 + (1 * lvl)).toString()

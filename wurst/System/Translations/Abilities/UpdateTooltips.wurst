@@ -1101,8 +1101,8 @@ public function addAbilities (unit hero)
         SPELL_W[id] = 'A0EM'
         SPELL_W2[id] = 'A0YC'
         SPELL_E[id] = 'A0Y7'
-        SPELL_R[id] = 'A0WQ'
-        SPELL_R2[id] = 'A0YD'
+        SPELL_R[id] = 'A19Q' // was Q0WQ
+        // SPELL_R2[id] = 'A0YD'
         SPELL_T[id] = 'A0HW'
         SPELL_F[id] = 'A0YF'
         SPELL_G[id] = 'A0YJ'
