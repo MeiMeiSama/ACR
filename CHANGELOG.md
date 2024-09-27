@@ -5,6 +5,7 @@
 2. Added brand new items.
 3. Added skin system.
 4. Added new side mini-bosses for team buffs.
+5. Re added attribute drugs.
 
 ### Improved
 1. Improved Terrain Layout.
@@ -13,8 +14,10 @@
 
 ### Changed
 1. Overall rework on items icons.
-2. Wards nerfed.
-3. Vergil R changed to the previous 2nd T (dante T).
+2. Wards harshly nerfed.
+3. Vergil R changed to the previous 2nd T (dante T). (not yet)
+4. Sakuya G now have mana cost.
+5. Karna and Mashu (shielder) W now puts them next to their target.
 
 ### Fixed
 1. Madoka and Kiara T cinematic planets fixed.

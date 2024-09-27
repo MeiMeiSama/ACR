@@ -128,6 +128,11 @@ function ringsUpgrade ()
     sunRing5.addItem(SUN_RING_VONGOLA) // Ring X
     sunRing5.addItem(SUN_ARCOBALENO_RECIPE) // Sun Arcobaleno Recipe
 
+    let mareSun = new ItemRecipe(MARE_SUN_RING, 0, false, true, true) // Mare Sun
+    mareSun.addItem(SUN_RING_VONGOLA) // Ring X
+    mareSun.addItem(SUN_RING_VONGOLA) // Ring X
+    mareSun.addItem(MARE_SUN_RECIPE) // Mare Sun Recipe
+
     // ------------------------- Thunder Ring ------------------------- //
     let thunderRing1 = new ItemRecipe(THUNDER_RING_2, 0, false, true, true) // Ring 2
     thunderRing1.addItem(THUNDER_RING_1) // Ring 1

@@ -1,5 +1,5 @@
 package MareSun
-
+/*
 import TimerUtils
 import ACR_TagSystem
 import DummyCaster
@@ -62,6 +62,4 @@ function mareSunTimerFunc()
         ..owner(mareSunUser[id].getOwner())
         ..origin(mareSunUser[id].getPos())
         ..castTarget('DUMMY_ABILITY_2_HERE', 1, OrderIds.bloodlust, mareSunUser[id])          
-
-
-    
+*/
