@@ -148,3 +148,10 @@ import ObjectDefinitions
     ..setTooltipNormal(1, "Green Buff")
     ..setTooltipNormalExtended(1, "This unit have increased health")
     ..setIcon("ReplaceableTextures\\CommandButtons\\BTNArcobalenoThunder.blp")
+
+    new BuffDefinition(MARE_SUN_BUFF, AbilityIds.bloodlust)
+    ..setName("Mare Sun Buff")
+    ..setTooltipNormal(1, "Mare Sun")
+    ..setTooltipNormalExtended(1, "This unit is under the effect of Mare Sun")
+    ..setArtTarget(1, SUN_EFFECT)
+    ..setIcon("ReplaceableTextures\\CommandButtons\\BTNMareSun [GShiro].blp")

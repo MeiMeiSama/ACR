@@ -92,7 +92,8 @@ public constant MANA_BURN_ABILITY = compiletime(ABIL_ID_GEN.next())
 public constant STAT_SWAP_ABILITY_STR = compiletime(ABIL_ID_GEN.next())
 public constant STAT_SWAP_ABILITY_AGI = compiletime(ABIL_ID_GEN.next())
 public constant STAT_SWAP_ABILITY_INT = compiletime(ABIL_ID_GEN.next())
-
+public constant MARE_SUN_DUMMY_SPELL = compiletime(ABIL_ID_GEN.next())
+public constant MARE_SUN_ABILITY = compiletime(ABIL_ID_GEN.next())
 
 // ------------------------------ Item Stat Abilities ------------------------------
 public constant HEALTH_ABILITY_14 = compiletime(ABIL_ID_GEN.next())
@@ -174,6 +175,7 @@ public constant SUN_VONGOLA_HOT_BUFF = compiletime(BUFF_ID_GEN.next())
 public constant SUN_ARCO_HOT_BUFF = compiletime(BUFF_ID_GEN.next())
 public constant THUNDER_VONGOLA_SLOW_DEBUFF = compiletime(BUFF_ID_GEN.next())
 public constant THUNDER_ARCO_SLOW_DEBUFF = compiletime(BUFF_ID_GEN.next())
+public constant MARE_SUN_BUFF = compiletime(BUFF_ID_GEN.next())
 
 // ------------------------------ Item Tome Upgrades ------------------------------
 public constant VONGOLA_RING_UPGRADE = compiletime(ITEM_ID_GEN.next())
@@ -201,6 +203,7 @@ public constant STAT_SWAP_ITEM_INT_RECIPE = compiletime(ITEM_ID_GEN.next())
 public constant LOLLIPOP_MANA_ITEM_RECIPE = compiletime(ITEM_ID_GEN.next())
 public constant HURT_NOT_ITEM_RECIPE = compiletime(ITEM_ID_GEN.next())
 public constant CHING_GPS_ITEM_RECIPE = compiletime(ITEM_ID_GEN.next())
+public constant MARE_SUN_RECIPE = compiletime(ITEM_ID_GEN.next())
 
 // ------------------------------ New Items ------------------------------
 
@@ -261,6 +264,7 @@ public constant THUNDER_RING_3 = compiletime(ITEM_ID_GEN.next())
 public constant THUNDER_RING_4 = compiletime(ITEM_ID_GEN.next())
 public constant THUNDER_RING_VONGOLA = compiletime(ITEM_ID_GEN.next())
 public constant THUNDER_RING_ARCOBALENO = compiletime(ITEM_ID_GEN.next())
+public constant MARE_SUN_RING = compiletime(ITEM_ID_GEN.next())
 
 // ------------------------------ Boots ------------------------------
 public constant MANA_BOOT = compiletime(ITEM_ID_GEN.next())

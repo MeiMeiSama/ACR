@@ -141,6 +141,17 @@ import Objects
     ..setModelUsed(Objects.treasurechest1)
     ..setInterfaceIcon("ReplaceableTextures\\CommandButtons\\BTNchinggps.blp")
 
+    new ItemDefinition(MARE_SUN_RECIPE, 'rnsp') // Mare Sun Recipe
+    ..setAbilities("")
+    ..setName("|cffffd700Recipe: |cffff8080Mare Sun")
+    ..setDescription("|cffff8080Requirements:|r|n|n|cffc0c0c02x Sun Ring X|n|n|cff008080Active:|n|n|r|cffffd700For the next 3 seconds, any damage dealt to you will be tracked. Afterwards, the next ability you use will deal additional damage equal to 25% of damage tracked by this ability and heals you for the same amount.|n|n|r|cffffd700Direct heal:|r|cffc0c0c0 15% of missing health |cffff8080+ |cffff3f3f5 x Strength|n|r|cffffd700Heal over time:|r|cffc0c0c0 5% of missing health |cffff8080+ |cffff3f3f1 x Strength  |r|n|cffffd700Cooldown: |cffff808045|r|n|n|cffc0c0c0Passive|r|n|n|cffff3f3fStrength + 110|n|r|cffffd700Increases the user's health regeneration by 55|n|r|cffffd700Increases the user's health by 1320")
+    ..setTooltipExtended("|cffff8080Requirements:|r|n|n|cffc0c0c02x Sun Ring X|n|n|cff008080Active:|n|n|r|cffffd700For the next 3 seconds, any damage dealt to you will be tracked. Afterwards, the next ability you use will deal additional damage equal to 25% of damage tracked by this ability and heals you for the same amount.|n|n|r|cffffd700Direct heal:|r|cffc0c0c0 15% of missing health |cffff8080+ |cffff3f3f5 x Strength|n|r|cffffd700Heal over time:|r|cffc0c0c0 5% of missing health |cffff8080+ |cffff3f3f1 x Strength  |r|n|cffffd700Cooldown: |cffff808045|r|n|n|cffc0c0c0Passive|r|n|n|cffff3f3fStrength + 110|n|r|cffffd700Increases the user's health regeneration by 55|n|r|cffffd700Increases the user's health by 1320")
+    ..setGoldCost(2000)..setLumberCost(0)
+    ..setDroppedWhenCarrierDies(false)..setStockReplenishInterval(0)
+    ..setButtonPositionX(1)..setButtonPositionY(0)
+    ..setModelUsed(Objects.treasurechest1)
+    ..setInterfaceIcon("ReplaceableTextures\\CommandButtons\\BTNMareSun [GShiro].blp")
+
     new ItemDefinition(VONGOLA_RING_UPGRADE_TOME, ItemIds.manualofHealth) // Vongola Ring Tome Recipe
     ..setAbilities("")
     ..setHitPoints(0)
@@ -729,6 +740,18 @@ import Objects
     ..setDroppedWhenCarrierDies(false)..setStockReplenishInterval(0)
     ..setModelUsed(Objects.treasurechest1)
     ..setInterfaceIcon("ReplaceableTextures\\CommandButtons\\BTNArcobalenoSun.blp")
+
+    new ItemDefinition(MARE_SUN_RING, ItemIds.hornoftheClouds)
+    ..setAbilities(commaList(MARE_SUN_ABILITY))
+    ..setCooldownGroup("A07D")
+    ..setName("|cffff8080Mare Sun")
+    ..setDescription("|n|cff008080Active:|n|n|r|cffffd700For the next 3 seconds, any damage dealt to the user will be tracked. Afterwards, the next ability you the user use will deal additional damage equal to 25% of damage tracked by this ability and heals for the same amount.|n|n|r|cffffd700Direct heal:|cffff0000 15% of missing health + |cffff00005x Strength|n|r|cffffd700Heal over time:|cffff0000 5% of missing health + |cffff00003x Strength  |r|n|n|cffffd700Cooldown: |cffff808045|r|n|n|cffff0000Strength + 110|n|r|cffffd700Increases the user's health regeneration by 55|n|r|cffffd700Increases the user's health by 1320")
+    ..setTooltipBasic("|cffff8080Mare Sun")
+    ..setTooltipExtended("|n|cff008080Active:|n|n|r|cffffd700For the next 3 seconds, any damage dealt to the user will be tracked. Afterwards, the next ability you the user use will deal additional damage equal to 25% of damage tracked by this ability and heals for the same amount.|n|n|r|cffffd700Direct heal:|cffff0000 15% of missing health + |cffff00005x Strength|n|r|cffffd700Heal over time:|cffff0000 5% of missing health + |cffff00003x Strength  |r|n|n|cffffd700Cooldown: |cffff808045|r|n|n|cffff0000Strength + 110|n|r|cffffd700Increases the user's health regeneration by 55|n|r|cffffd700Increases the user's health by 1320")
+    ..setGoldCost(17000)..setLumberCost(0)
+    ..setDroppedWhenCarrierDies(false)..setStockReplenishInterval(0)
+    ..setModelUsed(Objects.treasurechest1)
+    ..setInterfaceIcon("ReplaceableTextures\\CommandButtons\\BTNMareSun [GShiro].blp")
 
 @compiletime function ring_Thunder()
 
