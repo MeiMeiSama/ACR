@@ -515,8 +515,9 @@ function trig_MikotoQWERTFGActions()
         SaveInteger(YDLOC, GetHandleId(_ydl_timer), 73782792, LoadInteger(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 73782792))
         TimerStart(_ydl_timer, 0.003, true, function trig_MikotoQWERTFGFunc005Func023T)
     else if GetSpellAbilityId() == 'A013'
+        misaka = GetTriggerUnit()
         let caster = misaka
-        let victim = LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 549)
+        let victim = GetSpellTargetUnit()
         let playerr = caster.getOwner()
         let playerrr = victim.getOwner()
         let pid = caster.getOwner().getId() 
