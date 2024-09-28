@@ -25,6 +25,7 @@ function trig_AnziT___E___FFunc004Func001Func005Func002Func015T()
         DestroyTimer(GetExpiredTimer())
 function trig_AnziT___E___FFunc004Func001Func005T()
     timer _ydl_timer
+    ainz = GetTriggerUnit()
     SaveInteger(YDLOC, GetHandleId(GetExpiredTimer()), 280, LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 280) + 1)
     if LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 280) >= 20
         SetUnitInvulnerable(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), false)
@@ -41,7 +42,7 @@ function trig_AnziT___E___FFunc004Func001Func005T()
             DoNothing()
         else
             SetUnitPositionLocFacingBJ(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 683), GetUnitFacing(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594)))
-        let caster = LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594)
+        let caster = ainz
         let pid = caster.getOwner().getId()
         if skinEquipped[pid] == true
             SaveUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 843857024, CreateUnitAtLoc(LoadPlayerHandle(YDLOC, GetHandleId(GetExpiredTimer()), 603), AINZE_SKIN, LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 1108), GetUnitFacing(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594))))
