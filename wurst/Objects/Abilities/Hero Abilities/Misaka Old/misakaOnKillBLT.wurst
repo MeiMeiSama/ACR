@@ -20,15 +20,15 @@ public function misakaKillBLTFunc()
                 if misakaRKill == true
                     if GetLocalPlayer() == GetDyingUnit().getOwner()
                         CinematicFilterGenericBJ(5., BLEND_MODE_BLEND, "war3mapImported\\xpjfst.blp", 100, 100., 100, 30., 100., 100., 100., 30.)
-                        CreateTimer()..start(2, function misakaKillFlush)
+                    CreateTimer()..start(2, function misakaKillFlush)
                 else if misakaTKill == true  
                     if GetLocalPlayer() == GetDyingUnit().getOwner()   
                         CinematicFilterGenericBJ(5., BLEND_MODE_BLEND, "war3mapImported\\xpjtst.blp", 100, 100., 100, 30., 100., 100., 100., 30.)    
-                        CreateTimer()..start(2, function misakaKillFlush)
+                    CreateTimer()..start(2, function misakaKillFlush)
                 else if misakaFKill == true  
                     if GetLocalPlayer() == GetDyingUnit().getOwner()   
                         CinematicFilterGenericBJ(5., BLEND_MODE_BLEND, "war3mapImported\\pjswst.blp", 100, 100., 100, 30., 100., 100., 100., 30.)   
-                        CreateTimer()..start(2, function misakaKillFlush)
+                    CreateTimer()..start(2, function misakaKillFlush)
 
 
 function misakaKillFlush()
