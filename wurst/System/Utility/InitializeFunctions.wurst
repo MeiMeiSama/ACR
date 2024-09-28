@@ -74,6 +74,7 @@ import Sabo_G
 import N_Natsu_G
 import S_Natsu_G
 import Cobra_G
+import misakaOnKillBLT
 /*
 
     - Iniitalize functions after the game has started, when most data is "valid" such as udg_Playhero
@@ -173,8 +174,11 @@ public function initFunctions ()
         if udg_PlayHero[i].getTypeId() == 'H006'
             wendyE()  
 
+        if udg_PlayHero[i].getTypeId() == 'H008'
+            misakaKillBLTFunc()    
+
         if udg_PlayHero[i].getTypeId() == 'H00M'
-            minatoE()    
+            minatoE()   
 
         if udg_PlayHero[i].getTypeId() == 'H023'
             byakuranF() 
