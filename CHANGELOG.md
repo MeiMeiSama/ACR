@@ -16,7 +16,7 @@
 1. Overall rework on items icons.
 2. Wards harshly nerfed.
 3. Vergil R changed to the previous 2nd T (dante T).
-4. Sakuya G now have mana cost.
+4. Sakuya G now costs mana.
 5. Karna and Mashu (shielder) W now puts them next to their target.
 
 ### Fixed
@@ -25,7 +25,7 @@
 3. Kizaru R knockback removed.
 4. Kiyohime STR E should now be bug free.
 5. Dante model.
-6. Akame and Jack F to Max MS.
+6. Akame and Jack F now give Max MS for their duration.
 7. Sting, Rogue and Rentaro G fixed.
 8. Saber Ryougi perma w vision fixed.
 9. Levi crash W fixed.
