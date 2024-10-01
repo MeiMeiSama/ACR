@@ -4,6 +4,7 @@ import AbilityGlobals
 import TimerUtils
 import SkinSystem
 import ACR_SoundCreation
+import misakaOnKillBLT
 
 int array madokaTCount
 constant dokadoka = acrCreateSound("war3mapImported\\dokadokaT.mp3")
@@ -14,9 +15,7 @@ init
     initTrig_MadokaT()
 
 function dk()
-    DisplayCineFilter(false)
-    FlushChildHashtable(YDLOC, GetHandleId(GetExpiredTimer()))
-    DestroyTimer(GetExpiredTimer())        
+    DisplayCineFilter(false)     
 
 function trig_MadokaTConditions() returns boolean
     return GetSpellAbilityId() == 'A0JK'
@@ -31,6 +30,7 @@ function trig_MadokaTFunc033Func026Func001Func001Func011T()
 function trig_MadokaTFunc033Func026Func001T()
     timer _ydl_timer
     if LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 280) >= 65
+        madokaTKill = false
         SetUnitTimeScalePercent(madoka, 100.00)
         SetUnitVertexColorBJ(madoka, 100, 100, 100, 0.00)
         madoka.startAbilityCooldown('A0JK')
@@ -229,27 +229,20 @@ function trig_MadokaTActions()
     integer trigger_ID = LoadInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 865)
     trigger_ID += 3
     madoka = GetTriggerUnit()
+    madokaTKill = true
     SaveInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 865, trigger_ID)
     SaveInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 1045, trigger_ID)
     udg_MHtime++
     SaveUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594, GetTriggerUnit())
     SaveLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 549, GetSpellTargetLoc())
     let caster = madoka
-    let victim = LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 549)
-    let playerr = caster.getOwner()
-    let playerrr = victim.getOwner()
     let pid = caster.getOwner().getId() 
     if skinEquipped[pid] == true
         PlaySoundBJ(gg_snd_Madoka5)
-        if GetLocalPlayer() == playerr
+        if GetLocalPlayer() == caster.getOwner()
             dokadoka.play()
-            CinematicFilterGenericBJ(5., BLEND_MODE_BLEND, "war3mapImported\\dokadokat2.blp", 100, 100., 100, 30., 100., 100., 100., 30.)
-        if GetLocalPlayer() == playerrr    
-            CinematicFilterGenericBJ(5., BLEND_MODE_BLEND, "war3mapImported\\dokadokat2.blp", 100, 100., 100, 30., 100., 100., 100., 30.)   
-        dkTimer = CreateTimer()
-        TimerStart(dkTimer, 3.5, false, function dk)
-        FlushChildHashtable(YDLOC, GetHandleId(GetExpiredTimer()))
-        DestroyTimer(GetExpiredTimer())
+            CinematicFilterGenericBJ(5., BLEND_MODE_BLEND, "war3mapImported\\dokadokat2.blp", 100, 100., 100, 30., 100., 100., 100., 30.) 
+        CreateTimer()..start(2, function dk)
     else    
         PlaySoundBJ(gg_snd_Madoka5)
     SavePlayerHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 603, GetOwningPlayer(madoka))

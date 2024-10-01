@@ -174,8 +174,8 @@ public function initFunctions ()
         if udg_PlayHero[i].getTypeId() == 'H006'
             wendyE()  
 
-        if udg_PlayHero[i].getTypeId() == 'H008'
-            misakaKillBLTFunc()    
+        if udg_PlayHero[i].getTypeId() == 'H008' or udg_PlayHero[i].getTypeId() == 'H00H'
+            misakaKillBLTFunc()        
 
         if udg_PlayHero[i].getTypeId() == 'H00M'
             minatoE()   
