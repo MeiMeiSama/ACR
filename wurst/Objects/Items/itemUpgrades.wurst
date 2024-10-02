@@ -289,7 +289,7 @@ function lollipopManaUpgrade ()
     lollipopManaItem.addItem(MANA_ORB_BIG) //big mana orb
 
     let mediumManaOrb = new ItemRecipe(MANA_ORB_MEDIUM, 0, false, true, true) // Boots Lv. 2
-    mediumManaOrb.addItem(MANA_ORB_SMALL) // small health orb
+    mediumManaOrb.addItem(MANA_ORB_SMALL) // small mana orb
     mediumManaOrb.addItem('I02U') //lesser upgrade catalyst
 
     let bigManaOrb = new ItemRecipe(MANA_ORB_BIG, 0, false, true, true) // Boots Lv. 2
