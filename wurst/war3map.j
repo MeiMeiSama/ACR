@@ -1,9 +1,9 @@
 globals
 //globals from FrameLoader:
 constant boolean LIBRARY_FrameLoader=true
-trigger FrameLoader__eventTrigger= CreateTrigger()
-trigger FrameLoader__actionTrigger= CreateTrigger()
-timer FrameLoader__t= CreateTimer()
+trigger FrameLoader___eventTrigger= CreateTrigger()
+trigger FrameLoader___actionTrigger= CreateTrigger()
+timer FrameLoader___t= CreateTimer()
 //endglobals from FrameLoader
     // User-defined
 boolean udg_ItemCleanupFlag= false
@@ -51,9 +51,9 @@ rect gg_rct_WaveBottomRightCorner= null
 rect gg_rct_WaveTopRightCorner= null
 rect gg_rct_Zangetsu_Area_Boss= null
 rect gg_rct_New_Bosses_Area= null
+rect gg_rct_TeleportBossesMainOut= null
 camerasetup gg_cam_SelectionScreenCamera= null
 trigger gg_trg_Item_Cleanup= null
-rect gg_rct_TeleportBossesMainOut= null
 string array Music
 hashtable nzHash= InitHashtable()
 code l__Code
@@ -2092,18 +2092,18 @@ endglobals
 // function FrameLoaderAdd takes code func returns nothing
     // func runs when the game is loaded.
     function FrameLoaderAdd takes code func returns nothing
-        call TriggerAddAction(FrameLoader__actionTrigger, func)
+        call TriggerAddAction(FrameLoader___actionTrigger, func)
     endfunction
 
-    function FrameLoader__timerAction takes nothing returns nothing
-        call TriggerExecute(FrameLoader__actionTrigger)
+    function FrameLoader___timerAction takes nothing returns nothing
+        call TriggerExecute(FrameLoader___actionTrigger)
     endfunction
-    function FrameLoader__eventAction takes nothing returns nothing
-        call TimerStart(FrameLoader__t, 0, false, function FrameLoader__timerAction)
+    function FrameLoader___eventAction takes nothing returns nothing
+        call TimerStart(FrameLoader___t, 0, false, function FrameLoader___timerAction)
     endfunction
-    function FrameLoader__init_function takes nothing returns nothing
-        call TriggerRegisterGameEvent(FrameLoader__eventTrigger, EVENT_GAME_LOADED)
-        call TriggerAddAction(FrameLoader__eventTrigger, function FrameLoader__eventAction)
+    function FrameLoader___init_function takes nothing returns nothing
+        call TriggerRegisterGameEvent(FrameLoader___eventTrigger, EVENT_GAME_LOADED)
+        call TriggerAddAction(FrameLoader___eventTrigger, function FrameLoader___eventAction)
     endfunction
 
 //library FrameLoader ends
@@ -4644,7 +4644,7 @@ function CreateRegions takes nothing returns nothing
     set gg_rct_Team2WaveLeft=Rect(3136.0, 160.0, 3584.0, 576.0)
     set gg_rct_Team2WaveRight=Rect(3232.0, 4832.0, 3680.0, 5248.0)
     set gg_rct_Team3Base=Rect(- 5184.0, - 5248.0, - 4736.0, - 4832.0)
-    set gg_rct_Team3BaseArea=Rect(- 5888.0, - 6240.0, - 3840.0, - 3936.0)
+    set gg_rct_Team3BaseArea=Rect(- 5856.0, - 6304.0, - 3840.0, - 4128.0)
     set gg_rct_Team3WaveCenter=Rect(- 5024.0, - 2816.0, - 4576.0, - 2400.0)
     set gg_rct_Team3WaveLeft=Rect(- 7616.0, - 5152.0, - 7168.0, - 4736.0)
     set gg_rct_Team3WaveRight=Rect(- 2944.0, - 5472.0, - 2496.0, - 5056.0)
@@ -5119,7 +5119,7 @@ function main takes nothing returns nothing
 
 
 
-call ExecuteFunc("FrameLoader__init_function")
+call ExecuteFunc("FrameLoader___init_function")
 
 
 endfunction //injected main function (! inject command)??
