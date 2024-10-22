@@ -1,9 +1,9 @@
 globals
 //globals from FrameLoader:
 constant boolean LIBRARY_FrameLoader=true
-trigger FrameLoader___eventTrigger= CreateTrigger()
-trigger FrameLoader___actionTrigger= CreateTrigger()
-timer FrameLoader___t= CreateTimer()
+trigger FrameLoader__eventTrigger= CreateTrigger()
+trigger FrameLoader__actionTrigger= CreateTrigger()
+timer FrameLoader__t= CreateTimer()
 //endglobals from FrameLoader
     // User-defined
 boolean udg_ItemCleanupFlag= false
@@ -15,43 +15,45 @@ item array udg_CleanedItem
 timer udg_timer= null
 
     // Generated
-rect gg_rct_Team1WaveCenter= null
-rect gg_rct_Team1WaveRight= null
-rect gg_rct_Team1WaveLeft= null
-rect gg_rct_Team2WaveCenter= null
-rect gg_rct_Team2WaveRight= null
-rect gg_rct_Team2WaveLeft= null
-rect gg_rct_Team3WaveCenter= null
-rect gg_rct_Team3WaveRight= null
-rect gg_rct_Team3WaveLeft= null
+rect gg_rct_1v1v1Area= null
+rect gg_rct_2v2v2Area= null
+rect gg_rct_BossArea= null
 rect gg_rct_CenterOfMap= null
+rect gg_rct_ColorfullBuffMonsterLeft= null
+rect gg_rct_ColorfullBuffMonsterRight= null
+rect gg_rct_ColorfullBuffMonsterTop= null
+rect gg_rct_Fire_Area_Boss= null
+rect gg_rct_FreeForAllArea= null
+rect gg_rct_Ice_Area_Boss= null
+rect gg_rct_Japan_Area_Boss= null
 rect gg_rct_Team1Base= null
+rect gg_rct_Team1BaseArea= null
+rect gg_rct_Team1WaveCenter= null
+rect gg_rct_Team1WaveLeft= null
+rect gg_rct_Team1WaveRight= null
 rect gg_rct_Team2Base= null
+rect gg_rct_Team2BaseArea= null
+rect gg_rct_Team2WaveCenter= null
+rect gg_rct_Team2WaveLeft= null
+rect gg_rct_Team2WaveRight= null
 rect gg_rct_Team3Base= null
+rect gg_rct_Team3BaseArea= null
+rect gg_rct_Team3WaveCenter= null
+rect gg_rct_Team3WaveLeft= null
+rect gg_rct_Team3WaveRight= null
+rect gg_rct_TeamBattleArea= null
+rect gg_rct_TeleportBossesBottom= null
+rect gg_rct_TeleportBossesLeft= null
+rect gg_rct_TeleportBossesMain= null
+rect gg_rct_TeleportBossesRight= null
 rect gg_rct_WaveBottomLeftCorner= null
 rect gg_rct_WaveBottomRightCorner= null
 rect gg_rct_WaveTopRightCorner= null
-rect gg_rct_BossArea= null
-rect gg_rct_2v2v2Area= null
-rect gg_rct_FreeForAllArea= null
-rect gg_rct_TeamBattleArea= null
-rect gg_rct_1v1v1Area= null
-rect gg_rct_Team1BaseArea= null
-rect gg_rct_Team2BaseArea= null
-rect gg_rct_Team3BaseArea= null
-rect gg_rct_Japan_Area_Boss= null
-rect gg_rct_Ice_Area_Boss= null
-rect gg_rct_Fire_Area_Boss= null
 rect gg_rct_Zangetsu_Area_Boss= null
-rect gg_rct_TeleportBossesBottom= null
-rect gg_rct_TeleportBossesLeft= null
-rect gg_rct_TeleportBossesRight= null
-rect gg_rct_TeleportBossesMain= null
-rect gg_rct_ColorfullBuffMonsterLeft= null
-rect gg_rct_ColorfullBuffMonsterTop= null
-rect gg_rct_ColorfullBuffMonsterRight= null
+rect gg_rct_New_Bosses_Area= null
 camerasetup gg_cam_SelectionScreenCamera= null
 trigger gg_trg_Item_Cleanup= null
+rect gg_rct_TeleportBossesMainOut= null
 string array Music
 hashtable nzHash= InitHashtable()
 code l__Code
@@ -2090,18 +2092,18 @@ endglobals
 // function FrameLoaderAdd takes code func returns nothing
     // func runs when the game is loaded.
     function FrameLoaderAdd takes code func returns nothing
-        call TriggerAddAction(FrameLoader___actionTrigger, func)
+        call TriggerAddAction(FrameLoader__actionTrigger, func)
     endfunction
 
-    function FrameLoader___timerAction takes nothing returns nothing
-        call TriggerExecute(FrameLoader___actionTrigger)
+    function FrameLoader__timerAction takes nothing returns nothing
+        call TriggerExecute(FrameLoader__actionTrigger)
     endfunction
-    function FrameLoader___eventAction takes nothing returns nothing
-        call TimerStart(FrameLoader___t, 0, false, function FrameLoader___timerAction)
+    function FrameLoader__eventAction takes nothing returns nothing
+        call TimerStart(FrameLoader__t, 0, false, function FrameLoader__timerAction)
     endfunction
-    function FrameLoader___init_function takes nothing returns nothing
-        call TriggerRegisterGameEvent(FrameLoader___eventTrigger, EVENT_GAME_LOADED)
-        call TriggerAddAction(FrameLoader___eventTrigger, function FrameLoader___eventAction)
+    function FrameLoader__init_function takes nothing returns nothing
+        call TriggerRegisterGameEvent(FrameLoader__eventTrigger, EVENT_GAME_LOADED)
+        call TriggerAddAction(FrameLoader__eventTrigger, function FrameLoader__eventAction)
     endfunction
 
 //library FrameLoader ends
@@ -4620,41 +4622,43 @@ endfunction
 function CreateRegions takes nothing returns nothing
     local weathereffect we
 
-    set gg_rct_Team1WaveCenter=Rect(- 7648.0, - 160.0, - 7200.0, 256.0)
-    set gg_rct_Team1WaveRight=Rect(- 9632.0, - 1056.0, - 9184.0, - 640.0)
-    set gg_rct_Team1WaveLeft=Rect(- 7584.0, 2400.0, - 7136.0, 2816.0)
-    set gg_rct_Team2WaveCenter=Rect(480.0, - 128.0, 928.0, 288.0)
-    set gg_rct_Team2WaveRight=Rect(480.0, 2368.0, 928.0, 2784.0)
-    set gg_rct_Team2WaveLeft=Rect(2112.0, - 544.0, 2560.0, - 128.0)
-    set gg_rct_Team3WaveCenter=Rect(- 3552.0, - 4992.0, - 3104.0, - 4576.0)
-    set gg_rct_Team3WaveRight=Rect(- 1408.0, - 5024.0, - 960.0, - 4608.0)
-    set gg_rct_Team3WaveLeft=Rect(- 5696.0, - 5024.0, - 5248.0, - 4608.0)
-    set gg_rct_CenterOfMap=Rect(- 3616.0, - 1056.0, - 3040.0, - 512.0)
-    set gg_rct_Team1Base=Rect(- 10240.0, 896.0, - 9792.0, 1312.0)
-    set gg_rct_Team2Base=Rect(2944.0, 1312.0, 3392.0, 1728.0)
-    set gg_rct_Team3Base=Rect(- 3552.0, - 7456.0, - 3104.0, - 7040.0)
-    set gg_rct_WaveBottomLeftCorner=Rect(- 8000.0, - 3104.0, - 7456.0, - 2656.0)
-    set gg_rct_WaveBottomRightCorner=Rect(768.0, - 2944.0, 1216.0, - 2496.0)
-    set gg_rct_WaveTopRightCorner=Rect(- 3552.0, 2400.0, - 3136.0, 2752.0)
-    set gg_rct_BossArea=Rect(- 6016.0, - 13056.0, - 3328.0, - 9600.0)
-    set gg_rct_2v2v2Area=Rect(- 1920.0, - 12160.0, 2816.0, - 8704.0)
-    set gg_rct_FreeForAllArea=Rect(3904.0, - 12352.0, 10432.0, - 8672.0)
-    set gg_rct_TeamBattleArea=Rect(- 11008.0, - 12960.0, - 6752.0, - 8704.0)
     set gg_rct_1v1v1Area=Rect(8320.0, 2688.0, 11392.0, 6144.0)
-    set gg_rct_Team1BaseArea=Rect(- 10304.0, - 128.0, - 8000.0, 2240.0)
-    set gg_rct_Team2BaseArea=Rect(1280.0, 512.0, 3648.0, 2720.0)
-    set gg_rct_Team3BaseArea=Rect(- 4288.0, - 7616.0, - 2240.0, - 5312.0)
-    set gg_rct_Japan_Area_Boss=Rect(10592.0, - 3168.0, 10912.0, - 2784.0)
-    set gg_rct_Ice_Area_Boss=Rect(5312.0, - 3488.0, 5600.0, - 3264.0)
+    set gg_rct_2v2v2Area=Rect(- 1920.0, - 12160.0, 2816.0, - 8704.0)
+    set gg_rct_BossArea=Rect(- 6016.0, - 13056.0, - 3328.0, - 9600.0)
+    set gg_rct_CenterOfMap=Rect(- 5152.0, 2624.0, - 4576.0, 3168.0)
+    set gg_rct_ColorfullBuffMonsterLeft=Rect(- 8384.0, 2240.0, - 7904.0, 2656.0)
+    set gg_rct_ColorfullBuffMonsterRight=Rect(- 1024.0, - 1312.0, - 544.0, - 896.0)
+    set gg_rct_ColorfullBuffMonsterTop=Rect(- 4352.0, 7232.0, - 3904.0, 7712.0)
     set gg_rct_Fire_Area_Boss=Rect(5088.0, - 6880.0, 5280.0, - 6720.0)
-    set gg_rct_Zangetsu_Area_Boss=Rect(9952.0, - 7040.0, 10464.0, - 6720.0)
-    set gg_rct_TeleportBossesBottom=Rect(- 3456.0, - 2400.0, - 3200.0, - 2176.0)
-    set gg_rct_TeleportBossesLeft=Rect(- 4896.0, - 480.0, - 4672.0, - 288.0)
-    set gg_rct_TeleportBossesRight=Rect(- 1920.0, - 288.0, - 1728.0, - 96.0)
+    set gg_rct_FreeForAllArea=Rect(3904.0, - 12352.0, 10432.0, - 8672.0)
+    set gg_rct_Ice_Area_Boss=Rect(5312.0, - 3488.0, 5600.0, - 3264.0)
+    set gg_rct_Japan_Area_Boss=Rect(10592.0, - 3168.0, 10912.0, - 2784.0)
+    set gg_rct_Team1Base=Rect(- 11392.0, 9088.0, - 10944.0, 9504.0)
+    set gg_rct_Team1BaseArea=Rect(- 12672.0, 8320.0, - 9728.0, 10944.0)
+    set gg_rct_Team1WaveCenter=Rect(- 8896.0, 6336.0, - 8448.0, 6752.0)
+    set gg_rct_Team1WaveLeft=Rect(- 8576.0, 9504.0, - 8128.0, 9920.0)
+    set gg_rct_Team1WaveRight=Rect(- 11584.0, 6272.0, - 11136.0, 6688.0)
+    set gg_rct_Team2Base=Rect(3008.0, 2560.0, 3456.0, 2976.0)
+    set gg_rct_Team2BaseArea=Rect(1984.0, 1856.0, 4320.0, 4064.0)
+    set gg_rct_Team2WaveCenter=Rect(288.0, 2656.0, 736.0, 3072.0)
+    set gg_rct_Team2WaveLeft=Rect(3136.0, 160.0, 3584.0, 576.0)
+    set gg_rct_Team2WaveRight=Rect(3232.0, 4832.0, 3680.0, 5248.0)
+    set gg_rct_Team3Base=Rect(- 5184.0, - 5248.0, - 4736.0, - 4832.0)
+    set gg_rct_Team3BaseArea=Rect(- 5888.0, - 6240.0, - 3840.0, - 3936.0)
+    set gg_rct_Team3WaveCenter=Rect(- 5024.0, - 2816.0, - 4576.0, - 2400.0)
+    set gg_rct_Team3WaveLeft=Rect(- 7616.0, - 5152.0, - 7168.0, - 4736.0)
+    set gg_rct_Team3WaveRight=Rect(- 2944.0, - 5472.0, - 2496.0, - 5056.0)
+    set gg_rct_TeamBattleArea=Rect(- 11008.0, - 12960.0, - 6752.0, - 8704.0)
+    set gg_rct_TeleportBossesBottom=Rect(- 5728.0, 1536.0, - 5472.0, 1760.0)
+    set gg_rct_TeleportBossesLeft=Rect(- 6016.0, 4672.0, - 5792.0, 4864.0)
     set gg_rct_TeleportBossesMain=Rect(7296.0, - 4992.0, 7520.0, - 4768.0)
-    set gg_rct_ColorfullBuffMonsterLeft=Rect(- 9120.0, - 4256.0, - 8640.0, - 3840.0)
-    set gg_rct_ColorfullBuffMonsterTop=Rect(- 3584.0, 3648.0, - 3104.0, 4064.0)
-    set gg_rct_ColorfullBuffMonsterRight=Rect(1984.0, - 4320.0, 2464.0, - 3904.0)
+    set gg_rct_TeleportBossesRight=Rect(- 3488.0, 3424.0, - 3296.0, 3616.0)
+    set gg_rct_WaveBottomLeftCorner=Rect(- 11520.0, - 4928.0, - 10976.0, - 4480.0)
+    set gg_rct_WaveBottomRightCorner=Rect(2944.0, - 5184.0, 3392.0, - 4736.0)
+    set gg_rct_WaveTopRightCorner=Rect(3072.0, 9696.0, 3488.0, 10048.0)
+    set gg_rct_Zangetsu_Area_Boss=Rect(9952.0, - 7040.0, 10464.0, - 6720.0)
+    set gg_rct_New_Bosses_Area=Rect(4576.0, - 7200.0, 11168.0, - 2528.0)
+    set gg_rct_TeleportBossesMainOut=Rect(4672.0, - 5248.0, 4896.0, - 5024.0)
 endfunction
 
 //***************************************************************************
@@ -5115,7 +5119,7 @@ function main takes nothing returns nothing
 
 
 
-call ExecuteFunc("FrameLoader___init_function")
+call ExecuteFunc("FrameLoader__init_function")
 
 
 endfunction //injected main function (! inject command)??
