@@ -54,6 +54,8 @@ rect gg_rct_New_Bosses_Area= null
 rect gg_rct_TeleportBossesMainOut= null
 camerasetup gg_cam_SelectionScreenCamera= null
 trigger gg_trg_Item_Cleanup= null
+rect gg_rct_Region_037= null
+rect gg_rct_Region_038= null
 string array Music
 hashtable nzHash= InitHashtable()
 code l__Code
@@ -4634,7 +4636,7 @@ function CreateRegions takes nothing returns nothing
     set gg_rct_Ice_Area_Boss=Rect(5312.0, - 3488.0, 5600.0, - 3264.0)
     set gg_rct_Japan_Area_Boss=Rect(10592.0, - 3168.0, 10912.0, - 2784.0)
     set gg_rct_Team1Base=Rect(- 11392.0, 9088.0, - 10944.0, 9504.0)
-    set gg_rct_Team1BaseArea=Rect(- 12672.0, 8320.0, - 9728.0, 10944.0)
+    set gg_rct_Team1BaseArea=Rect(- 12672.0, 8320.0, - 9728.0, 11008.0)
     set gg_rct_Team1WaveCenter=Rect(- 8896.0, 6336.0, - 8448.0, 6752.0)
     set gg_rct_Team1WaveLeft=Rect(- 8576.0, 9504.0, - 8128.0, 9920.0)
     set gg_rct_Team1WaveRight=Rect(- 11584.0, 6272.0, - 11136.0, 6688.0)
@@ -4659,6 +4661,8 @@ function CreateRegions takes nothing returns nothing
     set gg_rct_Zangetsu_Area_Boss=Rect(9952.0, - 7040.0, 10464.0, - 6720.0)
     set gg_rct_New_Bosses_Area=Rect(4576.0, - 7200.0, 11168.0, - 2528.0)
     set gg_rct_TeleportBossesMainOut=Rect(4672.0, - 5248.0, 4896.0, - 5024.0)
+    set gg_rct_Region_037=Rect(- 12480.0, 10048.0, - 11616.0, 10912.0)
+    set gg_rct_Region_038=Rect(4192.0, 2944.0, 4224.0, 2976.0)
 endfunction
 
 //***************************************************************************

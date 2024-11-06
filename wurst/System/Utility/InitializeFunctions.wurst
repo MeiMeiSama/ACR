@@ -116,7 +116,7 @@ function updateSelection ()
     GetExpiredTimer().destr()
 
 public function initFunctions ()
-    BlzChangeMinimapTerrainTex("MinimapPreview.blp")
+    BlzChangeMinimapTerrainTex("MinimapPreview2.blp")
     firstWave()
     bountySystemSetup()
     // acrAntiCheat()
