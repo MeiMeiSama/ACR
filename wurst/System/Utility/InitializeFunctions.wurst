@@ -17,7 +17,7 @@ import SoundFunctions
 import AbilityGlobals
 import ACR_TagSystem
 import CameraFunctions
-// import ACR_SpeedBoost
+import ACR_SpeedBoost
 import GetFrames
 import TimerUtils
 import BootsStackDisable
@@ -124,7 +124,7 @@ public function initFunctions ()
     BlzFrameSetVisible(getFrameACR("ConsoleUIBackdrop", 0), true)
     BlzHideOriginFrames(false)
     moonUI()
-    // acrSpeedBoostTimer()
+    acrSpeedBoostTimer()
     scoreboardMain()
     scoreboardTab()
     bootStack()
