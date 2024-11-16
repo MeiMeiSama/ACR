@@ -12,10 +12,9 @@
 
 ### Changed
 1. Overall rework on items icons.
-2. Wards harshly nerfed.
-3. Vergil R changed to the previous 2nd T (dante T).
-4. Sakuya G now costs mana.
-5. Karna, Mashu (shielder) and Miyuki W now puts them next to their enemy target.
+2. Vergil R changed to the previous 2nd T (dante T).
+3. Sakuya G now costs mana.
+4. Karna, Mashu (shielder) and Miyuki W now puts them next to their enemy target.
 
 ### Fixed
 1. Madoka and Kiara T cinematic planets fixed.
