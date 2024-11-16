@@ -8,16 +8,14 @@
 5. Re added attribute drugs.
 
 ### Improved
-1. Improved Terrain Layout.
-3. Improved Terrain Coordinates, all teams should have equal distances.
-4. Improved Shop locations, should be concise now, and more easily clickable.
+1. Slightly adjusted Terrain Layout.
 
 ### Changed
 1. Overall rework on items icons.
 2. Wards harshly nerfed.
 3. Vergil R changed to the previous 2nd T (dante T).
 4. Sakuya G now costs mana.
-5. Karna and Mashu (shielder) W now puts them next to their target.
+5. Karna, Mashu (shielder) and Miyuki W now puts them next to their enemy target.
 
 ### Fixed
 1. Madoka and Kiara T cinematic planets fixed.
