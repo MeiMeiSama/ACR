@@ -9,6 +9,8 @@ int array meleeBonusDamageCount
 unit array meleeBonusDamageUser
 real array meleeBonusDamage
 timer array meleeBonusDamageTimer
+timer array meleeBonusDamageCooldownTimer
+boolean array meleeBonusDamageCooldown
 
 init
     meleeBonusDamage()
@@ -16,15 +18,19 @@ function meleeBonusDamage ()
     CreateTrigger()
     ..registerAnyUnitEvent(EVENT_PLAYER_UNIT_DAMAGED)
     ..addAction() ->
-        if BlzGetEventAttackType() == ATTACK_TYPE_MAGIC and GetEventDamageSource().hasItemById(SWORD_OF_PEW)
+        if BlzGetEventAttackType() == ATTACK_TYPE_MAGIC and GetEventDamageSource().hasItemById(SWORD_OF_PEW) and BlzGetEventDamageTarget().isType(UNIT_TYPE_HERO)
             let caster = GetEventDamageSource()
             let id = caster.getOwner().getId()
             let dmg = GetEventDamage()
-            meleeBonusDamageUser[id] = caster
-            meleeBonusDamage[id] = meleeBonusDamage[id] + dmg
-            meleeBonusDamageCount[id] = 0
-            if meleeBonusDamageTimer[id] == null
-                meleeBonusDamageTimer[id] = CreateTimer()..startPeriodic(0.01, function meleeBonusDamageEnd)..setData(id)
+            if meleeBonusDamageCooldown[id] == false
+                meleeBonusDamageCooldown[id] = true
+                meleeBonusDamageUser[id] = caster
+                meleeBonusDamage[id] = meleeBonusDamage[id] + dmg
+                print("Bonus Damage: "+meleeBonusDamage[id].toString())
+                meleeBonusDamageCount[id] = 0
+                CreateTimer()..start(0.003, function meleeBonusDamageCooldownFunc)..setData(id)                
+                if meleeBonusDamageTimer[id] == null
+                    meleeBonusDamageTimer[id] = CreateTimer()..startPeriodic(0.01, function meleeBonusDamageEnd)..setData(id)
 
         if BlzGetEventAttackType() == ATTACK_TYPE_HERO and GetEventDamageSource().hasItemById(SWORD_OF_PEW)
             let caster = GetEventDamageSource()
@@ -33,7 +39,9 @@ function meleeBonusDamage ()
             if meleeBonusDamage[id] > 0
                 DamageEvent.setNextDamageFromCode()
                 caster.damageTarget(victim, meleeBonusDamage[id] * 0.2, ATTACK_TYPE_CHAOS) 
+                print("Extra damage dealt: "+(meleeBonusDamage[id] * 0.2).toString())
                 meleeBonusDamage[id] = 0  
+                print("Extra damage dealt and reset back to"+meleeBonusDamage[id].toString())
 
 
 function meleeBonusDamageEnd()
@@ -43,4 +51,12 @@ function meleeBonusDamageEnd()
 
     if meleeBonusDamageCount[id] >= 300
         meleeBonusDamageCount[id] = 0
+        meleeBonusDamage[id] = 0
+        print("Damage reset to: "+meleeBonusDamageCount[id].toString())
         meleeBonusDamageTimer[id].destr()
+        meleeBonusDamageTimer[id] = null
+
+function meleeBonusDamageCooldownFunc()
+    let id = GetExpiredTimer().getData()
+    if meleeBonusDamageCooldown[id] == true
+        meleeBonusDamageCooldown[id] = false
