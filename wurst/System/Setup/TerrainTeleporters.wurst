@@ -27,8 +27,13 @@ region tpleft
 region tpbottom
 region tpmain
 */
+region T1
+region T2
+region T3
+
 init
     teleporterAnimations()
+    regionTeams()
     /*teleporterTp()
     regions()
     */ 
@@ -38,6 +43,12 @@ function teleporterAnimations ()
     SetDoodadAnimationRect(gg_rct_TeleportBossesBottom, 'D029', "stand", false)
     SetDoodadAnimationRect(gg_rct_TeleportBossesMain, 'D029', "stand", false)
     SetDoodadAnimationRect(gg_rct_TeleportBossesMainOut, 'D029', "stand", false)
+
+function regionTeams()
+    RegionAddRect(T1, gg_rct_T1)
+    RegionAddRect(T2, gg_rct_T2)
+    RegionAddRect(T3, gg_rct_T3)
+
 /*
 function teleporterTp()
     CreateTrigger()
