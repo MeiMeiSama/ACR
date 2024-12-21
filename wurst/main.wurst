@@ -5006,7 +5006,7 @@ function trig_dmbActions()
     trigger_ID += 3
     SaveInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 865, trigger_ID)
     SaveInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 1045, trigger_ID)
-    SaveGroupHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 710, yDWEGetUnitsInRectMatchingNull(GetPlayableMapRect(), Condition(function trig_dmbFunc001003002)))
+    SaveGroupHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 710, yDWEGetUnitsInRectMatchingNull(gg_rct_WholeMap, Condition(function trig_dmbFunc001003002)))
     ForGroupBJ(LoadGroupHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 710), function trig_dmbFunc002A)
     DestroyGroup(LoadGroupHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 710))
     SetUnitInvulnerable(gg_unit_o000_0010, false)
@@ -5138,7 +5138,7 @@ function trig_jfshadiFunc006Func002Func002Func002A()
     PauseUnit(GetEnumUnit(), true)
 
 function trig_jfshadiFunc006Func002Func002Func003Func001A()
-    CreateFogModifierRectBJ(true, GetEnumPlayer(), FOG_OF_WAR_VISIBLE, GetPlayableMapRect())
+    CreateFogModifierRectBJ(true, GetEnumPlayer(), FOG_OF_WAR_VISIBLE, gg_rct_WholeMap)
 
 function trig_jfshadiFunc006Func002Func002Func004T()
     CustomVictoryBJ(Player(8), true, true)
@@ -5158,7 +5158,7 @@ function trig_jfshadiFunc006Func002Func003A()
     PauseUnit(GetEnumUnit(), true)
 
 function trig_jfshadiFunc006Func002Func004Func001A()
-    CreateFogModifierRectBJ(true, GetEnumPlayer(), FOG_OF_WAR_VISIBLE, GetPlayableMapRect())
+    CreateFogModifierRectBJ(true, GetEnumPlayer(), FOG_OF_WAR_VISIBLE, gg_rct_WholeMap)
 
 function trig_jfshadiFunc006Func002Func005T()
     CustomVictoryBJ(Player(4), true, true)
@@ -5178,7 +5178,7 @@ function trig_jfshadiFunc006Func003A()
     PauseUnit(GetEnumUnit(), true)
 
 function trig_jfshadiFunc006Func004Func001A()
-    CreateFogModifierRectBJ(true, GetEnumPlayer(), FOG_OF_WAR_VISIBLE, GetPlayableMapRect())
+    CreateFogModifierRectBJ(true, GetEnumPlayer(), FOG_OF_WAR_VISIBLE, gg_rct_WholeMap)
 
 function trig_jfshadiFunc006Func005T()
     CustomVictoryBJ(Player(0), true, true)
@@ -5225,7 +5225,7 @@ function trig_jfshadiActions()
         LeaderboardSetPlayerItemValueBJ(Player(11), LoadLeaderboardHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1019), LoadInteger(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 788))
     if LoadInteger(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1130) >= LoadInteger(YDHT, StringHash("jfms"), 281)
         udg_MvpWin = true
-        ForGroupBJ(yDWEGetUnitsInRectMatchingNull(GetPlayableMapRect(), null), function trig_jfshadiFunc006Func003A)
+        ForGroupBJ(yDWEGetUnitsInRectMatchingNull(gg_rct_WholeMap, null), function trig_jfshadiFunc006Func003A)
         bj_forLoopAIndex = 1
         bj_forLoopAIndexEnd = 12
         while true
@@ -5237,7 +5237,7 @@ function trig_jfshadiActions()
         TimerStart(_ydl_timer, 3.00, false, function trig_jfshadiFunc006Func005T)
     else if LoadInteger(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 586) >= LoadInteger(YDHT, StringHash("jfms"), 281)
         udg_MvpWin = true
-        ForGroupBJ(yDWEGetUnitsInRectMatchingNull(GetPlayableMapRect(), null), function trig_jfshadiFunc006Func002Func003A)
+        ForGroupBJ(yDWEGetUnitsInRectMatchingNull(gg_rct_WholeMap, null), function trig_jfshadiFunc006Func002Func003A)
         bj_forLoopAIndex = 1
         bj_forLoopAIndexEnd = 12
         while true
@@ -5249,7 +5249,7 @@ function trig_jfshadiActions()
         TimerStart(_ydl_timer, 3.00, false, function trig_jfshadiFunc006Func002Func005T)
     else if LoadInteger(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 788) >= LoadInteger(YDHT, StringHash("jfms"), 281)
         udg_MvpWin = true
-        ForGroupBJ(yDWEGetUnitsInRectMatchingNull(GetPlayableMapRect(), null), function trig_jfshadiFunc006Func002Func002Func002A)
+        ForGroupBJ(yDWEGetUnitsInRectMatchingNull(gg_rct_WholeMap, null), function trig_jfshadiFunc006Func002Func002Func002A)
         bj_forLoopAIndex = 1
         bj_forLoopAIndexEnd = 12
         while true
@@ -5301,7 +5301,7 @@ function trig_baolaojiaFunc001Func001Func001Func003003001() returns boolean
     return GetPlayerSlotState(GetFilterPlayer()) == PLAYER_SLOT_STATE_PLAYING
 
 function trig_baolaojiaFunc001Func001Func001Func004A()
-    CreateFogModifierRectBJ(true, GetEnumPlayer(), FOG_OF_WAR_VISIBLE, GetPlayableMapRect())
+    CreateFogModifierRectBJ(true, GetEnumPlayer(), FOG_OF_WAR_VISIBLE, gg_rct_WholeMap)
 
 function trig_baolaojiaFunc001Func001Func003A()
     PauseUnit(GetEnumUnit(), true)
@@ -5310,7 +5310,7 @@ function trig_baolaojiaFunc001Func001Func004003001() returns boolean
     return GetPlayerSlotState(GetFilterPlayer()) == PLAYER_SLOT_STATE_PLAYING
 
 function trig_baolaojiaFunc001Func001Func005A()
-    CreateFogModifierRectBJ(true, GetEnumPlayer(), FOG_OF_WAR_VISIBLE, GetPlayableMapRect())
+    CreateFogModifierRectBJ(true, GetEnumPlayer(), FOG_OF_WAR_VISIBLE, gg_rct_WholeMap)
 
 function trig_baolaojiaFunc001Func003A()
     PauseUnit(GetEnumUnit(), true)
@@ -5319,7 +5319,7 @@ function trig_baolaojiaFunc001Func004003001() returns boolean
     return GetPlayerSlotState(GetFilterPlayer()) == PLAYER_SLOT_STATE_PLAYING
 
 function trig_baolaojiaFunc001Func005A()
-    CreateFogModifierRectBJ(true, GetEnumPlayer(), FOG_OF_WAR_VISIBLE, GetPlayableMapRect())
+    CreateFogModifierRectBJ(true, GetEnumPlayer(), FOG_OF_WAR_VISIBLE, gg_rct_WholeMap)
 
 function trig_baolaojiaActions()
     //group _ydl_group
@@ -5329,7 +5329,7 @@ function trig_baolaojiaActions()
     SaveInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 865, trigger_ID)
     SaveInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 1045, trigger_ID)
     if IsUnitAlly(GetKillingUnitBJ(), Player(3)) == true
-        SaveGroupHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 710, yDWEGetUnitsInRectMatchingNull(GetPlayableMapRect(), null))
+        SaveGroupHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 710, yDWEGetUnitsInRectMatchingNull(gg_rct_WholeMap, null))
         ForGroupBJ(LoadGroupHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 710), function trig_baolaojiaFunc001Func003A)
         SaveForceHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 'HeiF', yDWEGetPlayersMatchingNull(Condition(function trig_baolaojiaFunc001Func004003001)))
         ForForce(LoadForceHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 'HeiF'), function trig_baolaojiaFunc001Func005A)
@@ -5345,7 +5345,7 @@ function trig_baolaojiaActions()
         DestroyForce(LoadForceHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 'HeiF'))
         DestroyGroup(LoadGroupHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 710))
     else if IsUnitAlly(GetKillingUnitBJ(), Player(7)) == true
-        SaveGroupHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 710, yDWEGetUnitsInRectMatchingNull(GetPlayableMapRect(), null))
+        SaveGroupHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 710, yDWEGetUnitsInRectMatchingNull(gg_rct_WholeMap, null))
         ForGroupBJ(LoadGroupHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 710), function trig_baolaojiaFunc001Func001Func003A)
         SaveForceHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 'HeiF', yDWEGetPlayersMatchingNull(Condition(function trig_baolaojiaFunc001Func001Func004003001)))
         ForForce(LoadForceHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 'HeiF'), function trig_baolaojiaFunc001Func001Func005A)
@@ -5361,7 +5361,7 @@ function trig_baolaojiaActions()
         DestroyForce(LoadForceHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 'HeiF'))
         DestroyGroup(LoadGroupHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 710))
     else if IsUnitAlly(GetKillingUnitBJ(), Player(11)) == true
-        SaveGroupHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 710, yDWEGetUnitsInRectMatchingNull(GetPlayableMapRect(), null))
+        SaveGroupHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 710, yDWEGetUnitsInRectMatchingNull(gg_rct_WholeMap, null))
         ForGroupBJ(LoadGroupHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 710), function trig_baolaojiaFunc001Func001Func001Func002A)
         SaveForceHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 'HeiF', yDWEGetPlayersMatchingNull(Condition(function trig_baolaojiaFunc001Func001Func001Func003003001)))
         ForForce(LoadForceHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 'HeiF'), function trig_baolaojiaFunc001Func001Func001Func004A)
@@ -5674,7 +5674,7 @@ function trig_ClearActions()
             break
         DestroyTextTag(udg_Text[GetForLoopIndexA()])
         bj_forLoopAIndex++
-    SaveGroupHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 361, yDWEGetUnitsInRectMatchingNull(GetPlayableMapRect(), Condition(function trig_ClearFunc017003002)))
+    SaveGroupHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 361, yDWEGetUnitsInRectMatchingNull(gg_rct_WholeMap, Condition(function trig_ClearFunc017003002)))
     ForGroupBJ(LoadGroupHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 361), function trig_ClearFunc018A)
     DestroyGroup(LoadGroupHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 361))
     udg_SelectYet[1] = false
@@ -5791,7 +5791,7 @@ function trig_LeavesPlayerActions()
     ForGroupBJ(LoadGroupHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 361), function trig_LeavesPlayerFunc006A)
     GroupClear(LoadGroupHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 361))
     DestroyGroup(LoadGroupHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 361))
-    EnumItemsInRectBJ(GetPlayableMapRect(), function trig_LeavesPlayerFunc009A)
+    EnumItemsInRectBJ(gg_rct_WholeMap, function trig_LeavesPlayerFunc009A)
     FlushChildHashtable(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID)
 
 function initTrig_LeavesPlayer()
@@ -5855,7 +5855,7 @@ function trig_ClearHeroActions()
     trigger_ID += 3
     SaveInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 865, trigger_ID)
     SaveInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 1045, trigger_ID)
-    SaveGroupHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 361, yDWEGetUnitsInRectMatchingNull(GetPlayableMapRect(), Condition(function trig_ClearHeroFunc001003002)))
+    SaveGroupHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 361, yDWEGetUnitsInRectMatchingNull(gg_rct_WholeMap, Condition(function trig_ClearHeroFunc001003002)))
     ForGroupBJ(LoadGroupHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 361), function trig_ClearHeroFunc002A)
     DestroyGroup(LoadGroupHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 361))
     FlushChildHashtable(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID)
@@ -5900,14 +5900,14 @@ function trig_TeamTournament333BeginFunc010Func040T()
     //group _ydl_group
     //unit _ydl_unit
     if LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 756959634) >= 240
-        SaveGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 83, yDWEGetUnitsInRectMatchingNull(GetPlayableMapRect(), Condition(function trig_TeamTournament333BeginFunc010Func040Func001Func001003002)))
+        SaveGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 83, yDWEGetUnitsInRectMatchingNull(gg_rct_WholeMap, Condition(function trig_TeamTournament333BeginFunc010Func040Func001Func001003002)))
         ForGroupBJ(LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 83), function trig_TeamTournament333BeginFunc010Func040Func001Func002A)
         DestroyGroup(LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 83))
         FlushChildHashtable(YDLOC, GetHandleId(GetExpiredTimer()))
         DestroyTimer(GetExpiredTimer())
     else
         SaveInteger(YDLOC, GetHandleId(GetExpiredTimer()), 756959634, LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 756959634) + 1)
-        SaveGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 83, yDWEGetUnitsInRectMatchingNull(GetPlayableMapRect(), Condition(function trig_TeamTournament333BeginFunc010Func040Func001Func007003002)))
+        SaveGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 83, yDWEGetUnitsInRectMatchingNull(gg_rct_WholeMap, Condition(function trig_TeamTournament333BeginFunc010Func040Func001Func007003002)))
         ForGroupBJ(LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 83), function trig_TeamTournament333BeginFunc010Func040Func001Func008A)
         DestroyGroup(LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 83))
 
@@ -6682,14 +6682,14 @@ function trig_TournamentFFAFunc010Func039T()
     //group _ydl_group
     //unit _ydl_unit
     if LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 756959634) >= 240
-        SaveGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 83, yDWEGetUnitsInRectMatchingNull(GetPlayableMapRect(), Condition(function trig_TournamentFFAFunc010Func039Func001Func001003002)))
+        SaveGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 83, yDWEGetUnitsInRectMatchingNull(gg_rct_WholeMap, Condition(function trig_TournamentFFAFunc010Func039Func001Func001003002)))
         ForGroupBJ(LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 83), function trig_TournamentFFAFunc010Func039Func001Func002A)
         DestroyGroup(LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 83))
         FlushChildHashtable(YDLOC, GetHandleId(GetExpiredTimer()))
         DestroyTimer(GetExpiredTimer())
     else
         SaveInteger(YDLOC, GetHandleId(GetExpiredTimer()), 756959634, LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 756959634) + 1)
-        SaveGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 83, yDWEGetUnitsInRectMatchingNull(GetPlayableMapRect(), Condition(function trig_TournamentFFAFunc010Func039Func001Func007003002)))
+        SaveGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 83, yDWEGetUnitsInRectMatchingNull(gg_rct_WholeMap, Condition(function trig_TournamentFFAFunc010Func039Func001Func007003002)))
         ForGroupBJ(LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 83), function trig_TournamentFFAFunc010Func039Func001Func008A)
         DestroyGroup(LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 83))
 
@@ -7115,14 +7115,14 @@ function trig_VsBossBeginFunc016Func039T()
     //group _ydl_group
     //unit _ydl_unit
     if LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 756959634) >= 240
-        SaveGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 83, yDWEGetUnitsInRectMatchingNull(GetPlayableMapRect(), Condition(function trig_VsBossBeginFunc016Func039Func001Func001003002)))
+        SaveGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 83, yDWEGetUnitsInRectMatchingNull(gg_rct_WholeMap, Condition(function trig_VsBossBeginFunc016Func039Func001Func001003002)))
         ForGroupBJ(LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 83), function trig_VsBossBeginFunc016Func039Func001Func002A)
         DestroyGroup(LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 83))
         FlushChildHashtable(YDLOC, GetHandleId(GetExpiredTimer()))
         DestroyTimer(GetExpiredTimer())
     else
         SaveInteger(YDLOC, GetHandleId(GetExpiredTimer()), 756959634, LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 756959634) + 1)
-        SaveGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 83, yDWEGetUnitsInRectMatchingNull(GetPlayableMapRect(), Condition(function trig_VsBossBeginFunc016Func039Func001Func007003002)))
+        SaveGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 83, yDWEGetUnitsInRectMatchingNull(gg_rct_WholeMap, Condition(function trig_VsBossBeginFunc016Func039Func001Func007003002)))
         ForGroupBJ(LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 83), function trig_VsBossBeginFunc016Func039Func001Func008A)
         DestroyGroup(LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 83))
 
@@ -7560,9 +7560,9 @@ function trig_VsBossBeginFunc016Func040T()
     //group _ydl_group
     //unit _ydl_unit
     timer _ydl_timer
-    udg_TourTeamGroup[1] = yDWEGetUnitsInRectMatchingNull(GetPlayableMapRect(), Condition(function trig_VsBossBeginFunc016Func040Func001002002))
-    udg_TourTeamGroup[2] = yDWEGetUnitsInRectMatchingNull(GetPlayableMapRect(), Condition(function trig_VsBossBeginFunc016Func040Func002002002))
-    udg_TourTeamGroup[3] = yDWEGetUnitsInRectMatchingNull(GetPlayableMapRect(), Condition(function trig_VsBossBeginFunc016Func040Func003002002))
+    udg_TourTeamGroup[1] = yDWEGetUnitsInRectMatchingNull(gg_rct_WholeMap, Condition(function trig_VsBossBeginFunc016Func040Func001002002))
+    udg_TourTeamGroup[2] = yDWEGetUnitsInRectMatchingNull(gg_rct_WholeMap, Condition(function trig_VsBossBeginFunc016Func040Func002002002))
+    udg_TourTeamGroup[3] = yDWEGetUnitsInRectMatchingNull(gg_rct_WholeMap, Condition(function trig_VsBossBeginFunc016Func040Func003002002))
     ForGroupBJ(udg_TourTeamGroup[1], function trig_VsBossBeginFunc016Func040Func004A)
     ForGroupBJ(udg_TourTeamGroup[2], function trig_VsBossBeginFunc016Func040Func005A)
     ForGroupBJ(udg_TourTeamGroup[3], function trig_VsBossBeginFunc016Func040Func006A)
@@ -7838,14 +7838,14 @@ function trig_TournamentSoLoBeginFunc012T()
     //group _ydl_group
     //unit _ydl_unit
     if LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 756959634) >= 240
-        SaveGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 83, yDWEGetUnitsInRectMatchingNull(GetPlayableMapRect(), Condition(function trig_TournamentSoLoBeginFunc012Func001Func001003002)))
+        SaveGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 83, yDWEGetUnitsInRectMatchingNull(gg_rct_WholeMap, Condition(function trig_TournamentSoLoBeginFunc012Func001Func001003002)))
         ForGroupBJ(LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 83), function trig_TournamentSoLoBeginFunc012Func001Func002A)
         DestroyGroup(LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 83))
         FlushChildHashtable(YDLOC, GetHandleId(GetExpiredTimer()))
         DestroyTimer(GetExpiredTimer())
     else
         SaveInteger(YDLOC, GetHandleId(GetExpiredTimer()), 756959634, LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 756959634) + 1)
-        SaveGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 83, yDWEGetUnitsInRectMatchingNull(GetPlayableMapRect(), Condition(function trig_TournamentSoLoBeginFunc012Func001Func007003002)))
+        SaveGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 83, yDWEGetUnitsInRectMatchingNull(gg_rct_WholeMap, Condition(function trig_TournamentSoLoBeginFunc012Func001Func007003002)))
         ForGroupBJ(LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 83), function trig_TournamentSoLoBeginFunc012Func001Func008A)
         DestroyGroup(LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 83))
 
@@ -8167,14 +8167,14 @@ function trig_Tournament222BeginFunc017Func039T()
     //group _ydl_group
     //unit _ydl_unit
     if LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 756959634) >= 240
-        SaveGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 83, yDWEGetUnitsInRectMatchingNull(GetPlayableMapRect(), Condition(function trig_Tournament222BeginFunc017Func039Func001Func001003002)))
+        SaveGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 83, yDWEGetUnitsInRectMatchingNull(gg_rct_WholeMap, Condition(function trig_Tournament222BeginFunc017Func039Func001Func001003002)))
         ForGroupBJ(LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 83), function trig_Tournament222BeginFunc017Func039Func001Func002A)
         DestroyGroup(LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 83))
         FlushChildHashtable(YDLOC, GetHandleId(GetExpiredTimer()))
         DestroyTimer(GetExpiredTimer())
     else
         SaveInteger(YDLOC, GetHandleId(GetExpiredTimer()), 756959634, LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 756959634) + 1)
-        SaveGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 83, yDWEGetUnitsInRectMatchingNull(GetPlayableMapRect(), Condition(function trig_Tournament222BeginFunc017Func039Func001Func007003002)))
+        SaveGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 83, yDWEGetUnitsInRectMatchingNull(gg_rct_WholeMap, Condition(function trig_Tournament222BeginFunc017Func039Func001Func007003002)))
         ForGroupBJ(LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 83), function trig_Tournament222BeginFunc017Func039Func001Func008A)
         DestroyGroup(LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 83))
 
