@@ -1,6 +1,6 @@
 package RedBuff
 
-import DamageEvent
+/*import DamageEvent
 
 constant BONUS_DAMAGE_FACTOR = 0.10
 
@@ -18,3 +18,4 @@ function redBonusDamage()
             let bonusDmg = currentDamage * BONUS_DAMAGE_FACTOR
             DamageEvent.setNextDamageFromCode()
             caster.damageTarget(victim, bonusDmg, ATTACK_TYPE_CHAOS)
+*/            
