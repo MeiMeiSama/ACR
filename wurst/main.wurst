@@ -6566,9 +6566,9 @@ function trig_TeamTournament333BeginFunc010Func041T()
     //group _ydl_group
     //unit _ydl_unit
     timer _ydl_timer
-    udg_TourTeamGroup[1] = yDWEGetUnitsInRectMatchingNull(gg_rct______________061, Condition(function trig_TeamTournament333BeginFunc010Func041Func001002002))
-    udg_TourTeamGroup[2] = yDWEGetUnitsInRectMatchingNull(gg_rct______________061, Condition(function trig_TeamTournament333BeginFunc010Func041Func002002002))
-    udg_TourTeamGroup[3] = yDWEGetUnitsInRectMatchingNull(gg_rct______________061, Condition(function trig_TeamTournament333BeginFunc010Func041Func003002002))
+    udg_TourTeamGroup[1] = yDWEGetUnitsInRectMatchingNull(gg_rct_WholeMap, Condition(function trig_TeamTournament333BeginFunc010Func041Func001002002))
+    udg_TourTeamGroup[2] = yDWEGetUnitsInRectMatchingNull(gg_rct_WholeMap, Condition(function trig_TeamTournament333BeginFunc010Func041Func002002002))
+    udg_TourTeamGroup[3] = yDWEGetUnitsInRectMatchingNull(gg_rct_WholeMap, Condition(function trig_TeamTournament333BeginFunc010Func041Func003002002))
     ForGroupBJ(udg_TourTeamGroup[1], function trig_TeamTournament333BeginFunc010Func041Func004A)
     ForGroupBJ(udg_TourTeamGroup[2], function trig_TeamTournament333BeginFunc010Func041Func005A)
     ForGroupBJ(udg_TourTeamGroup[3], function trig_TeamTournament333BeginFunc010Func041Func006A)
@@ -6919,9 +6919,9 @@ function trig_TournamentFFAFunc010Func040T()
     //group _ydl_group
     //unit _ydl_unit
     timer _ydl_timer
-    udg_TourTeamGroup[1] = yDWEGetUnitsInRectMatchingNull(gg_rct______________061, Condition(function trig_TournamentFFAFunc010Func040Func001002002))
-    udg_TourTeamGroup[2] = yDWEGetUnitsInRectMatchingNull(gg_rct______________061, Condition(function trig_TournamentFFAFunc010Func040Func002002002))
-    udg_TourTeamGroup[3] = yDWEGetUnitsInRectMatchingNull(gg_rct______________061, Condition(function trig_TournamentFFAFunc010Func040Func003002002))
+    udg_TourTeamGroup[1] = yDWEGetUnitsInRectMatchingNull(gg_rct_WholeMap, Condition(function trig_TournamentFFAFunc010Func040Func001002002))
+    udg_TourTeamGroup[2] = yDWEGetUnitsInRectMatchingNull(gg_rct_WholeMap, Condition(function trig_TournamentFFAFunc010Func040Func002002002))
+    udg_TourTeamGroup[3] = yDWEGetUnitsInRectMatchingNull(gg_rct_WholeMap, Condition(function trig_TournamentFFAFunc010Func040Func003002002))
     ForGroupBJ(udg_TourTeamGroup[1], function trig_TournamentFFAFunc010Func040Func004A)
     ForGroupBJ(udg_TourTeamGroup[2], function trig_TournamentFFAFunc010Func040Func005A)
     ForGroupBJ(udg_TourTeamGroup[3], function trig_TournamentFFAFunc010Func040Func006A)
@@ -8061,9 +8061,9 @@ function trig_TournamentSoLoBeginFunc013Func007T()
 
 function trig_TournamentSoLoBeginFunc013T()
     timer _ydl_timer
-    SaveGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 313, yDWEGetUnitsInRectMatchingNull(gg_rct______________061, Condition(function trig_TournamentSoLoBeginFunc013Func001003002)))
-    SaveGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 1150, yDWEGetUnitsInRectMatchingNull(gg_rct______________061, Condition(function trig_TournamentSoLoBeginFunc013Func002003002)))
-    SaveGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 455534162, yDWEGetUnitsInRectMatchingNull(gg_rct______________061, Condition(function trig_TournamentSoLoBeginFunc013Func003003002)))
+    SaveGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 313, yDWEGetUnitsInRectMatchingNull(gg_rct_WholeMap, Condition(function trig_TournamentSoLoBeginFunc013Func001003002)))
+    SaveGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 1150, yDWEGetUnitsInRectMatchingNull(gg_rct_WholeMap, Condition(function trig_TournamentSoLoBeginFunc013Func002003002)))
+    SaveGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 455534162, yDWEGetUnitsInRectMatchingNull(gg_rct_WholeMap, Condition(function trig_TournamentSoLoBeginFunc013Func003003002)))
     SaveUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 849, GroupPickRandomUnit(LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 313)))
     SaveUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 283125295, GroupPickRandomUnit(LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 1150)))
     SaveUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 1024, GroupPickRandomUnit(LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 455534162)))
@@ -8571,9 +8571,9 @@ function trig_Tournament222BeginFunc017Func040Func007T()
 
 function trig_Tournament222BeginFunc017Func040T()
     timer _ydl_timer
-    udg_TourTeamGroup[1] = yDWEGetUnitsInRectMatchingNull(gg_rct______________061, Condition(function trig_Tournament222BeginFunc017Func040Func001002002))
-    udg_TourTeamGroup[2] = yDWEGetUnitsInRectMatchingNull(gg_rct______________061, Condition(function trig_Tournament222BeginFunc017Func040Func002002002))
-    udg_TourTeamGroup[3] = yDWEGetUnitsInRectMatchingNull(gg_rct______________061, Condition(function trig_Tournament222BeginFunc017Func040Func003002002))
+    udg_TourTeamGroup[1] = yDWEGetUnitsInRectMatchingNull(gg_rct_WholeMap, Condition(function trig_Tournament222BeginFunc017Func040Func001002002))
+    udg_TourTeamGroup[2] = yDWEGetUnitsInRectMatchingNull(gg_rct_WholeMap, Condition(function trig_Tournament222BeginFunc017Func040Func002002002))
+    udg_TourTeamGroup[3] = yDWEGetUnitsInRectMatchingNull(gg_rct_WholeMap, Condition(function trig_Tournament222BeginFunc017Func040Func003002002))
     bj_forLoopAIndex = 1
     bj_forLoopAIndexEnd = 2
     while true
