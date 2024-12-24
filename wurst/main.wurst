@@ -9972,7 +9972,7 @@ function trig_shuayeFunc001Func002Func002T()
     while true
         if bj_forLoopAIndex > bj_forLoopAIndexEnd
             break
-        SaveLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 1108, GetRandomLocInRect(gg_rct______________068))
+        SaveLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 1108, GetRandomLocInRect(gg_rct_T3neutrals))
         SaveUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 65, CreateUnitAtLoc(Player(PLAYER_NEUTRAL_AGGRESSIVE), 'e0PB', LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 1108), GetRandomDirectionDeg()))
         RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 1108))
         bj_forLoopAIndex++
@@ -9985,7 +9985,7 @@ function trig_shuayeFunc002Func002Func002T()
     while true
         if bj_forLoopAIndex > bj_forLoopAIndexEnd
             break
-        SaveLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 683, GetRandomLocInRect(gg_rct______________070))
+        SaveLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 683, GetRandomLocInRect(gg_rct_T1neutrals))
         SaveUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 680, CreateUnitAtLoc(Player(PLAYER_NEUTRAL_AGGRESSIVE), 'e0PC', LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 683), GetRandomDirectionDeg()))
         RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 683))
         bj_forLoopAIndex++
@@ -9998,7 +9998,7 @@ function trig_shuayeFunc003Func002Func002T()
     while true
         if bj_forLoopAIndex > bj_forLoopAIndexEnd
             break
-        SaveLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 48, GetRandomLocInRect(gg_rct______________069))
+        SaveLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 48, GetRandomLocInRect(gg_rct_T2neutrals))
         SaveUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 582544290, CreateUnitAtLoc(Player(PLAYER_NEUTRAL_AGGRESSIVE), 'e0PD', LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 48), GetRandomDirectionDeg()))
         RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 48))
         bj_forLoopAIndex++

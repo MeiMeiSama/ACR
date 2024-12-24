@@ -58,6 +58,9 @@ rect gg_rct_T3= null
 rect gg_rct_WholeMap= null
 camerasetup gg_cam_SelectionScreenCamera= null
 trigger gg_trg_Item_Cleanup= null
+rect gg_rct_T1neutrals= null
+rect gg_rct_T2neutrals= null
+rect gg_rct_T3neutrals= null
 string array Music
 hashtable nzHash= InitHashtable()
 code l__Code
@@ -4666,7 +4669,10 @@ function CreateRegions takes nothing returns nothing
     set gg_rct_T1=Rect(- 12288.0, 10336.0, - 11808.0, 10752.0)
     set gg_rct_T2=Rect(3712.0, 2784.0, 4256.0, 3232.0)
     set gg_rct_T3=Rect(- 5184.0, - 6144.0, - 4736.0, - 5728.0)
-    set gg_rct_WholeMap=Rect(- 12704.0, - 13088.0, 11456.0, 11232.0)
+    set gg_rct_WholeMap=Rect(- 12800.0, - 13312.0, 11360.0, 11008.0)
+    set gg_rct_T1neutrals=Rect(- 2400.0, 6720.0, - 1824.0, 7072.0)
+    set gg_rct_T2neutrals=Rect(- 608.0, - 3616.0, - 256.0, - 3040.0)
+    set gg_rct_T3neutrals=Rect(- 9344.0, - 992.0, - 8768.0, - 640.0)
 endfunction
 
 //***************************************************************************

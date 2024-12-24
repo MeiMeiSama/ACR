@@ -1812,6 +1812,8 @@ import AbilityGlobals
     ..setName("Blue Buff Ability Dummy")
     ..setTooltipNormal(1, "Blue Buff Ability Dummy|r")
     ..setTooltipNormalExtended(1, "Blue Buff Ability Dummy|r")
+    ..setButtonPositionNormalX(0)
+    ..setButtonPositionNormalY(-11)
 
     new AbilityDefinitionBloodlust(DUMMY_YELLOWBUFF_ABILITY)
     ..setLevels(1)
@@ -1846,6 +1848,8 @@ import AbilityGlobals
     ..setName("Green Buff Ability Dummy")
     ..setTooltipNormal(1, "Green Buff Ability Dummy|r")
     ..setTooltipNormalExtended(1, "Green Buff Ability Dummy|r")
+    ..setButtonPositionNormalX(0)
+    ..setButtonPositionNormalY(-11)
 
     new AbilityDefinitionMaxLifeBonusGreater(DUMMY_GREENBUFF2_ABILITY)
     ..setItemAbility(false)
@@ -1858,6 +1862,8 @@ import AbilityGlobals
     ..setTooltipNormal(1, "Green Buff Ability Dummy|r")
     ..setTooltipNormalExtended(1, "Green Buff Ability Dummy|r")
     ..setIconNormal("ReplaceableTextures\\CommandButtons\\BTNArcobalenoThunder.blp")
+    ..setButtonPositionNormalX(0)
+    ..setButtonPositionNormalY(-11)
 
     new AbilityDefinitionBloodlust(MARE_SUN_DUMMY_SPELL)
     ..setRequirements("")

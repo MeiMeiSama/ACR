@@ -1,138 +1,138 @@
-// package devTools
-// import ClosureEvents
-// import Orders
-// import ObjectIds
-// import main
-// import ACR_TagSystem
-// import ACR_ReviveInstant
-// import CreateBuildings
-// import ObjectDefinitions
-// int acrdevtimer
-// unit selectedUnit
-// timer acrTimer
-// timer testTimer
-// bool array devTools
-// fogmodifier array acr_MH
+package devTools
+import ClosureEvents
+import Orders
+import ObjectIds
+import main
+import ACR_TagSystem
+import ACR_ReviveInstant
+import CreateBuildings
+import ObjectDefinitions
+int acrdevtimer
+unit selectedUnit
+timer acrTimer
+timer testTimer
+bool array devTools
+fogmodifier array acr_MH
 
-// init
-//     udg_PlayHero[1] = createUnit(Player(1), COBRA, vec2(-8868, -11444))..setUserData(1)
-//     ..setStr(5000)
-//     udg_PlayHero[2] = createUnit(Player(2), 'H01R', vec2(-8868, -11450))..setUserData(2)
-//     ..setStr(5000)
-//     udg_PlayHero[4] = createUnit((Player(4)), ICHIGO_STRENGTH, vec2(-8868, -11456))..setUserData(4)
-//     ..setStr(500)
-//     udg_PlayHero[5] = createUnit((Player(5)), 'H006', vec2(-10223, -9559))..setUserData(5)
-//     ..setStr(5000)
-//     udg_PlayHero[6] = createUnit((Player(6)), 'H00R', vec2(-10223, -9563))..setUserData(6)
-//     ..setStr(5000)    
-//     udg_PlayHero[8] = createUnit((Player(8)), 'H03G', vec2(-10223, -9572))..setUserData(8)
-//     ..setStr(5000)  
-//     udg_PlayHero[9] = createUnit((Player(9)), 'H01A', vec2(-10223, -9589))..setUserData(9)
-//     ..setStr(5000)  
-//     udg_PlayHero[10] = createUnit((Player(10)), DIO_BRANDO, vec2(-10223, -9596))..setUserData(10)
-//     ..setStr(5000)              
-//     devTools()
+init
+    udg_PlayHero[1] = createUnit(Player(1), COBRA, vec2(-8868, -11444))..setUserData(1)
+    ..setStr(5000)
+    udg_PlayHero[2] = createUnit(Player(2), 'H01R', vec2(-8868, -11450))..setUserData(2)
+    ..setStr(5000)
+    udg_PlayHero[4] = createUnit((Player(4)), ICHIGO_STRENGTH, vec2(-8868, -11456))..setUserData(4)
+    ..setStr(500)
+    udg_PlayHero[5] = createUnit((Player(5)), 'H006', vec2(-10223, -9559))..setUserData(5)
+    ..setStr(5000)
+    udg_PlayHero[6] = createUnit((Player(6)), 'H00R', vec2(-10223, -9563))..setUserData(6)
+    ..setStr(5000)    
+    udg_PlayHero[8] = createUnit((Player(8)), 'H03G', vec2(-10223, -9572))..setUserData(8)
+    ..setStr(5000)  
+    udg_PlayHero[9] = createUnit((Player(9)), 'H01A', vec2(-10223, -9589))..setUserData(9)
+    ..setStr(5000)  
+    udg_PlayHero[10] = createUnit((Player(10)), DIO_BRANDO, vec2(-10223, -9596))..setUserData(10)
+    ..setStr(5000)              
+    devTools()
 
-// function acrTimerFunc()
-//     acrdevtimer++
-//     print("ACR Timer: [|cffffd700"+acrdevtimer.toString()+"|r]")
+function acrTimerFunc()
+    acrdevtimer++
+    print("ACR Timer: [|cffffd700"+acrdevtimer.toString()+"|r]")
 
-// function testFunc()
-//     print("timer ended")
+function testFunc()
+    print("timer ended")
 
-// function testFunc2()
-//     testTimer.destr()          
+function testFunc2()
+    testTimer.destr()          
 
-// function devTools ()
-//     teleport()
-//     for i = 0 to 12
-//         devTools[i] = false
+function devTools ()
+    teleport()
+    for i = 0 to 12
+        devTools[i] = false
 
-//     EventListener.add(EVENT_PLAYER_CHAT_FILTER) ->
-//         let input = GetEventPlayerChatString()
-//         let p = GetTriggerPlayer()
-//         let id = p.getId()
-//         if input == "acr"
-//             print("|cffffd700Dev Tools: |cffff0000ON|r", 3)
-//             p.setGold(500000)
-//             udg_PlayHero[id]
-//             ..setLevel(45, false)
-//             ..setStr(100)
-//             ..setInt(100)
-//             ..setAgi(100)
-//             ..setMaxMana(1000)
-//             ..setMaxHP(1000)
-//             devTools[id] = true
-//             activator_Handler(id)
-//             acr_MH[id] = createFogModifier(p, FOG_OF_WAR_VISIBLE, GetWorldBounds(), false, false)
-//             acr_MH[id].start()
-//         else if input == "stop"
-//             print("|cffffd700Dev Tools: |cffff0000OFF|r", 3)
-//             devTools[id] = false
-//             acr_MH[id].stop()
-//             acr_MH[id].destr()
-//         else if input == "ms"
-//             print(selectedUnit.getMoveSpeed().toString())   
-//         else if input == "meta"
-//             selectedUnit.issueImmediateOrder("metamorphosis")        
-//         else if input == "pause"
-//             selectedUnit.pauseEx()   
-//             selectedUnit.addTagPauseEX()       
-//         else if input == "unpause"
-//             selectedUnit.unpauseEx()  
-//             selectedUnit.removeTagPauseEX()                     
-//         else if input == "music"
-//             StopMusic(false)
-//         else if input == "gold"
-//             print(udg_PlayHero[id].getOwner().getGold())
-//         else if input == "1v1"
-//             trig_TournamentSoLoBeginActions()
-//         else if input == "2v2"
-//             trig_Tournament222BeginActions()
-//         else if input == "3v3"
-//             trig_TeamTournament333BeginActions()
-//         else if input == "boss"
-//             trig_VsBossBeginActions()
-//         else if input == "ffa"
-//             trig_TournamentFFAActions()
-//         else if input == "test"
-//             testTimer = CreateTimer()..start(5, function testFunc)     
-//         else if input == "release"
-//             testFunc2()                    
-//         else if input == "timer"
-//             acrdevtimer = 0
-//             acrTimer = CreateTimer()..startPeriodic(1, function acrTimerFunc)
-//         else if input == "timerstop"
-//             print("Destroyed ACR Timer")
-//             acrTimer.destr()
-//         else if input == "revive"
-//             acrRevive(selectedUnit)
+    EventListener.add(EVENT_PLAYER_CHAT_FILTER) ->
+        let input = GetEventPlayerChatString()
+        let p = GetTriggerPlayer()
+        let id = p.getId()
+        if input == "acr"
+            print("|cffffd700Dev Tools: |cffff0000ON|r", 3)
+            p.setGold(500000)
+            udg_PlayHero[id]
+            ..setLevel(45, false)
+            ..setStr(100)
+            ..setInt(100)
+            ..setAgi(100)
+            ..setMaxMana(1000)
+            ..setMaxHP(7000)
+            devTools[id] = true
+            activator_Handler(id)
+            acr_MH[id] = createFogModifier(p, FOG_OF_WAR_VISIBLE, GetWorldBounds(), false, false)
+            acr_MH[id].start()
+        else if input == "stop"
+            print("|cffffd700Dev Tools: |cffff0000OFF|r", 3)
+            devTools[id] = false
+            acr_MH[id].stop()
+            acr_MH[id].destr()
+        else if input == "ms"
+            print(selectedUnit.getMoveSpeed().toString())   
+        else if input == "meta"
+            selectedUnit.issueImmediateOrder("metamorphosis")        
+        else if input == "pause"
+            selectedUnit.pauseEx()   
+            selectedUnit.addTagPauseEX()       
+        else if input == "unpause"
+            selectedUnit.unpauseEx()  
+            selectedUnit.removeTagPauseEX()                     
+        else if input == "music"
+            StopMusic(false)
+        else if input == "gold"
+            print(udg_PlayHero[id].getOwner().getGold())
+        else if input == "1v1"
+            trig_TournamentSoLoBeginActions()
+        else if input == "2v2"
+            trig_Tournament222BeginActions()
+        else if input == "3v3"
+            trig_TeamTournament333BeginActions()
+        else if input == "boss"
+            trig_VsBossBeginActions()
+        else if input == "ffa"
+            trig_TournamentFFAActions()
+        else if input == "test"
+            testTimer = CreateTimer()..start(5, function testFunc)     
+        else if input == "release"
+            testFunc2()                    
+        else if input == "timer"
+            acrdevtimer = 0
+            acrTimer = CreateTimer()..startPeriodic(1, function acrTimerFunc)
+        else if input == "timerstop"
+            print("Destroyed ACR Timer")
+            acrTimer.destr()
+        else if input == "revive"
+            acrRevive(selectedUnit)
 
 
 
-//     EventListener.add(EVENT_PLAYER_UNIT_SELECTED) ->
-//         selectedUnit = GetTriggerUnit()
-//         print("Name: "+selectedUnit.getName())
-//         print("Type: "+selectedUnit.getTypeId().toRawCode())
-//         print("ID: "+selectedUnit.getUserData().toString())
-//         print("X: "+selectedUnit.getX().toString())
-//         print("Y: "+selectedUnit.getY().toString())
-//         if selectedUnit == miniboss[0]
-//             print("boss 0 selected")
-//         if selectedUnit == miniboss[1]
-//             print("boss 1 selected")  
-//         if selectedUnit == miniboss[2]
-//             print("boss 1 selected")                        
-//         // let pid = selectedUnit.getHandleId()
-//         // print("original id: "+pid.toString())
-//         // let id = selectedUnit.getHandleId().toString().substring(3, 7).toInt()
-//         // print("new id: "+id.toString())
-//         // print(GetUnitUserData(selectedUnit))           
+    EventListener.add(EVENT_PLAYER_UNIT_SELECTED) ->
+        selectedUnit = GetTriggerUnit()
+        print("Name: "+selectedUnit.getName())
+        print("Type: "+selectedUnit.getTypeId().toRawCode())
+        print("ID: "+selectedUnit.getUserData().toString())
+        print("X: "+selectedUnit.getX().toString())
+        print("Y: "+selectedUnit.getY().toString())
+        if selectedUnit == miniboss[0]
+            print("boss 0 selected")
+        if selectedUnit == miniboss[1]
+            print("boss 1 selected")  
+        if selectedUnit == miniboss[2]
+            print("boss 1 selected")                        
+        // let pid = selectedUnit.getHandleId()
+        // print("original id: "+pid.toString())
+        // let id = selectedUnit.getHandleId().toString().substring(3, 7).toInt()
+        // print("new id: "+id.toString())
+        // print(GetUnitUserData(selectedUnit))           
                         
 
-// function teleport ()
-//     CreateTrigger()
-//     ..registerAnyUnitEvent(EVENT_PLAYER_UNIT_ISSUED_POINT_ORDER)
-//     ..addAction() ->
-//         if GetIssuedOrderId() == Orders.patrol and devTools[GetTriggerUnit().getOwner().getId()] == true
-//             SetUnitPosition(GetTriggerUnit(), GetLocationX(GetOrderPointLoc()), GetLocationY(GetOrderPointLoc()))
+function teleport ()
+    CreateTrigger()
+    ..registerAnyUnitEvent(EVENT_PLAYER_UNIT_ISSUED_POINT_ORDER)
+    ..addAction() ->
+        if GetIssuedOrderId() == Orders.patrol and devTools[GetTriggerUnit().getOwner().getId()] == true
+            SetUnitPosition(GetTriggerUnit(), GetLocationX(GetOrderPointLoc()), GetLocationY(GetOrderPointLoc()))
