@@ -56,11 +56,11 @@ rect gg_rct_T1= null
 rect gg_rct_T2= null
 rect gg_rct_T3= null
 rect gg_rct_WholeMap= null
-camerasetup gg_cam_SelectionScreenCamera= null
-trigger gg_trg_Item_Cleanup= null
 rect gg_rct_T1neutrals= null
 rect gg_rct_T2neutrals= null
 rect gg_rct_T3neutrals= null
+camerasetup gg_cam_SelectionScreenCamera= null
+trigger gg_trg_Item_Cleanup= null
 string array Music
 hashtable nzHash= InitHashtable()
 code l__Code

@@ -149,6 +149,12 @@ import ObjectDefinitions
     ..setTooltipNormalExtended(1, "This unit have increased health")
     ..setIcon("ReplaceableTextures\\CommandButtons\\BTNArcobalenoThunder.blp")
 
+    new BuffDefinition(REDBUFF_BUFF, AbilityIds.trueshotAura)
+    ..setName("Red Buff")
+    ..setTooltipNormal(1, "Red Buff")
+    ..setTooltipNormalExtended(1, "This unit have increased damage")
+    ..setIcon("ReplaceableTextures\\CommandButtons\\PASBTNRedDemon.blp")
+
     new BuffDefinition(MARE_SUN_BUFF, AbilityIds.bloodlust)
     ..setName("Mare Sun Buff")
     ..setTooltipNormal(1, "Mare Sun")

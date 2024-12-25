@@ -1109,7 +1109,7 @@ init
                     if caster.hasAbility('B068')                                                        // Sistine's F buff
                         DamageEvent.setAmount(DamageEvent.getAmount()*1.30)
 
-                    if caster.hasAbility('A19P')
+                    if caster.hasAbility(DUMMY_REDBUFF_ABILITY)
                         DamageEvent.setAmount(DamageEvent.getAmount()*1.10)
                              
 

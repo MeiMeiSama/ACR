@@ -7,6 +7,7 @@ import ACR_TagSystem
 import ACR_ReviveInstant
 import CreateBuildings
 import ObjectDefinitions
+import DummyCaster
 int acrdevtimer
 unit selectedUnit
 timer acrTimer
@@ -107,6 +108,30 @@ function devTools ()
             acrTimer.destr()
         else if input == "revive"
             acrRevive(selectedUnit)
+        else if input == "red"
+            selectedUnit.addAbility(DUMMY_REDBUFF_ABILITY)
+        else if input == "nored"
+            selectedUnit.removeAbility(DUMMY_REDBUFF_ABILITY)
+        else if input == "blue"
+            selectedUnit.addAbility(DUMMY_BLUEBUFF_ABILITY)
+        else if input == "noblue"
+            selectedUnit.removeAbility(DUMMY_BLUEBUFF_ABILITY)
+        else if input == "yellow"
+            new DummyCaster()
+            ..owner(selectedUnit.getOwner())
+            ..origin(selectedUnit.getPos())
+            ..castTarget(DUMMY_YELLOWBUFF_ABILITY, 1, OrderIds.bloodlust, selectedUnit)
+            selectedUnit.addAbility(DUMMY_YELLOWBUFF_ABILITY)
+        else if input == "noyellow"
+            selectedUnit.removeAbility(DUMMY_YELLOWBUFF_ABILITY)
+        else if input == "green"
+            selectedUnit.addAbility(DUMMY_GREENBUFF_ABILITY)
+        else if input == "nogreen"
+            selectedUnit.removeAbility(DUMMY_GREENBUFF_ABILITY)
+        else if input == "green2"
+            selectedUnit.addAbility(DUMMY_GREENBUFF2_ABILITY)
+        else if input == "nogreen2"
+            selectedUnit.removeAbility(DUMMY_GREENBUFF2_ABILITY)                       
 
 
 
