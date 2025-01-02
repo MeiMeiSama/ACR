@@ -75,6 +75,7 @@ import N_Natsu_G
 import S_Natsu_G
 import Cobra_G
 import misakaOnKillBLT
+import MavisE_Orig
 /*
 
     - Iniitalize functions after the game has started, when most data is "valid" such as udg_Playhero
@@ -292,6 +293,8 @@ public function initFunctions ()
         if udg_PlayHero[i].getTypeId() == 'H00Y'
             natsu2Dot()     
         if udg_PlayHero[i].getTypeId() == COBRA
-            cobraDot()                                                         
+            cobraDot()
+        if udg_PlayHero[i].getTypeId() == MAVIS
+            initTrig_MavisE_Orig()                                                                         
 
     CreateTimer().start(3, function updateSelection)

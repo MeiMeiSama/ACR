@@ -63,6 +63,13 @@ public constant MISOGI_THAI_R = compiletime(ABIL_ID_GEN.next())
 public constant MISOGI_THAI_T = compiletime(ABIL_ID_GEN.next())
 public constant MISOGI_THAI_F = compiletime(ABIL_ID_GEN.next())
 public constant MISOGI_THAI_G = compiletime(ABIL_ID_GEN.next())
+public constant MAVIS_Q = compiletime(ABIL_ID_GEN.next())
+public constant MAVIS_W = compiletime(ABIL_ID_GEN.next())
+public constant MAVIS_E = compiletime(ABIL_ID_GEN.next())
+public constant MAVIS_T = compiletime(ABIL_ID_GEN.next())
+public constant MAVIS_F = compiletime(ABIL_ID_GEN.next())
+public constant MAVIS_R = compiletime(ABIL_ID_GEN.next())
+public constant ZERVIS_G = compiletime(ABIL_ID_GEN.next())
 
 // ------------------------------ Item Abilities ------------------------------
 public constant CLOUD_VONGOLA_ABILITY = compiletime(ABIL_ID_GEN.next())
@@ -155,6 +162,7 @@ public let ARTURIA_STRENGTH = compiletime(HERO_ID_GEN.next())
 public let ENMA_AI = compiletime(HERO_ID_GEN.next())
 public let KIYOHIME_STRENGTH = compiletime(HERO_ID_GEN.next())
 public let MISOGI_THAI = compiletime(HERO_ID_GEN.next())
+public let MAVIS = compiletime(HERO_ID_GEN.next())
 
 // ------------------------------ Units ------------------------------
 public let OK_BUTTON = compiletime(UNIT_ID_GEN.next())
@@ -337,6 +345,15 @@ public let MISOGI_THAI_F_DUMMY_4 = compiletime(UNIT_ID_GEN.next())
 public let MISOGI_THAI_F_DUMMY_5 = compiletime(UNIT_ID_GEN.next())
 
 public let MISOGI_THAI_E_DUMMY_1 = compiletime(UNIT_ID_GEN.next())
+
+public let MAVIS_Q_DUMMY = compiletime(UNIT_ID_GEN.next())
+public let MAVIS_W_DUMMY = compiletime(UNIT_ID_GEN.next())
+public let MAVIS_T_DUMMY = compiletime(UNIT_ID_GEN.next())
+public let MAVIS_F_DUMMY = compiletime(UNIT_ID_GEN.next())
+public let MAVIS_F_DUMMY2 = compiletime(UNIT_ID_GEN.next())
+public let MAVIS_F_DUMMY3 = compiletime(UNIT_ID_GEN.next())
+public let MAVIS_R_DUMMY = compiletime(UNIT_ID_GEN.next())
+public let MAVIS_R_DUMMY2 = compiletime(UNIT_ID_GEN.next())
 
 ///////////////////// Dummies for skins/////////////////////////
 public let RIN_SKIN = compiletime(UNIT_ID_GEN.next())

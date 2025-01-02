@@ -1176,6 +1176,7 @@ public function addAbilities (unit hero)
         SPELL_T[id] = 'A0IH'
         SPELL_F[id] = 'A0IL'
         SPELL_G[id] = 'A0IJ'
+        SPELL_G2[id] = ZERVIS_G
     else if hero.getTypeId() == 'H032' // Waver
         SPELL_Q[id] = 'A0RY'
         SPELL_W[id] = 'A0RZ'
@@ -1272,5 +1273,14 @@ public function addAbilities (unit hero)
         SPELL_R[id] = 'A0R3'
         SPELL_T[id] = 'A0R4'
         SPELL_F[id] = 'A0R5'
-        SPELL_G[id] = 'A0R6'        
+        SPELL_G[id] = 'A0R6'
+    else if hero.getTypeId() == MAVIS // Mavis
+        SPELL_Q[id] = MAVIS_Q
+        SPELL_W[id] = MAVIS_W
+        SPELL_E[id] = MAVIS_E
+        SPELL_R[id] = MAVIS_R
+        SPELL_T[id] = MAVIS_T
+        SPELL_F[id] = MAVIS_F
+        SPELL_G[id] = '_' 
+        SPELL_G2[id] = ZERVIS_G            
     updateTooltipsInit_Base(hero)

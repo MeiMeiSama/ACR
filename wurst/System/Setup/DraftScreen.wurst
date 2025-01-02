@@ -135,15 +135,15 @@ function dataList()
 
     // ━━━━━━━━━━━━ [INTELLIGENCE HEROES] ━━━━━━━━━━━━
     heroList_INT.add(
-    'H006','H017','H01U',ITACHI_EDO,MADARA_EDO,'H00D','H02E','H02W','H032','H02T','H00R','H01O','H03D',                                               // Row 11
+    'H006','H017','H01U',MAVIS,ITACHI_EDO,MADARA_EDO,'H00D','H02E','H02W','H032','H02T','H00R','H01O','H03D',                                               // Row 11
     'H008','H02J','H03H','H03F','H03E','H043',ENMA_AI,'H02Y')                                                                                          // Row 12
 
     canPick_Icon_INT.add(
-    'B00Z','B02Q','B042','B03K','B08F','B01O','B05Q','B06O','B06Y','B07C','B011','B03S','B07S',                                                       // Row 11
+    'B00Z','B02Q','B042','B07K','B03K','B08F','B01O','B05Q','B06O','B06Y','B07C','B011','B03S','B07S',                                                       // Row 11
     'B013','B05Y','B080','B07W','B07U','B08V','B092','B06U')                                                                                          // Row 12
 
     cannotPick_Icon_INT.add(
-    'B021','B02R','B043','B03L','B08G','B015','B05R','B06P','B06Z','B07D','B01T','B03T','B07T',                                                       // Ro1 11
+    'B021','B02R','B043','B09P','B03L','B08G','B015','B05R','B06P','B06Z','B07D','B01T','B03T','B07T',                                                       // Ro1 11
     'B01S','B05Z','B081','B07X','B07V','B08W','B093','B06V')                                                                                          // Row 12
     
     // ━━━━━━━━━━━━ [ADD ALL HEROES TOGETHER INTO ONE LIST] ━━━━━━━━━━━━

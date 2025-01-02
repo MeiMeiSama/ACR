@@ -1,0 +1,56 @@
+package MavisE_Orig
+import ObjectDefinitions
+import ChannelAbilityPreset
+import ClosureEvents
+import AbilityGlobals       
+
+unit mavis
+timer mavisETimer
+effect mavisEffect
+
+@compiletime function createAbility()
+    new ChannelAbilityPreset(MAVIS_E, 5, true)
+        ..presetTargetTypes(Targettype.PASSIVE)
+        ..setAnimationNames("1111111")
+        ..setButtonPositionNormalX(2)
+        ..setButtonPositionNormalY(2)
+        ..setButtonPositionResearchX(2)
+        ..setButtonPositionResearchY(0)
+        ..setIconNormal("ReplaceableTextures\\CommandButtonsDisabled\\DISBTNUltravision.blp")
+        ..setIconResearch("ReplaceableTextures\\CommandButtonsDisabled\\DISBTNUltravision.blp")
+        ..setMissileSpeed(99999)
+        ..setHeroAbility(true)
+        ..setHotkeyNormal("")
+        ..setHotkeyLearn("E")
+        ..setLevels(5)
+        ..setLevelSkipRequirement(2)
+        ..presetArtDuration(lvl -> 0)
+        ..presetBaseOrderID(lvl -> "acolyteharvest")
+        ..presetDisableOtherAbilities(lvl -> false)
+        ..presetFollowThroughTime(lvl -> 0)
+        ..presetTargetsAllowed(lvl -> "none")
+        ..presetTooltipNormal(lvl -> "Strategic Insight|r")
+        ..presetTooltipNormalExtended(lvl -> GOLD+"Mavis pings all enemies in the map for herself and her allies."+"\n\ncooldown: "+BLUE+"70/60/50/40/30|r")
+        ..setTooltipLearn("Strategic Insight|r")
+        ..setTooltipLearnExtended(GOLD+"Mavis pings all enemies in the map for herself and her allies."+"\n\ncooldown: "+BLUE+"70/60/50/40/30|r")
+
+public function initTrig_MavisE_Orig()
+    EventListener.add(EVENT_PLAYER_HERO_SKILL) ->
+        if GetLearnedSkill() == MAVIS_E
+            let mavis = GetTriggerUnit()
+            let a = GetLearnedSkill()
+            let abilvl = GetUnitAbilityLevel(mavis, a)
+            let interval = I2R(80 - abilvl * 10)
+            if mavisETimer == null
+                mavisETimer = CreateTimer()..startPeriodic(5, function ping)
+            else if mavisETimer != null   
+                CreateTimer()..start(0.03, function destr)
+                mavisETimer.startPeriodic(5, function ping)
+                 
+function ping()
+    for i = 0 to 12
+        if udg_PlayHero[i].getOwner().isEnemyOf(mavis.getOwner())
+            PingMinimapForForce(GetForceOfPlayer(mavis.getOwner()), udg_PlayHero[i].getX(), udg_PlayHero[i].getY(), 1)
+
+function destr()
+    mavisETimer.destr()
