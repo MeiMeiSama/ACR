@@ -168,6 +168,8 @@ function mavisRMove()
         mavisREnd2()       
 
 function mavisREnd2()
+    mavisRListenerMove.destr()
+    mavisRListenerEnd.destr()
     mavisREnd.destr()
     dummyUnit.remove()
     dummyUnit2.remove()
