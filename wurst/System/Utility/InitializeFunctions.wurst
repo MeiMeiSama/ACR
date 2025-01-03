@@ -296,13 +296,24 @@ public function initFunctions ()
         if udg_PlayHero[i].getTypeId() == COBRA
             cobraDot()
         if udg_PlayHero[i].getTypeId() == MAVIS
-            initTrig_MavisE_Orig()
-        if udg_PlayHero[i].getTypeId() == MAVIS and udg_PlayHero[i].getTypeId() == 'H01U'                                                                            
-            udg_PlayHero[i].addAbility(SPELL_G2[i])
-            udg_PlayHero[i].makeAbilityPermanent(SPELL_G2[i], true)
-            if SPELL_G2[i].hasTagHidden() == false
-                udg_PlayHero[i].hideAbility(SPELL_G2[i], true)
-                SPELL_G2[i].addTagHidden()        
-            zervisGAdd()
-            pickBoth()
+            initTrig_MavisE_Orig()            
+            let mavis = udg_PlayHero[i]
+            let mavisG = SPELL_G2[i]
+            for a = 0 to 12 
+                if udg_PlayHero[a].getTypeId() == 'H01U' 
+                    let zeref = udg_PlayHero[a]
+                    if zeref.isAllyOf(mavis)
+                        let zerefG = SPELL_G2[a]
+                        mavis.addAbility(mavisG)
+                        zeref.addAbility(zerefG)
+                        mavis.makeAbilityPermanent(mavisG, true)
+                        zeref.makeAbilityPermanent(zerefG, true)
+                        if mavisG.hasTagHidden() == false
+                            mavis.hideAbility(mavisG, true)
+                            mavisG.addTagHidden()       
+                        if zerefG.hasTagHidden() == false
+                            zeref.hideAbility(zerefG, true)
+                            zerefG.addTagHidden()                           
+                        zervisGAddTimer()
+                        // pickBoth()
     CreateTimer().start(3, function updateSelection)
