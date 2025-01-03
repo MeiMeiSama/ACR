@@ -302,18 +302,17 @@ public function initFunctions ()
             for a = 0 to 12 
                 if udg_PlayHero[a].getTypeId() == 'H01U' 
                     let zeref = udg_PlayHero[a]
-                    if zeref.isAllyOf(mavis)
-                        let zerefG = SPELL_G2[a]
-                        mavis.addAbility(mavisG)
-                        zeref.addAbility(zerefG)
-                        mavis.makeAbilityPermanent(mavisG, true)
-                        zeref.makeAbilityPermanent(zerefG, true)
-                        if mavisG.hasTagHidden() == false
-                            mavis.hideAbility(mavisG, true)
-                            mavisG.addTagHidden()       
-                        if zerefG.hasTagHidden() == false
-                            zeref.hideAbility(zerefG, true)
-                            zerefG.addTagHidden()                           
-                        zervisGAddTimer()
-                        // pickBoth()
+                    let zerefG = SPELL_G2[a]
+                    mavis.addAbility(mavisG)
+                    zeref.addAbility(zerefG)
+                    mavis.makeAbilityPermanent(mavisG, true)
+                    zeref.makeAbilityPermanent(zerefG, true)
+                    if mavisG.hasTagHidden() == false
+                        mavis.hideAbility(mavisG, true)
+                        mavisG.addTagHidden()       
+                    if zerefG.hasTagHidden() == false
+                        zeref.hideAbility(zerefG, true)
+                        zerefG.addTagHidden()                           
+                    zervisGAddTimer()
+                    // pickBoth()
     CreateTimer().start(3, function updateSelection)
