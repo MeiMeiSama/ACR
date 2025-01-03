@@ -76,6 +76,7 @@ import S_Natsu_G
 import Cobra_G
 import misakaOnKillBLT
 import MavisE_Orig
+import ZervisG_Orig
 /*
 
     - Iniitalize functions after the game has started, when most data is "valid" such as udg_Playhero
@@ -295,6 +296,13 @@ public function initFunctions ()
         if udg_PlayHero[i].getTypeId() == COBRA
             cobraDot()
         if udg_PlayHero[i].getTypeId() == MAVIS
-            initTrig_MavisE_Orig()                                                                         
-
+            initTrig_MavisE_Orig()
+        if udg_PlayHero[i].getTypeId() == MAVIS and udg_PlayHero[i].getTypeId() == 'H01U'                                                                            
+            udg_PlayHero[i].addAbility(SPELL_G2[i])
+            udg_PlayHero[i].makeAbilityPermanent(SPELL_G2[i], true)
+            if SPELL_G2[i].hasTagHidden() == false
+                udg_PlayHero[i].hideAbility(SPELL_G2[i], true)
+                SPELL_G2[i].addTagHidden()        
+            zervisGAdd()
+            pickBoth()
     CreateTimer().start(3, function updateSelection)

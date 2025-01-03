@@ -6,8 +6,9 @@ import ChannelAbilityPreset
 import UnitIds
 import main
 import ClosureForGroups
+//import OrderIds
 
-trigger mavisRListenerMove
+//trigger mavisRListenerMove
 trigger mavisRListenerEnd
 unit mavis
 unit dummyUnit
@@ -82,7 +83,7 @@ timer mavisREnd
         ..setTooltipBasic("_")
         ..setTooltipExtended("_")
     new UnitDefinition(MAVIS_R_DUMMY2, UnitIds.wisp)
-        ..setNormalAbilities(commaList('Avul', 'Aloc', 'Amrf'))
+        ..setNormalAbilities(commaList('Avul'))
         ..setAnimationCastBackswing(0)
         ..setDeathTimeseconds(0.1)
         ..setScalingValue(0.70)
@@ -91,12 +92,12 @@ timer mavisREnd
         ..setHasWaterShadow(false)
         ..setMaximumPitchAngledegrees(0)
         ..setMaximumRollAngledegrees(0)
-        ..setModelFile("war3mapImported\\amaterasu pix.mdx")
+        ..setModelFile("war3mapImported\\ShadowVoltex.mdx")
         ..setArtSpecial("_")
         ..setArmorType(ArmorType.Unarmored)
         ..setPlaceableInEditor(false)
         ..setMovementHeight(20)
-        ..setSpeedBase(100)
+        ..setSpeedBase(500)
         ..setTurnRate(3)
         ..setMovementType(MovementType.Fly)
         ..setCollisionSize(0)
@@ -112,7 +113,7 @@ timer mavisREnd
         ..setStructuresBuilt("_")
         ..setUpgradesUsed("_")
         ..setHotkey("_")
-        ..setName("effect dummy")
+        ..setName("Curse of Ankhseram")
         ..setTooltipBasic("_")
         ..setTooltipExtended("_")
     
@@ -138,16 +139,17 @@ function initTrig_MavisR_Orig()
             SetUnitTimeScalePercent(dummyUnit, 80)
             dummyUnit.setFacing(dummyUnit.getPos().angleTo(spellPos))
             dummyUnit2 = createUnit(MAVIS_R_DUMMY2, spellPos)
-            SetUnitScale(dummyUnit2,0.80,0.80,0.80)
+            SetUnitScale(dummyUnit2,1,1,1)
             SetUnitTimeScalePercent(dummyUnit2, 80)
             dummyUnit.setFacing(dummyUnit2.getPos().angleTo(mavisPos))
             mavisRInt=0
+            SelectUnitForPlayerSingle(dummyUnit2, mavis.getOwner())
             mavisRMove()
             mavisREnd = CreateTimer()..startPeriodic(0.01, function mavisREnd)
 
 function mavisREnd()
-    if mavisRInt < 600  
-        mavisRInt++
+    mavisRInt++
+    if mavisRInt < 600
         forUnitsInRange(dummyUnit2.getPos(), 400) (unit victim) ->
             if victim.isType(UNIT_TYPE_STRUCTURE)==false and victim.isEnemyOf(mavis)==true and victim.isAlive()==true and mavisGroup.has(victim) == false and victim.isInvulnerable() == false
                 DamageEvent.setNextDamageId(DAMAGE_ABILITY_R)
@@ -158,21 +160,31 @@ function mavisREnd()
         mavisREnd2()
 
 function mavisRMove()    
-    mavisRListenerMove = CreateTrigger()
-    mavisRListenerMove..registerPlayerKeyPress(mavis.getOwner(), OSKEY_LCONTROL, OSKEY_META.NONE, true)
-    mavisRListenerMove..addAction() ->
-        IssuePointOrder(dummyUnit2, "move", BlzGetTriggerPlayerMouseX(), BlzGetTriggerPlayerMouseY())   
+    //mavisRListenerMove..registerPlayerUnitEvent(mavis.getOwner(), EVENT_PLAYER_UNIT_ISSUED_POINT_ORDER, Condition(function filter))
+    //mavisRListenerMove..addAction() ->
+        //SelectUnitForPlayerSingle(dummyUnit2, mavis.getOwner())
     mavisRListenerEnd = CreateTrigger()
     mavisRListenerEnd..registerPlayerKeyPress(mavis.getOwner(), OSKEY_ESCAPE, OSKEY_META.NONE, true)
     mavisRListenerEnd..addAction() ->
         mavisREnd2()       
 
 function mavisREnd2()
-    mavisRListenerMove.destr()
+    //mavisRListenerMove.destr()
     mavisRListenerEnd.destr()
     mavisREnd.destr()
     dummyUnit.remove()
     dummyUnit2.remove()
+    SelectUnitForPlayerSingle(mavis, mavis.getOwner())
     mavis.setInvulnerable(false)
     mavis.unpause()
-    mavisGroup.clear()  
+    mavisGroup.clear()
+    mavis=null
+
+//function filter() returns boolean
+    //return GetIssuedOrderId() == OrderIds.smart
+
+    //mavisRListenerMove = CreateTrigger()
+    //mavisRListenerMove..registerPlayerKeyPress(mavis.getOwner(), OSKEY_LCONTROL, OSKEY_META.NONE, true)
+    //mavisRListenerMove..addAction() ->
+        //IssuePointOrderById(dummyUnit2, OrderIds.move, GetOrderPointX(), GetOrderPointY())  
+ //IssuePointOrderById(dummyUnit2, OrderId("move"), GetOrderPointX(), GetOrderPointY())

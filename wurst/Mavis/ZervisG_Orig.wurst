@@ -1,0 +1,219 @@
+package ZervisG_Orig
+import DamageEvent
+import AbilityGlobals
+import ObjectDefinitions
+import ChannelAbilityPreset
+import UnitIds
+import main
+import ACR_TagSystem
+
+unit mavis
+unit zeref
+unit zervisGTarget
+unit zervis
+unit dummyUnit
+unit dummyUnit2
+integer zervisGInt
+
+@compiletime function createAbility()
+    new ChannelAbilityPreset(ZERVIS_G, 1, true)
+        ..presetTargetTypes(Targettype.UNIT)
+        ..setAnimationNames("11111111")
+        ..setButtonPositionNormalX(1)
+        ..setButtonPositionNormalY(1)
+        ..setButtonPositionResearchX(1)
+        ..setButtonPositionResearchY(1)
+        ..setIconNormal("ReplaceableTextures\\CommandButtons\\BTNAmuletOftheWild.blp.blp")
+        ..setIconResearch("ReplaceableTextures\\CommandButtons\\BTNAmuletOftheWild.blp.blp")
+        ..setMissileSpeed(99999)
+        ..setHeroAbility(true)
+        ..setHotkeyNormal("G")
+        ..setHotkeyLearn("G")
+        ..setLevels(1)
+        ..setRequiredLevel(1)
+        ..presetArtDuration(lvl -> 0)
+        ..presetBaseOrderID(lvl -> "hex")
+        ..presetDisableOtherAbilities(lvl -> false)
+        ..presetFollowThroughTime(lvl -> 0)
+        ..presetCastRange(lvl -> 2000)
+        ..presetCooldown(lvl -> 80)
+        ..presetManaCost(lvl -> 100)
+        ..presetTargetsAllowed(lvl -> "enemy,ground,air,neutral")
+        ..presetTooltipNormal(lvl -> "Duality")
+        ..presetTooltipNormalExtended(lvl -> GOLD+"Mavis and Zeref combine their powers to stike the target."+"\n\ncooldown: "+BLUE+"80|r")
+    new UnitDefinition(ZERVIS_G_DUMMY, UnitIds.wisp)
+        ..setNormalAbilities(commaList('Avul', 'Aloc', 'Amrf'))
+        ..setAnimationCastBackswing(0)
+        ..setDeathTimeseconds(0.1)
+        ..setScalingValue(0.70)
+        ..setUnitClassification("_")
+        ..setArtSpecial("_")
+        ..setHasWaterShadow(false)
+        ..setMaximumPitchAngledegrees(0)
+        ..setMaximumRollAngledegrees(0)
+        ..setModelFile("war3mapImported\\Dark Shield.mdx")
+        ..setArtSpecial("_")
+        ..setArmorType(ArmorType.Unarmored)
+        ..setPlaceableInEditor(false)
+        ..setMovementHeight(20)
+        ..setSpeedBase(100)
+        ..setTurnRate(3)
+        ..setMovementType(MovementType.Fly)
+        ..setCollisionSize(0)
+        ..setUnitSoundSet("_")
+        ..setCanFlee(false)
+        ..setFoodCost(0)
+        ..setHideMinimapDisplay(true)
+        ..setHitPointsMaximumBase(60)
+        ..setHitPointsRegenerationRate(-1)
+        ..setHitPointsRegenerationType("Always")
+        ..setStockMaximum(1)
+        ..setStockReplenishInterval(1)
+        ..setStructuresBuilt("_")
+        ..setUpgradesUsed("_")
+        ..setHotkey("_")
+        ..setName("effect dummy")
+        ..setTooltipBasic("_")
+        ..setTooltipExtended("_")
+    new UnitDefinition(ZERVIS_G_DUMMY2, UnitIds.wisp)
+        ..setNormalAbilities(commaList('Avul', 'Aloc', 'Amrf'))
+        ..setAnimationCastBackswing(0)
+        ..setDeathTimeseconds(0.1)
+        ..setScalingValue(0.70)
+        ..setUnitClassification("_")
+        ..setArtSpecial("_")
+        ..setHasWaterShadow(false)
+        ..setMaximumPitchAngledegrees(0)
+        ..setMaximumRollAngledegrees(0)
+        ..setModelFile("war3mapImported\\mr.war3_xnhl2.mdx")
+        ..setArtSpecial("_")
+        ..setArmorType(ArmorType.Unarmored)
+        ..setPlaceableInEditor(false)
+        ..setMovementHeight(20)
+        ..setSpeedBase(100)
+        ..setTurnRate(3)
+        ..setMovementType(MovementType.Fly)
+        ..setCollisionSize(0)
+        ..setUnitSoundSet("_")
+        ..setCanFlee(false)
+        ..setFoodCost(0)
+        ..setHideMinimapDisplay(true)
+        ..setHitPointsMaximumBase(60)
+        ..setHitPointsRegenerationRate(-1)
+        ..setHitPointsRegenerationType("Always")
+        ..setStockMaximum(1)
+        ..setStockReplenishInterval(1)
+        ..setStructuresBuilt("_")
+        ..setUpgradesUsed("_")
+        ..setHotkey("_")
+        ..setName("effect dummy")
+        ..setTooltipBasic("_")
+        ..setTooltipExtended("_")     
+
+function zervisGInit()
+    CreateTrigger()
+    ..registerAnyUnitEvent(EVENT_PLAYER_UNIT_SPELL_EFFECT)
+    ..addCondition(Condition(function zervisGCondition))
+    ..addAction() ->
+        soundPlay("war3mapImported\\.mp3", 0, 0)
+        zervis=GetSpellAbilityUnit()
+        zervisGTarget=GetSpellTargetUnit()
+        PauseUnit(zervis,true)
+        SetUnitInvulnerable(zervis,true)
+        PauseUnit(zervisGTarget,true)
+        SetUnitInvulnerable(zervisGTarget,true)
+        let angle = zervis.getPos().angleTo(zervisGTarget.getPos())
+        if zervis.getTypeId() == MAVIS
+            PauseUnit(zeref, true)
+            SetUnitInvulnerable(zeref, true)
+            zeref.setPos(zervis.getPos().polarOffset(angle, 200))
+            zeref.setAnimation("spell")
+            zervis.setAnimation("spell")
+            dummyUnit = createUnit(ZERVIS_G_DUMMY, zeref.getPos())
+            SetUnitScale(dummyUnit,1,1,1)
+            SetUnitTimeScalePercent(dummyUnit, 80)
+            dummyUnit.setFacing(dummyUnit.getPos().angleTo(zervisGTarget.getPos()))
+            dummyUnit2 = createUnit(ZERVIS_G_DUMMY2, zervis.getPos())
+            SetUnitScale(dummyUnit2,1,1,1)
+            SetUnitTimeScalePercent(dummyUnit2, 80)
+            dummyUnit.setFacing(dummyUnit2.getPos().angleTo(zervisGTarget.getPos()))
+        else if zervis.getTypeId() == 'H01U'   
+            PauseUnit(mavis, true)
+            SetUnitInvulnerable(mavis, true)
+            mavis.setPos(zervis.getPos().polarOffset(angle, 200))
+            mavis.setAnimation("spell")
+            zervis.setAnimation("spell")
+            dummyUnit = createUnit(ZERVIS_G_DUMMY, zervis.getPos())
+            SetUnitScale(dummyUnit,1,1,1)
+            SetUnitTimeScalePercent(dummyUnit, 80)
+            dummyUnit.setFacing(dummyUnit.getPos().angleTo(zervisGTarget.getPos()))
+            dummyUnit2 = createUnit(ZERVIS_G_DUMMY2, mavis.getPos())
+            SetUnitScale(dummyUnit2,1,1,1)
+            SetUnitTimeScalePercent(dummyUnit2, 80)
+            dummyUnit.setFacing(dummyUnit2.getPos().angleTo(zervisGTarget.getPos()))
+        zervisGInt=0
+        CreateTimer()..startPeriodic(0.03, function zervisGEnd)
+
+function zervisGEnd()
+    zervisGInt++
+    if zervisGInt < 300
+        // not finished
+        DamageEvent.setNextDamageId(DAMAGE_ABILITY_G)
+        DamageEvent.setNextDamageFromCode()
+        UnitDamageTargetBJ(zervis, zervisGTarget,(12*GetHeroInt(zervis,true)).toReal(),ATTACK_TYPE_MAGIC,DAMAGE_TYPE_MAGIC)     
+    if zervisGInt >= 400
+        zervis.setInvulnerable(false)
+        zervis.unpause()
+        mavis.setInvulnerable(false)
+        mavis.unpause()
+        zeref.setInvulnerable(false)
+        zeref.unpause()
+        zervisGTarget.setInvulnerable(false)
+        zervisGTarget.unpause()
+        zervis=null
+        zervisGTarget=null
+        zeref=null
+        mavis=null
+        dummyUnit.remove()
+        dummyUnit2.remove()
+        
+
+
+public function zervisGAdd()
+    //check units in range????
+    CreateTrigger()
+    ..registerUnitInRange(mavis, 800, Condition(function filter))
+    ..addAction() ->
+        //no idea how this works, but im assuming this can hide/show to both units?
+        if ZERVIS_G.hasTagHidden() == true
+            zeref.hideAbility(ZERVIS_G, false)
+            mavis.hideAbility(ZERVIS_G, false)
+            ZERVIS_G.removeTagHidden()
+        if mavis.getPos().distanceTo(zeref.getPos()) >= 700
+            if ZERVIS_G.hasTagHidden() == false
+                zeref.hideAbility(ZERVIS_G, true)
+                mavis.hideAbility(ZERVIS_G, true)
+                ZERVIS_G.addTagHidden()
+
+
+public function pickBoth()
+    let zerefpickgroup = CreateGroup()
+    GroupEnumUnitsInRect(zerefpickgroup, gg_rct_WholeMap, Condition(function filter))
+    zeref = GetEnumUnit()
+    let mavispickgroup = CreateGroup()
+    GroupEnumUnitsInRect(mavispickgroup, gg_rct_WholeMap, Condition(function filter2))
+    mavis = GetEnumUnit()
+    mavispickgroup.clear()
+    zerefpickgroup.clear()
+
+function filter() returns boolean
+    return GetEnumUnit().getTypeId() == 'H01U' //zeref typeId
+
+function filter2() returns boolean
+    return GetEnumUnit().getTypeId() == MAVIS
+
+function zervisGCondition() returns boolean
+    return GetSpellAbilityId() == ZERVIS_G
+
+init 
+    zervisGInit()

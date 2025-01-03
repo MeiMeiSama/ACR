@@ -93,7 +93,7 @@ function mavisFilter() returns boolean
 function mavisDMG()
     DamageEvent.setNextDamageId(DAMAGE_ABILITY_T)
     DamageEvent.setNextDamageFromCode()
-    UnitDamageTargetBJ(mavis,GetEnumUnit(),(15*GetHeroAgi(mavis,true)).toReal(),ATTACK_TYPE_MAGIC,DAMAGE_TYPE_MAGIC)
+    UnitDamageTargetBJ(mavis,GetEnumUnit(),(15*GetHeroInt(mavis,true)).toReal(),ATTACK_TYPE_MAGIC,DAMAGE_TYPE_MAGIC)
 
 init
     initTrig_MavisT_Orig()
