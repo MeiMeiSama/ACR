@@ -363,6 +363,15 @@ public function tooltip_G2 (int pid)
     int mana
     int duration
     int cd
+    int stat = 0
+    int dmg
+    if BlzGetUnitIntegerField(hero, UNIT_IF_PRIMARY_ATTRIBUTE) == 1 // Strength
+        stat = hero.getStr(true)
+    else if BlzGetUnitIntegerField(hero, UNIT_IF_PRIMARY_ATTRIBUTE) == 2 // Intellect
+        stat = hero.getInt(true)
+    else if BlzGetUnitIntegerField(hero, UNIT_IF_PRIMARY_ATTRIBUTE) == 3 // Agility
+        stat = hero.getAgi(true)
+
     let skill = SPELL_G2[id]
 
     if skill == 'A00L' // ━━━━━━━━━━━━ [Edo Minato's Kunai Teleport] ━━━━━━━━━━━━
@@ -401,6 +410,24 @@ public function tooltip_G2 (int pid)
         ..setField(ABILITY_ILF_MANA_COST, hero.getAbilityLevel(skill) - 1, mana)
         ..setField(ABILITY_RLF_COOLDOWN, hero.getAbilityLevel(skill) - 1, cd.toReal())
 
+    else if skill == ZERVIS_G
+        spellLvl = skill.getSkillLvl(id)
+        cd = 80
+        range = 800
+        mana = 70
+        dmg = ((8 * spellLvl) + (stat * 0.05 * spellLvl)).toInt()
+
+        skill..setTitle(id, BLUE+"Duality"+LEVEL_TOOLTIP+spellLvl.toString()+CR+"]")
+        ..setDescription(id,
+        GOLD+
+        "Mavis and Zeref combine their powers to stike at the target."+
+        "\n\nDamage: "+hero.getStatColor()+dmg.toString()+GOLD+
+        "\n\nCast Range: "+PINK+range.toString()+GOLD+                        
+        "\nCooldown: "+PINK+cd.toString()+GOLD)
+        hero.getAbility(skill)
+
+        ..setField(ABILITY_ILF_MANA_COST, hero.getAbilityLevel(skill) - 1, mana)
+        ..setField(ABILITY_RLF_COOLDOWN, hero.getAbilityLevel(skill) - 1, cd.toReal())
 
     else
         spellLvl = skill.getSkillLvl(id)

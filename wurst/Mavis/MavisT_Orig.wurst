@@ -45,7 +45,7 @@ function initTrig_MavisT_Orig()
     ..addCondition(Condition(function mavisCondition))
     ..addAction() ->
         let t=CreateTimer()
-        soundPlay("war3mapImported\\.mp3", 0, 0)
+        soundPlay("war3mapImported\\Mavis T.mp3", 0, 0)
         mavis=GetSpellAbilityUnit()
         mavisTTarget=GetSpellTargetUnit()
         let mavisPos2 = mavis.getPos()
@@ -64,13 +64,11 @@ function initTrig_MavisT_Orig()
         TimerStart(t,.02,true,function mavisTEnd)
 
 function mavisTEnd ()
-    mavisTInt=mavisTInt+1
+    mavisTInt++
     PauseUnit(mavis,true)
     SetUnitInvulnerable(mavis,true)
     PauseUnit(mavisTTarget,true)
     SetUnitInvulnerable(mavisTTarget,true)
-    if mavisTInt==270
-        soundPlay("war3mapImported\\.mp3", 0, 0)
     if mavisTInt>350
         DestroyTimer(GetExpiredTimer())
         effect1.destr()

@@ -356,6 +356,7 @@ public let MAVIS_R_DUMMY = compiletime(UNIT_ID_GEN.next())
 public let MAVIS_R_DUMMY2 = compiletime(UNIT_ID_GEN.next())
 public let ZERVIS_G_DUMMY = compiletime(UNIT_ID_GEN.next())
 public let ZERVIS_G_DUMMY2 = compiletime(UNIT_ID_GEN.next())
+public let ZERVIS_G_DUMMY3 = compiletime(UNIT_ID_GEN.next())
 
 ///////////////////// Dummies for skins/////////////////////////
 public let RIN_SKIN = compiletime(UNIT_ID_GEN.next())

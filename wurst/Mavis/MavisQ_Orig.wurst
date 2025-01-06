@@ -88,7 +88,7 @@ function initTrig_MavisQ_Orig()
 
 function mavisQEnd()
     unit u
-    mavisQInt=mavisQInt+1
+    mavisQInt++
     PauseUnit(mavis,true)
     if mavisQInt>12
         DestroyTimer(GetExpiredTimer())
@@ -98,7 +98,7 @@ function mavisQEnd()
         SetUnitScale(u,2.5,2.5,2.5)
         SetUnitTimeScalePercent(u,80)
         UnitApplyTimedLife(u,'BHwe',2)
-        soundPlay("war3mapImported\\.mp3", 0, 0)
+        soundPlay("war3mapImported\\Mavis Q.mp3", 0, 0)
         mavis=null
         mavisQLoc=null
         mavisQInt=0        
