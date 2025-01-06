@@ -4,6 +4,7 @@ import AbilityClassifications
 import AbilityGlobals
 import ObjectDefinitions
 import ACR_StatColors
+import ZervisG_Orig
 
 public function tooltip_G (int pid)
     let id = pid
@@ -363,14 +364,7 @@ public function tooltip_G2 (int pid)
     int mana
     int duration
     int cd
-    int stat = 0
     int dmg
-    if BlzGetUnitIntegerField(hero, UNIT_IF_PRIMARY_ATTRIBUTE) == 1 // Strength
-        stat = hero.getStr(true)
-    else if BlzGetUnitIntegerField(hero, UNIT_IF_PRIMARY_ATTRIBUTE) == 2 // Intellect
-        stat = hero.getInt(true)
-    else if BlzGetUnitIntegerField(hero, UNIT_IF_PRIMARY_ATTRIBUTE) == 3 // Agility
-        stat = hero.getAgi(true)
 
     let skill = SPELL_G2[id]
 
@@ -415,7 +409,7 @@ public function tooltip_G2 (int pid)
         cd = 80
         range = 800
         mana = 70
-        dmg = ((8 * spellLvl) + (stat * 0.05 * spellLvl)).toInt()
+        dmg = (300 + (4 * mavis.getInt(true)) + 4* zeref.getInt(true))
 
         skill..setTitle(id, BLUE+"Duality"+LEVEL_TOOLTIP+spellLvl.toString()+CR+"]")
         ..setDescription(id,
