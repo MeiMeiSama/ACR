@@ -7,8 +7,8 @@ import UnitIds
 import main
 import ACR_TagSystem
 
-unit mavis
-unit zeref
+public unit mavis
+public unit zeref
 unit zervisGTarget
 unit zervis
 unit dummyUnit
