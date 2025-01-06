@@ -421,7 +421,7 @@ public function addAbilities (unit hero)
         SPELL_T[id] = 'A0T5'
         SPELL_F[id] = 'A0T8'
         SPELL_G[id] = 'A16L'
-    else if hero.getTypeId() == 'H01F' // Jotaro
+    else if hero.getTypeId() == KUJO_JOTARO // Jotaro
         SPELL_Q[id] = 'A0ES'
         SPELL_W[id] = 'A0KU'
         SPELL_E[id] = 'A17K'

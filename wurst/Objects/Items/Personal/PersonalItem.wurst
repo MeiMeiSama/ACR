@@ -533,7 +533,7 @@ function trig_NewSPActions()
         if SPELL_F[id].hasTagHidden()
             GetTriggerUnit().hideAbility(SPELL_F[id], false)
             SPELL_F[id].removeTagHidden()
-    else if GetUnitTypeId(GetTriggerUnit()) == 'H01F' and yDWEUnitHasItemOfTypeBJNull(GetTriggerUnit(), 'I047') == false //Jotaro
+    else if GetUnitTypeId(GetTriggerUnit()) == KUJO_JOTARO and yDWEUnitHasItemOfTypeBJNull(GetTriggerUnit(), 'I047') == false //Jotaro
         soundPlay("war3mapImported\\JotaroSP.mp3", GetUnitX(udg_soundplayunit[7]), GetUnitY(udg_soundplayunit[7]))
         RemoveItem(GetManipulatedItem())
         SaveLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * ydl_localvar_step, 1108, GetUnitLoc(GetTriggerUnit()))

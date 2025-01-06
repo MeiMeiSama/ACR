@@ -440,7 +440,7 @@ package Selection_Start
 //     udg_HeroType[60] = 'H022'
 //     udg_HeroType[61] = 'H03T'
 //     udg_HeroType[62] = 'H023'
-//     udg_HeroType[63] = 'H01F'
+//     udg_HeroType[63] = KUJO_JOTARO
 //     udg_HeroType[64] = DIO_BRANDO
 //     udg_HeroType[65] = 'H025'
 //     udg_HeroType[66] = 'H026'

@@ -80,7 +80,7 @@ function dataList()
     // ━━━━━━━━━━━━ [STRENGTH HEROES] ━━━━━━━━━━━━
     heroList_STR.add(
     'H001','H00Y',GAJEEL_REDFOX,'H00L',COBRA,'H009','H00G','H005',MONKEYD_LUFFY,RORONOA_ZORO,PORTGASD_ACE,SABO,'H027',                                // Row 1
-    KIYOHIME_STRENGTH,'H021',OKITA_STRENGTH,'H03V',ARTURIA_STRENGTH,'H02V','H030',ICHIGO_STRENGTH,'H01Q','H01F',DIO_BRANDO,'H023',KAMIJOU_TOUMA)                 // Row 2
+    KIYOHIME_STRENGTH,'H021',OKITA_STRENGTH,'H03V',ARTURIA_STRENGTH,'H02V','H030',ICHIGO_STRENGTH,'H01Q',KUJO_JOTARO,DIO_BRANDO,'H023',KAMIJOU_TOUMA)                 // Row 2
     heroList_STR.add(
     'H00W','H01M','H03Z','H04A','H00F','H007','H03X')                                                                                                 // Row 3   
 

@@ -4672,7 +4672,7 @@ function trig_HeroGod___zhugongActions()
             soundPlay("war3mapImported\\special5.mp3", GetUnitX(udg_Unitsound), GetUnitY(udg_Unitsound))
         if GetUnitTypeId(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 36)) == ITACHI_EDO and GetUnitTypeId(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 929)) == SASUKE_YOUNG
             soundPlay("war3mapImported\\special6.mp3", GetUnitX(udg_Unitsound), GetUnitY(udg_Unitsound))
-        if GetUnitTypeId(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 36)) == DIO_BRANDO and GetUnitTypeId(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 929)) == 'H01F'
+        if GetUnitTypeId(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 36)) == DIO_BRANDO and GetUnitTypeId(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 929)) == KUJO_JOTARO
             if GetRandomInt(1, 3) == 1
                 soundPlay("war3mapImported\\special7-1.mp3", GetUnitX(udg_Unitsound), GetUnitY(udg_Unitsound))
             else if GetRandomInt(1, 2) == 2
@@ -5416,7 +5416,7 @@ function trig_dmbbl2Actions()
     SaveStr(YDHT, StringHash("ms64"), 758, "ReplaceableTextures\\CommandButtons\\BTNByakuran.blp")
     SaveInteger(YDHT, DIO_BRANDO, 428, 65)
     SaveStr(YDHT, StringHash("ms65"), 758, "ReplaceableTextures\\CommandButtons\\BTNDIO.blp")
-    SaveInteger(YDHT, 'H01F', 428, 66)
+    SaveInteger(YDHT, KUJO_JOTARO, 428, 66)
     SaveStr(YDHT, StringHash("ms66"), 758, "ReplaceableTextures\\CommandButtons\\BTNYuuki.blp")
     SaveInteger(YDHT, 'H025', 428, 67)
     SaveStr(YDHT, StringHash("ms67"), 758, "ReplaceableTextures\\CommandButtons\\BTNLancerElizabeth.blp")
