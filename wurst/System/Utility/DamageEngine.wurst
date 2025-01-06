@@ -9,6 +9,7 @@ import main
 import Cloud
 import Mist
 import magicshield
+import ZervisG_Orig
 constant izanamiSound_proc = new SoundDefinition("war3mapImported\\Izanami_proc.mp3")
 constant abigailSound_proc = new SoundDefinition("war3mapImported\\AbigailSE3.mp3")
 constant rinneganSound_proc = new SoundDefinition("war3mapImported\\Rinnegan_proc.mp3")
@@ -189,7 +190,11 @@ init
                         DamageEvent.setAmount(_dmg)
                         //printTimedToPlayer (R2S(_dmg) , 1, caster.getOwner())
                         //printTimedToPlayer("MISAKA G", 1, caster.getOwner())
-
+                    else if id == DAMAGE_ABILITY_ZERVIS_G
+                        _dmg = (300 + (4.0 * zeref.getInt(true)) + (4.0 * mavis.getInt(true)))
+                        DamageEvent.setAmount(_dmg)
+                        //printTimedToPlayer (R2S(_dmg) , 1, caster.getOwner())
+                        //printTimedToPlayer("ZERVIS G", 1, caster.getOwner())
 
 
 
