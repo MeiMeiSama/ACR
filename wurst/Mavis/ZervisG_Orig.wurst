@@ -246,7 +246,7 @@ public function zervisGAddTimer()
         //         mavis.hideAbility(ZERVIS_G, true)
         //         ZERVIS_G.addTagHidden()
 function zervisGAdd()
-    if zeref.isAllyOf(mavis)
+    if zeref.isAllyOf(mavis) and zeref.getLevel() >= 18 and mavis.getLevel() >= 18
         let mavisPos = mavis.getPos()
         let zerefPos = zeref.getPos()
         if zervisInRange == false and mavisPos.distanceTo(zerefPos) <= 800
