@@ -409,7 +409,7 @@ public function tooltip_G2 (int pid)
         cd = 80
         range = 800
         mana = 70
-        dmg = (300 + (4 * mavis.getInt(true)) + (4* zeref.getInt(true)))
+        dmg = (300 + (4 * mavis.getInt(true)) + (4 * zeref.getInt(true)))
 
         skill..setTitle(id, BLUE+"Duality"+LEVEL_TOOLTIP+spellLvl.toString()+CR+"]")
         ..setDescription(id,
