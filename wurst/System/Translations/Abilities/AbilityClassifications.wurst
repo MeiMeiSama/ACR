@@ -235,7 +235,7 @@ public function int.isEDash () returns boolean
     return false
 
 public function int.isRDash () returns boolean
-    if (this == 'A0TW')
+    if (this == 'A0TW') or (this == JOTARO_R)
         return true
     return false
 

@@ -3,6 +3,7 @@ package Jotaro_R
 import DamageEvent
 import AbilityGlobals
 import ObjectDefinitions
+import TerrainUtils
 import ChannelAbilityPreset
 import UnitIds
 import main
@@ -12,7 +13,16 @@ import ClosureForGroups
 //trigger mavisRListenerMove
 // trigger mavisRListenerEnd
 // unit mavis
+unit jotaro
+unit jotaroRTarget
+unit dio
+vec2 dioPos
+vec2 jotaroPos
+vec2 abilityJotaroRPos
 unit starPlatinum
+int jotaroRTimerInt1
+int jotaroRTimerInt2
+timer jotaroRTimer
 // unit dummyUnit2
 // vec2 spellPos
 // vec2 mavisPos
@@ -60,6 +70,7 @@ unit starPlatinum
         ..setMaximumPitchAngledegrees(0)
         ..setMaximumRollAngledegrees(0)
         ..setModelFile("war3mapImported\\starplatinum.mdl")
+        ..setScalingValue(3.0)
         ..setArtSpecial("_")
         ..setArmorType(ArmorType.Unarmored)
         ..setPlaceableInEditor(false)
@@ -119,18 +130,115 @@ unit starPlatinum
     //     ..setTooltipExtended("_")
     
 init
-    initTrig_MavisR_Orig()     
+    jotaroR()    
 
-function initTrig_MavisR_Orig()
+function jotaroR()
     CreateTrigger()
     ..registerAnyUnitEvent(EVENT_PLAYER_UNIT_SPELL_EFFECT)
     ..addAction() ->
         if GetSpellAbilityId() == JOTARO_R
-            let spellPos = vec2(GetSpellTargetX(), GetSpellTargetY())
-            let jotaro = GetTriggerUnit()
-            let jotaroPos = jotaro.getPos()
-            starPlatinum = createUnit(JOTARO_R_DUMMY, jotaroPos.polarOffset(jotaroPos.angleTo(spellPos), 200))
-            print("yey")
+            abilityJotaroRPos = vec2(GetSpellTargetX(), GetSpellTargetY())
+            jotaro = GetTriggerUnit()
+            jotaroPos = jotaro.getPos()
+            if jotaroPos.distanceTo(abilityJotaroRPos) < 1250
+                abilityJotaroRPos = jotaroPos.polarOffset(jotaroPos.angleTo(abilityJotaroRPos), 1250)
+            jotaroRTimerInt1 = 0
+            jotaroRDashBool = true
+            jotaro.setAnimation(11)
+            jotaro.pause()
+            jotaro.setInvulnerable(true)       
+            jotaro.setPathing(false)
+            jotaro.setFacing(jotaroPos.angleTo(abilityJotaroRPos))     
+            let rng = GetRandomInt(0, 1)
+            if rng == 0
+                gg_snd_jotaroR1_1.play()
+            else 
+                gg_snd_jotaroR1_2.play()    
+            jotaroRTimer = CreateTimer()..startPeriodic(0.01, function jotaroRDash)
+
+function jotaroRDash()
+    if jotaroRTimerInt1 >= 25 or jotaroPos.distanceTo(abilityJotaroRPos) < 25
+        jotaro.setAnimation(13)
+        jotaroDashEnd()
+
+    if jotaroRTimerInt1 < 25
+        jotaroRTimerInt1++
+        if jotaroPos.polarOffset(jotaroPos.angleTo(abilityJotaroRPos), 100).isTerrainPathable(PATHING_TYPE_WALKABILITY) == true and jotaroPos.polarOffset(jotaroPos.angleTo(abilityJotaroRPos), 100).isTerrainPathable(PATHING_TYPE_FLYABILITY) == true 
+            jotaroDashEnd()          
+        else
+            jotaro.setPos(jotaroPos.polarOffset(jotaroPos.angleTo(abilityJotaroRPos), 50))
+            jotaroPos = jotaro.getPos()
+            forUnitsInRange(jotaroPos, 350) (unit u) ->
+                if jotaro.isAllyOf(u) == false and u.isType(UNIT_TYPE_HERO) and jotaroRDashBool == true
+                    if u.getTypeId() == DIO_BRANDO and dioRDashBool == true
+                        print("dio")
+                        jotaroRDashBool = false
+                        jotaroDashEnd()
+                        dio = u
+                        dioPos = dio.getPos()
+                        jotaro.setFacing(jotaroPos.angleTo(dioPos))
+                        dio.setFacing(dioPos.angleTo(jotaroPos))     
+                        jotaroRTimerInt2 = 0       
+                        jotaroRTimer = CreateTimer()..startPeriodic(0.03, function jotaroRDio)                             
+                    else if u.isInvulnerable() == false
+                        jotaroRDashBool = false
+                        jotaroDashEnd()
+                        jotaroRTarget = u
+                        jotaro.pause()
+                        jotaro.setInvulnerable(true)
+                        jotaroRTarget.pause()
+                        jotaroRTarget.setInvulnerable(true)
+                        jotaro.setPos(jotaroRTarget.getPos().polarOffset(jotaroRTarget.getPos().angleTo(jotaroPos), 350))
+                        jotaro.setFacing(jotaro.getPos().angleTo(jotaroRTarget.getPos()))
+                        starPlatinum = createUnit(JOTARO_R_DUMMY, jotaroRTarget.getPos().polarOffset(jotaroRTarget.getPos().angleTo(jotaroPos), 150))     
+                        starPlatinum.setAnimation(7)
+                        starPlatinum.setFacing(starPlatinum.getPos().angleTo(jotaroRTarget.getPos()))
+                        jotaroRTimerInt2 = 0             
+                        jotaroRTimer = CreateTimer()..startPeriodic(0.03, function jotaroRAttack1)           
+
+function jotaroRDio()
+
+
+
+function jotaroDashEnd()
+    jotaroRDashBool = false
+    jotaroRTimer.destr()
+    jotaro.setPathing(true)
+    jotaro.unpause()
+    jotaro.setInvulnerable(false)    
+
+function jotaroRAttack1()
+    jotaroRTimerInt2++
+    if jotaroRTimerInt2 == 10
+        gg_snd_jotaroR2.play() 
+        jotaro.setAnimation(8)
+        starPlatinum.setAnimation(4)
+    if jotaroRTimerInt2 == 20
+        gg_snd_jotaroR3.play()
+        jotaro.setAnimation(21)
+        starPlatinum.setAnimation(3) 
+    if jotaroRTimerInt2 >= 21 and jotaroRTimerInt2 < 140
+        jotaroPos = jotaro.getPos()
+        jotaro.setPos(jotaroPos.polarOffset(jotaroPos.angleTo(jotaroRTarget.getPos()), 5)) 
+        jotaroRTarget.setPos(jotaroPos.polarOffset(jotaroPos.angleTo(jotaroRTarget.getPos()), 355))
+        starPlatinum.setPos(jotaroPos.polarOffset(jotaroPos.angleTo(jotaroRTarget.getPos()), 155))       
+    if jotaroRTimerInt2 == 130
+        gg_snd_jotaroR4.play() 
+    if jotaroRTimerInt2 == 155
+        jotaro.setAnimation(9)
+        starPlatinum.setAnimation(1) 
+        gg_snd_jotaroR5.play()
+    if jotaroRTimerInt2 == 175
+        jotaroRTarget.setInvulnerable(false)
+        starPlatinum.kill()
+        DamageEvent.setNextDamageId(DAMAGE_ABILITY_DELAYED_R)
+        DamageEvent.setNextDamageFromCode()
+        jotaro.damageTarget(jotaroRTarget, 1, ATTACK_TYPE_MAGIC)
+        jotaroDashEnd()
+        jotaroRTarget.unpause()   
+
+
+
 //             spellPos = vec2(GetSpellTargetX(), GetSpellTargetY())
 //             mavisPos = mavis.getPos()
 //             if mavisGroup == null

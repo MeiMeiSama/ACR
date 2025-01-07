@@ -206,3 +206,8 @@ public constant DAMAGE_ABILITY_RAIN_ARCO = 50500
 public constant DAMAGE_ABILITY_BOSS_1 = 75000
 public constant DAMAGE_ABILITY_BOSS_2 = 75100
 public constant DAMAGE_ABILITY_BOSS_3 = 75200
+
+
+
+public boolean jotaroRDashBool
+public boolean dioRDashBool

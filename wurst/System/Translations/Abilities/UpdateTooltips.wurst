@@ -425,7 +425,7 @@ public function addAbilities (unit hero)
         SPELL_Q[id] = 'A0ES'
         SPELL_W[id] = 'A0KU'
         SPELL_E[id] = 'A17K'
-        SPELL_R[id] = 'A0EX'
+        SPELL_R[id] = JOTARO_R
         SPELL_T[id] = 'A0AB'
         SPELL_F[id] = 'A0EZ'
         SPELL_G[id] = 'A0KV'

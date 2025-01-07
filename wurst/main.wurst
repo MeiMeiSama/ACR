@@ -24,6 +24,12 @@ public sound gg_snd_MidoriyaT2
 public sound gg_snd_MidoriyaT3
 public sound gg_snd_MidoriyaT4
 public sound gg_snd_MidoriyaT5
+public sound gg_snd_jotaroR1_1
+public sound gg_snd_jotaroR1_2
+public sound gg_snd_jotaroR2
+public sound gg_snd_jotaroR3
+public sound gg_snd_jotaroR4
+public sound gg_snd_jotaroR5
 public sound gg_snd_kuroganeT
 public sound gg_snd_MHXT
 public sound gg_snd_EnmaT
@@ -3560,6 +3566,36 @@ function initSounds()
     SetSoundChannel(gg_snd_MidoriyaT5, 0)
     SetSoundVolume(gg_snd_MidoriyaT5, 127)
     SetSoundPitch(gg_snd_MidoriyaT5, 1.0) 
+    gg_snd_jotaroR1_1 = CreateSound("war3mapImported\\jotaroR1_1.mp3", false, false, false, 10, 10, "")
+    SetSoundDuration(gg_snd_jotaroR1_1, 12095)
+    SetSoundChannel(gg_snd_jotaroR1_1, 0)
+    SetSoundVolume(gg_snd_jotaroR1_1, 127)
+    SetSoundPitch(gg_snd_jotaroR1_1, 1.0)     
+    gg_snd_jotaroR1_2 = CreateSound("war3mapImported\\jotaroR1_2.mp3", false, false, false, 10, 10, "")
+    SetSoundDuration(gg_snd_jotaroR1_2, 12095)
+    SetSoundChannel(gg_snd_jotaroR1_2, 0)
+    SetSoundVolume(gg_snd_jotaroR1_2, 127)
+    SetSoundPitch(gg_snd_jotaroR1_2, 1.0)      
+    gg_snd_jotaroR2 = CreateSound("war3mapImported\\jotaroR2.mp3", false, false, false, 10, 10, "")
+    SetSoundDuration(gg_snd_jotaroR2, 12095)
+    SetSoundChannel(gg_snd_jotaroR2, 0)
+    SetSoundVolume(gg_snd_jotaroR2, 127)
+    SetSoundPitch(gg_snd_jotaroR2, 1.0)      
+    gg_snd_jotaroR3 = CreateSound("war3mapImported\\jotaroR3.mp3", false, false, false, 10, 10, "")
+    SetSoundDuration(gg_snd_jotaroR3, 12095)
+    SetSoundChannel(gg_snd_jotaroR3, 0)
+    SetSoundVolume(gg_snd_jotaroR3, 127)
+    SetSoundPitch(gg_snd_jotaroR3, 1.0)  
+    gg_snd_jotaroR4 = CreateSound("war3mapImported\\jotaroR4.mp3", false, false, false, 10, 10, "")
+    SetSoundDuration(gg_snd_jotaroR4, 12095)
+    SetSoundChannel(gg_snd_jotaroR4, 0)
+    SetSoundVolume(gg_snd_jotaroR4, 127)
+    SetSoundPitch(gg_snd_jotaroR4, 1.0)     
+    gg_snd_jotaroR5 = CreateSound("war3mapImported\\jotaroR5.mp3", false, false, false, 10, 10, "")
+    SetSoundDuration(gg_snd_jotaroR5, 12095)
+    SetSoundChannel(gg_snd_jotaroR5, 0)
+    SetSoundVolume(gg_snd_jotaroR5, 127)
+    SetSoundPitch(gg_snd_jotaroR5, 1.0)           
     gg_snd_neptune6 = CreateSound("war3mapImported\\neptune6 .mp3", false, false, false, 10, 10, "")
     SetSoundDuration(gg_snd_neptune6, 4064)
     SetSoundChannel(gg_snd_neptune6, 0)

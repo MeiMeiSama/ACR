@@ -3,6 +3,7 @@ package Translate_R
 import AbilityClassifications
 import AbilityGlobals
 import ACR_StatColors
+import ObjectDefinitions
 
 public function tooltip_R (int pid)
     let id = pid
@@ -217,25 +218,44 @@ public function tooltip_R (int pid)
             ..setField(ABILITY_RLF_COOLDOWN, hero.getAbilityLevel(skill) - 1, cd.toReal())  
 
     else if skill.isRDash()
-        spellLvl = skill.getSkillLvl(id)
-        dmg = (70 * spellLvl) + ((2 + spellLvl) * stat)
-        cd = (30 + (spellLvl * 5))
-        mana = (40 + (10 * spellLvl))
-        range = (1250)
-        
-        skill
-        ..setDescription(id, 
-        GOLD+
-        "The user dashes to the targeted location, dealing damage to enemies in their path."+
-        "\n\nCast Range: "+PINK+range.toString()+GOLD+
-        "\nCooldown: "+PINK+cd.toString()+GOLD+
-        "\nDamage Output: "+hero.getStatColor()+dmg.toString()+GOLD)
-        
-        hero.getAbility(skill)
-        ..setField(ABILITY_ILF_MANA_COST, hero.getAbilityLevel(skill) - 1, mana)
-        ..setField(ABILITY_RLF_CAST_RANGE, hero.getAbilityLevel(skill) - 1, range.toReal())
-        ..setField(ABILITY_RLF_COOLDOWN, hero.getAbilityLevel(skill) - 1, cd.toReal()) 
-
+        if skill == JOTARO_R
+            spellLvl = skill.getSkillLvl(id)
+            dmg = (70 * spellLvl) + ((2 + spellLvl) * stat)
+            cd = (30 + (spellLvl * 5))
+            mana = (40 + (10 * spellLvl))
+            range = (1250)
+            
+            skill
+            ..setDescription(id, 
+            GOLD+
+            "The user dashes to the targeted location, dealing damage to first enemy hero they encounter."+
+            "\n\nCast Range: "+PINK+range.toString()+GOLD+
+            "\nCooldown: "+PINK+cd.toString()+GOLD+
+            "\nDamage Output: "+hero.getStatColor()+dmg.toString()+GOLD)
+            
+            hero.getAbility(skill)
+            ..setField(ABILITY_ILF_MANA_COST, hero.getAbilityLevel(skill) - 1, mana)
+            ..setField(ABILITY_RLF_CAST_RANGE, hero.getAbilityLevel(skill) - 1, range.toReal())
+            ..setField(ABILITY_RLF_COOLDOWN, hero.getAbilityLevel(skill) - 1, cd.toReal()) 
+        else     
+            spellLvl = skill.getSkillLvl(id)
+            dmg = (70 * spellLvl) + ((2 + spellLvl) * stat)
+            cd = (30 + (spellLvl * 5))
+            mana = (40 + (10 * spellLvl))
+            range = (1250)
+            
+            skill
+            ..setDescription(id, 
+            GOLD+
+            "The user dashes to the targeted location, dealing damage to enemies in their path."+
+            "\n\nCast Range: "+PINK+range.toString()+GOLD+
+            "\nCooldown: "+PINK+cd.toString()+GOLD+
+            "\nDamage Output: "+hero.getStatColor()+dmg.toString()+GOLD)
+            
+            hero.getAbility(skill)
+            ..setField(ABILITY_ILF_MANA_COST, hero.getAbilityLevel(skill) - 1, mana)
+            ..setField(ABILITY_RLF_CAST_RANGE, hero.getAbilityLevel(skill) - 1, range.toReal())
+            ..setField(ABILITY_RLF_COOLDOWN, hero.getAbilityLevel(skill) - 1, cd.toReal()) 
     else if skill.isRPoint()
         spellLvl = skill.getSkillLvl(id)
         dmg = (70 * spellLvl) + ((2 + spellLvl) * stat)
