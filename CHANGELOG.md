@@ -6,6 +6,7 @@
 3. Added skin system.
 4. Added new side mini-bosses for team buffs.
 5. Re added attribute drugs.
+6. New hero Mavis Vermillion (FT)
 
 ### Improved
 1. Slightly adjusted Terrain Layout.
