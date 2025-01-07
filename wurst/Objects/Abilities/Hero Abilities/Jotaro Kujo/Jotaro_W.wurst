@@ -3,10 +3,10 @@ package Jotaro_W
 import DamageEvent
 import AbilityGlobals
 import ObjectDefinitions
-import TerrainUtils
+import UpdateTooltips
+import TimerUtils
 import ChannelAbilityPreset
 import UnitIds
-import main
 import ClosureForGroups
 import ACR_Pull
 import ACR_TagSystem
@@ -58,8 +58,8 @@ vec2 starPlatinumPos
         ..setButtonPositionNormalY(2)
         ..setButtonPositionResearchX(1)
         ..setButtonPositionResearchY(0)
-        ..setIconNormal("ReplaceableTextures\\PassiveButtons\\PASBTNFireRocks.blp")
-        ..setIconResearch("ReplaceableTextures\\PassiveButtons\\PASBTNFireRocks.blp")
+        ..setIconNormal("ReplaceableTextures\\CommandButtons\\BTNHydraWarStomp.blp")
+        ..setIconResearch("ReplaceableTextures\\CommandButtons\\BTNHydraWarStomp.blp")
         ..setMissileSpeed(99999)
         ..setHeroAbility(true)
         ..setHotkeyNormal("W")
@@ -122,7 +122,6 @@ function jotaroW()
     ..registerAnyUnitEvent(EVENT_PLAYER_UNIT_SPELL_EFFECT)
     ..addAction() ->
         if GetSpellAbilityId() == JOTARO_W
-            print("1")
             abilityJotaroWPos = vec2(GetSpellTargetX(), GetSpellTargetY())
             jotaro = GetTriggerUnit()
             jotaroWBool = true
@@ -136,7 +135,6 @@ function jotaroW()
             jotaro.setInvulnerable(true)                            
             jotaroWTimer = CreateTimer()..startPeriodic(0.01, function jotaroWStart)   
         else if GetSpellAbilityId() == JOTARO_W2
-            print("2")
             jotaroWEnd() 
             starPlatinumPos = starPlatinum.getPos()  
             jotaroWTimerInt3 = 0                      
@@ -152,9 +150,11 @@ function jotaroWStart()
             jotaro.hideAbility(JOTARO_W, true)
             JOTARO_W.addTagHidden()
         if jotaro.hasAbility(JOTARO_W2) == false    
-            jotaro.addAbility(JOTARO_W2)             
+            jotaro.addAbility(JOTARO_W2)   
+            let id = jotaro.getOwner().getId()        
+            let tooltipTimer = CreateTimer()
+            tooltipTimer..start(0.02, function updateTooltips)..setData(id)          
     if jotaroWTimerInt1 < 54
-        print("timer working")
         starPlatinumPos = starPlatinum.getPos()
         starPlatinum.setPos(starPlatinumPos.polarOffset(starPlatinumPos.angleTo(abilityJotaroWPos), 25))
         forUnitsInRange(starPlatinumPos, 350) (unit u) ->
@@ -169,8 +169,7 @@ function jotaroWStart()
                 starPlatinum.setFacing(starPlatinumPos.angleTo(jotaroWTarget.getPos()))
                 jotaroWTimerInt2 = 0             
                 jotaroWTimer = CreateTimer()..startPeriodic(0.03, function jotaroWAttack)   
-    if jotaroWTimerInt1 >= 55
-        print("3")   
+    if jotaroWTimerInt1 >= 400 
         starPlatinum.kill()
         jotaroWEnd()
 

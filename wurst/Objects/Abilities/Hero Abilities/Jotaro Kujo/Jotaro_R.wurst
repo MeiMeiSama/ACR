@@ -100,11 +100,11 @@ function jotaroR()
                 abilityJotaroRPos = jotaroPos.polarOffset(jotaroPos.angleTo(abilityJotaroRPos), 1250)
             jotaroRTimerInt1 = 0
             jotaroRDashBool = true
-            jotaro.setAnimation(11)
             jotaro.pause()
             jotaro.setInvulnerable(true)       
             jotaro.setPathing(false)
-            jotaro.setFacing(jotaroPos.angleTo(abilityJotaroRPos))     
+            jotaro.setFacing(jotaroPos.angleTo(abilityJotaroRPos)) 
+            jotaro.setAnimation(11)   
             let rng = GetRandomInt(0, 1)
             if rng == 0
                 gg_snd_jotaroR1_1.play()
