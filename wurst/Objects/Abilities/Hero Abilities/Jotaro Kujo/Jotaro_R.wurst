@@ -186,8 +186,10 @@ function jotaroRDash()
                         jotaroRTarget = u
                         jotaro.pause()
                         jotaro.setInvulnerable(true)
+                        jotaro.setPathing(false)
                         jotaroRTarget.pause()
                         jotaroRTarget.setInvulnerable(true)
+                        jotaroRTarget.setPathing(false)
                         jotaro.setPos(jotaroRTarget.getPos().polarOffset(jotaroRTarget.getPos().angleTo(jotaroPos), 350))
                         jotaro.setFacing(jotaro.getPos().angleTo(jotaroRTarget.getPos()))
                         starPlatinum = createUnit(JOTARO_R_DUMMY, jotaroRTarget.getPos().polarOffset(jotaroRTarget.getPos().angleTo(jotaroPos), 150))     
@@ -222,19 +224,20 @@ function jotaroRAttack1()
         jotaro.setPos(jotaroPos.polarOffset(jotaroPos.angleTo(jotaroRTarget.getPos()), 5)) 
         jotaroRTarget.setPos(jotaroPos.polarOffset(jotaroPos.angleTo(jotaroRTarget.getPos()), 355))
         starPlatinum.setPos(jotaroPos.polarOffset(jotaroPos.angleTo(jotaroRTarget.getPos()), 155))       
-    if jotaroRTimerInt2 == 130
+    if jotaroRTimerInt2 == 140
         gg_snd_jotaroR4.play() 
-    if jotaroRTimerInt2 == 155
+    if jotaroRTimerInt2 == 175
         jotaro.setAnimation(9)
         starPlatinum.setAnimation(1) 
         gg_snd_jotaroR5.play()
-    if jotaroRTimerInt2 == 175
+    if jotaroRTimerInt2 == 200
         jotaroRTarget.setInvulnerable(false)
         starPlatinum.kill()
         DamageEvent.setNextDamageId(DAMAGE_ABILITY_DELAYED_R)
         DamageEvent.setNextDamageFromCode()
         jotaro.damageTarget(jotaroRTarget, 1, ATTACK_TYPE_MAGIC)
         jotaroDashEnd()
+        jotaroRTarget.setPathing(true)
         jotaroRTarget.unpause()   
 
 
