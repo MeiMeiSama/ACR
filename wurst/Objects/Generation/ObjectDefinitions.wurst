@@ -70,6 +70,8 @@ public constant MAVIS_T = compiletime(ABIL_ID_GEN.next())
 public constant MAVIS_F = compiletime(ABIL_ID_GEN.next())
 public constant MAVIS_R = compiletime(ABIL_ID_GEN.next())
 public constant ZERVIS_G = compiletime(ABIL_ID_GEN.next())
+public constant JOTARO_W = compiletime(ABIL_ID_GEN.next())
+public constant JOTARO_W2 = compiletime(ABIL_ID_GEN.next())
 public constant JOTARO_R = compiletime(ABIL_ID_GEN.next())
 // ------------------------------ Item Abilities ------------------------------
 public constant CLOUD_VONGOLA_ABILITY = compiletime(ABIL_ID_GEN.next())
@@ -359,6 +361,7 @@ public let ZERVIS_G_DUMMY = compiletime(UNIT_ID_GEN.next())
 public let ZERVIS_G_DUMMY2 = compiletime(UNIT_ID_GEN.next())
 public let ZERVIS_G_DUMMY3 = compiletime(UNIT_ID_GEN.next())
 public let JOTARO_R_DUMMY = compiletime(UNIT_ID_GEN.next())
+public let JOTARO_W_DUMMY = compiletime(UNIT_ID_GEN.next())
 
 ///////////////////// Dummies for skins/////////////////////////
 public let RIN_SKIN = compiletime(UNIT_ID_GEN.next())

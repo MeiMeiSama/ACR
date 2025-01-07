@@ -3,6 +3,7 @@ package Translate_W
 import AbilityClassifications
 import AbilityGlobals
 import ACR_StatColors
+import ObjectDefinitions
 
 public function tooltip_W (int pid)
     let id = pid
@@ -142,25 +143,47 @@ public function tooltip_W (int pid)
             ..setField(ABILITY_RLF_COOLDOWN, hero.getAbilityLevel(skill) - 1, cd.toReal())  
 
     else if skill.isWProjectile()
-        spellLvl = skill.getSkillLvl(id)
-        dmg = (30 * spellLvl) + (0.8 * stat * spellLvl).toInt()
-        cd = (16 + spellLvl)
-        mana = (15 + (5*spellLvl))
-        range = (1350)
-        castrange = (5000)
+        if skill == JOTARO_W
+            spellLvl = skill.getSkillLvl(id)
+            dmg = (30 * spellLvl) + (0.8 * stat * spellLvl).toInt()
+            cd = (16 + spellLvl)
+            mana = (15 + (5*spellLvl))
+            range = (1350)
+            castrange = (5000)
 
-        skill
-        ..setDescription(id, 
-        GOLD+
-        "Deals damage to enemies along the path towards the targeted location."+
-        "\n\nCast Range: "+PINK+range.toString()+GOLD+
-        "\nCooldown: "+PINK+cd.toString()+GOLD+
-        "\nDamage Output: "+hero.getStatColor()+dmg.toString()+GOLD)
-        
-        hero.getAbility(skill)
-        ..setField(ABILITY_ILF_MANA_COST, hero.getAbilityLevel(skill) - 1, mana)
-        ..setField(ABILITY_RLF_CAST_RANGE, hero.getAbilityLevel(skill) - 1, castrange.toReal())
-        ..setField(ABILITY_RLF_COOLDOWN, hero.getAbilityLevel(skill) - 1, cd.toReal())   
+            skill
+            ..setDescription(id, 
+            GOLD+
+            "Sends Star Platinum towards the targeted location, dealing damage and pulling the first enemy hero it encounters towards Jotaro."+
+            "\n\nCast Range: "+PINK+range.toString()+GOLD+
+            "\nCooldown: "+PINK+cd.toString()+GOLD+
+            "\nDamage Output: "+hero.getStatColor()+dmg.toString()+GOLD)
+            
+            hero.getAbility(skill)
+            ..setField(ABILITY_ILF_MANA_COST, hero.getAbilityLevel(skill) - 1, mana)
+            ..setField(ABILITY_RLF_CAST_RANGE, hero.getAbilityLevel(skill) - 1, castrange.toReal())
+            ..setField(ABILITY_RLF_COOLDOWN, hero.getAbilityLevel(skill) - 1, cd.toReal())   
+
+        else
+            spellLvl = skill.getSkillLvl(id)
+            dmg = (30 * spellLvl) + (0.8 * stat * spellLvl).toInt()
+            cd = (16 + spellLvl)
+            mana = (15 + (5*spellLvl))
+            range = (1350)
+            castrange = (5000)
+
+            skill
+            ..setDescription(id, 
+            GOLD+
+            "Deals damage to enemies along the path towards the targeted location."+
+            "\n\nCast Range: "+PINK+range.toString()+GOLD+
+            "\nCooldown: "+PINK+cd.toString()+GOLD+
+            "\nDamage Output: "+hero.getStatColor()+dmg.toString()+GOLD)
+            
+            hero.getAbility(skill)
+            ..setField(ABILITY_ILF_MANA_COST, hero.getAbilityLevel(skill) - 1, mana)
+            ..setField(ABILITY_RLF_CAST_RANGE, hero.getAbilityLevel(skill) - 1, castrange.toReal())
+            ..setField(ABILITY_RLF_COOLDOWN, hero.getAbilityLevel(skill) - 1, cd.toReal())   
 
     else if skill == 'A0ZI' //kenjiro
         spellLvl = skill.getSkillLvl(id)
@@ -351,6 +374,27 @@ public function tooltip_W2 (int pid)
         ..setDescription(id,
         GOLD+
         "Deals damage to surrounding enemies."+
+        "\n\nArea of Effect: "+PINK+range.toString()+GOLD+
+        "\nCooldown: "+PINK+cd.toString()+GOLD+
+        "\nDamage Output: "+hero.getStatColor()+dmg.toString()+GOLD)
+        
+        hero.getAbility(skill)
+        ..setField(ABILITY_ILF_MANA_COST, hero.getAbilityLevel(skill) - 1, mana)
+        ..setField(ABILITY_RLF_CAST_RANGE, hero.getAbilityLevel(skill) - 1, range.toReal())
+        ..setField(ABILITY_RLF_COOLDOWN, hero.getAbilityLevel(skill) - 1, cd.toReal())
+
+    else if skill == JOTARO_W2 // jotaro
+        let jotarow = JOTARO_W
+        spellLvl = jotarow.getSkillLvl(id)
+        dmg = (30 * spellLvl) + (0.8 * stat * spellLvl).toInt()
+        cd = (30 + (5 * spellLvl))
+        mana = (20 + (5 * spellLvl))
+        range = (600)
+
+        skill
+        ..setDescription(id,
+        GOLD+
+        "Star platinum deals damage to enemies around him, stuns them and then disappears."+
         "\n\nArea of Effect: "+PINK+range.toString()+GOLD+
         "\nCooldown: "+PINK+cd.toString()+GOLD+
         "\nDamage Output: "+hero.getStatColor()+dmg.toString()+GOLD)

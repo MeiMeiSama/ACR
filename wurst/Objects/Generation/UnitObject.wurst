@@ -721,7 +721,7 @@ import ObjectIds
     ..setProperNames("Imagine Breaker")
 
     new HeroDefinition(KUJO_JOTARO, 'Hpal') // H01F
-    ..setHeroAbilities(commaList('A0ES', 'A0KU', 'A17K', JOTARO_R, 'A0AB'))
+    ..setHeroAbilities(commaList('A0ES', JOTARO_W, 'A17K', JOTARO_R, 'A0AB'))
     ..setNormalAbilities(commaList('A0KV', 'AInv'))
     ..setAnimationBlendTimeseconds(0.1)
     ..setAnimationCastBackswing(0.1)

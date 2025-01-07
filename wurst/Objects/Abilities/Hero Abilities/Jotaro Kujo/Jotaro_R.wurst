@@ -8,11 +8,7 @@ import ChannelAbilityPreset
 import UnitIds
 import main
 import ClosureForGroups
-//import OrderIds
 
-//trigger mavisRListenerMove
-// trigger mavisRListenerEnd
-// unit mavis
 unit jotaro
 unit jotaroRTarget
 unit dio
@@ -23,12 +19,6 @@ unit starPlatinum
 int jotaroRTimerInt1
 int jotaroRTimerInt2
 timer jotaroRTimer
-// unit dummyUnit2
-// vec2 spellPos
-// vec2 mavisPos
-// integer mavisRInt
-// group mavisGroup
-// timer mavisREnd
 
 @compiletime function createAbility()
     new ChannelAbilityPreset(JOTARO_R, 3, true)
@@ -94,41 +84,7 @@ timer jotaroRTimer
         ..setName("effect dummy")
         ..setTooltipBasic("_")
         ..setTooltipExtended("_")
-    // new UnitDefinition(MAVIS_R_DUMMY2, UnitIds.wisp)
-    //     ..setNormalAbilities(commaList('Avul'))
-    //     ..setAnimationCastBackswing(0)
-    //     ..setDeathTimeseconds(0.1)
-    //     ..setScalingValue(0.70)
-    //     ..setUnitClassification("_")
-    //     ..setArtSpecial("_")
-    //     ..setHasWaterShadow(false)
-    //     ..setMaximumPitchAngledegrees(0)
-    //     ..setMaximumRollAngledegrees(0)
-    //     ..setModelFile("war3mapImported\\ShadowVoltex.mdx")
-    //     ..setArtSpecial("_")
-    //     ..setArmorType(ArmorType.Unarmored)
-    //     ..setPlaceableInEditor(false)
-    //     ..setMovementHeight(20)
-    //     ..setSpeedBase(500)
-    //     ..setTurnRate(3)
-    //     ..setMovementType(MovementType.Fly)
-    //     ..setCollisionSize(0)
-    //     ..setUnitSoundSet("_")
-    //     ..setCanFlee(false)
-    //     ..setFoodCost(0)
-    //     ..setHideMinimapDisplay(true)
-    //     ..setHitPointsMaximumBase(60)
-    //     ..setHitPointsRegenerationRate(-1)
-    //     ..setHitPointsRegenerationType("Always")
-    //     ..setStockMaximum(1)
-    //     ..setStockReplenishInterval(1)
-    //     ..setStructuresBuilt("_")
-    //     ..setUpgradesUsed("_")
-    //     ..setHotkey("_")
-    //     ..setName("Curse of Ankhseram")
-    //     ..setTooltipBasic("_")
-    //     ..setTooltipExtended("_")
-    
+
 init
     jotaroR()    
 
@@ -157,16 +113,16 @@ function jotaroR()
             jotaroRTimer = CreateTimer()..startPeriodic(0.01, function jotaroRDash)
 
 function jotaroRDash()
-    if jotaroRTimerInt1 >= 25 or jotaroPos.distanceTo(abilityJotaroRPos) < 25
+    jotaroRTimerInt1++
+    if jotaroRTimerInt1 >= 50 or jotaroPos.distanceTo(abilityJotaroRPos) < 25
         jotaro.setAnimation(13)
         jotaroDashEnd()
 
-    if jotaroRTimerInt1 < 25
-        jotaroRTimerInt1++
+    if jotaroRTimerInt1 < 50
         if jotaroPos.polarOffset(jotaroPos.angleTo(abilityJotaroRPos), 100).isTerrainPathable(PATHING_TYPE_WALKABILITY) == true and jotaroPos.polarOffset(jotaroPos.angleTo(abilityJotaroRPos), 100).isTerrainPathable(PATHING_TYPE_FLYABILITY) == true 
             jotaroDashEnd()          
         else
-            jotaro.setPos(jotaroPos.polarOffset(jotaroPos.angleTo(abilityJotaroRPos), 50))
+            jotaro.setPos(jotaroPos.polarOffset(jotaroPos.angleTo(abilityJotaroRPos), 25))
             jotaroPos = jotaro.getPos()
             forUnitsInRange(jotaroPos, 350) (unit u) ->
                 if jotaro.isAllyOf(u) == false and u.isType(UNIT_TYPE_HERO) and jotaroRDashBool == true
@@ -239,68 +195,3 @@ function jotaroRAttack1()
         jotaroDashEnd()
         jotaroRTarget.setPathing(true)
         jotaroRTarget.unpause()   
-
-
-
-//             spellPos = vec2(GetSpellTargetX(), GetSpellTargetY())
-//             mavisPos = mavis.getPos()
-//             if mavisGroup == null
-//                 mavisGroup = CreateGroup()
-//             mavis.setInvulnerable(true)
-//             mavis.pause()
-//             SetUnitAnimation(mavis, "spell")
-//             soundPlay("war3mapImported\\Mavis R.mp3", 0, 0)
-//             dummyUnit = createUnit(MAVIS_R_DUMMY, mavisPos)
-//             SetUnitScale(dummyUnit,1,1,1)
-//             SetUnitTimeScalePercent(dummyUnit, 80)
-//             dummyUnit.setFacing(dummyUnit.getPos().angleTo(spellPos))
-//             dummyUnit2 = createUnit(MAVIS_R_DUMMY2, spellPos)
-//             SetUnitScale(dummyUnit2,1.5,1.5,1.5)
-//             SetUnitTimeScalePercent(dummyUnit2, 80)
-//             dummyUnit.setFacing(dummyUnit2.getPos().angleTo(mavisPos))
-//             mavisRInt=0
-//             SelectUnitForPlayerSingle(dummyUnit2, mavis.getOwner())
-//             mavisRMove()
-//             mavisREnd = CreateTimer()..startPeriodic(0.01, function mavisREnd)
-
-// function mavisREnd()
-//     mavisRInt++
-//     if mavisRInt < 600
-//         forUnitsInRange(dummyUnit2.getPos(), 400) (unit victim) ->
-//             if victim.isType(UNIT_TYPE_STRUCTURE)==false and victim.isEnemyOf(mavis)==true and victim.isAlive()==true and mavisGroup.has(victim) == false and victim.isInvulnerable() == false
-//                 DamageEvent.setNextDamageId(DAMAGE_ABILITY_R)
-//                 DamageEvent.setNextDamageFromCode()
-//                 UnitDamageTargetBJ(mavis, victim,(((GetUnitAbilityLevel(mavis,MAVIS_R)+1))*(GetHeroInt(mavis,true)).toReal()),ATTACK_TYPE_MAGIC,DAMAGE_TYPE_MAGIC)
-//                 mavisGroup.add(victim)
-//     if mavisRInt  >= 700     
-//         mavisREnd2()
-
-// function mavisRMove()    
-//     //mavisRListenerMove..registerPlayerUnitEvent(mavis.getOwner(), EVENT_PLAYER_UNIT_ISSUED_POINT_ORDER, Condition(function filter))
-//     //mavisRListenerMove..addAction() ->
-//         //SelectUnitForPlayerSingle(dummyUnit2, mavis.getOwner())
-//     mavisRListenerEnd = CreateTrigger()
-//     mavisRListenerEnd..registerPlayerKeyPress(mavis.getOwner(), OSKEY_ESCAPE, OSKEY_META.NONE, true)
-//     mavisRListenerEnd..addAction() ->
-//         mavisREnd2()       
-
-// function mavisREnd2()
-//     //mavisRListenerMove.destr()
-//     mavisRListenerEnd.destr()
-//     mavisREnd.destr()
-//     dummyUnit.remove()
-//     dummyUnit2.remove()
-//     SelectUnitForPlayerSingle(mavis, mavis.getOwner())
-//     mavis.setInvulnerable(false)
-//     mavis.unpause()
-//     mavisGroup.clear()
-//     mavis=null
-
-//function filter() returns boolean
-    //return GetIssuedOrderId() == OrderIds.smart
-
-    //mavisRListenerMove = CreateTrigger()
-    //mavisRListenerMove..registerPlayerKeyPress(mavis.getOwner(), OSKEY_LCONTROL, OSKEY_META.NONE, true)
-    //mavisRListenerMove..addAction() ->
-        //IssuePointOrderById(dummyUnit2, OrderIds.move, GetOrderPointX(), GetOrderPointY())  
- //IssuePointOrderById(dummyUnit2, OrderId("move"), GetOrderPointX(), GetOrderPointY())

@@ -169,7 +169,7 @@ public function int.isQProjectile () returns boolean
     return false
 
 public function int.isWProjectile () returns boolean
-    if (this == 'A0JL') or (this == 'A09B') or (this == 'A0TQ') or (this == 'A0TQ') or (this == 'A0TH') or (this == 'A11U')
+    if (this == 'A0JL') or (this == 'A09B') or (this == 'A0TQ') or (this == 'A0TQ') or (this == 'A0TH') or (this == 'A11U') or (this == JOTARO_W)
         return true
     return false
 

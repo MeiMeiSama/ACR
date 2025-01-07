@@ -1,2 +1,215 @@
 package Jotaro_W
 
+import DamageEvent
+import AbilityGlobals
+import ObjectDefinitions
+import TerrainUtils
+import ChannelAbilityPreset
+import UnitIds
+import main
+import ClosureForGroups
+import ACR_Pull
+import ACR_TagSystem
+import ACR_Stun
+
+unit jotaro
+unit starPlatinum
+unit jotaroWTarget
+bool jotaroWBool
+timer jotaroWTimer
+int jotaroWTimerInt1
+int jotaroWTimerInt2
+int jotaroWTimerInt3
+vec2 abilityJotaroWPos
+vec2 starPlatinumPos
+
+@compiletime function createAbility()
+    new ChannelAbilityPreset(JOTARO_W, 5, true)
+        ..presetTargetTypes(Targettype.POINT)
+        ..setAnimationNames("11111111")
+        ..setButtonPositionNormalX(1)
+        ..setButtonPositionNormalY(2)
+        ..setButtonPositionResearchX(1)
+        ..setButtonPositionResearchY(0)
+        ..setIconNormal("ReplaceableTextures\\PassiveButtons\\PASBTNFireRocks.blp")
+        ..setIconResearch("ReplaceableTextures\\PassiveButtons\\PASBTNFireRocks.blp")
+        ..setMissileSpeed(99999)
+        ..setHeroAbility(true)
+        ..setHotkeyNormal("W")
+        ..setHotkeyLearn("W")
+        ..setLevels(5)
+        ..setLevelSkipRequirement(2)
+        ..presetArtDuration(lvl -> 0)
+        ..presetBaseOrderID(lvl -> "possession")
+        ..presetDisableOtherAbilities(lvl -> false)
+        ..presetFollowThroughTime(lvl -> 0)
+        ..presetCastRange(lvl -> 2000)
+        ..presetCooldown(lvl -> 50)
+        ..presetManaCost(lvl -> 70)
+        ..presetTargetsAllowed(lvl -> "enemy,ground,air,neutral")
+        ..presetTooltipNormal(lvl -> "Howl of the Illusory Wolf|r")
+        ..presetTooltipNormalExtended(lvl -> "Jotaro W Desc|r")
+        ..setTooltipLearn("Learn W|r")
+        ..setTooltipLearnExtended("Learning W|r")   
+    new ChannelAbilityPreset(JOTARO_W2, 5, true)
+        ..presetTargetTypes(Targettype.NONE)
+        ..setAnimationNames("11111111")
+        ..setButtonPositionNormalX(1)
+        ..setButtonPositionNormalY(2)
+        ..setButtonPositionResearchX(1)
+        ..setButtonPositionResearchY(0)
+        ..setIconNormal("ReplaceableTextures\\PassiveButtons\\PASBTNFireRocks.blp")
+        ..setIconResearch("ReplaceableTextures\\PassiveButtons\\PASBTNFireRocks.blp")
+        ..setMissileSpeed(99999)
+        ..setHeroAbility(true)
+        ..setHotkeyNormal("W")
+        ..setHotkeyLearn("W")
+        ..setLevels(5)
+        ..setLevelSkipRequirement(2)
+        ..presetArtDuration(lvl -> 0)
+        ..presetBaseOrderID(lvl -> "possession")
+        ..presetDisableOtherAbilities(lvl -> false)
+        ..presetFollowThroughTime(lvl -> 0)
+        ..presetCastRange(lvl -> 2000)
+        ..presetCooldown(lvl -> 50)
+        ..presetManaCost(lvl -> 70)
+        ..presetTargetsAllowed(lvl -> "enemy,ground,air,neutral")
+        ..presetTooltipNormal(lvl -> "Howl of the Illusory Wolf|r")
+        ..presetTooltipNormalExtended(lvl -> "Jotaro W Desc|r")
+        ..setTooltipLearn("Learn W|r")
+        ..setTooltipLearnExtended("Learning W|r")         
+    new UnitDefinition(JOTARO_W_DUMMY, UnitIds.wisp)
+        ..setNormalAbilities(commaList('Avul', 'Aloc', 'Amrf'))
+        ..setAnimationCastBackswing(0)
+        ..setDeathTimeseconds(0.1)
+        ..setScalingValue(0.70)
+        ..setUnitClassification("_")
+        ..setArtSpecial("_")
+        ..setHasWaterShadow(false)
+        ..setMaximumPitchAngledegrees(0)
+        ..setMaximumRollAngledegrees(0)
+        ..setModelFile("war3mapImported\\starplatinum.mdl")
+        ..setScalingValue(3.0)
+        ..setArtSpecial("_")
+        ..setArmorType(ArmorType.Unarmored)
+        ..setPlaceableInEditor(false)
+        ..setMovementHeight(20)
+        ..setSpeedBase(100)
+        ..setTurnRate(3)
+        ..setMovementType(MovementType.Fly)
+        ..setCollisionSize(0)
+        ..setUnitSoundSet("_")
+        ..setCanFlee(false)
+        ..setFoodCost(0)
+        ..setHideMinimapDisplay(true)
+        ..setHitPointsMaximumBase(60)
+        ..setHitPointsRegenerationRate(-1)
+        ..setHitPointsRegenerationType("Always")
+        ..setStockMaximum(1)
+        ..setStockReplenishInterval(1)
+        ..setStructuresBuilt("_")
+        ..setUpgradesUsed("_")
+        ..setHotkey("_")
+        ..setName("effect dummy")
+        ..setTooltipBasic("_")
+        ..setTooltipExtended("_")
+
+init
+    jotaroW()    
+
+function jotaroW()
+    CreateTrigger()
+    ..registerAnyUnitEvent(EVENT_PLAYER_UNIT_SPELL_EFFECT)
+    ..addAction() ->
+        if GetSpellAbilityId() == JOTARO_W
+            print("1")
+            abilityJotaroWPos = vec2(GetSpellTargetX(), GetSpellTargetY())
+            jotaro = GetTriggerUnit()
+            jotaroWBool = true
+            if jotaro.getPos().distanceTo(abilityJotaroWPos) < 1250
+                abilityJotaroWPos = jotaro.getPos().polarOffset(jotaro.getPos().angleTo(abilityJotaroWPos), 1250)
+            starPlatinum = createUnit(JOTARO_W_DUMMY, jotaro.getPos())     
+            starPlatinum.setAnimation(2)
+            starPlatinum.setFacing(starPlatinum.getPos().angleTo(abilityJotaroWPos)) 
+            jotaroWTimerInt1 = 0
+            jotaro.pause()
+            jotaro.setInvulnerable(true)                            
+            jotaroWTimer = CreateTimer()..startPeriodic(0.01, function jotaroWStart)   
+        else if GetSpellAbilityId() == JOTARO_W2
+            print("2")
+            jotaroWEnd() 
+            starPlatinumPos = starPlatinum.getPos()  
+            jotaroWTimerInt3 = 0                      
+            jotaroWTimer = CreateTimer()..startPeriodic(0.03, function jotaroWAoe) 
+
+
+function jotaroWStart()
+    jotaroWTimerInt1++
+    if jotaroWTimerInt1 == 2
+        jotaro.unpause()
+        jotaro.setInvulnerable(false)
+        if JOTARO_W.hasTagHidden() == false
+            jotaro.hideAbility(JOTARO_W, true)
+            JOTARO_W.addTagHidden()
+        if jotaro.hasAbility(JOTARO_W2) == false    
+            jotaro.addAbility(JOTARO_W2)             
+    if jotaroWTimerInt1 < 54
+        print("timer working")
+        starPlatinumPos = starPlatinum.getPos()
+        starPlatinum.setPos(starPlatinumPos.polarOffset(starPlatinumPos.angleTo(abilityJotaroWPos), 25))
+        forUnitsInRange(starPlatinumPos, 350) (unit u) ->
+            if jotaro.isAllyOf(u) == false and u.isType(UNIT_TYPE_HERO) and u.isInvulnerable() == false and jotaroWBool == true and jotaroWTimerInt1 > 2 
+                let jotaroPos = jotaro.getPos()
+                jotaroWEnd()             
+                jotaroWTarget = u
+                jotaroWTarget.pause()
+                jotaroWTarget.setInvulnerable(true)
+                starPlatinum.setPos(jotaroWTarget.getPos().polarOffset(jotaroWTarget.getPos().angleTo(jotaroPos), -150))
+                starPlatinumPos = starPlatinum.getPos()
+                starPlatinum.setFacing(starPlatinumPos.angleTo(jotaroWTarget.getPos()))
+                jotaroWTimerInt2 = 0             
+                jotaroWTimer = CreateTimer()..startPeriodic(0.03, function jotaroWAttack)   
+    if jotaroWTimerInt1 >= 55
+        print("3")   
+        starPlatinum.kill()
+        jotaroWEnd()
+
+function jotaroWEnd()
+    jotaroWBool = false 
+    jotaroWTimer.destr() 
+    if jotaro.hasAbility(JOTARO_W2)
+        jotaro.removeAbility(JOTARO_W2)
+    if JOTARO_W.hasTagHidden() == true
+        jotaro.hideAbility(JOTARO_W, false)
+        JOTARO_W.removeTagHidden()  
+
+function jotaroWAttack()
+    jotaroWTimerInt2++
+    if jotaroWTimerInt2 == 5
+        starPlatinum.setAnimation(2) 
+    if jotaroWTimerInt2 == 20
+        jotaroWTarget.unpause()
+        jotaroWTarget.setInvulnerable(false)       
+        DamageEvent.setNextDamageId(DAMAGE_ABILITY_W)
+        DamageEvent.setNextDamageFromCode()
+        jotaro.damageTarget(jotaroWTarget, 1, ATTACK_TYPE_MAGIC)
+        acrPull(jotaro, jotaroWTarget, 700)
+    if jotaroWTimerInt2 >= 25
+        jotaroWTimer.destr()     
+        starPlatinum.kill()        
+
+function jotaroWAoe()
+    jotaroWTimerInt3++
+    if jotaroWTimerInt3 == 1 
+        starPlatinum.setAnimation(1)
+    if jotaroWTimerInt3 == 5
+        jotaroWTimer.destr()
+        forUnitsInRange(starPlatinumPos, 600) (unit u) ->
+            if jotaro.isAllyOf(u) == false and u.isInvulnerable() == false        
+                DamageEvent.setNextDamageId(DAMAGE_ABILITY_W)
+                DamageEvent.setNextDamageFromCode()
+                jotaro.damageTarget(u, 1, ATTACK_TYPE_MAGIC)     
+                acrStun(jotaro, u, 0.7)  
+        starPlatinum.kill()      
+
+
