@@ -44,13 +44,10 @@ public function initTrig_MavisE_Orig()
             if mavisETimer == null
                 mavisETimer = CreateTimer()..startPeriodic(5, function ping)
             else if mavisETimer != null   
-                //CreateTimer()..start(0.03, function destr)
                 mavisETimer.destr()
-                mavisETimer.startPeriodic(5, function ping)
+                mavisETimer = CreateTimer()..startPeriodic(5, function ping)
                  
 function ping()
     for i = 0 to 12
         if udg_PlayHero[i].getOwner().isEnemyOf(mavis.getOwner())
             PingMinimapForForce(GetForceOfPlayer(mavis.getOwner()), udg_PlayHero[i].getX(), udg_PlayHero[i].getY(), 1)
-//function destr()
-    //mavisETimer.destr()

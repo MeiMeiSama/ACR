@@ -16,6 +16,7 @@
 2. Vergil R changed to the previous 2nd T (dante T).
 3. Sakuya G now costs mana.
 4. Karna, Mashu (shielder) and Miyuki W now puts them next to their enemy target.
+5. Dio, Jotaro and Zeref Rework.
 
 ### Fixed
 1. Madoka and Kiara T cinematic planets fixed.
