@@ -1421,7 +1421,7 @@ function trig_NewSPActions()
         if SPELL_F[id].hasTagHidden()
             GetTriggerUnit().hideAbility(SPELL_F[id], false)
             SPELL_F[id].removeTagHidden()
-    else if GetUnitTypeId(GetTriggerUnit()) == 'H01U' and yDWEUnitHasItemOfTypeBJNull(GetTriggerUnit(), 'I04K') == false //Zeref
+    else if GetUnitTypeId(GetTriggerUnit()) == ZEREF and yDWEUnitHasItemOfTypeBJNull(GetTriggerUnit(), 'I04K') == false //Zeref //'H01U'
         RemoveItem(GetManipulatedItem())
         SaveLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * ydl_localvar_step, 1108, GetUnitLoc(GetTriggerUnit()))
         SaveUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * ydl_localvar_step, 36, CreateUnitAtLoc(GetOwningPlayer(GetTriggerUnit()), 'e03X', LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * ydl_localvar_step, 1108), GetRandomDirectionDeg()))
@@ -1585,6 +1585,7 @@ function trig_NewSPActions()
             GetTriggerUnit().hideAbility(SPELL_F[id], false)
             SPELL_F[id].removeTagHidden()
     else if GetUnitTypeId(GetTriggerUnit()) == MAVIS and yDWEUnitHasItemOfTypeBJNull(GetTriggerUnit(), 'I077') == false //Mavis
+        soundPlay("war3mapImported\\mavis test.mp3", GetUnitX(udg_soundplayunit[7]), GetUnitY(udg_soundplayunit[7]))
         RemoveItem(GetManipulatedItem())
         SaveLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * ydl_localvar_step, 1108, GetUnitLoc(GetTriggerUnit()))
         SaveUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * ydl_localvar_step, 36, CreateUnitAtLoc(GetOwningPlayer(GetTriggerUnit()), 'e03X', LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * ydl_localvar_step, 1108), GetRandomDirectionDeg()))

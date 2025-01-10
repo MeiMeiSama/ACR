@@ -192,7 +192,7 @@ public function zervisGAddTimer()
         if udg_PlayHero[i].getTypeId() == MAVIS
             mavis = udg_PlayHero[i]
             mavisG = SPELL_G2[i] 
-        if udg_PlayHero[i].getTypeId() == 'H01U'     
+        if udg_PlayHero[i].getTypeId() == ZEREF //'H01U'     
             zeref = udg_PlayHero[i] 
             zerefG = SPELL_G2[i] 
     CreateTimer()..startPeriodic(0.03, function zervisGAdd)
@@ -250,11 +250,11 @@ function zervisGAdd()
 //     mavispickgroup.clear()
 //     zerefpickgroup.clear()
 
-function filter() returns boolean
-    return GetEnumUnit().getTypeId() == 'H01U' //zeref typeId
+//function filter() returns boolean
+    //return GetEnumUnit().getTypeId() == 'H01U' //zeref typeId
 
-function filter2() returns boolean
-    return GetEnumUnit().getTypeId() == MAVIS
+//function filter2() returns boolean
+    //return GetEnumUnit().getTypeId() == MAVIS
 
 function zervisGCondition() returns boolean
     return GetSpellAbilityId() == ZERVIS_G

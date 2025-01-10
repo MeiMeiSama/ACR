@@ -300,7 +300,7 @@ public function initFunctions ()
             let mavis = udg_PlayHero[i]
             let mavisG = SPELL_G2[i]
             for a = 0 to 12 
-                if udg_PlayHero[a].getTypeId() == 'H01U' 
+                if udg_PlayHero[a].getTypeId() == ZEREF //'H01U' 
                     let zeref = udg_PlayHero[a]
                     let zerefG = SPELL_G2[a]
                     mavis.addAbility(mavisG)
