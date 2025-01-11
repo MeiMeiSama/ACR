@@ -130,9 +130,15 @@ function jotaroW()
             starPlatinum = createUnit(JOTARO_W_DUMMY, jotaro.getPos())     
             starPlatinum.setAnimation(2)
             starPlatinum.setFacing(starPlatinum.getPos().angleTo(abilityJotaroWPos)) 
-            jotaroWTimerInt1 = 0
-            jotaro.pause()
-            jotaro.setInvulnerable(true)                            
+            if JOTARO_W.hasTagHidden() == false
+                jotaro.hideAbility(JOTARO_W, true)
+                JOTARO_W.addTagHidden()
+            if jotaro.hasAbility(JOTARO_W2) == false    
+                jotaro.addAbility(JOTARO_W2)   
+                let id = jotaro.getOwner().getId()        
+                let tooltipTimer = CreateTimer()
+                tooltipTimer..start(0.02, function updateTooltips)..setData(id)              
+            jotaroWTimerInt1 = 0                          
             jotaroWTimer = CreateTimer()..startPeriodic(0.01, function jotaroWStart)   
         else if GetSpellAbilityId() == JOTARO_W2
             jotaroWEnd() 
@@ -142,18 +148,7 @@ function jotaroW()
 
 
 function jotaroWStart()
-    jotaroWTimerInt1++
-    if jotaroWTimerInt1 == 2
-        jotaro.unpause()
-        jotaro.setInvulnerable(false)
-        if JOTARO_W.hasTagHidden() == false
-            jotaro.hideAbility(JOTARO_W, true)
-            JOTARO_W.addTagHidden()
-        if jotaro.hasAbility(JOTARO_W2) == false    
-            jotaro.addAbility(JOTARO_W2)   
-            let id = jotaro.getOwner().getId()        
-            let tooltipTimer = CreateTimer()
-            tooltipTimer..start(0.02, function updateTooltips)..setData(id)          
+    jotaroWTimerInt1++                   
     if jotaroWTimerInt1 < 54
         starPlatinumPos = starPlatinum.getPos()
         starPlatinum.setPos(starPlatinumPos.polarOffset(starPlatinumPos.angleTo(abilityJotaroWPos), 25))
