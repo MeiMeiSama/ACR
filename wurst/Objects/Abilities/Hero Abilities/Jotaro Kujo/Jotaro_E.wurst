@@ -4,6 +4,7 @@ import DamageEvent
 import AbilityGlobals
 import ObjectDefinitions
 import ChannelAbilityPreset
+import main
 
 unit jotaro
 unit jotaroETarget
@@ -14,9 +15,9 @@ int jotaroETimerInt
     new ChannelAbilityPreset(JOTARO_E, 5, true)
         ..presetTargetTypes(Targettype.UNIT)
         ..setAnimationNames("11111111")
-        ..setButtonPositionNormalX(1)
+        ..setButtonPositionNormalX(2)
         ..setButtonPositionNormalY(2)
-        ..setButtonPositionResearchX(1)
+        ..setButtonPositionResearchX(2)
         ..setButtonPositionResearchY(0)
         ..setIconNormal("ReplaceableTextures\\CommandButtons\\BTNMirrorImage.blp")
         ..setIconResearch("ReplaceableTextures\\CommandButtons\\BTNMirrorImage.blp")
@@ -49,6 +50,7 @@ function jotaroE()
         if GetSpellAbilityId() == JOTARO_E
             jotaro = GetTriggerUnit()
             jotaroETarget = GetSpellTargetUnit()  
+            gg_snd_jotaroE.play()
             jotaro.pause()
             jotaro.setInvulnerable(true)
             jotaroETarget.pause()
@@ -60,13 +62,13 @@ function jotaroE()
 
 function jotaroEStart()
     jotaroETimerInt++        
-    if jotaroETimerInt == 30
+    if jotaroETimerInt == 90
         jotaro.setPos(jotaroETarget.getPos().polarOffset(jotaroETarget.getPos().angleTo(jotaro.getPos()), -200))
         jotaro.setFacing(jotaro.getPos().angleTo(jotaroETarget.getPos()))
         jotaro.setAnimation(22)
-    if jotaroETimerInt == 60
+    if jotaroETimerInt == 120
         jotaro.setAnimation(16)
-    if jotaroETimerInt >= 90
+    if jotaroETimerInt >= 135
         jotaroETarget.setInvulnerable(false)  
         jotaro.unpause()
         jotaro.setInvulnerable(false)     

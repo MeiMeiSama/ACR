@@ -26,9 +26,9 @@ vec2 starPlatinumPos
     new ChannelAbilityPreset(JOTARO_Q, 5, true)
         ..presetTargetTypes(Targettype.POINTUNIT)
         ..setAnimationNames("11111111")
-        ..setButtonPositionNormalX(1)
+        ..setButtonPositionNormalX(0)
         ..setButtonPositionNormalY(2)
-        ..setButtonPositionResearchX(1)
+        ..setButtonPositionResearchX(0)
         ..setButtonPositionResearchY(0)
         ..setIconNormal("ReplaceableTextures\\CommandButtons\\BTNGolemThunderclap.blp")
         ..setIconResearch("ReplaceableTextures\\CommandButtons\\BTNGolemThunderclap.blp")
@@ -94,7 +94,7 @@ function jotaroQ()
     ..registerAnyUnitEvent(EVENT_PLAYER_UNIT_SPELL_EFFECT)
     ..addAction() ->
         if GetSpellAbilityId() == JOTARO_Q
-            gg_snd_jotaroW1.play()
+            gg_snd_jotaroQ.play()
             abilityJotaroQPos = vec2(GetSpellTargetX(), GetSpellTargetY())
             jotaro = GetTriggerUnit()
             if jotaro.getPos().distanceTo(abilityJotaroQPos) < 1500
@@ -111,16 +111,17 @@ function jotaroQ()
 function jotaroQStart()
     jotaroQTimerInt++
     if jotaroQTimerInt == 5
-        for i = 2 to 13
+        for i = 3 to 12
             jotaroQDummy[i] = createUnit(JOTARO_Q_DUMMY, starPlatinumPos.polarOffset(starPlatinumPos.angleTo(abilityJotaroQPos), (100.0 * i)))  
-            forUnitsInRange(jotaroQDummy[i].getPos(), 200) (unit u) ->
+            forUnitsInRange(jotaroQDummy[i].getPos(), 300) (unit u) ->
                 if jotaro.isAllyOf(u) == false and u.isInvulnerable() == false and jotaroQGroup.has(u) == false
                     DamageEvent.setNextDamageId(DAMAGE_ABILITY_Q)
                     DamageEvent.setNextDamageFromCode()
                     jotaro.damageTarget(u, 1, ATTACK_TYPE_MAGIC) 
                     jotaroQGroup.add(u)                     
     if jotaroQTimerInt >= 50
-        for i = 2 to 13
+        starPlatinum.kill()
+        for i = 3 to 12
             jotaroQDummy[i].kill()
             jotaroQTimer.destr()
             jotaroQGroup.clear()
