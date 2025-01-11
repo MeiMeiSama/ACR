@@ -3,14 +3,9 @@ package Jotaro_Q
 import DamageEvent
 import AbilityGlobals
 import ObjectDefinitions
-import UpdateTooltips
-import TimerUtils
 import ChannelAbilityPreset
 import UnitIds
 import ClosureForGroups
-import ACR_Pull
-import ACR_TagSystem
-import ACR_Stun
 import main
 
 unit jotaro
