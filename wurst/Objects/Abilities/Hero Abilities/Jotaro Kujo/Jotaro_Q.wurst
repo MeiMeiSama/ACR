@@ -1,2 +1,134 @@
 package Jotaro_Q
 
+import DamageEvent
+import AbilityGlobals
+import ObjectDefinitions
+import UpdateTooltips
+import TimerUtils
+import ChannelAbilityPreset
+import UnitIds
+import ClosureForGroups
+import ACR_Pull
+import ACR_TagSystem
+import ACR_Stun
+import main
+
+unit jotaro
+unit starPlatinum
+unit array jotaroQDummy
+group jotaroQGroup
+timer jotaroQTimer
+int jotaroQTimerInt
+vec2 abilityJotaroQPos
+vec2 starPlatinumPos
+
+@compiletime function createAbility()
+    new ChannelAbilityPreset(JOTARO_Q, 5, true)
+        ..presetTargetTypes(Targettype.POINTUNIT)
+        ..setAnimationNames("11111111")
+        ..setButtonPositionNormalX(1)
+        ..setButtonPositionNormalY(2)
+        ..setButtonPositionResearchX(1)
+        ..setButtonPositionResearchY(0)
+        ..setIconNormal("ReplaceableTextures\\CommandButtons\\BTNGolemThunderclap.blp")
+        ..setIconResearch("ReplaceableTextures\\CommandButtons\\BTNGolemThunderclap.blp")
+        ..setMissileSpeed(99999)
+        ..setHeroAbility(true)
+        ..setHotkeyNormal("Q")
+        ..setHotkeyLearn("Q")
+        ..setLevels(5)
+        ..setLevelSkipRequirement(2)
+        ..presetArtDuration(lvl -> 0)
+        ..presetBaseOrderID(lvl -> "auravampiric")
+        ..presetDisableOtherAbilities(lvl -> false)
+        ..presetFollowThroughTime(lvl -> 0)
+        ..presetCastRange(lvl -> 2000)
+        ..presetCooldown(lvl -> 50)
+        ..presetManaCost(lvl -> 70)
+        ..presetTargetsAllowed(lvl -> "enemy,ground,air,neutral")
+        ..presetTooltipNormal(lvl -> "Howl of the Illusory Wolf|r")
+        ..presetTooltipNormalExtended(lvl -> "Jotaro Q Desc|r")
+        ..setTooltipLearn("Learn Q|r")
+        ..setTooltipLearnExtended("Learning Q|r")           
+    new UnitDefinition(JOTARO_Q_DUMMY, UnitIds.wisp)
+        ..setNormalAbilities(commaList('Avul', 'Aloc', 'Amrf'))
+        ..setAnimationCastBackswing(0)
+        ..setDeathTimeseconds(0.1)
+        ..setScalingValue(0.70)
+        ..setUnitClassification("_")
+        ..setArtSpecial("_")
+        ..setHasWaterShadow(false)
+        ..setMaximumPitchAngledegrees(0)
+        ..setMaximumRollAngledegrees(0)
+        ..setModelFile("war3mapImported\\Star Platinum.mdx")
+        ..setScalingValue(1.5)
+        ..setArtSpecial("_")
+        ..setArmorType(ArmorType.Unarmored)
+        ..setPlaceableInEditor(false)
+        ..setMovementHeight(20)
+        ..setSpeedBase(100)
+        ..setTurnRate(3)
+        ..setMovementType(MovementType.Fly)
+        ..setCollisionSize(0)
+        ..setUnitSoundSet("_")
+        ..setCanFlee(false)
+        ..setFoodCost(0)
+        ..setHideMinimapDisplay(true)
+        ..setHitPointsMaximumBase(60)
+        ..setHitPointsRegenerationRate(-1)
+        ..setHitPointsRegenerationType("Always")
+        ..setStockMaximum(1)
+        ..setStockReplenishInterval(1)
+        ..setStructuresBuilt("_")
+        ..setUpgradesUsed("_")
+        ..setHotkey("_")
+        ..setName("effect dummy")
+        ..setTooltipBasic("_")
+        ..setTooltipExtended("_")
+
+init
+    jotaroQ()    
+
+function jotaroQ()
+    CreateTrigger()
+    ..registerAnyUnitEvent(EVENT_PLAYER_UNIT_SPELL_EFFECT)
+    ..addAction() ->
+        if GetSpellAbilityId() == JOTARO_Q
+            gg_snd_jotaroW1.play()
+            abilityJotaroQPos = vec2(GetSpellTargetX(), GetSpellTargetY())
+            jotaro = GetTriggerUnit()
+            if jotaro.getPos().distanceTo(abilityJotaroQPos) < 1500
+                abilityJotaroQPos = jotaro.getPos().polarOffset(jotaro.getPos().angleTo(abilityJotaroQPos), 1500)
+            starPlatinum = createUnit(JOTARO_Q_DUMMY, jotaro.getPos())     
+            starPlatinum.setFacing(starPlatinum.getPos().angleTo(abilityJotaroQPos)) 
+            starPlatinum.setAnimation(2)
+            starPlatinumPos = starPlatinum.getPos()
+            jotaroQTimerInt = 0
+            if jotaroQGroup == null
+                jotaroQGroup = CreateGroup()            
+            jotaroQTimer = CreateTimer()..startPeriodic(0.01, function jotaroQStart)
+
+function jotaroQStart()
+    jotaroQTimerInt++
+    if jotaroQTimerInt == 5
+        for i = 2 to 13
+            jotaroQDummy[i] = createUnit(JOTARO_Q_DUMMY, starPlatinumPos.polarOffset(starPlatinumPos.angleTo(abilityJotaroQPos), (100.0 * i)))  
+            forUnitsInRange(jotaroQDummy[i].getPos(), 200) (unit u) ->
+                if jotaro.isAllyOf(u) == false and u.isInvulnerable() == false and jotaroQGroup.has(u) == false
+                    DamageEvent.setNextDamageId(DAMAGE_ABILITY_Q)
+                    DamageEvent.setNextDamageFromCode()
+                    jotaro.damageTarget(u, 1, ATTACK_TYPE_MAGIC) 
+                    jotaroQGroup.add(u)                     
+    if jotaroQTimerInt >= 50
+        for i = 2 to 13
+            jotaroQDummy[i].kill()
+            jotaroQTimer.destr()
+            jotaroQGroup.clear()
+
+                     
+
+
+
+
+
+
