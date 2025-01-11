@@ -422,12 +422,12 @@ public function addAbilities (unit hero)
         SPELL_F[id] = 'A0T8'
         SPELL_G[id] = 'A16L'
     else if hero.getTypeId() == KUJO_JOTARO // Jotaro
-        SPELL_Q[id] = 'A0ES'
+        SPELL_Q[id] = JOTARO_Q
         SPELL_W[id] = JOTARO_W
         SPELL_W2[id] = JOTARO_W2
-        SPELL_E[id] = 'A17K'
+        SPELL_E[id] = JOTARO_E
         SPELL_R[id] = JOTARO_R
-        SPELL_T[id] = 'A0AB'
+        SPELL_T[id] = JOTARO_T
         SPELL_F[id] = 'A0EZ'
         SPELL_G[id] = 'A0KV'
     else if hero.getTypeId() == KAMIJOU_TOUMA // Touma

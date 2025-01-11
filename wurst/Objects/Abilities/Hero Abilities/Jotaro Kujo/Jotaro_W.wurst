@@ -11,6 +11,7 @@ import ClosureForGroups
 import ACR_Pull
 import ACR_TagSystem
 import ACR_Stun
+import main
 
 unit jotaro
 unit starPlatinum
@@ -25,7 +26,7 @@ vec2 starPlatinumPos
 
 @compiletime function createAbility()
     new ChannelAbilityPreset(JOTARO_W, 5, true)
-        ..presetTargetTypes(Targettype.POINT)
+        ..presetTargetTypes(Targettype.POINTUNIT)
         ..setAnimationNames("11111111")
         ..setButtonPositionNormalX(1)
         ..setButtonPositionNormalY(2)
@@ -88,8 +89,8 @@ vec2 starPlatinumPos
         ..setHasWaterShadow(false)
         ..setMaximumPitchAngledegrees(0)
         ..setMaximumRollAngledegrees(0)
-        ..setModelFile("war3mapImported\\starplatinum.mdl")
-        ..setScalingValue(3.0)
+        ..setModelFile("war3mapImported\\Star Platinum.mdx")
+        ..setScalingValue(1.5)
         ..setArtSpecial("_")
         ..setArmorType(ArmorType.Unarmored)
         ..setPlaceableInEditor(false)
@@ -122,13 +123,14 @@ function jotaroW()
     ..registerAnyUnitEvent(EVENT_PLAYER_UNIT_SPELL_EFFECT)
     ..addAction() ->
         if GetSpellAbilityId() == JOTARO_W
+            gg_snd_jotaroW1.play()
             abilityJotaroWPos = vec2(GetSpellTargetX(), GetSpellTargetY())
             jotaro = GetTriggerUnit()
             jotaroWBool = true
             if jotaro.getPos().distanceTo(abilityJotaroWPos) < 1250
                 abilityJotaroWPos = jotaro.getPos().polarOffset(jotaro.getPos().angleTo(abilityJotaroWPos), 1250)
             starPlatinum = createUnit(JOTARO_W_DUMMY, jotaro.getPos())     
-            starPlatinum.setAnimation(2)
+            starPlatinum.setAnimation(9)
             starPlatinum.setFacing(starPlatinum.getPos().angleTo(abilityJotaroWPos)) 
             if JOTARO_W.hasTagHidden() == false
                 jotaro.hideAbility(JOTARO_W, true)
@@ -141,7 +143,10 @@ function jotaroW()
             jotaroWTimerInt1 = 0                          
             jotaroWTimer = CreateTimer()..startPeriodic(0.01, function jotaroWStart)   
         else if GetSpellAbilityId() == JOTARO_W2
-            jotaroWEnd() 
+            jotaroWEnd()
+            if gg_snd_jotaroW1.isPlaying()
+                gg_snd_jotaroW1.stop(false, false)
+            gg_snd_jotaroW3.play() 
             starPlatinumPos = starPlatinum.getPos()  
             jotaroWTimerInt3 = 0                      
             jotaroWTimer = CreateTimer()..startPeriodic(0.03, function jotaroWAoe) 
@@ -151,9 +156,12 @@ function jotaroWStart()
     jotaroWTimerInt1++                   
     if jotaroWTimerInt1 < 54
         starPlatinumPos = starPlatinum.getPos()
-        starPlatinum.setPos(starPlatinumPos.polarOffset(starPlatinumPos.angleTo(abilityJotaroWPos), 25))
+        if starPlatinumPos.distanceTo(abilityJotaroWPos) <= 25
+            starPlatinum.setAnimation(32) 
+        else     
+            starPlatinum.setPos(starPlatinumPos.polarOffset(starPlatinumPos.angleTo(abilityJotaroWPos), 25))
         forUnitsInRange(starPlatinumPos, 350) (unit u) ->
-            if jotaro.isAllyOf(u) == false and u.isType(UNIT_TYPE_HERO) and u.isInvulnerable() == false and jotaroWBool == true and jotaroWTimerInt1 > 2 
+            if jotaro.isAllyOf(u) == false and u.isType(UNIT_TYPE_HERO) and u.isInvulnerable() == false and jotaroWBool == true
                 let jotaroPos = jotaro.getPos()
                 jotaroWEnd()             
                 jotaroWTarget = u
@@ -162,8 +170,11 @@ function jotaroWStart()
                 starPlatinum.setPos(jotaroWTarget.getPos().polarOffset(jotaroWTarget.getPos().angleTo(jotaroPos), -150))
                 starPlatinumPos = starPlatinum.getPos()
                 starPlatinum.setFacing(starPlatinumPos.angleTo(jotaroWTarget.getPos()))
-                jotaroWTimerInt2 = 0             
-                jotaroWTimer = CreateTimer()..startPeriodic(0.03, function jotaroWAttack)   
+                jotaroWTimerInt2 = 0   
+                jotaroWTimer = CreateTimer()..startPeriodic(0.03, function jotaroWAttack)  
+    if starPlatinumPos.distanceTo(abilityJotaroWPos) >= 25  
+        starPlatinum.setAnimation(32)        
+           
     if jotaroWTimerInt1 >= 400 
         starPlatinum.kill()
         jotaroWEnd()
@@ -179,31 +190,40 @@ function jotaroWEnd()
 
 function jotaroWAttack()
     jotaroWTimerInt2++
-    if jotaroWTimerInt2 == 5
-        starPlatinum.setAnimation(2) 
-    if jotaroWTimerInt2 == 20
+    if jotaroWTimerInt2 == 25   
+        if gg_snd_jotaroW1.isPlaying()
+            gg_snd_jotaroW1.stop(false, false)             
+        let rng = GetRandomInt(0, 1)           
+        if rng == 0
+            gg_snd_jotaroW2_1.play()
+        else 
+            gg_snd_jotaroW2_2.play()         
+    if jotaroWTimerInt2 == 30  
+        starPlatinum.setAnimation(11) 
+    if jotaroWTimerInt2 == 55
         jotaroWTarget.unpause()
         jotaroWTarget.setInvulnerable(false)       
         DamageEvent.setNextDamageId(DAMAGE_ABILITY_W)
         DamageEvent.setNextDamageFromCode()
         jotaro.damageTarget(jotaroWTarget, 1, ATTACK_TYPE_MAGIC)
         acrPull(jotaro, jotaroWTarget, 700)
-    if jotaroWTimerInt2 >= 25
+    if jotaroWTimerInt2 >= 65
         jotaroWTimer.destr()     
         starPlatinum.kill()        
 
 function jotaroWAoe()
     jotaroWTimerInt3++
     if jotaroWTimerInt3 == 1 
-        starPlatinum.setAnimation(1)
-    if jotaroWTimerInt3 == 5
-        jotaroWTimer.destr()
+        starPlatinum.setAnimation(7)
+    if jotaroWTimerInt3 == 25
         forUnitsInRange(starPlatinumPos, 600) (unit u) ->
             if jotaro.isAllyOf(u) == false and u.isInvulnerable() == false        
                 DamageEvent.setNextDamageId(DAMAGE_ABILITY_W)
                 DamageEvent.setNextDamageFromCode()
                 jotaro.damageTarget(u, 1, ATTACK_TYPE_MAGIC)     
                 acrStun(jotaro, u, 0.7)  
+    if jotaroWTimerInt3 >= 30  
+        jotaroWTimer.destr()          
         starPlatinum.kill()      
 
 

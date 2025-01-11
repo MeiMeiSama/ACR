@@ -22,7 +22,7 @@ timer jotaroRTimer
 
 @compiletime function createAbility()
     new ChannelAbilityPreset(JOTARO_R, 3, true)
-        ..presetTargetTypes(Targettype.POINT)
+        ..presetTargetTypes(Targettype.POINTUNIT)
         ..setAnimationNames("11111111")
         ..setButtonPositionNormalX(3)
         ..setButtonPositionNormalY(2)
@@ -59,8 +59,8 @@ timer jotaroRTimer
         ..setHasWaterShadow(false)
         ..setMaximumPitchAngledegrees(0)
         ..setMaximumRollAngledegrees(0)
-        ..setModelFile("war3mapImported\\starplatinum.mdl")
-        ..setScalingValue(3.0)
+        ..setModelFile("war3mapImported\\Star Platinum.mdx")
+        ..setScalingValue(1.5)
         ..setArtSpecial("_")
         ..setArmorType(ArmorType.Unarmored)
         ..setPlaceableInEditor(false)
@@ -170,23 +170,30 @@ function jotaroRAttack1()
     if jotaroRTimerInt2 == 10
         gg_snd_jotaroR2.play() 
         jotaro.setAnimation(8)
-        starPlatinum.setAnimation(4)
-    if jotaroRTimerInt2 == 20
+        starPlatinum.setAnimation(1)
+    if jotaroRTimerInt2 == 40
         gg_snd_jotaroR3.play()
         jotaro.setAnimation(21)
-        starPlatinum.setAnimation(3) 
-    if jotaroRTimerInt2 >= 21 and jotaroRTimerInt2 < 140
+        starPlatinum.setAnimation(34)
+    if jotaroRTimerInt2 >= 41 and jotaroRTimerInt2 < 160     
         jotaroPos = jotaro.getPos()
-        jotaro.setPos(jotaroPos.polarOffset(jotaroPos.angleTo(jotaroRTarget.getPos()), 5)) 
-        jotaroRTarget.setPos(jotaroPos.polarOffset(jotaroPos.angleTo(jotaroRTarget.getPos()), 355))
-        starPlatinum.setPos(jotaroPos.polarOffset(jotaroPos.angleTo(jotaroRTarget.getPos()), 155))       
-    if jotaroRTimerInt2 == 140
-        gg_snd_jotaroR4.play() 
-    if jotaroRTimerInt2 == 175
+        if jotaroPos.polarOffset(jotaroPos.angleTo(jotaroRTarget.getPos()), 355).isTerrainPathable(PATHING_TYPE_WALKABILITY) == true and jotaroPos.polarOffset(jotaroPos.angleTo(jotaroRTarget.getPos()), 355).isTerrainPathable(PATHING_TYPE_FLYABILITY) == true
+            DoNothing()
+        else                 
+            jotaro.setPos(jotaroPos.polarOffset(jotaroPos.angleTo(jotaroRTarget.getPos()), 5)) 
+            jotaroRTarget.setPos(jotaroPos.polarOffset(jotaroPos.angleTo(jotaroRTarget.getPos()), 355))
+            starPlatinum.setPos(jotaroPos.polarOffset(jotaroPos.angleTo(jotaroRTarget.getPos()), 155))       
+    if jotaroRTimerInt2 == 160
+        gg_snd_jotaroR4.play()
+        starPlatinum.setAnimation(12) 
+    if jotaroRTimerInt2 == 170
+        starPlatinum.setAnimation(13) 
+    if jotaroRTimerInt2 == 190     
+        starPlatinum.setAnimation(0) 
+    if jotaroRTimerInt2 == 195
         jotaro.setAnimation(9)
-        starPlatinum.setAnimation(1) 
         gg_snd_jotaroR5.play()
-    if jotaroRTimerInt2 == 200
+    if jotaroRTimerInt2 == 210
         jotaroRTarget.setInvulnerable(false)
         starPlatinum.kill()
         DamageEvent.setNextDamageId(DAMAGE_ABILITY_DELAYED_R)
