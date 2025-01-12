@@ -129,6 +129,8 @@ function jotaroW()
             jotaroWBool = true
             if jotaro.getPos().distanceTo(abilityJotaroWPos) < 1250
                 abilityJotaroWPos = jotaro.getPos().polarOffset(jotaro.getPos().angleTo(abilityJotaroWPos), 1250)
+            jotaro.pause()
+            jotaro.setInvulnerable(true)    
             starPlatinum = createUnit(JOTARO_W_DUMMY, jotaro.getPos())     
             starPlatinum.setAnimation(9)
             starPlatinum.setFacing(starPlatinum.getPos().angleTo(abilityJotaroWPos)) 
@@ -153,7 +155,11 @@ function jotaroW()
 
 
 function jotaroWStart()
-    jotaroWTimerInt1++                   
+    jotaroWTimerInt1++
+    if jotaroWTimerInt1 == 5
+        jotaro.unpause()
+        jotaro.setInvulnerable(false)
+
     if jotaroWTimerInt1 < 54
         starPlatinumPos = starPlatinum.getPos()
         if starPlatinumPos.distanceTo(abilityJotaroWPos) <= 25
