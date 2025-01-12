@@ -13,7 +13,6 @@ integer zerefFInt
 vec2 spellPos
 unit dummy
 unit dummy2
-unit dummy3
 effect effect1
 effect effect2
 public boolean zerefFKill
@@ -113,40 +112,6 @@ public boolean zerefFKill
         ..setName("effect dummy")
         ..setTooltipBasic("_")
         ..setTooltipExtended("_")
-    new UnitDefinition(ZEREF_F_DUMMY3, UnitIds.wisp)
-        ..setNormalAbilities(commaList('Avul', 'Aloc', 'Amrf'))
-        ..setAnimationCastBackswing(0)
-        ..setDeathTimeseconds(0.1)
-        ..setScalingValue(4)
-        ..setUnitClassification("_")
-        ..setArtSpecial("_")
-        ..setHasWaterShadow(false)
-        ..setMaximumPitchAngledegrees(0)
-        ..setMaximumRollAngledegrees(0)
-        ..setModelFile("war3mapImported\\MardSmoke.mdl")
-        ..setArtSpecial("_")
-        ..setArmorType(ArmorType.Unarmored)
-        ..setPlaceableInEditor(false)
-        ..setMovementHeight(20)
-        ..setSpeedBase(100)
-        ..setTurnRate(3)
-        ..setMovementType(MovementType.Fly)
-        ..setCollisionSize(0)
-        ..setUnitSoundSet("_")
-        ..setCanFlee(false)
-        ..setFoodCost(0)
-        ..setHideMinimapDisplay(true)
-        ..setHitPointsMaximumBase(60)
-        ..setHitPointsRegenerationRate(-1)
-        ..setHitPointsRegenerationType("Always")
-        ..setStockMaximum(1)
-        ..setStockReplenishInterval(1)
-        ..setStructuresBuilt("_")
-        ..setUpgradesUsed("_")
-        ..setHotkey("_")
-        ..setName("effect dummy")
-        ..setTooltipBasic("_")
-        ..setTooltipExtended("_")
 
 init
     initTrig_ZerefF_Orig()     
@@ -160,48 +125,48 @@ function initTrig_ZerefF_Orig()
             zeref=GetTriggerUnit()
             enemy=GetSpellTargetUnit()
             spellPos = vec2(GetSpellTargetX(), GetSpellTargetY())
+            let angle = zeref.getPos().angleTo(spellPos)
             zeref.setInvulnerable(true)
             zeref.pause()
             enemy.setInvulnerable(true)
             enemy.pause()
             SetUnitAnimation(zeref, "spell")
-            dummy=createUnit(ZEREF_F_DUMMY, zeref.getPos().moveTowards(zeref.getPos(), 200))
-            ..setScale(1)
+            dummy=createUnit(ZEREF_F_DUMMY, zeref.getPos().polarOffset(zeref.getPos().angleTo(enemy.getPos()), (zeref.getPos().distanceTo(enemy.getPos()) -300)))
+            ..setScale(2)
             ..setTimeScale(80)
-            ..setFacing(dummy.getPos().angleTo(spellPos))
+            ..setFacing(angle)
             ..setAnimation("Spell One")
+            ..setTimedLife(5)
             effect2 = addEffect("war3mapImported\\MardAura", dummy, "origin")
+            effect1 = addEffect("war3mapImported\\HorrorSouls", enemy, "chest")
+            ..setScale(1.5)
             soundPlay("war3mapImported\\Mard_Curse", 0, 0)
             zerefFInt=0
             CreateTimer()..startPeriodic(0.03, function zerefFEnd)
 
 function zerefFEnd()
     zerefFInt++
-    if zerefFInt > 10
-        effect1 = addEffect("war3mapImported\\HorrorSouls", enemy, "origin")
-    if zerefFInt == 70
+    if zerefFInt == 130
         GetExpiredTimer().destr()
         soundPlay("war3mapImported\\Mard_Deah_Final", 0, 0)
         dummy.setAnimation("Spell Three")
         dummy2=createUnit(ZEREF_F_DUMMY2, spellPos)
             ..setScale(1)
-            ..setTimeScale(80)
+            ..setTimeScale(90)
+            ..setAnimation("stand")
             ..setTimedLife(2)
-        dummy3=createUnit(ZEREF_F_DUMMY3, spellPos)
-            ..setScale(1)
-            ..setTimeScale(80)
-            ..setTimedLife(1)
+        flashEffect("war3mapImported\\MardMemento2.mdl", spellPos, 4)    
+        flashEffect("war3mapImported\\MardSmoke.mdl", spellPos, 1.5)
+        enemy.setInvulnerable(false)    
         forUnitsInRange(spellPos, 500) (unit victim) ->
             if victim.isType(UNIT_TYPE_STRUCTURE)==false and victim.isEnemyOf(zeref)==true and victim.isAlive()==true and victim.isInvulnerable() == false
                 DamageEvent.setNextDamageId(DAMAGE_ABILITY_F)
                 DamageEvent.setNextDamageFromCode()
-                UnitDamageTargetBJ(zeref,victim,(100*GetUnitAbilityLevel(zeref,ZEREF_Q)).toReal(),ATTACK_TYPE_MAGIC,DAMAGE_TYPE_MAGIC)    
+                UnitDamageTargetBJ(zeref,victim,(100*GetUnitAbilityLevel(zeref,ZEREF_F)).toReal(),ATTACK_TYPE_MAGIC,DAMAGE_TYPE_MAGIC)    
         effect1.destr()
-        dummy.remove()
         effect2.destr()
         zeref.setInvulnerable(false)
         zeref.unpause()
-        enemy.setInvulnerable(false)
         enemy.unpause()
         zerefFKill = false
 
@@ -211,7 +176,7 @@ public function zerefKillFunc()
     CreateTrigger()
     ..registerAnyUnitEvent(EVENT_PLAYER_UNIT_DEATH)
     ..addAction() ->
-        if GetKillingUnit().getTypeId() == ZEREF
+        if GetKillingUnit().getTypeId() == ZEREF and GetDyingUnit().isType(UNIT_TYPE_HERO)
             if zerefFKill == true
                 soundPlay("war3mapImported\\Mard_Pick", 0, 0)          
                 
