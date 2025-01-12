@@ -8,6 +8,7 @@ import ChannelAbilityPreset
 import UnitIds
 import main
 import ClosureForGroups
+import Jotaro_T
 
 unit jotaro
 unit jotaroRTarget
@@ -96,21 +97,27 @@ function jotaroR()
             abilityJotaroRPos = vec2(GetSpellTargetX(), GetSpellTargetY())
             jotaro = GetTriggerUnit()
             jotaroPos = jotaro.getPos()
-            if jotaroPos.distanceTo(abilityJotaroRPos) < 1250
-                abilityJotaroRPos = jotaroPos.polarOffset(jotaroPos.angleTo(abilityJotaroRPos), 1250)
-            jotaroRTimerInt1 = 0
-            jotaroRDashBool = true
-            jotaro.pause()
-            jotaro.setInvulnerable(true)       
-            jotaro.setPathing(false)
-            jotaro.setFacing(jotaroPos.angleTo(abilityJotaroRPos)) 
-            jotaro.setAnimation(11)   
-            let rng = GetRandomInt(0, 1)
-            if rng == 0
-                gg_snd_jotaroR1_1.play()
-            else 
-                gg_snd_jotaroR1_2.play()    
-            jotaroRTimer = CreateTimer()..startPeriodic(0.01, function jotaroRDash)
+            jotaroRTimerInt1 = 0            
+            if abilityJotaroRPos.distanceTo(abilityJotaroTPos) < 900 and jotaroPos.distanceTo(abilityJotaroTPos) < 900
+                jotaro.pause()
+                jotaro.setInvulnerable(true)   
+                gg_snd_jotaroR6.play()
+                jotaroRTimer = CreateTimer()..startPeriodic(0.01, function jotaroRAoe)
+            else    
+                if jotaroPos.distanceTo(abilityJotaroRPos) < 1250
+                    abilityJotaroRPos = jotaroPos.polarOffset(jotaroPos.angleTo(abilityJotaroRPos), 1250)
+                jotaroRDashBool = true
+                jotaro.pause()
+                jotaro.setInvulnerable(true)       
+                jotaro.setPathing(false)
+                jotaro.setFacing(jotaroPos.angleTo(abilityJotaroRPos)) 
+                jotaro.setAnimation(11)   
+                let rng = GetRandomInt(0, 1)
+                if rng == 0
+                    gg_snd_jotaroR1_1.play()
+                else 
+                    gg_snd_jotaroR1_2.play()    
+                jotaroRTimer = CreateTimer()..startPeriodic(0.01, function jotaroRDash)
 
 function jotaroRDash()
     jotaroRTimerInt1++
@@ -156,7 +163,23 @@ function jotaroRDash()
 
 function jotaroRDio()
 
-
+function jotaroRAoe()
+    jotaroRTimerInt1++
+    if jotaroRTimerInt1 == 20
+        starPlatinum = createUnit(JOTARO_R_DUMMY, abilityJotaroRPos)  
+        jotaro.unpause()
+        jotaro.setInvulnerable(false)        
+    if jotaroRTimerInt1 == 50    
+        starPlatinum.setAnimation(8)    
+    if jotaroRTimerInt1 > 100 and jotaroRTimerInt1 < 150
+        forUnitsInRange(abilityJotaroRPos, 600) (unit u) ->
+            if jotaro.isAllyOf(u) == false and u.getPos().distanceTo(abilityJotaroTPos) < 900 and u.isInvulnerable() == false
+                DamageEvent.setNextDamageId(DAMAGE_ABILITY_JOTARO_R)
+                DamageEvent.setNextDamageFromCode()
+                jotaro.damageTarget(u, 1, ATTACK_TYPE_MAGIC)    
+    if jotaroRTimerInt1 >= 170
+        jotaroRTimer.destr()
+        starPlatinum.kill()
 
 function jotaroDashEnd()
     jotaroRDashBool = false

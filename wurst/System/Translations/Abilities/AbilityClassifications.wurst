@@ -332,7 +332,7 @@ public function int.isRAoe () returns boolean
     return false
 
 public function int.isTAoe () returns boolean
-    if (this == 'A0FZ') or (this == 'A0L0') or (this == 'A0JN') or (this == 'A0V2') or (this == 'A0VS')
+    if (this == 'A0FZ') or (this == 'A0L0') or (this == 'A0JN') or (this == 'A0V2') or (this == 'A0VS') or (this == JOTARO_T)
         return true
     return false
 

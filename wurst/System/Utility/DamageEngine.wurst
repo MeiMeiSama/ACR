@@ -642,7 +642,14 @@ init
                         //printTimedToPlayer (R2S(_dmg) , 1, caster.getOwner())
                         instances = instances + 1
                         //printTimedToPlayer (I2S(instances) , 1, caster.getOwner())  
-
+                    else if id == DAMAGE_ABILITY_JOTARO_R
+                        _lvl = GetUnitAbilityLevel(caster, SPELL_R[pid])                        
+                        _dmg = (((70.00 * _lvl) + ((2 + _lvl) * stat)) / 50)                              // 900 dmg in testing environment
+                        DamageEvent.setAmount(_dmg)
+                        //printTimedToPlayer("ENMA R", 1, caster.getOwner()) 
+                        //printTimedToPlayer (R2S(_dmg) , 1, caster.getOwner())
+                        instances = instances + 1
+                        //printTimedToPlayer (I2S(instances) , 1, caster.getOwner())    
 
 
                         

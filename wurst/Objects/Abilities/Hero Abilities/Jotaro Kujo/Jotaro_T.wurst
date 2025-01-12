@@ -1,9 +1,7 @@
 package Jotaro_T
 
-import DamageEvent
 import AbilityGlobals
 import ObjectDefinitions
-import TerrainUtils
 import ChannelAbilityPreset
 import UnitIds
 import main
@@ -13,6 +11,7 @@ import ACR_TagSystem
 unit jotaro
 vec2 jotaroPos
 public vec2 abilityJotaroTPos
+vec2 emptyVector
 unit starPlatinum
 unit za_Warudo_Jotaro
 group jotaroTGroup
@@ -59,7 +58,7 @@ timer jotaroTTimer
         ..setMaximumPitchAngledegrees(0)
         ..setMaximumRollAngledegrees(0)
         ..setModelFile("war3mapImported\\FieldPuRPle.mdl")
-        ..setScalingValue(1.5)
+        ..setScalingValue(2.35)
         ..setArtSpecial("_")
         ..setArmorType(ArmorType.Unarmored)
         ..setPlaceableInEditor(false)
@@ -130,9 +129,7 @@ function jotaroT()
             abilityJotaroTPos = jotaro.getPos()
             jotaro.pause()
             jotaro.setInvulnerable(true)
-            starPlatinum = createUnit(JOTARO_T_DUMMY2, jotaro.getPos())     
-            starPlatinum.setFacing(jotaro.getFacingAngle())             
-            starPlatinum.setAnimation(1)
+            gg_snd_jotaroT1.play()           
             jotaro.setAnimation(2)
             if jotaroTGroup == null
                 jotaroTGroup = CreateGroup()               
@@ -141,13 +138,20 @@ function jotaroT()
 
 function jotaroTStart()
     jotaroTTimerInt1++
-    if jotaroTTimerInt1 == 20
+    if jotaroTTimerInt1 == 25
+        starPlatinum = createUnit(JOTARO_T_DUMMY2, jotaro.getPos())     
+        starPlatinum.setFacing(jotaro.getFacingAngle())             
+    if jotaroTTimerInt1 == 65
+        starPlatinum.setAnimation(1)
+    if jotaroTTimerInt1 == 100
         za_Warudo_Jotaro = createUnit(JOTARO_T_DUMMY, jotaro.getPos())
         jotaro.unpause()
         jotaro.setInvulnerable(false) 
-    if jotaroTTimerInt1 > 20    
+        starPlatinum.kill()
+    if jotaroTTimerInt1 > 100 and jotaroTTimerInt1 < 500    
         forUnitsInRange(abilityJotaroTPos, 900) (unit u) ->
             if u.getTypeId() != DIO_BRANDO and u.getTypeId() != KUJO_JOTARO and u.isInvulnerable() == false and u.hasTagPauseEX() == false and jotaroTGroup.has(u) == false
+                IssueImmediateOrder(u, "stop")
                 jotaroTGroup.add(u)
                 u.pauseEx()
                 u.addTagPauseEX()
@@ -157,8 +161,7 @@ function jotaroTStart()
                 if u.hasTagPauseEX()
                     u.unpauseEx()
                     u.removeTagPauseEX()
-
-    if jotaroTTimerInt1 >= 400
+    if jotaroTTimerInt1 >= 500
         jotaroTTimer.destr()
         za_Warudo_Jotaro.kill()
         jotaroTGroup.forEachIn() (unit u) ->
@@ -166,6 +169,7 @@ function jotaroTStart()
                 u.unpauseEx()
                 u.removeTagPauseEX()
         jotaroTGroup.clear()
+        abilityJotaroTPos = emptyVector
 
 
 
