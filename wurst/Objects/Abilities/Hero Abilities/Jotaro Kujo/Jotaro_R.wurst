@@ -209,12 +209,12 @@ function jotaroRAttack1()
     if jotaroRTimerInt2 == 160
         gg_snd_jotaroR4.play()
         starPlatinum.setAnimation(12) 
+        jotaro.setAnimation(22)
     if jotaroRTimerInt2 == 170
-        starPlatinum.setAnimation(13) 
+        starPlatinum.setAnimation(13)
     if jotaroRTimerInt2 == 190     
         starPlatinum.setAnimation(0) 
     if jotaroRTimerInt2 == 195
-        jotaro.setAnimation(9)
         gg_snd_jotaroR5.play()
     if jotaroRTimerInt2 == 210
         jotaroRTarget.setInvulnerable(false)

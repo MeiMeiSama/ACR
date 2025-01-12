@@ -21,6 +21,7 @@ timer jotaroWTimer
 int jotaroWTimerInt1
 int jotaroWTimerInt2
 int jotaroWTimerInt3
+int jotaroWLvl
 vec2 abilityJotaroWPos
 vec2 starPlatinumPos
 
@@ -126,8 +127,9 @@ function jotaroW()
             gg_snd_jotaroW1.play()
             abilityJotaroWPos = vec2(GetSpellTargetX(), GetSpellTargetY())
             jotaro = GetTriggerUnit()
+            jotaroWLvl = GetUnitAbilityLevel(jotaro, JOTARO_W)
             jotaroWBool = true
-            if jotaro.getPos().distanceTo(abilityJotaroWPos) < 1250
+            if jotaro.getPos().distanceTo(abilityJotaroWPos) > 1250
                 abilityJotaroWPos = jotaro.getPos().polarOffset(jotaro.getPos().angleTo(abilityJotaroWPos), 1250)
             jotaro.pause()
             jotaro.setInvulnerable(true)    
@@ -150,7 +152,9 @@ function jotaroW()
                 gg_snd_jotaroW1.stop(false, false)
             gg_snd_jotaroW3.play() 
             starPlatinumPos = starPlatinum.getPos()  
-            jotaroWTimerInt3 = 0                      
+            jotaroWTimerInt3 = 0 
+            jotaro.pause()
+            jotaro.setInvulnerable(true)                     
             jotaroWTimer = CreateTimer()..startPeriodic(0.03, function jotaroWAoe) 
 
 
@@ -181,7 +185,7 @@ function jotaroWStart()
     if starPlatinumPos.distanceTo(abilityJotaroWPos) >= 25  
         starPlatinum.setAnimation(32)        
            
-    if jotaroWTimerInt1 >= 400 
+    if jotaroWTimerInt1 >= (300 * jotaroWLvl)
         starPlatinum.kill()
         jotaroWEnd()
 
@@ -221,6 +225,9 @@ function jotaroWAoe()
     jotaroWTimerInt3++
     if jotaroWTimerInt3 == 1 
         starPlatinum.setAnimation(7)
+    if jotaroWTimerInt3 == 23
+        jotaro.unpause()
+        jotaro.setInvulnerable(false)    
     if jotaroWTimerInt3 == 25
         forUnitsInRange(starPlatinumPos, 600) (unit u) ->
             if jotaro.isAllyOf(u) == false and u.isInvulnerable() == false        
