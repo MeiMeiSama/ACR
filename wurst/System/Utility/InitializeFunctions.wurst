@@ -77,6 +77,8 @@ import Cobra_G
 import misakaOnKillBLT
 import MavisE_Orig
 import ZervisG_Orig
+import Zeref_F
+
 /*
 
     - Iniitalize functions after the game has started, when most data is "valid" such as udg_Playhero
@@ -295,6 +297,8 @@ public function initFunctions ()
             natsu2Dot()     
         if udg_PlayHero[i].getTypeId() == COBRA
             cobraDot()
+        if udg_PlayHero[i].getTypeId() == ZEREF
+            zerefKillFunc()   
         if udg_PlayHero[i].getTypeId() == MAVIS
             initTrig_MavisE_Orig()            
             let mavis = udg_PlayHero[i]

@@ -6,7 +6,6 @@ import ChannelAbilityPreset
 import UnitIds
 import main
 import ClosureForGroups
-import TimerUtils
 
 unit zeref
 unit enemy
@@ -14,7 +13,7 @@ unit dummy
 unit dummy2
 unit dummy3
 unit dummy4
-integer zerefRInt
+//integer zerefRInt
 vec2 spellPos
 vec2 kyokaPos
 effect effect1
@@ -201,14 +200,13 @@ function initTrig_ZerefR_Orig()
             enemy.setInvulnerable(true)
             enemy.pause()
             SetUnitAnimation(zeref, "spell")
-            dummy = createUnit(ZEREF_R_DUMMY, zeref.getPos())
-            ..setScale(2.5)
+            dummy = createUnit(ZEREF_R_DUMMY, zeref.getPos().moveTowards(zeref.getPos(), 200))
+            ..setScale(1)
             ..setTimeScale(80)
             ..setFacing(dummy.getPos().angleTo(spellPos))
             ..setAnimation("Spell")
             kyokaPos = dummy.getPos()
-            soundPlay("war3mapImported\\Mavis T.mp3", 0, 0)
-            zerefRInt=0
+            soundPlay("war3mapImported\\Kyoka 3.mp3", 0, 0)
             CreateTimer()..start(0.02, function zerefREnd)
 
 function zerefREnd()
@@ -224,35 +222,41 @@ function zerefREnd()
     while dummy2.isAlive()
         dummy.setAnimation("Spell")
         dummy.setAnimation("Spell Four")
-        dummy.setAnimation("Spell")
-        dummy.setAnimation("Spell Four")
-        dummy.setAnimation("Spell")
-        dummy.setAnimation("Spell Four")
     effect1.destr()    
     CreateTimer()..start(6, function zerefREnd2)
 
 function zerefREnd2()
-    unit u
-    zerefRInt++
-    PauseUnit(zeref,true)
-    if zerefRInt==12
-        DestroyTimer(GetExpiredTimer())
-        forUnitsInRange(spellPos, 600) (unit victim) ->
+    soundPlay("war3mapImported\\Kyoka 7.mp3", 0, 0) 
+    dummy.setPos(kyokaPos)
+    dummy.setFacing(kyokaPos.angleTo(spellPos))
+    dummy.setAnimation("Spell One")
+    dummy3 = createUnit(ZEREF_R_DUMMY3, spellPos)
+    ..setScale(1.5)
+    ..setTimeScale(80)
+    ..setTimedLife(2)
+    dummy4 = createUnit(ZEREF_R_DUMMY4, kyokaPos)
+    ..setScale(1.5)
+    ..setTimeScale(80)
+    ..setFacing(dummy4.getPos().angleTo(spellPos))
+    dummy.setAnimation("Spell Three")
+    CreateTimer()..startPeriodic(0.03, function zerefREnd3)
+
+function zerefREnd3()
+    if dummy4.getPos().distanceTo(spellPos) <= 20   
+        flashEffect("war3mapImported\\KyokaStar.mdx", spellPos)
+        forUnitsInRange(spellPos, 400) (unit victim) ->
             if victim.isType(UNIT_TYPE_STRUCTURE)==false and victim.isEnemyOf(zeref)==true and victim.isAlive()==true and victim.isInvulnerable() == false
-                DamageEvent.setNextDamageId(DAMAGE_ABILITY_Q)
+                DamageEvent.setNextDamageId(DAMAGE_ABILITY_R)
                 DamageEvent.setNextDamageFromCode()
-                UnitDamageTargetBJ(zeref,victim,(100*GetUnitAbilityLevel(zeref,ZEREF_Q)).toReal(),ATTACK_TYPE_MAGIC,DAMAGE_TYPE_MAGIC)
-    if zerefRInt>20
+                UnitDamageTargetBJ(zeref,victim,(100*GetUnitAbilityLevel(zeref,ZEREF_Q)).toReal(),ATTACK_TYPE_MAGIC,DAMAGE_TYPE_MAGIC)          
+        GetExpiredTimer().destr()
+        dummy.remove()
+        dummy3.remove()
+        dummy4.remove()
         zeref.setInvulnerable(false)
         zeref.unpause()
-        u = createUnit(ZEREF_W_DUMMY, zeref.getPos())
-        SetUnitScale(u,2.5,2.5,2.5)
-        SetUnitTimeScalePercent(u,80)
-        SetUnitAnimation(u, "Spell")
-        UnitApplyTimedLife(u,'BHwe',2)
-        u = createUnit(ZEREF_W_DUMMY2, spellPos)
-        SetUnitScale(u,2.5,2.5,2.5)
-        SetUnitTimeScalePercent(u,80)
-        UnitApplyTimedLife(u,'BHwe',2)
-        flashEffect("war3mapImported\\seilaexp", spellPos)
-        soundPlay("war3mapImported\\Sayla 1.mp3", 0, 0) 
+        enemy.setInvulnerable(false)
+        enemy.unpause()
+    else
+        dummy4.setFacing(dummy4.getPos().angleTo(spellPos))
+        dummy4.setPos(dummy4.getPos().polarOffset(dummy4.getPos().angleTo(spellPos), 80))
