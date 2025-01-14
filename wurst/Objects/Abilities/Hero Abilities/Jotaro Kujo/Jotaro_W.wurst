@@ -171,7 +171,7 @@ function jotaroWStart()
         else     
             starPlatinum.setPos(starPlatinumPos.polarOffset(starPlatinumPos.angleTo(abilityJotaroWPos), 25))
         forUnitsInRange(starPlatinumPos, 350) (unit u) ->
-            if jotaro.isAllyOf(u) == false and u.isType(UNIT_TYPE_HERO) and u.isInvulnerable() == false and jotaroWBool == true
+            if jotaro.isAllyOf(u) == false and u.isType(UNIT_TYPE_HERO) and u.isInvulnerable() == false and jotaroWBool == true and jotaroWTimerInt1 > 5
                 let jotaroPos = jotaro.getPos()
                 jotaroWEnd()             
                 jotaroWTarget = u

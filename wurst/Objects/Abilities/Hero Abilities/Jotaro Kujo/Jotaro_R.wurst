@@ -126,7 +126,7 @@ function jotaroRDash()
         jotaroDashEnd()
 
     if jotaroRTimerInt1 < 50
-        if jotaroPos.polarOffset(jotaroPos.angleTo(abilityJotaroRPos), 100).isTerrainPathable(PATHING_TYPE_WALKABILITY) == true and jotaroPos.polarOffset(jotaroPos.angleTo(abilityJotaroRPos), 100).isTerrainPathable(PATHING_TYPE_FLYABILITY) == true 
+        if jotaroPos.polarOffset(jotaroPos.angleTo(abilityJotaroRPos), 25).isTerrainPathable(PATHING_TYPE_WALKABILITY) == true and jotaroPos.polarOffset(jotaroPos.angleTo(abilityJotaroRPos), 25).isTerrainPathable(PATHING_TYPE_FLYABILITY) == true 
             jotaroDashEnd()          
         else
             jotaro.setPos(jotaroPos.polarOffset(jotaroPos.angleTo(abilityJotaroRPos), 25))

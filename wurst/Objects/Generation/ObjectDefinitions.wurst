@@ -81,6 +81,7 @@ public constant JOTARO_W2 = compiletime(ABIL_ID_GEN.next())
 public constant JOTARO_E = compiletime(ABIL_ID_GEN.next())
 public constant JOTARO_R = compiletime(ABIL_ID_GEN.next())
 public constant JOTARO_T = compiletime(ABIL_ID_GEN.next())
+public constant JOTARO_T2 = compiletime(ABIL_ID_GEN.next())
 // ------------------------------ Item Abilities ------------------------------
 public constant CLOUD_VONGOLA_ABILITY = compiletime(ABIL_ID_GEN.next())
 public constant CLOUD_ARCO_ABILITY = compiletime(ABIL_ID_GEN.next())

@@ -7,17 +7,25 @@ import UnitIds
 import main
 import ClosureForGroups
 import ACR_TagSystem
+import UpdateTooltips
+import TimerUtils
+import TerrainUtils
+import DamageEvent
 
 unit jotaro
 vec2 jotaroPos
+vec2 jotaroTTargetPos
+vec2 starPlatinumPos
 public vec2 abilityJotaroTPos
 vec2 emptyVector
 unit starPlatinum
 unit za_Warudo_Jotaro
+unit jotaroTTarget
 group jotaroTGroup
 int jotaroTTimerInt1
-int jotaroRTimerInt2
+int jotaroT2TimerInt
 timer jotaroTTimer
+timer jotaroT2Timer
 
 @compiletime function createAbility()
     new ChannelAbilityPreset(JOTARO_T, 1, true)
@@ -42,11 +50,38 @@ timer jotaroTTimer
         ..presetCastRange(lvl -> 2000)
         ..presetCooldown(lvl -> 50)
         ..presetManaCost(lvl -> 70)
-        ..presetTargetsAllowed(lvl -> "enemy,ground,air,neutral")
+        ..presetTargetsAllowed(lvl -> "enemy,ground,air,neutral, vulnerable")
         ..presetTooltipNormal(lvl -> "Law")
         ..presetTooltipNormalExtended(lvl -> GOLD+"Mavis uses law on target, and engulfs nearby enemies hit by it."+"\n\ncooldown: "+BLUE+"50|r")
         ..setTooltipLearn("Law|r")
         ..setTooltipLearnExtended(GOLD+"Mavis uses law on target, and engulfs nearby enemies hit by it."+"\n\ncooldown: "+BLUE+"50|r")
+    new ChannelAbilityPreset(JOTARO_T2, 1, true)
+        ..presetTargetTypes(Targettype.UNIT)
+        ..setAnimationNames("11111111")
+        ..setButtonPositionNormalX(3)
+        ..setButtonPositionNormalY(1)
+        ..setButtonPositionResearchX(3)
+        ..setButtonPositionResearchY(1)
+        ..setIconNormal("ReplaceableTextures\\CommandButtons\\BTNSpellSteal.blp")
+        ..setIconResearch("ReplaceableTextures\\CommandButtons\\BTNSpellSteal.blp")
+        ..setMissileSpeed(99999)
+        ..setHeroAbility(true)
+        ..setHotkeyNormal("T")
+        ..setHotkeyLearn("T")
+        ..setLevels(1)
+        ..setRequiredLevel(23)
+        ..presetArtDuration(lvl -> 0)
+        ..presetBaseOrderID(lvl -> "ambush")
+        ..presetDisableOtherAbilities(lvl -> false)
+        ..presetFollowThroughTime(lvl -> 0)
+        ..presetCastRange(lvl -> 2000)
+        ..presetCooldown(lvl -> 50)
+        ..presetManaCost(lvl -> 70)
+        ..presetTargetsAllowed(lvl -> "enemy,ground,air,neutral, vulnerable")
+        ..presetTooltipNormal(lvl -> "Law")
+        ..presetTooltipNormalExtended(lvl -> GOLD+"Mavis uses law on target, and engulfs nearby enemies hit by it."+"\n\ncooldown: "+BLUE+"50|r")
+        ..setTooltipLearn("Law|r")
+        ..setTooltipLearnExtended(GOLD+"Mavis uses law on target, and engulfs nearby enemies hit by it."+"\n\ncooldown: "+BLUE+"50|r")        
     new UnitDefinition(JOTARO_T_DUMMY, UnitIds.wisp)
         ..setNormalAbilities(commaList('Avul', 'Aloc', 'Amrf'))
         ..setAnimationCastBackswing(0)
@@ -129,12 +164,74 @@ function jotaroT()
             abilityJotaroTPos = jotaro.getPos()
             jotaro.pause()
             jotaro.setInvulnerable(true)
+            if JOTARO_T.hasTagHidden() == false
+                jotaro.hideAbility(JOTARO_T, true)
+                JOTARO_T.addTagHidden()
+            if jotaro.hasAbility(JOTARO_T2) == false    
+                jotaro.addAbility(JOTARO_T2)   
+                let id = jotaro.getOwner().getId()        
+                let tooltipTimer = CreateTimer()
+                tooltipTimer..start(0.02, function updateTooltips)..setData(id)              
             gg_snd_jotaroT1.play()           
             jotaro.setAnimation(2)
             if jotaroTGroup == null
                 jotaroTGroup = CreateGroup()               
             jotaroTTimerInt1 = 0                          
             jotaroTTimer = CreateTimer()..startPeriodic(0.02, function jotaroTStart)  
+        else if GetSpellAbilityId() == JOTARO_T2
+            jotaroTTarget = GetSpellTargetUnit()  
+            gg_snd_jotaroT2.play()
+            jotaro.pause()
+            jotaro.setInvulnerable(true)
+            jotaroTTarget.pause()
+            jotaroTTarget.setInvulnerable(true)
+            jotaro.setAnimation(5)            
+            jotaroT2TimerInt = 0
+            jotaroT2Timer = CreateTimer()..startPeriodic(0.01, function jotaroT2Start)
+
+function jotaroT2Start()
+    print(jotaroT2TimerInt.toString())
+    jotaroT2TimerInt++
+    if jotaroT2TimerInt == 820
+        starPlatinum = createUnit(JOTARO_T_DUMMY2, jotaroTTarget.getPos().polarOffset(jotaroTTarget.getPos().angleTo(jotaro.getPos()), 200)) 
+        starPlatinum.setFacing(starPlatinum.getPos().angleTo(jotaroTTarget.getPos()))
+    if jotaroT2TimerInt == 840        
+        jotaro.setAnimation(5) 
+        starPlatinum.setAnimation(0)
+    if jotaroT2TimerInt == 240        
+        jotaro.setAnimation(19)
+    if jotaroT2TimerInt == 1850      
+        starPlatinum.setAnimation(34)  
+    if jotaroT2TimerInt == 2500
+        starPlatinumPos = starPlatinum.getPos()
+        starPlatinum.kill()
+        jotaroTTarget.setPathing(false)
+        if JOTARO_T.hasTagHidden() == true
+            jotaro.hideAbility(JOTARO_T, false)
+            JOTARO_T.removeTagHidden()
+            jotaro.startAbilityCooldown(JOTARO_T)
+        if jotaro.hasAbility(JOTARO_T2) == true    
+            jotaro.removeAbility(JOTARO_T2)        
+        jotaro.unpause()
+        jotaro.setInvulnerable(false)
+    if jotaroT2TimerInt > 2500 and jotaroT2TimerInt < 2701
+        jotaroTTargetPos = jotaroTTarget.getPos()
+        if jotaroTTargetPos.polarOffset(starPlatinumPos.angleTo(jotaroTTargetPos), 25).isTerrainPathable(PATHING_TYPE_WALKABILITY) == true and jotaroTTargetPos.polarOffset(starPlatinumPos.angleTo(jotaroTTargetPos), 25).isTerrainPathable(PATHING_TYPE_FLYABILITY) == true 
+            DoNothing()
+        else    
+            jotaroTTarget.setPos(jotaroTTargetPos.polarOffset(starPlatinumPos.angleTo(jotaroTTargetPos), 25))  
+    if jotaroT2TimerInt >= 2701
+        jotaroT2Timer.destr()
+        jotaroTTarget.setPathing(true)
+        jotaroTTarget.setInvulnerable(false)
+        jotaroTTarget.unpause()
+        DamageEvent.setNextDamageId(DAMAGE_ABILITY_DELAYED_T)
+        DamageEvent.setNextDamageFromCode()
+        jotaro.damageTarget(jotaroTTarget, 1, ATTACK_TYPE_MAGIC)
+
+
+
+
 
 function jotaroTStart()
     jotaroTTimerInt1++
@@ -170,7 +267,12 @@ function jotaroTStart()
                 u.removeTagPauseEX()
         jotaroTGroup.clear()
         abilityJotaroTPos = emptyVector
-
+        if JOTARO_T.hasTagHidden() == true
+            jotaro.hideAbility(JOTARO_T, false)
+            JOTARO_T.removeTagHidden()
+            jotaro.startAbilityCooldown(JOTARO_T)
+        if jotaro.hasAbility(JOTARO_T2) == true    
+            jotaro.removeAbility(JOTARO_T2)  
 
 
 

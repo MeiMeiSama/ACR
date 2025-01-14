@@ -38,6 +38,7 @@ public sound gg_snd_jotaroR4
 public sound gg_snd_jotaroR5
 public sound gg_snd_jotaroR6
 public sound gg_snd_jotaroT1
+public sound gg_snd_jotaroT2
 public sound gg_snd_kuroganeT
 public sound gg_snd_MHXT
 public sound gg_snd_EnmaT
@@ -3644,6 +3645,11 @@ function initSounds()
     SetSoundChannel(gg_snd_jotaroT1, 0)
     SetSoundVolume(gg_snd_jotaroT1, 127)
     SetSoundPitch(gg_snd_jotaroT1, 1.0)         
+    gg_snd_jotaroT2 = CreateSound("war3mapImported\\jotaroT2.mp3", false, false, false, 10, 10, "")
+    SetSoundDuration(gg_snd_jotaroT2, 12095)
+    SetSoundChannel(gg_snd_jotaroT2, 0)
+    SetSoundVolume(gg_snd_jotaroT2, 127)
+    SetSoundPitch(gg_snd_jotaroT2, 1.0)       
     gg_snd_neptune6 = CreateSound("war3mapImported\\neptune6 .mp3", false, false, false, 10, 10, "")
     SetSoundDuration(gg_snd_neptune6, 4064)
     SetSoundChannel(gg_snd_neptune6, 0)
