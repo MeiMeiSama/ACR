@@ -146,9 +146,10 @@ function initTrig_ZerefF_Orig()
 
 function zerefFEnd()
     zerefFInt++
+    if zerefFInt == 70
+        soundPlay("war3mapImported\\Mard_Deah_Final", 0, 0)
     if zerefFInt == 130
         GetExpiredTimer().destr()
-        soundPlay("war3mapImported\\Mard_Deah_Final", 0, 0)
         dummy.setAnimation("Spell Three")
         dummy2=createUnit(ZEREF_F_DUMMY2, spellPos)
             ..setScale(1)

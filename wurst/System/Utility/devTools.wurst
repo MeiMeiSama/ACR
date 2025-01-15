@@ -18,7 +18,7 @@ fogmodifier array acr_MH
 init
     udg_PlayHero[1] = createUnit(Player(1), COBRA, vec2(-8868, -11444))..setUserData(1)
     ..setStr(5000)
-    udg_PlayHero[2] = createUnit(Player(2), 'H01U', vec2(-8868, -11450))..setUserData(2)
+    udg_PlayHero[2] = createUnit(Player(2), ZEREF, vec2(-8868, -11450))..setUserData(2)
     ..setStr(5000)
     udg_PlayHero[4] = createUnit((Player(4)), ICHIGO_STRENGTH, vec2(-8868, -11456))..setUserData(4)
     ..setStr(500)

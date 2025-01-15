@@ -439,17 +439,17 @@ public function int.isModeBlink () returns boolean
 
 
 public function int.isTransform () returns boolean
-    if this == 'A19C' or this == 'A19D' or this == 'A19G' or this == 'A19H' or this == 'A19I' or this == 'A19K' or this == MADARA_EDO_T or this == SASUKE_ADULT_T  or this == 'A19L' or this == 'A19M' or this == 'A19N' or this == ICHIGO_STRENGTH_T
+    if this == 'A19C' or this == 'A19D' or this == 'A19G' or this == 'A19H' or this == 'A19I' or this == 'A19K' or this == MADARA_EDO_T or this == SASUKE_ADULT_T  or this == 'A19L' or this == 'A19M' or this == 'A19N' or this == ICHIGO_STRENGTH_T or this == ZEREF_T
         return true
     return false
 
 public function unit.isModeHeroBase () returns boolean
-    if this.getTypeId() == 'H01B' or this.getTypeId() == 'H01R' or this.getTypeId() == ICHIGO_STRENGTH or this.getTypeId() == 'H02M' or this.getTypeId() == 'H009' or this.getTypeId() == 'H006' or this.getTypeId() == 'H00M' or this.getTypeId() == MADARA_EDO or this.getTypeId() == SASUKE_ADULT  or this.getTypeId() == 'H001' or this.getTypeId() == 'H005' or this.getTypeId() == MONKEYD_LUFFY
+    if this.getTypeId() == 'H01B' or this.getTypeId() == 'H01R' or this.getTypeId() == ICHIGO_STRENGTH or this.getTypeId() == 'H02M' or this.getTypeId() == 'H009' or this.getTypeId() == 'H006' or this.getTypeId() == 'H00M' or this.getTypeId() == MADARA_EDO or this.getTypeId() == SASUKE_ADULT  or this.getTypeId() == 'H001' or this.getTypeId() == 'H005' or this.getTypeId() == MONKEYD_LUFFY or this.getTypeId() == ZEREF
         return true
     return false
 
 public function unit.isModeHeroTransformed () returns boolean
-    if this.getTypeId() == 'H00B' or this.getTypeId() == 'H03Q' or this.getTypeId() == 'H036' or this.getTypeId() == 'H01W' or this.getTypeId() == 'H01D' or this.getTypeId() == 'H01P' or this.getTypeId() == MADARA_EDO_MODO or this.getTypeId() == SASUKE_ADULT_MODO  or this.getTypeId() == 'H00S' or this.getTypeId() == 'H00I' or this.getTypeId() == 'H00U' or this.getTypeId() == ICHIGO_STRENGTH_MODO
+    if this.getTypeId() == 'H00B' or this.getTypeId() == 'H03Q' or this.getTypeId() == 'H036' or this.getTypeId() == 'H01W' or this.getTypeId() == 'H01D' or this.getTypeId() == 'H01P' or this.getTypeId() == MADARA_EDO_MODO or this.getTypeId() == SASUKE_ADULT_MODO  or this.getTypeId() == 'H00S' or this.getTypeId() == 'H00I' or this.getTypeId() == 'H00U' or this.getTypeId() == ICHIGO_STRENGTH_MODO or this.getTypeId() == ZEREF_MODO
         return true
     return false
 

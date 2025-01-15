@@ -81,7 +81,6 @@ function initTrig_MavisQ_Orig()
         let t=CreateTimer()
         mavis=GetSpellAbilityUnit()
         mavisQLoc=GetSpellTargetLoc()
-        PauseUnit(mavis,true)
         SetUnitAnimation(mavis, "spell")
         mavisQInt=0
         TimerStart(t,.02,true,function mavisQEnd)
@@ -89,11 +88,9 @@ function initTrig_MavisQ_Orig()
 function mavisQEnd()
     unit u
     mavisQInt++
-    PauseUnit(mavis,true)
     if mavisQInt>12
         DestroyTimer(GetExpiredTimer())
         ForGroupBJ(GetUnitsInRangeOfLocMatching(650,mavisQLoc,Condition(function mavisFilter)),function mavisDMG)
-        PauseUnit(mavis,false)
         u=CreateUnitAtLoc(GetOwningPlayer(mavis),MAVIS_Q_DUMMY,mavisQLoc,GetRandomDirectionDeg())
         SetUnitScale(u,2.5,2.5,2.5)
         SetUnitTimeScalePercent(u,80)

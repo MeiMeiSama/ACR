@@ -143,7 +143,7 @@ function zervisGInit()
             SetUnitScale(dummyUnit2,1,1,1)
             SetUnitTimeScalePercent(dummyUnit2, 80)
             dummyUnit.setFacing(dummyUnit2.getPos().angleTo(zervisGTarget.getPos()))
-        else if zervis.getTypeId() == 'H01U'   
+        else if zervis.getTypeId() == ZEREF //'H01U'   
             PauseUnit(mavis, true)
             SetUnitInvulnerable(mavis, true)
             mavis.setPos(zervis.getPos().moveTowards(zervis.getPos(), 400))

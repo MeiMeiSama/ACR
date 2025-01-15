@@ -72,6 +72,7 @@ function mavisTEnd ()
     if mavisTInt>350
         DestroyTimer(GetExpiredTimer())
         effect1.destr()
+        flashEffect("war3mapImported\\MavisLawPillar.mdx", mavisTTarget.getPos(), 4)
         flashEffect("war3mapImported\\dtfairylaw.mdx", mavisTTarget, "chest")
         PauseUnit(mavis,false)
         SetUnitInvulnerable(mavis,false)

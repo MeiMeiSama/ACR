@@ -118,7 +118,6 @@ function initTrig_ZerefQ_Orig()
         if GetSpellAbilityId() == ZEREF_Q
             zeref=GetTriggerUnit()
             spellPos = vec2(GetSpellTargetX(), GetSpellTargetY())
-            zeref.pause()
             SetUnitAnimation(zeref, "spell")
             zerefQInt=0
             CreateTimer()..startPeriodic(0.02, function zerefQEnd)
@@ -126,7 +125,6 @@ function initTrig_ZerefQ_Orig()
 function zerefQEnd()
     unit u
     zerefQInt++
-    PauseUnit(zeref,true)
     if zerefQInt>12
         DestroyTimer(GetExpiredTimer())
         forUnitsInRange(spellPos, 650) (unit victim) ->
@@ -134,7 +132,6 @@ function zerefQEnd()
                 DamageEvent.setNextDamageId(DAMAGE_ABILITY_Q)
                 DamageEvent.setNextDamageFromCode()
                 UnitDamageTargetBJ(zeref,victim,(100*GetUnitAbilityLevel(zeref,ZEREF_Q)).toReal(),ATTACK_TYPE_MAGIC,DAMAGE_TYPE_MAGIC)
-        zeref.unpause()
         u = createUnit(ZEREF_Q_DUMMY, zeref.getPos().moveTowards(zeref.getPos(), 200))
         SetUnitScale(u,2,2,2)
         SetUnitTimeScalePercent(u,80)

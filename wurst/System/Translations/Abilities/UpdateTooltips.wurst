@@ -1179,6 +1179,10 @@ public function addAbilities (unit hero)
         SPELL_F[id] = ZEREF_F //'A0IL'
         SPELL_G[id] = '_' //'A0IJ'
         SPELL_G2[id] = ZERVIS_G
+        SPELL_MODO_Q[id] = ZEREF_TQ
+        SPELL_MODO_W[id] = ZEREF_TW
+        SPELL_MODO_E[id] = ZEREF_TE
+        SPELL_MODO_R[id] = ZEREF_TR
     else if hero.getTypeId() == 'H032' // Waver
         SPELL_Q[id] = 'A0RY'
         SPELL_W[id] = 'A0RZ'

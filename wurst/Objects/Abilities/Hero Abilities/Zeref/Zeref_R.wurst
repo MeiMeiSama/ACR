@@ -18,7 +18,9 @@ angle kyokaAngle
 vec2 spellPos
 vec2 kyokaPos
 effect effect1
+effect effect2
 integer zerefRInt
+integer zerefRInt2
 
 @compiletime function createAbility()
     new ChannelAbilityPreset(ZEREF_R, 3, true)
@@ -197,15 +199,15 @@ function initTrig_ZerefR_Orig()
             zeref=GetTriggerUnit()
             enemy=GetSpellTargetUnit()
             spellPos = GetSpellTargetUnit().getPos()
+            let angle2 = zeref.getPos().angleTo(spellPos)
             zeref.setInvulnerable(true)
             zeref.pause()
             enemy.setInvulnerable(true)
             enemy.pause()
             SetUnitAnimation(zeref, "spell")
-            dummy = createUnit(ZEREF_R_DUMMY, zeref.getPos().polarOffset(zeref.getPos().angleTo(enemy.getPos()), (zeref.getPos().distanceTo(enemy.getPos()) -400)))
-            ..setScale(2)
-            ..setTimeScale(80)
-            ..setFacing(dummy.getPos().angleTo(spellPos))
+            dummy = createUnit(ZEREF_R_DUMMY, zeref.getPos().moveTowards(zeref.getPos(), 200))
+            ..setScale(1.6)
+            ..setFacing(angle2)
             ..setAnimation("Spell")
             kyokaPos = dummy.getPos()
             angle = dummy.getPos().angleTo(spellPos)
@@ -216,9 +218,10 @@ function initTrig_ZerefR_Orig()
 
 function zerefREnd()
     dummy2 = createUnit(ZEREF_R_DUMMY2, spellPos)
-    ..setScale(2.5)
+    ..setScale(4.5)
     ..setTimeScale(80)
-    ..setTimedLife(4)
+    ..setFacing(dummy2.getPos().angleTo(spellPos))
+    ..setTimedLife(6)
     CreateTimer()..start(2, function kyokaMov) 
 
 function zerefREnd2()
@@ -229,17 +232,18 @@ function zerefREnd2()
     dummy3 = createUnit(ZEREF_R_DUMMY3, spellPos)
     ..setScale(1.5)
     ..setTimeScale(80)
-    ..setTimedLife(4)
+    ..setTimedLife(2)
     dummy4 = createUnit(ZEREF_R_DUMMY4, kyokaPos)
     ..setScale(1.5)
     ..setTimeScale(80)
     ..setFacing(dummy4.getPos().angleTo(spellPos))
     dummy.setAnimation("Spell Three")
-    CreateTimer()..startPeriodic(0.03, function zerefREnd3)
+    zerefRInt2 = 0
+    CreateTimer()..startPeriodic(0.05, function zerefREnd3)
 
 function zerefREnd3()
-    if dummy4.getPos().distanceTo(spellPos) <= 10
-        GetExpiredTimer().destr()   
+    zerefRInt2++
+    if dummy4.getPos().distanceTo(spellPos) <= 20 or zerefRInt2 == 16  
         flashEffect("war3mapImported\\KyokaStar.mdx", spellPos)
         enemy.setInvulnerable(false)
         forUnitsInRange(spellPos, 400) (unit victim) ->
@@ -247,35 +251,49 @@ function zerefREnd3()
                 DamageEvent.setNextDamageId(DAMAGE_ABILITY_R)
                 DamageEvent.setNextDamageFromCode()
                 UnitDamageTargetBJ(zeref,victim,(100*GetUnitAbilityLevel(zeref,ZEREF_R)).toReal(),ATTACK_TYPE_MAGIC,DAMAGE_TYPE_MAGIC)          
-        dummy.remove()
-        dummy3.remove()
+        GetExpiredTimer().destr()
         dummy4.remove()
+        dummy.remove()
         zeref.setInvulnerable(false)
         zeref.unpause()
         enemy.unpause()
     else
         dummy4.setFacing(dummy4.getPos().angleTo(spellPos))
-        dummy4.setPos(dummy4.getPos().polarOffset(dummy4.getPos().angleTo(spellPos), 70))
+        dummy4.setPos(dummy4.getPos().polarOffset(dummy4.getPos().angleTo(spellPos), 60))
 
 function kyokaMov()
     dummy.setPos(dummy.getPos().polarOffset(angle, (dummy.getPos().distanceTo(spellPos) +170)))
     dummy.setFacing(dummy.getPos().angleTo(spellPos))
     effect1 = addEffect("war3mapImported\\KyokaSlash.mdx", spellPos)
     ..setScale(1)
-    CreateTimer()..startPeriodic(1, function kyokaAnim)
-    CreateTimer()..start(10, function zerefREnd2)  
-
+    CreateTimer()..startPeriodic(0.03, function kyokaAnim)
+    
 function kyokaAnim()
     zerefRInt++
     if zerefRInt == 2
+        soundPlay("war3mapImported\\Kyoka 111.mp3", 0, 0) 
         dummy.setAnimation("Spell")
-    if zerefRInt == 4
+        effect2 = addEffect("war3mapImported\\KyokaSlashes3.mdx", spellPos)
+        ..setScale(1.5)
+        ..destr()  
+    if zerefRInt == 40
         dummy.setAnimation("Spell Four")
-    if zerefRInt == 6
+        effect2 = addEffect("war3mapImported\\KyokaSlashes3.mdx", spellPos)
+        ..setScale(1.5)
+        ..destr() 
+    if zerefRInt == 82
+        soundPlay("war3mapImported\\Kyoka 4.mp3", 0, 0)
         dummy.setAnimation("Spell")
-    if zerefRInt == 8
-        dummy.setAnimation("Spell Four")    
-    if zerefRInt == 10  
+        effect2 = addEffect("war3mapImported\\KyokaSlashes3.mdx", spellPos)
+        ..setScale(1.5)
+        ..destr() 
+    if zerefRInt == 120
+        dummy.setAnimation("Spell Four")
+        effect2 = addEffect("war3mapImported\\KyokaSlashes3.mdx", spellPos)
+        ..setScale(1.5)
+        ..destr() 
+    if zerefRInt == 140
         GetExpiredTimer().destr()
-        effect1.destr()                     
-
+        effect1.destr()
+        effect2.destr()
+        CreateTimer()..start(0.50, function zerefREnd2)
