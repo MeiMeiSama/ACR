@@ -478,6 +478,23 @@ public function tooltip_Mode_E (int pid)
         ..setField(ABILITY_ILF_MANA_COST, hero.getAbilityLevel(skill) - 1, mana)
         ..setField(ABILITY_RLF_COOLDOWN, hero.getAbilityLevel(skill) - 1, cd.toReal())     
 
+    else if skill == ZEREF_TE // ━━━━━━━━━━━━ [Zeref] ━━━━━━━━━━━━ //
+        cd = (22)
+        mana = (35)
+        range = (800)
+
+        skill
+        ..setDescription(id,
+        GOLD+
+        "Zeref instantly blinks to the nearest enemy hero."+
+        "\nDuration: "+PINK+"0.5"+GOLD+
+        "\nCooldown: "+PINK+cd.toString()+GOLD)
+        
+        hero.getAbility(skill)
+        ..setField(ABILITY_ILF_MANA_COST, hero.getAbilityLevel(skill) - 1, mana)
+        ..setField(ABILITY_RLF_COOLDOWN, hero.getAbilityLevel(skill) - 1, cd.toReal()) 
+        ..setField(ABILITY_RLF_CAST_RANGE, hero.getAbilityLevel(skill) - 1, range.toReal())
+
     else if skill.isModeEPoint()
         dmg = (125) + (2.0 * stat).toInt()
         cd = (22)

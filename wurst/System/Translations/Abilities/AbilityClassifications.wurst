@@ -291,7 +291,7 @@ public function int.isFPoint () returns boolean
     return false
 
 public function int.isModeQPoint () returns boolean
-    if (this == 'A0MX') or (this == 'A0XK')
+    if (this == 'A0MX') or (this == 'A0XK') or (this == ZEREF_TQ)
         return true
     return false
 
@@ -342,7 +342,7 @@ public function int.isFAoe () returns boolean
     return false
 
 public function int.isModeWAoe () returns boolean
-    if (this == 'A0IY')
+    if (this == 'A0IY') or (this == ZEREF_TW)
         return true
     return false
 

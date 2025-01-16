@@ -13,10 +13,6 @@ integer zerefTRInt
 integer zerefTRInt2
 effect effect1
 effect effect2
-unit zerefBeam
-unit array zerefTQDummy
-group zerefTQGroup
-timer zerefTQTimer
 vec2 spellPos
 
 @compiletime function createAbility()
@@ -115,7 +111,7 @@ function zerefTREnd()
 function zerefTREnd2()
     zerefTRInt2++   
     if zerefTRInt2 == 40
-        SetUnitAnimation(zeref, "Spell Two")
+        SetUnitAnimation(zeref, "Attack - 1")
     if zerefTRInt2 == 60
         GetExpiredTimer().destr()
         effect1.destr()
