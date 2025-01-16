@@ -1,10 +1,10 @@
 package Zeref_TE
-import AbilityGlobals
 import ObjectDefinitions
 import ChannelAbilityPreset
-import UnitIds
 import main
 import ClosureForGroups
+
+unit zeref
 
 @compiletime function createAbility()
     new ChannelAbilityPreset(ZEREF_TE, 1, true)
@@ -29,37 +29,26 @@ import ClosureForGroups
         ..presetTargetsAllowed(lvl -> "enemy,ground,air,neutral")
         ..presetTooltipNormal(lvl -> "Time Magic|r")
         ..presetTooltipNormalExtended(lvl -> "Zeref E Desc|r")
-    new UnitDefinition(ZEREF_F_DUMMY, UnitIds.wisp)
-        ..setNormalAbilities(commaList('Avul', 'Aloc', 'Amrf'))
-        ..setAnimationCastBackswing(0)
-        ..setDeathTimeseconds(0.1)
-        ..setScalingValue(4)
-        ..setUnitClassification("_")
-        ..setArtSpecial("_")
-        ..setHasWaterShadow(false)
-        ..setMaximumPitchAngledegrees(0)
-        ..setMaximumRollAngledegrees(0)
-        ..setModelFile("war3mapImported\\MardGeer.mdl")
-        ..setArtSpecial("_")
-        ..setArmorType(ArmorType.Unarmored)
-        ..setPlaceableInEditor(false)
-        ..setMovementHeight(20)
-        ..setSpeedBase(100)
-        ..setTurnRate(3)
-        ..setMovementType(MovementType.Fly)
-        ..setCollisionSize(0)
-        ..setUnitSoundSet("_")
-        ..setCanFlee(false)
-        ..setFoodCost(0)
-        ..setHideMinimapDisplay(true)
-        ..setHitPointsMaximumBase(60)
-        ..setHitPointsRegenerationRate(-1)
-        ..setHitPointsRegenerationType("Always")
-        ..setStockMaximum(1)
-        ..setStockReplenishInterval(1)
-        ..setStructuresBuilt("_")
-        ..setUpgradesUsed("_")
-        ..setHotkey("_")
-        ..setName("effect dummy")
-        ..setTooltipBasic("_")
-        ..setTooltipExtended("_")
+   
+init
+    initTrig_ZerefTE_Orig()     
+
+function initTrig_ZerefTE_Orig()
+    CreateTrigger()
+    ..registerAnyUnitEvent(EVENT_PLAYER_UNIT_SPELL_EFFECT)
+    ..addAction() ->
+        if GetSpellAbilityId() == ZEREF_TE
+            zeref=GetTriggerUnit()
+            let pos = zeref.getPos()
+            soundPlay("war3mapImported\\Zeref TE.mp3", 0, 0)
+            flashEffect("war3mapImported\\ZerefBlink.mdx", pos)
+            zeref.setInvulnerable(true)
+            zeref.pause() 
+            forNearestUnit(pos, 800, Filter(function eFilter)) (unit u) ->
+                zeref.setPos(pos.polarOffset(pos.angleTo(u.getPos()), (pos.distanceTo(u.getPos()) -150)))
+                flashEffect("war3mapImported\\ZerefBlink.mdx", zeref.getPos())
+                zeref.setInvulnerable(false)
+                zeref.unpause()             
+                
+function eFilter() returns boolean
+    return GetFilterUnit().isType(UNIT_TYPE_STRUCTURE)==false and GetFilterUnit().isType(UNIT_TYPE_HERO)==true and GetFilterUnit().isEnemyOf(zeref)==true and GetFilterUnit().isAlive()==true and GetFilterUnit().isInvulnerable()== false    

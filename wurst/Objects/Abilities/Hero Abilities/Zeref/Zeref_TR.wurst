@@ -1,1 +1,137 @@
 package Zeref_TR
+import DamageEvent
+import AbilityGlobals
+import ObjectDefinitions
+import ChannelAbilityPreset
+import UnitIds
+import main
+import ClosureForGroups
+
+unit zeref
+unit enemy
+integer zerefTRInt
+integer zerefTRInt2
+effect effect1
+effect effect2
+unit zerefBeam
+unit array zerefTQDummy
+group zerefTQGroup
+timer zerefTQTimer
+vec2 spellPos
+
+@compiletime function createAbility()
+    new ChannelAbilityPreset(ZEREF_R, 1, true)
+        ..presetTargetTypes(Targettype.UNIT)
+        ..setAnimationNames("11111111")
+        ..setButtonPositionNormalX(3)
+        ..setButtonPositionNormalY(2)
+        ..setIconNormal("ReplaceableTextures\\CommandButtons\\BTNGhost.blp")
+        ..setIconResearch("ReplaceableTextures\\CommandButtons\\BTNGhost.blp")
+        ..setMissileSpeed(99999)
+        ..setHeroAbility(true)
+        ..setHotkeyNormal("R")
+        ..setHotkeyLearn("R")
+        ..setLevels(1)
+        ..setRequiredLevel(8)
+        ..setLevelSkipRequirement(5)
+        ..presetArtDuration(lvl -> 0)
+        ..presetBaseOrderID(lvl -> "submerge")
+        ..presetDisableOtherAbilities(lvl -> false)
+        ..presetFollowThroughTime(lvl -> 0)
+        ..presetCastRange(lvl -> 2000)
+        ..presetCooldown(lvl -> 50)
+        ..presetManaCost(lvl -> 70)
+        ..presetTargetsAllowed(lvl -> "enemy,ground,air,neutral")
+        ..presetTooltipNormal(lvl -> "Dark Blast Inferno|r")
+        ..presetTooltipNormalExtended(lvl -> "Zeref TR Desc|r")
+    new UnitDefinition(ZEREF_R_DUMMY, UnitIds.wisp)
+        ..setNormalAbilities(commaList('Avul', 'Aloc', 'Amrf'))
+        ..setAnimationCastBackswing(0)
+        ..setDeathTimeseconds(0.1)
+        ..setScalingValue(0.70)
+        ..setUnitClassification("_")
+        ..setArtSpecial("_")
+        ..setHasWaterShadow(false)
+        ..setMaximumPitchAngledegrees(0)
+        ..setMaximumRollAngledegrees(0)
+        ..setModelFile("war3mapImported\\Kyoka.mdx")
+        ..setArtSpecial("_")
+        ..setArmorType(ArmorType.Unarmored)
+        ..setPlaceableInEditor(false)
+        ..setMovementHeight(20)
+        ..setSpeedBase(100)
+        ..setTurnRate(3)
+        ..setMovementType(MovementType.Fly)
+        ..setCollisionSize(0)
+        ..setUnitSoundSet("_")
+        ..setCanFlee(false)
+        ..setFoodCost(0)
+        ..setHideMinimapDisplay(true)
+        ..setHitPointsMaximumBase(60)
+        ..setHitPointsRegenerationRate(-1)
+        ..setHitPointsRegenerationType("Always")
+        ..setStockMaximum(1)
+        ..setStockReplenishInterval(1)
+        ..setStructuresBuilt("_")
+        ..setUpgradesUsed("_")
+        ..setHotkey("_")
+        ..setName("effect dummy")
+        ..setTooltipBasic("_")
+        ..setTooltipExtended("_")
+
+init
+    initTrig_ZerefTR_Orig()     
+
+function initTrig_ZerefTR_Orig()
+    CreateTrigger()
+    ..registerAnyUnitEvent(EVENT_PLAYER_UNIT_SPELL_EFFECT)
+    ..addAction() ->
+        if GetSpellAbilityId() == ZEREF_R
+            soundPlay("war3mapImported\\Zeref TR.mp3", 0, 0)
+            zeref=GetTriggerUnit()
+            enemy=GetSpellTargetUnit()
+            spellPos = enemy.getPos()
+            zeref.setInvulnerable(true)
+            zeref.pause()
+            enemy.setInvulnerable(true)
+            enemy.pause()
+            SetUnitAnimation(zeref, "Stand Ready")
+            zerefTRInt = 0
+            CreateTimer()..startPeriodic(0.03, function zerefTREnd)
+
+
+function zerefTREnd()
+    zerefTRInt++
+    if zeref.getPos().distanceTo(spellPos) <= 40
+        GetExpiredTimer().destr()
+        effect1 = addEffect("war3mapImported\\CeremonyofDarkness.mdx", zeref, "origin")
+        effect2 = addEffect("war3mapImported\\ZerefTRBall.mdx", zeref, "right hand")
+        zerefTRInt2 = 0
+        CreateTimer()..startPeriodic(0.03, function zerefTREnd2)
+    else
+        zeref.setFacing(zeref.getPos().angleTo(spellPos))
+        zeref.setPos(zeref.getPos().polarOffset(zeref.getPos().angleTo(spellPos), 20))
+    
+function zerefTREnd2()
+    zerefTRInt2++   
+    if zerefTRInt2 == 40
+        SetUnitAnimation(zeref, "Spell Two")
+    if zerefTRInt2 == 60
+        GetExpiredTimer().destr()
+        effect1.destr()
+        flashEffect("war3mapImported\\ZerefTRexp.mdx", spellPos)
+        flashEffect("war3mapImported\\ZerefCone.mdx", spellPos)
+        enemy.setInvulnerable(false)
+        forUnitsInRange(spellPos, 400) (unit victim) ->
+            if zeref.getPos().distanceTo(victim.getPos()) <= (GetUnitFacing(zeref) + 45.00)
+                if zeref.getPos().distanceTo(victim.getPos()) >= (GetUnitFacing(zeref) - 45.00)
+                    if victim.isType(UNIT_TYPE_STRUCTURE)==false and victim.isEnemyOf(zeref)==true and victim.isAlive()==true and victim.isInvulnerable() == false
+                        DamageEvent.setNextDamageId(DAMAGE_ABILITY_MODE_R)
+                        DamageEvent.setNextDamageFromCode()
+                        UnitDamageTargetBJ(zeref,victim,(100*GetUnitAbilityLevel(zeref,ZEREF_TR)).toReal(),ATTACK_TYPE_MAGIC,DAMAGE_TYPE_MAGIC)          
+        GetExpiredTimer().destr()
+        effect1.destr()
+        effect2.destr()
+        zeref.setInvulnerable(false)
+        zeref.unpause()
+        enemy.unpause()

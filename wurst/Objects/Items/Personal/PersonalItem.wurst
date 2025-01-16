@@ -1423,7 +1423,7 @@ function trig_NewSPActions()
             SPELL_F[id].removeTagHidden()
     else if GetUnitTypeId(GetTriggerUnit()) == ZEREF or GetUnitTypeId(GetTriggerUnit()) == ZEREF_MODO
         if yDWEUnitHasItemOfTypeBJNull(GetTriggerUnit(), 'I04K') == false //Zeref //'H01U'
-            soundPlay("war3mapImported\\Zerf4.mp3", GetUnitX(udg_soundplayunit[7]), GetUnitY(udg_soundplayunit[7]))
+            soundPlay("war3mapImported\\Zeref Transform 1.mp3", GetUnitX(udg_soundplayunit[7]), GetUnitY(udg_soundplayunit[7]))
             RemoveItem(GetManipulatedItem())
             SaveLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * ydl_localvar_step, 1108, GetUnitLoc(GetTriggerUnit()))
             SaveUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * ydl_localvar_step, 36, CreateUnitAtLoc(GetOwningPlayer(GetTriggerUnit()), 'e03X', LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * ydl_localvar_step, 1108), GetRandomDirectionDeg()))

@@ -1,2 +1,68 @@
 package Zeref_TW
+import DamageEvent
+import AbilityGlobals
+import ObjectDefinitions
+import ChannelAbilityPreset
+import main
+import ClosureForGroups
+import ACR_Stun
 
+unit zeref
+integer zerefTWInt
+vec2 spellPos
+
+@compiletime function createAbility()
+    new ChannelAbilityPreset(ZEREF_TW, 1, true)
+        ..presetTargetTypes(Targettype.NONE)
+        ..setAnimationNames("11111111")
+        ..setButtonPositionNormalX(1)
+        ..setButtonPositionNormalY(2)
+        ..setIconNormal("ReplaceableTextures\\CommandButtons\\BTNDarkRitual.blp")
+        ..setIconResearch("ReplaceableTextures\\CommandButtons\\BTNDarkRitual.blp")
+        ..setMissileSpeed(99999)
+        ..setHeroAbility(true)
+        ..setHotkeyNormal("W")
+        ..setHotkeyLearn("W")
+        ..setLevels(1)
+        ..presetArtDuration(lvl -> 0)
+        ..presetBaseOrderID(lvl -> "possession")
+        ..presetDisableOtherAbilities(lvl -> false)
+        ..presetFollowThroughTime(lvl -> 0)
+        ..presetCastRange(lvl -> 2000)
+        ..presetCooldown(lvl -> 50)
+        ..presetManaCost(lvl -> 70)
+        ..presetTargetsAllowed(lvl -> "enemy,ground,air,neutral")
+        ..presetTooltipNormal(lvl -> "Neo Eclipse|r")
+        ..presetTooltipNormalExtended(lvl -> "Zeref TW Desc|r")
+
+init
+    initTrig_ZerefTW_Orig()     
+
+function initTrig_ZerefTW_Orig()
+    CreateTrigger()
+    ..registerAnyUnitEvent(EVENT_PLAYER_UNIT_SPELL_EFFECT)
+    ..addAction() ->
+        if GetSpellAbilityId() == ZEREF_TW
+            zeref=GetTriggerUnit()
+            spellPos = zeref.getPos()
+            soundPlay("war3mapImported\\Zeref TW.mp3", 0, 0)  
+            zeref.setInvulnerable(true)
+            zeref.pause()
+            SetUnitAnimation(zeref, "Spell Slam")
+            zerefTWInt=0
+            CreateTimer()..startPeriodic(0.02, function zerefTWEnd)
+
+function zerefTWEnd()
+    zerefTWInt++
+    if zerefTWInt == 4
+        DestroyTimer(GetExpiredTimer())
+        flashEffect("war3mapImported\\Void Disc", spellPos)
+        flashEffect("war3mapImported\\Void Rain", spellPos)
+        forUnitsInRange(spellPos, 600) (unit victim) ->
+            if victim.isType(UNIT_TYPE_STRUCTURE)==false and victim.isEnemyOf(zeref)==true and victim.isAlive()==true and victim.isInvulnerable() == false
+                DamageEvent.setNextDamageId(DAMAGE_ABILITY_MODE_W)
+                DamageEvent.setNextDamageFromCode()
+                UnitDamageTargetBJ(zeref,victim,(100*GetUnitAbilityLevel(zeref,ZEREF_TW)).toReal(),ATTACK_TYPE_MAGIC,DAMAGE_TYPE_MAGIC)
+                acrStun(zeref, victim, 0.7)
+        zeref.setInvulnerable(false)
+        zeref.unpause()                
