@@ -1428,7 +1428,7 @@ import ObjectIds
     ..setAnimationCastPoint(0.1)
     ..setIconGameInterface("ReplaceableTextures\\CommandButtons\\BTNZerefNew.blp")
     ..setIconScoreScreen("ReplaceableTextures\\CommandButtons\\BTNZerefNew.blp")
-    ..setModelFile("war3mapImported\\zerefnew.mdl")
+    ..setModelFile("war3mapImported\\Zerefnew.mdl")
     ..setScalingValue(1.2)
     ..setArtSpecial("")
     ..setAttack1CooldownTime(1.2)

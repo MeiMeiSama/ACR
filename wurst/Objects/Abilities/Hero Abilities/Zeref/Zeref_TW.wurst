@@ -6,8 +6,10 @@ import ChannelAbilityPreset
 import main
 import ClosureForGroups
 import ACR_Stun
+import UnitIds
 
 unit zeref
+unit dummy
 integer zerefTWInt
 vec2 spellPos
 
@@ -25,7 +27,7 @@ vec2 spellPos
         ..setHotkeyLearn("W")
         ..setLevels(1)
         ..presetArtDuration(lvl -> 0)
-        ..presetBaseOrderID(lvl -> "possession")
+        ..presetBaseOrderID(lvl -> "renew")
         ..presetDisableOtherAbilities(lvl -> false)
         ..presetFollowThroughTime(lvl -> 0)
         ..presetCastRange(lvl -> 2000)
@@ -34,6 +36,40 @@ vec2 spellPos
         ..presetTargetsAllowed(lvl -> "enemy,ground,air,neutral")
         ..presetTooltipNormal(lvl -> "Neo Eclipse|r")
         ..presetTooltipNormalExtended(lvl -> "Zeref TW Desc|r")
+    new UnitDefinition(ZEREF_TW_DUMMY, UnitIds.wisp)
+        ..setNormalAbilities(commaList('Avul', 'Aloc', 'Amrf'))
+        ..setAnimationCastBackswing(0)
+        ..setDeathTimeseconds(0.1)
+        ..setScalingValue(0.70)
+        ..setUnitClassification("_")
+        ..setArtSpecial("_")
+        ..setHasWaterShadow(false)
+        ..setMaximumPitchAngledegrees(0)
+        ..setMaximumRollAngledegrees(0)
+        ..setModelFile("war3mapImported\\Void Disc.mdx")
+        ..setArtSpecial("_")
+        ..setArmorType(ArmorType.Unarmored)
+        ..setPlaceableInEditor(false)
+        ..setMovementHeight(20)
+        ..setSpeedBase(100)
+        ..setTurnRate(3)
+        ..setMovementType(MovementType.Fly)
+        ..setCollisionSize(0)
+        ..setUnitSoundSet("_")
+        ..setCanFlee(false)
+        ..setFoodCost(0)
+        ..setHideMinimapDisplay(true)
+        ..setHitPointsMaximumBase(60)
+        ..setHitPointsRegenerationRate(-1)
+        ..setHitPointsRegenerationType("Always")
+        ..setStockMaximum(1)
+        ..setStockReplenishInterval(1)
+        ..setStructuresBuilt("_")
+        ..setUpgradesUsed("_")
+        ..setHotkey("_")
+        ..setName("effect dummy")
+        ..setTooltipBasic("_")
+        ..setTooltipExtended("_")
 
 init
     initTrig_ZerefTW_Orig()     
@@ -49,6 +85,12 @@ function initTrig_ZerefTW_Orig()
             zeref.setInvulnerable(true)
             zeref.pause()
             SetUnitAnimation(zeref, "Spell Slam")
+            flashEffect("war3mapImported\\Void Rain", spellPos, 10)
+            dummy = createUnit(ZEREF_TW_DUMMY, spellPos)
+            ..setScale(2.5)
+            //..setTimeScale(80)
+            ..setAnimation("stand")
+            ..setTimedLife(2)
             zerefTWInt=0
             CreateTimer()..startPeriodic(0.02, function zerefTWEnd)
 
@@ -56,8 +98,6 @@ function zerefTWEnd()
     zerefTWInt++
     if zerefTWInt == 4
         DestroyTimer(GetExpiredTimer())
-        flashEffect("war3mapImported\\Void Disc", spellPos)
-        flashEffect("war3mapImported\\Void Rain", spellPos)
         forUnitsInRange(spellPos, 600) (unit victim) ->
             if victim.isType(UNIT_TYPE_STRUCTURE)==false and victim.isEnemyOf(zeref)==true and victim.isAlive()==true and victim.isInvulnerable() == false
                 DamageEvent.setNextDamageId(DAMAGE_ABILITY_MODE_W)

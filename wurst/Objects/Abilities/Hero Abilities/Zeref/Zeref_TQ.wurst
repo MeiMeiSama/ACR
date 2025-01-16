@@ -31,7 +31,7 @@ vec2 zerefBeamPos
         ..setLevels(1)
         ..setLevelSkipRequirement(2)
         ..presetArtDuration(lvl -> 0)
-        ..presetBaseOrderID(lvl -> "auravampiric")
+        ..presetBaseOrderID(lvl -> "blizzard")
         ..presetDisableOtherAbilities(lvl -> false)
         ..presetFollowThroughTime(lvl -> 0)
         ..presetCastRange(lvl -> 2000)

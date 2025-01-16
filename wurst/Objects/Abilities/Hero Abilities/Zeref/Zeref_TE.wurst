@@ -45,10 +45,14 @@ function initTrig_ZerefTE_Orig()
             zeref.setInvulnerable(true)
             zeref.pause() 
             forNearestUnit(pos, 800, Filter(function eFilter)) (unit u) ->
-                zeref.setPos(pos.polarOffset(pos.angleTo(u.getPos()), (pos.distanceTo(u.getPos()) -150)))
-                flashEffect("war3mapImported\\ZerefBlink.mdx", zeref.getPos())
-                zeref.setInvulnerable(false)
-                zeref.unpause()             
+                if u != null
+                    zeref.setPos(pos.polarOffset(pos.angleTo(u.getPos()), (pos.distanceTo(u.getPos()) -150)))
+                    flashEffect("war3mapImported\\ZerefBlink.mdx", zeref.getPos())
+                    zeref.setInvulnerable(false)
+                    zeref.unpause()
+                else
+                    zeref.setInvulnerable(false)
+                    zeref.unpause()                
                 
 function eFilter() returns boolean
     return GetFilterUnit().isType(UNIT_TYPE_STRUCTURE)==false and GetFilterUnit().isType(UNIT_TYPE_HERO)==true and GetFilterUnit().isEnemyOf(zeref)==true and GetFilterUnit().isAlive()==true and GetFilterUnit().isInvulnerable()== false    

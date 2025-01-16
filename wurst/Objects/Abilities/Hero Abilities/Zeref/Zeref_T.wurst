@@ -31,6 +31,8 @@ import MusicPlaylist
         ..presetTargetsAllowed(lvl -> "enemy,ground,air,neutral")
         ..presetTooltipNormal(lvl -> "Fairy Heart|r")
         ..presetTooltipNormalExtended(lvl -> "Zeref T Desc|r")
+        ..setTooltipLearn("Fairy Heart|r")
+        ..setTooltipLearnExtended("Learning T|r")
 
 boolean zerefTActive = false
 unit zeref
@@ -43,7 +45,7 @@ function zerefModoT()
     CreateTrigger()
     ..registerAnyUnitEvent(EVENT_PLAYER_UNIT_SPELL_EFFECT)
     ..addAction() ->
-        if GetSpellAbilityId() == ZEREF_T
+        if ((GetSpellAbilityId() == ZEREF_T)) 
             let caster = GetTriggerUnit()
             zeref = caster
             let pid = caster.getOwner().getId()             
