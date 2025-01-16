@@ -86,6 +86,7 @@ function zerefTQ()
             soundPlay("war3mapImported\\Zeref TQ.mp3", 0, 0)
             spellPos = vec2(GetSpellTargetX(), GetSpellTargetY())
             zeref = GetTriggerUnit()
+            zeref.setInvulnerable(true)
             if zeref.getPos().distanceTo(spellPos) < 1500
                 spellPos = zeref.getPos().polarOffset(zeref.getPos().angleTo(spellPos), 1500)
             zerefBeam = createUnit(ZEREF_TQ_DUMMY, zeref.getPos())     
@@ -106,7 +107,8 @@ function zerefTQStart()
                     DamageEvent.setNextDamageId(DAMAGE_ABILITY_MODE_Q)
                     DamageEvent.setNextDamageFromCode()
                     zeref.damageTarget(u, 1, ATTACK_TYPE_MAGIC) 
-                    zerefTQGroup.add(u)                     
+                    zerefTQGroup.add(u)
+            zeref.setInvulnerable(false)                           
     if zerefTQInt >= 50
         zerefBeam.kill()
         for i = 3 to 12

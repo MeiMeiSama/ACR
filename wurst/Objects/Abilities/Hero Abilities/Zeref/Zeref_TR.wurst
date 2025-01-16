@@ -3,7 +3,6 @@ import DamageEvent
 import AbilityGlobals
 import ObjectDefinitions
 import ChannelAbilityPreset
-import UnitIds
 import main
 import ClosureForGroups
 
@@ -59,16 +58,17 @@ function initTrig_ZerefTR_Orig()
             zeref.pause()
             enemy.setInvulnerable(true)
             enemy.pause()
-            SetUnitAnimation(zeref, "Stand Ready")
+            zeref.setPos(zeref.getPos().polarOffset(angle, (zeref.getPos().distanceTo(spellPos) -700))) 
+            SetUnitAnimation(zeref, "Stand - 1")
             zerefTRInt = 0
             CreateTimer()..startPeriodic(0.03, function zerefTREnd)
-
 
 function zerefTREnd()
     zerefTRInt++
     if zerefTRInt == 60
         effect1 = addEffect("war3mapImported\\CeremonyofDarkness.mdx", zeref, "origin")
-        effect2 = addEffect("war3mapImported\\ZerefTRBall.mdx", zeref, "right hand")
+    if zerefTRInt == 80
+        effect2 = addEffect("war3mapImported\\ZerefTRBall.mdx", zeref, "left hand")    
     if zerefTRInt == 140
         GetExpiredTimer().destr()
         zeref.setPos(zeref.getPos().polarOffset(angle, (zeref.getPos().distanceTo(spellPos) -170))) 
@@ -86,10 +86,12 @@ function zerefTREnd()
        //zeref.setPos(zeref.getPos().polarOffset(zeref.getPos().angleTo(spellPos), 20))
     
 function zerefTREnd2()
-    zerefTRInt2++   
-    if zerefTRInt2 == 120
-        SetUnitAnimation(zeref, "Attack - 1")
-    if zerefTRInt2 == 150
+    zerefTRInt2++
+    if zerefTRInt2 == 140
+        SetUnitAnimation(zeref, "Stand Ready")   
+    if zerefTRInt2 == 190
+        SetUnitAnimation(zeref, "Attack - 2")
+    if zerefTRInt2 == 211
         GetExpiredTimer().destr()
         effect1.destr()
         flashEffect("war3mapImported\\ZerefTRexp.mdx", spellPos)

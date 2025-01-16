@@ -24,6 +24,7 @@ public sound gg_snd_MidoriyaT2
 public sound gg_snd_MidoriyaT3
 public sound gg_snd_MidoriyaT4
 public sound gg_snd_MidoriyaT5
+public sound gg_snd_ZerefForm
 public sound gg_snd_jotaroQ
 public sound gg_snd_jotaroW1
 public sound gg_snd_jotaroW2_1
@@ -2641,6 +2642,10 @@ function initSounds()
     SetSoundChannel(gg_snd_ZerfEffect2, 0)
     SetSoundVolume(gg_snd_ZerfEffect2, 127)
     SetSoundPitch(gg_snd_ZerfEffect2, 1.0)
+    gg_snd_ZerefForm = CreateSound("war3mapImported\\Zeref Transform 2 Bgm.mp3", false, false, false, 10, 10, "")
+    SetSoundChannel(gg_snd_ZerefForm, 0)
+    SetSoundVolume(gg_snd_ZerefForm, 127)
+    SetSoundPitch(gg_snd_ZerefForm, 1.0)
     gg_snd_Saitama1 = CreateSound("war3mapImported\\Saitama1.mp3", false, false, false, 10, 10, "")
     SetSoundDuration(gg_snd_Saitama1, 2728)
     SetSoundChannel(gg_snd_Saitama1, 0)

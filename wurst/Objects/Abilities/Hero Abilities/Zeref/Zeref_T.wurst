@@ -1,10 +1,10 @@
 package Zeref_T
 import ObjectDefinitions
 import ChannelAbilityPreset
-import main
 import ACR_Transformation
 import TimerUtils
 import MusicPlaylist
+import main
 
 @compiletime function createAbility()
     new ChannelAbilityPreset(ZEREF_T, 1, true)
@@ -51,13 +51,13 @@ function zerefModoT()
             let pid = caster.getOwner().getId()             
             stopBgm()
             StopMusic(false)
-            soundPlay("war3mapImported\\Zeref Transform 2.mp3", 0, 0)           
+            gg_snd_ZerefForm.play()          
             acrTransformation(caster, 40, ZEREF, ZEREF_MODO, 850, 4.0)
             CreateTimer()..startPeriodic(0.01, function zerefModoTEnd).setData(pid)
 
 function zerefModoTEnd()
     let pid = GetExpiredTimer().getData()
     if transformationActive[pid] == false
-        if gg_snd_WendyDragonForce.isPlaying()
-            gg_snd_WendyDragonForce.stop(false, false) 
+        if gg_snd_ZerefForm.isPlaying()
+            gg_snd_ZerefForm.stop(false, false) 
         GetExpiredTimer().destr()        
