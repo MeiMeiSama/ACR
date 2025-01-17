@@ -183,8 +183,7 @@ function jotaroWStart()
                 jotaroWTimerInt2 = 0   
                 jotaroWTimer = CreateTimer()..startPeriodic(0.03, function jotaroWAttack)  
     if starPlatinumPos.distanceTo(abilityJotaroWPos) >= 25  
-        starPlatinum.setAnimation(32)        
-           
+        starPlatinum.setAnimation(32)                   
     if jotaroWTimerInt1 >= (300 * jotaroWLvl)
         starPlatinum.kill()
         jotaroWEnd()
