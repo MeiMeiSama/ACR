@@ -6,9 +6,7 @@ import ChannelAbilityPreset
 import UnitIds
 import main
 import ClosureForGroups
-//import OrderIds
 
-//trigger mavisRListenerMove
 trigger mavisRListenerEnd
 unit mavis
 unit dummyUnit
@@ -160,16 +158,12 @@ function mavisREnd()
         mavisREnd2()
 
 function mavisRMove()    
-    //mavisRListenerMove..registerPlayerUnitEvent(mavis.getOwner(), EVENT_PLAYER_UNIT_ISSUED_POINT_ORDER, Condition(function filter))
-    //mavisRListenerMove..addAction() ->
-        //SelectUnitForPlayerSingle(dummyUnit2, mavis.getOwner())
     mavisRListenerEnd = CreateTrigger()
     mavisRListenerEnd..registerPlayerKeyPress(mavis.getOwner(), OSKEY_ESCAPE, OSKEY_META.NONE, true)
     mavisRListenerEnd..addAction() ->
         mavisREnd2()       
 
 function mavisREnd2()
-    //mavisRListenerMove.destr()
     mavisRListenerEnd.destr()
     mavisREnd.destr()
     dummyUnit.remove()
@@ -178,13 +172,3 @@ function mavisREnd2()
     mavis.setInvulnerable(false)
     mavis.unpause()
     mavisGroup.clear()
-    mavis=null
-
-//function filter() returns boolean
-    //return GetIssuedOrderId() == OrderIds.smart
-
-    //mavisRListenerMove = CreateTrigger()
-    //mavisRListenerMove..registerPlayerKeyPress(mavis.getOwner(), OSKEY_LCONTROL, OSKEY_META.NONE, true)
-    //mavisRListenerMove..addAction() ->
-        //IssuePointOrderById(dummyUnit2, OrderIds.move, GetOrderPointX(), GetOrderPointY())  
- //IssuePointOrderById(dummyUnit2, OrderId("move"), GetOrderPointX(), GetOrderPointY())

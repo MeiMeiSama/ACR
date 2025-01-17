@@ -88,9 +88,8 @@ function initTrig_ZerefTW_Orig()
             flashEffect("war3mapImported\\Void Rain", spellPos, 10)
             dummy = createUnit(ZEREF_TW_DUMMY, spellPos)
             ..setScale(1.5)
-            //..setTimeScale(80)
             ..setAnimation("stand")
-            ..setTimedLife(2)
+            ..setTimedLife(1)
             zerefTWInt=0
             CreateTimer()..startPeriodic(0.02, function zerefTWEnd)
 

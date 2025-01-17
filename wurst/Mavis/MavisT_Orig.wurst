@@ -78,10 +78,7 @@ function mavisTEnd ()
         SetUnitInvulnerable(mavis,false)
         PauseUnit(mavisTTarget,false)
         SetUnitInvulnerable(mavisTTarget,false)
-        ForGroupBJ(GetUnitsInRangeOfLocMatching(700,GetUnitLoc(mavisTTarget),Condition(function mavisFilter)),function mavisDMG)
-        mavis=null
-        mavisTTarget=null
-        mavisTInt=0    
+        ForGroupBJ(GetUnitsInRangeOfLocMatching(700,GetUnitLoc(mavisTTarget),Condition(function mavisFilter)),function mavisDMG)   
 
 function mavisCondition() returns boolean
     return GetSpellAbilityId() == MAVIS_T

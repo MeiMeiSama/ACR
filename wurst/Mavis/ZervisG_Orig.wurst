@@ -194,26 +194,13 @@ public function zervisGAddTimer()
         if udg_PlayHero[i].getTypeId() == MAVIS
             mavis = udg_PlayHero[i]
             mavisG = SPELL_G2[i] 
-        if udg_PlayHero[i].getTypeId() == ZEREF //'H01U'     
+        if udg_PlayHero[i].getTypeId() == ZEREF     
             zeref = udg_PlayHero[i] 
             zerefG = SPELL_G2[i] 
     CreateTimer()..startPeriodic(0.03, function zervisGAdd)
-    // CreateTrigger()
-    // ..registerUnitInRange(mavis, 800, Condition(function filter))
-    // ..addAction() ->
-    //     //no idea how this works, but im assuming this can hide/show to both units?
-    //     print(GetFilterUnit().getName()+" got near mavis")
-        // if ZERVIS_G.hasTagHidden() == true
-        //     zeref.hideAbility(ZERVIS_G, false)
-        //     mavis.hideAbility(ZERVIS_G, false)
-        //     ZERVIS_G.removeTagHidden()
-        // if mavis.getPos().distanceTo(zeref.getPos()) >= 700
-        //     if ZERVIS_G.hasTagHidden() == false
-        //         zeref.hideAbility(ZERVIS_G, true)
-        //         mavis.hideAbility(ZERVIS_G, true)
-        //         ZERVIS_G.addTagHidden()
+    
 function zervisGAdd()
-    if zeref.isAllyOf(mavis) //and zeref.getLevel() >= 18 and mavis.getLevel() >= 18
+    if zeref.isAllyOf(mavis) and zeref.getLevel() >= 18 and mavis.getLevel() >= 18
         let mavisPos = mavis.getPos()
         let zerefPos = zeref.getPos()
         if zervisInRange == false and mavisPos.distanceTo(zerefPos) <= 800
@@ -241,22 +228,6 @@ function zervisGAdd()
             if zerefG.hasTagHidden() == false
                 zeref.hideAbility(zerefG, true)
                 zerefG.addTagHidden()         
-
-// public function pickBoth()
-//     let zerefpickgroup = CreateGroup()
-//     GroupEnumUnitsInRect(zerefpickgroup, gg_rct_WholeMap, Condition(function filter))
-//     zeref = GetEnumUnit()
-//     let mavispickgroup = CreateGroup()
-//     GroupEnumUnitsInRect(mavispickgroup, gg_rct_WholeMap, Condition(function filter2))
-//     mavis = GetEnumUnit()
-//     mavispickgroup.clear()
-//     zerefpickgroup.clear()
-
-//function filter() returns boolean
-    //return GetEnumUnit().getTypeId() == 'H01U' //zeref typeId
-
-//function filter2() returns boolean
-    //return GetEnumUnit().getTypeId() == MAVIS
 
 function zervisGCondition() returns boolean
     return GetSpellAbilityId() == ZERVIS_G
