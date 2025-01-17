@@ -2,11 +2,11 @@ package MavisE_Orig
 import ObjectDefinitions
 import ChannelAbilityPreset
 import ClosureEvents
-import AbilityGlobals       
+import AbilityGlobals     
 
 unit mavis
 timer mavisETimer
-effect mavisEffect
+player mavisOwner
 
 @compiletime function createAbility()
     new ChannelAbilityPreset(MAVIS_E, 5, true)
@@ -38,16 +38,22 @@ public function initTrig_MavisE_Orig()
     EventListener.add(EVENT_PLAYER_HERO_SKILL) ->
         if GetLearnedSkill() == MAVIS_E
             let mavis = GetTriggerUnit()
+            mavisOwner = mavis.getOwner()
             let a = GetLearnedSkill()
             let abilvl = GetUnitAbilityLevel(mavis, a)
             let _interval = I2R(80 - abilvl * 10) //using 5 instead for testing
+            print("timer 0") 
             if mavisETimer == null
+                print("timer 1")
                 mavisETimer = CreateTimer()..startPeriodic(5, function ping)
-            else if mavisETimer != null   
+            else if mavisETimer != null
+                print("timer 2")  
                 mavisETimer.destr()
                 mavisETimer = CreateTimer()..startPeriodic(5, function ping)
                  
 function ping()
+    print("timer 3") 
     for i = 0 to 12
-        if udg_PlayHero[i].getOwner().isEnemyOf(mavis.getOwner())
-            PingMinimapForForce(GetForceOfPlayer(mavis.getOwner()), udg_PlayHero[i].getX(), udg_PlayHero[i].getY(), 1)
+        if udg_PlayHero[i].getOwner().isEnemyOf(mavisOwner)
+            PingMinimapForForce(GetForceOfPlayer(mavisOwner), udg_PlayHero[i].getX(), udg_PlayHero[i].getY(), 1)
+            print("timer 4")
