@@ -37,23 +37,18 @@ player mavisOwner
 public function initTrig_MavisE_Orig()
     EventListener.add(EVENT_PLAYER_HERO_SKILL) ->
         if GetLearnedSkill() == MAVIS_E
-            let mavis = GetTriggerUnit()
+            mavis = GetTriggerUnit()
             mavisOwner = mavis.getOwner()
             let a = GetLearnedSkill()
             let abilvl = GetUnitAbilityLevel(mavis, a)
-            let _interval = I2R(80 - abilvl * 10) //using 5 instead for testing
-            print("timer 0") 
-            if mavisETimer == null
-                print("timer 1")
-                mavisETimer = CreateTimer()..startPeriodic(5, function ping)
-            else if mavisETimer != null
-                print("timer 2")  
+            let interval = I2R(80 - abilvl * 10) //using 5 instead for testing
+            if mavisETimer != null
                 mavisETimer.destr()
-                mavisETimer = CreateTimer()..startPeriodic(5, function ping)
+            mavisETimer = CreateTimer()..startPeriodic(interval, function ping)
                  
 function ping()
-    print("timer 3") 
     for i = 0 to 12
-        if udg_PlayHero[i].getOwner().isEnemyOf(mavisOwner)
-            PingMinimapForForce(GetForceOfPlayer(mavisOwner), udg_PlayHero[i].getX(), udg_PlayHero[i].getY(), 1)
-            print("timer 4")
+        if udg_PlayHero[i].isAllyOf(mavis) or udg_PlayHero[i] == mavis
+            for a = 0 to 12
+                if udg_PlayHero[a].isAllyOf(mavis) == false and udg_PlayHero[a].isAlive()
+                    PingMinimapForPlayer(udg_PlayHero[i].getOwner(), udg_PlayHero[a].getX(), udg_PlayHero[a].getY(), 4)
