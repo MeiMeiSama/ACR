@@ -40,7 +40,7 @@ public function initTrig_MavisE_Orig()
             let mavis = GetTriggerUnit()
             let a = GetLearnedSkill()
             let abilvl = GetUnitAbilityLevel(mavis, a)
-            let _interval = I2R(80 - abilvl * 10)
+            let _interval = I2R(80 - abilvl * 10) //using 5 instead for testing
             if mavisETimer == null
                 mavisETimer = CreateTimer()..startPeriodic(5, function ping)
             else if mavisETimer != null   
