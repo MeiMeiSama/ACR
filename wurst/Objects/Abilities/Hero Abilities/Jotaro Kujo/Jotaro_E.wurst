@@ -61,7 +61,16 @@ function jotaroE()
 
 
 function jotaroEStart()
-    jotaroETimerInt++        
+    jotaroETimerInt++
+    if jotaroETimerInt > 0 and jotaroETimerInt < 135
+        if jotaro.isPaused() == false
+            jotaro.pause()
+        if jotaro.isInvulnerable() == false
+            jotaro.setInvulnerable(true)
+        if jotaroETarget.isPaused() == false
+            jotaroETarget.pause()
+        if jotaroETarget.isInvulnerable() == false
+            jotaroETarget.setInvulnerable(true)                   
     if jotaroETimerInt == 90
         jotaro.setPos(jotaroETarget.getPos().polarOffset(jotaroETarget.getPos().angleTo(jotaro.getPos()), -200))
         jotaro.setFacing(jotaro.getPos().angleTo(jotaroETarget.getPos()))

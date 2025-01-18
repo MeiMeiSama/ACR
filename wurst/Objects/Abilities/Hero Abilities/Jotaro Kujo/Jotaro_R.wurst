@@ -121,6 +121,11 @@ function jotaroR()
 
 function jotaroRDash()
     jotaroRTimerInt1++
+    if jotaroRTimerInt1 > 0 and jotaroRTimerInt1 < 50
+        if jotaro.isPaused() == false
+            jotaro.pause()
+        if jotaro.isInvulnerable() == false
+            jotaro.setInvulnerable(true) 
     if jotaroRTimerInt1 >= 50 or jotaroPos.distanceTo(abilityJotaroRPos) < 25
         jotaro.setAnimation(13)
         jotaroDashEnd()
@@ -165,6 +170,11 @@ function jotaroRDio()
 
 function jotaroRAoe()
     jotaroRTimerInt1++
+    if jotaroRTimerInt1 > 0 and jotaroRTimerInt1 < 20
+        if jotaro.isPaused() == false
+            jotaro.pause()
+        if jotaro.isInvulnerable() == false
+            jotaro.setInvulnerable(true) 
     if jotaroRTimerInt1 == 20
         starPlatinum = createUnit(JOTARO_R_DUMMY, abilityJotaroRPos)  
         jotaro.unpause()
@@ -190,6 +200,15 @@ function jotaroDashEnd()
 
 function jotaroRAttack1()
     jotaroRTimerInt2++
+    if jotaroRTimerInt2 > 0 and jotaroRTimerInt2 < 210
+        if jotaro.isPaused() == false
+            jotaro.pause()
+        if jotaro.isInvulnerable() == false
+            jotaro.setInvulnerable(true) 
+        if jotaroRTarget.isPaused() == false
+            jotaroRTarget.pause()
+        if jotaroRTarget.isInvulnerable() == false
+            jotaroRTarget.setInvulnerable(true)            
     if jotaroRTimerInt2 == 10
         gg_snd_jotaroR2.play() 
         jotaro.setAnimation(8)

@@ -199,6 +199,11 @@ function jotaroWEnd()
 
 function jotaroWAttack()
     jotaroWTimerInt2++
+    if jotaroWTimerInt2 > 0 and jotaroWTimerInt2 < 55
+        if jotaroWTarget.isPaused() == false
+            jotaroWTarget.pause()
+        if jotaroWTarget.isInvulnerable() == false
+            jotaroWTarget.setInvulnerable(true)       
     if jotaroWTimerInt2 == 25   
         if gg_snd_jotaroW1.isPlaying()
             gg_snd_jotaroW1.stop(false, false)             
@@ -222,6 +227,11 @@ function jotaroWAttack()
 
 function jotaroWAoe()
     jotaroWTimerInt3++
+    if jotaroWTimerInt3 > 0 and jotaroWTimerInt3 < 23
+        if jotaro.isPaused() == false
+            jotaro.pause()
+        if jotaro.isInvulnerable() == false
+            jotaro.setInvulnerable(true)      
     if jotaroWTimerInt3 == 1 
         starPlatinum.setAnimation(7)
     if jotaroWTimerInt3 == 23

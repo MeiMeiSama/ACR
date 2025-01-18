@@ -36,7 +36,6 @@ init
                     DamageEvent.setAmount(DamageEvent.getAmount()*0.95) 
                 if DamageEvent.getTarget().hasAbility(JOTARO_F_BUFF) // Jotaro's Counter
                     DamageEvent.setAmount(0)
-                    print("yey")
                     jotaroFProc(DamageEvent.getSource())    
             case SPELL
                 // if udg_PlayHero[DamageEvent.getSource().getOwner().getId()] == DamageEvent.getSource() and DamageEvent.getTarget().isInvulnerable() == false
@@ -1177,7 +1176,6 @@ init
 
                     if DamageEvent.getTarget().hasAbility(JOTARO_F_BUFF) // Jotaro's Counter
                         DamageEvent.setAmount(0)
-                        print("yey")
                         jotaroFProc(DamageEvent.getSource())
 
                     if DamageEvent.getTarget().hasAbility('B01T') // If target has tsuna G buff
