@@ -1,0 +1,224 @@
+package Jotaro_F
+
+import AbilityGlobals
+import ObjectDefinitions
+import ChannelAbilityPreset
+import UnitIds
+import ACR_TagSystem
+import DamageEvent
+import BuffObjEditing
+import DummyCaster
+import OrderIds
+
+unit jotaro
+unit jotaroFTarget
+unit jotaroFDummy
+int jotaroFInt
+int jotaroFProcInt
+timer jotaroFTimer
+timer jotaroFProcTimer
+public boolean jotaroFBool
+
+@compiletime function createAbility()
+    new ChannelAbilityPreset(JOTARO_F, 1, true)
+        ..presetTargetTypes(Targettype.NONE)
+        ..setAnimationNames("11111")
+        ..setButtonPositionNormalX(2)
+        ..setButtonPositionNormalY(1)
+        ..setButtonPositionResearchX(1)
+        ..setButtonPositionResearchY(1)
+        ..setIconNormal("ReplaceableTextures\\CommandButtons\\BTNInvisibility.blp")
+        ..setIconResearch("ReplaceableTextures\\CommandButtons\\BTNInvisibility.blp")
+        ..setMissileSpeed(99999)
+        ..setHeroAbility(true)
+        ..setHotkeyNormal("F")
+        ..setHotkeyLearn("F")
+        ..setLevels(1)
+        ..presetArtDuration(lvl -> 0)
+        ..presetBaseOrderID(lvl -> "tranquility")
+        ..presetDisableOtherAbilities(lvl -> false)
+        ..presetFollowThroughTime(lvl -> 0)
+        ..presetCastRange(lvl -> 2000)
+        ..presetCooldown(lvl -> 50)
+        ..presetManaCost(lvl -> 70)
+        ..presetTargetsAllowed(lvl -> "enemy,ground,air,neutral")
+        ..presetTooltipNormal(lvl -> "Illusionary Battalion|r")
+        ..presetTooltipNormalExtended(lvl -> "Misogi F Desc|r")
+        ..setTooltipLearn("Illusionary Battalion|r")
+        ..setTooltipLearnExtended("Learning F|r")    
+
+    new UnitDefinition(JOTARO_F_DUMMY, UnitIds.wisp)
+        ..setNormalAbilities(commaList('Avul', 'Aloc', 'Amrf'))
+        ..setAnimationCastBackswing(0)
+        ..setDeathTimeseconds(0.1)
+        ..setScalingValue(0.70)
+        ..setUnitClassification("_")
+        ..setArtSpecial("_")
+        ..setHasWaterShadow(false)
+        ..setMaximumPitchAngledegrees(0)
+        ..setMaximumRollAngledegrees(0)
+        ..setModelFile("war3mapImported\\FieldPuRPle.mdl")
+        ..setScalingValue(5.0)
+        ..setArtSpecial("_")
+        ..setArmorType(ArmorType.Unarmored)
+        ..setPlaceableInEditor(false)
+        ..setMovementHeight(20)
+        ..setSpeedBase(100)
+        ..setTurnRate(3)
+        ..setMovementType(MovementType.Fly)
+        ..setCollisionSize(0)
+        ..setUnitSoundSet("_")
+        ..setCanFlee(false)
+        ..setFoodCost(0)
+        ..setHideMinimapDisplay(true)
+        ..setHitPointsMaximumBase(60)
+        ..setHitPointsRegenerationRate(-1)
+        ..setHitPointsRegenerationType("Always")
+        ..setStockMaximum(1)
+        ..setStockReplenishInterval(1)
+        ..setStructuresBuilt("_")
+        ..setUpgradesUsed("_")
+        ..setHotkey("_")
+        ..setName("effect dummy")
+        ..setTooltipBasic("_")
+        ..setTooltipExtended("_")
+
+    new UnitDefinition(JOTARO_F_DUMMY2, UnitIds.wisp)
+        ..setNormalAbilities(commaList('Avul', 'Aloc', 'Amrf'))
+        ..setAnimationCastBackswing(0)
+        ..setDeathTimeseconds(0.1)
+        ..setScalingValue(0.70)
+        ..setUnitClassification("_")
+        ..setArtSpecial("_")
+        ..setHasWaterShadow(false)
+        ..setMaximumPitchAngledegrees(0)
+        ..setMaximumRollAngledegrees(0)
+        ..setModelFile("war3mapImported\\Star Platinum.mdx")
+        ..setScalingValue(1.5)
+        ..setArtSpecial("_")
+        ..setArmorType(ArmorType.Unarmored)
+        ..setPlaceableInEditor(false)
+        ..setMovementHeight(20)
+        ..setSpeedBase(100)
+        ..setTurnRate(3)
+        ..setMovementType(MovementType.Fly)
+        ..setCollisionSize(0)
+        ..setUnitSoundSet("_")
+        ..setCanFlee(false)
+        ..setFoodCost(0)
+        ..setHideMinimapDisplay(true)
+        ..setHitPointsMaximumBase(60)
+        ..setHitPointsRegenerationRate(-1)
+        ..setHitPointsRegenerationType("Always")
+        ..setStockMaximum(1)
+        ..setStockReplenishInterval(1)
+        ..setStructuresBuilt("_")
+        ..setUpgradesUsed("_")
+        ..setHotkey("_")
+        ..setName("effect dummy")
+        ..setTooltipBasic("_")
+        ..setTooltipExtended("_")
+
+    new BuffDefinition(JOTARO_F_BUFF, AbilityIds.innerFire)
+        ..setName(1, "Za Warudo Counter")
+        ..setTooltipNormal(1, "Za Warudo Counter")
+        ..setTooltipNormalExtended(1, "Counters the next incoming damage")
+        ..setIcon("ReplaceableTextures\\CommandButtons\\BTNYuuki.blp")
+        ..setIconNormal(1, "ReplaceableTextures\\CommandButtons\\BTNYuuki.blp")
+
+    new AbilityDefinitionBloodlust(JOTARO_F_DUMMY_ABILITY)
+        ..setLevels(1)
+        ..setManaCost(1, 0)
+        ..setScalingFactor(1, 0)
+        ..setCastRange(1, 99999)
+        ..setCastingTime(1, 0)
+        ..setDurationHero(1, 9999)
+        ..setDurationNormal(1, 9999)
+        ..setMovementSpeedIncrease(1, 0)
+        ..setAttackSpeedIncrease(1, 0)
+        ..setCooldown(1, 0.01)
+        ..setTargetsAllowed(1, "Friend, Invulnerable, Vulnerable")
+        ..setRequirements("")
+        ..setBuffs(1, commaList(JOTARO_F_BUFF))
+        ..setIconNormal("ReplaceableTextures\\CommandButtons\\BTNYuuki.blp")
+        ..setArtTarget("_")
+        ..setTargetAttachmentPoint("chest")
+        ..setTargetAttachmentPoint1("chest")
+        ..setName("Za Warudo Counter Dummy")
+        ..setTooltipNormal(1, "Za Warudo Counter Dummy|r")
+        ..setTooltipNormalExtended(1, "Za Warudo Counter Dummy|r")   
+
+
+init
+    jotaroF()    
+
+function jotaroF()
+    CreateTrigger()
+    ..registerAnyUnitEvent(EVENT_PLAYER_UNIT_SPELL_EFFECT)
+    ..addAction() ->
+        if GetSpellAbilityId() == JOTARO_F
+            jotaro = GetTriggerUnit()
+            jotaroFInt = 0
+            jotaroFBool = true
+            if JOTARO_F.hasTagDisabled() == false
+                jotaro.disableAbility(JOTARO_F, true, false)
+                JOTARO_F.addTagDisabled()        
+            new DummyCaster()
+            ..owner(jotaro.getOwner())
+            ..origin(jotaro.getPos())
+            ..castTarget(JOTARO_F_DUMMY_ABILITY, 1, OrderIds.bloodlust, jotaro)                
+            jotaroFTimer = CreateTimer()..startPeriodic(0.03, function jotaroFStart)  
+          
+
+function jotaroFStart()
+    if jotaro.isPaused() == false
+        jotaroFInt++
+    if jotaro.hasAbility(JOTARO_F_BUFF) == false
+        jotaroFTimer.destr() 
+        if JOTARO_F.hasTagDisabled() == true
+            jotaro.disableAbility(JOTARO_F, false, false)
+            JOTARO_F.removeTagDisabled()
+        jotaro.startAbilityCooldown(JOTARO_F) 
+
+    if jotaroFInt == 100
+        jotaroFTimer.destr()
+        jotaro.removeAbility(JOTARO_F_BUFF)
+        if JOTARO_F.hasTagDisabled() == true
+            jotaro.disableAbility(JOTARO_F, false, false)
+            JOTARO_F.removeTagDisabled()
+        jotaro.startAbilityCooldown(JOTARO_F)
+
+public function jotaroFProc(unit procUnit)
+    jotaroFTarget = procUnit
+    jotaroFProcInt = 0
+    jotaroFTarget.pause()
+    jotaroFTarget.setInvulnerable(true)
+    jotaro.pause()
+    jotaro.setInvulnerable(true)
+    jotaroFDummy = createUnit(JOTARO_F_DUMMY, jotaro.getPos())
+    jotaroFProcTimer = CreateTimer()..startPeriodic(0.01, function jotaroFProcStart)  
+
+function jotaroFProcStart()
+    jotaroFProcInt++
+    if jotaroFTarget.isPaused() == false 
+        jotaroFTarget.pause()
+    if jotaroFTarget.isInvulnerable() == false
+        jotaroFTarget.setInvulnerable(true)    
+    if jotaro.isPaused() == false
+        jotaro.pause()
+    if jotaro.isInvulnerable() == false
+        jotaro.setInvulnerable(true) 
+    if jotaroFProcInt == 15
+        jotaro.setPos(jotaroFTarget.getPos().polarOffset(jotaroFTarget.getPos().angleTo(jotaro.getPos()), -200))   
+        jotaro.setFacing(jotaro.getPos().angleTo(jotaroFTarget.getPos())) 
+    if jotaroFProcInt == 500
+        jotaroFProcTimer.destr()
+        jotaroFDummy.kill()
+        jotaro.unpause()
+        jotaro.setInvulnerable(false)
+        jotaroFTarget.setInvulnerable(false)  
+        jotaro.removeAbility(JOTARO_F_BUFF)
+        DamageEvent.setNextDamageId(DAMAGE_ABILITY_DELAYED_F)
+        DamageEvent.setNextDamageFromCode()
+        jotaro.damageTarget(jotaroFTarget, 1, ATTACK_TYPE_MAGIC)        
+        jotaroFTarget.unpause()

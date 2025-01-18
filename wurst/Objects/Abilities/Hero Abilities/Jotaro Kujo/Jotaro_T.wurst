@@ -192,17 +192,32 @@ function jotaroT()
 function jotaroT2Start()
     print(jotaroT2TimerInt.toString())
     jotaroT2TimerInt++
-    if jotaroT2TimerInt == 820
+    if jotaroT2TimerInt == 1
+        jotaro.setPos(jotaroTTarget.getPos().polarOffset(jotaroTTarget.getPos().angleTo(jotaro.getPos()), 600))
+        jotaro.setAnimation(0) 
+    if jotaroT2TimerInt == 100
+        jotaro.setAnimation(21)    
+    if jotaroT2TimerInt > 100 and jotaroT2TimerInt < 401
+        jotaroPos = jotaro.getPos()            
+        jotaro.setPos(jotaroPos.polarOffset(jotaroPos.angleTo(jotaroTTarget.getPos()), 1)) 
+    if jotaroT2TimerInt == 401
+        jotaro.setAnimation(22) 
+    if jotaroT2TimerInt == 600
         starPlatinum = createUnit(JOTARO_T_DUMMY2, jotaroTTarget.getPos().polarOffset(jotaroTTarget.getPos().angleTo(jotaro.getPos()), 200)) 
         starPlatinum.setFacing(starPlatinum.getPos().angleTo(jotaroTTarget.getPos()))
-    if jotaroT2TimerInt == 840        
+        jotaro.setAnimation(8)
+    if jotaroT2TimerInt == 620        
         jotaro.setAnimation(5) 
         starPlatinum.setAnimation(0)
-    if jotaroT2TimerInt == 240        
-        jotaro.setAnimation(19)
+    if jotaroT2TimerInt == 1750
+        starPlatinum.setAnimation(24)
     if jotaroT2TimerInt == 1850      
         starPlatinum.setAnimation(34)  
-    if jotaroT2TimerInt == 2500
+    if jotaroT2TimerInt == 2300
+        starPlatinum.setAnimation(12)
+    if jotaroT2TimerInt == 2350
+        starPlatinum.setAnimation(13)        
+    if jotaroT2TimerInt == 2700
         starPlatinumPos = starPlatinum.getPos()
         starPlatinum.kill()
         jotaroTTarget.setPathing(false)
@@ -214,13 +229,13 @@ function jotaroT2Start()
             jotaro.removeAbility(JOTARO_T2)        
         jotaro.unpause()
         jotaro.setInvulnerable(false)
-    if jotaroT2TimerInt > 2500 and jotaroT2TimerInt < 2701
+    if jotaroT2TimerInt > 2700 and jotaroT2TimerInt < 2751
         jotaroTTargetPos = jotaroTTarget.getPos()
         if jotaroTTargetPos.polarOffset(starPlatinumPos.angleTo(jotaroTTargetPos), 25).isTerrainPathable(PATHING_TYPE_WALKABILITY) == true and jotaroTTargetPos.polarOffset(starPlatinumPos.angleTo(jotaroTTargetPos), 25).isTerrainPathable(PATHING_TYPE_FLYABILITY) == true 
             DoNothing()
         else    
             jotaroTTarget.setPos(jotaroTTargetPos.polarOffset(starPlatinumPos.angleTo(jotaroTTargetPos), 25))  
-    if jotaroT2TimerInt >= 2701
+    if jotaroT2TimerInt >= 2751
         jotaroT2Timer.destr()
         jotaroTTarget.setPathing(true)
         jotaroTTarget.setInvulnerable(false)
