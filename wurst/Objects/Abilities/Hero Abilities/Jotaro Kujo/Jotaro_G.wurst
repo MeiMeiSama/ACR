@@ -8,6 +8,7 @@ import UnitIds
 
 unit starPlatinum
 int jotaroGInt
+timer jotaroGTimer
 boolean jotaroGActive
 
 @compiletime function createAbility()
@@ -25,7 +26,7 @@ boolean jotaroGActive
     ..setTooltipLearnExtended("Jotaro G|r")
     ..setTooltipNormal(1, BLUE+"Star Platinum|r")
     ..setTooltipNormalExtended(1, GOLD+
-            "Whenever Jotaro deals damage with a basic attack, Star platinum also strikes the same target for 50% of that damage. This effect can only happen once every second.")
+            "Whenever Jotaro deals damage with a basic attack, Star platinum also strikes the same target for 50% of that damage. This effect can only happen once every 0.5 seconds.")
 
     new UnitDefinition(JOTARO_G_DUMMY, UnitIds.wisp)
         ..setNormalAbilities(commaList('Avul', 'Aloc', 'Amrf'))
@@ -70,21 +71,26 @@ public function jotaroG ()
             let jotaro = GetEventDamageSource()
             let victim = BlzGetEventDamageTarget()
             let dmg = GetEventDamage() * 0.5
-            starPlatinum = createUnit(JOTARO_G_DUMMY, jotaro.getPos())
+            starPlatinum = createUnit(JOTARO_G_DUMMY, victim.getPos().polarOffset(victim.getPos().angleTo(jotaro.getPos()), -150))
             starPlatinum.setFacing(starPlatinum.getPos().angleTo(victim.getPos()))
-            let rng = GetRandomInt(0, 1)
-            if rng  == 0
-                starPlatinum.setAnimation(3)
-            else    
-                starPlatinum.setAnimation(25)
-            jotaro.damageTarget(victim, dmg, ATTACK_TYPE_CHAOS)    
+            jotaro.damageTarget(victim, dmg, ATTACK_TYPE_CHAOS)  
+            jotaroGInt = 0  
             CreateTimer()..startPeriodic(0.01, function jotaroGTimerFunc)    
 
 function jotaroGTimerFunc()
     jotaroGInt++
-    if jotaroGInt == 50
+    if jotaroGInt == 3
+        let rng = GetRandomInt(0, 1)
+        if rng  == 0
+            starPlatinum.setTimeScale(2.5)
+            starPlatinum.setAnimation(3)
+        else   
+            starPlatinum.setTimeScale(2.5) 
+            starPlatinum.setAnimation(25)        
+
+    if jotaroGInt == 49
         starPlatinum.kill()
-    if jotaroGInt >= 100
+    if jotaroGInt >= 50
         GetExpiredTimer().destr()
         jotaroGActive = false
 
