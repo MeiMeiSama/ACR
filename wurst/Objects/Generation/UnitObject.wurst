@@ -722,7 +722,7 @@ import ObjectIds
 
     new HeroDefinition(KUJO_JOTARO, 'Hpal') // H01F
     ..setHeroAbilities(commaList(JOTARO_Q, JOTARO_W, JOTARO_E, JOTARO_R, JOTARO_T))
-    ..setNormalAbilities(commaList('A0KV', 'AInv'))
+    ..setNormalAbilities(commaList(JOTARO_G, 'AInv'))
     ..setAnimationBlendTimeseconds(0.1)
     ..setAnimationCastBackswing(0.1)
     ..setAnimationCastPoint(0.1)

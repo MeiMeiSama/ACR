@@ -402,7 +402,7 @@ public function int.isTCounter () returns boolean
     return false
 
 public function int.isFcounter () returns boolean
-    if (this == 'A0KT') or (this == 'A0ZO') or (this == 'A0Y9') or (this == 'A0YA')
+    if (this == 'A0KT') or (this == 'A0ZO') or (this == 'A0Y9') or (this == 'A0YA') or (this == JOTARO_F)
         return true
     return false
 

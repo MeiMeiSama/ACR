@@ -74,6 +74,7 @@ import Sabo_G
 import N_Natsu_G
 import S_Natsu_G
 import Cobra_G
+import Jotaro_G
 import misakaOnKillBLT
 import MavisE_Orig
 import ZervisG_Orig
@@ -217,6 +218,9 @@ public function initFunctions ()
         if udg_PlayHero[i].getTypeId() == ICHIGO_STRENGTH
             ichigoStrE()
 
+        if udg_PlayHero[i].getTypeId() == KUJO_JOTARO
+            jotaroG()
+
         if udg_PlayHero[i].hasAbility('B06D')
             meltyRyougiG()     
 
@@ -228,7 +232,7 @@ public function initFunctions ()
    
         if udg_PlayHero[i].hasAbility('A0MN')
             yamamotoG()
-   
+
         if udg_PlayHero[i].hasAbility('A180')
             grayG()     
   
