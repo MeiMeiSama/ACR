@@ -42,9 +42,9 @@ public boolean jotaroFBool
         ..presetCooldown(lvl -> 50)
         ..presetManaCost(lvl -> 70)
         ..presetTargetsAllowed(lvl -> "enemy,ground,air,neutral")
-        ..presetTooltipNormal(lvl -> "Illusionary Battalion|r")
+        ..presetTooltipNormal(lvl -> "Star Platinum: Counter|r")
         ..presetTooltipNormalExtended(lvl -> "Misogi F Desc|r")
-        ..setTooltipLearn("Illusionary Battalion|r")
+        ..setTooltipLearn("Star Platinum: Counter|r")
         ..setTooltipLearnExtended("Learning F|r")    
 
     new UnitDefinition(JOTARO_F_DUMMY, UnitIds.wisp)
