@@ -190,7 +190,6 @@ function jotaroT()
             jotaroT2Timer = CreateTimer()..startPeriodic(0.01, function jotaroT2Start)
 
 function jotaroT2Start()
-    print(jotaroT2TimerInt.toString())
     jotaroT2TimerInt++
     if jotaroT2TimerInt > 0 and jotaroT2TimerInt < 2700
         if jotaro.isPaused() == false

@@ -398,6 +398,7 @@ public let JOTARO_T_DUMMY = compiletime(UNIT_ID_GEN.next())
 public let JOTARO_T_DUMMY2 = compiletime(UNIT_ID_GEN.next())
 public let JOTARO_F_DUMMY = compiletime(UNIT_ID_GEN.next())
 public let JOTARO_F_DUMMY2 = compiletime(UNIT_ID_GEN.next())
+public let JOTARO_F_DUMMY3 = compiletime(UNIT_ID_GEN.next())
 
 ///////////////////// Dummies for skins/////////////////////////
 public let RIN_SKIN = compiletime(UNIT_ID_GEN.next())
