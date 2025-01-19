@@ -64,7 +64,7 @@ boolean jotaroGActive
         ..setTooltipBasic("_")
         ..setTooltipExtended("_")   
 
-public function jotaroG ()
+public function jotaroG()
     EventListener.add(EVENT_PLAYER_UNIT_DAMAGED) -> 
         if GetEventDamageSource().hasAbility(JOTARO_G) and BlzGetEventAttackType() == ATTACK_TYPE_HERO and jotaroGActive == false
             jotaroGActive = true
