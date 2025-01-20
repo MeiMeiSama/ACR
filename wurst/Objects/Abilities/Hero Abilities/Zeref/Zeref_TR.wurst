@@ -75,16 +75,6 @@ function zerefTREnd()
         zerefTRInt2 = 0
         CreateTimer()..startPeriodic(0.03, function zerefTREnd2)
     
-    //if zeref.getPos().distanceTo(spellPos) <= 40
-       // GetExpiredTimer().destr()
-       // effect1 = addEffect("war3mapImported\\CeremonyofDarkness.mdx", zeref, "origin")
-       // effect2 = addEffect("war3mapImported\\ZerefTRBall.mdx", zeref, "right hand")
-       // zerefTRInt2 = 0
-        //CreateTimer()..startPeriodic(0.03, function zerefTREnd2)
-    //else
-        //zeref.setFacing(zeref.getPos().angleTo(spellPos))
-       //zeref.setPos(zeref.getPos().polarOffset(zeref.getPos().angleTo(spellPos), 20))
-    
 function zerefTREnd2()
     zerefTRInt2++
     if zerefTRInt2 == 140
