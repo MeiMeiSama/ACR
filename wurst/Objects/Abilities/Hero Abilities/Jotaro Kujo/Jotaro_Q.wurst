@@ -151,8 +151,6 @@ vec2 starPlatinumPos
         ..setTooltipBasic("_")
         ..setTooltipExtended("_")
 
-
-
 init
     jotaroQ()    
 
@@ -164,26 +162,13 @@ function jotaroQ()
             gg_snd_jotaroQ.play()
             abilityJotaroQPos = vec2(GetSpellTargetX(), GetSpellTargetY())
             jotaro = GetTriggerUnit()
-            unit u
             if jotaro.getPos().distanceTo(abilityJotaroQPos) < 1500
                 abilityJotaroQPos = jotaro.getPos().polarOffset(jotaro.getPos().angleTo(abilityJotaroQPos), 1500)
             starPlatinum = createUnit(JOTARO_Q_DUMMY, jotaro.getPos().polarOffset(jotaro.getPos().angleTo(abilityJotaroQPos), 200))
             starPlatinum.setFacing(starPlatinum.getPos().angleTo(abilityJotaroQPos)) 
-            starPlatinum.setTimeScale(80)
+            starPlatinum.setTimeScale(20)
             starPlatinum.setAnimation(3)
             starPlatinumPos = starPlatinum.getPos()
-            u = createUnit(JOTARO_Q_DUMMY3, starPlatinumPos.polarOffset(starPlatinumPos.angleTo(abilityJotaroQPos), 100))
-            u.setScale(1)
-            u.setFacing(u.getPos().angleTo(abilityJotaroQPos))
-            u.setTimedLife(1)
-            u = createUnit(JOTARO_Q_DUMMY3, starPlatinumPos.polarOffset(starPlatinumPos.angleTo(abilityJotaroQPos), 550))
-            u.setScale(1)
-            u.setFacing(u.getPos().angleTo(abilityJotaroQPos))
-            u.setTimedLife(1)
-            u = createUnit(JOTARO_Q_DUMMY3, starPlatinumPos.polarOffset(starPlatinumPos.angleTo(abilityJotaroQPos), 1000))
-            u.setScale(1)
-            u.setFacing(u.getPos().angleTo(abilityJotaroQPos))
-            u.setTimedLife(1)
             jotaroQTimerInt = 0
             if jotaroQGroup == null
                 jotaroQGroup = CreateGroup()            
