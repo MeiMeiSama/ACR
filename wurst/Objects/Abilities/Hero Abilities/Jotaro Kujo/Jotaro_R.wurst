@@ -19,7 +19,10 @@ vec2 abilityJotaroRPos
 unit starPlatinum
 int jotaroRTimerInt1
 int jotaroRTimerInt2
+int jotaroRTimerInt3
 timer jotaroRTimer
+effect effect1
+effect effect2
 
 @compiletime function createAbility()
     new ChannelAbilityPreset(JOTARO_R, 3, true)
@@ -116,7 +119,8 @@ function jotaroR()
                 if rng == 0
                     gg_snd_jotaroR1_1.play()
                 else 
-                    gg_snd_jotaroR1_2.play()    
+                    gg_snd_jotaroR1_2.play()
+                flashEffect("war3mapImported\\dustwavxfsfsfe.mdx", jotaro.getPos(), 0.60)        
                 jotaroRTimer = CreateTimer()..startPeriodic(0.01, function jotaroRDash)
 
 function jotaroRDash()
@@ -163,8 +167,10 @@ function jotaroRDash()
                         starPlatinum = createUnit(JOTARO_R_DUMMY, jotaroRTarget.getPos().polarOffset(jotaroRTarget.getPos().angleTo(jotaroPos), 150))     
                         starPlatinum.setAnimation(7)
                         starPlatinum.setFacing(starPlatinum.getPos().angleTo(jotaroRTarget.getPos()))
-                        jotaroRTimerInt2 = 0             
-                        jotaroRTimer = CreateTimer()..startPeriodic(0.03, function jotaroRAttack1)           
+                        jotaroRTimerInt2 = 0
+                        jotaroRTimerInt3 = 0              
+                        jotaroRTimer = CreateTimer()..startPeriodic(0.03, function jotaroRAttack1)
+                        CreateTimer()..startPeriodic(0.03, function jotaroRAttack2)    
 
 function jotaroRDio()
 
@@ -180,7 +186,8 @@ function jotaroRAoe()
         jotaro.unpause()
         jotaro.setInvulnerable(false)        
     if jotaroRTimerInt1 == 50    
-        starPlatinum.setAnimation(8)    
+        starPlatinum.setAnimation(8)
+        flashEffect("war3mapImported\\dustwavxfsfsfe.mdx", starPlatinum.getPos(), 0.70)  
     if jotaroRTimerInt1 > 100 and jotaroRTimerInt1 < 150
         forUnitsInRange(abilityJotaroRPos, 600) (unit u) ->
             if jotaro.isAllyOf(u) == false and u.getPos().distanceTo(abilityJotaroTPos) < 900 and u.isInvulnerable() == false
@@ -212,11 +219,11 @@ function jotaroRAttack1()
     if jotaroRTimerInt2 == 10
         gg_snd_jotaroR2.play() 
         jotaro.setAnimation(8)
-        starPlatinum.setAnimation(1)
+        starPlatinum.setAnimation(1)    
     if jotaroRTimerInt2 == 40
         gg_snd_jotaroR3.play()
         jotaro.setAnimation(21)
-        starPlatinum.setAnimation(34)
+        starPlatinum.setAnimation(34) 
     if jotaroRTimerInt2 >= 41 and jotaroRTimerInt2 < 160     
         jotaroPos = jotaro.getPos()
         if jotaroPos.polarOffset(jotaroPos.angleTo(jotaroRTarget.getPos()), 355).isTerrainPathable(PATHING_TYPE_WALKABILITY) == true and jotaroPos.polarOffset(jotaroPos.angleTo(jotaroRTarget.getPos()), 355).isTerrainPathable(PATHING_TYPE_FLYABILITY) == true
@@ -230,7 +237,7 @@ function jotaroRAttack1()
         starPlatinum.setAnimation(12) 
         jotaro.setAnimation(22)
     if jotaroRTimerInt2 == 170
-        starPlatinum.setAnimation(13)
+        starPlatinum.setAnimation(13)   
     if jotaroRTimerInt2 == 190     
         starPlatinum.setAnimation(0) 
     if jotaroRTimerInt2 == 195
@@ -243,4 +250,52 @@ function jotaroRAttack1()
         jotaro.damageTarget(jotaroRTarget, 1, ATTACK_TYPE_MAGIC)
         jotaroDashEnd()
         jotaroRTarget.setPathing(true)
-        jotaroRTarget.unpause()   
+        jotaroRTarget.unpause()
+
+function jotaroRAttack2()
+    jotaroRTimerInt3++
+    if jotaroRTimerInt3 == 50
+        effect1 = addEffect("war3mapImported\\punchshot.mdx", starPlatinum.getPos())
+        ..destr()
+        effect2 = addEffect("war3mapImported\\dustwavxfsfsfe.mdx", starPlatinum.getPos())
+        ..setScale(0.60)
+        ..destr()
+    if jotaroRTimerInt3 == 70
+        effect1 = addEffect("war3mapImported\\punchshot.mdx", starPlatinum.getPos())
+        ..destr()
+        effect2 = addEffect("war3mapImported\\dustwavxfsfsfe.mdx", starPlatinum.getPos())
+        ..setScale(0.60)
+        ..destr()
+    if jotaroRTimerInt3 == 90
+        effect1 = addEffect("war3mapImported\\punchshot.mdx", starPlatinum.getPos())
+        ..destr()
+        effect2 = addEffect("war3mapImported\\dustwavxfsfsfe.mdx", starPlatinum.getPos())
+        ..setScale(0.60)
+        ..destr()
+    if jotaroRTimerInt3 == 110
+        effect1 = addEffect("war3mapImported\\punchshot.mdx", starPlatinum.getPos())
+        ..destr()
+        effect2 = addEffect("war3mapImported\\dustwavxfsfsfe.mdx", starPlatinum.getPos())
+        ..setScale(0.60)
+        ..destr()
+    if jotaroRTimerInt3 == 130
+        effect1 = addEffect("war3mapImported\\punchshot.mdx", starPlatinum.getPos())
+        ..destr()
+        effect2 = addEffect("war3mapImported\\dustwavxfsfsfe.mdx", starPlatinum.getPos())
+        ..setScale(0.60)
+        ..destr()
+    if jotaroRTimerInt3 == 150
+        effect1 = addEffect("war3mapImported\\punchshot.mdx", starPlatinum.getPos())
+        ..destr()
+        effect2 = addEffect("war3mapImported\\dustwavxfsfsfe.mdx", starPlatinum.getPos())
+        ..setScale(0.60)
+        ..destr()                           
+    if jotaroRTimerInt3 == 200
+        effect1 = addEffect("war3mapImported\\punchshot.mdx", starPlatinum.getPos())
+        ..destr()
+        effect2 = addEffect("war3mapImported\\dustwavxfsfsfe.mdx", starPlatinum.getPos())
+        ..setScale(0.60)
+        ..destr() 
+    if jotaroRTimerInt3 == 205   
+        GetExpiredTimer().destr()
+

@@ -88,12 +88,10 @@ function zerefTREnd2()
         flashEffect("war3mapImported\\ZerefCone.mdx", spellPos, 2)
         enemy.setInvulnerable(false)
         forUnitsInRange(spellPos, 400) (unit victim) ->
-            if zeref.getPos().distanceTo(victim.getPos()) <= (GetUnitFacing(zeref) + 45.00)
-                if zeref.getPos().distanceTo(victim.getPos()) >= (GetUnitFacing(zeref) - 45.00)
-                    if victim.isType(UNIT_TYPE_STRUCTURE)==false and victim.isEnemyOf(zeref)==true and victim.isAlive()==true and victim.isInvulnerable() == false
-                        DamageEvent.setNextDamageId(DAMAGE_ABILITY_MODE_R)
-                        DamageEvent.setNextDamageFromCode()
-                        UnitDamageTargetBJ(zeref,victim,(100*GetUnitAbilityLevel(zeref,ZEREF_TR)).toReal(),ATTACK_TYPE_MAGIC,DAMAGE_TYPE_MAGIC)          
+            if victim.isType(UNIT_TYPE_STRUCTURE)==false and victim.isEnemyOf(zeref)==true and victim.isAlive()==true and victim.isInvulnerable() == false
+                DamageEvent.setNextDamageId(DAMAGE_ABILITY_MODE_R)
+                DamageEvent.setNextDamageFromCode()
+                UnitDamageTargetBJ(zeref,victim,(100*GetUnitAbilityLevel(zeref,ZEREF_TR)).toReal(),ATTACK_TYPE_MAGIC,DAMAGE_TYPE_MAGIC)          
         effect1.destr()
         effect2.destr()
         zeref.setInvulnerable(false)

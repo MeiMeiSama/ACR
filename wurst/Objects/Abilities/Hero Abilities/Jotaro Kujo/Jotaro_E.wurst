@@ -70,13 +70,17 @@ function jotaroEStart()
         if jotaroETarget.isPaused() == false
             jotaroETarget.pause()
         if jotaroETarget.isInvulnerable() == false
-            jotaroETarget.setInvulnerable(true)                   
+            jotaroETarget.setInvulnerable(true)
+    if jotaroETimerInt == 70
+        flashEffect("war3mapImported\\dustwavxfsfsfe.mdx", jotaro.getPos(), 0.60)
     if jotaroETimerInt == 90
         jotaro.setPos(jotaroETarget.getPos().polarOffset(jotaroETarget.getPos().angleTo(jotaro.getPos()), -200))
         jotaro.setFacing(jotaro.getPos().angleTo(jotaroETarget.getPos()))
         jotaro.setAnimation(22)
     if jotaroETimerInt == 120
         jotaro.setAnimation(16)
+    if jotaroETimerInt == 126
+        flashEffect("war3mapImported\\punchshot.mdx", jotaro.getPos())
     if jotaroETimerInt >= 135
         jotaroETarget.setInvulnerable(false)  
         jotaro.unpause()

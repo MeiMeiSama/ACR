@@ -213,7 +213,9 @@ function jotaroWAttack()
         else 
             gg_snd_jotaroW2_2.play()         
     if jotaroWTimerInt2 == 30  
-        starPlatinum.setAnimation(11) 
+        starPlatinum.setAnimation(11)
+    if jotaroWTimerInt2 == 36
+        flashEffect("war3mapImported\\punchshot.mdx", starPlatinumPos)    
     if jotaroWTimerInt2 == 55
         jotaroWTarget.unpause()
         jotaroWTarget.setInvulnerable(false)       
@@ -234,6 +236,8 @@ function jotaroWAoe()
             jotaro.setInvulnerable(true)      
     if jotaroWTimerInt3 == 1 
         starPlatinum.setAnimation(7)
+    if jotaroWTimerInt3 == 6
+        flashEffect("war3mapImported\\fuzzystomp.mdx", starPlatinumPos)    
     if jotaroWTimerInt3 == 23
         jotaro.unpause()
         jotaro.setInvulnerable(false)    
