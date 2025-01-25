@@ -9,16 +9,13 @@ import ClosureForGroups
 import main
 
 unit jotaro
-//unit starPlatinum
+unit starPlatinum
 unit array jotaroQDummy
 group jotaroQGroup
 timer jotaroQTimer
 int jotaroQTimerInt
 vec2 abilityJotaroQPos
-//vec2 starPlatinumPos
 vec2 jotaroPos
-//effect effect1
-angle angle
 
 @compiletime function createAbility()
     new ChannelAbilityPreset(JOTARO_Q, 5, true)
@@ -58,7 +55,7 @@ angle angle
         ..setHasWaterShadow(false)
         ..setMaximumPitchAngledegrees(0)
         ..setMaximumRollAngledegrees(0)
-        ..setModelFile("war3mapImported\\Star Platinum.mdx")
+        ..setModelFile("war3mapImported\\DioLaser.mdx") //Star Platinum
         ..setScalingValue(1.5)
         ..setArtSpecial("_")
         ..setArmorType(ArmorType.Unarmored)
@@ -133,23 +130,18 @@ function jotaroQ()
             jotaroPos = jotaro.getPos()
             if jotaro.getPos().distanceTo(abilityJotaroQPos) < 1500
                 abilityJotaroQPos = jotaro.getPos().polarOffset(jotaro.getPos().angleTo(abilityJotaroQPos), 1500)
-            angle = jotaroPos.angleTo(abilityJotaroQPos)
-            //starPlatinum = createUnit(JOTARO_Q_DUMMY, jotaro.getPos().polarOffset(jotaro.getPos().angleTo(abilityJotaroQPos), 200))
-            //starPlatinum.setFacing(starPlatinum.getPos().angleTo(abilityJotaroQPos)) 
-            //starPlatinum.setTimeScale(20)
-            //starPlatinum.setAnimation(3)
-            //starPlatinumPos = starPlatinum.getPos()
-            jotaro.setAnimation(3)
+            //flashEffect("war3mapImported\\DioLaser.mdx", jotaroPos.polarOffset(jotaroPos.angleTo(abilityJotaroQPos), 700), 35, jotaroPos.angleTo(abilityJotaroQPos))
+            starPlatinum = createUnit(JOTARO_Q_DUMMY, jotaroPos.polarOffset(jotaroPos.angleTo(abilityJotaroQPos), 700))
+            starPlatinum.setScale(35)
+            starPlatinum.setFacing(starPlatinum.getPos().angleTo(abilityJotaroQPos))
             jotaroQTimerInt = 0
             if jotaroQGroup == null
                 jotaroQGroup = CreateGroup()            
-            jotaroQTimer = CreateTimer()..startPeriodic(0.03, function jotaroQStart)
+            jotaroQTimer = CreateTimer()..startPeriodic(0.01, function jotaroQStart)
 
 function jotaroQStart()
     jotaroQTimerInt++
-    if jotaroQTimerInt == 14
-        flashEffect("war3mapImported\\Starfinger.mdx", jotaroPos.polarOffset(jotaroPos.angleTo(abilityJotaroQPos), 200), 2, angle)
-    if jotaroQTimerInt == 16
+    if jotaroQTimerInt == 10
         for i = 3 to 12
             jotaroQDummy[i] = createUnit(JOTARO_Q_DUMMY2, jotaroPos.polarOffset(jotaroPos.angleTo(abilityJotaroQPos), (100.0 * i)))  
             forUnitsInRange(jotaroQDummy[i].getPos(), 300) (unit u) ->
@@ -159,8 +151,8 @@ function jotaroQStart()
                     jotaro.damageTarget(u, 1, ATTACK_TYPE_MAGIC) 
                     jotaroQGroup.add(u)                      
     if jotaroQTimerInt >= 80
-        //starPlatinum.kill()
+        starPlatinum.kill()
         for i = 3 to 12
             jotaroQDummy[i].kill()
             jotaroQTimer.destr()
-            jotaroQGroup.clear()
+            jotaroQGroup.clear() 
