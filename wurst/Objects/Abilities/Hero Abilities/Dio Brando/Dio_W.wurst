@@ -1,2 +1,209 @@
 package Dio_W
 
+import DamageEvent
+import AbilityGlobals
+import ObjectDefinitions
+import UpdateTooltips
+import TimerUtils
+import ChannelAbilityPreset
+import UnitIds
+import ClosureForGroups
+import ACR_Pull
+import ACR_TagSystem
+import ACR_Stun
+import main
+
+unit dio
+unit zaWarudo
+unit dioWTarget
+bool dioWBool
+timer dioWTimer
+int dioWTimerInt1
+int dioWTimerInt2
+int dioWTimerInt3
+int dioWLvl
+vec2 abilitydioWPos
+vec2 zaWarudoPos
+
+@compiletime function createAbility()
+    new ChannelAbilityPreset(DIO_W, 5, true)
+        ..presetTargetTypes(Targettype.NONE)
+        ..setAnimationNames("11111111")
+        ..setButtonPositionNormalX(1)
+        ..setButtonPositionNormalY(2)
+        ..setButtonPositionResearchX(1)
+        ..setButtonPositionResearchY(0)
+        ..setIconNormal("ReplaceableTextures\\PassiveButtons\\PASBTNFireRocks.blp")
+        ..setIconResearch("ReplaceableTextures\\PassiveButtons\\PASBTNFireRocks.blp")
+        ..setMissileSpeed(99999)
+        ..setHeroAbility(true)
+        ..setHotkeyNormal("W")
+        ..setHotkeyLearn("W")
+        ..setLevels(5)
+        ..setLevelSkipRequirement(2)
+        ..presetArtDuration(lvl -> 0)
+        ..presetBaseOrderID(lvl -> "possession")
+        ..presetDisableOtherAbilities(lvl -> false)
+        ..presetFollowThroughTime(lvl -> 0)
+        ..presetCastRange(lvl -> 2000)
+        ..presetCooldown(lvl -> 50)
+        ..presetManaCost(lvl -> 70)
+        ..presetTargetsAllowed(lvl -> "enemy,ground,air,neutral")
+        ..presetTooltipNormal(lvl -> "Howl of the Illusory Wolf|r")
+        ..presetTooltipNormalExtended(lvl -> "dio W Desc|r")
+        ..setTooltipLearn("Learn W|r")
+        ..setTooltipLearnExtended("Learning W|r")    
+    new UnitDefinition(DIO_W_DUMMY, UnitIds.wisp)
+        ..setNormalAbilities(commaList('Avul', 'Aloc', 'Amrf'))
+        ..setAnimationCastBackswing(0)
+        ..setDeathTimeseconds(0.1)
+        ..setScalingValue(0.70)
+        ..setUnitClassification("_")
+        ..setArtSpecial("_")
+        ..setHasWaterShadow(false)
+        ..setMaximumPitchAngledegrees(0)
+        ..setMaximumRollAngledegrees(0)
+        ..setModelFile("war3mapImported\\Shio_Dio_The_World.mdx")
+        ..setScalingValue(1.5)
+        ..setArtSpecial("_")
+        ..setArmorType(ArmorType.Unarmored)
+        ..setPlaceableInEditor(false)
+        ..setMovementHeight(20)
+        ..setSpeedBase(100)
+        ..setTurnRate(3)
+        ..setMovementType(MovementType.Fly)
+        ..setCollisionSize(0)
+        ..setUnitSoundSet("_")
+        ..setCanFlee(false)
+        ..setFoodCost(0)
+        ..setHideMinimapDisplay(true)
+        ..setHitPointsMaximumBase(60)
+        ..setHitPointsRegenerationRate(-1)
+        ..setHitPointsRegenerationType("Always")
+        ..setStockMaximum(1)
+        ..setStockReplenishInterval(1)
+        ..setStructuresBuilt("_")
+        ..setUpgradesUsed("_")
+        ..setHotkey("_")
+        ..setName("effect dummy")
+        ..setTooltipBasic("_")
+        ..setTooltipExtended("_")
+
+init
+    dioW()    
+
+function dioW()
+    CreateTrigger()
+    ..registerAnyUnitEvent(EVENT_PLAYER_UNIT_SPELL_EFFECT)
+    ..addAction() ->
+        if GetSpellAbilityId() == DIO_W
+            gg_snd_dioW1.play()
+            abilitydioWPos = vec2(GetSpellTargetX(), GetSpellTargetY())
+            dio = GetTriggerUnit()
+            dioWLvl = GetUnitAbilityLevel(dio, dio_W)
+            dioWBool = true
+            if dio.getPos().distanceTo(abilitydioWPos) > 1250
+                abilitydioWPos = dio.getPos().polarOffset(dio.getPos().angleTo(abilitydioWPos), 1250)
+            dio.pause()
+            dio.setInvulnerable(true)    
+            zaWarudo = createUnit(dio_W_DUMMY, dio.getPos())     
+            zaWarudo.setAnimation(9)
+            zaWarudo.setFacing(zaWarudo.getPos().angleTo(abilitydioWPos))              
+            dioWTimerInt1 = 0                          
+            dioWTimer = CreateTimer()..startPeriodic(0.01, function dioWStart)   
+
+function dioWStart()
+    dioWTimerInt1++
+    if dioWTimerInt1 == 5
+        dio.unpause()
+        dio.setInvulnerable(false)
+
+    if dioWTimerInt1 < 54
+        zaWarudoPos = zaWarudo.getPos()
+        if zaWarudoPos.distanceTo(abilitydioWPos) <= 25
+            zaWarudo.setAnimation(32) 
+        else     
+            zaWarudo.setPos(zaWarudoPos.polarOffset(zaWarudoPos.angleTo(abilitydioWPos), 25))
+        forUnitsInRange(zaWarudoPos, 350) (unit u) ->
+            if dio.isAllyOf(u) == false and u.isType(UNIT_TYPE_HERO) and u.isInvulnerable() == false and dioWBool == true and dioWTimerInt1 > 5
+                let dioPos = dio.getPos()
+                dioWEnd()             
+                dioWTarget = u
+                dioWTarget.pause()
+                dioWTarget.setInvulnerable(true)
+                zaWarudo.setPos(dioWTarget.getPos().polarOffset(dioWTarget.getPos().angleTo(dioPos), -150))
+                zaWarudoPos = zaWarudo.getPos()
+                zaWarudo.setFacing(zaWarudoPos.angleTo(dioWTarget.getPos()))
+                dioWTimerInt2 = 0   
+                dioWTimer = CreateTimer()..startPeriodic(0.03, function dioWAttack)  
+    if zaWarudoPos.distanceTo(abilitydioWPos) >= 25  
+        zaWarudo.setAnimation(32)                   
+    if dioWTimerInt1 >= (300 * dioWLvl)
+        zaWarudo.kill()
+        dioWEnd()
+
+function dioWEnd()
+    dioWBool = false 
+    dioWTimer.destr() 
+    if dio.hasAbility(dio_W2)
+        dio.removeAbility(dio_W2)
+    if dio_W.hasTagHidden() == true
+        dio.hideAbility(dio_W, false)
+        dio_W.removeTagHidden()  
+
+function dioWAttack()
+    dioWTimerInt2++
+    if dioWTimerInt2 > 0 and dioWTimerInt2 < 55
+        if dioWTarget.isPaused() == false
+            dioWTarget.pause()
+        if dioWTarget.isInvulnerable() == false
+            dioWTarget.setInvulnerable(true)       
+    if dioWTimerInt2 == 25   
+        if gg_snd_dioW1.isPlaying()
+            gg_snd_dioW1.stop(false, false)             
+        let rng = GetRandomInt(0, 1)           
+        if rng == 0
+            gg_snd_dioW2_1.play()
+        else 
+            gg_snd_dioW2_2.play()         
+    if dioWTimerInt2 == 30  
+        zaWarudo.setAnimation(11)
+    if dioWTimerInt2 == 36
+        flashEffect("war3mapImported\\punchshot.mdx", zaWarudoPos)    
+    if dioWTimerInt2 == 55
+        dioWTarget.unpause()
+        dioWTarget.setInvulnerable(false)       
+        DamageEvent.setNextDamageId(DAMAGE_ABILITY_W)
+        DamageEvent.setNextDamageFromCode()
+        dio.damageTarget(dioWTarget, 1, ATTACK_TYPE_MAGIC)
+        acrPull(dio, dioWTarget, 700)
+    if dioWTimerInt2 >= 65
+        dioWTimer.destr()     
+        zaWarudo.kill()        
+
+function dioWAoe()
+    dioWTimerInt3++
+    if dioWTimerInt3 > 0 and dioWTimerInt3 < 23
+        if dio.isPaused() == false
+            dio.pause()
+        if dio.isInvulnerable() == false
+            dio.setInvulnerable(true)      
+    if dioWTimerInt3 == 1 
+        zaWarudo.setAnimation(7)
+    if dioWTimerInt3 == 6
+        flashEffect("war3mapImported\\fuzzystomp.mdx", zaWarudoPos)    
+    if dioWTimerInt3 == 23
+        dio.unpause()
+        dio.setInvulnerable(false)    
+    if dioWTimerInt3 == 25
+        forUnitsInRange(zaWarudoPos, 600) (unit u) ->
+            if dio.isAllyOf(u) == false and u.isInvulnerable() == false        
+                DamageEvent.setNextDamageId(DAMAGE_ABILITY_W)
+                DamageEvent.setNextDamageFromCode()
+                dio.damageTarget(u, 1, ATTACK_TYPE_MAGIC)     
+                acrStun(dio, u, 0.7)  
+    if dioWTimerInt3 >= 30  
+        dioWTimer.destr()          
+        zaWarudo.kill()      
+
+

@@ -89,6 +89,7 @@ public constant JOTARO_T2 = compiletime(ABIL_ID_GEN.next())
 public constant JOTARO_F = compiletime(ABIL_ID_GEN.next())
 public constant JOTARO_F_DUMMY_ABILITY = compiletime(ABIL_ID_GEN.next())
 public constant JOTARO_G = compiletime(ABIL_ID_GEN.next())
+public constant DIO_W = compiletime(ABIL_ID_GEN.next())
 
 // ------------------------------ Item Abilities ------------------------------
 public constant CLOUD_VONGOLA_ABILITY = compiletime(ABIL_ID_GEN.next())
@@ -404,6 +405,7 @@ public let JOTARO_F_DUMMY = compiletime(UNIT_ID_GEN.next())
 public let JOTARO_F_DUMMY2 = compiletime(UNIT_ID_GEN.next())
 public let JOTARO_F_DUMMY3 = compiletime(UNIT_ID_GEN.next())
 public let JOTARO_G_DUMMY = compiletime(UNIT_ID_GEN.next())
+public let DIO_W_DUMMY = compiletime(UNIT_ID_GEN.next())
 
 ///////////////////// Dummies for skins/////////////////////////
 public let RIN_SKIN = compiletime(UNIT_ID_GEN.next())

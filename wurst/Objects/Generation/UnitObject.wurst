@@ -1115,7 +1115,7 @@ import ObjectIds
     ..setAnimationCastPoint(0.1)
     ..setIconGameInterface("ReplaceableTextures\\CommandButtons\\BTNDIO.blp")
     ..setIconScoreScreen("ReplaceableTextures\\CommandButtons\\BTNDIO.blp")
-    ..setModelFile("war3mapImported\\AFBDIO.mdl")
+    ..setModelFile("war3mapImported\\Shio_Dio.mdx")
     ..setScalingValue(1.25)
     ..setArtSpecial("")
     ..setAttack1CooldownTime(1.65)

@@ -219,7 +219,7 @@ public function addAbilities (unit hero)
         SPELL_G[id] = 'S000'  
     else if hero.getTypeId() == DIO_BRANDO // Dio
         SPELL_Q[id] = 'A0KX'
-        SPELL_W[id] = 'A0KZ'
+        SPELL_W[id] = DIO_W
         SPELL_E[id] = 'A0L2'
         SPELL_R[id] = 'A0KY'
         SPELL_T[id] = 'A0L0'
