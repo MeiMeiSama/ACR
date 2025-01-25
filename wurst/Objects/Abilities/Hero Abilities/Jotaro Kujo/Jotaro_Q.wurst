@@ -9,15 +9,15 @@ import ClosureForGroups
 import main
 
 unit jotaro
-unit starPlatinum
+//unit starPlatinum
 unit array jotaroQDummy
 group jotaroQGroup
 timer jotaroQTimer
 int jotaroQTimerInt
 vec2 abilityJotaroQPos
-vec2 starPlatinumPos
+//vec2 starPlatinumPos
 vec2 jotaroPos
-effect effect1
+//effect effect1
 angle angle
 
 @compiletime function createAbility()
