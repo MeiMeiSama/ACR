@@ -16,6 +16,7 @@ unit dio
 vec2 dioPos
 vec2 jotaroPos
 vec2 abilityJotaroRPos
+angle angle
 unit starPlatinum
 int jotaroRTimerInt1
 int jotaroRTimerInt2
@@ -188,6 +189,7 @@ function jotaroRAoe()
     if jotaroRTimerInt1 == 50    
         starPlatinum.setAnimation(8)
         flashEffect("war3mapImported\\dustwavxfsfsfe.mdx", starPlatinum.getPos(), 0.70)  
+        flashEffect("war3mapImported\\tx.mdx", starPlatinum.getPos(), 4, starPlatinum.getPos().angleTo(jotaroRTarget.getPos()))
     if jotaroRTimerInt1 > 100 and jotaroRTimerInt1 < 150
         forUnitsInRange(abilityJotaroRPos, 600) (unit u) ->
             if jotaro.isAllyOf(u) == false and u.getPos().distanceTo(abilityJotaroTPos) < 900 and u.isInvulnerable() == false
@@ -255,43 +257,58 @@ function jotaroRAttack1()
 function jotaroRAttack2()
     jotaroRTimerInt3++
     if jotaroRTimerInt3 == 50
-        effect1 = addEffect("war3mapImported\\punchshot.mdx", starPlatinum.getPos())
+        angle = starPlatinum.getPos().angleTo(jotaroRTarget.getPos())
+        effect1 = addEffect("war3mapImported\\tx.mdx", starPlatinum.getPos())
+        ..setScale(3)
+        ..setYaw(angle)
         ..destr()
         effect2 = addEffect("war3mapImported\\dustwavxfsfsfe.mdx", starPlatinum.getPos())
         ..setScale(0.60)
-        ..destr()
+        ..destr() 
     if jotaroRTimerInt3 == 70
-        effect1 = addEffect("war3mapImported\\punchshot.mdx", starPlatinum.getPos())
+        effect1 = addEffect("war3mapImported\\tx.mdx", starPlatinum.getPos())
+        ..setScale(3)
+        ..setYaw(angle)
         ..destr()
         effect2 = addEffect("war3mapImported\\dustwavxfsfsfe.mdx", starPlatinum.getPos())
         ..setScale(0.60)
-        ..destr()
+        ..destr() 
     if jotaroRTimerInt3 == 90
-        effect1 = addEffect("war3mapImported\\punchshot.mdx", starPlatinum.getPos())
+        effect1 = addEffect("war3mapImported\\tx.mdx", starPlatinum.getPos())
+        ..setScale(3)
+        ..setYaw(angle)
         ..destr()
         effect2 = addEffect("war3mapImported\\dustwavxfsfsfe.mdx", starPlatinum.getPos())
         ..setScale(0.60)
-        ..destr()
+        ..destr() 
     if jotaroRTimerInt3 == 110
-        effect1 = addEffect("war3mapImported\\punchshot.mdx", starPlatinum.getPos())
+        effect1 = addEffect("war3mapImported\\tx.mdx", starPlatinum.getPos())
+        ..setScale(3)
+        ..setYaw(angle)
         ..destr()
         effect2 = addEffect("war3mapImported\\dustwavxfsfsfe.mdx", starPlatinum.getPos())
         ..setScale(0.60)
-        ..destr()
+        ..destr() 
     if jotaroRTimerInt3 == 130
-        effect1 = addEffect("war3mapImported\\punchshot.mdx", starPlatinum.getPos())
+        effect1 = addEffect("war3mapImported\\tx.mdx", starPlatinum.getPos())
+        ..setScale(3)
+        ..setYaw(angle)
         ..destr()
         effect2 = addEffect("war3mapImported\\dustwavxfsfsfe.mdx", starPlatinum.getPos())
         ..setScale(0.60)
-        ..destr()
+        ..destr() 
     if jotaroRTimerInt3 == 150
-        effect1 = addEffect("war3mapImported\\punchshot.mdx", starPlatinum.getPos())
+        effect1 = addEffect("war3mapImported\\tx.mdx", starPlatinum.getPos())
+        ..setScale(3)
+        ..setYaw(angle)
         ..destr()
         effect2 = addEffect("war3mapImported\\dustwavxfsfsfe.mdx", starPlatinum.getPos())
         ..setScale(0.60)
-        ..destr()                           
+        ..destr()                          
     if jotaroRTimerInt3 == 200
-        effect1 = addEffect("war3mapImported\\punchshot.mdx", starPlatinum.getPos())
+        effect1 = addEffect("war3mapImported\\tx.mdx", starPlatinum.getPos())
+        ..setScale(3)
+        ..setYaw(angle)
         ..destr()
         effect2 = addEffect("war3mapImported\\dustwavxfsfsfe.mdx", starPlatinum.getPos())
         ..setScale(0.60)
