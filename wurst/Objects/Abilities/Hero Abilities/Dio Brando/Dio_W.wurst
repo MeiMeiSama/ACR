@@ -3,13 +3,10 @@ package Dio_W
 import DamageEvent
 import AbilityGlobals
 import ObjectDefinitions
-import UpdateTooltips
-import TimerUtils
 import ChannelAbilityPreset
 import UnitIds
 import ClosureForGroups
-import ACR_Pull
-import ACR_TagSystem
+import ACR_Knockback
 import ACR_Stun
 import main
 
@@ -100,10 +97,7 @@ function dioW()
             abilitydioWPos = vec2(GetSpellTargetX(), GetSpellTargetY())
             dio = GetTriggerUnit()
             dio.pause()
-            dio.setInvulnerable(true)    
-            zaWarudo = createUnit(DIO_W_DUMMY, dio.getPos())     
-            zaWarudo.setAnimation(9)
-            zaWarudo.setFacing(zaWarudo.getPos().angleTo(abilitydioWPos))              
+            dio.setInvulnerable(true)                 
             dioWTimerInt1 = 0                          
             dioWTimer = CreateTimer()..startPeriodic(0.01, function dioWStart)   
 
@@ -113,14 +107,54 @@ function dioWStart()
         forNearestUnit(dio.getPos(), 600, Filter(function dioWFilter)) (unit u) ->
             if u != null
                 dioWTimer.destr()
-                print("1")
-                dio.unpause()
-                dio.setInvulnerable(false)                  
+                dioWTarget = u
+                dioWTarget.pause()
+                dioWTarget.setInvulnerable(true)
+                dioWTimerInt1 = 0
+                dioWTimer = CreateTimer()..startPeriodic(0.01, function dioWSingleTarget)                 
             else 
-                dioWTimer.destr()
-                print("2")            
-                dio.unpause()
-                dio.setInvulnerable(false)        
+                dioWTimer.destr()         
+                dioWTimerInt1 = 0
+                dioWTimer = CreateTimer()..startPeriodic(0.01, function dioWAoe)        
+
+function dioWSingleTarget()
+    dioWTimerInt1++
+    if dioWTimerInt1 == 5
+        zaWarudo = createUnit(DIO_W_DUMMY, dioWTarget.getPos().polarOffset(dioWTarget.getPos().angleTo(dio.getPos()), 200)) 
+        zaWarudo.setFacing(zaWarudo.getPos().angleTo(dioWTarget.getPos()))    
+    if dioWTimerInt1 == 6  
+        zaWarudo.setAnimation(2)  
+    if dioWTimerInt1 == 100
+        dio.unpause()
+        dio.setInvulnerable(false)        
+        dioWTarget.setInvulnerable(false)        
+        DamageEvent.setNextDamageId(DAMAGE_ABILITY_W)
+        DamageEvent.setNextDamageFromCode()
+        dio.damageTarget(dioWTarget, 1, ATTACK_TYPE_MAGIC)  
+        dioWTarget.unpause()   
+        acrKnockback(dio, dioWTarget, 700)    
+    if dioWTimerInt1 >= 125
+        dioWTimer.destr()
+        zaWarudo.kill()
+
+function dioWAoe()
+    dioWTimerInt1++
+    if dioWTimerInt1 == 5
+        zaWarudo = createUnit(DIO_W_DUMMY, dio.getPos())   
+    if dioWTimerInt1 == 6  
+        zaWarudo.setAnimation(14)  
+    if dioWTimerInt1 == 100
+        dio.unpause()
+        dio.setInvulnerable(false)        
+        forUnitsInRange(dio.getPos(), 600) (unit u) ->
+            if dio.isAllyOf(u) == false and u.isInvulnerable() == false
+                DamageEvent.setNextDamageId(DAMAGE_ABILITY_W)
+                DamageEvent.setNextDamageFromCode()
+                dio.damageTarget(u, 1, ATTACK_TYPE_MAGIC)     
+                acrStun(dio, u, 0.7)   
+    if dioWTimerInt1 >= 125
+        dioWTimer.destr()
+        zaWarudo.kill()
 
 function dioWFilter() returns boolean
     return GetFilterUnit().isType(UNIT_TYPE_HERO)==true and GetFilterUnit().isEnemyOf(dio)==true and GetFilterUnit().isAlive()==true and GetFilterUnit().isInvulnerable()== false  
