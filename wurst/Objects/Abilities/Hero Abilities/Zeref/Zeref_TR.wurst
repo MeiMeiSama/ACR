@@ -5,6 +5,7 @@ import ObjectDefinitions
 import ChannelAbilityPreset
 import main
 import ClosureForGroups
+import TerrainUtils
 
 unit zeref
 unit enemy
@@ -14,6 +15,7 @@ effect effect1
 effect effect2
 vec2 spellPos
 angle angle
+vec2 zerefPos
 
 @compiletime function createAbility()
     new ChannelAbilityPreset(ZEREF_TR, 1, true)
@@ -58,20 +60,28 @@ function initTrig_ZerefTR_Orig()
             zeref.pause()
             enemy.setInvulnerable(true)
             enemy.pause()
-            zeref.setPos(zeref.getPos().polarOffset(angle, (zeref.getPos().distanceTo(spellPos) -700))) 
-            SetUnitAnimation(zeref, "Stand - 1")
+            zeref.setPos(zeref.getPos().polarOffset(angle, (zeref.getPos().distanceTo(spellPos) -800))) 
             zerefTRInt = 0
             CreateTimer()..startPeriodic(0.03, function zerefTREnd)
 
 function zerefTREnd()
     zerefTRInt++
-    if zerefTRInt == 60
-        effect1 = addEffect("war3mapImported\\CeremonyofDarkness.mdx", zeref, "origin")
+    if zerefTRInt == 30
+        zeref.setAnimation(2)
+    if zerefTRInt >= 31 and zerefTRInt < 135
+        zerefPos = zeref.getPos()
+        if zerefPos.polarOffset(zerefPos.angleTo(spellPos), 250).isTerrainPathable(PATHING_TYPE_WALKABILITY) == true and zerefPos.polarOffset(zerefPos.angleTo(spellPos), 250).isTerrainPathable(PATHING_TYPE_FLYABILITY) == true
+            DoNothing()
+        else                 
+            zeref.setPos(zerefPos.polarOffset(zerefPos.angleTo(spellPos), 4))   
     if zerefTRInt == 80
+        effect1 = addEffect("war3mapImported\\CeremonyofDarkness.mdx", zeref, "origin")
+    if zerefTRInt == 100
         effect2 = addEffect("war3mapImported\\ZerefTRBall.mdx", zeref, "left hand")    
     if zerefTRInt == 140
         GetExpiredTimer().destr()
-        zeref.setPos(zeref.getPos().polarOffset(angle, (zeref.getPos().distanceTo(spellPos) -170))) 
+        //zeref.setPos(zeref.getPos().polarOffset(angle, (zeref.getPos().distanceTo(spellPos) -170))) 
+        zeref.setAnimation("Stand - 1")
         zerefTRInt2 = 0
         CreateTimer()..startPeriodic(0.03, function zerefTREnd2)
     
@@ -92,7 +102,6 @@ function zerefTREnd2()
                 DamageEvent.setNextDamageId(DAMAGE_ABILITY_MODE_R)
                 DamageEvent.setNextDamageFromCode()
                 UnitDamageTargetBJ(zeref,victim,(100*GetUnitAbilityLevel(zeref,ZEREF_TR)).toReal(),ATTACK_TYPE_MAGIC,DAMAGE_TYPE_MAGIC)          
-        effect1.destr()
         effect2.destr()
         zeref.setInvulnerable(false)
         zeref.unpause()

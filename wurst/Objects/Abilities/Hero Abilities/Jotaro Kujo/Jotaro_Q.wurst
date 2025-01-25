@@ -55,7 +55,7 @@ vec2 jotaroPos
         ..setHasWaterShadow(false)
         ..setMaximumPitchAngledegrees(0)
         ..setMaximumRollAngledegrees(0)
-        ..setModelFile("war3mapImported\\DioLaser.mdx") //Star Platinum
+        ..setModelFile("war3mapImported\\DioLaser.mdx") //Star Platinum //DioLaser
         ..setScalingValue(1.5)
         ..setArtSpecial("_")
         ..setArmorType(ArmorType.Unarmored)
