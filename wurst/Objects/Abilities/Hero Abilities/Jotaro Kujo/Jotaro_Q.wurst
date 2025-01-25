@@ -55,13 +55,13 @@ vec2 jotaroPos
         ..setHasWaterShadow(false)
         ..setMaximumPitchAngledegrees(0)
         ..setMaximumRollAngledegrees(0)
-        ..setModelFile("war3mapImported\\DioLaser.mdx") //Star Platinum //DioLaser
-        ..setScalingValue(1.5)
+        ..setModelFile("war3mapImported\\starfinger.mdx") //Star Platinum //DioLaser
+        ..setScalingValue(1.0)
         ..setArtSpecial("_")
         ..setArmorType(ArmorType.Unarmored)
         ..setPlaceableInEditor(false)
         ..setMovementHeight(20)
-        ..setSpeedBase(100)
+        ..setSpeedBase(522)
         ..setTurnRate(3)
         ..setMovementType(MovementType.Fly)
         ..setCollisionSize(0)
@@ -80,6 +80,7 @@ vec2 jotaroPos
         ..setName("effect dummy")
         ..setTooltipBasic("_")
         ..setTooltipExtended("_")
+
     new UnitDefinition(JOTARO_Q_DUMMY2, UnitIds.wisp)
         ..setNormalAbilities(commaList('Avul', 'Aloc', 'Amrf'))
         ..setAnimationCastBackswing(0)
@@ -90,7 +91,7 @@ vec2 jotaroPos
         ..setHasWaterShadow(false)
         ..setMaximumPitchAngledegrees(0)
         ..setMaximumRollAngledegrees(0)
-        ..setModelFile("_")
+        ..setModelFile("war3mapImported\\Star Platinum.mdx")
         ..setScalingValue(1.5)
         ..setArtSpecial("_")
         ..setArmorType(ArmorType.Unarmored)
@@ -131,9 +132,9 @@ function jotaroQ()
             if jotaro.getPos().distanceTo(abilityJotaroQPos) < 1500
                 abilityJotaroQPos = jotaro.getPos().polarOffset(jotaro.getPos().angleTo(abilityJotaroQPos), 1500)
             //flashEffect("war3mapImported\\DioLaser.mdx", jotaroPos.polarOffset(jotaroPos.angleTo(abilityJotaroQPos), 700), 35, jotaroPos.angleTo(abilityJotaroQPos))
-            starPlatinum = createUnit(JOTARO_Q_DUMMY, jotaroPos.polarOffset(jotaroPos.angleTo(abilityJotaroQPos), 700))
-            starPlatinum.setScale(35)
-            starPlatinum.setFacing(starPlatinum.getPos().angleTo(abilityJotaroQPos))
+            starPlatinum = createUnit(jotaro.getOwner(), JOTARO_Q_DUMMY2, jotaroPos.polarOffset(jotaroPos.angleTo(abilityJotaroQPos), 150), jotaro.getPos().angleTo(abilityJotaroQPos))
+            starPlatinum.setTimeScale(3.5)
+            starPlatinum.setAnimation(2)
             jotaroQTimerInt = 0
             if jotaroQGroup == null
                 jotaroQGroup = CreateGroup()            
@@ -141,18 +142,26 @@ function jotaroQ()
 
 function jotaroQStart()
     jotaroQTimerInt++
-    if jotaroQTimerInt == 10
+    // if jotaroQTimerInt < 11 
+    //     let laser = createUnit(jotaro.getOwner(), JOTARO_Q_DUMMY, jotaroPos.polarOffset(jotaroPos.angleTo(abilityJotaroQPos), (100.0 * i)) , jotaroPos.angleTo(abilityJotaroQPos))
+    //     SetUnitScale(laser, 10.0, 1.0, 1.0)
+    //     laser.setTimedLife(1.0)
+    if jotaroQTimerInt == 5
         for i = 3 to 12
-            jotaroQDummy[i] = createUnit(JOTARO_Q_DUMMY2, jotaroPos.polarOffset(jotaroPos.angleTo(abilityJotaroQPos), (100.0 * i)))  
+            jotaroQDummy[i] = createUnit(jotaro.getOwner(), JOTARO_Q_DUMMY, jotaroPos.polarOffset(jotaroPos.angleTo(abilityJotaroQPos), (100.0 * i)) , jotaroPos.angleTo(abilityJotaroQPos))  
+            SetUnitScale(jotaroQDummy[i], 10.0, 3.0, 1.0)
+            jotaroQDummy[i].setFlyHeight(300, 0)
             forUnitsInRange(jotaroQDummy[i].getPos(), 300) (unit u) ->
                 if jotaro.isAllyOf(u) == false and u.isInvulnerable() == false and jotaroQGroup.has(u) == false
                     DamageEvent.setNextDamageId(DAMAGE_ABILITY_Q)
                     DamageEvent.setNextDamageFromCode()
                     jotaro.damageTarget(u, 1, ATTACK_TYPE_MAGIC) 
                     jotaroQGroup.add(u)                      
-    if jotaroQTimerInt >= 80
+    if jotaroQTimerInt >= 40
         starPlatinum.kill()
         for i = 3 to 12
             jotaroQDummy[i].kill()
             jotaroQTimer.destr()
             jotaroQGroup.clear() 
+
+            
