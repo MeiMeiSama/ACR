@@ -16,6 +16,9 @@ timer jotaroQTimer
 int jotaroQTimerInt
 vec2 abilityJotaroQPos
 vec2 starPlatinumPos
+vec2 jotaroPos
+effect effect1
+angle angle
 
 @compiletime function createAbility()
     new ChannelAbilityPreset(JOTARO_Q, 5, true)
@@ -115,41 +118,6 @@ vec2 starPlatinumPos
         ..setName("effect dummy")
         ..setTooltipBasic("_")
         ..setTooltipExtended("_")
-    new UnitDefinition(JOTARO_Q_DUMMY3, UnitIds.wisp)
-        ..setNormalAbilities(commaList('Avul', 'Aloc', 'Amrf'))
-        ..setAnimationCastBackswing(0)
-        ..setDeathTimeseconds(0.1)
-        ..setScalingValue(0.70)
-        ..setUnitClassification("_")
-        ..setArtSpecial("_")
-        ..setHasWaterShadow(false)
-        ..setMaximumPitchAngledegrees(0)
-        ..setMaximumRollAngledegrees(0)
-        ..setModelFile("war3mapImported\\Piercing Thrust Purple.mdx")
-        ..setScalingValue(1.5)
-        ..setArtSpecial("_")
-        ..setArmorType(ArmorType.Unarmored)
-        ..setPlaceableInEditor(false)
-        ..setMovementHeight(20)
-        ..setSpeedBase(100)
-        ..setTurnRate(3)
-        ..setMovementType(MovementType.Fly)
-        ..setCollisionSize(0)
-        ..setUnitSoundSet("_")
-        ..setCanFlee(false)
-        ..setFoodCost(0)
-        ..setHideMinimapDisplay(true)
-        ..setHitPointsMaximumBase(60)
-        ..setHitPointsRegenerationRate(-1)
-        ..setHitPointsRegenerationType("Always")
-        ..setStockMaximum(1)
-        ..setStockReplenishInterval(1)
-        ..setStructuresBuilt("_")
-        ..setUpgradesUsed("_")
-        ..setHotkey("_")
-        ..setName("effect dummy")
-        ..setTooltipBasic("_")
-        ..setTooltipExtended("_")
 
 init
     jotaroQ()    
@@ -162,23 +130,28 @@ function jotaroQ()
             gg_snd_jotaroQ.play()
             abilityJotaroQPos = vec2(GetSpellTargetX(), GetSpellTargetY())
             jotaro = GetTriggerUnit()
+            jotaroPos = jotaro.getPos()
             if jotaro.getPos().distanceTo(abilityJotaroQPos) < 1500
                 abilityJotaroQPos = jotaro.getPos().polarOffset(jotaro.getPos().angleTo(abilityJotaroQPos), 1500)
-            starPlatinum = createUnit(JOTARO_Q_DUMMY, jotaro.getPos().polarOffset(jotaro.getPos().angleTo(abilityJotaroQPos), 200))
-            starPlatinum.setFacing(starPlatinum.getPos().angleTo(abilityJotaroQPos)) 
-            starPlatinum.setTimeScale(20)
-            starPlatinum.setAnimation(3)
-            starPlatinumPos = starPlatinum.getPos()
+            angle = jotaroPos.angleTo(abilityJotaroQPos)
+            //starPlatinum = createUnit(JOTARO_Q_DUMMY, jotaro.getPos().polarOffset(jotaro.getPos().angleTo(abilityJotaroQPos), 200))
+            //starPlatinum.setFacing(starPlatinum.getPos().angleTo(abilityJotaroQPos)) 
+            //starPlatinum.setTimeScale(20)
+            //starPlatinum.setAnimation(3)
+            //starPlatinumPos = starPlatinum.getPos()
+            jotaro.setAnimation(3)
             jotaroQTimerInt = 0
             if jotaroQGroup == null
                 jotaroQGroup = CreateGroup()            
-            jotaroQTimer = CreateTimer()..startPeriodic(0.01, function jotaroQStart)
+            jotaroQTimer = CreateTimer()..startPeriodic(0.03, function jotaroQStart)
 
 function jotaroQStart()
     jotaroQTimerInt++
-    if jotaroQTimerInt == 5
+    if jotaroQTimerInt == 14
+        flashEffect("war3mapImported\\Starfinger.mdx", jotaroPos.polarOffset(jotaroPos.angleTo(abilityJotaroQPos), 200), 2, angle)
+    if jotaroQTimerInt == 16
         for i = 3 to 12
-            jotaroQDummy[i] = createUnit(JOTARO_Q_DUMMY2, starPlatinumPos.polarOffset(starPlatinumPos.angleTo(abilityJotaroQPos), (100.0 * i)))  
+            jotaroQDummy[i] = createUnit(JOTARO_Q_DUMMY2, jotaroPos.polarOffset(jotaroPos.angleTo(abilityJotaroQPos), (100.0 * i)))  
             forUnitsInRange(jotaroQDummy[i].getPos(), 300) (unit u) ->
                 if jotaro.isAllyOf(u) == false and u.isInvulnerable() == false and jotaroQGroup.has(u) == false
                     DamageEvent.setNextDamageId(DAMAGE_ABILITY_Q)
@@ -186,7 +159,7 @@ function jotaroQStart()
                     jotaro.damageTarget(u, 1, ATTACK_TYPE_MAGIC) 
                     jotaroQGroup.add(u)                      
     if jotaroQTimerInt >= 80
-        starPlatinum.kill()
+        //starPlatinum.kill()
         for i = 3 to 12
             jotaroQDummy[i].kill()
             jotaroQTimer.destr()
