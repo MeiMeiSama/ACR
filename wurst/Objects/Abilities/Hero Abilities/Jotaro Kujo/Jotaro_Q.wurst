@@ -179,7 +179,12 @@ function jotaroQ()
 function jotaroQStart()
     jotaroQTimerInt++
 
-    // yone
+    // Yone Code Start --------------------------------------------------------------------------------------------------------------------------
+    // I recommend learning to use "effect" for effects instead of units. Using units is ancient technique, ever since we got reforged it is no longer necessary. Read code below for demonstration
+    // Unit is also less friendly on FPS, whereas effects have almost no impact on performance when compared to spawning multiple units instead
+    // Another benefit is that effects dont behave like a unit, and no dummy is required. For example a unit can not go through boundary, making the dummy_effect look weird but effect instead of unit will be able to.
+    // Of course, you can find workarounds for this like giving locust to dummy unit, but there is also issues with cliffs and other things. I recommend learning effects, they are superior when it comes to  handling effects.
+
     effect sfx = null
     if jotaroQTimerInt == 3
         sfx = addEffect("war3mapImported\\starfinger.mdx", starPlatinum.getPos().polarOffset(starPlatinum.getPos().angleTo(abilityJotaroQPos), 1000))
@@ -187,21 +192,29 @@ function jotaroQStart()
         ..setYaw(starPlatinum.getPos().angleTo(abilityJotaroQPos))
         ..setScale(vec3(50, 10, 5))
         ..setZ(450)
-        ..setTime(0.50)
+        ..setTime(0.50) // I can't get setTime to work properly, maybe its bugged? Not sure, so I used doAfter and removed it
         ..playAnimation(ANIM_TYPE_STAND)
         sfx.getPos().add(25, 0)
-        doAfter(0.5) -> // Temporary, Gajeel hates ClosureTimers
-            sfx.setX(-999999) // When killing an effect, it plays death animation lasting 0.5s to 1.5s depending on how long it is
-            sfx.setY(-999999) // So same part where we destroy it we just move it away from map
-            sfx.destr()
-    // yone
+        doAfter(0.5) ->
+            sfx.setX(-999999) // Sometimes when destroying an effect there is a delay (to give it time to play death animation)
+            sfx.setY(-999999) // Laser has only "STAND" animation but it does nothing, so for us useless. We move effect away from everyone's eye, giving the impression it disappeared instantly.
+            sfx.destr()       // And destroy it, so it does not leak
 
-        // So this is where he creates the laser effect ? yep
-        // laser = createUnit(jotaro.getOwner(), JOTARO_Q_DUMMY3, starPlatinum.getPos().polarOffset(starPlatinum.getPos().angleTo(abilityJotaroQPos), 700), starPlatinum.getPos().angleTo(abilityJotaroQPos))
-        // SetUnitScale(laser, 35.0, 3.0, 1.0) // need to convert this part to that is it cuz laser btw why was this part needed cuz laser ?not fully sure why it didnt apepar tho
+    // Yaw: This changes the direction it should look at / face at
+    // Pitch: How much it should look up/down, like when a plane is about to lift, it has to increase its pitch to look up to fly
+    // Roll: If you want the plane to fly upside down, you would change Roll, so this "rotates" on the object itself
+    // Plane Image Demonstration: https://upload.wikimedia.org/wikipedia/commons/c/c1/Yaw_Axis_Corrected.svg
 
-        // laser.setFlyHeight(300, 0)
-        // laser.setTimedLife(0.50)
+    // Animation: Effects don't use animations like units "integer 1" or "string name", they mostly use ANIMTYPEs. For example, Laser animation has STAND. So for us, we would play STAND like this: sfx.playAnimation(ANIM_TYPE_STAND)
+    // Animation: See https://i.imgur.com/FxL1jDC.png for all the ANIMTYPEs, can also find them in common.j
+
+    // Yone Code End --------------------------------------------------------------------------------------------------------------------------
+
+    // laser = createUnit(jotaro.getOwner(), JOTARO_Q_DUMMY3, starPlatinum.getPos().polarOffset(starPlatinum.getPos().angleTo(abilityJotaroQPos), 700), starPlatinum.getPos().angleTo(abilityJotaroQPos))
+    // SetUnitScale(laser, 35.0, 3.0, 1.0) // need to convert this part to that is it cuz laser btw why was this part needed cuz laser ?not fully sure why it didnt apepar tho
+
+    // laser.setFlyHeight(300, 0)
+    // laser.setTimedLife(0.50)
     if jotaroQTimerInt == 5
         for i = 3 to 12
             jotaroQDummy[i] = createUnit(jotaro.getOwner(), JOTARO_Q_DUMMY, jotaroPos.polarOffset(jotaroPos.angleTo(abilityJotaroQPos), (100.0 * i)) , jotaroPos.angleTo(abilityJotaroQPos))  
