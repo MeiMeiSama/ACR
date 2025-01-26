@@ -211,7 +211,7 @@ function jotaroQStart()
     // Yone Code End --------------------------------------------------------------------------------------------------------------------------
 
     // laser = createUnit(jotaro.getOwner(), JOTARO_Q_DUMMY3, starPlatinum.getPos().polarOffset(starPlatinum.getPos().angleTo(abilityJotaroQPos), 700), starPlatinum.getPos().angleTo(abilityJotaroQPos))
-    // SetUnitScale(laser, 35.0, 3.0, 1.0) // need to convert this part to that is it cuz laser btw why was this part needed cuz laser ?not fully sure why it didnt apepar tho
+    // SetUnitScale(laser, 35.0, 3.0, 1.0)
 
     // laser.setFlyHeight(300, 0)
     // laser.setTimedLife(0.50)
