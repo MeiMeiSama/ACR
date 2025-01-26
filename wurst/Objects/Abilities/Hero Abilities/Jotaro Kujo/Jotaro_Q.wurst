@@ -10,6 +10,7 @@ import main
 
 unit jotaro
 unit starPlatinum
+unit laser
 unit array jotaroQDummy
 group jotaroQGroup
 timer jotaroQTimer
@@ -55,7 +56,7 @@ vec2 jotaroPos
         ..setHasWaterShadow(false)
         ..setMaximumPitchAngledegrees(0)
         ..setMaximumRollAngledegrees(0)
-        ..setModelFile("war3mapImported\\starfinger.mdx") //Star Platinum //DioLaser
+        ..setModelFile("_") //Star Platinum //DioLaser //starfinger
         ..setScalingValue(1.0)
         ..setArtSpecial("_")
         ..setArmorType(ArmorType.Unarmored)
@@ -116,6 +117,41 @@ vec2 jotaroPos
         ..setName("effect dummy")
         ..setTooltipBasic("_")
         ..setTooltipExtended("_")
+    new UnitDefinition(JOTARO_Q_DUMMY3, UnitIds.wisp)
+        ..setNormalAbilities(commaList('Avul', 'Aloc', 'Amrf'))
+        ..setAnimationCastBackswing(0)
+        ..setDeathTimeseconds(0.1)
+        ..setScalingValue(0.70)
+        ..setUnitClassification("_")
+        ..setArtSpecial("_")
+        ..setHasWaterShadow(false)
+        ..setMaximumPitchAngledegrees(0)
+        ..setMaximumRollAngledegrees(0)
+        ..setModelFile("war3mapImported\\starfinger.mdx")
+        ..setScalingValue(1.5)
+        ..setArtSpecial("_")
+        ..setArmorType(ArmorType.Unarmored)
+        ..setPlaceableInEditor(false)
+        ..setMovementHeight(20)
+        ..setSpeedBase(100)
+        ..setTurnRate(3)
+        ..setMovementType(MovementType.Fly)
+        ..setCollisionSize(0)
+        ..setUnitSoundSet("_")
+        ..setCanFlee(false)
+        ..setFoodCost(0)
+        ..setHideMinimapDisplay(true)
+        ..setHitPointsMaximumBase(60)
+        ..setHitPointsRegenerationRate(-1)
+        ..setHitPointsRegenerationType("Always")
+        ..setStockMaximum(1)
+        ..setStockReplenishInterval(1)
+        ..setStructuresBuilt("_")
+        ..setUpgradesUsed("_")
+        ..setHotkey("_")
+        ..setName("effect dummy")
+        ..setTooltipBasic("_")
+        ..setTooltipExtended("_")    
 
 init
     jotaroQ()    
@@ -131,7 +167,6 @@ function jotaroQ()
             jotaroPos = jotaro.getPos()
             if jotaro.getPos().distanceTo(abilityJotaroQPos) < 1500
                 abilityJotaroQPos = jotaro.getPos().polarOffset(jotaro.getPos().angleTo(abilityJotaroQPos), 1500)
-            //flashEffect("war3mapImported\\DioLaser.mdx", jotaroPos.polarOffset(jotaroPos.angleTo(abilityJotaroQPos), 700), 35, jotaroPos.angleTo(abilityJotaroQPos))
             starPlatinum = createUnit(jotaro.getOwner(), JOTARO_Q_DUMMY2, jotaroPos.polarOffset(jotaroPos.angleTo(abilityJotaroQPos), 150), jotaro.getPos().angleTo(abilityJotaroQPos))
             starPlatinum.setTimeScale(3.5)
             starPlatinum.setAnimation(2)
@@ -142,10 +177,11 @@ function jotaroQ()
 
 function jotaroQStart()
     jotaroQTimerInt++
-    // if jotaroQTimerInt < 11 
-    //     let laser = createUnit(jotaro.getOwner(), JOTARO_Q_DUMMY, jotaroPos.polarOffset(jotaroPos.angleTo(abilityJotaroQPos), (100.0 * i)) , jotaroPos.angleTo(abilityJotaroQPos))
-    //     SetUnitScale(laser, 10.0, 1.0, 1.0)
-    //     laser.setTimedLife(1.0)
+    if jotaroQTimerInt == 2
+        laser = createUnit(jotaro.getOwner(), JOTARO_Q_DUMMY3, starPlatinum.getPos().polarOffset(starPlatinum.getPos().angleTo(abilityJotaroQPos), 700), starPlatinum.getPos().angleTo(abilityJotaroQPos))
+        SetUnitScale(laser, 35.0, 3.0, 1.0)
+        laser.setFlyHeight(300, 0)
+        laser.setTimedLife(0.50)
     if jotaroQTimerInt == 5
         for i = 3 to 12
             jotaroQDummy[i] = createUnit(jotaro.getOwner(), JOTARO_Q_DUMMY, jotaroPos.polarOffset(jotaroPos.angleTo(abilityJotaroQPos), (100.0 * i)) , jotaroPos.angleTo(abilityJotaroQPos))  
@@ -163,5 +199,3 @@ function jotaroQStart()
             jotaroQDummy[i].kill()
             jotaroQTimer.destr()
             jotaroQGroup.clear() 
-
-            
