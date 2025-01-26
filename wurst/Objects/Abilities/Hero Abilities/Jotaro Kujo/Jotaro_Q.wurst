@@ -142,10 +142,6 @@ function jotaroQ()
 
 function jotaroQStart()
     jotaroQTimerInt++
-    // if jotaroQTimerInt < 11 
-    //     let laser = createUnit(jotaro.getOwner(), JOTARO_Q_DUMMY, jotaroPos.polarOffset(jotaroPos.angleTo(abilityJotaroQPos), (100.0 * i)) , jotaroPos.angleTo(abilityJotaroQPos))
-    //     SetUnitScale(laser, 10.0, 1.0, 1.0)
-    //     laser.setTimedLife(1.0)
     if jotaroQTimerInt == 5
         for i = 3 to 12
             jotaroQDummy[i] = createUnit(jotaro.getOwner(), JOTARO_Q_DUMMY, jotaroPos.polarOffset(jotaroPos.angleTo(abilityJotaroQPos), (100.0 * i)) , jotaroPos.angleTo(abilityJotaroQPos))  
