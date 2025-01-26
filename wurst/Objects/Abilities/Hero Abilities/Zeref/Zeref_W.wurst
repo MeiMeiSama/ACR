@@ -7,9 +7,13 @@ import UnitIds
 import main
 import ClosureForGroups
 import ACR_Stun
+import ClosureTimers
 
 unit zeref
+unit alegria
 integer zerefWInt
+integer zerefWInt2
+effect sfx
 vec2 spellPos
 
 @compiletime function createAbility()
@@ -108,6 +112,40 @@ vec2 spellPos
         ..setName("effect dummy")
         ..setTooltipBasic("_")
         ..setTooltipExtended("_")
+    new UnitDefinition(ZEREF_W_DUMMY3, UnitIds.wisp)
+        ..setNormalAbilities(commaList('Avul', 'Aloc', 'Amrf'))
+        ..setAnimationCastBackswing(0)
+        ..setDeathTimeseconds(0.1)
+        ..setScalingValue(0.70)
+        ..setUnitClassification("_")
+        ..setArtSpecial("_")
+        ..setHasWaterShadow(false)
+        ..setMaximumPitchAngledegrees(0)
+        ..setMaximumRollAngledegrees(0)
+        ..setModelFile("war3mapImported\\Goyka.mdx")
+        ..setArtSpecial("_")
+        ..setArmorType(ArmorType.Unarmored)
+        ..setPlaceableInEditor(false)
+        ..setMovementHeight(20)
+        ..setSpeedBase(100)
+        ..setTurnRate(3)
+        ..setMovementType(MovementType.Fly)
+        ..setCollisionSize(0)
+        ..setUnitSoundSet("_")
+        ..setCanFlee(false)
+        ..setFoodCost(0)
+        ..setHideMinimapDisplay(true)
+        ..setHitPointsMaximumBase(60)
+        ..setHitPointsRegenerationRate(-1)
+        ..setHitPointsRegenerationType("Always")
+        ..setStockMaximum(1)
+        ..setStockReplenishInterval(1)
+        ..setStructuresBuilt("_")
+        ..setUpgradesUsed("_")
+        ..setHotkey("_")
+        ..setName("effect dummy")
+        ..setTooltipBasic("_")
+        ..setTooltipExtended("_")    
 
 init
     initTrig_ZerefW_Orig()     
@@ -122,8 +160,14 @@ function initTrig_ZerefW_Orig()
             zeref.setInvulnerable(true)
             zeref.pause()
             SetUnitAnimation(zeref, "spell")
-            zerefWInt=0
-            CreateTimer()..startPeriodic(0.02, function zerefWEnd)
+            let rng = GetRandomInt(0, 1)
+            if rng == 0
+                zerefWInt2=0
+                soundPlay("war3mapImported\\Allegria.mp3", 0, 0)
+                CreateTimer()..startPeriodic(0.02, function zerefWEnd2)
+            else    
+                zerefWInt=0
+                CreateTimer()..startPeriodic(0.02, function zerefWEnd)
 
 function zerefWEnd()
     unit u
@@ -149,5 +193,38 @@ function zerefWEnd()
         SetUnitScale(u,4.5,4.5,4.5)
         SetUnitTimeScalePercent(u,80)
         UnitApplyTimedLife(u,'BHwe',2)
-        flashEffect("war3mapImported\\seilaexp", spellPos)
-        soundPlay("war3mapImported\\Sayla 5.mp3", 0, 0)           
+        flashEffect("war3mapImported\\seilaexp.mdx", spellPos)
+        soundPlay("war3mapImported\\Sayla 5.mp3", 0, 0) 
+
+function zerefWEnd2()
+    zerefWInt2++
+    PauseUnit(zeref,true)
+    if zerefWInt2 == 6
+        alegria = createUnit(zeref.getOwner(), ZEREF_W_DUMMY3, zeref.getPos().polarOffset(zeref.getPos().angleTo(spellPos), 200), zeref.getPos().angleTo(spellPos))
+        ..setScale(1.6)
+        ..setFlyHeight(400, 0)
+        ..setTimedLife(1)
+    if zerefWInt2 >= 7 and zerefWInt2 < 17
+        if alegria.getPos().distanceTo(spellPos) > 100
+            alegria.setPos(alegria.getPos().polarOffset(alegria.getPos().angleTo(spellPos), 70))
+            alegria.setFlyHeight(-200, 1)
+        else
+            DoNothing() 
+    if zerefWInt2 == 18
+        alegria.kill()
+        sfx = addEffect("war3mapImported\\AlegriaExp.mdx", spellPos)
+        ..setScale(3.5)
+        doAfter(2.5) -> 
+            sfx.setX(-999999)
+            sfx.setY(-999999)
+            sfx.destr()
+    if zerefWInt2 == 20
+        GetExpiredTimer().destr()
+        forUnitsInRange(spellPos, 600) (unit victim) ->
+            if victim.isType(UNIT_TYPE_STRUCTURE)==false and victim.isEnemyOf(zeref)==true and victim.isAlive()==true and victim.isInvulnerable() == false
+                DamageEvent.setNextDamageId(DAMAGE_ABILITY_W)
+                DamageEvent.setNextDamageFromCode()
+                zeref.damageTarget(victim, 1, ATTACK_TYPE_MAGIC)
+                acrStun(zeref, victim, 0.7)
+        zeref.setInvulnerable(false)
+        zeref.unpause() 
