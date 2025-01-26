@@ -12,7 +12,7 @@ public function newY(real locY, real dist, real angle) returns real
     return locY + dist * Sin(Deg2Rad(angle))
 
 public function getAxisAngle(real fromX, real fromY, real targetX, real targetY) returns real
-    return Rad2Deg(Atan2(targetY - fromY, targetX - fromX))
+    return (Atan2(targetY - fromY, targetX - fromX))
 
 public function getAngleCast(unit caster, real targetX, real targetY) returns real
     let fromX = GetUnitX(caster)

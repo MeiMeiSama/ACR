@@ -8,7 +8,7 @@ import UnitIds
 import ClosureForGroups
 import ACR_Knockback
 import ACR_Stun
-import main
+// import main
 
 unit dio
 unit zaWarudo
@@ -133,9 +133,12 @@ function dioWSingleTarget()
 function dioWAoe()
     dioWTimerInt++
     if dioWTimerInt == 5
-        zaWarudo = createUnit(DIO_W_DUMMY, dio.getPos())   
+        zaWarudo = createUnitZ(dio.getOwner(), DIO_W_DUMMY, dio.getPos().withZ(1000), DOWN.getAngle())
+        // zaWarudo = createUnitZ(dio.getOwner(), DIO_W_DUMMY, dio.getPos3with(1000), zaWarudo.getPos3with(1000).angleTo2d(zaWarudo.getPos()))
+        // let angle2 = zaWarudo.getPos3with(300).angleTo2d(zaWarudo.getPos())
+        // zaWarudo.setFacing(angle2)
     if dioWTimerInt == 6  
-        zaWarudo.setAnimation(14)  
+        zaWarudo.setAnimation(14)
     if dioWTimerInt == 100
         dio.unpause()
         dio.setInvulnerable(false)        

@@ -8,6 +8,7 @@ import ACR_ReviveInstant
 import CreateBuildings
 import ObjectDefinitions
 import DummyCaster
+import CameraFunctions
 int acrdevtimer
 unit selectedUnit
 timer acrTimer
@@ -96,6 +97,8 @@ function devTools ()
             trig_VsBossBeginActions()
         else if input == "ffa"
             trig_TournamentFFAActions()
+        else if input == "cam"
+            camON = true
         else if input == "test"
             testTimer = CreateTimer()..start(5, function testFunc)     
         else if input == "release"
