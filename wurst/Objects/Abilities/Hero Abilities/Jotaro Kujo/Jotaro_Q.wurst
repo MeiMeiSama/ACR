@@ -18,7 +18,7 @@ timer jotaroQTimer
 int jotaroQTimerInt
 vec2 abilityJotaroQPos
 vec2 jotaroPos
-//effect sfx
+effect sfx
 
 @compiletime function createAbility()
     new ChannelAbilityPreset(JOTARO_Q, 5, true)
@@ -210,12 +210,15 @@ function jotaroQStart()
 
     // Yone Code End --------------------------------------------------------------------------------------------------------------------------
     
-    if jotaroQTimerInt == 4
-        laser = createUnit(jotaro.getOwner(), JOTARO_Q_DUMMY3, starPlatinum.getPos().polarOffset(starPlatinum.getPos().angleTo(abilityJotaroQPos), 800), starPlatinum.getPos().angleTo(abilityJotaroQPos))
-        SetUnitScale(laser, 30.0, 10.0, 10.0)
-        laser.setFlyHeight(300, 0)
-        laser.setTimedLife(0.50)
-    if jotaroQTimerInt == 5
+    if jotaroQTimerInt == 10
+        //laser = createUnit(jotaro.getOwner(), JOTARO_Q_DUMMY3, starPlatinum.getPos().polarOffset(starPlatinum.getPos().angleTo(abilityJotaroQPos), 800), starPlatinum.getPos().angleTo(abilityJotaroQPos))
+        //SetUnitScale(laser, 30.0, 10.0, 10.0)
+        //laser.setFlyHeight(300, 0)
+        //laser.setTimedLife(0.50)
+        sfx = addEffect("war3mapImported\\starfinger.mdx", starPlatinum.getPos().polarOffset(starPlatinum.getPos().angleTo(abilityJotaroQPos), 800))
+        ..setYaw(starPlatinum.getPos().angleTo(abilityJotaroQPos))
+        ..setScale(vec3(30, 70, 10))    
+    if jotaroQTimerInt == 12
         for i = 3 to 12
             jotaroQDummy[i] = createUnit(jotaro.getOwner(), JOTARO_Q_DUMMY, jotaroPos.polarOffset(jotaroPos.angleTo(abilityJotaroQPos), (100.0 * i)) , jotaroPos.angleTo(abilityJotaroQPos))  
             SetUnitScale(jotaroQDummy[i], 10.0, 3.0, 1.0)
@@ -227,7 +230,9 @@ function jotaroQStart()
                     jotaro.damageTarget(u, 1, ATTACK_TYPE_MAGIC) 
                     jotaroQGroup.add(u)                      
     if jotaroQTimerInt >= 40
-       // sfx.destr()
+        sfx.setX(-999999)
+        sfx.setY(-999999)
+        sfx.destr()
         starPlatinum.kill()
         for i = 3 to 12
             jotaroQDummy[i].kill()
