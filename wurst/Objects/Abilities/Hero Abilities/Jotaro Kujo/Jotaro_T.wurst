@@ -263,7 +263,7 @@ function jotaroT2Effects()
     jotaroT2TimerInt3++
     if jotaroT2TimerInt3 == 670
         angle = starPlatinum.getPos().angleTo(jotaroTTarget.getPos())
-        flashEffect("war3mapImported\\punchshot.mdx", starPlatinum.getPos())
+        flashEffect("war3mapImported\\punchshot.mdx", starPlatinum.getPos(), 1, starPlatinum.getPos().angleTo(jotaroTTarget.getPos()))
     if jotaroT2TimerInt3 == 1850
         effect1 = addEffect("war3mapImported\\circle-air.mdx", jotaroTTarget.getPos())
         ..setScale(3)
@@ -313,7 +313,7 @@ function jotaroT2Effects()
         ..setYaw(angle)
         ..destr()                  
     if jotaroT2TimerInt3 == 2680
-        flashEffect("war3mapImported\\punchshot.mdx", starPlatinum.getPos())
+        flashEffect("war3mapImported\\punchshot.mdx", starPlatinum.getPos(), 1, starPlatinum.getPos().angleTo(jotaroTTarget.getPos()))
     if jotaroT2TimerInt3 == 2695
         GetExpiredTimer().destr()
         flashEffect("war3mapImported\\tx.mdx", jotaroTTarget.getPos(), 5, starPlatinum.getPos().angleTo(jotaroTTarget.getPos()))

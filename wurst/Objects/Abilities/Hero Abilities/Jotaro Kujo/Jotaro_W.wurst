@@ -215,7 +215,7 @@ function jotaroWAttack()
     if jotaroWTimerInt2 == 30  
         starPlatinum.setAnimation(11)
     if jotaroWTimerInt2 == 36
-        flashEffect("war3mapImported\\punchshot.mdx", starPlatinumPos)    
+        flashEffect("war3mapImported\\punchshot.mdx", starPlatinumPos, 1, starPlatinumPos.angleTo(jotaroWTarget.getPos()))    
     if jotaroWTimerInt2 == 55
         jotaroWTarget.unpause()
         jotaroWTarget.setInvulnerable(false)       

@@ -259,7 +259,7 @@ function jotaroFProcStart()
     if jotaroFProcInt == 600
         starPlatinum.setAnimation(23)
     if jotaroFProcInt == 602
-        flashEffect("war3mapImported\\punchshot.mdx", starPlatinum.getPos())        
+        flashEffect("war3mapImported\\punchshot.mdx", starPlatinum.getPos(), 1, starPlatinum.getPos().angleTo(jotaroFTarget.getPos()))        
     if jotaroFProcInt == 700
         starPlatinum.kill()  
     if jotaroFProcInt == 1050

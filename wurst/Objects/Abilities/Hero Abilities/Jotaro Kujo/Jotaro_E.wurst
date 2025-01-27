@@ -80,7 +80,7 @@ function jotaroEStart()
     if jotaroETimerInt == 120
         jotaro.setAnimation(16)
     if jotaroETimerInt == 126
-        flashEffect("war3mapImported\\punchshot.mdx", jotaro.getPos())
+        flashEffect("war3mapImported\\punchshot.mdx", jotaro.getPos(), 1, jotaro.getPos().angleTo(jotaroETarget.getPos()))
     if jotaroETimerInt >= 135
         jotaroETarget.setInvulnerable(false)  
         jotaro.unpause()
