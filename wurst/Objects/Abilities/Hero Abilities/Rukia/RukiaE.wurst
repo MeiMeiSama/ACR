@@ -5,9 +5,6 @@ import AbilityGlobals
 import ObjectDefinitions
 import ChannelAbilityPreset
 import main
-import ClosureForGroups
-//import ClosureTimers
-import UnitIds
 import ACR_Slow
 
 unit rukia
@@ -64,7 +61,7 @@ function rukiaE()
                 rukiaETarget.setInvulnerable(true)
                 rukiaETarget.pause()
                 gg_snd_RukiaE2.play()
-                flashEffect("war3mapImported\\dustwavxfsfsfe.mdx", rukia.getPos(), 0.60)
+                flashEffect("war3mapImported\\RukiaBlink.mdx", rukia.getPos(), 1)
                 rukiaEInt2 = 0
                 rukiaETimer2 = CreateTimer()..startPeriodic(0.02, function rukiaEEnd2)
             else
@@ -91,8 +88,30 @@ function rukiaEEnd()
         DamageEvent.setNextDamageFromCode()
         rukia.damageTarget(rukiaETarget, 1, ATTACK_TYPE_MAGIC)   
         rukiaETarget.unpause()
-        acrSlow(rukia, rukiaETarget, 10, 1)
+        acrSlow(rukia, rukiaETarget, 15, 1)
         rukiaETimer.destr() 
 
 function rukiaEEnd2()
-    rukia.setAnimation(2)                     
+    rukiaEInt2++
+    if rukiaEInt2 == 6
+        rukia.setPos(rukia.getPos().polarOffset(rukia.getPos().angleTo(rukiaETarget.getPos()), (rukia.getPos().distanceTo(rukiaETarget.getPos()) -120)))
+    if rukiaEInt2 == 8
+        flashEffect("war3mapImported\\RukiaBlink.mdx", rukia.getPos(), 1)
+    if rukiaEInt2 == 12
+        sfx2 = addEffect("war3mapImported\\BlianceSword+Frost.mdx", rukia.getPos().polarOffset(rukia.getPos().angleTo(rukiaETarget.getPos()), 80))
+        ..setScale(1)
+        ..setYaw(rukia.getPos().angleTo(rukiaETarget.getPos()))
+        ..destr()
+        rukia.setAnimation(2)
+    if rukiaEInt2 == 16
+        flashEffect("war3mapImported\\RukiaNova.mdx", rukiaETarget.getPos())
+    if rukiaEInt2 == 18
+        rukiaETarget.setInvulnerable(false)  
+        rukia.unpause()
+        rukia.setInvulnerable(false)     
+        DamageEvent.setNextDamageId(DAMAGE_ABILITY_E)
+        DamageEvent.setNextDamageFromCode()
+        rukia.damageTarget(rukiaETarget, 1, ATTACK_TYPE_MAGIC)   
+        rukiaETarget.unpause()
+        acrSlow(rukia, rukiaETarget, 40, 1)
+        rukiaETimer2.destr()                             

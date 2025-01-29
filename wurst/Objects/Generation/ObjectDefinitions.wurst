@@ -322,7 +322,6 @@ public constant SHARINNEGAN_BUFF = compiletime(BUFF_ID_GEN.next())
 public constant IZANAMI_BUFF = compiletime(BUFF_ID_GEN.next())
 public constant JOTARO_F_BUFF = compiletime(BUFF_ID_GEN.next())
 public constant RUKIA_R_BUFF = compiletime(BUFF_ID_GEN.next())
-public constant RUKIA_E_BUFF = compiletime(BUFF_ID_GEN.next())
 public constant RUKIA_R_DUMMY_ABILITY = compiletime(ABIL_ID_GEN.next())
 
 public constant BURNDOT_DEBUFF = compiletime(BUFF_ID_GEN.next())
@@ -442,6 +441,7 @@ public let NANAYAWRTF_SKIN = compiletime(UNIT_ID_GEN.next())
 public let ILLYAT_SKIN = compiletime(UNIT_ID_GEN.next())
 public let KIARAWT_SKIN = compiletime(UNIT_ID_GEN.next())
 public let AINZE_SKIN = compiletime(UNIT_ID_GEN.next())
+public let RUKIAT_SKIN = compiletime(UNIT_ID_GEN.next())
 
 ///////////////////// Dummy and abilities for TeamBuffs/////////////////////////
 public let DUMMY_AMANO = compiletime(UNIT_ID_GEN.next())
