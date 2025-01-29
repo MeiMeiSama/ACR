@@ -1,0 +1,98 @@
+package RukiaE
+
+import DamageEvent
+import AbilityGlobals
+import ObjectDefinitions
+import ChannelAbilityPreset
+import main
+import ClosureForGroups
+//import ClosureTimers
+import UnitIds
+import ACR_Slow
+
+unit rukia
+unit rukiaETarget
+integer rukiaEInt
+integer rukiaEInt2
+effect sfx
+effect sfx2
+timer rukiaETimer
+timer rukiaETimer2
+
+@compiletime function createAbility()
+    new ChannelAbilityPreset(RUKIA_E, 5, true)
+        ..presetTargetTypes(Targettype.UNIT)
+        ..setAnimationNames("11111111")
+        ..setButtonPositionNormalX(2)
+        ..setButtonPositionNormalY(2)
+        ..setButtonPositionResearchX(2)
+        ..setButtonPositionResearchY(0)
+        ..setIconNormal("ReplaceableTextures\\CommandButtons\\BTNFrost.blp")
+        ..setIconResearch("ReplaceableTextures\\CommandButtons\\BTNFrost.blp")
+        ..setMissileSpeed(99999)
+        ..setHeroAbility(true)
+        ..setHotkeyNormal("E")
+        ..setHotkeyLearn("E")
+        ..setLevels(5)
+        ..setLevelSkipRequirement(2)
+        ..presetArtDuration(lvl -> 0)
+        ..presetBaseOrderID(lvl -> "stampede")
+        ..presetDisableOtherAbilities(lvl -> false)
+        ..presetFollowThroughTime(lvl -> 0)
+        ..presetCastRange(lvl -> 2000)
+        ..presetCooldown(lvl -> 50)
+        ..presetManaCost(lvl -> 70)
+        ..presetTargetsAllowed(lvl -> "enemy,ground,air,neutral, vulnerable")
+        ..presetTooltipNormal(lvl -> "Rikujōkōrō/Shirafune|r")
+        ..presetTooltipNormalExtended(lvl -> "Rukia E Desc|r")
+        ..setTooltipLearn("Learn E|r")
+        ..setTooltipLearnExtended("Learning E|r")
+
+init
+    rukiaE()     
+
+function rukiaE()
+    CreateTrigger()
+    ..registerAnyUnitEvent(EVENT_PLAYER_UNIT_SPELL_EFFECT)
+    ..addAction() ->
+        if GetSpellAbilityId() == RUKIA_E
+            rukia = GetTriggerUnit()
+            rukiaETarget = GetSpellTargetUnit()
+            if rukia.hasAbility(RUKIA_R_BUFF)
+                rukia.setInvulnerable(true)
+                rukia.pause()
+                rukiaETarget.setInvulnerable(true)
+                rukiaETarget.pause()
+                gg_snd_RukiaE2.play()
+                flashEffect("war3mapImported\\dustwavxfsfsfe.mdx", rukia.getPos(), 0.60)
+                rukiaEInt2 = 0
+                rukiaETimer2 = CreateTimer()..startPeriodic(0.02, function rukiaEEnd2)
+            else
+                rukia.setInvulnerable(true)
+                rukia.pause()
+                rukiaETarget.setInvulnerable(true)
+                rukiaETarget.pause()
+                gg_snd_RukiaE1.play()      
+                rukia.setAnimation(1) 
+                rukiaEInt = 0
+                rukiaETimer = CreateTimer()..startPeriodic(0.02, function rukiaEEnd)
+
+function rukiaEEnd()
+    rukiaEInt++
+    if rukiaEInt == 4
+        sfx = addEffect("war3mapImported\\RukiaBakudo61.mdx", rukiaETarget, "Chest")
+        ..setScale(1)
+        ..destr()
+    if rukiaEInt == 6
+        rukiaETarget.setInvulnerable(false)  
+        rukia.unpause()
+        rukia.setInvulnerable(false)     
+        DamageEvent.setNextDamageId(DAMAGE_ABILITY_E)
+        DamageEvent.setNextDamageFromCode()
+        rukia.damageTarget(rukiaETarget, 1, ATTACK_TYPE_MAGIC)   
+        rukiaETarget.unpause()
+        acrSlow(rukia, rukiaETarget, 10, 1)
+        rukiaETimer.destr() 
+
+function rukiaEEnd2()
+    rukia.setAnimation(2)                     

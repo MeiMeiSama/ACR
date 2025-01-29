@@ -1,0 +1,188 @@
+package RukiaQ
+
+import DamageEvent
+import AbilityGlobals
+import ObjectDefinitions
+import ChannelAbilityPreset
+import main
+import ClosureForGroups
+import ClosureTimers
+import UnitIds
+
+unit rukia
+unit array rukiaQDummy
+group rukiaQGroup
+integer rukiaQInt
+integer rukiaQInt2
+integer rng
+vec2 spellPos
+effect sfx
+effect sfx2
+effect sfx3
+effect sfx4
+effect sfx5
+effect sfx6
+effect sfx7
+timer rukiaQTimer
+timer rukiaQTimer2
+
+@compiletime function createAbility()
+    new ChannelAbilityPreset(RUKIA_Q, 5, true)
+        ..presetTargetTypes(Targettype.POINTUNIT)
+        ..setAnimationNames("11111111")
+        ..setButtonPositionNormalX(0)
+        ..setButtonPositionNormalY(2)
+        ..setButtonPositionResearchX(0)
+        ..setButtonPositionResearchY(0)
+        ..setIconNormal("ReplaceableTextures\\CommandButtons\\BTNFrostMourne.blp")
+        ..setIconResearch("ReplaceableTextures\\CommandButtons\\BTNFrostMourne.blp")
+        ..setMissileSpeed(99999)
+        ..setHeroAbility(true)
+        ..setHotkeyNormal("Q")
+        ..setHotkeyLearn("Q")
+        ..setLevels(5)
+        ..setLevelSkipRequirement(2)
+        ..presetArtDuration(lvl -> 0)
+        ..presetBaseOrderID(lvl -> "auravampiric")
+        ..presetDisableOtherAbilities(lvl -> false)
+        ..presetFollowThroughTime(lvl -> 0)
+        ..presetCastRange(lvl -> 2000)
+        ..presetCooldown(lvl -> 50)
+        ..presetManaCost(lvl -> 70)
+        ..presetTargetsAllowed(lvl -> "enemy,ground,air,neutral")
+        ..presetTooltipNormal(lvl -> "Sōkatsui/Hakuren|r")
+        ..presetTooltipNormalExtended(lvl -> "Rukia Q Desc|r")
+        ..setTooltipLearn("Learn Q|r")
+        ..setTooltipLearnExtended("Learning Q|r")
+    new UnitDefinition(RUKIA_Q_DUMMY, UnitIds.wisp)
+        ..setNormalAbilities(commaList('Avul', 'Aloc', 'Amrf'))
+        ..setAnimationCastBackswing(0)
+        ..setDeathTimeseconds(0.1)
+        ..setScalingValue(4)
+        ..setUnitClassification("_")
+        ..setArtSpecial("_")
+        ..setHasWaterShadow(false)
+        ..setMaximumPitchAngledegrees(0)
+        ..setMaximumRollAngledegrees(0)
+        ..setModelFile("_")
+        ..setArtSpecial("_")
+        ..setArmorType(ArmorType.Unarmored)
+        ..setPlaceableInEditor(false)
+        ..setMovementHeight(20)
+        ..setSpeedBase(100)
+        ..setTurnRate(3)
+        ..setMovementType(MovementType.Fly)
+        ..setCollisionSize(0)
+        ..setUnitSoundSet("_")
+        ..setCanFlee(false)
+        ..setFoodCost(0)
+        ..setHideMinimapDisplay(true)
+        ..setHitPointsMaximumBase(60)
+        ..setHitPointsRegenerationRate(-1)
+        ..setHitPointsRegenerationType("Always")
+        ..setStockMaximum(1)
+        ..setStockReplenishInterval(1)
+        ..setStructuresBuilt("_")
+        ..setUpgradesUsed("_")
+        ..setHotkey("_")
+        ..setName("effect dummy")
+        ..setTooltipBasic("_")
+        ..setTooltipExtended("_")    
+
+init
+    rukiaQ()     
+
+function rukiaQ()
+    CreateTrigger()
+    ..registerAnyUnitEvent(EVENT_PLAYER_UNIT_SPELL_EFFECT)
+    ..addAction() ->
+        if GetSpellAbilityId() == RUKIA_Q
+            rukia = GetTriggerUnit()
+            spellPos = vec2(GetSpellTargetX(), GetSpellTargetY())
+            if rukia.hasAbility(RUKIA_R_BUFF)
+                rukia.setInvulnerable(true)
+                rukia.pause()
+                rukia.setAnimation(4)
+                gg_snd_RukiaQ2.play()
+                if rukia.getPos().distanceTo(spellPos) < 1500
+                    spellPos = rukia.getPos().polarOffset(rukia.getPos().angleTo(spellPos), 1500)
+                rukiaQInt2 = 0
+                if rukiaQGroup == null
+                    rukiaQGroup = CreateGroup() 
+                rukiaQTimer2 = CreateTimer()..startPeriodic(0.02, function rukiaQEnd2)
+            else
+                rng = GetRandomInt(0, 1)
+                if rng == 0
+                    gg_snd_RukiaQ1.play()      
+                else
+                    gg_snd_RukiaQ11.play()      
+                rukia.setAnimation(1)
+                rukia.setTimeScale(80)
+                rukiaQInt = 0
+                rukiaQTimer = CreateTimer()..startPeriodic(0.02, function rukiaQEnd)    
+
+function rukiaQEnd()
+    rukiaQInt++
+    if rukiaQInt == 10
+        sfx = addEffect("war3mapImported\\kameha_blue.mdx", rukia.getPos())
+        ..setScale(1)
+        ..setYaw(rukia.getPos().angleTo(spellPos))
+        ..destr()
+    if rukiaQInt == 12
+        if rng == 0
+            DoNothing()
+        else
+            sfx4 = addEffect("war3mapImported\\kameha_blue.mdx", rukia.getPos())
+            ..setScale(1)
+            ..setYaw(rukia.getPos().angleTo(spellPos))
+            ..destr()
+    if rukiaQInt == 14
+        if rng == 0           
+            sfx2 = addEffect("war3mapImported\\AncientExplode.mdx", spellPos)
+            ..setScale(1)
+        else
+            sfx3 = addEffect("war3mapImported\\AncientExplode2.mdx", spellPos)
+            ..setScale(1.5)
+        forUnitsInRange(spellPos, 650) (unit victim) ->
+            if victim.isType(UNIT_TYPE_STRUCTURE) == false and victim.isEnemyOf(rukia) == true and victim.isAlive() == true and victim.isInvulnerable() == false
+                DamageEvent.setNextDamageId(DAMAGE_ABILITY_Q)
+                DamageEvent.setNextDamageFromCode()
+                rukia.damageTarget(victim, 1, ATTACK_TYPE_MAGIC)
+                rukia.setTimeScale(0)
+        rukiaQTimer.destr()        
+
+function rukiaQEnd2()
+    rukiaQInt2++
+    if rukiaQInt2 == 4
+        sfx5 = addEffect("war3mapImported\\HarvestManaRukia.mdx", rukia.getPos())
+        ..setScale(1)
+        ..destr()
+    if rukiaQInt2 == 6       
+        gg_snd_RukiaQ22.play()
+        sfx6 = addEffect("war3mapImported\\Icebeam.mdx", (rukia.getPos().polarOffset(rukia.getPos().angleTo(spellPos), 100)))
+        ..setScale(vec3(6, 3, 1)) 
+        ..setYaw(rukia.getPos().angleTo(spellPos))
+        doAfter(2) ->
+            sfx6.setX(-999999)
+            sfx6.setY(-999999)
+            sfx6.destr()
+    if rukiaQInt2 == 10
+        sfx7 = addEffect("war3mapImported\\RukiaHakurenZone.mdx", (spellPos))
+        ..setScale(1)
+        ..destr()
+    if rukiaQInt2 == 12
+        for i = 3 to 12
+            rukiaQDummy[i] = createUnit(RUKIA_Q_DUMMY, rukia.getPos().polarOffset(rukia.getPos().angleTo(spellPos), (100.0 * i)))
+            forUnitsInRange(rukiaQDummy[i].getPos(), 300) (unit victim) ->
+                if victim.isType(UNIT_TYPE_STRUCTURE) == false and victim.isEnemyOf(rukia) == true and victim.isAlive() == true and rukiaQGroup.has(victim) == false and victim.isInvulnerable() == false
+                    DamageEvent.setNextDamageId(DAMAGE_ABILITY_Q)
+                    DamageEvent.setNextDamageFromCode()
+                    rukia.damageTarget(victim, 1, ATTACK_TYPE_MAGIC)
+                    rukiaQGroup.add(victim)
+            rukia.setInvulnerable(false)
+            rukia.unpause()                  
+    if rukiaQInt2 >= 50
+        for i = 3 to 12
+            rukiaQDummy[i].kill()
+            rukiaQTimer2.destr()
+            rukiaQGroup.clear() 

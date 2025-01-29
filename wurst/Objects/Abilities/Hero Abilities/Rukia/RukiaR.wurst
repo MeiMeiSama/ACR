@@ -1,0 +1,89 @@
+package RukiaR
+
+import ObjectDefinitions
+import ChannelAbilityPreset
+import BuffObjEditing
+import DummyCaster
+import OrderIds
+import main
+
+unit rukia
+timer rukiaRTimer
+effect sfx 
+
+@compiletime function createAbility()
+    new ChannelAbilityPreset(RUKIA_R, 3, true)
+        ..presetTargetTypes(Targettype.NONE)
+        ..setAnimationNames("11111")
+        ..setButtonPositionNormalX(2)
+        ..setButtonPositionNormalY(1)
+        ..setButtonPositionResearchX(1)
+        ..setButtonPositionResearchY(1)
+        ..setIconNormal("ReplaceableTextures\\CommandButtons\\BTNEtherealFormOn.blp")
+        ..setIconResearch("ReplaceableTextures\\CommandButtons\\BTNEtherealFormOn.blp")
+        ..setMissileSpeed(99999)
+        ..setHeroAbility(true)
+        ..setHotkeyNormal("R")
+        ..setHotkeyLearn("R")
+        ..setLevels(3)
+        ..presetArtDuration(lvl -> 0)
+        ..presetBaseOrderID(lvl -> "submerge")
+        ..presetDisableOtherAbilities(lvl -> false)
+        ..presetFollowThroughTime(lvl -> 0)
+        ..presetCastRange(lvl -> 2000)
+        ..presetCooldown(lvl -> 50)
+        ..presetManaCost(lvl -> 70)
+        ..presetTargetsAllowed(lvl -> "enemy,ground,air,neutral")
+        ..presetTooltipNormal(lvl -> "Sode no Shirayuki|r")
+        ..presetTooltipNormalExtended(lvl -> "Rukia R Desc|r")
+        ..setTooltipLearn("Sode no Shirayuki|r")
+        ..setTooltipLearnExtended("Learning R|r")
+
+    new BuffDefinition(RUKIA_R_BUFF, AbilityIds.innerFire)
+        ..setName(1, "Shikai Release")
+        ..setTooltipNormal(1, "Shikai Release")
+        ..setTooltipNormalExtended(1, "Empowers Rukia basic abilities")
+        ..setIcon("ReplaceableTextures\\CommandButtons\\BTNYuuki.blp")
+        ..setIconNormal(1, "ReplaceableTextures\\CommandButtons\\BTNYuuki.blp")
+
+    new AbilityDefinitionSlow(RUKIA_R_DUMMY_ABILITY)
+        ..setLevels(1)
+        ..setManaCost(1, 0)
+        ..setCastRange(1, 99999)
+        ..setCastingTime(1, 0)
+        ..setDurationHero(1, 9999)
+        ..setDurationNormal(1, 9999)
+        ..setMovementSpeedFactor(1, 0)
+        ..setAttackSpeedFactor(1, 0)
+        ..setCooldown(1, 0.01)
+        ..setTargetsAllowed(1, "Friend, Invulnerable, Vulnerable")
+        ..setRequirements("")
+        ..setBuffs(1, commaList(RUKIA_R_BUFF))
+        ..setIconNormal("ReplaceableTextures\\CommandButtons\\BTNYuuki.blp")
+        ..setArtTarget("_")
+        ..setTargetAttachmentPoint("chest")
+        ..setTargetAttachmentPoint1("chest")
+        ..setName("Sode no Shirayuki Dummy")
+        ..setTooltipNormal(1, "Sode no Shirayuki Dummy|r")
+        ..setTooltipNormalExtended(1, "Sode no Shirayuki Dummy|r")
+
+init
+    rukiaR()
+
+function rukiaR()
+    CreateTrigger()
+    ..registerAnyUnitEvent(EVENT_PLAYER_UNIT_SPELL_EFFECT)
+    ..addAction() ->
+        if GetSpellAbilityId() == RUKIA_R
+            rukia = GetTriggerUnit()
+            gg_snd_RukiaR.play()     
+            new DummyCaster()
+            ..owner(rukia.getOwner())
+            ..origin(rukia.getPos())
+            ..castTarget(RUKIA_R_DUMMY_ABILITY, 1, OrderIds.slow, rukia)
+            sfx = addEffect("war3mapImported\\RukiaAura.mdx", rukia, "origin")                
+            rukiaRTimer = CreateTimer()..start(30, function rukiaRStart)
+
+function rukiaRStart()
+    rukia.removeAbility(RUKIA_R_BUFF)
+    sfx.destr()
