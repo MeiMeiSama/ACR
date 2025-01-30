@@ -1464,13 +1464,13 @@ import ObjectIds
     ..setProperNames("Timeless Sovereign")
 
     new HeroDefinition(RUKIA, 'Hpal') //Rukia
-    ..setHeroAbilities(commaList(RUKIA_Q, RUKIA_W, RUKIA_E, RUKIA_R, RUKIA_T, RUKIA_F))
+    ..setHeroAbilities(commaList(RUKIA_Q, RUKIA_W, RUKIA_E, RUKIA_R, RUKIA_T))
     ..setNormalAbilities(commaList('_','AInv'))
     ..setAnimationBlendTimeseconds(0.1)
     ..setAnimationCastBackswing(0.1)
     ..setAnimationCastPoint(0.1)
-    ..setIconGameInterface("ReplaceableTextures\\CommandButtons\\BTNZerf.blp")
-    ..setIconScoreScreen("ReplaceableTextures\\CommandButtons\\BTNZerf.blp")
+    ..setIconGameInterface("ReplaceableTextures\\CommandButtons\\BTNRukia.blp")
+    ..setIconScoreScreen("ReplaceableTextures\\CommandButtons\\BTNRukia.blp")
     ..setModelFile("war3mapImported\\RukiaCaptain.mdl")
     ..setScalingValue(1.080)
     ..setArtSpecial("")

@@ -1288,5 +1288,13 @@ public function addAbilities (unit hero)
         SPELL_T[id] = MAVIS_T
         SPELL_F[id] = MAVIS_F
         SPELL_G[id] = '_' 
-        SPELL_G2[id] = ZERVIS_G            
+        SPELL_G2[id] = ZERVIS_G
+    else if hero.getTypeId() == RUKIA // Rukia
+        SPELL_Q[id] = RUKIA_Q
+        SPELL_W[id] = RUKIA_W
+        SPELL_E[id] = RUKIA_E
+        SPELL_R[id] = RUKIA_R
+        SPELL_T[id] = RUKIA_T
+        SPELL_F[id] = RUKIA_F
+        SPELL_G[id] = '_'                
     updateTooltipsInit_Base(hero)

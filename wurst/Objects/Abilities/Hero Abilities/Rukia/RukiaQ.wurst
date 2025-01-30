@@ -6,7 +6,7 @@ import ObjectDefinitions
 import ChannelAbilityPreset
 import main
 import ClosureForGroups
-import ClosureTimers
+//import ClosureTimers
 import UnitIds
 
 unit rukia
@@ -14,7 +14,6 @@ unit array rukiaQDummy
 group rukiaQGroup
 integer rukiaQInt
 integer rukiaQInt2
-integer rng
 vec2 spellPos
 effect sfx
 effect sfx2
@@ -25,6 +24,7 @@ effect sfx6
 effect sfx7
 timer rukiaQTimer
 timer rukiaQTimer2
+boolean rukiaBool
 
 @compiletime function createAbility()
     new ChannelAbilityPreset(RUKIA_Q, 5, true)
@@ -111,66 +111,52 @@ function rukiaQ()
                     rukiaQGroup = CreateGroup() 
                 rukiaQTimer2 = CreateTimer()..startPeriodic(0.02, function rukiaQEnd2)
             else
-                rng = GetRandomInt(0, 1)
-                if rng == 0
-                    gg_snd_RukiaQ1.play()      
+                let both = GetRandomInt(0, 1)
+                if both == 0
+                    gg_snd_RukiaQ1.play()  
                 else
                     gg_snd_RukiaQ11.play()      
                 rukia.setAnimation(1)
-                rukia.setTimeScale(80)
                 rukiaQInt = 0
                 rukiaQTimer = CreateTimer()..startPeriodic(0.02, function rukiaQEnd)    
 
 function rukiaQEnd()
     rukiaQInt++
-    if rukiaQInt == 10
-        sfx = addEffect("war3mapImported\\kameha_blue.mdx", rukia.getPos())
-        ..setScale(1)
+    if rukiaQInt == 4
+        sfx = addEffect("war3mapImported\\kameha_blue.mdx", rukia.getPos().polarOffset(rukia.getPos().angleTo(spellPos), 70))
+        ..setScale(0.70)
         ..setYaw(rukia.getPos().angleTo(spellPos))
+    if rukiaQInt == 12    
+        sfx2 = addEffect("war3mapImported\\AncientExplode.mdx", spellPos)
+        ..setScale(1)
         ..destr()
-    if rukiaQInt == 12
-        if rng == 0
-            DoNothing()
-        else
-            sfx4 = addEffect("war3mapImported\\kameha_blue.mdx", rukia.getPos())
-            ..setScale(1)
-            ..setYaw(rukia.getPos().angleTo(spellPos))
-            ..destr()
-    if rukiaQInt == 14
-        if rng == 0           
-            sfx2 = addEffect("war3mapImported\\AncientExplode.mdx", spellPos)
-            ..setScale(1)
-        else
-            sfx3 = addEffect("war3mapImported\\AncientExplode2.mdx", spellPos)
-            ..setScale(1.5)
+        sfx.destr()
         forUnitsInRange(spellPos, 650) (unit victim) ->
             if victim.isType(UNIT_TYPE_STRUCTURE) == false and victim.isEnemyOf(rukia) == true and victim.isAlive() == true and victim.isInvulnerable() == false
                 DamageEvent.setNextDamageId(DAMAGE_ABILITY_Q)
                 DamageEvent.setNextDamageFromCode()
-                rukia.damageTarget(victim, 1, ATTACK_TYPE_MAGIC)
-                rukia.setTimeScale(0)
+                rukia.damageTarget(victim, 1, ATTACK_TYPE_MAGIC)       
         rukiaQTimer.destr()        
 
 function rukiaQEnd2()
     rukiaQInt2++
-    if rukiaQInt2 == 4
+    if rukiaQInt2 == 10
         sfx5 = addEffect("war3mapImported\\HarvestManaRukia.mdx", rukia.getPos())
         ..setScale(1)
         ..destr()
-    if rukiaQInt2 == 6       
+    if rukiaQInt2 == 20    
         gg_snd_RukiaQ22.play()
         sfx6 = addEffect("war3mapImported\\Icebeam.mdx", (rukia.getPos().polarOffset(rukia.getPos().angleTo(spellPos), 100)))
-        ..setScale(vec3(6, 3, 1)) 
+        ..setScale(vec3(30, 15, 1))
+        ..playAnimation(ANIM_TYPE_STAND) 
         ..setYaw(rukia.getPos().angleTo(spellPos))
-        doAfter(2) ->
-            sfx6.setX(-999999)
-            sfx6.setY(-999999)
-            sfx6.destr()
-    if rukiaQInt2 == 10
-        sfx7 = addEffect("war3mapImported\\RukiaHakurenZone.mdx", (spellPos))
-        ..setScale(1)
-        ..destr()
-    if rukiaQInt2 == 12
+        // doAfter(2) ->
+        //     sfx6.setX(-999999)
+        //     sfx6.setY(-999999)
+        //     sfx6.destr()
+    if rukiaQInt2 == 22
+        gg_snd_RukiaQ22.play()        
+    if rukiaQInt2 == 23
         for i = 3 to 12
             rukiaQDummy[i] = createUnit(RUKIA_Q_DUMMY, rukia.getPos().polarOffset(rukia.getPos().angleTo(spellPos), (100.0 * i)))
             forUnitsInRange(rukiaQDummy[i].getPos(), 300) (unit victim) ->
@@ -178,10 +164,17 @@ function rukiaQEnd2()
                     DamageEvent.setNextDamageId(DAMAGE_ABILITY_Q)
                     DamageEvent.setNextDamageFromCode()
                     rukia.damageTarget(victim, 1, ATTACK_TYPE_MAGIC)
+                    if victim.isType(UNIT_TYPE_HERO)
+                        sfx7 = addEffect("war3mapImported\\RukiaHakurenZone.mdx", (spellPos))
+                        ..setScale(1.5)
+                        ..destr()
                     rukiaQGroup.add(victim)
             rukia.setInvulnerable(false)
             rukia.unpause()                  
-    if rukiaQInt2 >= 50
+    if rukiaQInt2 >= 45
+        sfx6.setX(-999999)
+        sfx6.setY(-999999)
+        sfx6.destr()
         for i = 3 to 12
             rukiaQDummy[i].kill()
             rukiaQTimer2.destr()

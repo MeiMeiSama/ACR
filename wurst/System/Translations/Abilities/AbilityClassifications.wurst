@@ -169,7 +169,7 @@ public function int.isQProjectile () returns boolean
     return false
 
 public function int.isWProjectile () returns boolean
-    if (this == 'A0JL') or (this == 'A09B') or (this == 'A0TQ') or (this == 'A0TQ') or (this == 'A0TH') or (this == 'A11U') or (this == JOTARO_W)
+    if (this == 'A0JL') or (this == 'A09B') or (this == 'A0TQ') or (this == 'A0TQ') or (this == 'A0TH') or (this == 'A11U') or (this == JOTARO_W) or (this == RUKIA_W)
         return true
     return false
 
@@ -261,7 +261,7 @@ public function int.isModeEDash () returns boolean
 
 
 public function int.isQPoint () returns boolean
-    if (this == 'A12F') or (this == 'A0YM') or (this == 'A0VX') or (this == 'A0V6') or (this == 'A0R8') or (this == 'A0QU') or (this == 'A0QM') or (this == 'A0PN') or (this == 'A0OI') or (this == 'A0O6') or (this == 'A0NC') or (this == 'A0LR') or (this == 'A0IC') or (this == 'A0ES') or (this == 'A0EK') or (this == 'A0D6') or (this == 'A0BW') or (this == 'A0A3') or (this == 'A04D') or (this == 'A04C') or (this == 'A020') or (this == 'A0LX') or (this == MISOGI_THAI_Q) or (this == 'A0RY') or (this == 'A019') or (this == MAVIS_Q) or (this == ZEREF_Q)
+    if (this == 'A12F') or (this == 'A0YM') or (this == 'A0VX') or (this == 'A0V6') or (this == 'A0R8') or (this == 'A0QU') or (this == 'A0QM') or (this == 'A0PN') or (this == 'A0OI') or (this == 'A0O6') or (this == 'A0NC') or (this == 'A0LR') or (this == 'A0IC') or (this == 'A0ES') or (this == 'A0EK') or (this == 'A0D6') or (this == 'A0BW') or (this == 'A0A3') or (this == 'A04D') or (this == 'A04C') or (this == 'A020') or (this == 'A0LX') or (this == MISOGI_THAI_Q) or (this == 'A0RY') or (this == 'A019') or (this == MAVIS_Q) or (this == ZEREF_Q) or (this == RUKIA_Q)
         return true
     return false
 
@@ -332,7 +332,7 @@ public function int.isRAoe () returns boolean
     return false
 
 public function int.isTAoe () returns boolean
-    if (this == 'A0FZ') or (this == 'A0L0') or (this == 'A0JN') or (this == 'A0V2') or (this == 'A0VS') or (this == JOTARO_T)
+    if (this == 'A0FZ') or (this == 'A0L0') or (this == 'A0JN') or (this == 'A0V2') or (this == 'A0VS') or (this == JOTARO_T) or (this == RUKIA_T)
         return true
     return false
 
@@ -413,7 +413,7 @@ public function int.isFcounter () returns boolean
 
 
 public function int.isEDamaging () returns boolean
-    if (this == 'A11H') or (this == 'A11V') or (this == 'A0WD') or (this == 'A01E') or (this == 'A0VG') or (this == 'A11P') or (this == 'A0U2') or (this == 'A0NQ') or (this == 'A123') or (this == 'A0KS') or (this == 'A014') or (this == 'A0D2') or (this == 'A0ZK') or (this == 'A10A') or (this == 'A110') or (this == 'A0SY') or (this == 'A0WV') or (this == JOTARO_E) or (this == ZEREF_TE)
+    if (this == 'A11H') or (this == 'A11V') or (this == 'A0WD') or (this == 'A01E') or (this == 'A0VG') or (this == 'A11P') or (this == 'A0U2') or (this == 'A0NQ') or (this == 'A123') or (this == 'A0KS') or (this == 'A014') or (this == 'A0D2') or (this == 'A0ZK') or (this == 'A10A') or (this == 'A110') or (this == 'A0SY') or (this == 'A0WV') or (this == JOTARO_E) or (this == ZEREF_TE) or (this == RUKIA_E)
         return true
     return false
 

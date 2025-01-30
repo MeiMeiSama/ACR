@@ -37,6 +37,20 @@ public function tooltip_R (int pid)
         ..setField(ABILITY_ILF_MANA_COST, hero.getAbilityLevel(skill) - 1, mana)
         ..setField(ABILITY_RLF_COOLDOWN, hero.getAbilityLevel(skill) - 1, cd.toReal())     
     
+    else if skill == RUKIA_R //Rukia
+        spellLvl = skill.getSkillLvl(id)
+        cd = (30 + (spellLvl * 5))
+        mana = (40 + (10 * spellLvl))
+
+        skill
+        ..setDescription(id, 
+        GOLD+
+        "Rukia releases her shikai, changing her basic abilities."+
+        "\n\nCooldown: "+PINK+cd.toString()+GOLD)
+
+        hero.getAbility(skill)
+        ..setField(ABILITY_ILF_MANA_COST, hero.getAbilityLevel(skill) - 1, mana)
+        ..setField(ABILITY_RLF_COOLDOWN, hero.getAbilityLevel(skill) - 1, cd.toReal())
 
     else if skill == 'A0SE' //Goku
         spellLvl = skill.getSkillLvl(id)

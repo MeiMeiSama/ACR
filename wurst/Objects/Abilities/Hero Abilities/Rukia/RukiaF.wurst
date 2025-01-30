@@ -1,0 +1,186 @@
+package RukiaF
+
+import DamageEvent
+import AbilityGlobals
+import ObjectDefinitions
+import ChannelAbilityPreset
+import main
+import TerrainUtils
+
+unit rukia
+unit rukiaFTarget
+integer rukiaFInt
+integer rukiaFInt2
+vec2 rukiaFTargetPos
+effect sfx
+effect sfx2
+effect sfx3
+effect sfx4
+effect sfx5
+effect sfx6
+effect sfx7
+effect sfx8
+timer rukiaFTimer
+timer rukiaFTimer2
+
+@compiletime function createAbility()
+    new ChannelAbilityPreset(RUKIA_F, 1, true)
+        ..presetTargetTypes(Targettype.UNIT)
+        ..setAnimationNames("11111")
+        ..setButtonPositionNormalX(2)
+        ..setButtonPositionNormalY(1)
+        ..setButtonPositionResearchX(1)
+        ..setButtonPositionResearchY(1)
+        ..setIconNormal("ReplaceableTextures\\CommandButtons\\BTNOrbOfFrost.blp")
+        ..setIconResearch("ReplaceableTextures\\CommandButtons\\BTNOrbOfFrost.blp")
+        ..setMissileSpeed(99999)
+        ..setHeroAbility(true)
+        ..setHotkeyNormal("F")
+        ..setHotkeyLearn("F")
+        ..setLevels(1)
+        ..presetArtDuration(lvl -> 0)
+        ..presetBaseOrderID(lvl -> "tranquility")
+        ..presetDisableOtherAbilities(lvl -> false)
+        ..presetFollowThroughTime(lvl -> 0)
+        ..presetCastRange(lvl -> 2000)
+        ..presetCooldown(lvl -> 50)
+        ..presetManaCost(lvl -> 70)
+        ..presetTargetsAllowed(lvl -> "enemy,ground,air,neutral")
+        ..presetTooltipNormal(lvl -> "Goated Rukia|r")
+        ..presetTooltipNormalExtended(lvl -> "Rukia F Desc|r")
+        ..setTooltipLearn("Goated Rukia|r")
+        ..setTooltipLearnExtended("Learning F|r")
+
+init
+    rukiaF()     
+
+function rukiaF()
+    CreateTrigger()
+    ..registerAnyUnitEvent(EVENT_PLAYER_UNIT_SPELL_EFFECT)
+    ..addAction() ->
+        if GetSpellAbilityId() == RUKIA_F
+            rukia = GetTriggerUnit()
+            rukiaFTarget = GetSpellTargetUnit()
+            rukiaFTargetPos = rukiaFTarget.getPos()
+            let rng = GetRandomInt(0, 1)
+            if rng == 0
+                gg_snd_RukiaQ1.play()      
+                rukia.setInvulnerable(true)
+                rukia.pause()
+                rukiaFTarget.setInvulnerable(true)
+                rukiaFTarget.pause()
+                rukia.setPos(rukia.getPos().polarOffset(rukia.getPos().angleTo(rukiaFTargetPos), (rukia.getPos().distanceTo(rukiaFTargetPos) -800)))
+                sfx = addEffect("war3mapImported\\XIUBAIXUE.mdx", rukia.getPos() + vec2(0, 400))
+                ..setScale(1.5)
+                ..setYaw(rukia.getPos().angleTo(rukiaFTargetPos))
+                rukiaFInt2 = 0
+                rukiaFTimer2 = CreateTimer()..startPeriodic(0.02, function rukiaFEnd2)
+            else
+                gg_snd_RukiaE1.play()    
+                rukia.setInvulnerable(true)
+                rukia.pause()
+                rukiaFTarget.setInvulnerable(true)
+                rukiaFTarget.pause()    
+                rukia.setAnimation(0) 
+                rukiaFInt = 0
+                rukiaFTimer = CreateTimer()..startPeriodic(0.02, function rukiaFEnd)
+
+function rukiaFEnd()
+    rukiaFInt++
+    if rukiaFInt == 15
+        sfx2 = addEffect("war3mapImported\\WaterSlow.mdx", rukia, "origin")
+        ..setScale(1)
+    if rukiaFInt == 30
+        sfx3 = addEffect("war3mapImported\\AZ B.mdx", rukiaFTargetPos)
+        ..setScale(4)
+        flashEffect("war3mapImported\\RukiaBlink.mdx", rukia.getPos(), 1)
+    if rukiaFInt == 34
+        rukia.setPos(rukia.getPos().polarOffset(rukia.getPos().angleTo(rukiaFTargetPos), (rukia.getPos().distanceTo(rukiaFTargetPos) -125)))  
+        sfx4 = addEffect("war3mapImported\\RukiaAuraF.mdx", rukia.getPos())
+        ..setScale(1)
+        ..destr()
+        rukia.setAnimation(2)
+    if rukiaFInt == 36
+        flashEffect("war3mapImported\\RukiaBlink.mdx", rukia.getPos(), 1)    
+    if rukiaFInt == 42
+        sfx5 = addEffect("war3mapImported\\RukiaIceExp.mdx", rukiaFTargetPos)
+        ..setScale(1)
+        ..destr()
+        sfx2.destr()
+        sfx3.destr()
+    if rukiaFInt == 44
+        rukiaFTarget.setInvulnerable(false)       
+        DamageEvent.setNextDamageId(DAMAGE_ABILITY_F)
+        DamageEvent.setNextDamageFromCode()
+        rukia.damageTarget(rukiaFTarget, 1, ATTACK_TYPE_MAGIC)
+        rukia.unpause()
+        rukia.setInvulnerable(false)   
+        rukiaFTarget.unpause()
+        rukiaFTimer.destr()       
+
+function rukiaFEnd2()
+    rukiaFInt2++
+    if rukiaFInt2 == 8
+        flashEffect("war3mapImported\\RukiaBlink.mdx", rukia.getPos(), 1)
+    if rukiaFInt2 == 10
+        rukia.setPos(rukia.getPos().polarOffset(rukia.getPos().angleTo(rukiaFTargetPos), (rukia.getPos().distanceTo(rukiaFTargetPos) -120)))
+    if rukiaFInt2 == 14
+        flashEffect("war3mapImported\\RukiaBlink.mdx", rukia.getPos(), 1)
+    if rukiaFInt2 == 16
+        rukia.setAnimation(3)
+    if rukiaFInt2 == 20
+        rukiaFTarget.addAbility('Amrf')
+        rukiaFTarget.setFlyHeight(400, 40)
+    if rukiaFInt2 == 35
+        sfx.setHeight(400)
+        sfx.setPos(sfx.getPos().polarOffset(sfx.getPos().angleTo(rukiaFTarget.getPos()), (sfx.getPos().distanceTo(rukiaFTarget.getPos()) +75)))
+        sfx.playAnimation(ANIM_TYPE_ATTACK)
+    if rukiaFInt2 == 40
+        rukiaFTarget.setFlyHeight(-400, 40)
+    if rukiaFInt2 >= 41 and rukiaFInt2 <= 55
+        if rukiaFTarget.getPos().polarOffset(rukiaFTarget.getPos().angleTo(rukia.getPos()), 355).isTerrainPathable(PATHING_TYPE_WALKABILITY) == true and rukiaFTarget.getPos().polarOffset(rukiaFTarget.getPos().angleTo(rukia.getPos()), 355).isTerrainPathable(PATHING_TYPE_FLYABILITY) == true
+            DoNothing()
+        else
+            rukiaFTarget.setPos(rukiaFTarget.getPos().polarOffset(rukiaFTarget.getPos().angleTo(rukia.getPos()), 20))
+            rukiaFTarget.setFacing(rukiaFTarget.getPos().angleTo(rukia.getPos()))
+    if rukiaFInt2 == 56
+        rukiaFTarget.removeAbility('Amrf')
+        rukiaFTargetPos = rukiaFTarget.getPos()
+        rukia.setPos(rukiaFTargetPos + vec2(0, 400))
+        sfx6 = addEffect("war3mapImported\\Ice Incenerate.mdx", rukiaFTargetPos)
+        ..setScale(1)
+        ..destr()
+    if rukiaFInt2 == 62
+        sfx.setPos(rukiaFTargetPos)
+        sfx.setHeight(-400)
+        sfx.playAnimation(ANIM_TYPE_SPELL)
+    if rukiaFInt2 == 65
+        flashEffect("war3mapImported\\IceNova.mdx", rukiaFTargetPos, 1)
+    if rukiaFInt2 == 70
+        sfx6.destr()
+        rukia.setAnimation(1)
+        sfx7 = addEffect("war3mapImported\\Missle-Ice.mdx", rukia.getPos())
+        ..setScale(1)
+        ..setYaw(rukia.getPos().angleTo(rukiaFTargetPos))
+    if sfx7.getPos().distanceTo(rukiaFTargetPos) <= 40
+        sfx8 = addEffect("war3mapImported\\iceflower.mdx", rukiaFTargetPos)
+        ..setScale(1)
+        ..destr()
+        rukiaFTarget.setInvulnerable(false)       
+        DamageEvent.setNextDamageId(DAMAGE_ABILITY_F)
+        DamageEvent.setNextDamageFromCode()
+        rukia.damageTarget(rukiaFTarget, 1, ATTACK_TYPE_MAGIC)
+        rukia.unpause()
+        rukia.setInvulnerable(false)   
+        rukiaFTarget.unpause()
+        sfx7.setX(-999999)
+        sfx7.setY(-999999)
+        sfx7.destr()
+        rukiaFTimer2.destr() 
+    else
+        sfx7.setPos(sfx7.getPos().polarOffset(sfx7.getPos().angleTo(rukiaFTargetPos), 60))    
+
+
+
+
+            

@@ -1,0 +1,6 @@
+package DestIds
+import ObjectIdGenerator
+
+public constant DEST_ID_GEN = new IdGenerator('YTlb')
+
+/////since cant add on ObjectIdGenerator or destructibleObject files/////

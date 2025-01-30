@@ -1,5 +1,6 @@
 package ObjectDefinitions
 import ObjectIdGenerator
+import DestIds
 
 // ------------------------------ Universal Abilities ------------------------------
 public constant ATTACK_EVASION = compiletime(ABIL_ID_GEN.next())
@@ -264,6 +265,13 @@ public constant HURT_NOT = compiletime(ITEM_ID_GEN.next())
 public constant RE_MEDUSA = compiletime(ITEM_ID_GEN.next())
 public constant CHING_WEALTH = compiletime(ITEM_ID_GEN.next())
 public constant CHING_GPS = compiletime(ITEM_ID_GEN.next())
+
+// ------------------------------ New Personal Items ------------------------------
+public constant RUKIA_PERSONAL_ITEM = compiletime(ITEM_ID_GEN.next())
+
+// ------------------------------ Draft Buttons ------------------------------
+public constant RUKIA_BUTTON = compiletime(DEST_ID_GEN.next())
+public constant RUKIA_BUTTON_DARK = compiletime(DEST_ID_GEN.next())
 
 // ------------------------------ Rings ------------------------------
 public constant CLOUD_RING_1 = compiletime(ITEM_ID_GEN.next())

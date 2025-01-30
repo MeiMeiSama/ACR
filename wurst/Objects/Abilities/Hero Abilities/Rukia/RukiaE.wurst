@@ -77,9 +77,8 @@ function rukiaE()
 function rukiaEEnd()
     rukiaEInt++
     if rukiaEInt == 4
-        sfx = addEffect("war3mapImported\\RukiaBakudo61.mdx", rukiaETarget, "Chest")
-        ..setScale(1)
-        ..destr()
+        sfx = addEffect("war3mapImported\\RukiaBakudo61.mdx", rukiaETarget.getPos())
+        ..setScale(0.70)
     if rukiaEInt == 6
         rukiaETarget.setInvulnerable(false)  
         rukia.unpause()
@@ -89,29 +88,32 @@ function rukiaEEnd()
         rukia.damageTarget(rukiaETarget, 1, ATTACK_TYPE_MAGIC)   
         rukiaETarget.unpause()
         acrSlow(rukia, rukiaETarget, 15, 1)
+    if rukiaEInt == 44
+        sfx.destr()
         rukiaETimer.destr() 
 
 function rukiaEEnd2()
     rukiaEInt2++
-    if rukiaEInt2 == 6
+    if rukiaEInt2 == 10
         rukia.setPos(rukia.getPos().polarOffset(rukia.getPos().angleTo(rukiaETarget.getPos()), (rukia.getPos().distanceTo(rukiaETarget.getPos()) -120)))
-    if rukiaEInt2 == 8
+    if rukiaEInt2 == 12
         flashEffect("war3mapImported\\RukiaBlink.mdx", rukia.getPos(), 1)
     if rukiaEInt2 == 12
         sfx2 = addEffect("war3mapImported\\BlianceSword+Frost.mdx", rukia.getPos().polarOffset(rukia.getPos().angleTo(rukiaETarget.getPos()), 80))
-        ..setScale(1)
+        ..setScale(0.70)
         ..setYaw(rukia.getPos().angleTo(rukiaETarget.getPos()))
         ..destr()
         rukia.setAnimation(2)
-    if rukiaEInt2 == 16
+    if rukiaEInt2 == 20
         flashEffect("war3mapImported\\RukiaNova.mdx", rukiaETarget.getPos())
-    if rukiaEInt2 == 18
-        rukiaETarget.setInvulnerable(false)  
+        rukia.setInvulnerable(false)
         rukia.unpause()
-        rukia.setInvulnerable(false)     
+    if rukiaEInt2 == 25
+        rukiaETarget.setInvulnerable(false)      
         DamageEvent.setNextDamageId(DAMAGE_ABILITY_E)
         DamageEvent.setNextDamageFromCode()
         rukia.damageTarget(rukiaETarget, 1, ATTACK_TYPE_MAGIC)   
         rukiaETarget.unpause()
-        acrSlow(rukia, rukiaETarget, 40, 1)
+        rukiaETarget.issueImmediateOrder("stop")
+        acrSlow(rukia, rukiaETarget, 40, 2)
         rukiaETimer2.destr()                             
