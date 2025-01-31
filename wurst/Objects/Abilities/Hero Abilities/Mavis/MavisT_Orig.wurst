@@ -9,6 +9,7 @@ unit mavis
 integer mavisTInt
 unit mavisTTarget
 effect effect1
+effect sfx
 
 @compiletime function createAbility()
     new ChannelAbilityPreset(MAVIS_T, 1, true)
@@ -72,13 +73,21 @@ function mavisTEnd ()
     if mavisTInt>350
         DestroyTimer(GetExpiredTimer())
         effect1.destr()
-        flashEffect("war3mapImported\\MavisLawPillar.mdx", mavisTTarget.getPos(), 4)
+        //flashEffect("war3mapImported\\MavisLawPillar.mdx", mavisTTarget.getPos(), 4)
+        sfx = addEffect("war3mapImported\\MavisLawPillar.mdx", mavisTTarget.getPos())
+        ..setScale(4)
+        CreateTimer()..start(1, function mavisLawEnd)
         flashEffect("war3mapImported\\dtfairylaw.mdx", mavisTTarget, "chest")
         PauseUnit(mavis,false)
         SetUnitInvulnerable(mavis,false)
         PauseUnit(mavisTTarget,false)
         SetUnitInvulnerable(mavisTTarget,false)
         ForGroupBJ(GetUnitsInRangeOfLocMatching(700,GetUnitLoc(mavisTTarget),Condition(function mavisFilter)),function mavisDMG)   
+
+function mavisLawEnd()
+    sfx.setX(-999999)
+    sfx.setY(-999999)
+    sfx.destr()
 
 function mavisCondition() returns boolean
     return GetSpellAbilityId() == MAVIS_T

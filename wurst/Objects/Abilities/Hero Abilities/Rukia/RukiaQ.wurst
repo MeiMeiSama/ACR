@@ -6,7 +6,7 @@ import ObjectDefinitions
 import ChannelAbilityPreset
 import main
 import ClosureForGroups
-//import ClosureTimers
+import ClosureTimers
 import UnitIds
 
 unit rukia
@@ -145,18 +145,20 @@ function rukiaQEnd2()
         ..setScale(1)
         ..destr()
     if rukiaQInt2 == 20    
-        gg_snd_RukiaQ22.play()
         sfx6 = addEffect("war3mapImported\\Icebeam.mdx", (rukia.getPos().polarOffset(rukia.getPos().angleTo(spellPos), 100)))
-        ..setScale(vec3(30, 15, 1))
+        //..setScale(vec3(200, 100, 200))
+        ..setScale(4)
+        ..setY(400)
+        ..setHeight(300)
         ..playAnimation(ANIM_TYPE_STAND) 
         ..setYaw(rukia.getPos().angleTo(spellPos))
-        // doAfter(2) ->
-        //     sfx6.setX(-999999)
-        //     sfx6.setY(-999999)
-        //     sfx6.destr()
-    if rukiaQInt2 == 22
+        doAfter(2) ->
+            sfx6.setX(-999999)
+            sfx6.setY(-999999)
+            sfx6.destr()
+    if rukiaQInt2 == 40
         gg_snd_RukiaQ22.play()        
-    if rukiaQInt2 == 23
+    if rukiaQInt2 >= 46
         for i = 3 to 12
             rukiaQDummy[i] = createUnit(RUKIA_Q_DUMMY, rukia.getPos().polarOffset(rukia.getPos().angleTo(spellPos), (100.0 * i)))
             forUnitsInRange(rukiaQDummy[i].getPos(), 300) (unit victim) ->
@@ -165,16 +167,13 @@ function rukiaQEnd2()
                     DamageEvent.setNextDamageFromCode()
                     rukia.damageTarget(victim, 1, ATTACK_TYPE_MAGIC)
                     if victim.isType(UNIT_TYPE_HERO)
-                        sfx7 = addEffect("war3mapImported\\RukiaHakurenZone.mdx", (spellPos))
+                        sfx7 = addEffect("war3mapImported\\RukiaHakurenZone.mdx", victim.getPos())
                         ..setScale(1.5)
                         ..destr()
                     rukiaQGroup.add(victim)
             rukia.setInvulnerable(false)
             rukia.unpause()                  
-    if rukiaQInt2 >= 45
-        sfx6.setX(-999999)
-        sfx6.setY(-999999)
-        sfx6.destr()
+    if rukiaQInt2 >= 60
         for i = 3 to 12
             rukiaQDummy[i].kill()
             rukiaQTimer2.destr()

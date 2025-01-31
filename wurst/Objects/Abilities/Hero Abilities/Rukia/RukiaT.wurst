@@ -68,23 +68,23 @@ function rukiaT()
 
 function rukiaTEnd()
     rukiaTInt++
-    if rukiaTInt >= 2 and rukiaTInt < 118
-        forUnitsInRange(spellPos, 900) (unit victim) ->
-            if victim.isInvulnerable() == false and victim.hasTagPauseEX() == false and rukiaTGroup.has(victim) == false and victim.isAllyOf(rukia) == false
-                IssueImmediateOrder(victim, "stop")
-                rukiaTGroup.add(victim)
-                victim.pause()
-                victim.setInvulnerable(true)
-    if rukiaTInt == 30
+    if rukiaTInt >= 2 and rukiaTInt < 189
+        forUnitsInRange(spellPos, 900) (unit u) ->
+            if u.isInvulnerable() == false and u.hasTagPauseEX() == false and rukiaTGroup.has(u) == false and u.isAllyOf(rukia) == false
+                IssueImmediateOrder(u, "stop")
+                rukiaTGroup.add(u)
+                u.pause()
+                u.setInvulnerable(true)
+    if rukiaTInt == 90
         sfx = addEffect("war3mapImported\\IcePillar88.mdx", spellPos)
-        ..setScale(2)
-    if rukiaTInt == 40
+        ..setScale(1)
+    if rukiaTInt == 120
         rukia.setAnimation(3)
         sfx2 = addEffect("war3mapImported\\IceAge.mdx", spellPos)
         ..setScale(1)
-    if rukiaTInt >= 47 and rukiaTInt < 100
+    if rukiaTInt >= 122 and rukiaTInt < 140
         sfx2.setScale(sfx2.getScale() + 0.14)
-    if rukiaTInt == 102            
+    if rukiaTInt == 160            
         rukia.setAnimation(0)
         sfx.setX(-999999)
         sfx.setY(-999999)
@@ -92,25 +92,25 @@ function rukiaTEnd()
         sfx2.setX(-999999)
         sfx2.setY(-999999)
         sfx2.destr()
-    if rukiaTInt == 115
+    if rukiaTInt == 185
         rukiaTGroup.forEachIn() (unit victim) ->
             if victim.isType(UNIT_TYPE_HERO)
                 sfx3 = addEffect("war3mapImported\\SpellEffectIceCoffinV2Fix.mdx", victim.getPos())
-                ..setScale(2)
-    if rukiaTInt == 120
-        rukiaTTimer.destr()
+                ..setScale(3)
+                ..playAnimation(ANIM_TYPE_STAND)
+    if rukiaTInt == 240
+        rukia.setInvulnerable(false)
+        rukia.unpause()
         rukiaTGroup.forEachIn() (unit victim) ->
             if victim.isInvulnerable()
                 victim.setInvulnerable(false) 
             DamageEvent.setNextDamageId(DAMAGE_ABILITY_T)
             DamageEvent.setNextDamageFromCode()
             rukia.damageTarget(victim, 1, ATTACK_TYPE_MAGIC)
-            rukia.setInvulnerable(false)
-            rukia.unpause()
             if victim.isPaused()
                 victim.unpause()
-            rukiaTGroup.remove(victim)
-            rukiaTGroup.clear()
-            sfx3.destr()          
+        rukiaTGroup.clear()
+        sfx3.destr()
         BlzSetUnitSkin(rukia, RUKIA)
+        rukiaTTimer.destr()          
 

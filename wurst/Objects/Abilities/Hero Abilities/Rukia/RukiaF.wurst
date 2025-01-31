@@ -80,7 +80,8 @@ function rukiaF()
                 rukia.setInvulnerable(true)
                 rukia.pause()
                 rukiaFTarget.setInvulnerable(true)
-                rukiaFTarget.pause()    
+                rukiaFTarget.pause()
+                rukia.setPos(rukia.getPos().polarOffset(rukia.getPos().angleTo(rukiaFTargetPos), (rukia.getPos().distanceTo(rukiaFTargetPos) -800)))    
                 rukia.setAnimation(0) 
                 rukiaFInt = 0
                 rukiaFTimer = CreateTimer()..startPeriodic(0.02, function rukiaFEnd)
@@ -90,25 +91,26 @@ function rukiaFEnd()
     if rukiaFInt == 15
         sfx2 = addEffect("war3mapImported\\WaterSlow.mdx", rukia, "origin")
         ..setScale(1)
-    if rukiaFInt == 30
+    if rukiaFInt == 70
         sfx3 = addEffect("war3mapImported\\AZ B.mdx", rukiaFTargetPos)
         ..setScale(4)
+    if rukiaFInt == 160
         flashEffect("war3mapImported\\RukiaBlink.mdx", rukia.getPos(), 1)
-    if rukiaFInt == 34
+    if rukiaFInt == 170
         rukia.setPos(rukia.getPos().polarOffset(rukia.getPos().angleTo(rukiaFTargetPos), (rukia.getPos().distanceTo(rukiaFTargetPos) -125)))  
         sfx4 = addEffect("war3mapImported\\RukiaAuraF.mdx", rukia.getPos())
         ..setScale(1)
         ..destr()
         rukia.setAnimation(2)
-    if rukiaFInt == 36
+    if rukiaFInt == 180
         flashEffect("war3mapImported\\RukiaBlink.mdx", rukia.getPos(), 1)    
-    if rukiaFInt == 42
+    if rukiaFInt == 210
         sfx5 = addEffect("war3mapImported\\RukiaIceExp.mdx", rukiaFTargetPos)
         ..setScale(1)
         ..destr()
         sfx2.destr()
         sfx3.destr()
-    if rukiaFInt == 44
+    if rukiaFInt == 240
         rukiaFTarget.setInvulnerable(false)       
         DamageEvent.setNextDamageId(DAMAGE_ABILITY_F)
         DamageEvent.setNextDamageFromCode()
@@ -120,43 +122,44 @@ function rukiaFEnd()
 
 function rukiaFEnd2()
     rukiaFInt2++
-    if rukiaFInt2 == 8
+    if rukiaFInt2 == 70
         flashEffect("war3mapImported\\RukiaBlink.mdx", rukia.getPos(), 1)
-    if rukiaFInt2 == 10
+    if rukiaFInt2 == 80
         rukia.setPos(rukia.getPos().polarOffset(rukia.getPos().angleTo(rukiaFTargetPos), (rukia.getPos().distanceTo(rukiaFTargetPos) -120)))
-    if rukiaFInt2 == 14
+    if rukiaFInt2 == 90
         flashEffect("war3mapImported\\RukiaBlink.mdx", rukia.getPos(), 1)
-    if rukiaFInt2 == 16
+    if rukiaFInt2 == 110
         rukia.setAnimation(3)
-    if rukiaFInt2 == 20
+    if rukiaFInt2 == 140
         rukiaFTarget.addAbility('Amrf')
         rukiaFTarget.setFlyHeight(400, 40)
-    if rukiaFInt2 == 35
+        rukiaFTarget.setPos(rukiaFTargetPos + vec2(0, 600))
+    if rukiaFInt2 == 170
         sfx.setHeight(400)
         sfx.setPos(sfx.getPos().polarOffset(sfx.getPos().angleTo(rukiaFTarget.getPos()), (sfx.getPos().distanceTo(rukiaFTarget.getPos()) +75)))
         sfx.playAnimation(ANIM_TYPE_ATTACK)
-    if rukiaFInt2 == 40
+    if rukiaFInt2 == 200
         rukiaFTarget.setFlyHeight(-400, 40)
-    if rukiaFInt2 >= 41 and rukiaFInt2 <= 55
+    if rukiaFInt2 >= 202 and rukiaFInt2 <= 250
         if rukiaFTarget.getPos().polarOffset(rukiaFTarget.getPos().angleTo(rukia.getPos()), 355).isTerrainPathable(PATHING_TYPE_WALKABILITY) == true and rukiaFTarget.getPos().polarOffset(rukiaFTarget.getPos().angleTo(rukia.getPos()), 355).isTerrainPathable(PATHING_TYPE_FLYABILITY) == true
             DoNothing()
         else
             rukiaFTarget.setPos(rukiaFTarget.getPos().polarOffset(rukiaFTarget.getPos().angleTo(rukia.getPos()), 20))
             rukiaFTarget.setFacing(rukiaFTarget.getPos().angleTo(rukia.getPos()))
-    if rukiaFInt2 == 56
+    if rukiaFInt2 == 270
         rukiaFTarget.removeAbility('Amrf')
         rukiaFTargetPos = rukiaFTarget.getPos()
-        rukia.setPos(rukiaFTargetPos + vec2(0, 400))
+        rukia.setPos(rukiaFTargetPos + vec2(0, 800))
         sfx6 = addEffect("war3mapImported\\Ice Incenerate.mdx", rukiaFTargetPos)
         ..setScale(1)
         ..destr()
-    if rukiaFInt2 == 62
+    if rukiaFInt2 == 310
         sfx.setPos(rukiaFTargetPos)
         sfx.setHeight(-400)
         sfx.playAnimation(ANIM_TYPE_SPELL)
-    if rukiaFInt2 == 65
+    if rukiaFInt2 == 330
         flashEffect("war3mapImported\\IceNova.mdx", rukiaFTargetPos, 1)
-    if rukiaFInt2 == 70
+    if rukiaFInt2 == 370
         sfx6.destr()
         rukia.setAnimation(1)
         sfx7 = addEffect("war3mapImported\\Missle-Ice.mdx", rukia.getPos())
