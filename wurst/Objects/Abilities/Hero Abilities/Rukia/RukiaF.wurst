@@ -90,7 +90,7 @@ function rukiaFEnd()
     rukiaFInt++
     if rukiaFInt == 15
         sfx2 = addEffect("war3mapImported\\WaterSlow.mdx", rukia, "origin")
-        ..setScale(1)
+        ..setScale(2)
     if rukiaFInt == 70
         sfx3 = addEffect("war3mapImported\\AZ B.mdx", rukiaFTargetPos)
         ..setScale(4)
@@ -133,10 +133,11 @@ function rukiaFEnd2()
     if rukiaFInt2 == 140
         rukiaFTarget.addAbility('Amrf')
         rukiaFTarget.setFlyHeight(400, 40)
-        rukiaFTarget.setPos(rukiaFTargetPos + vec2(0, 600))
+        rukiaFTarget.setPos(rukiaFTargetPos + vec2(600, 600))
     if rukiaFInt2 == 170
         sfx.setHeight(400)
         sfx.setPos(sfx.getPos().polarOffset(sfx.getPos().angleTo(rukiaFTarget.getPos()), (sfx.getPos().distanceTo(rukiaFTarget.getPos()) +75)))
+        sfx.setYaw(sfx.getPos().angleTo(rukiaFTarget.getPos()))
         sfx.playAnimation(ANIM_TYPE_ATTACK)
     if rukiaFInt2 == 200
         rukiaFTarget.setFlyHeight(-400, 40)
@@ -150,11 +151,13 @@ function rukiaFEnd2()
         rukiaFTarget.removeAbility('Amrf')
         rukiaFTargetPos = rukiaFTarget.getPos()
         rukia.setPos(rukiaFTargetPos + vec2(0, 800))
+        rukia.setFacing(rukia.getPos().angleTo(rukiaFTargetPos))
         sfx6 = addEffect("war3mapImported\\Ice Incenerate.mdx", rukiaFTargetPos)
         ..setScale(1)
         ..destr()
     if rukiaFInt2 == 310
         sfx.setPos(rukiaFTargetPos)
+        sfx.setYaw(sfx.getPos().angleTo(rukiaFTargetPos))
         sfx.setHeight(-400)
         sfx.playAnimation(ANIM_TYPE_SPELL)
     if rukiaFInt2 == 330
@@ -167,7 +170,7 @@ function rukiaFEnd2()
         ..setYaw(rukia.getPos().angleTo(rukiaFTargetPos))
     if sfx7.getPos().distanceTo(rukiaFTargetPos) <= 40
         sfx8 = addEffect("war3mapImported\\iceflower.mdx", rukiaFTargetPos)
-        ..setScale(1)
+        ..setScale(2)
         ..destr()
         rukiaFTarget.setInvulnerable(false)       
         DamageEvent.setNextDamageId(DAMAGE_ABILITY_F)

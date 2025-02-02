@@ -20,7 +20,7 @@ effect sfx2
 effect sfx3
 effect sfx4
 effect sfx5
-effect sfx6
+effect sfx6 = null
 effect sfx7
 timer rukiaQTimer
 timer rukiaQTimer2
@@ -176,14 +176,14 @@ function rukiaQEnd3()
         sfx6 = addEffect("war3mapImported\\RukiaHakuren.mdx", (rukia.getPos().polarOffset(rukia.getPos().angleTo(spellPos), 100)))
         ..setScale(3)
         ..setYaw(rukia.getPos().angleTo(spellPos))
-        ..setHeight(200)
+        ..setHeight(100)
         ..playAnimation(ANIM_TYPE_STAND)
-    if rukiaQInt3 >= 22 and rukiaQInt3 <= 50
-        if sfx6.getPos().distanceTo(spellPos) <= 20 or rukiaQInt3 >= 50   
-            sfx6.setX(-999999)
-            sfx6.setY(-999999)
-            sfx6.destr()       
-            rukiaQTimer3.destr() 
-        else
-            sfx6.setPos(sfx6.getPos().polarOffset(sfx6.getPos().angleTo(spellPos), 60))
+    //if rukiaQInt3 >= 22 and rukiaQInt3 <= 50
+    if sfx6.getPos().distanceTo(spellPos) <= 20 //or rukiaQInt3 >= 50   
+        sfx6.setX(-999999)
+        sfx6.setY(-999999)
+        sfx6.destr()       
+        rukiaQTimer3.destr() 
+    else
+        sfx6.setPos(sfx6.getPos().polarOffset(sfx6.getPos().angleTo(spellPos), 60))
     
