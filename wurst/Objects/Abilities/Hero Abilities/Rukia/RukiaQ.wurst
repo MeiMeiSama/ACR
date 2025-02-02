@@ -6,7 +6,6 @@ import ObjectDefinitions
 import ChannelAbilityPreset
 import main
 import ClosureForGroups
-import ClosureTimers
 import UnitIds
 
 unit rukia
@@ -14,6 +13,7 @@ unit array rukiaQDummy
 group rukiaQGroup
 integer rukiaQInt
 integer rukiaQInt2
+integer rukiaQInt3
 vec2 spellPos
 effect sfx
 effect sfx2
@@ -24,7 +24,7 @@ effect sfx6
 effect sfx7
 timer rukiaQTimer
 timer rukiaQTimer2
-boolean rukiaBool
+timer rukiaQTimer3
 
 @compiletime function createAbility()
     new ChannelAbilityPreset(RUKIA_Q, 5, true)
@@ -110,6 +110,7 @@ function rukiaQ()
                 if rukiaQGroup == null
                     rukiaQGroup = CreateGroup() 
                 rukiaQTimer2 = CreateTimer()..startPeriodic(0.02, function rukiaQEnd2)
+                rukiaQTimer3 = CreateTimer()..startPeriodic(0.02, function rukiaQEnd3)
             else
                 let both = GetRandomInt(0, 1)
                 if both == 0
@@ -144,18 +145,6 @@ function rukiaQEnd2()
         sfx5 = addEffect("war3mapImported\\HarvestManaRukia.mdx", rukia.getPos())
         ..setScale(1)
         ..destr()
-    if rukiaQInt2 == 20    
-        sfx6 = addEffect("war3mapImported\\Icebeam.mdx", (rukia.getPos().polarOffset(rukia.getPos().angleTo(spellPos), 100)))
-        //..setScale(vec3(200, 100, 200))
-        ..setScale(4)
-        ..setY(400)
-        ..setHeight(300)
-        ..playAnimation(ANIM_TYPE_STAND) 
-        ..setYaw(rukia.getPos().angleTo(spellPos))
-        doAfter(2) ->
-            sfx6.setX(-999999)
-            sfx6.setY(-999999)
-            sfx6.destr()
     if rukiaQInt2 == 40
         gg_snd_RukiaQ22.play()        
     if rukiaQInt2 >= 46
@@ -169,12 +158,32 @@ function rukiaQEnd2()
                     if victim.isType(UNIT_TYPE_HERO)
                         sfx7 = addEffect("war3mapImported\\RukiaHakurenZone.mdx", victim.getPos())
                         ..setScale(1.5)
-                        ..destr()
                     rukiaQGroup.add(victim)
             rukia.setInvulnerable(false)
             rukia.unpause()                  
     if rukiaQInt2 >= 60
+        sfx7.setX(-999999)
+        sfx7.setY(-999999)
+        sfx7.destr()
         for i = 3 to 12
             rukiaQDummy[i].kill()
             rukiaQTimer2.destr()
-            rukiaQGroup.clear() 
+            rukiaQGroup.clear()
+
+function rukiaQEnd3()
+    rukiaQInt3++
+    if rukiaQInt3 == 20
+        sfx6 = addEffect("war3mapImported\\RukiaHakuren.mdx", (rukia.getPos().polarOffset(rukia.getPos().angleTo(spellPos), 100)))
+        ..setScale(3)
+        ..setYaw(rukia.getPos().angleTo(spellPos))
+        ..setHeight(200)
+        ..playAnimation(ANIM_TYPE_STAND)
+    if rukiaQInt3 >= 22 and rukiaQInt3 <= 50
+        if sfx6.getPos().distanceTo(spellPos) <= 20 or rukiaQInt3 >= 50   
+            sfx6.setX(-999999)
+            sfx6.setY(-999999)
+            sfx6.destr()       
+            rukiaQTimer3.destr() 
+        else
+            sfx6.setPos(sfx6.getPos().polarOffset(sfx6.getPos().angleTo(spellPos), 60))
+    

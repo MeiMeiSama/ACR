@@ -83,7 +83,7 @@ function rukiaTEnd()
         sfx2 = addEffect("war3mapImported\\IceAge.mdx", spellPos)
         ..setScale(1)
     if rukiaTInt >= 122 and rukiaTInt < 140
-        sfx2.setScale(sfx2.getScale() + 0.14)
+        sfx2.setScale(sfx2.getScale() + 0.06)
     if rukiaTInt == 160            
         rukia.setAnimation(0)
         sfx.setX(-999999)
