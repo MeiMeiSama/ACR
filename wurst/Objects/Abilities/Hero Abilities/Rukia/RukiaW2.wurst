@@ -39,7 +39,7 @@ timer rukiaW2Timer
         ..setLevels(5)
         ..setLevelSkipRequirement(2)
         ..presetArtDuration(lvl -> 0)
-        ..presetBaseOrderID(lvl -> "possession")
+        ..presetBaseOrderID(lvl -> "renew")
         ..presetDisableOtherAbilities(lvl -> false)
         ..presetFollowThroughTime(lvl -> 0)
         ..presetCastRange(lvl -> 2000)

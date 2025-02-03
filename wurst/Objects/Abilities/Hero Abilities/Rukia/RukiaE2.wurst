@@ -31,7 +31,7 @@ timer rukiaE2Timer
         ..setLevels(5)
         ..setLevelSkipRequirement(2)
         ..presetArtDuration(lvl -> 0)
-        ..presetBaseOrderID(lvl -> "stampede")
+        ..presetBaseOrderID(lvl -> "blink")
         ..presetDisableOtherAbilities(lvl -> false)
         ..presetFollowThroughTime(lvl -> 0)
         ..presetCastRange(lvl -> 2000)
