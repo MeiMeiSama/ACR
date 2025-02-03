@@ -322,4 +322,24 @@ public function initFunctions ()
                         zeref.hideAbility(zerefG, true)
                         zerefG.addTagHidden()                           
                     zervisGAddTimer()
+        if udg_PlayHero[i].getTypeId() == RUKIA
+            let rukia = udg_PlayHero[i]
+            let rukiaQ2 = SPELL_Q2[i]
+            let rukiaW2 = SPELL_W2[i]
+            let rukiaE2 = SPELL_E2[i]
+            rukia.addAbility(rukiaQ2)
+            rukia.makeAbilityPermanent(rukiaQ2, true) 
+            if rukiaQ2.hasTagHidden() == false
+                rukia.hideAbility(rukiaQ2, true)
+                rukiaQ2.addTagHidden()
+            rukia.addAbility(rukiaW2)
+            rukia.makeAbilityPermanent(rukiaW2, true) 
+            if rukiaW2.hasTagHidden() == false
+                rukia.hideAbility(rukiaW2, true)
+                rukiaW2.addTagHidden()
+            rukia.addAbility(rukiaE2)
+            rukia.makeAbilityPermanent(rukiaE2, true) 
+            if rukiaE2.hasTagHidden() == false
+                rukia.hideAbility(rukiaE2, true)
+                rukiaE2.addTagHidden()                      
     CreateTimer().start(3, function updateSelection)

@@ -6,6 +6,7 @@ import BuffObjEditing
 import DummyCaster
 import OrderIds
 import main
+import ACR_TagSystem
 
 unit rukia
 timer rukiaRTimer
@@ -82,9 +83,46 @@ function rukiaR()
             ..origin(rukia.getPos())
             ..castTarget(RUKIA_R_DUMMY_ABILITY, 1, OrderIds.slow, rukia)
             sfx = addEffect("war3mapImported\\RukiaAura.mdx", rukia, "origin")
-            ..setScale(2)                
+            ..setScale(2)
+            if RUKIA_Q.hasTagHidden() == false
+                rukia.hideAbility(RUKIA_Q, true)
+                RUKIA_Q.addTagHidden()
+            if RUKIA_W.hasTagHidden() == false
+                rukia.hideAbility(RUKIA_W, true)
+                RUKIA_W.addTagHidden()
+            if RUKIA_E.hasTagHidden() == false
+                rukia.hideAbility(RUKIA_E, true)
+                RUKIA_E.addTagHidden()
+            if RUKIA_Q2.hasTagHidden() == true
+                rukia.hideAbility(RUKIA_Q2, false)
+                RUKIA_Q2.removeTagHidden()
+            if RUKIA_W2.hasTagHidden() == true
+                rukia.hideAbility(RUKIA_W2, false)
+                RUKIA_W2.removeTagHidden()
+            if RUKIA_E2.hasTagHidden() == true
+                rukia.hideAbility(RUKIA_E2, false)
+                RUKIA_E2.removeTagHidden()                                                                             
             rukiaRTimer = CreateTimer()..start(30, function rukiaREnd)
 
 function rukiaREnd()
     rukia.removeAbility(RUKIA_R_BUFF)
     sfx.destr()
+    if RUKIA_Q2.hasTagHidden() == false
+        rukia.hideAbility(RUKIA_Q2, true)
+        RUKIA_Q2.addTagHidden()
+    if RUKIA_W2.hasTagHidden() == false
+        rukia.hideAbility(RUKIA_W2, true)
+        RUKIA_W2.addTagHidden()
+    if RUKIA_E2.hasTagHidden() == false
+        rukia.hideAbility(RUKIA_E2, true)
+        RUKIA_E2.addTagHidden()
+    if RUKIA_Q.hasTagHidden() == true
+        rukia.hideAbility(RUKIA_Q, false)
+        RUKIA_Q.removeTagHidden()
+    if RUKIA_W.hasTagHidden() == true
+        rukia.hideAbility(RUKIA_W, false)
+        RUKIA_W.removeTagHidden()
+    if RUKIA_E.hasTagHidden() == true
+        rukia.hideAbility(RUKIA_E, false)
+        RUKIA_E.removeTagHidden()    
+ 

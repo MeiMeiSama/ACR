@@ -10,12 +10,12 @@ import ACR_Slow
 unit rukia
 unit rukiaETarget
 integer rukiaEInt
-integer rukiaEInt2
+// integer rukiaEInt2
 effect sfx
-effect sfx2
-effect sfx3
+// effect sfx2
+// effect sfx3
 timer rukiaETimer
-timer rukiaETimer2
+// timer rukiaETimer2
 
 @compiletime function createAbility()
     new ChannelAbilityPreset(RUKIA_E, 5, true)
@@ -25,8 +25,8 @@ timer rukiaETimer2
         ..setButtonPositionNormalY(2)
         ..setButtonPositionResearchX(2)
         ..setButtonPositionResearchY(0)
-        ..setIconNormal("ReplaceableTextures\\CommandButtons\\BTNFrost.blp")
-        ..setIconResearch("ReplaceableTextures\\CommandButtons\\BTNFrost.blp")
+        ..setIconNormal("ReplaceableTextures\\CommandButtons\\BTNMagicLariet.blp")
+        ..setIconResearch("ReplaceableTextures\\CommandButtons\\BTNMagicLariet.blp")
         ..setMissileSpeed(99999)
         ..setHeroAbility(true)
         ..setHotkeyNormal("E")
@@ -41,7 +41,7 @@ timer rukiaETimer2
         ..presetCooldown(lvl -> 50)
         ..presetManaCost(lvl -> 70)
         ..presetTargetsAllowed(lvl -> "enemy,ground,air,neutral, vulnerable")
-        ..presetTooltipNormal(lvl -> "Rikujōkōrō/Shirafune|r")
+        ..presetTooltipNormal(lvl -> "Bakudō #61: Rikujōkōrō|r")
         ..presetTooltipNormalExtended(lvl -> "Rukia E Desc|r")
         ..setTooltipLearn("Learn E|r")
         ..setTooltipLearnExtended("Learning E|r")
@@ -56,24 +56,14 @@ function rukiaE()
         if GetSpellAbilityId() == RUKIA_E
             rukia = GetTriggerUnit()
             rukiaETarget = GetSpellTargetUnit()
-            if rukia.hasAbility(RUKIA_R_BUFF)
-                rukia.setInvulnerable(true)
-                rukia.pause()
-                rukiaETarget.setInvulnerable(true)
-                rukiaETarget.pause()
-                gg_snd_RukiaE2.play()
-                flashEffect("war3mapImported\\RukiaBlink.mdx", rukia.getPos(), 1)
-                rukiaEInt2 = 0
-                rukiaETimer2 = CreateTimer()..startPeriodic(0.02, function rukiaEEnd2)
-            else
-                rukia.setInvulnerable(true)
-                rukia.pause()
-                rukiaETarget.setInvulnerable(true)
-                rukiaETarget.pause()
-                gg_snd_RukiaE1.play()      
-                rukia.setAnimation(1) 
-                rukiaEInt = 0
-                rukiaETimer = CreateTimer()..startPeriodic(0.02, function rukiaEEnd)
+            rukia.setInvulnerable(true)
+            rukia.pause()
+            rukiaETarget.setInvulnerable(true)
+            rukiaETarget.pause()
+            gg_snd_RukiaE1.play()      
+            rukia.setAnimation(1) 
+            rukiaEInt = 0
+            rukiaETimer = CreateTimer()..startPeriodic(0.02, function rukiaEEnd)
 
 function rukiaEEnd()
     rukiaEInt++
@@ -93,38 +83,38 @@ function rukiaEEnd()
         sfx.destr()
         rukiaETimer.destr() 
 
-function rukiaEEnd2()
-    rukiaEInt2++
-    if rukiaEInt2 == 44
-        rukia.setPos(rukia.getPos().polarOffset(rukia.getPos().angleTo(rukiaETarget.getPos()), (rukia.getPos().distanceTo(rukiaETarget.getPos()) -120)))
-    if rukiaEInt2 == 46
-        flashEffect("war3mapImported\\RukiaBlink.mdx", rukia.getPos(), 1)
-    if rukiaEInt2 == 120
-        sfx2 = addEffect("war3mapImported\\BlianceSword+Frost.mdx", rukia.getPos().polarOffset(rukia.getPos().angleTo(rukiaETarget.getPos()), 80))
-        ..setScale(0.80)
-        ..setHeight(80)
-        ..playAnimation(ANIM_TYPE_STAND)
-        ..setYaw(rukia.getPos().angleTo(rukiaETarget.getPos()))
-        rukia.setAnimation(2)
-    if rukiaEInt2 == 140   
-        sfx2.playAnimation(ANIM_TYPE_ATTACK) 
-    if rukiaEInt2 == 150
-        sfx2.setX(-999999)
-        sfx2.setY(-999999)
-        sfx2.destr() 
-        sfx3 = addEffect("war3mapImported\\RukiaNova.mdx", rukiaETarget.getPos())
-        ..setScale(10)
-        ..playAnimation(ANIM_TYPE_STAND)
-        rukia.setInvulnerable(false)
-        rukia.unpause()
-    if rukiaEInt2 == 164
-        sfx3.destr()    
-    if rukiaEInt2 == 165
-        rukiaETarget.setInvulnerable(false)      
-        DamageEvent.setNextDamageId(DAMAGE_ABILITY_E)
-        DamageEvent.setNextDamageFromCode()
-        rukia.damageTarget(rukiaETarget, 1, ATTACK_TYPE_MAGIC)   
-        rukiaETarget.unpause()
-        rukiaETarget.issueImmediateOrder("stop")
-        acrSlow(rukia, rukiaETarget, 40, 2)
-        rukiaETimer2.destr()                             
+// function rukiaEEnd2()
+//     rukiaEInt2++
+//     if rukiaEInt2 == 44
+//         rukia.setPos(rukia.getPos().polarOffset(rukia.getPos().angleTo(rukiaETarget.getPos()), (rukia.getPos().distanceTo(rukiaETarget.getPos()) -120)))
+//     if rukiaEInt2 == 46
+//         flashEffect("war3mapImported\\RukiaBlink.mdx", rukia.getPos(), 1)
+//     if rukiaEInt2 == 120
+//         sfx2 = addEffect("war3mapImported\\BlianceSword+Frost.mdx", rukia.getPos().polarOffset(rukia.getPos().angleTo(rukiaETarget.getPos()), 80))
+//         ..setScale(0.80)
+//         ..setHeight(80)
+//         ..playAnimation(ANIM_TYPE_STAND)
+//         ..setYaw(rukia.getPos().angleTo(rukiaETarget.getPos()))
+//         rukia.setAnimation(2)
+//     if rukiaEInt2 == 140   
+//         sfx2.playAnimation(ANIM_TYPE_ATTACK) 
+//     if rukiaEInt2 == 150
+//         sfx2.setX(-999999)
+//         sfx2.setY(-999999)
+//         sfx2.destr() 
+//         sfx3 = addEffect("war3mapImported\\RukiaNova.mdx", rukiaETarget.getPos())
+//         ..setScale(10)
+//         ..playAnimation(ANIM_TYPE_STAND)
+//         rukia.setInvulnerable(false)
+//         rukia.unpause()
+//     if rukiaEInt2 == 164
+//         sfx3.destr()    
+//     if rukiaEInt2 == 165
+//         rukiaETarget.setInvulnerable(false)      
+//         DamageEvent.setNextDamageId(DAMAGE_ABILITY_E)
+//         DamageEvent.setNextDamageFromCode()
+//         rukia.damageTarget(rukiaETarget, 1, ATTACK_TYPE_MAGIC)   
+//         rukiaETarget.unpause()
+//         rukiaETarget.issueImmediateOrder("stop")
+//         acrSlow(rukia, rukiaETarget, 40, 2)
+//         rukiaETimer2.destr()                             

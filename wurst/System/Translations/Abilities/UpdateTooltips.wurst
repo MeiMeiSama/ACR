@@ -1291,8 +1291,11 @@ public function addAbilities (unit hero)
         SPELL_G2[id] = ZERVIS_G
     else if hero.getTypeId() == RUKIA // Rukia
         SPELL_Q[id] = RUKIA_Q
+        SPELL_Q2[id] = RUKIA_Q2
         SPELL_W[id] = RUKIA_W
+        SPELL_W2[id] = RUKIA_W2
         SPELL_E[id] = RUKIA_E
+        SPELL_E2[id] = RUKIA_E2
         SPELL_R[id] = RUKIA_R
         SPELL_T[id] = RUKIA_T
         SPELL_F[id] = RUKIA_F
