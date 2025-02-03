@@ -7,10 +7,10 @@ import DummyCaster
 import OrderIds
 import main
 import ACR_TagSystem
+import ClosureEvents
 
-unit rukia
-timer rukiaRTimer
-effect sfx 
+effect sfx
+boolean rukiaRon 
 
 @compiletime function createAbility()
     new ChannelAbilityPreset(RUKIA_R, 3, true)
@@ -69,60 +69,70 @@ effect sfx
         ..setTooltipNormalExtended(1, "Sode no Shirayuki Dummy|r")
 
 init
-    rukiaR()
 
-function rukiaR()
-    CreateTrigger()
-    ..registerAnyUnitEvent(EVENT_PLAYER_UNIT_SPELL_EFFECT)
-    ..addAction() ->
-        if GetSpellAbilityId() == RUKIA_R
-            rukia = GetTriggerUnit()
-            gg_snd_RukiaR.play()     
+public function rukiaR()
+    EventListener.add(EVENT_PLAYER_HERO_SKILL) ->
+        if GetLearnedSkill() == RUKIA_Q or GetLearnedSkill() == RUKIA_W or GetLearnedSkill() == RUKIA_E
+            let u = GetTriggerUnit()
+            let a = GetLearnedSkill()
+            let abilvl = GetUnitAbilityLevel(u, a)
+            if a == RUKIA_Q
+                u.setAbilityLevel(RUKIA_Q2, abilvl)
+            if a == RUKIA_W    
+                u.setAbilityLevel(RUKIA_W2, abilvl)
+            if a == RUKIA_E    
+                u.setAbilityLevel(RUKIA_E2, abilvl)
+            
+    EventListener.onCast(RUKIA_R) (unit caster) ->
+        if rukiaRon == false
+            gg_snd_RukiaR.play()
             new DummyCaster()
-            ..owner(rukia.getOwner())
-            ..origin(rukia.getPos())
-            ..castTarget(RUKIA_R_DUMMY_ABILITY, 1, OrderIds.slow, rukia)
-            sfx = addEffect("war3mapImported\\RukiaAura.mdx", rukia, "origin")
+            ..owner(caster.getOwner())
+            ..origin(caster.getPos())
+            ..castTarget(RUKIA_R_DUMMY_ABILITY, 1, OrderIds.slow, caster)
+            sfx = addEffect("war3mapImported\\RukiaAura.mdx", caster, "origin")
             ..setScale(2)
+            BlzSetAbilityIcon(RUKIA_R, "ReplaceableTextures\\CommandButtons\\DISBTNEtherealFormOn.blp")
             if RUKIA_Q.hasTagHidden() == false
-                rukia.hideAbility(RUKIA_Q, true)
+                caster.hideAbility(RUKIA_Q, true)
                 RUKIA_Q.addTagHidden()
             if RUKIA_W.hasTagHidden() == false
-                rukia.hideAbility(RUKIA_W, true)
+                caster.hideAbility(RUKIA_W, true)
                 RUKIA_W.addTagHidden()
             if RUKIA_E.hasTagHidden() == false
-                rukia.hideAbility(RUKIA_E, true)
+                caster.hideAbility(RUKIA_E, true)
                 RUKIA_E.addTagHidden()
             if RUKIA_Q2.hasTagHidden() == true
-                rukia.hideAbility(RUKIA_Q2, false)
+                caster.hideAbility(RUKIA_Q2, false)
                 RUKIA_Q2.removeTagHidden()
             if RUKIA_W2.hasTagHidden() == true
-                rukia.hideAbility(RUKIA_W2, false)
+                caster.hideAbility(RUKIA_W2, false)
                 RUKIA_W2.removeTagHidden()
             if RUKIA_E2.hasTagHidden() == true
-                rukia.hideAbility(RUKIA_E2, false)
-                RUKIA_E2.removeTagHidden()                                                                             
-            rukiaRTimer = CreateTimer()..start(30, function rukiaREnd)
-
-function rukiaREnd()
-    rukia.removeAbility(RUKIA_R_BUFF)
-    sfx.destr()
-    if RUKIA_Q2.hasTagHidden() == false
-        rukia.hideAbility(RUKIA_Q2, true)
-        RUKIA_Q2.addTagHidden()
-    if RUKIA_W2.hasTagHidden() == false
-        rukia.hideAbility(RUKIA_W2, true)
-        RUKIA_W2.addTagHidden()
-    if RUKIA_E2.hasTagHidden() == false
-        rukia.hideAbility(RUKIA_E2, true)
-        RUKIA_E2.addTagHidden()
-    if RUKIA_Q.hasTagHidden() == true
-        rukia.hideAbility(RUKIA_Q, false)
-        RUKIA_Q.removeTagHidden()
-    if RUKIA_W.hasTagHidden() == true
-        rukia.hideAbility(RUKIA_W, false)
-        RUKIA_W.removeTagHidden()
-    if RUKIA_E.hasTagHidden() == true
-        rukia.hideAbility(RUKIA_E, false)
-        RUKIA_E.removeTagHidden()    
+                caster.hideAbility(RUKIA_E2, false)
+                RUKIA_E2.removeTagHidden()
+            rukiaRon = true    
+        else 
+            caster.removeAbility(RUKIA_R_BUFF)
+            sfx.destr()
+            BlzSetAbilityIcon(RUKIA_R, "ReplaceableTextures\\CommandButtons\\BTNEtherealFormOn.blp")
+            if RUKIA_Q2.hasTagHidden() == false
+                caster.hideAbility(RUKIA_Q2, true)
+                RUKIA_Q2.addTagHidden()
+            if RUKIA_W2.hasTagHidden() == false
+                caster.hideAbility(RUKIA_W2, true)
+                RUKIA_W2.addTagHidden()
+            if RUKIA_E2.hasTagHidden() == false
+                caster.hideAbility(RUKIA_E2, true)
+                RUKIA_E2.addTagHidden()
+            if RUKIA.hasTagHidden() == true
+                caster.hideAbility(RUKIA_Q, false)
+                RUKIA_Q.removeTagHidden()
+            if RUKIA_W.hasTagHidden() == true
+                caster.hideAbility(RUKIA_W, false)
+                RUKIA_W.removeTagHidden()
+            if RUKIA_E.hasTagHidden() == true
+                caster.hideAbility(RUKIA_E, false)
+                RUKIA_E.removeTagHidden()
+            rukiaRon = false       
  

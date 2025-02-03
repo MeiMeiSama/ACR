@@ -79,6 +79,7 @@ import misakaOnKillBLT
 import MavisE_Orig
 import ZervisG_Orig
 import Zeref_F
+import RukiaR
 
 /*
 
@@ -341,5 +342,6 @@ public function initFunctions ()
             rukia.makeAbilityPermanent(rukiaE2, true) 
             if rukiaE2.hasTagHidden() == false
                 rukia.hideAbility(rukiaE2, true)
-                rukiaE2.addTagHidden()                      
+                rukiaE2.addTagHidden()
+            rukiaR()                          
     CreateTimer().start(3, function updateSelection)
