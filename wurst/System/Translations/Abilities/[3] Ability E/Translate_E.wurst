@@ -243,21 +243,52 @@ public function tooltip_E2 (int pid)
     let hero = udg_PlayHero[id]
     int range
     int cd
-    let skill = SPELL_E2[id] // only Law uses this
+    int dmg
+    int stat = 0
+    int mana
+    let skill = SPELL_E2[id]
+    int spellLvl = skill.getSkillLvl(id)
+    if BlzGetUnitIntegerField(hero, UNIT_IF_PRIMARY_ATTRIBUTE) == 1 // Strength
+        stat = hero.getStr(true)
+    else if BlzGetUnitIntegerField(hero, UNIT_IF_PRIMARY_ATTRIBUTE) == 2 // Intellect
+        stat = hero.getInt(true)
+    else if BlzGetUnitIntegerField(hero, UNIT_IF_PRIMARY_ATTRIBUTE) == 3 // Agility
+        stat = hero.getAgi(true)
 
-    cd = (22)
-    range = (50000)
+    if skill == 'A0LW' //Law
+        cd = (22)
+        range = (50000)
 
-    skill
-    ..setDescription(id,
-    GOLD+
-    "Law switches positions with his target. This ability can only be used within Room."+
-    "\n\nCast Range: "+PINK+"Global"+GOLD+
-    "\nCooldown: "+PINK+cd.toString()+GOLD)
+        skill
+        ..setDescription(id,
+        GOLD+
+        "Law switches positions with his target. This ability can only be used within Room."+
+        "\n\nCast Range: "+PINK+"Global"+GOLD+
+        "\nCooldown: "+PINK+cd.toString()+GOLD)
 
-    hero.getAbility(skill)
-    ..setField(ABILITY_RLF_CAST_RANGE, hero.getAbilityLevel(skill) - 1, range.toReal())
-    ..setField(ABILITY_RLF_COOLDOWN, hero.getAbilityLevel(skill) - 1, cd.toReal())  
+        hero.getAbility(skill)
+        ..setField(ABILITY_RLF_CAST_RANGE, hero.getAbilityLevel(skill) - 1, range.toReal())
+        ..setField(ABILITY_RLF_COOLDOWN, hero.getAbilityLevel(skill) - 1, cd.toReal())
+
+    else if skill == RUKIA_E2
+        spellLvl = skill.getSkillLvl(id)
+        dmg = (40 * spellLvl) + (0.2 * stat * spellLvl).toInt()
+        cd = (15 + spellLvl)
+        mana = (10 + (5*spellLvl))
+        range = (875)
+
+        skill..setTitle(id, BLUE+"San no Mai, Shirafune"+LEVEL_TOOLTIP+spellLvl.toString()+CR+"]")
+        ..setDescription(id,
+        GOLD+
+        "Deals damage to the target enemy."+
+        "\n\nCast Range: "+PINK+range.toString()+GOLD+
+        "\nCooldown: "+PINK+cd.toString()+GOLD+
+        "\nDamage Output: "+hero.getStatColor()+dmg.toString()+GOLD)
+        
+        hero.getAbility(skill)
+        ..setField(ABILITY_ILF_MANA_COST, hero.getAbilityLevel(skill) - 1, mana)
+        ..setField(ABILITY_RLF_CAST_RANGE, hero.getAbilityLevel(skill) - 1, range.toReal())
+        ..setField(ABILITY_RLF_COOLDOWN, hero.getAbilityLevel(skill) - 1, cd.toReal())
 
 public function tooltip_Damaging_E (int pid)
     let id = pid

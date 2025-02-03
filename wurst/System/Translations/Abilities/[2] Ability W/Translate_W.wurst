@@ -424,6 +424,27 @@ public function tooltip_W2 (int pid)
         ..setField(ABILITY_ILF_MANA_COST, hero.getAbilityLevel(skill) - 1, mana)
         ..setField(ABILITY_RLF_CAST_RANGE, hero.getAbilityLevel(skill) - 1, range.toReal())
         ..setField(ABILITY_RLF_COOLDOWN, hero.getAbilityLevel(skill) - 1, cd.toReal())
+
+    else if skill == RUKIA_W2 //Rukia
+        let rukiaw = RUKIA_W
+        spellLvl = rukiaw.getSkillLvl(id)
+        dmg = (55 * spellLvl) + ((2 + (0.5 * spellLvl)) * stat).toInt()
+        cd = (16 + spellLvl)
+        mana = (15 + (5*spellLvl))
+        range = (1350)
+
+        skill
+        ..setDescription(id,
+        GOLD+
+        "Deals damage to enemies in the targeted area."+
+        "\n\nCast Range: "+PINK+range.toString()+GOLD+
+        "\nCooldown: "+PINK+cd.toString()+GOLD+
+        "\nDamage Output: "+hero.getStatColor()+dmg.toString()+GOLD)
+        
+        hero.getAbility(skill)
+        ..setField(ABILITY_ILF_MANA_COST, hero.getAbilityLevel(skill) - 1, mana)
+        ..setField(ABILITY_RLF_CAST_RANGE, hero.getAbilityLevel(skill) - 1, range.toReal())
+        ..setField(ABILITY_RLF_COOLDOWN, hero.getAbilityLevel(skill) - 1, cd.toReal())    
 // --------------------------------------------------------------------------------------------------------------------------------------------------- //
 
 public function tooltip_Mode_W (int pid)
