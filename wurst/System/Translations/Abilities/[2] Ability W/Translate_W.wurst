@@ -433,7 +433,7 @@ public function tooltip_W2 (int pid)
         mana = (15 + (5*spellLvl))
         range = (1350)
 
-        skill
+        skill..setTitle(id, BLUE+"Some no Mai, Tsukishiro"+LEVEL_TOOLTIP+spellLvl.toString()+CR+"]")
         ..setDescription(id,
         GOLD+
         "Deals damage to enemies in the targeted area."+

@@ -39,13 +39,13 @@ public function tooltip_R (int pid)
     
     else if skill == RUKIA_R //Rukia
         spellLvl = skill.getSkillLvl(id)
-        cd = (30 + (spellLvl * 5))
+        cd = (1)
         mana = (40 + (10 * spellLvl))
 
         skill
         ..setDescription(id, 
         GOLD+
-        "Rukia releases her shikai, changing her basic abilities."+
+        "Rukia changes her skills between her Q/W/E original abilities and their alternative shikai versions."+
         "\n\nCooldown: "+PINK+cd.toString()+GOLD)
 
         hero.getAbility(skill)

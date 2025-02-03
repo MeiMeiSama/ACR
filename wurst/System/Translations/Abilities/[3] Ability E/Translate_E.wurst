@@ -247,7 +247,7 @@ public function tooltip_E2 (int pid)
     int stat = 0
     int mana
     let skill = SPELL_E2[id]
-    int spellLvl = skill.getSkillLvl(id)
+    int spellLvl
     if BlzGetUnitIntegerField(hero, UNIT_IF_PRIMARY_ATTRIBUTE) == 1 // Strength
         stat = hero.getStr(true)
     else if BlzGetUnitIntegerField(hero, UNIT_IF_PRIMARY_ATTRIBUTE) == 2 // Intellect

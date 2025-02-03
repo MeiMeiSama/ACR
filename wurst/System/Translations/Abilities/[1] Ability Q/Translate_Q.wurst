@@ -524,7 +524,7 @@ public function tooltip_Q2 (int pid)
         range = 1500
         castrange = 5000
 
-        skill
+        skill..setTitle(id, BLUE+"Tsugi no Mai, Hakuren"+LEVEL_TOOLTIP+spellLvl.toString()+CR+"]")
         ..setDescription(id, 
         GOLD+
         "Deals damage to enemies along the path towards the targeted location."+

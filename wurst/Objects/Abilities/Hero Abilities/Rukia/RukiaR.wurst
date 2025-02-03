@@ -92,7 +92,7 @@ public function rukiaR()
             ..castTarget(RUKIA_R_DUMMY_ABILITY, 1, OrderIds.slow, caster)
             sfx = addEffect("war3mapImported\\RukiaAura.mdx", caster, "origin")
             ..setScale(2)
-            BlzSetAbilityIcon(RUKIA_R, "ReplaceableTextures\\CommandButtons\\DISBTNEtherealFormOn.blp")
+            BlzSetAbilityIcon(RUKIA_R, "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNEtherealFormOn.blp")
             if RUKIA_Q.hasTagHidden() == false
                 caster.hideAbility(RUKIA_Q, true)
                 RUKIA_Q.addTagHidden()
@@ -125,7 +125,7 @@ public function rukiaR()
             if RUKIA_E2.hasTagHidden() == false
                 caster.hideAbility(RUKIA_E2, true)
                 RUKIA_E2.addTagHidden()
-            if RUKIA.hasTagHidden() == true
+            if RUKIA_Q.hasTagHidden() == true
                 caster.hideAbility(RUKIA_Q, false)
                 RUKIA_Q.removeTagHidden()
             if RUKIA_W.hasTagHidden() == true
