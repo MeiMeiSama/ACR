@@ -18,6 +18,7 @@ vec2 jotaroPos
 vec2 abilityJotaroRPos
 angle angle
 unit starPlatinum
+unit invisibleDummy
 int jotaroRTimerInt1
 int jotaroRTimerInt2
 int jotaroRTimerInt3
@@ -66,6 +67,41 @@ effect effect2
         ..setMaximumRollAngledegrees(0)
         ..setModelFile("war3mapImported\\Star Platinum.mdx")
         ..setScalingValue(1.5)
+        ..setArtSpecial("_")
+        ..setArmorType(ArmorType.Unarmored)
+        ..setPlaceableInEditor(false)
+        ..setMovementHeight(20)
+        ..setSpeedBase(100)
+        ..setTurnRate(3)
+        ..setMovementType(MovementType.Fly)
+        ..setCollisionSize(0)
+        ..setUnitSoundSet("_")
+        ..setCanFlee(false)
+        ..setFoodCost(0)
+        ..setHideMinimapDisplay(true)
+        ..setHitPointsMaximumBase(60)
+        ..setHitPointsRegenerationRate(-1)
+        ..setHitPointsRegenerationType("Always")
+        ..setStockMaximum(1)
+        ..setStockReplenishInterval(1)
+        ..setStructuresBuilt("_")
+        ..setUpgradesUsed("_")
+        ..setHotkey("_")
+        ..setName("effect dummy")
+        ..setTooltipBasic("_")
+        ..setTooltipExtended("_")
+    new UnitDefinition(JOTARO_R_DUMMY2, UnitIds.wisp)
+        ..setNormalAbilities(commaList('Avul', 'Aloc', 'Amrf'))
+        ..setAnimationCastBackswing(0)
+        ..setDeathTimeseconds(0.1)
+        ..setScalingValue(0.01)
+        ..setUnitClassification("_")
+        ..setArtSpecial("_")
+        ..setHasWaterShadow(false)
+        ..setMaximumPitchAngledegrees(0)
+        ..setMaximumRollAngledegrees(0)
+        ..setModelFile("_")
+        ..setScalingValue(0.01)
         ..setArtSpecial("_")
         ..setArmorType(ArmorType.Unarmored)
         ..setPlaceableInEditor(false)
@@ -145,10 +181,12 @@ function jotaroRDash()
                 if jotaro.isAllyOf(u) == false and u.isType(UNIT_TYPE_HERO) and jotaroRDashBool == true
                     if u.getTypeId() == DIO_BRANDO and dioRDashBool == true
                         print("dio")
+                        jotaroDioRBool = true
                         jotaroRDashBool = false
                         jotaroDashEnd()
                         dio = u
                         dioPos = dio.getPos()
+                        invisibleDummy = createUnit(JOTARO_R_DUMMY2, jotaroPos.polarOffset(jotaroPos.angleTo(dioPos), 175))
                         jotaro.setFacing(jotaroPos.angleTo(dioPos))
                         dio.setFacing(dioPos.angleTo(jotaroPos))     
                         jotaroRTimerInt2 = 0       

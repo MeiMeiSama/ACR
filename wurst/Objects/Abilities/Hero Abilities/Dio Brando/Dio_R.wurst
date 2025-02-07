@@ -1,2 +1,306 @@
 package Dio_R
 
+import DamageEvent
+import AbilityGlobals
+import ObjectDefinitions
+import TerrainUtils
+import ChannelAbilityPreset
+import UnitIds
+// import main
+import ClosureForGroups
+import Dio_T
+
+unit dio
+unit dioRTarget
+unit jotaro
+vec2 jotaroPos
+vec2 dioPos
+vec2 abilitydioRPos
+angle angle
+unit starPlatinum
+int dioRTimerInt1
+int dioRTimerInt2
+int dioRTimerInt3
+timer dioRTimer
+effect effect1
+effect effect2
+
+@compiletime function createAbility()
+    new ChannelAbilityPreset(DIO_R, 3, true)
+        ..presetTargetTypes(Targettype.POINTUNIT)
+        ..setAnimationNames("11111111")
+        ..setButtonPositionNormalX(3)
+        ..setButtonPositionNormalY(2)
+        ..setButtonPositionResearchX(3)
+        ..setButtonPositionResearchY(0)
+        ..setIconNormal("ReplaceableTextures\\CommandButtons\\BTNStampede.blp")
+        ..setIconResearch("ReplaceableTextures\\CommandButtons\\BTNStampede.blp")
+        ..setMissileSpeed(99999)
+        ..setHeroAbility(true)
+        ..setHotkeyNormal("R")
+        ..setHotkeyLearn("R")
+        ..setLevels(3)
+        ..setRequiredLevel(8)
+        ..setLevelSkipRequirement(5)
+        ..presetArtDuration(lvl -> 0)
+        ..presetBaseOrderID(lvl -> "submerge")
+        ..presetDisableOtherAbilities(lvl -> false)
+        ..presetFollowThroughTime(lvl -> 0)
+        ..presetCastRange(lvl -> 2000)
+        ..presetCooldown(lvl -> 50)
+        ..presetManaCost(lvl -> 70)
+        ..presetTargetsAllowed(lvl -> "enemy,ground,air,neutral")
+        ..presetTooltipNormal(lvl -> "Dash|r")
+        ..presetTooltipNormalExtended(lvl -> "Mavis R Desc|r")
+        ..setTooltipLearn("Dash|r")
+        ..setTooltipLearnExtended("Learning R|r")
+    new UnitDefinition(DIO_R_DUMMY, UnitIds.wisp)
+        ..setNormalAbilities(commaList('Avul', 'Aloc', 'Amrf'))
+        ..setAnimationCastBackswing(0)
+        ..setDeathTimeseconds(0.1)
+        ..setScalingValue(0.70)
+        ..setUnitClassification("_")
+        ..setArtSpecial("_")
+        ..setHasWaterShadow(false)
+        ..setMaximumPitchAngledegrees(0)
+        ..setMaximumRollAngledegrees(0)
+        ..setModelFile("war3mapImported\\Star Platinum.mdx")
+        ..setScalingValue(1.5)
+        ..setArtSpecial("_")
+        ..setArmorType(ArmorType.Unarmored)
+        ..setPlaceableInEditor(false)
+        ..setMovementHeight(20)
+        ..setSpeedBase(100)
+        ..setTurnRate(3)
+        ..setMovementType(MovementType.Fly)
+        ..setCollisionSize(0)
+        ..setUnitSoundSet("_")
+        ..setCanFlee(false)
+        ..setFoodCost(0)
+        ..setHideMinimapDisplay(true)
+        ..setHitPointsMaximumBase(60)
+        ..setHitPointsRegenerationRate(-1)
+        ..setHitPointsRegenerationType("Always")
+        ..setStockMaximum(1)
+        ..setStockReplenishInterval(1)
+        ..setStructuresBuilt("_")
+        ..setUpgradesUsed("_")
+        ..setHotkey("_")
+        ..setName("effect dummy")
+        ..setTooltipBasic("_")
+        ..setTooltipExtended("_")
+
+init
+    dioR()    
+
+function dioR()
+    CreateTrigger()
+    ..registerAnyUnitEvent(EVENT_PLAYER_UNIT_SPELL_EFFECT)
+    ..addAction() ->
+        if GetSpellAbilityId() == DIO_R
+            abilitydioRPos = vec2(GetSpellTargetX(), GetSpellTargetY())
+            dio = GetTriggerUnit()
+            dioPos = dio.getPos()
+            dioRTimerInt1 = 0            
+            if abilitydioRPos.distanceTo(abilitydioTPos) < 900 and dioPos.distanceTo(abilitydioTPos) < 900
+                dio.pause()
+                dio.setInvulnerable(true)   
+                gg_snd_dioR6.play()
+                dioRTimer = CreateTimer()..startPeriodic(0.01, function dioRAoe)
+            else    
+                if dioPos.distanceTo(abilitydioRPos) < 1250
+                    abilitydioRPos = dioPos.polarOffset(dioPos.angleTo(abilitydioRPos), 1250)
+                dioRDashBool = true
+                dio.pause()
+                dio.setInvulnerable(true)       
+                dio.setPathing(false)
+                dio.setFacing(dioPos.angleTo(abilitydioRPos)) 
+                dio.setAnimation(11)   
+                let rng = GetRandomInt(0, 1)
+                if rng == 0
+                    gg_snd_dioR1_1.play()
+                else 
+                    gg_snd_dioR1_2.play()
+                flashEffect("war3mapImported\\dustwavxfsfsfe.mdx", dio.getPos(), 0.60)        
+                dioRTimer = CreateTimer()..startPeriodic(0.01, function dioRDash)
+
+function dioRDash()
+    dioRTimerInt1++
+    if dioRTimerInt1 > 0 and dioRTimerInt1 < 50
+        if dio.isPaused() == false
+            dio.pause()
+        if dio.isInvulnerable() == false
+            dio.setInvulnerable(true) 
+    if dioRTimerInt1 >= 50 or dioPos.distanceTo(abilitydioRPos) < 25 or jotaroDioRBool == true
+        dio.setAnimation(13)
+        dioDashEnd()
+
+    if dioRTimerInt1 < 50
+        if dioPos.polarOffset(dioPos.angleTo(abilitydioRPos), 25).isTerrainPathable(PATHING_TYPE_WALKABILITY) == true and dioPos.polarOffset(dioPos.angleTo(abilitydioRPos), 25).isTerrainPathable(PATHING_TYPE_FLYABILITY) == true 
+            dioDashEnd()          
+        else
+            dio.setPos(dioPos.polarOffset(dioPos.angleTo(abilitydioRPos), 25))
+            dioPos = dio.getPos()
+            forUnitsInRange(dioPos, 350) (unit u) ->
+                if dio.isAllyOf(u) == false and u.isType(UNIT_TYPE_HERO) and dioRDashBool == true and u.isInvulnerable() == false                           
+                    dioRDashBool = false
+                    dioDashEnd()
+                    dioRTarget = u
+                    dio.pause()
+                    dio.setInvulnerable(true)
+                    dio.setPathing(false)
+                    dioRTarget.pause()
+                    dioRTarget.setInvulnerable(true)
+                    dioRTarget.setPathing(false)
+                    dio.setPos(dioRTarget.getPos().polarOffset(dioRTarget.getPos().angleTo(dioPos), 350))
+                    dio.setFacing(dio.getPos().angleTo(dioRTarget.getPos()))
+                    starPlatinum = createUnit(DIO_R_DUMMY, dioRTarget.getPos().polarOffset(dioRTarget.getPos().angleTo(dioPos), 150))     
+                    starPlatinum.setAnimation(7)
+                    starPlatinum.setFacing(starPlatinum.getPos().angleTo(dioRTarget.getPos()))
+                    dioRTimerInt2 = 0
+                    dioRTimerInt3 = 0              
+                    dioRTimer = CreateTimer()..startPeriodic(0.03, function dioRAttack1)
+                    CreateTimer()..startPeriodic(0.03, function dioRAttack2)    
+
+
+function dioRAoe()
+    dioRTimerInt1++
+    if dioRTimerInt1 > 0 and dioRTimerInt1 < 20
+        if dio.isPaused() == false
+            dio.pause()
+        if dio.isInvulnerable() == false
+            dio.setInvulnerable(true) 
+    if dioRTimerInt1 == 20
+        starPlatinum = createUnit(DIO_R_DUMMY, abilitydioRPos)  
+        dio.unpause()
+        dio.setInvulnerable(false)        
+    if dioRTimerInt1 == 50    
+        starPlatinum.setAnimation(8)
+        flashEffect("war3mapImported\\dustwavxfsfsfe.mdx", starPlatinum.getPos(), 0.70)  
+        flashEffect("war3mapImported\\tx.mdx", starPlatinum.getPos(), 4, starPlatinum.getPos().angleTo(dio.getPos()))
+    if dioRTimerInt1 > 100 and dioRTimerInt1 < 150
+        forUnitsInRange(abilitydioRPos, 600) (unit u) ->
+            if dio.isAllyOf(u) == false and u.getPos().distanceTo(abilitydioTPos) < 900 and u.isInvulnerable() == false
+                DamageEvent.setNextDamageId(DAMAGE_ABILITY_DIO_R)
+                DamageEvent.setNextDamageFromCode()
+                dio.damageTarget(u, 1, ATTACK_TYPE_MAGIC)    
+    if dioRTimerInt1 >= 170
+        dioRTimer.destr()
+        starPlatinum.kill()
+
+function dioDashEnd()
+    dioRDashBool = false
+    dioRTimer.destr()
+    dio.setPathing(true)
+    dio.unpause()
+    dio.setInvulnerable(false)    
+
+function dioRAttack1()
+    dioRTimerInt2++
+    if dioRTimerInt2 > 0 and dioRTimerInt2 < 210
+        if dio.isPaused() == false
+            dio.pause()
+        if dio.isInvulnerable() == false
+            dio.setInvulnerable(true) 
+        if dioRTarget.isPaused() == false
+            dioRTarget.pause()
+        if dioRTarget.isInvulnerable() == false
+            dioRTarget.setInvulnerable(true)            
+    if dioRTimerInt2 == 10
+        gg_snd_dioR2.play() 
+        dio.setAnimation(8)
+        starPlatinum.setAnimation(1)    
+    if dioRTimerInt2 == 40
+        gg_snd_dioR3.play()
+        dio.setAnimation(21)
+        starPlatinum.setAnimation(34) 
+    if dioRTimerInt2 >= 41 and dioRTimerInt2 < 160     
+        dioPos = dio.getPos()
+        if dioPos.polarOffset(dioPos.angleTo(dioRTarget.getPos()), 355).isTerrainPathable(PATHING_TYPE_WALKABILITY) == true and dioPos.polarOffset(dioPos.angleTo(dioRTarget.getPos()), 355).isTerrainPathable(PATHING_TYPE_FLYABILITY) == true
+            DoNothing()
+        else                 
+            dio.setPos(dioPos.polarOffset(dioPos.angleTo(dioRTarget.getPos()), 5)) 
+            dioRTarget.setPos(dioPos.polarOffset(dioPos.angleTo(dioRTarget.getPos()), 355))
+            starPlatinum.setPos(dioPos.polarOffset(dioPos.angleTo(dioRTarget.getPos()), 155))       
+    if dioRTimerInt2 == 160
+        gg_snd_dioR4.play()
+        starPlatinum.setAnimation(12) 
+        dio.setAnimation(22)
+    if dioRTimerInt2 == 170
+        starPlatinum.setAnimation(13)   
+    if dioRTimerInt2 == 190     
+        starPlatinum.setAnimation(0) 
+    if dioRTimerInt2 == 195
+        gg_snd_dioR5.play()
+    if dioRTimerInt2 == 210
+        dioRTarget.setInvulnerable(false)
+        starPlatinum.kill()
+        DamageEvent.setNextDamageId(DAMAGE_ABILITY_DELAYED_R)
+        DamageEvent.setNextDamageFromCode()
+        dio.damageTarget(dioRTarget, 1, ATTACK_TYPE_MAGIC)
+        dioDashEnd()
+        dioRTarget.setPathing(true)
+        dioRTarget.unpause()
+
+function dioRAttack2()
+    dioRTimerInt3++
+    if dioRTimerInt3 == 50
+        angle = starPlatinum.getPos().angleTo(dio.getPos())
+        effect1 = addEffect("war3mapImported\\tx.mdx", starPlatinum.getPos())
+        ..setScale(3)
+        ..setYaw(angle)
+        ..destr()
+        effect2 = addEffect("war3mapImported\\dustwavxfsfsfe.mdx", starPlatinum.getPos())
+        ..setScale(0.60)
+        ..destr() 
+    if dioRTimerInt3 == 70
+        effect1 = addEffect("war3mapImported\\tx.mdx", starPlatinum.getPos())
+        ..setScale(3)
+        ..setYaw(angle)
+        ..destr()
+        effect2 = addEffect("war3mapImported\\dustwavxfsfsfe.mdx", starPlatinum.getPos())
+        ..setScale(0.60)
+        ..destr() 
+    if dioRTimerInt3 == 90
+        effect1 = addEffect("war3mapImported\\tx.mdx", starPlatinum.getPos())
+        ..setScale(3)
+        ..setYaw(angle)
+        ..destr()
+        effect2 = addEffect("war3mapImported\\dustwavxfsfsfe.mdx", starPlatinum.getPos())
+        ..setScale(0.60)
+        ..destr() 
+    if dioRTimerInt3 == 110
+        effect1 = addEffect("war3mapImported\\tx.mdx", starPlatinum.getPos())
+        ..setScale(3)
+        ..setYaw(angle)
+        ..destr()
+        effect2 = addEffect("war3mapImported\\dustwavxfsfsfe.mdx", starPlatinum.getPos())
+        ..setScale(0.60)
+        ..destr() 
+    if dioRTimerInt3 == 130
+        effect1 = addEffect("war3mapImported\\tx.mdx", starPlatinum.getPos())
+        ..setScale(3)
+        ..setYaw(angle)
+        ..destr()
+        effect2 = addEffect("war3mapImported\\dustwavxfsfsfe.mdx", starPlatinum.getPos())
+        ..setScale(0.60)
+        ..destr() 
+    if dioRTimerInt3 == 150
+        effect1 = addEffect("war3mapImported\\tx.mdx", starPlatinum.getPos())
+        ..setScale(3)
+        ..setYaw(angle)
+        ..destr()
+        effect2 = addEffect("war3mapImported\\dustwavxfsfsfe.mdx", starPlatinum.getPos())
+        ..setScale(0.60)
+        ..destr()                          
+    if dioRTimerInt3 == 200
+        effect1 = addEffect("war3mapImported\\tx.mdx", starPlatinum.getPos())
+        ..setScale(3)
+        ..setYaw(angle)
+        ..destr()
+        effect2 = addEffect("war3mapImported\\dustwavxfsfsfe.mdx", starPlatinum.getPos())
+        ..setScale(0.60)
+        ..destr() 
+    if dioRTimerInt3 == 205   
+        GetExpiredTimer().destr()
+

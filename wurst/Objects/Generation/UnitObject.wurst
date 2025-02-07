@@ -1108,7 +1108,7 @@ import ObjectIds
     ..setProperNames("Iron Dragon Slayer")
 
     new HeroDefinition(DIO_BRANDO, 'Hpal') // H024
-    ..setHeroAbilities(commaList('A0L2', DIO_W, 'A0KZ', 'A0KY', 'A0KX'))
+    ..setHeroAbilities(commaList('A0L2', DIO_W, DIO_R, DIO_T, 'A0KX'))
     ..setNormalAbilities(commaList(DIO_BRANDO_ABILITY_G, 'AInv'))
     ..setAnimationBlendTimeseconds(0.1)
     ..setAnimationCastBackswing(0.1)
