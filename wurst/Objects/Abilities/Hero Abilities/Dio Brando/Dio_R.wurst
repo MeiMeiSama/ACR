@@ -6,7 +6,7 @@ import ObjectDefinitions
 import TerrainUtils
 import ChannelAbilityPreset
 import UnitIds
-// import main
+import main
 import ClosureForGroups
 import Dio_T
 
@@ -17,7 +17,7 @@ vec2 jotaroPos
 vec2 dioPos
 vec2 abilitydioRPos
 angle angle
-unit starPlatinum
+unit zaWarudo
 int dioRTimerInt1
 int dioRTimerInt2
 int dioRTimerInt3
@@ -64,7 +64,7 @@ effect effect2
         ..setHasWaterShadow(false)
         ..setMaximumPitchAngledegrees(0)
         ..setMaximumRollAngledegrees(0)
-        ..setModelFile("war3mapImported\\Star Platinum.mdx")
+        ..setModelFile("war3mapImported\\shio_dio_the_world.mdx")
         ..setScalingValue(1.5)
         ..setArtSpecial("_")
         ..setArmorType(ArmorType.Unarmored)
@@ -118,9 +118,9 @@ function dioR()
                 dio.setAnimation(11)   
                 let rng = GetRandomInt(0, 1)
                 if rng == 0
-                    // gg_snd_dioR1_1.play()
+                    gg_snd_dioR1_1.play()
                 else 
-                    // gg_snd_dioR1_2.play()
+                    gg_snd_dioR1_2.play()
                 flashEffect("war3mapImported\\dustwavxfsfsfe.mdx", dio.getPos(), 0.60)        
                 dioRTimer = CreateTimer()..startPeriodic(0.01, function dioRDash)
 
@@ -154,9 +154,9 @@ function dioRDash()
                     dioRTarget.setPathing(false)
                     dio.setPos(dioRTarget.getPos().polarOffset(dioRTarget.getPos().angleTo(dioPos), 350))
                     dio.setFacing(dio.getPos().angleTo(dioRTarget.getPos()))
-                    starPlatinum = createUnit(DIO_R_DUMMY, dioRTarget.getPos().polarOffset(dioRTarget.getPos().angleTo(dioPos), 150))     
-                    starPlatinum.setAnimation(7)
-                    starPlatinum.setFacing(starPlatinum.getPos().angleTo(dioRTarget.getPos()))
+                    zaWarudo = createUnit(DIO_R_DUMMY, dioRTarget.getPos().polarOffset(dioRTarget.getPos().angleTo(dioPos), 150))     
+                    zaWarudo.setAnimation(7)
+                    zaWarudo.setFacing(zaWarudo.getPos().angleTo(dioRTarget.getPos()))
                     dioRTimerInt2 = 0
                     dioRTimerInt3 = 0              
                     dioRTimer = CreateTimer()..startPeriodic(0.03, function dioRAttack1)
@@ -171,13 +171,13 @@ function dioRAoe()
         if dio.isInvulnerable() == false
             dio.setInvulnerable(true) 
     if dioRTimerInt1 == 20
-        starPlatinum = createUnit(DIO_R_DUMMY, abilitydioRPos)  
+        zaWarudo = createUnit(DIO_R_DUMMY, abilitydioRPos)  
         dio.unpause()
         dio.setInvulnerable(false)        
     if dioRTimerInt1 == 50    
-        starPlatinum.setAnimation(8)
-        flashEffect("war3mapImported\\dustwavxfsfsfe.mdx", starPlatinum.getPos(), 0.70)  
-        flashEffect("war3mapImported\\tx.mdx", starPlatinum.getPos(), 4, starPlatinum.getPos().angleTo(dio.getPos()))
+        zaWarudo.setAnimation(8)
+        flashEffect("war3mapImported\\dustwavxfsfsfe.mdx", zaWarudo.getPos(), 0.70)  
+        flashEffect("war3mapImported\\tx.mdx", zaWarudo.getPos(), 4, zaWarudo.getPos().angleTo(dio.getPos()))
     if dioRTimerInt1 > 100 and dioRTimerInt1 < 150
         forUnitsInRange(abilitydioRPos, 600) (unit u) ->
             if dio.isAllyOf(u) == false and u.getPos().distanceTo(abilitydioTPos) < 900 and u.isInvulnerable() == false
@@ -186,7 +186,7 @@ function dioRAoe()
                 dio.damageTarget(u, 1, ATTACK_TYPE_MAGIC)    
     if dioRTimerInt1 >= 170
         dioRTimer.destr()
-        starPlatinum.kill()
+        zaWarudo.kill()
 
 function dioDashEnd()
     dioRDashBool = false
@@ -209,11 +209,11 @@ function dioRAttack1()
     if dioRTimerInt2 == 10
         // gg_snd_dioR2.play() 
         dio.setAnimation(8)
-        starPlatinum.setAnimation(1)    
+        zaWarudo.setAnimation(1)    
     if dioRTimerInt2 == 40
-        // gg_snd_dioR3.play()
+        gg_snd_dioR2.play()
         dio.setAnimation(21)
-        starPlatinum.setAnimation(34) 
+        zaWarudo.setAnimation(34) 
     if dioRTimerInt2 >= 41 and dioRTimerInt2 < 160     
         dioPos = dio.getPos()
         if dioPos.polarOffset(dioPos.angleTo(dioRTarget.getPos()), 355).isTerrainPathable(PATHING_TYPE_WALKABILITY) == true and dioPos.polarOffset(dioPos.angleTo(dioRTarget.getPos()), 355).isTerrainPathable(PATHING_TYPE_FLYABILITY) == true
@@ -221,20 +221,20 @@ function dioRAttack1()
         else                 
             dio.setPos(dioPos.polarOffset(dioPos.angleTo(dioRTarget.getPos()), 5)) 
             dioRTarget.setPos(dioPos.polarOffset(dioPos.angleTo(dioRTarget.getPos()), 355))
-            starPlatinum.setPos(dioPos.polarOffset(dioPos.angleTo(dioRTarget.getPos()), 155))       
+            zaWarudo.setPos(dioPos.polarOffset(dioPos.angleTo(dioRTarget.getPos()), 155))       
     if dioRTimerInt2 == 160
         // gg_snd_dioR4.play()
-        starPlatinum.setAnimation(12) 
+        zaWarudo.setAnimation(12) 
         dio.setAnimation(22)
     if dioRTimerInt2 == 170
-        starPlatinum.setAnimation(13)   
+        zaWarudo.setAnimation(13)   
     if dioRTimerInt2 == 190     
-        starPlatinum.setAnimation(0) 
+        zaWarudo.setAnimation(0) 
     if dioRTimerInt2 == 195
-        // gg_snd_dioR5.play()
+        gg_snd_dioR3.play()
     if dioRTimerInt2 == 210
         dioRTarget.setInvulnerable(false)
-        starPlatinum.kill()
+        zaWarudo.kill()
         DamageEvent.setNextDamageId(DAMAGE_ABILITY_DELAYED_R)
         DamageEvent.setNextDamageFromCode()
         dio.damageTarget(dioRTarget, 1, ATTACK_TYPE_MAGIC)
@@ -245,60 +245,60 @@ function dioRAttack1()
 function dioRAttack2()
     dioRTimerInt3++
     if dioRTimerInt3 == 50
-        angle = starPlatinum.getPos().angleTo(dio.getPos())
-        effect1 = addEffect("war3mapImported\\tx.mdx", starPlatinum.getPos())
+        angle = zaWarudo.getPos().angleTo(dio.getPos())
+        effect1 = addEffect("war3mapImported\\tx.mdx", zaWarudo.getPos())
         ..setScale(3)
         ..setYaw(angle)
         ..destr()
-        effect2 = addEffect("war3mapImported\\dustwavxfsfsfe.mdx", starPlatinum.getPos())
+        effect2 = addEffect("war3mapImported\\dustwavxfsfsfe.mdx", zaWarudo.getPos())
         ..setScale(0.60)
         ..destr() 
     if dioRTimerInt3 == 70
-        effect1 = addEffect("war3mapImported\\tx.mdx", starPlatinum.getPos())
+        effect1 = addEffect("war3mapImported\\tx.mdx", zaWarudo.getPos())
         ..setScale(3)
         ..setYaw(angle)
         ..destr()
-        effect2 = addEffect("war3mapImported\\dustwavxfsfsfe.mdx", starPlatinum.getPos())
+        effect2 = addEffect("war3mapImported\\dustwavxfsfsfe.mdx", zaWarudo.getPos())
         ..setScale(0.60)
         ..destr() 
     if dioRTimerInt3 == 90
-        effect1 = addEffect("war3mapImported\\tx.mdx", starPlatinum.getPos())
+        effect1 = addEffect("war3mapImported\\tx.mdx", zaWarudo.getPos())
         ..setScale(3)
         ..setYaw(angle)
         ..destr()
-        effect2 = addEffect("war3mapImported\\dustwavxfsfsfe.mdx", starPlatinum.getPos())
+        effect2 = addEffect("war3mapImported\\dustwavxfsfsfe.mdx", zaWarudo.getPos())
         ..setScale(0.60)
         ..destr() 
     if dioRTimerInt3 == 110
-        effect1 = addEffect("war3mapImported\\tx.mdx", starPlatinum.getPos())
+        effect1 = addEffect("war3mapImported\\tx.mdx", zaWarudo.getPos())
         ..setScale(3)
         ..setYaw(angle)
         ..destr()
-        effect2 = addEffect("war3mapImported\\dustwavxfsfsfe.mdx", starPlatinum.getPos())
+        effect2 = addEffect("war3mapImported\\dustwavxfsfsfe.mdx", zaWarudo.getPos())
         ..setScale(0.60)
         ..destr() 
     if dioRTimerInt3 == 130
-        effect1 = addEffect("war3mapImported\\tx.mdx", starPlatinum.getPos())
+        effect1 = addEffect("war3mapImported\\tx.mdx", zaWarudo.getPos())
         ..setScale(3)
         ..setYaw(angle)
         ..destr()
-        effect2 = addEffect("war3mapImported\\dustwavxfsfsfe.mdx", starPlatinum.getPos())
+        effect2 = addEffect("war3mapImported\\dustwavxfsfsfe.mdx", zaWarudo.getPos())
         ..setScale(0.60)
         ..destr() 
     if dioRTimerInt3 == 150
-        effect1 = addEffect("war3mapImported\\tx.mdx", starPlatinum.getPos())
+        effect1 = addEffect("war3mapImported\\tx.mdx", zaWarudo.getPos())
         ..setScale(3)
         ..setYaw(angle)
         ..destr()
-        effect2 = addEffect("war3mapImported\\dustwavxfsfsfe.mdx", starPlatinum.getPos())
+        effect2 = addEffect("war3mapImported\\dustwavxfsfsfe.mdx", zaWarudo.getPos())
         ..setScale(0.60)
         ..destr()                          
     if dioRTimerInt3 == 200
-        effect1 = addEffect("war3mapImported\\tx.mdx", starPlatinum.getPos())
+        effect1 = addEffect("war3mapImported\\tx.mdx", zaWarudo.getPos())
         ..setScale(3)
         ..setYaw(angle)
         ..destr()
-        effect2 = addEffect("war3mapImported\\dustwavxfsfsfe.mdx", starPlatinum.getPos())
+        effect2 = addEffect("war3mapImported\\dustwavxfsfsfe.mdx", zaWarudo.getPos())
         ..setScale(0.60)
         ..destr() 
     if dioRTimerInt3 == 205   
