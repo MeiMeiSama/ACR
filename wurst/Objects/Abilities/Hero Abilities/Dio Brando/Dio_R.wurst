@@ -207,11 +207,11 @@ function dioRAttack1()
         if dioRTarget.isInvulnerable() == false
             dioRTarget.setInvulnerable(true)            
     if dioRTimerInt2 == 10
-        // gg_snd_dioR2.play() 
+        gg_snd_dioR2.play() 
         dio.setAnimation(8)
         zaWarudo.setAnimation(1)    
     if dioRTimerInt2 == 40
-        gg_snd_dioR2.play()
+        gg_snd_dioR3.play()
         dio.setAnimation(21)
         zaWarudo.setAnimation(34) 
     if dioRTimerInt2 >= 41 and dioRTimerInt2 < 160     
@@ -231,7 +231,7 @@ function dioRAttack1()
     if dioRTimerInt2 == 190     
         zaWarudo.setAnimation(0) 
     if dioRTimerInt2 == 195
-        gg_snd_dioR3.play()
+        gg_snd_dioR4.play()
     if dioRTimerInt2 == 210
         dioRTarget.setInvulnerable(false)
         zaWarudo.kill()
