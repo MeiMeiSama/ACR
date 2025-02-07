@@ -206,15 +206,15 @@ function dioRAttack1()
             dioRTarget.pause()
         if dioRTarget.isInvulnerable() == false
             dioRTarget.setInvulnerable(true)            
-    if dioRTimerInt2 == 10
+    if dioRTimerInt2 == 30
         gg_snd_dioR2.play() 
         dio.setAnimation(8)
         zaWarudo.setAnimation(1)    
-    if dioRTimerInt2 == 40
+    if dioRTimerInt2 == 70
         gg_snd_dioR3.play()
         dio.setAnimation(21)
         zaWarudo.setAnimation(34) 
-    if dioRTimerInt2 >= 41 and dioRTimerInt2 < 160     
+    if dioRTimerInt2 >= 71 and dioRTimerInt2 < 190     
         dioPos = dio.getPos()
         if dioPos.polarOffset(dioPos.angleTo(dioRTarget.getPos()), 355).isTerrainPathable(PATHING_TYPE_WALKABILITY) == true and dioPos.polarOffset(dioPos.angleTo(dioRTarget.getPos()), 355).isTerrainPathable(PATHING_TYPE_FLYABILITY) == true
             DoNothing()
@@ -222,16 +222,16 @@ function dioRAttack1()
             dio.setPos(dioPos.polarOffset(dioPos.angleTo(dioRTarget.getPos()), 5)) 
             dioRTarget.setPos(dioPos.polarOffset(dioPos.angleTo(dioRTarget.getPos()), 355))
             zaWarudo.setPos(dioPos.polarOffset(dioPos.angleTo(dioRTarget.getPos()), 155))       
-    if dioRTimerInt2 == 160
+    if dioRTimerInt2 == 170
         // gg_snd_dioR4.play()
         zaWarudo.setAnimation(12) 
         dio.setAnimation(22)
-    if dioRTimerInt2 == 170
-        zaWarudo.setAnimation(13)   
+    if dioRTimerInt2 == 180
+        zaWarudo.setAnimation(13)  
+    if dioRTimerInt2 == 181
+        gg_snd_dioR4.play()         
     if dioRTimerInt2 == 190     
         zaWarudo.setAnimation(0) 
-    if dioRTimerInt2 == 195
-        gg_snd_dioR4.play()
     if dioRTimerInt2 == 210
         dioRTarget.setInvulnerable(false)
         zaWarudo.kill()
