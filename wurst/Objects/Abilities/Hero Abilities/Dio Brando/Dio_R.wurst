@@ -105,7 +105,7 @@ function dioR()
             if abilitydioRPos.distanceTo(abilitydioTPos) < 900 and dioPos.distanceTo(abilitydioTPos) < 900
                 dio.pause()
                 dio.setInvulnerable(true)   
-                gg_snd_dioR6.play()
+                // gg_snd_dioR6.play()
                 dioRTimer = CreateTimer()..startPeriodic(0.01, function dioRAoe)
             else    
                 if dioPos.distanceTo(abilitydioRPos) < 1250
@@ -118,9 +118,9 @@ function dioR()
                 dio.setAnimation(11)   
                 let rng = GetRandomInt(0, 1)
                 if rng == 0
-                    gg_snd_dioR1_1.play()
+                    // gg_snd_dioR1_1.play()
                 else 
-                    gg_snd_dioR1_2.play()
+                    // gg_snd_dioR1_2.play()
                 flashEffect("war3mapImported\\dustwavxfsfsfe.mdx", dio.getPos(), 0.60)        
                 dioRTimer = CreateTimer()..startPeriodic(0.01, function dioRDash)
 
@@ -207,11 +207,11 @@ function dioRAttack1()
         if dioRTarget.isInvulnerable() == false
             dioRTarget.setInvulnerable(true)            
     if dioRTimerInt2 == 10
-        gg_snd_dioR2.play() 
+        // gg_snd_dioR2.play() 
         dio.setAnimation(8)
         starPlatinum.setAnimation(1)    
     if dioRTimerInt2 == 40
-        gg_snd_dioR3.play()
+        // gg_snd_dioR3.play()
         dio.setAnimation(21)
         starPlatinum.setAnimation(34) 
     if dioRTimerInt2 >= 41 and dioRTimerInt2 < 160     
@@ -223,7 +223,7 @@ function dioRAttack1()
             dioRTarget.setPos(dioPos.polarOffset(dioPos.angleTo(dioRTarget.getPos()), 355))
             starPlatinum.setPos(dioPos.polarOffset(dioPos.angleTo(dioRTarget.getPos()), 155))       
     if dioRTimerInt2 == 160
-        gg_snd_dioR4.play()
+        // gg_snd_dioR4.play()
         starPlatinum.setAnimation(12) 
         dio.setAnimation(22)
     if dioRTimerInt2 == 170
@@ -231,7 +231,7 @@ function dioRAttack1()
     if dioRTimerInt2 == 190     
         starPlatinum.setAnimation(0) 
     if dioRTimerInt2 == 195
-        gg_snd_dioR5.play()
+        // gg_snd_dioR5.play()
     if dioRTimerInt2 == 210
         dioRTarget.setInvulnerable(false)
         starPlatinum.kill()

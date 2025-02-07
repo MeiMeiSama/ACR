@@ -213,3 +213,4 @@ public constant DAMAGE_ABILITY_BOSS_3 = 75200
 
 public boolean jotaroRDashBool
 public boolean dioRDashBool
+public boolean jotaroDioRBool
