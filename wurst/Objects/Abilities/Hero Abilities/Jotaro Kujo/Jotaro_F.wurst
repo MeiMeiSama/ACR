@@ -289,7 +289,7 @@ function jotaroFProcStart()
     if jotaroFProcInt == 1
         jotaro.setPos(jotaroFTarget.getPos().polarOffset(jotaroFTarget.getPos().angleTo(jotaro.getPos()), -350))  // is this where he walks
         jotaro.setFacing(jotaro.getPos().angleTo(jotaroFTarget.getPos()) + angle(PI)) 
-        harpoon = createUnit(jotaro.getOwner(), JOTARO_F_DUMMY3, jotaroFTarget.getPos().polarOffset(jotaroFTarget.getPos().angleTo(jotaro.getPos()) + angle(15), -800), DOWN.getAngle())
+        harpoon = createUnit(jotaro.getOwner(), JOTARO_F_DUMMY3, jotaroFTarget.getPos().polarOffset(jotaroFTarget.getPos().angleTo(jotaro.getPos()) + angle(0.15), 800), DOWN.getAngle())
         harpoon.setFlyHeight(100, 0)        
     if jotaroFProcInt == 575
         starPlatinum = createUnit(jotaro.getOwner(), JOTARO_F_DUMMY2, harpoon.getPos().polarOffset(jotaro.getPos().angleTo(jotaroFTarget.getPos()), -50), harpoon.getPos().angleTo(jotaroFTarget.getPos()))
