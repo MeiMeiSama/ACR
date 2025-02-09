@@ -34,7 +34,7 @@ init
                 if DamageEvent.getTarget().hasAbility('B00K') or DamageEvent.getTarget().hasAbility('B007') or DamageEvent.getTarget().hasAbility('B02W') 
                     // Sting/Rogue/Rentaro G
                     DamageEvent.setAmount(DamageEvent.getAmount()*0.95) 
-                if DamageEvent.getTarget().hasAbility(JOTARO_F_BUFF) // Jotaro's Counter
+                if DamageEvent.getTarget().hasAbility(JOTARO_F_BUFF) and DamageEvent.getSource().isType(UNIT_TYPE_HERO) // Jotaro's Counter
                     DamageEvent.setAmount(0)
                     jotaroFProc(DamageEvent.getSource())    
             case SPELL
@@ -1181,7 +1181,7 @@ init
                         if DamageEvent.getTarget().hasAbility(SHARINNEGAN_MODEL_EFFECT) // Sharinnegan
                             rinneganSound_proc.play() 
 
-                    if DamageEvent.getTarget().hasAbility(JOTARO_F_BUFF) // Jotaro's Counter
+                    if DamageEvent.getTarget().hasAbility(JOTARO_F_BUFF) and DamageEvent.getSource().isType(UNIT_TYPE_HERO)// Jotaro's Counter
                         DamageEvent.setAmount(0)
                         jotaroFProc(DamageEvent.getSource())
 

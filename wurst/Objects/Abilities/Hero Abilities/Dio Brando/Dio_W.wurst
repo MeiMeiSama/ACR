@@ -112,9 +112,13 @@ function dioWStart()
 
 function dioWSingleTarget()
     dioWTimerInt++
+    if dioWTimerInt > 0 and dioWTimerInt < 100
+        if dio.isPaused() == false
+            dio.pause()
+        if dio.isInvulnerable() == false
+            dio.setInvulnerable(true)    
     if dioWTimerInt == 5
-        zaWarudo = createUnit(DIO_W_DUMMY, dioWTarget.getPos().polarOffset(dioWTarget.getPos().angleTo(dio.getPos()), 200)) 
-        zaWarudo.setFacing(zaWarudo.getPos().angleTo(dioWTarget.getPos()))    
+        zaWarudo = createUnit(DIO_W_DUMMY, dioWTarget.getPos().polarOffset(dioWTarget.getPos().angleTo(dio.getPos()), 150))  
     if dioWTimerInt == 6  
         zaWarudo.setAnimation(2)  
     if dioWTimerInt == 100
@@ -132,8 +136,13 @@ function dioWSingleTarget()
 
 function dioWAoe()
     dioWTimerInt++
+    if dioWTimerInt > 0 and dioWTimerInt < 100
+        if dio.isPaused() == false
+            dio.pause()
+        if dio.isInvulnerable() == false
+            dio.setInvulnerable(true)        
     if dioWTimerInt == 5
-        zaWarudo = createUnitZ(dio.getOwner(), DIO_W_DUMMY, dio.getPos().withZ(1000), DOWN.getAngle())
+        zaWarudo = createUnitZ(dio.getOwner(), DIO_W_DUMMY, dio.getPos().withZ(50), DOWN.getAngle())
         // zaWarudo = createUnitZ(dio.getOwner(), DIO_W_DUMMY, dio.getPos3with(1000), zaWarudo.getPos3with(1000).angleTo2d(zaWarudo.getPos()))
         // let angle2 = zaWarudo.getPos3with(300).angleTo2d(zaWarudo.getPos())
         // zaWarudo.setFacing(angle2)

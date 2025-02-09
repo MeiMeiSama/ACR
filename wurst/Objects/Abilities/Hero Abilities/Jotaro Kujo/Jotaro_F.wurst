@@ -16,6 +16,8 @@ unit jotaro
 unit jotaroFTarget
 unit starPlatinum
 unit jotaroFDummy
+unit jotaroFInvisibleDummy
+unit harpoon
 // unit jotaroFDummy2
 vec2 jotaroPos
 int jotaroFInt
@@ -122,7 +124,40 @@ timer jotaroFProcTimer
         ..setName("effect dummy")
         ..setTooltipBasic("_")
         ..setTooltipExtended("_")
-
+    new UnitDefinition(JOTARO_F_DUMMY3, UnitIds.wisp)
+        ..setNormalAbilities(commaList('Avul', 'Aloc', 'Amrf'))
+        ..setAnimationCastBackswing(0)
+        ..setDeathTimeseconds(0.1)
+        ..setScalingValue(0.25)
+        ..setUnitClassification("_")
+        ..setArtSpecial("_")
+        ..setHasWaterShadow(false)
+        ..setMaximumPitchAngledegrees(0)
+        ..setMaximumRollAngledegrees(0)
+        ..setModelFile("war3mapImported\\Harpoon.mdx")
+        ..setArtSpecial("_")
+        ..setArmorType(ArmorType.Unarmored)
+        ..setPlaceableInEditor(false)
+        ..setMovementHeight(20)
+        ..setSpeedBase(100)
+        ..setTurnRate(3)
+        ..setMovementType(MovementType.Fly)
+        ..setCollisionSize(0)
+        ..setUnitSoundSet("_")
+        ..setCanFlee(false)
+        ..setFoodCost(0)
+        ..setHideMinimapDisplay(true)
+        ..setHitPointsMaximumBase(60)
+        ..setHitPointsRegenerationRate(-1)
+        ..setHitPointsRegenerationType("Always")
+        ..setStockMaximum(1)
+        ..setStockReplenishInterval(1)
+        ..setStructuresBuilt("_")
+        ..setUpgradesUsed("_")
+        ..setHotkey("_")
+        ..setName("effect dummy")
+        ..setTooltipBasic("_")
+        ..setTooltipExtended("_")
     // new UnitDefinition(JOTARO_F_DUMMY3, UnitIds.wisp)
     //     ..setNormalAbilities(commaList('Avul', 'Aloc', 'Amrf'))
     //     ..setAnimationCastBackswing(0)
@@ -240,6 +275,8 @@ public function jotaroFProc(unit procUnit)
     jotaroFProcTimer = CreateTimer()..startPeriodic(0.01, function jotaroFProcStart)  
 
 function jotaroFProcStart()
+    // let rng = GetRandomInt(0, 1)
+    // if rng == 0 
     jotaroFProcInt++
     if jotaroFTarget.isPaused() == false 
         jotaroFTarget.pause()
@@ -250,16 +287,21 @@ function jotaroFProcStart()
     if jotaro.isInvulnerable() == false
         jotaro.setInvulnerable(true) 
     if jotaroFProcInt == 1
-        // jotaroFDummy2 = createUnit(JOTARO_F_DUMMY3, jotaroFTarget.getPos().polarOffset(jotaroFTarget.getPos().angleTo(jotaro.getPos()), -1000))
         jotaro.setPos(jotaroFTarget.getPos().polarOffset(jotaroFTarget.getPos().angleTo(jotaro.getPos()), -350))  // is this where he walks
         jotaro.setFacing(jotaro.getPos().angleTo(jotaroFTarget.getPos()) + angle(PI)) 
+        harpoon = createUnit(jotaro.getOwner(), JOTARO_F_DUMMY3, jotaroFTarget.getPos().polarOffset(jotaroFTarget.getPos().angleTo(jotaro.getPos()) + angle(15), -800), DOWN.getAngle())
+        harpoon.setFlyHeight(100, 0)        
     if jotaroFProcInt == 575
-        starPlatinum = createUnit(JOTARO_F_DUMMY2, jotaro.getPos().polarOffset(jotaro.getPos().angleTo(jotaroFTarget.getPos()), 150))
-        starPlatinum.setFacing(starPlatinum.getPos().angleTo(jotaroFTarget.getPos()))
+        starPlatinum = createUnit(jotaro.getOwner(), JOTARO_F_DUMMY2, harpoon.getPos().polarOffset(jotaro.getPos().angleTo(jotaroFTarget.getPos()), -50), harpoon.getPos().angleTo(jotaroFTarget.getPos()))
     if jotaroFProcInt == 600
-        starPlatinum.setAnimation(23)
-    if jotaroFProcInt == 602
-        flashEffect("war3mapImported\\punchshot.mdx", starPlatinum.getPos(), 1, starPlatinum.getPos().angleTo(jotaroFTarget.getPos()))        
+        starPlatinum.setAnimation(11)
+        harpoon.setFlyHeight(300, 0)
+        harpoon.setFacing(harpoon.getPos().angleTo(jotaroFTarget.getPos()))
+    if jotaroFProcInt >= 650
+        if harpoon.getPos().distanceTo(jotaroFTarget.getPos()) > 200
+            harpoon.setPos(harpoon.getPos().polarOffset(harpoon.getPos().angleTo(jotaroFTarget.getPos()), harpoon.getPos().distanceTo(jotaroFTarget.getPos()) / 200))  
+    // if jotaroFProcInt == 602
+    //     flashEffect("war3mapImported\\punchshot.mdx", starPlatinum.getPos(), 1, starPlatinum.getPos().angleTo(jotaroFTarget.getPos()))        
     if jotaroFProcInt == 700
         starPlatinum.kill()  
     if jotaroFProcInt == 1050
@@ -275,11 +317,16 @@ function jotaroFProcStart()
     if jotaroFProcInt == 1450
         jotaro.setAnimation(22)
         gg_snd_jotaroF2.play()
-    if jotaroFProcInt == 1690
-        flashEffect("war3mapImported\\BrokenGlass.mdx", jotaroFTarget.getPos(), 4)    
+    if jotaroFProcInt >= 1675
+        if harpoon.getPos().distanceTo(jotaroFTarget.getPos()) > 50
+            harpoon.setPos(harpoon.getPos().polarOffset(harpoon.getPos().angleTo(jotaroFTarget.getPos()), 7))                
+    // if jotaroFProcInt == 1690
+    //     flashEffect("war3mapImported\\BrokenGlass.mdx", jotaroFTarget.getPos(), 4)    
     if jotaroFProcInt == 1700
         jotaroFProcTimer.destr()
         jotaroFDummy.kill()
+        // jotaroFInvisibleDummy.kill()
+        harpoon.kill()
         // jotaroFDummy2.kill()
         jotaro.setPathing(true)
         jotaro.unpause()
@@ -290,3 +337,54 @@ function jotaroFProcStart()
         DamageEvent.setNextDamageFromCode()
         jotaro.damageTarget(jotaroFTarget, 1, ATTACK_TYPE_MAGIC)        
         jotaroFTarget.unpause()
+    // else 
+    //     jotaroFProcInt++
+    //     if jotaroFTarget.isPaused() == false 
+    //         jotaroFTarget.pause()
+    //     if jotaroFTarget.isInvulnerable() == false
+    //         jotaroFTarget.setInvulnerable(true)    
+    //     if jotaro.isPaused() == false
+    //         jotaro.pause()
+    //     if jotaro.isInvulnerable() == false
+    //         jotaro.setInvulnerable(true) 
+    //     if jotaroFProcInt == 1
+    //         // jotaroFDummy2 = createUnit(JOTARO_F_DUMMY3, jotaroFTarget.getPos().polarOffset(jotaroFTarget.getPos().angleTo(jotaro.getPos()), -1000))
+    //         jotaro.setPos(jotaroFTarget.getPos().polarOffset(jotaroFTarget.getPos().angleTo(jotaro.getPos()), -350))  // is this where he walks
+    //         jotaro.setFacing(jotaro.getPos().angleTo(jotaroFTarget.getPos()) + angle(PI)) 
+    //     if jotaroFProcInt == 575
+    //         starPlatinum = createUnit(JOTARO_F_DUMMY2, jotaro.getPos().polarOffset(jotaro.getPos().angleTo(jotaroFTarget.getPos()), 150))
+    //         starPlatinum.setFacing(starPlatinum.getPos().angleTo(jotaroFTarget.getPos()))
+    //     if jotaroFProcInt == 600
+    //         starPlatinum.setAnimation(23)
+    //     // if jotaroFProcInt == 602
+    //     //     flashEffect("war3mapImported\\punchshot.mdx", starPlatinum.getPos(), 1, starPlatinum.getPos().angleTo(jotaroFTarget.getPos()))        
+    //     if jotaroFProcInt == 700
+    //         starPlatinum.kill()  
+    //     if jotaroFProcInt == 1050
+    //         jotaro.setAnimation(21) 
+    //     if jotaroFProcInt > 1050 and jotaroFProcInt < 1450
+    //         jotaroPos = jotaro.getPos()     
+    //         if jotaroPos.polarOffset(jotaroPos.angleTo(jotaroFTarget.getPos()) + angle(PI), 1).isTerrainPathable(PATHING_TYPE_WALKABILITY) == true and jotaroPos.polarOffset(jotaroPos.angleTo(jotaroFTarget.getPos()) + angle(PI), 1).isTerrainPathable(PATHING_TYPE_FLYABILITY) == true
+    //             DoNothing()
+    //         else                    
+    //             // jotaro.setPos(jotaroPos.polarOffset(jotaroPos.angleTo(jotaroFTarget.getPos()) + angle(180), 1))
+    //             // jotaro.setPos(jotaroPos.polarOffset(jotaroPos.angleTo(jotaroFTarget.getPos()) + angle(90), 1))
+    //             jotaro.setPos(jotaroPos.polarOffset(jotaroPos.angleTo(jotaroFTarget.getPos()) + angle(PI), 1))
+    //     if jotaroFProcInt == 1450
+    //         jotaro.setAnimation(22)
+    //         gg_snd_jotaroF2.play()
+    //     // if jotaroFProcInt == 1690
+    //     //     flashEffect("war3mapImported\\BrokenGlass.mdx", jotaroFTarget.getPos(), 4)    
+    //     if jotaroFProcInt == 1700
+    //         jotaroFProcTimer.destr()
+    //         jotaroFDummy.kill()
+    //         // jotaroFDummy2.kill()
+    //         jotaro.setPathing(true)
+    //         jotaro.unpause()
+    //         jotaro.setInvulnerable(false)
+    //         jotaroFTarget.setInvulnerable(false)  
+    //         jotaro.removeAbility(JOTARO_F_BUFF)
+    //         DamageEvent.setNextDamageId(DAMAGE_ABILITY_DELAYED_F)
+    //         DamageEvent.setNextDamageFromCode()
+    //         jotaro.damageTarget(jotaroFTarget, 1, ATTACK_TYPE_MAGIC)        
+    //         jotaroFTarget.unpause()        
