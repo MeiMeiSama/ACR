@@ -6,25 +6,13 @@ import ObjectDefinitions
 import ChannelAbilityPreset
 import main
 import ClosureForGroups
-// import UnitIds
 
 unit rukia
-// unit array rukiaQDummy
-// group rukiaQGroup
 integer rukiaQInt
-// integer rukiaQInt2
-// integer rukiaQInt3
 vec2 spellPos
 effect sfx
 effect sfx2
-// effect sfx3
-// effect sfx4
-// effect sfx5
-// effect sfx6
-// effect sfx7
 timer rukiaQTimer
-// timer rukiaQTimer2
-// timer rukiaQTimer3
 
 @compiletime function createAbility()
     new ChannelAbilityPreset(RUKIA_Q, 5, true)
@@ -53,41 +41,7 @@ timer rukiaQTimer
         ..presetTooltipNormal(lvl -> "Hadō #33: Sōkatsui|r")
         ..presetTooltipNormalExtended(lvl -> "Rukia Q Desc|r")
         ..setTooltipLearn("Learn Q|r")
-        ..setTooltipLearnExtended("Learning Q|r")
-    // new UnitDefinition(RUKIA_Q_DUMMY, UnitIds.wisp)
-    //     ..setNormalAbilities(commaList('Avul', 'Aloc', 'Amrf'))
-    //     ..setAnimationCastBackswing(0)
-    //     ..setDeathTimeseconds(0.1)
-    //     ..setScalingValue(4)
-    //     ..setUnitClassification("_")
-    //     ..setArtSpecial("_")
-    //     ..setHasWaterShadow(false)
-    //     ..setMaximumPitchAngledegrees(0)
-    //     ..setMaximumRollAngledegrees(0)
-    //     ..setModelFile("_")
-    //     ..setArtSpecial("_")
-    //     ..setArmorType(ArmorType.Unarmored)
-    //     ..setPlaceableInEditor(false)
-    //     ..setMovementHeight(20)
-    //     ..setSpeedBase(100)
-    //     ..setTurnRate(3)
-    //     ..setMovementType(MovementType.Fly)
-    //     ..setCollisionSize(0)
-    //     ..setUnitSoundSet("_")
-    //     ..setCanFlee(false)
-    //     ..setFoodCost(0)
-    //     ..setHideMinimapDisplay(true)
-    //     ..setHitPointsMaximumBase(60)
-    //     ..setHitPointsRegenerationRate(-1)
-    //     ..setHitPointsRegenerationType("Always")
-    //     ..setStockMaximum(1)
-    //     ..setStockReplenishInterval(1)
-    //     ..setStructuresBuilt("_")
-    //     ..setUpgradesUsed("_")
-    //     ..setHotkey("_")
-    //     ..setName("effect dummy")
-    //     ..setTooltipBasic("_")
-    //     ..setTooltipExtended("_")    
+        ..setTooltipLearnExtended("Learning Q|r")  
 
 init
     rukiaQ()     
@@ -99,19 +53,6 @@ function rukiaQ()
         if GetSpellAbilityId() == RUKIA_Q
             rukia = GetTriggerUnit()
             spellPos = vec2(GetSpellTargetX(), GetSpellTargetY())
-            // if rukia.hasAbility(RUKIA_R_BUFF)
-            //     rukia.setInvulnerable(true)
-            //     rukia.pause()
-            //     rukia.setAnimation(4)
-            //     gg_snd_RukiaQ2.play()
-            //     if rukia.getPos().distanceTo(spellPos) < 1500
-            //         spellPos = rukia.getPos().polarOffset(rukia.getPos().angleTo(spellPos), 1500)
-            //     rukiaQInt2 = 0
-            //     if rukiaQGroup == null
-            //         rukiaQGroup = CreateGroup() 
-            //     rukiaQTimer2 = CreateTimer()..startPeriodic(0.02, function rukiaQEnd2)
-            //     rukiaQTimer3 = CreateTimer()..startPeriodic(0.02, function rukiaQEnd3)
-            // else
             let both = GetRandomInt(0, 1)
             if both == 0
                 gg_snd_RukiaQ1.play()  
@@ -137,53 +78,4 @@ function rukiaQEnd()
                 DamageEvent.setNextDamageId(DAMAGE_ABILITY_Q)
                 DamageEvent.setNextDamageFromCode()
                 rukia.damageTarget(victim, 1, ATTACK_TYPE_MAGIC)       
-        rukiaQTimer.destr()        
-
-// function rukiaQEnd2()
-//     rukiaQInt2++
-//     if rukiaQInt2 == 10
-//         sfx5 = addEffect("war3mapImported\\HarvestManaRukia.mdx", rukia.getPos())
-//         ..setScale(1)
-//         ..destr()
-//     if rukiaQInt2 == 40
-//         gg_snd_RukiaQ22.play()        
-//     if rukiaQInt2 >= 46
-//         for i = 3 to 12
-//             rukiaQDummy[i] = createUnit(RUKIA_Q_DUMMY, rukia.getPos().polarOffset(rukia.getPos().angleTo(spellPos), (100.0 * i)))
-//             forUnitsInRange(rukiaQDummy[i].getPos(), 300) (unit victim) ->
-//                 if victim.isType(UNIT_TYPE_STRUCTURE) == false and victim.isEnemyOf(rukia) == true and victim.isAlive() == true and rukiaQGroup.has(victim) == false and victim.isInvulnerable() == false
-//                     DamageEvent.setNextDamageId(DAMAGE_ABILITY_Q)
-//                     DamageEvent.setNextDamageFromCode()
-//                     rukia.damageTarget(victim, 1, ATTACK_TYPE_MAGIC)
-//                     if victim.isType(UNIT_TYPE_HERO)
-//                         sfx7 = addEffect("war3mapImported\\RukiaHakurenZone.mdx", victim.getPos())
-//                         ..setScale(1.5)
-//                     rukiaQGroup.add(victim)
-//             rukia.setInvulnerable(false)
-//             rukia.unpause()                  
-//     if rukiaQInt2 >= 60
-//         sfx7.setX(-999999)
-//         sfx7.setY(-999999)
-//         sfx7.destr()
-//         for i = 3 to 12
-//             rukiaQDummy[i].kill()
-//             rukiaQTimer2.destr()
-//             rukiaQGroup.clear()
-
-// function rukiaQEnd3()
-//     rukiaQInt3++
-//     if rukiaQInt3 == 20
-//         sfx6 = addEffect("war3mapImported\\RukiaHakuren.mdx", (rukia.getPos().polarOffset(rukia.getPos().angleTo(spellPos), 100)))
-//         ..setScale(3)
-//         ..setYaw(rukia.getPos().angleTo(spellPos))
-//         ..setHeight(100)
-//         ..playAnimation(ANIM_TYPE_STAND)
-//     //if rukiaQInt3 >= 22 and rukiaQInt3 <= 50
-//     if sfx6.getPos().distanceTo(spellPos) <= 20 //or rukiaQInt3 >= 50   
-//         sfx6.setX(-999999)
-//         sfx6.setY(-999999)
-//         sfx6.destr()       
-//         rukiaQTimer3.destr() 
-//     else
-//         sfx6.setPos(sfx6.getPos().polarOffset(sfx6.getPos().angleTo(spellPos), 60))
-    
+        rukiaQTimer.destr()

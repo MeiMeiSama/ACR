@@ -145,8 +145,7 @@ function rukiaQ2End2()
         ..setYaw(rukia.getPos().angleTo(spellPos))
         ..setHeight(30)
         ..playAnimation(ANIM_TYPE_STAND)
-    //if rukiaQInt3 >= 22 and rukiaQInt3 <= 50
-    if sfx3.getPos().distanceTo(spellPos) <= 40 //or rukiaQ2Int2 >= 52   
+    if sfx3.getPos().distanceTo(spellPos) <= 40  
         sfx3.setX(-999999)
         sfx3.setY(-999999)
         sfx3.destr()       
