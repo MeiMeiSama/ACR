@@ -143,14 +143,14 @@ function rukiaQ2End2()
         sfx3 = addEffect("war3mapImported\\RukiaHakuren.mdx", (rukia.getPos().polarOffset(rukia.getPos().angleTo(spellPos), 100)))
         ..setScale(3)
         ..setYaw(rukia.getPos().angleTo(spellPos))
-        ..setHeight(40)
+        ..setHeight(30)
         ..playAnimation(ANIM_TYPE_STAND)
     //if rukiaQInt3 >= 22 and rukiaQInt3 <= 50
-    if sfx3.getPos().distanceTo(spellPos) <= 20 or rukiaQ2Int2 >= 52   
+    if sfx3.getPos().distanceTo(spellPos) <= 40 //or rukiaQ2Int2 >= 52   
         sfx3.setX(-999999)
         sfx3.setY(-999999)
         sfx3.destr()       
         rukiaQ2Timer2.destr() 
     else
-        sfx3.setPos(sfx3.getPos().polarOffset(sfx3.getPos().angleTo(spellPos), 50))                
+        sfx3.setPos(sfx3.getPos().polarOffset(sfx3.getPos().angleTo(spellPos), 60))                
          

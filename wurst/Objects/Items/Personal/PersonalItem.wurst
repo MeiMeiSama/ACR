@@ -1599,8 +1599,8 @@ function trig_NewSPActions()
         if SPELL_F[id].hasTagHidden()
             GetTriggerUnit().hideAbility(SPELL_F[id], false)
             SPELL_F[id].removeTagHidden()
-    else if GetUnitTypeId(GetTriggerUnit()) == RUKIA and yDWEUnitHasItemOfTypeBJNull(GetTriggerUnit(), RUKIA_PERSONAL_ITEM) == false //Mavis
-        soundPlay("_", GetUnitX(udg_soundplayunit[7]), GetUnitY(udg_soundplayunit[7]))
+    else if GetUnitTypeId(GetTriggerUnit()) == RUKIA and yDWEUnitHasItemOfTypeBJNull(GetTriggerUnit(), RUKIA_PERSONAL_ITEM) == false //Rukia
+        soundPlay("war3mapImported\\Rukia Item.mp3", GetUnitX(udg_soundplayunit[7]), GetUnitY(udg_soundplayunit[7]))
         RemoveItem(GetManipulatedItem())
         SaveLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * ydl_localvar_step, 1108, GetUnitLoc(GetTriggerUnit()))
         SaveUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * ydl_localvar_step, 36, CreateUnitAtLoc(GetOwningPlayer(GetTriggerUnit()), 'e03X', LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * ydl_localvar_step, 1108), GetRandomDirectionDeg()))

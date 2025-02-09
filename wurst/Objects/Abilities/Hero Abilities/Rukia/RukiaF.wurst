@@ -64,7 +64,7 @@ function rukiaF()
             rukiaFTargetPos = rukiaFTarget.getPos()
             let rng = GetRandomInt(0, 1)
             if rng == 0
-                gg_snd_RukiaQ1.play()      
+                gg_snd_RukiaF1.play()      
                 rukia.setInvulnerable(true)
                 rukia.pause()
                 rukiaFTarget.setInvulnerable(true)

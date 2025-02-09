@@ -81,14 +81,14 @@ function rukiaE2End()
     if rukiaE2Int == 150
         sfx.setX(-999999)
         sfx.setY(-999999)
-        sfx.destr() 
+        sfx.destr()
+    if rukiaE2Int == 157     
         sfx2 = addEffect("war3mapImported\\RukiaNova.mdx", rukiaE2Target.getPos())
-        ..setScale(10)
+        ..setScale(3)
         ..playAnimation(ANIM_TYPE_STAND)
+        sfx2.destr()
         rukia.setInvulnerable(false)
-        rukia.unpause()
-    if rukiaE2Int == 164
-        sfx2.destr()    
+        rukia.unpause() 
     if rukiaE2Int == 165
         rukiaE2Target.setInvulnerable(false)      
         DamageEvent.setNextDamageId(DAMAGE_ABILITY_E)

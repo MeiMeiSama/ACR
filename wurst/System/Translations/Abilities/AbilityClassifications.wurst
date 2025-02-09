@@ -413,7 +413,7 @@ public function int.isFcounter () returns boolean
 
 
 public function int.isEDamaging () returns boolean
-    if (this == 'A11H') or (this == 'A11V') or (this == 'A0WD') or (this == 'A01E') or (this == 'A0VG') or (this == 'A11P') or (this == 'A0U2') or (this == 'A0NQ') or (this == 'A123') or (this == 'A0KS') or (this == 'A014') or (this == 'A0D2') or (this == 'A0ZK') or (this == 'A10A') or (this == 'A110') or (this == 'A0SY') or (this == 'A0WV') or (this == JOTARO_E) or (this == ZEREF_TE) or (this == RUKIA_E)
+    if (this == 'A11H') or (this == 'A11V') or (this == 'A0WD') or (this == 'A01E') or (this == 'A0VG') or (this == 'A11P') or (this == 'A0U2') or (this == 'A0NQ') or (this == 'A123') or (this == 'A0KS') or (this == 'A014') or (this == 'A0D2') or (this == 'A0ZK') or (this == 'A10A') or (this == 'A110') or (this == 'A0SY') or (this == 'A0WV') or (this == JOTARO_E) or (this == ZEREF_TE)
         return true
     return false
 
