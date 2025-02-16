@@ -68,13 +68,15 @@ function rukiaT()
 
 function rukiaTEnd()
     rukiaTInt++
-    if rukiaTInt >= 2 and rukiaTInt < 189
+    if rukiaTInt >= 2 and rukiaTInt < 180
         forUnitsInRange(spellPos, 900) (unit u) ->
             if u.isInvulnerable() == false and u.hasTagPauseEX() == false and rukiaTGroup.has(u) == false and u.isAllyOf(rukia) == false
                 IssueImmediateOrder(u, "stop")
                 rukiaTGroup.add(u)
                 u.pause()
                 u.setInvulnerable(true)
+    if rukiaTInt == 50
+        gg_snd_RukiaT2.play()             
     if rukiaTInt == 90
         sfx = addEffect("war3mapImported\\IcePillar88.mdx", spellPos)
         ..setScale(1)
@@ -84,7 +86,7 @@ function rukiaTEnd()
         ..setScale(1)
     if rukiaTInt >= 122 and rukiaTInt < 140
         sfx2.setScale(sfx2.getScale() + 0.06)
-    if rukiaTInt == 160            
+    if rukiaTInt == 250           
         rukia.setAnimation(0)
         sfx.setX(-999999)
         sfx.setY(-999999)
@@ -92,13 +94,13 @@ function rukiaTEnd()
         sfx2.setX(-999999)
         sfx2.setY(-999999)
         sfx2.destr()
-    if rukiaTInt == 185
+    if rukiaTInt == 280
         rukiaTGroup.forEachIn() (unit victim) ->
             if victim.isType(UNIT_TYPE_HERO)
                 sfx3 = addEffect("war3mapImported\\SpellEffectIceCoffinV2Fix.mdx", victim.getPos())
                 ..setScale(3)
                 ..playAnimation(ANIM_TYPE_STAND)
-    if rukiaTInt == 240
+    if rukiaTInt == 400
         rukia.setInvulnerable(false)
         rukia.unpause()
         rukiaTGroup.forEachIn() (unit victim) ->
