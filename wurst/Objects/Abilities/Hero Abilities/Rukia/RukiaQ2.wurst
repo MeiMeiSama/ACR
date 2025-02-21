@@ -119,7 +119,7 @@ function rukiaQ2End()
             rukiaQ2Dummy[i] = createUnit(RUKIA_Q_DUMMY, rukia.getPos().polarOffset(rukia.getPos().angleTo(spellPos), (100.0 * i)))
             forUnitsInRange(rukiaQ2Dummy[i].getPos(), 300) (unit victim) ->
                 if victim.isType(UNIT_TYPE_STRUCTURE) == false and victim.isEnemyOf(rukia) == true and victim.isAlive() == true and rukiaQ2Group.has(victim) == false and victim.isInvulnerable() == false
-                    DamageEvent.setNextDamageId(DAMAGE_ABILITY_Q)
+                    DamageEvent.setNextDamageId(DAMAGE_ABILITY_RUKIARQ)
                     DamageEvent.setNextDamageFromCode()
                     rukia.damageTarget(victim, 1, ATTACK_TYPE_MAGIC)
                     if victim.isType(UNIT_TYPE_HERO)

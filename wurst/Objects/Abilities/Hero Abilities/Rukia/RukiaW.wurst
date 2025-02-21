@@ -99,8 +99,8 @@ function rukiaWEnd()
                         sfx3 = addEffect("war3mapImported\\Byakurai3.mdx", victim.getPos())    
                         ..setScale(2)
                         ..destr()
-                    if victim.hasAbility('B06P') and victim.isType(UNIT_TYPE_HERO)
-                        rukia.damageTarget(victim, victim.getMaxHP() * 0.05, ATTACK_TYPE_MAGIC)
+                    // if victim.hasAbility('B06P') and victim.isType(UNIT_TYPE_HERO)
+                    //     rukia.damageTarget(victim, victim.getMaxHP() * 0.05, ATTACK_TYPE_MAGIC)
                     rukiaWGroup.add(victim)       
          
 

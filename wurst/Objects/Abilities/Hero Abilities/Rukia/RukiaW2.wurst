@@ -86,7 +86,7 @@ function rukiaWEnd()
         rukia.unpause()
         forUnitsInRange(spellPos, 500) (unit victim) ->
             if victim.isType(UNIT_TYPE_STRUCTURE) == false and victim.isEnemyOf(rukia) == true and victim.isAlive() == true and victim.isInvulnerable() == false
-                DamageEvent.setNextDamageId(DAMAGE_ABILITY_W)
+                DamageEvent.setNextDamageId(DAMAGE_ABILITY_RUKIARW)
                 DamageEvent.setNextDamageFromCode()
                 rukia.damageTarget(victim, 1, ATTACK_TYPE_MAGIC)
                 acrStun(rukia, victim, 1)

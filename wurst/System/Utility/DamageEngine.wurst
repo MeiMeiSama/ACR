@@ -267,7 +267,18 @@ init
                         //printTimedToPlayer (R2S(_dmg) , 1, caster.getOwner())
                         instances = instances + 1
                         //printTimedToPlayer (I2S(instances) , 1, caster.getOwner())                        
-            
+                    else if id == DAMAGE_ABILITY_RUKIARQ
+                        _lvl = GetUnitAbilityLevel(caster, SPELL_Q[pid])                
+                        _dmg = ((20.00 * _lvl) + (0.2 * stat * _lvl))                                   // 30/60/90/120/150 dmg in testing environment
+                        DamageEvent.setAmount(_dmg)
+                    else if id == DAMAGE_ABILITY_RUKIARW
+                        _lvl = GetUnitAbilityLevel(caster, SPELL_Q[pid])                
+                        _dmg = ((20.00 * _lvl) + (0.2 * stat * _lvl))                                   // 30/60/90/120/150 dmg in testing environment
+                        DamageEvent.setAmount(_dmg)
+                    else if id == DAMAGE_ABILITY_RUKIARE
+                        _lvl = GetUnitAbilityLevel(caster, SPELL_Q[pid])                
+                        _dmg = ((20.00 * _lvl) + (0.2 * stat * _lvl))                                   // 30/60/90/120/150 dmg in testing environment
+                        DamageEvent.setAmount(_dmg)        
             
             
                     // ━━━━━━━━━━━━━━━ [SPECIAL CASES: W] ━━━━━━━━━━━━━━━━━━ //
