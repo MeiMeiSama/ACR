@@ -14,10 +14,12 @@ boolean pepeSkillCD1ON
 unit pepe
 unit enemy 
 integer pepe1INT
+integer pepe2INT
 effect sfx
 effect sfx2
 effect sfx5
 timer skill1CD
+effect array sfx6
 public trigger pepeTrigger
 public trigger pepeTrigger3
 
@@ -107,24 +109,27 @@ function pepeInstaKill()
     sfx5.setX(-999999)
     sfx5.setY(-999999)
     sfx5.destr()
-    flashEffect("war3mapImported\\bearpants.mdx", gg_rct_BossArea.randomPoint(), 2)
-    flashEffect("war3mapImported\\bearpants.mdx", gg_rct_BossArea.randomPoint(), 2)
-    flashEffect("war3mapImported\\bearpants.mdx", gg_rct_BossArea.randomPoint(), 2)
-    flashEffect("war3mapImported\\bearpants.mdx", gg_rct_BossArea.randomPoint(), 2)
-    flashEffect("war3mapImported\\bearpants.mdx", gg_rct_BossArea.randomPoint(), 2)
-    flashEffect("war3mapImported\\bearpants.mdx", gg_rct_BossArea.randomPoint(), 2)
-    flashEffect("war3mapImported\\bearpants.mdx", gg_rct_BossArea.randomPoint(), 2)
-    flashEffect("war3mapImported\\bearpants.mdx", gg_rct_BossArea.randomPoint(), 2)
-    flashEffect("war3mapImported\\bearpants.mdx", gg_rct_BossArea.randomPoint(), 2)
-    flashEffect("war3mapImported\\bearpants.mdx", gg_rct_BossArea.randomPoint(), 2)
-    flashEffect("war3mapImported\\bearpants.mdx", gg_rct_BossArea.randomPoint(), 2)
-    flashEffect("war3mapImported\\bearpants.mdx", gg_rct_BossArea.randomPoint(), 2)
-    flashEffect("war3mapImported\\bearpants.mdx", gg_rct_BossArea.randomPoint(), 2)
+    pepe2INT = 0    
+    CreateTimer()..startPeriodic(0.03, function pantiesfall)    
     forUnitsInRect(gg_rct_BossArea) (unit deadge) ->
         if deadge.isAlive() and deadge.isType(UNIT_TYPE_HERO) and deadge.isEnemyOf(gg_unit_O005_0043)
             deadge.kill()
     pepe.setInvulnerable(false)
-    pepe.unpause()       
+    pepe.unpause()
+
+function pantiesfall()
+    pepe2INT++
+    for i = 3 to 20
+        sfx6[i] = addEffect("war3mapImported\\bearpants.mdx", gg_rct_BossArea.randomPoint())
+        ..setScale(1)
+        ..setHeight(800)
+    if pepe2INT >= 3 and pepe2INT < 30
+        for i = 3 to 20
+            sfx6[i].setHeight(- 20)
+    if pepe2INT >= 31
+        for i = 3 to 20
+            sfx6[i].destr()
+            GetExpiredTimer().destr()
 
 init 
     pepeSkill1()
