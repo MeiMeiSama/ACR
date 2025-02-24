@@ -9,6 +9,8 @@ import CreateBuildings
 import ObjectDefinitions
 import DummyCaster
 import CameraFunctions
+import BossSpell1
+import BossSpell2
 int acrdevtimer
 unit selectedUnit
 timer acrTimer
@@ -82,7 +84,22 @@ function devTools ()
             selectedUnit.addTagPauseEX()       
         else if input == "unpause"
             selectedUnit.unpauseEx()  
-            selectedUnit.removeTagPauseEX()                     
+            selectedUnit.removeTagPauseEX()
+        else if input == "invuloff"
+            selectedUnit.setInvulnerable(false)
+        else if input == "pauseoff"
+            selectedUnit.unpause()
+        else if input == "pepe"
+            pepeTrigger.enable()
+            pepeTrigger2.enable()
+            pepeTrigger3.enable()
+            pepeSkill1()
+            pepeSkill2()
+            pepeTimerExpired()
+            gg_unit_O005_0043.setInvulnerable(false)
+            gg_unit_O005_0043.unpause()
+        else if input == "pepeult"
+            pepeTimerExpiredActions()
         else if input == "music"
             StopMusic(false)
         else if input == "gold"
