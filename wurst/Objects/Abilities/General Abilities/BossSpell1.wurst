@@ -28,9 +28,11 @@ public function pepeSkill1()
     ..registerAnyUnitEvent(EVENT_PLAYER_UNIT_DAMAGED)
     ..addAction() ->
         if BlzGetEventDamageTarget() == gg_unit_O005_0043
+            if BlzGetEventDamageTarget().getUserData() != (998)
+                BlzGetEventDamageTarget().setUserData(998)
+            pepe = BlzGetEventDamageTarget()
+            enemy = GetEventDamageSource()
             if pepeSkillCD1ON == false
-                pepe = BlzGetEventDamageTarget()
-                enemy = GetEventDamageSource()
                 pepe.setInvulnerable(true)
                 pepe.pause()
                 pepe1INT = 0
@@ -41,8 +43,6 @@ public function pepeSkill1()
             else
                 let bossrng = GetRandomInt(0, 3)
                 if bossrng == 1
-                    pepe = BlzGetEventDamageTarget()
-                    enemy = GetEventDamageSource()
                     if enemy.isType(UNIT_TYPE_STRUCTURE) == false and enemy.isEnemyOf(pepe) == true and enemy.isAlive() == true
                         sfx2 = addEffect("war3mapImported\\PepeExplosion.mdx", enemy.getPos())
                         ..setScale(1)
@@ -67,7 +67,7 @@ function pepeSkill1End()
         pepe.setAnimation(1)
     if pepe1INT == 25
         sfx = addEffect("war3mapImported\\Water-BubbleShot.mdx", pepe.getPos())
-        ..setScale(3)
+        ..setScale(5)
         ..setYaw(pepe.getPos().angleTo(enemy.getPos()))
     if sfx.getPos().distanceTo(enemy.getPos()) <= 40              
         sfx.setX(-999999)

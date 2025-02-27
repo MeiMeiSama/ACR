@@ -98,6 +98,8 @@ function devTools ()
             pepeTimerExpired()
             gg_unit_O005_0043.setInvulnerable(false)
             gg_unit_O005_0043.unpause()
+            if gg_unit_O005_0043.getUserData() != (998)
+                gg_unit_O005_0043.setUserData(998)
         else if input == "pepeult"
             pepeTimerExpiredActions()
         else if input == "music"
