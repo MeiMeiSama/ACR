@@ -196,16 +196,17 @@ function dioT()
             dioTTimer = CreateTimer()..startPeriodic(0.02, function dioTStart)  
 
 function dioTReplaceTimer()
-    if dio.getPos().distanceTo(abilityJotaroTPos) < 900 or dio.getPos().distanceTo(abilityDioTPos) < 900
-        if DIO_T.hasTagHidden() == false
-            dio.hideAbility(DIO_T, true)
-            DIO_T.addTagHidden()        
-        if dioT2.hasTagHidden() == true
-            dio.hideAbility(dioT2, false)
-            dioT2.removeTagHidden()
-            let id = dio.getOwner().getId()        
-            let tooltipTimer = CreateTimer()
-            tooltipTimer..start(0.02, function updateTooltips)..setData(id)            
+    if jotaroTOn == true or dioTOn == true
+        if dio.getPos().distanceTo(abilityJotaroTPos) < 900 or dio.getPos().distanceTo(abilityDioTPos) < 900
+            if DIO_T.hasTagHidden() == false
+                dio.hideAbility(DIO_T, true)
+                DIO_T.addTagHidden()        
+            if dioT2.hasTagHidden() == true
+                dio.hideAbility(dioT2, false)
+                dioT2.removeTagHidden()
+                let id = dio.getOwner().getId()        
+                let tooltipTimer = CreateTimer()
+                tooltipTimer..start(0.02, function updateTooltips)..setData(id)            
     if dio.getPos().distanceTo(abilityJotaroTPos) > 900 and dio.getPos().distanceTo(abilityDioTPos) > 900
         if dioTOn == false 
             if DIO_T.hasTagHidden() == true

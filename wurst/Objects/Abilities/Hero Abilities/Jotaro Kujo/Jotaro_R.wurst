@@ -137,11 +137,19 @@ function jotaroR()
             jotaro = GetTriggerUnit()
             jotaroPos = jotaro.getPos()
             jotaroRTimerInt1 = 0            
-            if abilityJotaroRPos.distanceTo(abilityJotaroTPos) < 900 and jotaroPos.distanceTo(abilityJotaroTPos) < 900
-                jotaro.pause()
-                jotaro.setInvulnerable(true)   
-                gg_snd_jotaroR6.play()
-                jotaroRTimer = CreateTimer()..startPeriodic(0.01, function jotaroRAoe)
+            if jotaroTOn == true or dioTOn == true
+                if abilityJotaroRPos.distanceTo(abilityJotaroTPos) < 900 and jotaroPos.distanceTo(abilityJotaroTPos) < 900
+                    abilityJotaroRPos = abilityJotaroTPos
+                    jotaro.pause()
+                    jotaro.setInvulnerable(true)   
+                    gg_snd_jotaroR6.play()
+                    jotaroRTimer = CreateTimer()..startPeriodic(0.01, function jotaroRAoe)
+                else if abilityJotaroRPos.distanceTo(abilityDioTPos) < 900 and jotaroPos.distanceTo(abilityDioTPos) < 900
+                    abilityJotaroRPos = abilityDioTPos
+                    jotaro.pause()
+                    jotaro.setInvulnerable(true)   
+                    gg_snd_jotaroR6.play()
+                    jotaroRTimer = CreateTimer()..startPeriodic(0.01, function jotaroRAoe)                
             else    
                 if jotaroPos.distanceTo(abilityJotaroRPos) < 1250
                     abilityJotaroRPos = jotaroPos.polarOffset(jotaroPos.angleTo(abilityJotaroRPos), 1250)
@@ -160,6 +168,7 @@ function jotaroR()
                 jotaroRTimer = CreateTimer()..startPeriodic(0.01, function jotaroRDash)
 
 function jotaroRDash()
+    print(jotaroRTimerInt1.toString())
     jotaroRTimerInt1++
     if jotaroRTimerInt1 > 0 and jotaroRTimerInt1 < 50
         if jotaro.isPaused() == false
@@ -228,8 +237,8 @@ function jotaroRAoe()
         flashEffect("war3mapImported\\dustwavxfsfsfe.mdx", starPlatinum.getPos(), 0.70)  
         flashEffect("war3mapImported\\tx.mdx", starPlatinum.getPos(), 4, starPlatinum.getPos().angleTo(jotaro.getPos()))
     if jotaroRTimerInt1 > 100 and jotaroRTimerInt1 < 150
-        forUnitsInRange(abilityJotaroRPos, 600) (unit u) ->
-            if jotaro.isAllyOf(u) == false and u.getPos().distanceTo(abilityJotaroTPos) < 900 and u.isInvulnerable() == false
+        forUnitsInRange(abilityJotaroRPos, 900) (unit u) ->
+            if jotaro.isAllyOf(u) == false and u.isInvulnerable() == false
                 DamageEvent.setNextDamageId(DAMAGE_ABILITY_JOTARO_R)
                 DamageEvent.setNextDamageFromCode()
                 jotaro.damageTarget(u, 1, ATTACK_TYPE_MAGIC)    

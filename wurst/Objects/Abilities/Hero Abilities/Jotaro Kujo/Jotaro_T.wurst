@@ -207,16 +207,17 @@ function jotaroT()
             CreateTimer()..startPeriodic(0.01, function jotaroT2Effects)
 
 function jotaroTReplaceTimer()
-    if jotaro.getPos().distanceTo(abilityJotaroTPos) < 900 or jotaro.getPos().distanceTo(abilityDioTPos) < 900
-        if JOTARO_T.hasTagHidden() == false
-            jotaro.hideAbility(JOTARO_T, true)
-            JOTARO_T.addTagHidden()        
-        if JOTARO_T2.hasTagHidden() == true
-            jotaro.hideAbility(JOTARO_T2, false)
-            JOTARO_T2.removeTagHidden()
-            let id = jotaro.getOwner().getId()        
-            let tooltipTimer = CreateTimer()
-            tooltipTimer..start(0.02, function updateTooltips)..setData(id)            
+    if jotaroTOn == true or dioTOn == true
+        if jotaro.getPos().distanceTo(abilityJotaroTPos) < 900 or jotaro.getPos().distanceTo(abilityDioTPos) < 900
+            if JOTARO_T.hasTagHidden() == false
+                jotaro.hideAbility(JOTARO_T, true)
+                JOTARO_T.addTagHidden()        
+            if JOTARO_T2.hasTagHidden() == true
+                jotaro.hideAbility(JOTARO_T2, false)
+                JOTARO_T2.removeTagHidden()
+                let id = jotaro.getOwner().getId()        
+                let tooltipTimer = CreateTimer()
+                tooltipTimer..start(0.02, function updateTooltips)..setData(id)                     
     if jotaro.getPos().distanceTo(abilityJotaroTPos) > 900 and jotaro.getPos().distanceTo(abilityDioTPos) > 900
         if jotaroTOn == false 
             if JOTARO_T.hasTagHidden() == true
