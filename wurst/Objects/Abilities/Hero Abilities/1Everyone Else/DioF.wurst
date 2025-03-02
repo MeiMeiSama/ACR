@@ -346,7 +346,7 @@ function trig_DioFActions ()
     timer ydl_timer
     integer trigger_ID = LoadInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 865)
     trigger_ID = trigger_ID + 3
-    let dio = LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594) 
+    let dio = GetSpellAbilityUnit()
     if dio.getPos().distanceTo(abilityDioTPos) < dio.getPos().distanceTo(abilityJotaroTPos)
         print("1")
         dioT2TargetPoint = abilityDioTPos
