@@ -160,6 +160,16 @@ init
 
 function jotaroT()
     CreateTrigger()
+    ..registerAnyUnitEvent(EVENT_PLAYER_HERO_SKILL)
+    ..addAction() ->
+        if GetLearnedSkill() == JOTARO_T
+            jotaro = GetTriggerUnit()
+            jotaro.addAbility(JOTARO_T2)
+            if JOTARO_T2.hasTagHidden() == false
+                jotaro.hideAbility(JOTARO_T2, true)
+                JOTARO_T2.addTagHidden()
+            CreateTimer()..startPeriodic(0.01, function jotaroTReplaceTimer)    
+    CreateTrigger()
     ..registerAnyUnitEvent(EVENT_PLAYER_UNIT_SPELL_EFFECT)
     ..addAction() ->
         if GetSpellAbilityId() == JOTARO_T
@@ -171,11 +181,12 @@ function jotaroT()
             if JOTARO_T.hasTagHidden() == false
                 jotaro.hideAbility(JOTARO_T, true)
                 JOTARO_T.addTagHidden()
-            if jotaro.hasAbility(JOTARO_T2) == false    
-                jotaro.addAbility(JOTARO_T2)   
+            if JOTARO_T2.hasTagHidden() == true
+                jotaro.hideAbility(JOTARO_T2, false)
+                JOTARO_T2.removeTagHidden()
                 let id = jotaro.getOwner().getId()        
                 let tooltipTimer = CreateTimer()
-                tooltipTimer..start(0.02, function updateTooltips)..setData(id)              
+                tooltipTimer..start(0.02, function updateTooltips)..setData(id)               
             gg_snd_jotaroT1.play()           
             jotaro.setAnimation(2)
             if jotaroTGroup == null
@@ -194,6 +205,27 @@ function jotaroT()
             jotaroT2TimerInt3 = 0
             jotaroT2Timer = CreateTimer()..startPeriodic(0.01, function jotaroT2Start)
             CreateTimer()..startPeriodic(0.01, function jotaroT2Effects)
+
+function jotaroTReplaceTimer()
+    if jotaro.getPos().distanceTo(abilityJotaroTPos) < 900 or jotaro.getPos().distanceTo(abilityDioTPos) < 900
+        if JOTARO_T.hasTagHidden() == false
+            jotaro.hideAbility(JOTARO_T, true)
+            JOTARO_T.addTagHidden()        
+        if JOTARO_T2.hasTagHidden() == true
+            jotaro.hideAbility(JOTARO_T2, false)
+            JOTARO_T2.removeTagHidden()
+            let id = jotaro.getOwner().getId()        
+            let tooltipTimer = CreateTimer()
+            tooltipTimer..start(0.02, function updateTooltips)..setData(id)            
+    if jotaro.getPos().distanceTo(abilityJotaroTPos) > 900 and jotaro.getPos().distanceTo(abilityDioTPos) > 900
+        if jotaroTOn == false 
+            if JOTARO_T.hasTagHidden() == true
+                jotaro.hideAbility(JOTARO_T, false)
+                JOTARO_T.removeTagHidden()       
+        if JOTARO_T2.hasTagHidden() == false
+            jotaro.hideAbility(JOTARO_T2, true)
+            JOTARO_T2.addTagHidden()
+
 
 function jotaroT2Start()
     jotaroT2TimerInt++
@@ -235,13 +267,7 @@ function jotaroT2Start()
     if jotaroT2TimerInt == 2700
         starPlatinumPos = starPlatinum.getPos()
         starPlatinum.kill()
-        jotaroTTarget.setPathing(false)
-        if JOTARO_T.hasTagHidden() == true
-            jotaro.hideAbility(JOTARO_T, false)
-            JOTARO_T.removeTagHidden()
-            jotaro.startAbilityCooldown(JOTARO_T)
-        if jotaro.hasAbility(JOTARO_T2) == true    
-            jotaro.removeAbility(JOTARO_T2)        
+        jotaroTTarget.setPathing(false)       
         jotaro.unpause()
         jotaro.setInvulnerable(false)
     if jotaroT2TimerInt > 2700 and jotaroT2TimerInt < 2751
@@ -360,12 +386,7 @@ function jotaroTStart()
                 u.removeTagPauseEX()
         jotaroTGroup.clear()
         abilityJotaroTPos = emptyVector
-        if JOTARO_T.hasTagHidden() == true
-            jotaro.hideAbility(JOTARO_T, false)
-            JOTARO_T.removeTagHidden()
-            jotaro.startAbilityCooldown(JOTARO_T)
-        if jotaro.hasAbility(JOTARO_T2) == true    
-            jotaro.removeAbility(JOTARO_T2)  
+        jotaro.startAbilityCooldown(JOTARO_T)
 
 
 

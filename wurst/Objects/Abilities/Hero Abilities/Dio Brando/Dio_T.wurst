@@ -259,12 +259,6 @@ function dioTStart()
         dioTGroup.clear()
         abilityDioTPos = emptyVector
         dio.startAbilityCooldown(DIO_T)            
-        if DIO_T.hasTagHidden() == true
-            dio.hideAbility(DIO_T, false)
-            DIO_T.removeTagHidden()
-        if dioT2.hasTagHidden() == false
-            dio.hideAbility(dioT2, true)
-            dioT2.addTagHidden() 
 
 
 
