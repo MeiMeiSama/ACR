@@ -8,7 +8,6 @@ import ChannelAbilityPreset
 import UnitIds
 import main
 import ClosureForGroups
-import Jotaro_T
 
 unit jotaro
 unit jotaroRTarget

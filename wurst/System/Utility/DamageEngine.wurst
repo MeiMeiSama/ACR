@@ -858,7 +858,13 @@ init
                         //printTimedToPlayer (R2S(_dmg) , 1, caster.getOwner())
                         instances = instances + 1
                         //printTimedToPlayer (I2S(instances) , 1, caster.getOwner())                                                                                 
-
+                    else if id == DAMAGE_ABILITY_DIO_T2
+                        _dmg = ((300.00 + (7 * stat)) / 120)                                          // 1250 dmg in testing environment
+                        DamageEvent.setAmount(_dmg)
+                        //printTimedToPlayer("DIO F", 1, caster.getOwner())  
+                        //printTimedToPlayer (R2S(_dmg) , 1, caster.getOwner())
+                        instances = instances + 1
+                        //printTimedToPlayer (I2S(instances) , 1, caster.getOwner())    
                     // ━━━━━━━━━━━━━━━ [SPECIAL CASES: F] ━━━━━━━━━━━━━━━━━━ //
 
 
@@ -941,14 +947,7 @@ init
                         //printTimedToPlayer("GILGAMESH F", 1, caster.getOwner())        
                         //printTimedToPlayer (R2S(_dmg) , 1, caster.getOwner())
                         instances = instances + 1
-                        //printTimedToPlayer (I2S(instances) , 1, caster.getOwner())                                                                
-                    else if id == DAMAGE_ABILITY_DIO_T2
-                        _dmg = ((250.00 + (6 * stat)) / 120)                                                  // 950 dmg in testing environment
-                        DamageEvent.setAmount(_dmg)
-                        //printTimedToPlayer("DIO F", 1, caster.getOwner())  
-                        //printTimedToPlayer (R2S(_dmg) , 1, caster.getOwner())
-                        instances = instances + 1
-                        //printTimedToPlayer (I2S(instances) , 1, caster.getOwner())                                                   
+                        //printTimedToPlayer (I2S(instances) , 1, caster.getOwner())                                                                                                               
                     else if id == DAMAGE_ABILITY_ACCEL_F
                         _dmg = ((250.00 + (6 * stat)) / 80)                                                  // 950 dmg in testing environment
                         DamageEvent.setAmount(_dmg)

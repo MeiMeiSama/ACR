@@ -24,6 +24,7 @@ group dioTGroup
 int dioTTimerInt1
 int dioT2TimerInt
 int dioT2TimerInt3
+int dioT2 = 'A0L1'
 timer dioTTimer
 timer dioT2Timer
 effect effect1
@@ -160,6 +161,16 @@ init
 
 function dioT()
     CreateTrigger()
+    ..registerAnyUnitEvent(EVENT_PLAYER_HERO_SKILL)
+    ..addAction() ->
+        if GetLearnedSkill() == DIO_T
+            dio = GetTriggerUnit()
+            dio.addAbility(dioT2)
+            if dioT2.hasTagHidden() == false
+                dio.hideAbility(dioT2, true)
+                dioT2.addTagHidden()
+            CreateTimer()..startPeriodic(0.01, function dioTReplaceTimer)
+    CreateTrigger()
     ..registerAnyUnitEvent(EVENT_PLAYER_UNIT_SPELL_EFFECT)
     ..addAction() ->
         if GetSpellAbilityId() == DIO_T
@@ -171,8 +182,9 @@ function dioT()
             if DIO_T.hasTagHidden() == false
                 dio.hideAbility(DIO_T, true)
                 DIO_T.addTagHidden()
-            if dio.hasAbility('A0L1') == false    
-                dio.addAbility('A0L1')   
+            if dioT2.hasTagHidden() == true
+                dio.hideAbility(dioT2, false)
+                dioT2.removeTagHidden()
                 let id = dio.getOwner().getId()        
                 let tooltipTimer = CreateTimer()
                 tooltipTimer..start(0.02, function updateTooltips)..setData(id)              
@@ -182,6 +194,26 @@ function dioT()
                 dioTGroup = CreateGroup()               
             dioTTimerInt1 = 0                          
             dioTTimer = CreateTimer()..startPeriodic(0.02, function dioTStart)  
+
+function dioTReplaceTimer()
+    if dio.getPos().distanceTo(abilityJotaroTPos) < 900 or dio.getPos().distanceTo(abilityDioTPos) < 900
+        if DIO_T.hasTagHidden() == false
+            dio.hideAbility(DIO_T, true)
+            DIO_T.addTagHidden()        
+        if dioT2.hasTagHidden() == true
+            dio.hideAbility(dioT2, false)
+            dioT2.removeTagHidden()
+            let id = dio.getOwner().getId()        
+            let tooltipTimer = CreateTimer()
+            tooltipTimer..start(0.02, function updateTooltips)..setData(id)            
+    if dio.getPos().distanceTo(abilityJotaroTPos) > 900 and dio.getPos().distanceTo(abilityDioTPos) > 900
+        if dioTOn == false 
+            if DIO_T.hasTagHidden() == true
+                dio.hideAbility(DIO_T, false)
+                DIO_T.removeTagHidden()       
+        if dioT2.hasTagHidden() == false
+            dio.hideAbility(dioT2, true)
+            dioT2.addTagHidden()
 
 
 function dioTStart()
@@ -214,7 +246,7 @@ function dioTStart()
                 dioTGroup.remove(u)
                 if u.hasTagPauseEX()
                     u.unpauseEx()
-                    u.removeTagPauseEX()
+                    u.removeTagPauseEX()               
     if dioTTimerInt1 >= 500
         dioTTimer.destr()
         dioTOn = false
@@ -226,12 +258,13 @@ function dioTStart()
                 u.removeTagPauseEX()
         dioTGroup.clear()
         abilityDioTPos = emptyVector
+        dio.startAbilityCooldown(DIO_T)            
         if DIO_T.hasTagHidden() == true
             dio.hideAbility(DIO_T, false)
             DIO_T.removeTagHidden()
-            dio.startAbilityCooldown(DIO_T)
-        if dio.hasAbility('A0L1') == true    
-            dio.removeAbility('A0L1')  
+        if dioT2.hasTagHidden() == false
+            dio.hideAbility(dioT2, true)
+            dioT2.addTagHidden() 
 
 
 

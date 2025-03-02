@@ -2,7 +2,6 @@ package DioF
 import DamageEvent
 import AbilityGlobals
 import main
-import ACR_PauseArea
 
 vec2 dioT2TargetPoint
 location dioT2Loc
