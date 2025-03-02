@@ -160,6 +160,7 @@ function devTools ()
     EventListener.add(EVENT_PLAYER_UNIT_SELECTED) ->
         selectedUnit = GetTriggerUnit()
         print("Name: "+selectedUnit.getName())
+        print("Owner "+ selectedUnit.getOwner().getName())
         print("Type: "+selectedUnit.getTypeId().toRawCode())
         print("ID: "+selectedUnit.getUserData().toString())
         print("X: "+selectedUnit.getX().toString())

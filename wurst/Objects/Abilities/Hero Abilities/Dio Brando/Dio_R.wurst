@@ -194,7 +194,6 @@ function dioRAoe()
     if dioRTimerInt1 >= 170
         dioRTimer.destr()
         zaWarudo.kill()
-
 function dioDashEnd()
     dioRDashBool = false
     dioRTimer.destr()
