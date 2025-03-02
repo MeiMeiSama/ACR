@@ -223,8 +223,8 @@ public function addAbilities (unit hero)
         SPELL_E[id] = 'A0L2'
         SPELL_R[id] = DIO_R
         SPELL_T[id] = DIO_T
-        SPELL_T2[id] = DIO_T2
-        SPELL_F[id] = 'A0L1'
+        SPELL_T2[id] = 'A0L1'
+        SPELL_F[id] = DIO_F
         SPELL_G[id] = DIO_BRANDO_ABILITY_G 
     else if hero.getTypeId() == 'H025' // Elizabeth
         SPELL_Q[id] = 'A0L5'

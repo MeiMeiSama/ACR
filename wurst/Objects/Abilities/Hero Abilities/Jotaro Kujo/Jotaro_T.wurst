@@ -16,7 +16,6 @@ unit jotaro
 vec2 jotaroPos
 vec2 jotaroTTargetPos
 vec2 starPlatinumPos
-public vec2 abilityJotaroTPos
 vec2 emptyVector
 unit starPlatinum
 unit za_Warudo_Jotaro
@@ -166,6 +165,7 @@ function jotaroT()
         if GetSpellAbilityId() == JOTARO_T
             jotaro = GetTriggerUnit()
             abilityJotaroTPos = jotaro.getPos()
+            abilityJotaroTLoc = GetUnitLoc(jotaro)
             jotaro.pause()
             jotaro.setInvulnerable(true)
             if JOTARO_T.hasTagHidden() == false
@@ -335,6 +335,7 @@ function jotaroTStart()
         jotaro.unpause()
         jotaro.setInvulnerable(false) 
         starPlatinum.kill()
+        jotaroTOn = true
     if jotaroTTimerInt1 > 100 and jotaroTTimerInt1 < 500    
         forUnitsInRange(abilityJotaroTPos, 900) (unit u) ->
             if u.getTypeId() != DIO_BRANDO and u.getTypeId() != KUJO_JOTARO and u.isInvulnerable() == false and u.hasTagPauseEX() == false and jotaroTGroup.has(u) == false
@@ -350,6 +351,8 @@ function jotaroTStart()
                     u.removeTagPauseEX()
     if jotaroTTimerInt1 >= 500
         jotaroTTimer.destr()
+        jotaroTOn = false
+        RemoveLocation(abilityJotaroTLoc)
         za_Warudo_Jotaro.kill()
         jotaroTGroup.forEachIn() (unit u) ->
             if u.hasTagPauseEX()

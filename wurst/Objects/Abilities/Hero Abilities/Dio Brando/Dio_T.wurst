@@ -16,7 +16,6 @@ unit dio
 vec2 dioPos
 vec2 dioTTargetPos
 vec2 starPlatinumPos
-public vec2 abilitydioTPos
 vec2 emptyVector
 unit starPlatinum
 unit za_Warudo_dio
@@ -165,14 +164,15 @@ function dioT()
     ..addAction() ->
         if GetSpellAbilityId() == DIO_T
             dio = GetTriggerUnit()
-            abilitydioTPos = dio.getPos()
+            abilityDioTPos = dio.getPos()
+            abilityDioTLoc = GetUnitLoc(dio)
             dio.pause()
             dio.setInvulnerable(true)
             if DIO_T.hasTagHidden() == false
                 dio.hideAbility(DIO_T, true)
                 DIO_T.addTagHidden()
-            if dio.hasAbility(DIO_T2) == false    
-                dio.addAbility(DIO_T2)   
+            if dio.hasAbility('A0L1') == false    
+                dio.addAbility('A0L1')   
                 let id = dio.getOwner().getId()        
                 let tooltipTimer = CreateTimer()
                 tooltipTimer..start(0.02, function updateTooltips)..setData(id)              
@@ -182,141 +182,7 @@ function dioT()
                 dioTGroup = CreateGroup()               
             dioTTimerInt1 = 0                          
             dioTTimer = CreateTimer()..startPeriodic(0.02, function dioTStart)  
-        else if GetSpellAbilityId() == DIO_T2
-            dioTTarget = GetSpellTargetUnit()  
-            // gg_snd_dioT2.play()
-            dio.pause()
-            dio.setInvulnerable(true)
-            dioTTarget.pause()
-            dioTTarget.setInvulnerable(true)
-            dio.setAnimation(5)            
-            dioT2TimerInt = 0
-            dioT2TimerInt3 = 0
-            dioT2Timer = CreateTimer()..startPeriodic(0.01, function dioT2Start)
-            CreateTimer()..startPeriodic(0.01, function dioT2Effects)
 
-function dioT2Start()
-    dioT2TimerInt++
-    if dioT2TimerInt > 0 and dioT2TimerInt < 2700
-        if dio.isPaused() == false
-            dio.pause()
-        if dio.isInvulnerable() == false
-            dio.setInvulnerable(true) 
-    if dioT2TimerInt > 0 and dioT2TimerInt < 2751  
-        if dioTTarget.isPaused() == false
-            dioTTarget.pause()
-        if dioTTarget.isInvulnerable() == false
-            dioTTarget.setInvulnerable(true)                        
-    if dioT2TimerInt == 1
-        dio.setPos(dioTTarget.getPos().polarOffset(dioTTarget.getPos().angleTo(dio.getPos()), 600))
-        dio.setAnimation(0) 
-    if dioT2TimerInt == 100
-        dio.setAnimation(21)    
-    if dioT2TimerInt > 100 and dioT2TimerInt < 401
-        dioPos = dio.getPos()            
-        dio.setPos(dioPos.polarOffset(dioPos.angleTo(dioTTarget.getPos()), 1)) 
-    if dioT2TimerInt == 401
-        dio.setAnimation(22) 
-    if dioT2TimerInt == 600
-        starPlatinum = createUnit(DIO_T_DUMMY2, dioTTarget.getPos().polarOffset(dioTTarget.getPos().angleTo(dio.getPos()), 200)) 
-        starPlatinum.setFacing(starPlatinum.getPos().angleTo(dioTTarget.getPos()))
-        dio.setAnimation(8)
-    if dioT2TimerInt == 620        
-        dio.setAnimation(5) 
-        starPlatinum.setAnimation(0)
-    if dioT2TimerInt == 1750
-        starPlatinum.setAnimation(24)
-    if dioT2TimerInt == 1850      
-        starPlatinum.setAnimation(34)  
-    if dioT2TimerInt == 2300
-        starPlatinum.setAnimation(12)
-    if dioT2TimerInt == 2350
-        starPlatinum.setAnimation(13)        
-    if dioT2TimerInt == 2700
-        starPlatinumPos = starPlatinum.getPos()
-        starPlatinum.kill()
-        dioTTarget.setPathing(false)
-        if DIO_T.hasTagHidden() == true
-            dio.hideAbility(DIO_T, false)
-            DIO_T.removeTagHidden()
-            dio.startAbilityCooldown(DIO_T)
-        if dio.hasAbility(DIO_T2) == true    
-            dio.removeAbility(DIO_T2)        
-        dio.unpause()
-        dio.setInvulnerable(false)
-    if dioT2TimerInt > 2700 and dioT2TimerInt < 2751
-        dioTTargetPos = dioTTarget.getPos()
-        if dioTTargetPos.polarOffset(starPlatinumPos.angleTo(dioTTargetPos), 25).isTerrainPathable(PATHING_TYPE_WALKABILITY) == true and dioTTargetPos.polarOffset(starPlatinumPos.angleTo(dioTTargetPos), 25).isTerrainPathable(PATHING_TYPE_FLYABILITY) == true 
-            DoNothing()
-        else    
-            dioTTarget.setPos(dioTTargetPos.polarOffset(starPlatinumPos.angleTo(dioTTargetPos), 25))  
-    if dioT2TimerInt >= 2751
-        dioT2Timer.destr()
-        dioTTarget.setPathing(true)
-        dioTTarget.setInvulnerable(false)
-        dioTTarget.unpause()
-        DamageEvent.setNextDamageId(DAMAGE_ABILITY_DELAYED_T)
-        DamageEvent.setNextDamageFromCode()
-        dio.damageTarget(dioTTarget, 1, ATTACK_TYPE_MAGIC)
-
-function dioT2Effects()
-    dioT2TimerInt3++
-    if dioT2TimerInt3 == 670
-        angle = starPlatinum.getPos().angleTo(dio.getPos())
-        flashEffect("war3mapImported\\punchshot.mdx", starPlatinum.getPos(), 1, starPlatinum.getPos().angleTo(dioTTarget.getPos()))
-    if dioT2TimerInt3 == 1850
-        effect1 = addEffect("war3mapImported\\circle-air.mdx", dioTTarget.getPos())
-        ..setScale(3)
-        ..destr()
-        effect2 = addEffect("war3mapImported\\tx.mdx", starPlatinum.getPos())
-        ..setScale(3)
-        ..setYaw(angle)
-        ..destr()
-    if dioT2TimerInt3 == 1900
-        effect1 = addEffect("war3mapImported\\circle-air.mdx", dioTTarget.getPos())
-        ..setScale(3)
-        ..destr()
-        effect2 = addEffect("war3mapImported\\tx.mdx", starPlatinum.getPos())
-        ..setScale(3)
-        ..setYaw(angle)
-        ..destr()
-    if dioT2TimerInt3 == 2000
-        effect1 = addEffect("war3mapImported\\circle-air.mdx", dioTTarget.getPos())
-        ..setScale(3)
-        ..destr()
-        effect2 = addEffect("war3mapImported\\tx.mdx", starPlatinum.getPos())
-        ..setScale(3)
-        ..setYaw(angle)
-        ..destr()
-    if dioT2TimerInt3 == 2100
-        effect1 = addEffect("war3mapImported\\circle-air.mdx", dioTTarget.getPos())
-        ..setScale(3)
-        ..destr()
-        effect2 = addEffect("war3mapImported\\tx.mdx", starPlatinum.getPos())
-        ..setScale(3)
-        ..setYaw(angle)
-        ..destr()
-    if dioT2TimerInt3 == 2200
-        effect1 = addEffect("war3mapImported\\circle-air.mdx", dioTTarget.getPos())
-        ..setScale(3)
-        ..destr()
-        effect2 = addEffect("war3mapImported\\tx.mdx", starPlatinum.getPos())
-        ..setScale(3)
-        ..setYaw(angle)
-        ..destr()
-    if dioT2TimerInt3 == 2300
-        effect1 = addEffect("war3mapImported\\circle-air.mdx", dioTTarget.getPos())
-        ..setScale(3)
-        ..destr()
-        effect2 = addEffect("war3mapImported\\tx.mdx", starPlatinum.getPos())
-        ..setScale(3)
-        ..setYaw(angle)
-        ..destr()                  
-    if dioT2TimerInt3 == 2680
-        flashEffect("war3mapImported\\punchshot.mdx", starPlatinum.getPos(), 1, starPlatinum.getPos().angleTo(dioTTarget.getPos()))
-    if dioT2TimerInt3 == 2695
-        GetExpiredTimer().destr()
-        flashEffect("war3mapImported\\tx.mdx", dioTTarget.getPos(), 5, starPlatinum.getPos().angleTo(dio.getPos()))
 
 function dioTStart()
     dioTTimerInt1++
@@ -331,38 +197,41 @@ function dioTStart()
     if dioTTimerInt1 == 65
         starPlatinum.setAnimation(1)
     if dioTTimerInt1 == 100
+        dioTOn = true
         za_Warudo_dio = createUnit(DIO_T_DUMMY, dio.getPos())
         dio.unpause()
         dio.setInvulnerable(false) 
         starPlatinum.kill()
     if dioTTimerInt1 > 100 and dioTTimerInt1 < 500    
-        forUnitsInRange(abilitydioTPos, 900) (unit u) ->
+        forUnitsInRange(abilityDioTPos, 900) (unit u) ->
             if u.getTypeId() != DIO_BRANDO and u.getTypeId() != KUJO_JOTARO and u.isInvulnerable() == false and u.hasTagPauseEX() == false and dioTGroup.has(u) == false
                 IssueImmediateOrder(u, "stop")
                 dioTGroup.add(u)
                 u.pauseEx()
                 u.addTagPauseEX()
         dioTGroup.forEachIn() (unit u) ->
-            if u.getPos().distanceTo(abilitydioTPos) > 900
+            if u.getPos().distanceTo(abilityDioTPos) > 900
                 dioTGroup.remove(u)
                 if u.hasTagPauseEX()
                     u.unpauseEx()
                     u.removeTagPauseEX()
     if dioTTimerInt1 >= 500
         dioTTimer.destr()
+        dioTOn = false
+        RemoveLocation(abilityDioTLoc)
         za_Warudo_dio.kill()
         dioTGroup.forEachIn() (unit u) ->
             if u.hasTagPauseEX()
                 u.unpauseEx()
                 u.removeTagPauseEX()
         dioTGroup.clear()
-        abilitydioTPos = emptyVector
+        abilityDioTPos = emptyVector
         if DIO_T.hasTagHidden() == true
             dio.hideAbility(DIO_T, false)
             DIO_T.removeTagHidden()
             dio.startAbilityCooldown(DIO_T)
-        if dio.hasAbility(DIO_T2) == true    
-            dio.removeAbility(DIO_T2)  
+        if dio.hasAbility('A0L1') == true    
+            dio.removeAbility('A0L1')  
 
 
 

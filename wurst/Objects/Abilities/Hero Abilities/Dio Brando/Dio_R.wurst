@@ -102,7 +102,7 @@ function dioR()
             dio = GetTriggerUnit()
             dioPos = dio.getPos()
             dioRTimerInt1 = 0            
-            if abilitydioRPos.distanceTo(abilitydioTPos) < 900 and dioPos.distanceTo(abilitydioTPos) < 900
+            if abilitydioRPos.distanceTo(abilityDioTPos) < 900 and dioPos.distanceTo(abilityDioTPos) < 900
                 dio.pause()
                 dio.setInvulnerable(true)   
                 // gg_snd_dioR6.play()
@@ -180,7 +180,7 @@ function dioRAoe()
         flashEffect("war3mapImported\\tx.mdx", zaWarudo.getPos(), 4, zaWarudo.getPos().angleTo(dio.getPos()))
     if dioRTimerInt1 > 100 and dioRTimerInt1 < 150
         forUnitsInRange(abilitydioRPos, 600) (unit u) ->
-            if dio.isAllyOf(u) == false and u.getPos().distanceTo(abilitydioTPos) < 900 and u.isInvulnerable() == false
+            if dio.isAllyOf(u) == false and u.getPos().distanceTo(abilityDioTPos) < 900 and u.isInvulnerable() == false
                 DamageEvent.setNextDamageId(DAMAGE_ABILITY_DIO_R)
                 DamageEvent.setNextDamageFromCode()
                 dio.damageTarget(u, 1, ATTACK_TYPE_MAGIC)    
