@@ -44,6 +44,8 @@ public sound gg_snd_jotaroT1
 public sound gg_snd_jotaroT2
 public sound gg_snd_jotaroF1
 public sound gg_snd_jotaroF2
+public sound gg_snd_dioE
+public sound gg_snd_dioW
 public sound gg_snd_dioR1_1
 public sound gg_snd_dioR1_2
 public sound gg_snd_dioR2
@@ -3686,7 +3688,17 @@ function initSounds()
     SetSoundDuration(gg_snd_jotaroF2, 12095)
     SetSoundChannel(gg_snd_jotaroF2, 0)
     SetSoundVolume(gg_snd_jotaroF2, 127)
-    SetSoundPitch(gg_snd_jotaroF2, 1.0)         
+    SetSoundPitch(gg_snd_jotaroF2, 1.0)
+    gg_snd_dioW = CreateSound("war3mapImported\\dioW.mp3", false, false, false, 10, 10, "")
+    SetSoundDuration(gg_snd_dioW, 12095)
+    SetSoundChannel(gg_snd_dioW, 0)
+    SetSoundVolume(gg_snd_dioW, 127)
+    SetSoundPitch(gg_snd_dioW, 1.0)
+    gg_snd_dioE = CreateSound("war3mapImported\\dioE.mp3", false, false, false, 10, 10, "")
+    SetSoundDuration(gg_snd_dioE, 12095)
+    SetSoundChannel(gg_snd_dioE, 0)
+    SetSoundVolume(gg_snd_dioE, 127)
+    SetSoundPitch(gg_snd_dioE, 1.0)          
     gg_snd_dioR1_1 = CreateSound("war3mapImported\\dioR1_1.mp3", false, false, false, 10, 10, "")
     SetSoundDuration(gg_snd_dioR1_1, 12095)
     SetSoundChannel(gg_snd_dioR1_1, 0)

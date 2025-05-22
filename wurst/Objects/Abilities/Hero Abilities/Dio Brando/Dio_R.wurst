@@ -49,7 +49,7 @@ effect effect2
         ..presetCooldown(lvl -> 50)
         ..presetManaCost(lvl -> 70)
         ..presetTargetsAllowed(lvl -> "enemy,ground,air,neutral")
-        ..presetTooltipNormal(lvl -> "Dash|r")
+        ..presetTooltipNormal(lvl -> "Supa Dash|r")
         ..presetTooltipNormalExtended(lvl -> "Mavis R Desc|r")
         ..setTooltipLearn("Dash|r")
         ..setTooltipLearnExtended("Learning R|r")

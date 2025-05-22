@@ -40,7 +40,7 @@ int dioWTimerInt
         ..presetCooldown(lvl -> 50)
         ..presetManaCost(lvl -> 70)
         ..presetTargetsAllowed(lvl -> "enemy,ground,air,neutral")
-        ..presetTooltipNormal(lvl -> "Howl of the Illusory Wolf|r")
+        ..presetTooltipNormal(lvl -> "Dio's Fury|r")
         ..presetTooltipNormalExtended(lvl -> "dio W Desc|r")
         ..setTooltipLearn("Learn W|r")
         ..setTooltipLearnExtended("Learning W|r")    
@@ -120,7 +120,10 @@ function dioWSingleTarget()
     if dioWTimerInt == 5
         zaWarudo = createUnit(DIO_W_DUMMY, dioWTarget.getPos().polarOffset(dioWTarget.getPos().angleTo(dio.getPos()), 150))  
     if dioWTimerInt == 6  
-        zaWarudo.setAnimation(2)  
+        zaWarudo.setAnimation(2)
+        gg_snd_dioW.play()
+    if dioWTimerInt == 80
+        flashEffect("war3mapImported\\dioW2.mdx", zaWarudo.getPos().polarOffset(dioWTarget.getPos().angleTo(dio.getPos()), 100))
     if dioWTimerInt == 100
         dio.unpause()
         dio.setInvulnerable(false)        
@@ -148,6 +151,9 @@ function dioWAoe()
         // zaWarudo.setFacing(angle2)
     if dioWTimerInt == 6  
         zaWarudo.setAnimation(14)
+        gg_snd_dioW.play()
+    if dioWTimerInt == 80
+        flashEffect("war3mapImported\\dioW.mdx", dio.getPos(), 3)
     if dioWTimerInt == 100
         dio.unpause()
         dio.setInvulnerable(false)        

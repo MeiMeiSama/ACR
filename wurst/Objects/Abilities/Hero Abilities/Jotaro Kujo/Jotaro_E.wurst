@@ -35,7 +35,7 @@ int jotaroETimerInt
         ..presetCooldown(lvl -> 50)
         ..presetManaCost(lvl -> 70)
         ..presetTargetsAllowed(lvl -> "enemy,ground,air,neutral, vulnerable")
-        ..presetTooltipNormal(lvl -> "Howl of the Illusory Wolf|r")
+        ..presetTooltipNormal(lvl -> "Limit Breaker Punch|r")
         ..presetTooltipNormalExtended(lvl -> "Jotaro E Desc|r")
         ..setTooltipLearn("Learn E|r")
         ..setTooltipLearnExtended("Learning E|r")          

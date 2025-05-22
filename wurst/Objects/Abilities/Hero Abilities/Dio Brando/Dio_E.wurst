@@ -1,2 +1,94 @@
 package Dio_E
 
+import DamageEvent
+import AbilityGlobals
+import ObjectDefinitions
+import ChannelAbilityPreset
+import main
+
+unit dio
+unit dioETarget
+timer dioETimer
+int dioETimerInt
+
+@compiletime function createAbility()
+    new ChannelAbilityPreset(DIO_E, 5, true)
+        ..presetTargetTypes(Targettype.UNIT)
+        ..setAnimationNames("11111111")
+        ..setButtonPositionNormalX(2)
+        ..setButtonPositionNormalY(2)
+        ..setButtonPositionResearchX(2)
+        ..setButtonPositionResearchY(0)
+        ..setIconNormal("ReplaceableTextures\\CommandButtons\\BTNMirrorImage.blp")
+        ..setIconResearch("ReplaceableTextures\\CommandButtons\\BTNMirrorImage.blp")
+        ..setMissileSpeed(99999)
+        ..setHeroAbility(true)
+        ..setHotkeyNormal("E")
+        ..setHotkeyLearn("E")
+        ..setLevels(5)
+        ..setLevelSkipRequirement(2)
+        ..presetArtDuration(lvl -> 0)
+        ..presetBaseOrderID(lvl -> "stampede")
+        ..presetDisableOtherAbilities(lvl -> false)
+        ..presetFollowThroughTime(lvl -> 0)
+        ..presetCastRange(lvl -> 2000)
+        ..presetCooldown(lvl -> 50)
+        ..presetManaCost(lvl -> 70)
+        ..presetTargetsAllowed(lvl -> "enemy,ground,air,neutral, vulnerable")
+        ..presetTooltipNormal(lvl -> "Unleashed Rage|r")
+        ..presetTooltipNormalExtended(lvl -> "Jotaro E Desc|r")
+        ..setTooltipLearn("Learn E|r")
+        ..setTooltipLearnExtended("Learning E|r")          
+
+init
+    dioE()    
+
+function dioE()
+    CreateTrigger()
+    ..registerAnyUnitEvent(EVENT_PLAYER_UNIT_SPELL_EFFECT)
+    ..addAction() ->
+        if GetSpellAbilityId() == DIO_E
+            dio = GetTriggerUnit()
+            dioETarget = GetSpellTargetUnit()  
+            gg_snd_dioE.play()
+            dio.pause()
+            dio.setInvulnerable(true)
+            dioETarget.pause()
+            dioETarget.setInvulnerable(true)
+            dioETimerInt = 0
+            dio.setAnimation(7)
+            dioETimer = CreateTimer()..startPeriodic(0.02, function dioEStart)   
+
+
+function dioEStart()
+    dioETimerInt++
+    if dioETimerInt > 0 and dioETimerInt < 135
+        if dio.isPaused() == false
+            dio.pause()
+        if dio.isInvulnerable() == false
+            dio.setInvulnerable(true)
+        if dioETarget.isPaused() == false
+            dioETarget.pause()
+        if dioETarget.isInvulnerable() == false
+            dioETarget.setInvulnerable(true)
+    if dioETimerInt == 70
+        flashEffect("war3mapImported\\dustwavxfsfsfe.mdx", dio.getPos(), 0.60)
+    if dioETimerInt == 90
+        dio.setPos(dioETarget.getPos().polarOffset(dioETarget.getPos().angleTo(dio.getPos()), -200))
+        dio.setFacing(dio.getPos().angleTo(dioETarget.getPos()))
+        dio.setAnimation(14)
+    if dioETimerInt == 120
+        dio.setAnimation(18)
+    if dioETimerInt == 126
+        //flashEffect("war3mapImported\\dls1_exd.mdx", dio.getPos(), 1, dio.getPos().angleTo(dioETarget.getPos()))
+        flashEffect("war3mapImported\\dls1_exd.mdx", dioETarget.getPos(), 1)
+    if dioETimerInt >= 135
+        dioETarget.setInvulnerable(false)  
+        dio.unpause()
+        dio.setInvulnerable(false)     
+        DamageEvent.setNextDamageId(DAMAGE_ABILITY_E)
+        DamageEvent.setNextDamageFromCode()
+        dio.damageTarget(dioETarget, 1, ATTACK_TYPE_MAGIC)   
+        dioETarget.unpause()
+        dioETarget.issueImmediateOrder("stop")
+        dioETimer.destr()
