@@ -162,7 +162,7 @@ function dioRDash()
                     dio.setPos(dioRTarget.getPos().polarOffset(dioRTarget.getPos().angleTo(dioPos), 350))
                     dio.setFacing(dio.getPos().angleTo(dioRTarget.getPos()))
                     zaWarudo = createUnit(DIO_R_DUMMY, dioRTarget.getPos().polarOffset(dioRTarget.getPos().angleTo(dioPos), 150))     
-                    zaWarudo.setAnimation(7)
+                    //zaWarudo.setAnimation(7)
                     zaWarudo.setFacing(zaWarudo.getPos().angleTo(dioRTarget.getPos()))
                     dioRTimerInt2 = 0
                     dioRTimerInt3 = 0              
@@ -182,7 +182,7 @@ function dioRAoe()
         dio.unpause()
         dio.setInvulnerable(false)        
     if dioRTimerInt1 == 50    
-        zaWarudo.setAnimation(8)
+        zaWarudo.setAnimation(12)
         flashEffect("war3mapImported\\dustwavxfsfsfe.mdx", zaWarudo.getPos(), 0.70)  
         flashEffect("war3mapImported\\tx.mdx", zaWarudo.getPos(), 4, zaWarudo.getPos().angleTo(dio.getPos()))
     if dioRTimerInt1 > 100 and dioRTimerInt1 < 150
@@ -212,14 +212,16 @@ function dioRAttack1()
             dioRTarget.pause()
         if dioRTarget.isInvulnerable() == false
             dioRTarget.setInvulnerable(true)            
-    if dioRTimerInt2 == 30
+    if dioRTimerInt2 == 10
         gg_snd_dioR2.play() 
         dio.setAnimation(8)
-        zaWarudo.setAnimation(1)    
+        zaWarudo.setAnimation(1)
+    //if dioRTimerInt2 == 40
+        //zaWarudo.setAnimation(12)        
     if dioRTimerInt2 == 70
         gg_snd_dioR3.play()
         dio.setAnimation(21)
-        zaWarudo.setAnimation(34) 
+        zaWarudo.setAnimation(12) 
     if dioRTimerInt2 >= 71 and dioRTimerInt2 < 190     
         dioPos = dio.getPos()
         if dioPos.polarOffset(dioPos.angleTo(dioRTarget.getPos()), 355).isTerrainPathable(PATHING_TYPE_WALKABILITY) == true and dioPos.polarOffset(dioPos.angleTo(dioRTarget.getPos()), 355).isTerrainPathable(PATHING_TYPE_FLYABILITY) == true
@@ -250,7 +252,7 @@ function dioRAttack1()
 
 function dioRAttack2()
     dioRTimerInt3++
-    if dioRTimerInt3 == 50
+    if dioRTimerInt3 == 70
         angle = zaWarudo.getPos().angleTo(dio.getPos())
         effect1 = addEffect("war3mapImported\\tx.mdx", zaWarudo.getPos())
         ..setScale(3)

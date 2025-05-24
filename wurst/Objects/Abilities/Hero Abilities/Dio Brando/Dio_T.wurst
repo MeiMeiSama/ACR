@@ -9,8 +9,8 @@ import ClosureForGroups
 import ACR_TagSystem
 import UpdateTooltips
 import TimerUtils
-import TerrainUtils
-import DamageEvent
+//import TerrainUtils
+//import DamageEvent
 
 unit dio
 vec2 dioPos
@@ -126,7 +126,7 @@ angle angle
         ..setHasWaterShadow(false)
         ..setMaximumPitchAngledegrees(0)
         ..setMaximumRollAngledegrees(0)
-        ..setModelFile("war3mapImported\\Star Platinum.mdx")
+        ..setModelFile("war3mapImported\\Shio_Dio_The_World.mdx")
         ..setScalingValue(1.5)
         ..setArtSpecial("_")
         ..setArmorType(ArmorType.Unarmored)
@@ -183,8 +183,8 @@ function dioT()
                 let id = dio.getOwner().getId()        
                 let tooltipTimer = CreateTimer()
                 tooltipTimer..start(0.02, function updateTooltips)..setData(id)              
-            // gg_snd_dioT1.play()           
-            dio.setAnimation(2)
+            gg_snd_dioT.play()           
+            dio.setAnimation(13)
             if dioTGroup == null
                 dioTGroup = CreateGroup()               
             dioTTimerInt1 = 0                          

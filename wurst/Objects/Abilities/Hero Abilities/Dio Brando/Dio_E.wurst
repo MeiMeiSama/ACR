@@ -50,7 +50,7 @@ function dioE()
         if GetSpellAbilityId() == DIO_E
             dio = GetTriggerUnit()
             dioETarget = GetSpellTargetUnit()  
-            gg_snd_dioE.play()
+            gg_snd_dioE2.play()
             dio.pause()
             dio.setInvulnerable(true)
             dioETarget.pause()
@@ -62,7 +62,7 @@ function dioE()
 
 function dioEStart()
     dioETimerInt++
-    if dioETimerInt > 0 and dioETimerInt < 135
+    if dioETimerInt > 0 and dioETimerInt < 130
         if dio.isPaused() == false
             dio.pause()
         if dio.isInvulnerable() == false
@@ -73,6 +73,7 @@ function dioEStart()
             dioETarget.setInvulnerable(true)
     if dioETimerInt == 70
         flashEffect("war3mapImported\\dustwavxfsfsfe.mdx", dio.getPos(), 0.60)
+        gg_snd_dioE.play()
     if dioETimerInt == 90
         dio.setPos(dioETarget.getPos().polarOffset(dioETarget.getPos().angleTo(dio.getPos()), -200))
         dio.setFacing(dio.getPos().angleTo(dioETarget.getPos()))
@@ -82,7 +83,7 @@ function dioEStart()
     if dioETimerInt == 126
         //flashEffect("war3mapImported\\dls1_exd.mdx", dio.getPos(), 1, dio.getPos().angleTo(dioETarget.getPos()))
         flashEffect("war3mapImported\\dls1_exd.mdx", dioETarget.getPos(), 1)
-    if dioETimerInt >= 135
+    if dioETimerInt >= 130
         dioETarget.setInvulnerable(false)  
         dio.unpause()
         dio.setInvulnerable(false)     

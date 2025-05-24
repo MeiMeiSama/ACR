@@ -8,7 +8,7 @@ import UnitIds
 import ClosureForGroups
 import ACR_Knockback
 import ACR_Stun
-// import main
+import main
 
 unit dio
 unit zaWarudo
@@ -118,12 +118,12 @@ function dioWSingleTarget()
         if dio.isInvulnerable() == false
             dio.setInvulnerable(true)    
     if dioWTimerInt == 5
-        zaWarudo = createUnit(DIO_W_DUMMY, dioWTarget.getPos().polarOffset(dioWTarget.getPos().angleTo(dio.getPos()), 150))  
+        zaWarudo = createUnit(DIO_W_DUMMY, dioWTarget.getPos().polarOffset(dioWTarget.getPos().angleTo(dio.getPos()), 170))  
     if dioWTimerInt == 6  
         zaWarudo.setAnimation(2)
         gg_snd_dioW.play()
     if dioWTimerInt == 80
-        flashEffect("war3mapImported\\dioW2.mdx", zaWarudo.getPos().polarOffset(dioWTarget.getPos().angleTo(dio.getPos()), 100))
+        flashEffect("war3mapImported\\dioW2.mdx", zaWarudo.getPos().polarOffset(dioWTarget.getPos().angleTo(zaWarudo.getPos()), 100), 2, zaWarudo.getPos().angleTo(dioWTarget.getPos()))
     if dioWTimerInt == 100
         dio.unpause()
         dio.setInvulnerable(false)        
@@ -132,7 +132,7 @@ function dioWSingleTarget()
         DamageEvent.setNextDamageFromCode()
         dio.damageTarget(dioWTarget, 1, ATTACK_TYPE_MAGIC)  
         dioWTarget.unpause()   
-        acrKnockback(dio, dioWTarget, 700)    
+        acrKnockback(dio, dioWTarget, 600)    
     if dioWTimerInt >= 125
         dioWTimer.destr()
         zaWarudo.kill()
@@ -153,7 +153,7 @@ function dioWAoe()
         zaWarudo.setAnimation(14)
         gg_snd_dioW.play()
     if dioWTimerInt == 80
-        flashEffect("war3mapImported\\dioW.mdx", dio.getPos(), 3)
+        flashEffect("war3mapImported\\dioW.mdx", dio.getPos(), 2)
     if dioWTimerInt == 100
         dio.unpause()
         dio.setInvulnerable(false)        

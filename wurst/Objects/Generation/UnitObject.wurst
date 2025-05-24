@@ -1116,6 +1116,7 @@ import ObjectIds
     ..setIconGameInterface("ReplaceableTextures\\CommandButtons\\BTNDIO.blp")
     ..setIconScoreScreen("ReplaceableTextures\\CommandButtons\\BTNDIO.blp")
     ..setModelFile("war3mapImported\\Shio_Dio.mdx")
+    ..setPortraitModelFile("war3mapImported\\AFBDIO_portrait")
     ..setScalingValue(1.25)
     ..setArtSpecial("")
     ..setAttack1CooldownTime(1.65)

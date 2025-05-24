@@ -49,7 +49,7 @@ vec2 starPlatinumPos
         ..presetCooldown(lvl -> 50)
         ..presetManaCost(lvl -> 70)
         ..presetTargetsAllowed(lvl -> "enemy,ground,air,neutral")
-        ..presetTooltipNormal(lvl -> "Howl of the Illusory Wolf|r")
+        ..presetTooltipNormal(lvl -> "Star Platinum Debut|r")
         ..presetTooltipNormalExtended(lvl -> "Jotaro W Desc|r")
         ..setTooltipLearn("Learn W|r")
         ..setTooltipLearnExtended("Learning W|r")   
