@@ -1,2 +1,151 @@
 package Dio_F
 
+import DamageEvent
+import AbilityGlobals
+import ObjectDefinitions
+import ChannelAbilityPreset
+import main
+//import TerrainUtils
+
+unit dio
+unit dioFTarget
+integer dioFInt
+vec2 dioFTargetPos
+vec2 dioStartPos
+effect sfx
+effect sfx2
+effect sfx3
+effect sfx4
+timer dioFTimer
+
+@compiletime function createAbility()
+    new ChannelAbilityPreset(DIO_F, 1, true)
+        ..presetTargetTypes(Targettype.UNIT)
+        ..setAnimationNames("11111")
+        ..setButtonPositionNormalX(2)
+        ..setButtonPositionNormalY(1)
+        ..setButtonPositionResearchX(1)
+        ..setButtonPositionResearchY(1)
+        ..setIconNormal("ReplaceableTextures\\CommandButtons\\BTNNatureTouchGrow.blp")
+        ..setIconResearch("ReplaceableTextures\\CommandButtons\\BTNNatureTouchGrow.blp")
+        ..setMissileSpeed(99999)
+        ..setHeroAbility(true)
+        ..setHotkeyNormal("F")
+        ..setHotkeyLearn("F")
+        ..setLevels(1)
+        ..presetArtDuration(lvl -> 0)
+        ..presetBaseOrderID(lvl -> "tranquility")
+        ..presetDisableOtherAbilities(lvl -> false)
+        ..presetFollowThroughTime(lvl -> 0)
+        ..presetCastRange(lvl -> 2000)
+        ..presetCooldown(lvl -> 50)
+        ..presetManaCost(lvl -> 70)
+        ..presetTargetsAllowed(lvl -> "enemy,ground,air,neutral")
+        ..presetTooltipNormal(lvl -> "Dio's Prime|r")
+        ..presetTooltipNormalExtended(lvl -> "Dio F Desc|r")
+
+init
+    dioF()     
+
+function dioF()
+    CreateTrigger()
+    ..registerAnyUnitEvent(EVENT_PLAYER_UNIT_SPELL_EFFECT)
+    ..addAction() ->
+        if GetSpellAbilityId() == DIO_F
+            dio = GetTriggerUnit()
+            dioFTarget = GetSpellTargetUnit()
+            dioStartPos = dio.getPos()
+            dioFTargetPos = dioFTarget.getPos()
+            gg_snd_dioF1.play()      
+            dio.setInvulnerable(true)
+            dio.pause()
+            dioFTarget.setInvulnerable(true)
+            dioFTarget.pause()
+            dioFInt = 0
+            dioFTimer = CreateTimer()..startPeriodic(0.02, function dioFEnd)
+
+function dioFEnd()
+    dioFInt++
+    if dioFInt == 30
+        dio.setAnimation(14)
+    if dioFInt == 50
+        flashEffect("war3mapImported\\dustwavxfsfsfe.mdx", dio.getPos(), 0.60)
+    if dioFInt == 55
+        dio.setPos(dio.getPos().polarOffset(dio.getPos().angleTo(dioFTargetPos), (dio.getPos().distanceTo(dioFTargetPos) -150)))
+        dio.setFacing(dio.getPos().angleTo(dioFTargetPos))
+        dio.setAnimation(16)
+    if dioFInt == 80
+        gg_snd_dioF2.play()    
+    if dioFInt == 120
+        sfx = addEffect("war3mapImported\\tsukoyomiJJ.mdx", dio.getPos())
+        ..setScale(1)
+        ..playAnimation(ANIM_TYPE_STAND)    
+    if dioFInt == 150
+        dio.setAnimation(4)
+    if dioFInt == 175    
+        dio.setPos(dioStartPos)
+        dio.setFacing(dio.getPos().angleTo(dioFTargetPos))   
+    if dioFInt == 200
+        dio.setAnimation(0)
+        dio.addAbility('Amrf')
+        dio.setFlyHeight(400, 10)
+    if dioFInt == 215
+        dio.setAnimation(5)
+        gg_snd_dioF4.play()     
+    if dioFInt == 420
+        gg_snd_dioF3.play()
+        dio.setAnimation(6)
+        sfx2 = addEffect("war3mapImported\\DIOknifel.mdx", dio.getPos().polarOffset(dioFTargetPos.angleTo(dio.getPos()), 100))
+        ..setScale(5)
+        ..setYaw(dio.getPos().angleTo(dioFTargetPos))
+        sfx3 = addEffect("war3mapImported\\DIOknifel.mdx", sfx2.getPos() + vec2(0, 200))
+        ..setScale(5)
+        ..setYaw(dio.getPos().angleTo(dioFTargetPos))
+        sfx4 = addEffect("war3mapImported\\DIOknifel.mdx", sfx2.getPos() + vec2(0, -200))
+        ..setScale(5)
+        ..setYaw(dio.getPos().angleTo(dioFTargetPos))
+    // if dioFInt >= 75 and dioFInt <= 100
+    //     if sfx2.getPos().polarOffset(sfx2.getPos().angleTo(dioFTargetPos), 355).isTerrainPathable(PATHING_TYPE_WALKABILITY) == true and sfx2.getPos().polarOffset(sfx2.getPos().angleTo(dioFTargetPos), 355).isTerrainPathable(PATHING_TYPE_FLYABILITY) == true
+    //         DoNothing()
+    //     else
+    //         sfx2.setPos(sfx2.getPos().polarOffset(sfx2.getPos().angleTo(dioFTargetPos), 20))
+    //         sfx2.setYaw(dio.getPos().angleTo(dioFTargetPos))
+    //     if sfx3.getPos().polarOffset(sfx3.getPos().angleTo(dioFTargetPos), 355).isTerrainPathable(PATHING_TYPE_WALKABILITY) == true and sfx3.getPos().polarOffset(sfx3.getPos().angleTo(dioFTargetPos), 355).isTerrainPathable(PATHING_TYPE_FLYABILITY) == true
+    //         DoNothing()
+    //     else
+    //         sfx3.setPos(sfx3.getPos().polarOffset(sfx3.getPos().angleTo(dioFTargetPos), 20))
+    //         sfx3.setYaw(dio.getPos().angleTo(dioFTargetPos))
+    //     if sfx4.getPos().polarOffset(sfx4.getPos().angleTo(dioFTargetPos), 355).isTerrainPathable(PATHING_TYPE_WALKABILITY) == true and sfx4.getPos().polarOffset(sfx4.getPos().angleTo(dioFTargetPos), 355).isTerrainPathable(PATHING_TYPE_FLYABILITY) == true
+    //         DoNothing()
+    //     else
+    //         sfx4.setPos(sfx4.getPos().polarOffset(sfx4.getPos().angleTo(dioFTargetPos), 20))
+    //         sfx4.setYaw(dio.getPos().angleTo(dioFTargetPos))
+    if sfx2.getPos().distanceTo(dioFTargetPos) <= 40 and sfx3.getPos().distanceTo(dioFTargetPos) <= 40 and sfx4.getPos().distanceTo(dioFTargetPos) <= 40
+        dio.removeAbility('Amrf')
+        dio.setFlyHeight(-400, 0)
+        flashEffect("blood-4.mdx", dioFTarget, "overhead")
+        sfx.destr()
+        sfx2.setX(-999999)
+        sfx2.setY(-999999)
+        sfx2.destr()
+        sfx3.setX(-999999)
+        sfx3.setY(-999999)
+        sfx3.destr()
+        sfx4.setX(-999999)
+        sfx4.setY(-999999)
+        sfx4.destr()
+        dioFTarget.setInvulnerable(false)       
+        DamageEvent.setNextDamageId(DAMAGE_ABILITY_F)
+        DamageEvent.setNextDamageFromCode()
+        dio.damageTarget(dioFTarget, 1, ATTACK_TYPE_MAGIC)
+        dio.unpause()
+        dio.setInvulnerable(false)   
+        dioFTarget.unpause()
+        dioFTimer.destr()
+    else
+        sfx2.setPos(sfx2.getPos().polarOffset(sfx2.getPos().angleTo(dioFTargetPos), 20))
+        sfx2.setYaw(dio.getPos().angleTo(dioFTargetPos))
+        sfx3.setPos(sfx3.getPos().polarOffset(sfx3.getPos().angleTo(dioFTargetPos), 20))
+        sfx3.setYaw(dio.getPos().angleTo(dioFTargetPos))
+        sfx4.setPos(sfx4.getPos().polarOffset(sfx4.getPos().angleTo(dioFTargetPos), 20))
+        sfx4.setYaw(dio.getPos().angleTo(dioFTargetPos))                        

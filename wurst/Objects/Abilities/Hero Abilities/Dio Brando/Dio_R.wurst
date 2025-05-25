@@ -220,7 +220,7 @@ function dioRAttack1()
         //zaWarudo.setAnimation(12)        
     if dioRTimerInt2 == 70
         gg_snd_dioR3.play()
-        dio.setAnimation(21)
+        dio.setAnimation(1)
         zaWarudo.setAnimation(12) 
     if dioRTimerInt2 >= 71 and dioRTimerInt2 < 190     
         dioPos = dio.getPos()
@@ -233,7 +233,7 @@ function dioRAttack1()
     if dioRTimerInt2 == 170
         // gg_snd_dioR4.play()
         zaWarudo.setAnimation(12) 
-        dio.setAnimation(22)
+        dio.setAnimation(13)
     if dioRTimerInt2 == 180
         zaWarudo.setAnimation(13)  
     if dioRTimerInt2 == 181
@@ -300,7 +300,15 @@ function dioRAttack2()
         ..destr()
         effect2 = addEffect("war3mapImported\\dustwavxfsfsfe.mdx", zaWarudo.getPos())
         ..setScale(0.60)
-        ..destr()                          
+        ..destr()
+    if dioRTimerInt3 == 170
+        effect1 = addEffect("war3mapImported\\tx.mdx", zaWarudo.getPos())
+        ..setScale(3)
+        ..setYaw(angle)
+        ..destr()
+        effect2 = addEffect("war3mapImported\\dustwavxfsfsfe.mdx", zaWarudo.getPos())
+        ..setScale(0.60)
+        ..destr()                                
     if dioRTimerInt3 == 200
         effect1 = addEffect("war3mapImported\\tx.mdx", zaWarudo.getPos())
         ..setScale(3)

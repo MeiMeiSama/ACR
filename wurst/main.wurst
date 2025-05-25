@@ -53,6 +53,10 @@ public sound gg_snd_dioR2
 public sound gg_snd_dioR3
 public sound gg_snd_dioR4
 public sound gg_snd_dioT
+public sound gg_snd_dioF1
+public sound gg_snd_dioF2
+public sound gg_snd_dioF3
+public sound gg_snd_dioF4
 public sound gg_snd_kuroganeT
 public sound gg_snd_MHXT
 public sound gg_snd_EnmaT
@@ -3735,7 +3739,27 @@ function initSounds()
     SetSoundDuration(gg_snd_dioT, 12095)
     SetSoundChannel(gg_snd_dioT, 0)
     SetSoundVolume(gg_snd_dioT, 127)
-    SetSoundPitch(gg_snd_dioT, 1.0)              
+    SetSoundPitch(gg_snd_dioT, 1.0)
+    gg_snd_dioF1 = CreateSound("war3mapImported\\dioF1.mp3", false, false, false, 10, 10, "")
+    SetSoundDuration(gg_snd_dioF1, 12095)
+    SetSoundChannel(gg_snd_dioF1, 0)
+    SetSoundVolume(gg_snd_dioF1, 127)
+    SetSoundPitch(gg_snd_dioF1, 1.0)
+    gg_snd_dioF2 = CreateSound("war3mapImported\\dioF2.mp3", false, false, false, 10, 10, "")
+    SetSoundDuration(gg_snd_dioF2, 12095)
+    SetSoundChannel(gg_snd_dioF2, 0)
+    SetSoundVolume(gg_snd_dioF2, 127)
+    SetSoundPitch(gg_snd_dioF2, 1.0)
+    gg_snd_dioF3 = CreateSound("war3mapImported\\dioF3.mp3", false, false, false, 10, 10, "")
+    SetSoundDuration(gg_snd_dioF3, 12095)
+    SetSoundChannel(gg_snd_dioF3, 0)
+    SetSoundVolume(gg_snd_dioF3, 127)
+    SetSoundPitch(gg_snd_dioF3, 1.0)
+    gg_snd_dioF4 = CreateSound("war3mapImported\\dioF4.mp3", false, false, false, 10, 10, "")
+    SetSoundDuration(gg_snd_dioF4, 12095)
+    SetSoundChannel(gg_snd_dioF4, 0)
+    SetSoundVolume(gg_snd_dioF4, 127)
+    SetSoundPitch(gg_snd_dioF4, 1.0)              
     gg_snd_neptune6 = CreateSound("war3mapImported\\neptune6 .mp3", false, false, false, 10, 10, "")
     SetSoundDuration(gg_snd_neptune6, 4064)
     SetSoundChannel(gg_snd_neptune6, 0)
