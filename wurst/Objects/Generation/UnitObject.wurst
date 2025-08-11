@@ -1465,7 +1465,7 @@ import ObjectIds
     ..setProperNames("Timeless Sovereign")
 
     new HeroDefinition(RUKIA, 'Hpal') //Rukia
-    ..setHeroAbilities(commaList(RUKIA_Q, RUKIA_W, RUKIA_E, RUKIA_R, RUKIA_T))
+    ..setHeroAbilities(commaList(RUKIA_G, RUKIA_Q, RUKIA_W, RUKIA_E, RUKIA_R, RUKIA_T))
     ..setNormalAbilities(commaList('_','AInv'))
     ..setAnimationBlendTimeseconds(0.1)
     ..setAnimationCastBackswing(0.1)

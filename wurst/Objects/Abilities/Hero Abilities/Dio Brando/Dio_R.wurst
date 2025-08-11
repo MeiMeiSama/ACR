@@ -184,7 +184,7 @@ function dioRAoe()
     if dioRTimerInt1 == 50    
         zaWarudo.setAnimation(12)
         flashEffect("war3mapImported\\dustwavxfsfsfe.mdx", zaWarudo.getPos(), 0.70)  
-        flashEffect("war3mapImported\\tx.mdx", zaWarudo.getPos(), 4, zaWarudo.getPos().angleTo(dio.getPos()))
+        // flashEffect("war3mapImported\\tx.mdx", zaWarudo.getPos(), 4, zaWarudo.getPos().angleTo(dio.getPos()))
     if dioRTimerInt1 > 100 and dioRTimerInt1 < 150
         forUnitsInRange(abilitydioRPos, 900) (unit u) ->
             if dio.isAllyOf(u) == false and u.isInvulnerable() == false

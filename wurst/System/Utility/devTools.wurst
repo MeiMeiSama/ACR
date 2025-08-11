@@ -66,6 +66,7 @@ function devTools ()
             ..setAgi(100)
             ..setMaxMana(1000)
             ..setMaxHP(7000)
+            ..setHP(7000)
             devTools[id] = true
             activator_Handler(id)
             acr_MH[id] = createFogModifier(p, FOG_OF_WAR_VISIBLE, GetWorldBounds(), false, false)

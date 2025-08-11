@@ -80,6 +80,7 @@ import MavisE_Orig
 import ZervisG_Orig
 import Zeref_F
 import RukiaR
+import RukiaG
 
 /*
 
@@ -343,5 +344,6 @@ public function initFunctions ()
             if rukiaE2.hasTagHidden() == false
                 rukia.hideAbility(rukiaE2, true)
                 rukiaE2.addTagHidden()
-            rukiaR()                          
+            rukiaR()
+            rukiaG()                            
     CreateTimer().start(3, function updateSelection)

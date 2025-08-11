@@ -235,7 +235,7 @@ function jotaroRAoe()
     if jotaroRTimerInt1 == 50    
         starPlatinum.setAnimation(8)
         flashEffect("war3mapImported\\dustwavxfsfsfe.mdx", starPlatinum.getPos(), 0.70)  
-        flashEffect("war3mapImported\\tx.mdx", starPlatinum.getPos(), 4, starPlatinum.getPos().angleTo(jotaro.getPos()))
+        // flashEffect("war3mapImported\\tx.mdx", starPlatinum.getPos(), 4, starPlatinum.getPos().angleTo(jotaro.getPos()))
     if jotaroRTimerInt1 > 100 and jotaroRTimerInt1 < 150
         forUnitsInRange(abilityJotaroRPos, 900) (unit u) ->
             if jotaro.isAllyOf(u) == false and u.isInvulnerable() == false

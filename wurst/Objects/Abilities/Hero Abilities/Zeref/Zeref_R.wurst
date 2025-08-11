@@ -217,7 +217,7 @@ function initTrig_ZerefR_Orig()
 
 function zerefREnd()
     dummy2 = createUnit(ZEREF_R_DUMMY2, spellPos)
-    ..setScale(4.5)
+    ..setScale(3)
     ..setTimeScale(80)
     ..setFacing(dummy2.getPos().angleTo(spellPos))
     ..setTimedLife(6)
