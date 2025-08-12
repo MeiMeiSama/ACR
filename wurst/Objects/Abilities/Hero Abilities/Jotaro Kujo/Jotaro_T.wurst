@@ -18,7 +18,7 @@ vec2 jotaroTTargetPos
 vec2 starPlatinumPos
 vec2 emptyVector
 unit starPlatinum
-unit za_Warudo_Jotaro
+public unit za_Warudo_Jotaro
 unit jotaroTTarget
 group jotaroTGroup
 int jotaroTTimerInt1

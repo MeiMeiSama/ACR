@@ -18,7 +18,7 @@ vec2 dioTTargetPos
 vec2 starPlatinumPos
 vec2 emptyVector
 unit starPlatinum
-unit za_Warudo_dio
+public unit za_Warudo_dio
 unit dioTTarget
 group dioTGroup
 int dioTTimerInt1

@@ -8,6 +8,7 @@ import ChannelAbilityPreset
 import UnitIds
 import main
 import ClosureForGroups
+import Dio_T
 
 unit dio
 unit dioRTarget
@@ -185,6 +186,8 @@ function dioRAoe()
         zaWarudo.setAnimation(12)
         flashEffect("war3mapImported\\dustwavxfsfsfe.mdx", zaWarudo.getPos(), 0.70)  
         // flashEffect("war3mapImported\\tx.mdx", zaWarudo.getPos(), 4, zaWarudo.getPos().angleTo(dio.getPos()))
+    if dioRTimerInt1 == 75
+        flashEffect("war3mapImported\\white wave.mdx", za_Warudo_dio.getPos(), 4) 
     if dioRTimerInt1 > 100 and dioRTimerInt1 < 150
         forUnitsInRange(abilitydioRPos, 900) (unit u) ->
             if dio.isAllyOf(u) == false and u.isInvulnerable() == false
