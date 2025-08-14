@@ -290,6 +290,14 @@ public function tooltip_G (int pid)
         GOLD+
         "Whenever Akame uses a basic attack, her next basic attack deals additional damage. This effect stacks and ends when Akame doesn't use a basic attack for 3 consecutive seconds."+
         "\n\nDamage Bonus: "+PINK+"15%"+GOLD)
+    
+    else if skill == RUKIA_G  //  ━━━━━━━━━━━━ [Rukia] ━━━━━━━━━━━━
+        spellLvl = skill.getSkillLvl(id)
+
+        skill..setTitle(id, BLUE+"Trail of cold"+LEVEL_TOOLTIP+spellLvl.toString()+CR+"]")
+        ..setDescription(id,
+        GOLD+
+        "Everytime Rukia uses an ability there is a chance it will freeze enemy heroes around her briefly.")
 
     else if skill == 'A0Y1' // ━━━━━━━━━━━━ [Edo Minato's Kunai Throw] ━━━━━━━━━━━━
         cd = (45)

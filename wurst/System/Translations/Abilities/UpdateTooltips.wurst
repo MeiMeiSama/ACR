@@ -1300,5 +1300,5 @@ public function addAbilities (unit hero)
         SPELL_R[id] = RUKIA_R
         SPELL_T[id] = RUKIA_T
         SPELL_F[id] = RUKIA_F
-        SPELL_G[id] = '_'                
+        SPELL_G[id] = RUKIA_G                
     updateTooltipsInit_Base(hero)
