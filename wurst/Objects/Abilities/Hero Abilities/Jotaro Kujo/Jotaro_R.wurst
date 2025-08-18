@@ -169,7 +169,7 @@ function jotaroR()
                 jotaroRTimer = CreateTimer()..startPeriodic(0.01, function jotaroRDash)
 
 function jotaroRDash()
-    print(jotaroRTimerInt1.toString())
+    //print(jotaroRTimerInt1.toString())
     jotaroRTimerInt1++
     if jotaroRTimerInt1 > 0 and jotaroRTimerInt1 < 50
         if jotaro.isPaused() == false
@@ -188,18 +188,20 @@ function jotaroRDash()
             jotaroPos = jotaro.getPos()
             forUnitsInRange(jotaroPos, 350) (unit u) ->
                 if jotaro.isAllyOf(u) == false and u.isType(UNIT_TYPE_HERO) and jotaroRDashBool == true
-                    if u.getTypeId() == DIO_BRANDO and dioRDashBool == true
-                        print("dio")
-                        jotaroDioRBool = true
-                        jotaroRDashBool = false
-                        jotaroDashEnd()
-                        dio = u
-                        dioPos = dio.getPos()
-                        invisibleDummy = createUnit(JOTARO_R_DUMMY2, jotaroPos.polarOffset(jotaroPos.angleTo(dioPos), 175))
-                        jotaro.setFacing(jotaroPos.angleTo(dioPos))
-                        dio.setFacing(dioPos.angleTo(jotaroPos))     
-                        jotaroRTimerInt2 = 0       
-                        jotaroRTimer = CreateTimer()..startPeriodic(0.03, function jotaroRDio)                             
+                    if u.isInvulnerable() == true
+                        DoNothing()
+                    // if u.getTypeId() == DIO_BRANDO and dioRDashBool == true
+                        // print("dio")
+                        // jotaroDioRBool = true
+                        // jotaroRDashBool = false
+                        // jotaroDashEnd()
+                        // dio = u
+                        // dioPos = dio.getPos()
+                        // invisibleDummy = createUnit(JOTARO_R_DUMMY2, jotaroPos.polarOffset(jotaroPos.angleTo(dioPos), 175))
+                        // jotaro.setFacing(jotaroPos.angleTo(dioPos))
+                        // dio.setFacing(dioPos.angleTo(jotaroPos))     
+                        // jotaroRTimerInt2 = 0       
+                        // jotaroRTimer = CreateTimer()..startPeriodic(0.03, function jotaroRDio)                             
                     else if u.isInvulnerable() == false
                         jotaroRDashBool = false
                         jotaroDashEnd()
@@ -220,7 +222,7 @@ function jotaroRDash()
                         jotaroRTimer = CreateTimer()..startPeriodic(0.03, function jotaroRAttack1)
                         CreateTimer()..startPeriodic(0.03, function jotaroRAttack2)    
 
-function jotaroRDio()
+// function jotaroRDio()
 
 function jotaroRAoe()
     jotaroRTimerInt1++
