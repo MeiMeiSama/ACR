@@ -1,0 +1,87 @@
+package MISAKA_STR_W
+
+import DamageEvent
+import AbilityGlobals
+import ObjectDefinitions
+import ChannelAbilityPreset
+import main
+import ACR_Stun
+
+unit misaka
+unit misakaWtarget
+integer misakaWInt
+effect sfx
+timer misakaWTimer
+public boolean misakaEOn
+public unit misakaETargetLock
+
+@compiletime function createAbility()
+    new ChannelAbilityPreset(MISAKA_STR_W, 5, true)
+        ..presetTargetTypes(Targettype.UNIT)
+        ..setAnimationNames("11111111")
+        ..setButtonPositionNormalX(1)
+        ..setButtonPositionNormalY(2)
+        ..setButtonPositionResearchX(1)
+        ..setButtonPositionResearchY(0)
+        ..setIconNormal("ReplaceableTextures\\CommandButtons\\BTNUnsummonBuilding.blp")
+        ..setIconResearch("ReplaceableTextures\\CommandButtons\\BTNUnsummonBuilding.blp")
+        ..setMissileSpeed(99999)
+        ..setHeroAbility(true)
+        ..setHotkeyNormal("W")
+        ..setHotkeyLearn("W")
+        ..setLevels(5)
+        ..setLevelSkipRequirement(2)
+        ..presetArtDuration(lvl -> 0)
+        ..presetBaseOrderID(lvl -> "renew")
+        ..presetDisableOtherAbilities(lvl -> false)
+        ..presetFollowThroughTime(lvl -> 0)
+        ..presetCastRange(lvl -> 2000)
+        ..presetCooldown(lvl -> 50)
+        ..presetManaCost(lvl -> 70)
+        ..presetTargetsAllowed(lvl -> "enemy,ground,air,neutral")
+        ..presetTooltipNormal(lvl -> "Sand Iron Guillotine|r")
+        ..presetTooltipNormalExtended(lvl -> "Misaka W Desc|r")
+        ..setTooltipLearn("Learn W|r")
+        ..setTooltipLearnExtended("Learning W|r")
+
+init
+    misakaSTRW()     
+
+function misakaSTRW()
+    CreateTrigger()
+    ..registerAnyUnitEvent(EVENT_PLAYER_UNIT_SPELL_EFFECT)
+    ..addAction() ->
+        if GetSpellAbilityId() == MISAKA_STR_W
+            misaka = GetTriggerUnit()
+            misakaWtarget = GetSpellTargetUnit()
+            misakaETargetLock = misakaWtarget
+            misakaEOn = true
+            misaka.setInvulnerable(true)
+            misaka.pause()
+            misakaWtarget.setInvulnerable(true)
+            misakaWtarget.pause()
+            misaka.setAnimation(11)
+            gg_snd_MisakaSTR_W.play()
+            misakaWInt = 0
+            misakaWTimer = CreateTimer()..startPeriodic(0.02, function misakaSTRWEnd)
+            CreateTimer()..start(6, function misakaSTRELockOff)
+
+function misakaSTRWEnd()
+    misakaWInt++
+    if misakaWInt == 4
+        sfx = addEffect("war3mapImported\\misaka TSK W.mdx", misakaWtarget.getPos())
+        ..setScale(2)
+        ..destr()
+    if misakaWInt == 30
+        misaka.setInvulnerable(false)
+        misaka.unpause()
+        misakaWtarget.setInvulnerable(false)
+        DamageEvent.setNextDamageId(DAMAGE_ABILITY_W)
+        DamageEvent.setNextDamageFromCode()
+        misaka.damageTarget(misakaWtarget, 1, ATTACK_TYPE_MAGIC)
+        acrStun(misaka, misakaWtarget, 0.7)
+        misakaWtarget.unpause()           
+        misakaWTimer.destr()
+
+function misakaSTRELockOff()
+    misakaEOn = false        

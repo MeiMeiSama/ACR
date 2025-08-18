@@ -1,0 +1,76 @@
+package MISAKA_STR_Q
+
+import DamageEvent
+import AbilityGlobals
+import ObjectDefinitions
+import ChannelAbilityPreset
+import main
+import ClosureForGroups
+
+unit misaka
+integer misakaQInt
+vec2 spellPos
+effect sfx
+effect sfx2
+timer misakaQTimer
+
+@compiletime function createAbility()
+    new ChannelAbilityPreset(MISAKA_STR_Q, 5, true)
+        ..presetTargetTypes(Targettype.POINTUNIT)
+        ..setAnimationNames("11111111")
+        ..setButtonPositionNormalX(0)
+        ..setButtonPositionNormalY(2)
+        ..setButtonPositionResearchX(0)
+        ..setButtonPositionResearchY(0)
+        ..setIconNormal("ReplaceableTextures\\CommandButtons\\BTNAdvancedReinforcedHides.blp")
+        ..setIconResearch("ReplaceableTextures\\CommandButtons\\BTNAdvancedReinforcedHides.blp")
+        ..setMissileSpeed(99999)
+        ..setHeroAbility(true)
+        ..setHotkeyNormal("Q")
+        ..setHotkeyLearn("Q")
+        ..setLevels(5)
+        ..setLevelSkipRequirement(2)
+        ..presetArtDuration(lvl -> 0)
+        ..presetBaseOrderID(lvl -> "auravampiric")
+        ..presetDisableOtherAbilities(lvl -> false)
+        ..presetFollowThroughTime(lvl -> 0)
+        ..presetCastRange(lvl -> 2000)
+        ..presetCooldown(lvl -> 50)
+        ..presetManaCost(lvl -> 70)
+        ..presetTargetsAllowed(lvl -> "enemy,ground,air,neutral")
+        ..presetTooltipNormal(lvl -> "Iron Sand Crush|r")
+        ..presetTooltipNormalExtended(lvl -> "Misaka Q Desc|r")
+        ..setTooltipLearn("Learn Q|r")
+        ..setTooltipLearnExtended("Learning Q|r")  
+
+init
+    misakaSTRQ()     
+
+function misakaSTRQ()
+    CreateTrigger()
+    ..registerAnyUnitEvent(EVENT_PLAYER_UNIT_SPELL_EFFECT)
+    ..addAction() ->
+        if GetSpellAbilityId() == MISAKA_STR_Q
+            misaka = GetTriggerUnit()
+            spellPos = vec2(GetSpellTargetX(), GetSpellTargetY())
+            gg_snd_MisakaSTR_Q.play()      
+            misaka.setAnimation(15)
+            misakaQInt = 0
+            misakaQTimer = CreateTimer()..startPeriodic(0.02, function misakaSTRQEnd)    
+
+function misakaSTRQEnd()
+    misakaQInt++
+    if misakaQInt == 4
+        sfx = addEffect("war3mapImported\\MisakaQCube.mdx", spellPos)
+        ..setScale(2)
+    if misakaQInt == 12    
+        sfx2 = addEffect("war3mapImported\\DustwindMisaka.mdx", spellPos)
+        ..setScale(1)
+        ..destr()
+        sfx.destr()
+        forUnitsInRange(spellPos, 700) (unit victim) ->
+            if victim.isType(UNIT_TYPE_STRUCTURE) == false and victim.isEnemyOf(misaka) == true and victim.isAlive() == true and victim.isInvulnerable() == false
+                DamageEvent.setNextDamageId(DAMAGE_ABILITY_Q)
+                DamageEvent.setNextDamageFromCode()
+                misaka.damageTarget(victim, 1, ATTACK_TYPE_MAGIC)       
+        misakaQTimer.destr()

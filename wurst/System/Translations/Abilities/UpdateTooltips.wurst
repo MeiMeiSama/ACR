@@ -1300,5 +1300,17 @@ public function addAbilities (unit hero)
         SPELL_R[id] = RUKIA_R
         SPELL_T[id] = RUKIA_T
         SPELL_F[id] = RUKIA_F
-        SPELL_G[id] = RUKIA_G                
+        SPELL_G[id] = RUKIA_G
+    else if hero.getTypeId() == MISAKA_STR // Misaka_STR
+        SPELL_Q[id] = MISAKA_STR_Q
+        SPELL_W[id] = MISAKA_STR_W
+        SPELL_E[id] = MISAKA_STR_E
+        SPELL_R[id] = MISAKA_STR_R
+        SPELL_T[id] = MISAKA_STR_T
+        SPELL_F[id] = MISAKA_STR_F
+        SPELL_G[id] = MISAKA_STR_G
+        SPELL_MODO_Q[id] = MISAKA_STR_TQ
+        SPELL_MODO_W[id] = MISAKA_STR_TW
+        SPELL_MODO_E[id] = MISAKA_STR_TE
+        SPELL_MODO_R[id] = MISAKA_STR_TR                    
     updateTooltipsInit_Base(hero)

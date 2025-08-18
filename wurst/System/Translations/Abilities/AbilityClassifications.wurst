@@ -261,7 +261,7 @@ public function int.isModeEDash () returns boolean
 
 
 public function int.isQPoint () returns boolean
-    if (this == 'A12F') or (this == 'A0YM') or (this == 'A0VX') or (this == 'A0V6') or (this == 'A0R8') or (this == 'A0QU') or (this == 'A0QM') or (this == 'A0PN') or (this == 'A0OI') or (this == 'A0O6') or (this == 'A0NC') or (this == 'A0LR') or (this == 'A0IC') or (this == 'A0ES') or (this == 'A0EK') or (this == 'A0D6') or (this == 'A0BW') or (this == 'A0A3') or (this == 'A04D') or (this == 'A04C') or (this == 'A020') or (this == 'A0LX') or (this == MISOGI_THAI_Q) or (this == 'A0RY') or (this == 'A019') or (this == MAVIS_Q) or (this == ZEREF_Q) or (this == RUKIA_Q)
+    if (this == 'A12F') or (this == 'A0YM') or (this == 'A0VX') or (this == 'A0V6') or (this == 'A0R8') or (this == 'A0QU') or (this == 'A0QM') or (this == 'A0PN') or (this == 'A0OI') or (this == 'A0O6') or (this == 'A0NC') or (this == 'A0LR') or (this == 'A0IC') or (this == 'A0ES') or (this == 'A0EK') or (this == 'A0D6') or (this == 'A0BW') or (this == 'A0A3') or (this == 'A04D') or (this == 'A04C') or (this == 'A020') or (this == 'A0LX') or (this == MISOGI_THAI_Q) or (this == 'A0RY') or (this == 'A019') or (this == MAVIS_Q) or (this == ZEREF_Q) or (this == RUKIA_Q) or (this == MISAKA_STR_Q)
         return true
     return false
 

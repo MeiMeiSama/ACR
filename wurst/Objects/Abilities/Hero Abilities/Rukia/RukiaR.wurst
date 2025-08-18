@@ -27,6 +27,8 @@ boolean rukiaRon
         ..setHotkeyNormal("R")
         ..setHotkeyLearn("R")
         ..setLevels(3)
+        ..setRequiredLevel(8)
+        ..setLevelSkipRequirement(5)
         ..presetArtDuration(lvl -> 0)
         ..presetBaseOrderID(lvl -> "submerge")
         ..presetDisableOtherAbilities(lvl -> false)

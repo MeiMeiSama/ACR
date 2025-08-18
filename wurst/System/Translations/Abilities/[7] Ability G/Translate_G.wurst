@@ -299,6 +299,14 @@ public function tooltip_G (int pid)
         GOLD+
         "Everytime Rukia uses an ability there is a chance it will freeze enemy heroes around her briefly.")
 
+    else if skill == MISAKA_STR_G  //  ━━━━━━━━━━━━ [Misaka_STR] ━━━━━━━━━━━━
+        spellLvl = skill.getSkillLvl(id)
+
+        skill..setTitle(id, BLUE+"Electromagnetic Veil"+LEVEL_TOOLTIP+spellLvl.toString()+CR+"]")
+        ..setDescription(id,
+        GOLD+
+        "Every 3rd ability the iron sand spreads, making a big dust cloud which gives invisibility to allies inside.")
+
     else if skill == 'A0Y1' // ━━━━━━━━━━━━ [Edo Minato's Kunai Throw] ━━━━━━━━━━━━
         cd = (45)
         mana = (50)

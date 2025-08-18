@@ -11,6 +11,7 @@ player mavisOwner
 @compiletime function createAbility()
     new AbilityDefinitionEvasion(MAVIS_E)
         ..setIconNormal("ReplaceableTextures\\CommandButtonsDisabled\\DISBTNUltravision.blp")
+        ..setIconResearch("ReplaceableTextures\\CommandButtonsDisabled\\DISBTNUltravision.blp")
         ..setChancetoEvade(1, 0)
         ..setBuffs(1, "")
         ..setAreaofEffect(1, 0)

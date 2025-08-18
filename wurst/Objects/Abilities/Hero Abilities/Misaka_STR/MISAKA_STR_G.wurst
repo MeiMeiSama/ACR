@@ -1,0 +1,43 @@
+package MISAKA_STR_G
+
+import ClosureEvents
+import ObjectDefinitions
+import AbilityGlobals
+import ChannelAbilityPreset
+import ClosureForGroups
+import DummyCaster
+import OrderIds
+
+int misakaGcharges = 0
+
+@compiletime function createAbility()
+    new AbilityDefinitionEvasion(MISAKA_STR_G)
+    ..setIconNormal("ReplaceableTextures\\CommandButtons\\BTNCloudOfFog.blp")
+    ..setChancetoEvade(1, 0)
+    ..setBuffs(1, "")
+    ..setAreaofEffect(1, 0)
+    ..setButtonPositionNormalX(1)
+    ..setButtonPositionNormalY(1)
+    ..setButtonPositionResearchX(2)
+    ..setButtonPositionResearchY(0)
+    ..setLevels(1)
+    ..setTooltipLearn("Misaka G|r")
+    ..setTooltipLearnExtended("Misaka G|r")
+    ..setTooltipNormal(1, BLUE+"Electromagnetic Veil|r")
+    ..setTooltipNormalExtended(1, GOLD+
+            "Every 3rd ability the iron sand spreads, making a big dust cloud which gives invisibility to allies inside.")
+
+public function misakaSTRG()
+    EventListener.add(EVENT_PLAYER_UNIT_SPELL_EFFECT) ->
+        if GetTriggerUnit().getTypeId() == MISAKA_STR
+            misakaGcharges++
+            if misakaGcharges == 3
+                let misaka = GetTriggerUnit()
+                misakaGcharges = 0
+                forUnitsInRange(misaka.getPos(), 800) (unit u) ->
+                    if u.isAllyOf(misaka) and u.isAlive() and u.isInvulnerable() == false and u.isType(UNIT_TYPE_HERO)
+                        new DummyCaster()
+                        ..owner(misaka.getOwner())
+                        ..origin(misaka.getPos())
+                        ..castTarget(DUMMY_ACRINVIS_ABILITY, 1, OrderIds.invisibility, u)
+                flashEffect("war3mapImported\\misakafogironsand.mdx", misaka.getPos(), 4)

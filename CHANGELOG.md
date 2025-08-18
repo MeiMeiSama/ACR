@@ -7,6 +7,7 @@
 4. Added new side mini-bosses for team buffs.
 5. Re added attribute drugs.
 6. New hero Mavis Vermillion (FT)
+7. New hero Kuchiki Rukia (Bleach)
 
 ### Improved
 1. Slightly adjusted Terrain Layout.

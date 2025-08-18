@@ -18,6 +18,7 @@ public constant KAMIJOU_TOUMA_G_EFFECT = compiletime(ABIL_ID_GEN.next())
 public constant RORONOA_ZORO_G_EFFECT = compiletime(ABIL_ID_GEN.next())
 public constant ICHIGO_STRENGTH_G_EFFECT = compiletime(ABIL_ID_GEN.next())
 public constant DUMMY_ACRSPEED_ABILITY = compiletime(ABIL_ID_GEN.next())
+public constant DUMMY_ACRINVIS_ABILITY = compiletime(ABIL_ID_GEN.next())
 
 // ------------------------------ Hero Abilities ------------------------------
 public constant POISONDOT_COBRA = compiletime(ABIL_ID_GEN.next())
@@ -105,7 +106,18 @@ public constant RUKIA_F = compiletime(ABIL_ID_GEN.next())
 public constant RUKIA_Q2 = compiletime(ABIL_ID_GEN.next())
 public constant RUKIA_W2 = compiletime(ABIL_ID_GEN.next())
 public constant RUKIA_E2 = compiletime(ABIL_ID_GEN.next())
-public constant RUKIA_G = compiletime(ABIL_ID_GEN.next())  
+public constant RUKIA_G = compiletime(ABIL_ID_GEN.next())
+public constant MISAKA_STR_G = compiletime(ABIL_ID_GEN.next())
+public constant MISAKA_STR_Q = compiletime(ABIL_ID_GEN.next())
+public constant MISAKA_STR_W = compiletime(ABIL_ID_GEN.next())
+public constant MISAKA_STR_E = compiletime(ABIL_ID_GEN.next())
+public constant MISAKA_STR_R = compiletime(ABIL_ID_GEN.next())
+public constant MISAKA_STR_T = compiletime(ABIL_ID_GEN.next())
+public constant MISAKA_STR_F = compiletime(ABIL_ID_GEN.next())
+public constant MISAKA_STR_TQ = compiletime(ABIL_ID_GEN.next())
+public constant MISAKA_STR_TW = compiletime(ABIL_ID_GEN.next())
+public constant MISAKA_STR_TE = compiletime(ABIL_ID_GEN.next())
+public constant MISAKA_STR_TR = compiletime(ABIL_ID_GEN.next())
 
 // ------------------------------ Item Abilities ------------------------------
 public constant CLOUD_VONGOLA_ABILITY = compiletime(ABIL_ID_GEN.next())
@@ -203,6 +215,7 @@ public let MAVIS = compiletime(HERO_ID_GEN.next())
 public let ZEREF = compiletime(HERO_ID_GEN.next())
 public let ZEREF_MODO = compiletime(HERO_ID_GEN.next())
 public let RUKIA = compiletime(HERO_ID_GEN.next())
+public let MISAKA_STR = compiletime(HERO_ID_GEN.next())
 
 // ------------------------------ Units ------------------------------
 public let OK_BUTTON = compiletime(UNIT_ID_GEN.next())
@@ -224,6 +237,7 @@ public constant SUN_ARCO_HOT_BUFF = compiletime(BUFF_ID_GEN.next())
 public constant THUNDER_VONGOLA_SLOW_DEBUFF = compiletime(BUFF_ID_GEN.next())
 public constant THUNDER_ARCO_SLOW_DEBUFF = compiletime(BUFF_ID_GEN.next())
 public constant MARE_SUN_BUFF = compiletime(BUFF_ID_GEN.next())
+public constant ACRINVIS_BUFF = compiletime(BUFF_ID_GEN.next())
 
 // ------------------------------ Item Tome Upgrades ------------------------------
 public constant VONGOLA_RING_UPGRADE = compiletime(ITEM_ID_GEN.next())
@@ -281,6 +295,8 @@ public constant RUKIA_PERSONAL_ITEM = compiletime(ITEM_ID_GEN.next())
 // ------------------------------ Draft Buttons ------------------------------
 public constant RUKIA_BUTTON = compiletime(DEST_ID_GEN.next())
 public constant RUKIA_BUTTON_DARK = compiletime(DEST_ID_GEN.next())
+public constant MISAKA_STR_BUTTON = compiletime(DEST_ID_GEN.next())
+public constant MISAKA_STR_BUTTON_DARK = compiletime(DEST_ID_GEN.next())
 
 // ------------------------------ Rings ------------------------------
 public constant CLOUD_RING_1 = compiletime(ITEM_ID_GEN.next())

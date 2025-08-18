@@ -1,0 +1,89 @@
+package MISAKA_STR_E
+
+import DamageEvent
+import AbilityGlobals
+import ObjectDefinitions
+import ChannelAbilityPreset
+import main
+import MISAKA_STR_W
+
+unit misaka
+integer misakaEInt
+effect sfx
+effect sfx2
+effect sfx3
+effect sfx4
+timer misakaETimer
+
+@compiletime function createAbility()
+    new ChannelAbilityPreset(MISAKA_STR_E, 5, true)
+        ..presetTargetTypes(Targettype.NONE)
+        ..setAnimationNames("11111111")
+        ..setButtonPositionNormalX(2)
+        ..setButtonPositionNormalY(2)
+        ..setButtonPositionResearchX(2)
+        ..setButtonPositionResearchY(0)
+        ..setIconNormal("ReplaceableTextures\\CommandButtons\\BTNUpgradeRegenerationAura.blp")
+        ..setIconResearch("ReplaceableTextures\\CommandButtons\\BTNUpgradeRegenerationAura.blp")
+        ..setMissileSpeed(99999)
+        ..setHeroAbility(true)
+        ..setHotkeyNormal("E")
+        ..setHotkeyLearn("E")
+        ..setLevels(5)
+        ..setLevelSkipRequirement(2)
+        ..presetArtDuration(lvl -> 0)
+        ..presetBaseOrderID(lvl -> "stampede")
+        ..presetDisableOtherAbilities(lvl -> false)
+        ..presetFollowThroughTime(lvl -> 0)
+        ..presetCastRange(lvl -> 2000)
+        ..presetCooldown(lvl -> 50)
+        ..presetManaCost(lvl -> 70)
+        ..presetTargetsAllowed(lvl -> "enemy,ground,air,neutral, vulnerable")
+        ..presetTooltipNormal(lvl -> "Iron Sand Barrage|r")
+        ..presetTooltipNormalExtended(lvl -> "Misaka E Desc|r")
+        ..setTooltipLearn("Learn E|r")
+        ..setTooltipLearnExtended("Learning E|r")
+
+init
+    misakaSTRE()     
+
+function misakaSTRE()
+    CreateTrigger()
+    ..registerAnyUnitEvent(EVENT_PLAYER_UNIT_SPELL_EFFECT)
+    ..addAction() ->
+        if GetSpellAbilityId() == MISAKA_STR_E
+            misaka = GetTriggerUnit()
+            if misakaEOn == true
+                misaka.setInvulnerable(true)
+                misaka.pause()
+                misakaETargetLock.setInvulnerable(true)
+                misakaETargetLock.pause()
+                misakaETimer = CreateTimer()..startPeriodic(0.02, function misakaSTREEnd)
+            else
+                misaka.setInvulnerable(true)
+                misaka.pause()
+                misakaETimer = CreateTimer()..startPeriodic(0.02, function misakaSTREEnd2)
+            gg_snd_RukiaE1.play()      
+            misaka.setAnimation(12) 
+            misakaEInt = 0
+
+function misakaSTREEnd()
+    misakaEInt++
+    if misakaEInt == 4
+        sfx = addEffect("war3mapImported\\misaka TSK small.mdx", misakaETargetLock.getPos())
+        ..setScale(1)
+        ..playAnimation(ANIM_TYPE_SPELL)
+        ..destr()
+    if misakaEInt == 10
+        misaka.setPos(misaka.getPos().polarOffset(misaka.getPos().angleTo(misakaETargetLock.getPos()), (misaka.getPos().distanceTo(misakaETargetLock.getPos()) -120)))
+    if misakaEInt == 14    
+        misakaETargetLock.setInvulnerable(false)  
+        misaka.unpause()
+        misaka.setInvulnerable(false)     
+        DamageEvent.setNextDamageId(DAMAGE_ABILITY_E)
+        DamageEvent.setNextDamageFromCode()
+        misaka.damageTarget(misakaETargetLock, 1, ATTACK_TYPE_MAGIC)
+        misakaETargetLock.unpause()
+        misakaETimer.destr()
+
+function misakaSTREEnd2()                                

@@ -11,6 +11,7 @@ import DummyCaster
 import CameraFunctions
 import BossSpell1
 import BossSpell2
+import MISAKA_STR_G
 int acrdevtimer
 unit selectedUnit
 timer acrTimer
@@ -19,23 +20,26 @@ bool array devTools
 fogmodifier array acr_MH
 
 init
-    udg_PlayHero[1] = createUnit(Player(1), COBRA, vec2(-8868, -11444))..setUserData(1)
-    ..setStr(5000)
-    udg_PlayHero[2] = createUnit(Player(2), ZEREF, vec2(-8868, -11450))..setUserData(2)
-    ..setStr(5000)
-    udg_PlayHero[4] = createUnit((Player(4)), ICHIGO_STRENGTH, vec2(-8868, -11456))..setUserData(4)
-    ..setStr(500)
-    udg_PlayHero[5] = createUnit((Player(5)), 'H006', vec2(-10223, -9559))..setUserData(5)
-    ..setStr(5000)
-    udg_PlayHero[6] = createUnit((Player(6)), 'H00R', vec2(-10223, -9563))..setUserData(6)
-    ..setStr(5000)    
-    udg_PlayHero[8] = createUnit((Player(8)), 'H03G', vec2(-10223, -9572))..setUserData(8)
-    ..setStr(5000)  
-    udg_PlayHero[9] = createUnit((Player(9)), 'H01A', vec2(-10223, -9589))..setUserData(9)
-    ..setStr(5000)  
-    udg_PlayHero[10] = createUnit((Player(10)), DIO_BRANDO, vec2(-10223, -9596))..setUserData(10)
-    ..setStr(5000)              
-    devTools()
+    // udg_PlayHero[0] = createUnit(Player(0), MISAKA_STR, vec2(-8868, -11444))..setUserData(11)
+    // ..setStr(5000)
+    // udg_PlayHero[1] = createUnit(Player(1), COBRA, vec2(-8868, -11444))..setUserData(1)
+    // ..setStr(5000)
+    // udg_PlayHero[2] = createUnit(Player(2), ZEREF, vec2(-8868, -11450))..setUserData(2)
+    // ..setStr(5000)
+    // udg_PlayHero[4] = createUnit((Player(4)), ICHIGO_STRENGTH, vec2(-8868, -11456))..setUserData(4)
+    // ..setStr(500)
+    // udg_PlayHero[5] = createUnit((Player(5)), 'H006', vec2(-10223, -9559))..setUserData(5)
+    // ..setStr(5000)
+    // udg_PlayHero[6] = createUnit((Player(6)), 'H00R', vec2(-10223, -9563))..setUserData(6)
+    // ..setStr(5000)    
+    // udg_PlayHero[8] = createUnit((Player(8)), 'H03G', vec2(-10223, -9572))..setUserData(8)
+    // ..setStr(5000)  
+    // udg_PlayHero[9] = createUnit((Player(9)), 'H01A', vec2(-10223, -9589))..setUserData(9)
+    // ..setStr(5000)  
+    // udg_PlayHero[10] = createUnit((Player(10)), DIO_BRANDO, vec2(-10223, -9596))..setUserData(10)
+    // ..setStr(5000)
+    // misakaSTRG()              
+    // devTools()
 
 function acrTimerFunc()
     acrdevtimer++

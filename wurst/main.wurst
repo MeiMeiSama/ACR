@@ -74,6 +74,8 @@ public sound gg_snd_RukiaT1
 public sound gg_snd_RukiaT2
 public sound gg_snd_RukiaF1
 public sound gg_snd_RukiaItem
+public sound gg_snd_MisakaSTR_Q
+public sound gg_snd_MisakaSTR_W
 public framehandle textArea
 public int targetPoints = 0
 public int team1_Kills = 0
@@ -4007,6 +4009,14 @@ function initSounds()
     SetSoundChannel(gg_snd_RukiaItem, 0)
     SetSoundVolume(gg_snd_RukiaItem, 127)
     SetSoundPitch(gg_snd_RukiaItem, 1.0)
+    gg_snd_MisakaSTR_Q = CreateSound("war3mapImported\\MisakaSTR_Q.mp3", false, false, false, 10, 10, "")
+    SetSoundChannel(gg_snd_MisakaSTR_Q, 0)
+    SetSoundVolume(gg_snd_MisakaSTR_Q, 127)
+    SetSoundPitch(gg_snd_MisakaSTR_Q, 1.0)
+    gg_snd_MisakaSTR_W = CreateSound("war3mapImported\\MisakaSTR_W.mp3", false, false, false, 10, 10, "")
+    SetSoundChannel(gg_snd_MisakaSTR_W, 0)
+    SetSoundVolume(gg_snd_MisakaSTR_W, 127)
+    SetSoundPitch(gg_snd_MisakaSTR_W, 1.0)
 
 public function soundPlay(string st, real px, real py)
     let so = CreateSound(st, false, false, false, 10, 10, "Default")

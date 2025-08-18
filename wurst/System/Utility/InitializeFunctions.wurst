@@ -81,6 +81,7 @@ import ZervisG_Orig
 import Zeref_F
 import RukiaR
 import RukiaG
+import MISAKA_STR_G
 
 /*
 
@@ -345,5 +346,7 @@ public function initFunctions ()
                 rukia.hideAbility(rukiaE2, true)
                 rukiaE2.addTagHidden()
             rukiaR()
-            rukiaG()                            
+            rukiaG()
+        if udg_PlayHero[i].getTypeId() == MISAKA_STR
+            misakaSTRG()                                
     CreateTimer().start(3, function updateSelection)

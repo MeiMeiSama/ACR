@@ -6,8 +6,6 @@ import AbilityGlobals
 import ChannelAbilityPreset
 import ClosureForGroups
 
-unit rukia
-
 @compiletime function createAbility()
     new AbilityDefinitionEvasion(RUKIA_G)
     ..setIconNormal("ReplaceableTextures\\CommandButtons\\BTNFrostArmor.blp")

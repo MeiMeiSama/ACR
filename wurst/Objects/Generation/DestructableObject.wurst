@@ -35,3 +35,17 @@ import DestructableObjEditing
 	..setPath("")
 	..setTexture("ReplaceableTextures\\CommandButtonsDisabled\\DISBTNRukia.blp")
 	..setTextureId(31)
+
+	new DestructableDefinition(MISAKA_STR_BUTTON, 'YTlb')
+	..setModel("war3mapImported\\button.mdl")
+	..setName("Misaka_STR")
+	..setPath("")
+	..setTexture("ReplaceableTextures\\CommandButtons\\BTNMisakaSTR.blp")
+	..setTextureId(31)
+
+	new DestructableDefinition(MISAKA_STR_BUTTON_DARK, 'YTlb')
+	..setModel("war3mapImported\\button.mdl")
+	..setName("Misaka_STR (Dark)")
+	..setPath("")
+	..setTexture("ReplaceableTextures\\CommandButtonsDisabled\\DISBTNMisakaSTR.blp")
+	..setTextureId(31)
