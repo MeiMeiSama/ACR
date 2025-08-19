@@ -33,9 +33,9 @@ function antiRegenItemUseEnd()
     let id = GetExpiredTimer().getData()
     if antiRegenVictim[id].isPaused() == false and antiRegenVictim[id].hasTagPauseEX() == false
         antiRegenCount[id]++
-        print(antiRegenVictim[id].getName())
-        print(antiRegenCaster[id].getName())
-        print(antiRegenCount[id])
+        // print(antiRegenVictim[id].getName())
+        // print(antiRegenCaster[id].getName())
+        // print(antiRegenCount[id])
     if antiRegenVictim[id].getHP() > antiRegenVictimHealth[id]
         let heal = antiRegenVictim[id].getHP() - antiRegenVictimHealth[id]
         antiRegenCaster[id].addHP(heal)

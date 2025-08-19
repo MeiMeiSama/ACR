@@ -26,7 +26,7 @@ function meleeBonusDamage ()
                 meleeBonusDamageCooldown[id] = true
                 meleeBonusDamageUser[id] = caster
                 meleeBonusDamage[id] = meleeBonusDamage[id] + dmg
-                print("Bonus Damage: "+meleeBonusDamage[id].toString())
+                // print("Bonus Damage: "+meleeBonusDamage[id].toString())
                 meleeBonusDamageCount[id] = 0
                 CreateTimer()..start(0.003, function meleeBonusDamageCooldownFunc)..setData(id)                
                 if meleeBonusDamageTimer[id] == null
@@ -39,9 +39,9 @@ function meleeBonusDamage ()
             if meleeBonusDamage[id] > 0
                 DamageEvent.setNextDamageFromCode()
                 caster.damageTarget(victim, meleeBonusDamage[id] * 0.2, ATTACK_TYPE_CHAOS) 
-                print("Extra damage dealt: "+(meleeBonusDamage[id] * 0.2).toString())
+                // print("Extra damage dealt: "+(meleeBonusDamage[id] * 0.2).toString())
                 meleeBonusDamage[id] = 0  
-                print("Extra damage dealt and reset back to"+meleeBonusDamage[id].toString())
+                // print("Extra damage dealt and reset back to"+meleeBonusDamage[id].toString())
 
 
 function meleeBonusDamageEnd()
@@ -52,7 +52,7 @@ function meleeBonusDamageEnd()
     if meleeBonusDamageCount[id] >= 300
         meleeBonusDamageCount[id] = 0
         meleeBonusDamage[id] = 0
-        print("Damage reset to: "+meleeBonusDamageCount[id].toString())
+        // print("Damage reset to: "+meleeBonusDamageCount[id].toString())
         meleeBonusDamageTimer[id].destr()
         meleeBonusDamageTimer[id] = null
 

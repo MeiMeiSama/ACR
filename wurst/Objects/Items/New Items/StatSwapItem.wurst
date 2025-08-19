@@ -50,7 +50,7 @@ function statSwapAntiStack ()
             let itm = GetManipulatedItem()
             if statSwapItemOwner[id].hasTagStatSwapDrop() == false
                 if itm.getTypeId() == STAT_SWAP_ITEM_STR and statSwapItemOwner[id].hasTagStatSwapStr()
-                    print("dropped str item")
+                    // print("dropped str item")
                     statSwapItemOwner[id].addBonus(Bonus.STRENGTH, (statSwapItemOwnerStrBonus[id] * -1).toReal()) 
                     statSwapItemOwner[id].addBonus(Bonus.AGILITY, (statSwapItemOwnerAgiBonus[id] * -1).toReal()) 
                     statSwapItemOwner[id].addBonus(Bonus.INTELLIGENCE, (statSwapItemOwnerIntBonus[id] * -1).toReal())              
@@ -87,13 +87,13 @@ function statSwapAntiStack ()
             if statSwapItemOwner[id].hasTagStatSwapStr()
                 for i = 0 to 6 
                     if statSwapItemOwner[id].itemInSlot(i).getTypeId() == STAT_SWAP_ITEM_STR
-                        print("str changed to agi")
+                        // print("str changed to agi")
                         if statSwapItemOwner[id].hasTagStatSwapDrop() == false
                             statSwapItemOwner[id].addTagStatSwapDrop()
                         let itm = statSwapItemOwner[id].itemInSlot(i)
                         itm.remove()   
                         statSwapItemOwner[id].removeTagStatSwapStr() 
-                        print("str tag removed")
+                        // print("str tag removed")
                         CreateTimer()..start(0.02, function statSwapItemAntiStack)..setData(id)
                         statSwapItemOwner[id].addItemToSlot(STAT_SWAP_ITEM_AGI, i)
                         statSwapItemOwner[id].startAbilityCooldown(STAT_SWAP_ABILITY_AGI)
@@ -104,7 +104,7 @@ function statSwapAntiStack ()
             statSwapItemOwner[id] = GetTriggerUnit()
             for i = 0 to 6 
                 if statSwapItemOwner[id].itemInSlot(i).getTypeId() == STAT_SWAP_ITEM_AGI
-                    print("agi changed to int")
+                    // print("agi changed to int")
                     if statSwapItemOwner[id].hasTagStatSwapDrop() == false
                         statSwapItemOwner[id].addTagStatSwapDrop()
                     let itm = statSwapItemOwner[id].itemInSlot(i)
@@ -119,7 +119,7 @@ function statSwapAntiStack ()
             statSwapItemOwner[id] = GetTriggerUnit()
             for i = 0 to 6 
                 if statSwapItemOwner[id].itemInSlot(i).getTypeId() == STAT_SWAP_ITEM_INT
-                    print("int changed to str")
+                    // print("int changed to str")
                     if statSwapItemOwner[id].hasTagStatSwapDrop() == false
                         statSwapItemOwner[id].addTagStatSwapDrop()
                     let itm = statSwapItemOwner[id].itemInSlot(i)
@@ -205,7 +205,7 @@ function statSwap()
         for i = 0 to 5
             let itm = statSwapItemOwner[id].itemInSlot(i)
             if itm.getTypeId() == STAT_SWAP_ITEM_STR
-                print("1")                                          
+                // print("1")                                          
                 statSwapItemOwnerStrBonus[id] = (statSwapItemOwnerStrBase[id] * 0.05).floor()
                 if statSwapItemOwnerStrBonus[id].isOdd()
                     statSwapItemOwnerStrBonus[id]++  
@@ -224,7 +224,7 @@ function statSwap()
                 if statSwapItemTimer[id] == null
                     statSwapItemTimer[id] = CreateTimer()..startPeriodic(0.01, function statSwapPeriodic)..setData(id)    
             else if itm.getTypeId() == STAT_SWAP_ITEM_AGI              
-                print("2")      
+                // print("2")      
                 statSwapItemOwnerStrBonus[id] = (statSwapItemOwnerStrBase[id] * -0.1).floor()
                 if statSwapItemOwnerStrBonus[id].isOdd()
                     statSwapItemOwnerStrBonus[id]++  
@@ -243,7 +243,7 @@ function statSwap()
                 if statSwapItemTimer[id] == null
                     statSwapItemTimer[id] = CreateTimer()..startPeriodic(0.01, function statSwapPeriodic)..setData(id)            
             else if itm.getTypeId() == STAT_SWAP_ITEM_INT 
-                print("3")                   
+                // print("3")                   
                 statSwapItemOwnerStrBonus[id] = (statSwapItemOwnerStrBase[id] * -0.1).floor()
                 if statSwapItemOwnerStrBonus[id].isOdd()
                     statSwapItemOwnerStrBonus[id]++  

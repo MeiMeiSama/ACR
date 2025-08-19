@@ -61,19 +61,19 @@ init
                     let src = DamageEvent.getSource()
                     _dmg = (100.00 + (1.5 * src.getStr(true)))                                                  // aoe 1
                     DamageEvent.setAmount(_dmg)
-                    print("Damage 1: "+_dmg.toString())
+                    // print("Damage 1: "+_dmg.toString())
                 else if DamageEvent.getId() == DAMAGE_ABILITY_BOSS_2
                     real _dmg
                     let src = DamageEvent.getSource()
                     _dmg = (300.00 + (1.5 * src.getStr(true)))                                                  // aoe 2
                     DamageEvent.setAmount(_dmg)                 
-                    print("Damage 2: "+_dmg.toString())                                                
+                    // print("Damage 2: "+_dmg.toString())                                                
                 else if DamageEvent.getId() == DAMAGE_ABILITY_BOSS_3
                     real _dmg
                     let src = DamageEvent.getSource()
                     _dmg = (500.00 + (3.5 * src.getStr(true)))                                                  // single target 
                     DamageEvent.setAmount(_dmg)               
-                    print("Damage 3: "+_dmg.toString())
+                    // print("Damage 3: "+_dmg.toString())
                 if DamageEvent.getSource().isType(UNIT_TYPE_HERO) == false and DamageEvent.getTarget().isInvulnerable() == false //NON-HERO UNITS CODE
                     let id = DamageEvent.getId()
                     real _dmg

@@ -348,11 +348,11 @@ function trig_DioFActions ()
     trigger_ID = trigger_ID + 3
     let dio = GetSpellAbilityUnit()
     if dio.getPos().distanceTo(abilityDioTPos) < dio.getPos().distanceTo(abilityJotaroTPos)
-        print("1")
+        // print("1")
         dioT2TargetPoint = abilityDioTPos
         SaveLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 549, abilityDioTLoc)        
     else  
-        print("2")
+        // print("2")
         dioT2TargetPoint = abilityJotaroTPos
         SaveLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 549, abilityJotaroTLoc)                  
     SaveInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 865, trigger_ID)
