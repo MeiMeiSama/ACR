@@ -9,12 +9,12 @@ import ClosureForGroups
 
 unit zeref
 integer zerefTQInt
-unit zerefBeam
+// unit zerefBeam
 unit array zerefTQDummy
 group zerefTQGroup
 timer zerefTQTimer
 vec2 spellPos
-vec2 zerefBeamPos
+// vec2 zerefBeamPos
 
 @compiletime function createAbility()
     new ChannelAbilityPreset(ZEREF_TQ, 1, true)
@@ -89,9 +89,9 @@ function zerefTQ()
             zeref.setInvulnerable(true)
             if zeref.getPos().distanceTo(spellPos) < 1500
                 spellPos = zeref.getPos().polarOffset(zeref.getPos().angleTo(spellPos), 1500)
-            zerefBeam = createUnit(ZEREF_TQ_DUMMY, zeref.getPos())     
-            zerefBeam.setFacing(zerefBeam.getPos().angleTo(spellPos))
-            zerefBeamPos = zerefBeam.getPos()
+            // zerefBeam = createUnit(zeref.getOwner(), ZEREF_TQ_DUMMY, zeref.getPos())     
+            // zerefBeam.setFacing(zerefBeam.getPos().angleTo(spellPos))
+            // zerefBeamPos = zerefBeam.getPos()
             zerefTQInt = 0
             if zerefTQGroup == null
                 zerefTQGroup = CreateGroup()            
@@ -101,7 +101,8 @@ function zerefTQStart()
     zerefTQInt++
     if zerefTQInt == 5
         for i = 3 to 12
-            zerefTQDummy[i] = createUnit(ZEREF_TQ_DUMMY, zerefBeamPos.polarOffset(zerefBeamPos.angleTo(spellPos), (100.0 * i)))  
+            zerefTQDummy[i] = createUnit(zeref.getOwner(), ZEREF_TQ_DUMMY, zeref.getPos().polarOffset(zeref.getPos().angleTo(spellPos), (100.0 * i)))  
+            zerefTQDummy[i].setTimedLife(2)
             forUnitsInRange(zerefTQDummy[i].getPos(), 300) (unit u) ->
                 if zeref.isAllyOf(u) == false and u.isInvulnerable() == false and zerefTQGroup.has(u) == false
                     DamageEvent.setNextDamageId(DAMAGE_ABILITY_MODE_Q)
@@ -110,8 +111,8 @@ function zerefTQStart()
                     zerefTQGroup.add(u)
             zeref.setInvulnerable(false)                           
     if zerefTQInt >= 50
-        zerefBeam.kill()
-        for i = 3 to 12
-            zerefTQDummy[i].kill()
-            zerefTQTimer.destr()
-            zerefTQGroup.clear()        
+        // zerefBeam.kill()
+        // for i = 3 to 12
+        //     zerefTQDummy[i].kill()
+        zerefTQTimer.destr()
+        zerefTQGroup.clear()        

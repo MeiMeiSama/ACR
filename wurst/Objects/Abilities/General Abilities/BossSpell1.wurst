@@ -43,7 +43,7 @@ public function pepeSkill1()
             else
                 let bossrng = GetRandomInt(0, 3)
                 if bossrng == 1
-                    if enemy.isType(UNIT_TYPE_STRUCTURE) == false and enemy.isEnemyOf(pepe) == true and enemy.isAlive() == true
+                    if enemy.isType(UNIT_TYPE_STRUCTURE) == false and enemy.isEnemyOf(pepe) == true and enemy.isAlive() == true 
                         sfx2 = addEffect("war3mapImported\\PepeExplosion.mdx", enemy.getPos())
                         ..setScale(1)
                         ..destr()

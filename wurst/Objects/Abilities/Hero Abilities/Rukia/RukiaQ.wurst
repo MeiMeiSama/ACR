@@ -6,6 +6,7 @@ import ObjectDefinitions
 import ChannelAbilityPreset
 import main
 import ClosureForGroups
+import UnitIds
 
 unit rukia
 integer rukiaQInt
@@ -41,7 +42,43 @@ timer rukiaQTimer
         ..presetTooltipNormal(lvl -> "Hadō #33: Sōkatsui|r")
         ..presetTooltipNormalExtended(lvl -> "Rukia Q Desc|r")
         ..setTooltipLearn("Learn Q|r")
-        ..setTooltipLearnExtended("Learning Q|r")  
+        ..setTooltipLearnExtended("Learning Q|r")
+
+    new UnitDefinition(RUKIA_Q_DUMMY, UnitIds.wisp)
+        ..setNormalAbilities(commaList('Avul', 'Aloc', 'Amrf'))
+        ..setAnimationCastBackswing(0)
+        ..setDeathTimeseconds(0.1)
+        ..setScalingValue(0.70)
+        ..setUnitClassification("_")
+        ..setArtSpecial("_")
+        ..setHasWaterShadow(false)
+        ..setMaximumPitchAngledegrees(0)
+        ..setMaximumRollAngledegrees(0)
+        ..setModelFile("_")
+        ..setScalingValue(1.0)
+        ..setArtSpecial("_")
+        ..setArmorType(ArmorType.Unarmored)
+        ..setPlaceableInEditor(false)
+        ..setMovementHeight(20)
+        ..setSpeedBase(522)
+        ..setTurnRate(3)
+        ..setMovementType(MovementType.Fly)
+        ..setCollisionSize(0)
+        ..setUnitSoundSet("_")
+        ..setCanFlee(false)
+        ..setFoodCost(0)
+        ..setHideMinimapDisplay(true)
+        ..setHitPointsMaximumBase(60)
+        ..setHitPointsRegenerationRate(-1)
+        ..setHitPointsRegenerationType("Always")
+        ..setStockMaximum(1)
+        ..setStockReplenishInterval(1)
+        ..setStructuresBuilt("_")
+        ..setUpgradesUsed("_")
+        ..setHotkey("_")
+        ..setName("effect dummy")
+        ..setTooltipBasic("_")
+        ..setTooltipExtended("_")  
 
 init
     rukiaQ()     
@@ -73,6 +110,9 @@ function rukiaQEnd()
         ..setScale(1)
         ..destr()
         sfx.destr()
+        let u = createUnit(rukia.getOwner(), RUKIA_Q_DUMMY, spellPos)
+        u.setScale(2)
+        u.setTimedLife(2)
         forUnitsInRange(spellPos, 650) (unit victim) ->
             if victim.isType(UNIT_TYPE_STRUCTURE) == false and victim.isEnemyOf(rukia) == true and victim.isAlive() == true and victim.isInvulnerable() == false
                 DamageEvent.setNextDamageId(DAMAGE_ABILITY_Q)

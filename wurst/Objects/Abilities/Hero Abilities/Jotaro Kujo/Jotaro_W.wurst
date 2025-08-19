@@ -133,7 +133,7 @@ function jotaroW()
                 abilityJotaroWPos = jotaro.getPos().polarOffset(jotaro.getPos().angleTo(abilityJotaroWPos), 1250)
             jotaro.pause()
             jotaro.setInvulnerable(true)    
-            starPlatinum = createUnit(JOTARO_W_DUMMY, jotaro.getPos())     
+            starPlatinum = createUnit(jotaro.getOwner(), JOTARO_W_DUMMY, jotaro.getPos())     
             starPlatinum.setAnimation(9)
             starPlatinum.setFacing(starPlatinum.getPos().angleTo(abilityJotaroWPos)) 
             if JOTARO_W.hasTagHidden() == false

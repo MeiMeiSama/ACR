@@ -11,6 +11,7 @@ import Mist
 import magicshield
 import ZervisG_Orig
 import Jotaro_F
+import Dio_AA
 constant izanamiSound_proc = new SoundDefinition("war3mapImported\\Izanami_proc.mp3")
 constant abigailSound_proc = new SoundDefinition("war3mapImported\\AbigailSE3.mp3")
 constant rinneganSound_proc = new SoundDefinition("war3mapImported\\Rinnegan_proc.mp3")
@@ -36,7 +37,7 @@ init
                     DamageEvent.setAmount(DamageEvent.getAmount()*0.95) 
                 if DamageEvent.getTarget().hasAbility(JOTARO_F_BUFF) and DamageEvent.getSource().isType(UNIT_TYPE_HERO) // Jotaro's Counter
                     DamageEvent.setAmount(0)
-                    jotaroFProc(DamageEvent.getSource())    
+                    jotaroFProc(DamageEvent.getSource())         
             case SPELL
                 // if udg_PlayHero[DamageEvent.getSource().getOwner().getId()] == DamageEvent.getSource() and DamageEvent.getTarget().isInvulnerable() == false
                 //     // //printTimedToPlayer("SPELL")
@@ -54,6 +55,25 @@ init
                 //         instances = instances + 1
                 //         //printTimedToPlayer (I2S(instances) , 1, caster.getOwner())           
             case CODE
+                // ━━━━━━━━━━━━━━━ [BOSS] ━━━━━━━━━━━━━━━━━━ //
+                if DamageEvent.getId() == DAMAGE_ABILITY_BOSS_1
+                    real _dmg
+                    let src = DamageEvent.getSource()
+                    _dmg = (100.00 + (1.5 * src.getStr(true)))                                                  // aoe 1
+                    DamageEvent.setAmount(_dmg)
+                    print("Damage 1: "+_dmg.toString())
+                else if DamageEvent.getId() == DAMAGE_ABILITY_BOSS_2
+                    real _dmg
+                    let src = DamageEvent.getSource()
+                    _dmg = (300.00 + (1.5 * src.getStr(true)))                                                  // aoe 2
+                    DamageEvent.setAmount(_dmg)                 
+                    print("Damage 2: "+_dmg.toString())                                                
+                else if DamageEvent.getId() == DAMAGE_ABILITY_BOSS_3
+                    real _dmg
+                    let src = DamageEvent.getSource()
+                    _dmg = (500.00 + (3.5 * src.getStr(true)))                                                  // single target 
+                    DamageEvent.setAmount(_dmg)               
+                    print("Damage 3: "+_dmg.toString())
                 if DamageEvent.getSource().isType(UNIT_TYPE_HERO) == false and DamageEvent.getTarget().isInvulnerable() == false //NON-HERO UNITS CODE
                     let id = DamageEvent.getId()
                     real _dmg
@@ -74,8 +94,8 @@ init
                                     //printTimedToPlayer("NA-TSU", 1, caster.getOwner())   
                                     //printTimedToPlayer (R2S(_dmg) , 1, caster.getOwner())
                                     instances = instances + 1
-                                    //printTimedToPlayer (I2S(instances) , 1, caster.getOwner()) 
-                if udg_PlayHero[DamageEvent.getSource().getOwner().getId()] == DamageEvent.getSource() and DamageEvent.getTarget().isInvulnerable() == false
+                                    //printTimedToPlayer (I2S(instances) , 1, caster.getOwner())             
+                if udg_PlayHero[DamageEvent.getSource().getOwner().getId()] == DamageEvent.getSource() and DamageEvent.getTarget().isInvulnerable() == false 
                     let pid = DamageEvent.getSource().getOwner().getId()
                     let id = DamageEvent.getId()
                     let caster = DamageEvent.getSource()
@@ -90,7 +110,6 @@ init
                         stat = caster.getInt(true)
                     else if BlzGetUnitIntegerField(caster, UNIT_IF_PRIMARY_ATTRIBUTE) == 3 // Agility
                         stat = caster.getAgi(true)
-
                     if id == DAMAGE_ABILITY_Q                                   // ━━━━━━━━━━━━━━━━━━━━━━ [TESTING ENVIRONMENT WITH 100 ALL STATS] ━━━━━━━━━━━━━━━━━━━━━━━━━ //
                         _lvl = GetUnitAbilityLevel(caster, SPELL_Q[pid])
                         _dmg = ((40.00 * _lvl) + (0.6 * stat * _lvl))                                   // 70/140/210/280/350 dmg in testing environment
@@ -1118,24 +1137,6 @@ init
                         //printTimedToPlayer (R2S(_dmg) , 1, caster.getOwner())
                         //printTimedToPlayer("RAIN ARCO", 1, caster.getOwner())
 
-
-
-                    // ━━━━━━━━━━━━━━━ [BOSS] ━━━━━━━━━━━━━━━━━━ //
-
-
-
-                    else if id == DAMAGE_ABILITY_BOSS_1
-                        _dmg = (100.00 + (1.5 * stat))                                                  // aoe 1
-                        DamageEvent.setAmount(_dmg)  
-                    else if id == DAMAGE_ABILITY_BOSS_2
-                        _dmg = (300.00 + (1.5 * stat))                                                  // aoe 2
-                        DamageEvent.setAmount(_dmg)                                                                 
-                    else if id == DAMAGE_ABILITY_BOSS_3
-                        _dmg = (500.00 + (3.5 * stat))                                                  // single target 
-                        DamageEvent.setAmount(_dmg)                                               
-
-
-
                     // ━━━━━━━━━━━━━━━ [SPECIAL CASES: SUPER EXCEPTIONS] ━━━━━━━━━━━━━━━━━━ //
 
                     if caster.hasAbility('B068')                                                        // Sistine's F buff
@@ -1253,5 +1254,25 @@ init
                     if gracePeriod == true
                         DamageEvent.setAmount(0)
                         DamageEvent.abortCurrent()
+
+                // // ━━━━━━━━━━━━━━━ [BOSS] ━━━━━━━━━━━━━━━━━━ //
+                // if DamageEvent.getId() == DAMAGE_ABILITY_BOSS_1
+                //     real _dmg
+                //     let src = DamageEvent.getSource()
+                //     _dmg = (100.00 + (1.5 * src.getStr(true)))                                                  // aoe 1
+                //     DamageEvent.setAmount(_dmg)
+                //     print("Damage 1: "+_dmg.toString())
+                // else if DamageEvent.getId() == DAMAGE_ABILITY_BOSS_2
+                //     real _dmg
+                //     let src = DamageEvent.getSource()
+                //     _dmg = (300.00 + (1.5 * src.getStr(true)))                                                  // aoe 2
+                //     DamageEvent.setAmount(_dmg)                 
+                //     print("Damage 2: "+_dmg.toString())                                                
+                // else if DamageEvent.getId() == DAMAGE_ABILITY_BOSS_3
+                //     real _dmg
+                //     let src = DamageEvent.getSource()
+                //     _dmg = (500.00 + (3.5 * src.getStr(true)))                                                  // single target 
+                //     DamageEvent.setAmount(_dmg)               
+                //     print("Damage 3: "+_dmg.toString())                                
                                                             
             default

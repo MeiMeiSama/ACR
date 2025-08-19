@@ -1,0 +1,69 @@
+package Dio_AA
+
+
+import ClosureEvents
+import ObjectDefinitions
+import ChannelAbilityPreset
+import UnitIds
+
+unit zaWarudo
+int dioGInt
+timer dioGTimer
+public real standoDmg
+
+@compiletime function createAbility()
+    new UnitDefinition(DIO_AA_DUMMY, UnitIds.wisp)
+        ..setNormalAbilities(commaList('Avul', 'Aloc', 'Amrf'))
+        ..setAnimationCastBackswing(0)
+        ..setDeathTimeseconds(0.1)
+        ..setScalingValue(0.70)
+        ..setUnitClassification("_")
+        ..setArtSpecial("_")
+        ..setHasWaterShadow(false)
+        ..setMaximumPitchAngledegrees(0)
+        ..setMaximumRollAngledegrees(0)
+        ..setModelFile("war3mapImported\\Shio_Dio_The_World.mdx")
+        ..setScalingValue(1.5)
+        ..setArtSpecial("_")
+        ..setArmorType(ArmorType.Unarmored)
+        ..setPlaceableInEditor(false)
+        ..setMovementHeight(20)
+        ..setSpeedBase(100)
+        ..setTurnRate(3)
+        ..setMovementType(MovementType.Fly)
+        ..setCollisionSize(0)
+        ..setUnitSoundSet("_")
+        ..setCanFlee(false)
+        ..setFoodCost(0)
+        ..setHideMinimapDisplay(true)
+        ..setHitPointsMaximumBase(60)
+        ..setHitPointsRegenerationRate(-1)
+        ..setHitPointsRegenerationType("Always")
+        ..setStockMaximum(1)
+        ..setStockReplenishInterval(1)
+        ..setStructuresBuilt("_")
+        ..setUpgradesUsed("_")
+        ..setHotkey("_")
+        ..setName("effect dummy")
+        ..setTooltipBasic("_")
+        ..setTooltipExtended("_")   
+
+public function dioAA()
+    EventListener.add(EVENT_PLAYER_UNIT_DAMAGING) -> 
+        if GetEventDamageSource().getTypeId() == DIO_BRANDO and BlzGetEventAttackType() == ATTACK_TYPE_HERO
+            let dio = GetEventDamageSource()
+            let victim = BlzGetEventDamageTarget()
+            zaWarudo = createUnit(dio.getOwner(), DIO_AA_DUMMY, victim.getPos().polarOffset(victim.getPos().angleTo(dio.getPos()), -150))
+            zaWarudo.setFacing(zaWarudo.getPos().angleTo(victim.getPos())) 
+            dioGInt = 0  
+            CreateTimer()..startPeriodic(0.01, function dioGTimerFunc)    
+
+function dioGTimerFunc()
+    dioGInt++
+    if dioGInt == 3
+        zaWarudo.setTimeScale(2.5) 
+        zaWarudo.setAnimation(3)
+    if dioGInt == 30
+        zaWarudo.kill()
+    if dioGInt >= 42
+        GetExpiredTimer().destr()

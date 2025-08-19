@@ -7,11 +7,10 @@ import ChannelAbilityPreset
 import main
 import ClosureForGroups
 //import ClosureTimers
-// import UnitIds
+import UnitIds
 import ACR_Stun
 
 unit rukia
-// unit array rukiaWDummy
 group rukiaW2Group
 integer rukiaW2Int
 vec2 spellPos
@@ -51,6 +50,41 @@ timer rukiaW2Timer
         ..setTooltipLearn("Learn W|r")
         ..setTooltipLearnExtended("Learning W|r")
 
+    new UnitDefinition(RUKIA_W2_DUMMY, UnitIds.wisp)
+        ..setNormalAbilities(commaList('Avul', 'Aloc', 'Amrf'))
+        ..setAnimationCastBackswing(0)
+        ..setDeathTimeseconds(0.1)
+        ..setScalingValue(4)
+        ..setUnitClassification("_")
+        ..setArtSpecial("_")
+        ..setHasWaterShadow(false)
+        ..setMaximumPitchAngledegrees(0)
+        ..setMaximumRollAngledegrees(0)
+        ..setModelFile("_")
+        ..setArtSpecial("_")
+        ..setArmorType(ArmorType.Unarmored)
+        ..setPlaceableInEditor(false)
+        ..setMovementHeight(20)
+        ..setSpeedBase(100)
+        ..setTurnRate(3)
+        ..setMovementType(MovementType.Fly)
+        ..setCollisionSize(0)
+        ..setUnitSoundSet("_")
+        ..setCanFlee(false)
+        ..setFoodCost(0)
+        ..setHideMinimapDisplay(true)
+        ..setHitPointsMaximumBase(60)
+        ..setHitPointsRegenerationRate(-1)
+        ..setHitPointsRegenerationType("Always")
+        ..setStockMaximum(1)
+        ..setStockReplenishInterval(1)
+        ..setStructuresBuilt("_")
+        ..setUpgradesUsed("_")
+        ..setHotkey("_")
+        ..setName("effect dummy")
+        ..setTooltipBasic("_")
+        ..setTooltipExtended("_")
+
 init
     rukiaW2()     
 
@@ -81,6 +115,9 @@ function rukiaWEnd()
         sfx2 = addEffect("war3mapImported\\RukiaTsukishiro.mdx", spellPos)
         ..setScale(5)
         CreateTimer()..start(1.5, function rukiaTsuEnd)
+        let u = createUnit(rukia.getOwner(), RUKIA_W2_DUMMY, spellPos)
+        u.setScale(2)
+        u.setTimedLife(2) 
     if rukiaW2Int == 80
         rukia.setInvulnerable(false)
         rukia.unpause()

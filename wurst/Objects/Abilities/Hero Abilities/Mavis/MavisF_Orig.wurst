@@ -189,9 +189,9 @@ function mavisFEnd()
         addEffect("war3mapImported\\LIGHT3.mdx", dummyUnit3.getPos())
         ..setScale(0.70)
         ..destr()
-        dummyUnit.remove()
-        dummyUnit2.remove()
-        dummyUnit3.remove()
+        dummyUnit.kill()
+        dummyUnit2.kill()
+        dummyUnit3.kill()
         GetExpiredTimer().destr()
         mavis=null
         mavisFInt=0

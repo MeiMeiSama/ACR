@@ -21,6 +21,7 @@ import main
         ..setHotkeyNormal("T")
         ..setHotkeyLearn("T")
         ..setLevels(1)
+        ..setRequiredLevel(23)
         ..presetArtDuration(lvl -> 0)
         ..presetBaseOrderID(lvl -> "eattree")
         ..presetDisableOtherAbilities(lvl -> false)

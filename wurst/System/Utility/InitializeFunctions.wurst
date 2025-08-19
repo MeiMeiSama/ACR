@@ -82,6 +82,7 @@ import Zeref_F
 import RukiaR
 import RukiaG
 import MISAKA_STR_G
+import Dio_AA
 
 /*
 
@@ -289,6 +290,7 @@ public function initFunctions ()
     
         if udg_PlayHero[i].getTypeId() == DIO_BRANDO
             dioG()
+            dioAA()
     
         if udg_PlayHero[i].getTypeId() == ARTURIA_STRENGTH
             saberStrG()

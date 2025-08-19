@@ -7,6 +7,7 @@ import ChannelAbilityPreset
 import main
 import ClosureForGroups
 import ACR_TagSystem
+import ClosureTimers
 
 unit rukia
 integer rukiaTInt
@@ -14,7 +15,7 @@ group rukiaTGroup
 vec2 spellPos
 effect sfx
 effect sfx2
-effect sfx3
+effect array sfx3
 timer rukiaTTimer
 
 @compiletime function createAbility()
@@ -97,9 +98,12 @@ function rukiaTEnd()
     if rukiaTInt == 280
         rukiaTGroup.forEachIn() (unit victim) ->
             if victim.isType(UNIT_TYPE_HERO)
-                sfx3 = addEffect("war3mapImported\\SpellEffectIceCoffinV2Fix.mdx", victim.getPos())
+                let id = victim.getUserData()
+                sfx3[id] = addEffect("war3mapImported\\SpellEffectIceCoffinV2Fix.mdx", victim.getPos())
                 ..setScale(3)
                 ..playAnimation(ANIM_TYPE_STAND)
+                doAfter(2) ->
+                    sfx3[id].destr()          
     if rukiaTInt == 400
         rukia.setInvulnerable(false)
         rukia.unpause()
@@ -112,7 +116,6 @@ function rukiaTEnd()
             if victim.isPaused()
                 victim.unpause()
         rukiaTGroup.clear()
-        sfx3.destr()
         BlzSetUnitSkin(rukia, RUKIA)
         rukiaTTimer.destr()          
 
