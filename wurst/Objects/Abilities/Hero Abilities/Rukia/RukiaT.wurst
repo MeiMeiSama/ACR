@@ -117,5 +117,4 @@ function rukiaTEnd()
                 victim.unpause()
         rukiaTGroup.clear()
         BlzSetUnitSkin(rukia, RUKIA)
-        rukiaTTimer.destr()          
-
+        rukiaTTimer.destr()         
