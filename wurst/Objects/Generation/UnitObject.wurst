@@ -636,7 +636,7 @@ import ObjectIds
 
     new HeroDefinition(ICHIGO_STRENGTH_MODO, 'Hpal') // H03N
     ..setHeroAbilities("")
-    ..setNormalAbilities(commaList('A18V', ICHIGO_STRENGTH_ABILITY_G, 'A0X4', 'A0X5', 'A0X6', 'A0X7', 'A0X3', 'AInv'))
+    ..setNormalAbilities(commaList('A18V', 'A0X4', 'A0X5', 'A0X6', 'A0X7', 'A0X3', 'AInv'))
     ..setAnimationBlendTimeseconds(0.1)
     ..setAnimationCastBackswing(0.1)
     ..setAnimationCastPoint(0.1)

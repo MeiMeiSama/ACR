@@ -542,7 +542,7 @@ public function addAbilities (unit hero)
         SPELL_MODO_E[id] = 'A0X6'
         SPELL_MODO_R[id] = 'A0X7'
         SPELL_MODO_T[id] = 'A0X3' 
-        SPELL_MODO_G[id] = ICHIGO_STRENGTH_ABILITY_G
+        SPELL_MODO_G[id] = '____'
     else if hero.getTypeId() == 'H018' // Ichigo Old
         SPELL_Q[id] = 'A0D0'
         SPELL_W[id] = 'A0D1'
