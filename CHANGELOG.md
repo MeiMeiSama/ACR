@@ -30,6 +30,7 @@
 8. Saber Ryougi perma w vision fixed.
 9. Levi crash W fixed.
 10. Kiara F ms passive fixed (no longer from lvl 1).
+11. IchigoSTR G disappearing fixed.
 
 ### Deleted
 1. MDD removed.
