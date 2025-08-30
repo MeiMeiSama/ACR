@@ -1,0 +1,260 @@
+package Dio_T
+
+import AbilityGlobals
+import ObjectDefinitions
+import ChannelAbilityPreset
+import UnitIds
+import main
+import ClosureForGroups
+import ACR_TagSystem
+import UpdateTooltips
+import TimerUtils
+//import TerrainUtils
+//import DamageEvent
+
+unit dio
+vec2 dioPos
+vec2 dioTTargetPos
+vec2 starPlatinumPos
+vec2 emptyVector
+unit starPlatinum
+public unit za_Warudo_dio
+unit dioTTarget
+group dioTGroup
+int dioTTimerInt1
+int dioT2TimerInt
+int dioT2TimerInt3
+int dioT2 = 'A0L1'
+timer dioTTimer
+timer dioT2Timer
+effect effect1
+effect effect2
+angle angle
+
+@compiletime function createAbility()
+    new ChannelAbilityPreset(DIO_T, 1, true)
+        ..presetTargetTypes(Targettype.NONE)
+        ..setAnimationNames("11111111")
+        ..setButtonPositionNormalX(3)
+        ..setButtonPositionNormalY(1)
+        ..setButtonPositionResearchX(3)
+        ..setButtonPositionResearchY(1)
+        ..setIconNormal("ReplaceableTextures\\CommandButtons\\BTNUsedSoulGem.blp")
+        ..setIconResearch("ReplaceableTextures\\CommandButtons\\BTNUsedSoulGem.blp")
+        ..setMissileSpeed(99999)
+        ..setHeroAbility(true)
+        ..setHotkeyNormal("T")
+        ..setHotkeyLearn("T")
+        ..setLevels(1)
+        ..setRequiredLevel(23)
+        ..presetArtDuration(lvl -> 0)
+        ..presetBaseOrderID(lvl -> "eattree")
+        ..presetDisableOtherAbilities(lvl -> false)
+        ..presetFollowThroughTime(lvl -> 0)
+        ..presetCastRange(lvl -> 2000)
+        ..presetCooldown(lvl -> 50)
+        ..presetManaCost(lvl -> 70)
+        ..presetTargetsAllowed(lvl -> "enemy,ground,air,neutral, vulnerable")
+        ..presetTooltipNormal(lvl -> "Za Warudo")
+        ..setTooltipLearn("Za Warudo|r")
+    new ChannelAbilityPreset(DIO_T2, 1, true)
+        ..presetTargetTypes(Targettype.UNIT)
+        ..setAnimationNames("11111111")
+        ..setButtonPositionNormalX(3)
+        ..setButtonPositionNormalY(1)
+        ..setButtonPositionResearchX(3)
+        ..setButtonPositionResearchY(1)
+        ..setIconNormal("ReplaceableTextures\\CommandButtons\\BTNSpellSteal.blp")
+        ..setIconResearch("ReplaceableTextures\\CommandButtons\\BTNSpellSteal.blp")
+        ..setMissileSpeed(99999)
+        ..setHeroAbility(true)
+        ..setHotkeyNormal("T")
+        ..setHotkeyLearn("T")
+        ..setLevels(1)
+        ..setRequiredLevel(23)
+        ..presetArtDuration(lvl -> 0)
+        ..presetBaseOrderID(lvl -> "ambush")
+        ..presetDisableOtherAbilities(lvl -> false)
+        ..presetFollowThroughTime(lvl -> 0)
+        ..presetCastRange(lvl -> 2000)
+        ..presetCooldown(lvl -> 50)
+        ..presetManaCost(lvl -> 70)
+        ..presetTargetsAllowed(lvl -> "enemy,ground,air,neutral, vulnerable")
+        ..presetTooltipNormal(lvl -> "Road Roller")
+    new UnitDefinition(DIO_T_DUMMY, UnitIds.wisp)
+        ..setNormalAbilities(commaList('Avul', 'Aloc', 'Amrf'))
+        ..setAnimationCastBackswing(0)
+        ..setDeathTimeseconds(0.1)
+        ..setScalingValue(0.70)
+        ..setUnitClassification("_")
+        ..setArtSpecial("_")
+        ..setHasWaterShadow(false)
+        ..setMaximumPitchAngledegrees(0)
+        ..setMaximumRollAngledegrees(0)
+        ..setModelFile("war3mapImported\\tsukoyomiJJ.mdl")
+        ..setScalingValue(2.35)
+        ..setArtSpecial("_")
+        ..setArmorType(ArmorType.Unarmored)
+        ..setPlaceableInEditor(false)
+        ..setMovementHeight(20)
+        ..setSpeedBase(100)
+        ..setTurnRate(3)
+        ..setMovementType(MovementType.Fly)
+        ..setCollisionSize(0)
+        ..setUnitSoundSet("_")
+        ..setCanFlee(false)
+        ..setFoodCost(0)
+        ..setHideMinimapDisplay(true)
+        ..setHitPointsMaximumBase(60)
+        ..setHitPointsRegenerationRate(-1)
+        ..setHitPointsRegenerationType("Always")
+        ..setStockMaximum(1)
+        ..setStockReplenishInterval(1)
+        ..setStructuresBuilt("_")
+        ..setUpgradesUsed("_")
+        ..setHotkey("_")
+        ..setName("effect dummy")
+        ..setTooltipBasic("_")
+        ..setTooltipExtended("_")
+    new UnitDefinition(DIO_T_DUMMY2, UnitIds.wisp)
+        ..setNormalAbilities(commaList('Avul', 'Aloc', 'Amrf'))
+        ..setAnimationCastBackswing(0)
+        ..setDeathTimeseconds(0.1)
+        ..setScalingValue(0.70)
+        ..setUnitClassification("_")
+        ..setArtSpecial("_")
+        ..setHasWaterShadow(false)
+        ..setMaximumPitchAngledegrees(0)
+        ..setMaximumRollAngledegrees(0)
+        ..setModelFile("war3mapImported\\Shio_Dio_The_World.mdx")
+        ..setScalingValue(1.5)
+        ..setArtSpecial("_")
+        ..setArmorType(ArmorType.Unarmored)
+        ..setPlaceableInEditor(false)
+        ..setMovementHeight(20)
+        ..setSpeedBase(100)
+        ..setTurnRate(3)
+        ..setMovementType(MovementType.Fly)
+        ..setCollisionSize(0)
+        ..setUnitSoundSet("_")
+        ..setCanFlee(false)
+        ..setFoodCost(0)
+        ..setHideMinimapDisplay(true)
+        ..setHitPointsMaximumBase(60)
+        ..setHitPointsRegenerationRate(-1)
+        ..setHitPointsRegenerationType("Always")
+        ..setStockMaximum(1)
+        ..setStockReplenishInterval(1)
+        ..setStructuresBuilt("_")
+        ..setUpgradesUsed("_")
+        ..setHotkey("_")
+        ..setName("effect dummy")
+        ..setTooltipBasic("_")
+        ..setTooltipExtended("_")  
+init
+    dioT()    
+
+function dioT()
+    CreateTrigger()
+    ..registerAnyUnitEvent(EVENT_PLAYER_HERO_SKILL)
+    ..addAction() ->
+        if GetLearnedSkill() == DIO_T
+            dio = GetTriggerUnit()
+            dio.addAbility(dioT2)
+            if dioT2.hasTagHidden() == false
+                dio.hideAbility(dioT2, true)
+                dioT2.addTagHidden()
+            CreateTimer()..startPeriodic(0.01, function dioTReplaceTimer)
+    CreateTrigger()
+    ..registerAnyUnitEvent(EVENT_PLAYER_UNIT_SPELL_EFFECT)
+    ..addAction() ->
+        if GetSpellAbilityId() == DIO_T
+            dio = GetTriggerUnit()
+            abilityDioTPos = dio.getPos()
+            abilityDioTLoc = GetUnitLoc(dio)
+            dio.pause()
+            dio.setInvulnerable(true)
+            if DIO_T.hasTagHidden() == false
+                dio.hideAbility(DIO_T, true)
+                DIO_T.addTagHidden()
+            if dioT2.hasTagHidden() == true
+                dio.hideAbility(dioT2, false)
+                dioT2.removeTagHidden()
+                let id = dio.getOwner().getId()        
+                let tooltipTimer = CreateTimer()
+                tooltipTimer..start(0.02, function updateTooltips)..setData(id)              
+            gg_snd_dioT.play()           
+            dio.setAnimation(13)
+            if dioTGroup == null
+                dioTGroup = CreateGroup()               
+            dioTTimerInt1 = 0                          
+            dioTTimer = CreateTimer()..startPeriodic(0.02, function dioTStart)  
+
+function dioTReplaceTimer()
+    if jotaroTOn == true or dioTOn == true
+        if dio.getPos().distanceTo(abilityJotaroTPos) < 900 or dio.getPos().distanceTo(abilityDioTPos) < 900
+            if DIO_T.hasTagHidden() == false
+                dio.hideAbility(DIO_T, true)
+                DIO_T.addTagHidden()        
+            if dioT2.hasTagHidden() == true
+                dio.hideAbility(dioT2, false)
+                dioT2.removeTagHidden()
+                let id = dio.getOwner().getId()        
+                let tooltipTimer = CreateTimer()
+                tooltipTimer..start(0.02, function updateTooltips)..setData(id)            
+    if dio.getPos().distanceTo(abilityJotaroTPos) > 900 and dio.getPos().distanceTo(abilityDioTPos) > 900
+        if dioTOn == false 
+            if DIO_T.hasTagHidden() == true
+                dio.hideAbility(DIO_T, false)
+                DIO_T.removeTagHidden()       
+        if dioT2.hasTagHidden() == false
+            dio.hideAbility(dioT2, true)
+            dioT2.addTagHidden()
+
+
+function dioTStart()
+    dioTTimerInt1++
+    if dioTTimerInt1 > 0 and dioTTimerInt1 < 100
+        if dio.isPaused() == false
+            dio.pause()
+        if dio.isInvulnerable() == false
+            dio.setInvulnerable(true)   
+    if dioTTimerInt1 == 25
+        starPlatinum = createUnit(DIO_T_DUMMY2, dio.getPos())     
+        starPlatinum.setFacing(dio.getFacingAngle())             
+    if dioTTimerInt1 == 65
+        starPlatinum.setAnimation(1)
+    if dioTTimerInt1 == 100
+        dioTOn = true
+        za_Warudo_dio = createUnit(DIO_T_DUMMY, dio.getPos())
+        dio.unpause()
+        dio.setInvulnerable(false) 
+        starPlatinum.kill()
+    if dioTTimerInt1 > 100 and dioTTimerInt1 < 500    
+        forUnitsInRange(abilityDioTPos, 900) (unit u) ->
+            if u.getTypeId() != DIO_BRANDO and u.getTypeId() != KUJO_JOTARO and u.isInvulnerable() == false and u.hasTagPauseEX() == false and dioTGroup.has(u) == false
+                IssueImmediateOrder(u, "stop")
+                dioTGroup.add(u)
+                u.pauseEx()
+                u.addTagPauseEX()
+        dioTGroup.forEachIn() (unit u) ->
+            if u.getPos().distanceTo(abilityDioTPos) > 900
+                dioTGroup.remove(u)
+                if u.hasTagPauseEX()
+                    u.unpauseEx()
+                    u.removeTagPauseEX()               
+    if dioTTimerInt1 >= 500
+        dioTTimer.destr()
+        dioTOn = false
+        RemoveLocation(abilityDioTLoc)
+        za_Warudo_dio.kill()
+        dioTGroup.forEachIn() (unit u) ->
+            if u.hasTagPauseEX()
+                u.unpauseEx()
+                u.removeTagPauseEX()
+        dioTGroup.clear()
+        abilityDioTPos = emptyVector
+        dio.startAbilityCooldown(DIO_T)            
+
+
+

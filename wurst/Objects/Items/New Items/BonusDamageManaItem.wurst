@@ -1,0 +1,20 @@
+package BonusDamageManaItem
+
+import DamageEvent
+import ObjectDefinitions
+
+constant BONUS_DAMAGE_FACTOR = 0.1
+
+init
+    abilityBonusDamage()
+function abilityBonusDamage ()
+    CreateTrigger()
+    ..registerAnyUnitEvent(EVENT_PLAYER_UNIT_DAMAGED)
+    ..addAction() ->
+        if BlzGetEventAttackType() == ATTACK_TYPE_MAGIC and GetEventDamageSource().hasItemById(CUBE_SIPS)
+            let caster = GetEventDamageSource()
+            let victim = BlzGetEventDamageTarget()
+            let currentMana = caster.getMana()
+            let bonusDmg = currentMana * BONUS_DAMAGE_FACTOR
+            DamageEvent.setNextDamageFromCode()
+            caster.damageTarget(victim, bonusDmg, ATTACK_TYPE_CHAOS)

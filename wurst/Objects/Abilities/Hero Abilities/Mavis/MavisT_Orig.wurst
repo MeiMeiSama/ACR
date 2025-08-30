@@ -1,0 +1,104 @@
+package MavisT_Orig
+import DamageEvent
+import AbilityGlobals
+import ObjectDefinitions
+import ChannelAbilityPreset
+import main
+
+unit mavis
+integer mavisTInt
+unit mavisTTarget
+effect effect1
+effect sfx
+
+@compiletime function createAbility()
+    new ChannelAbilityPreset(MAVIS_T, 1, true)
+        ..presetTargetTypes(Targettype.UNIT)
+        ..setAnimationNames("11111111")
+        ..setButtonPositionNormalX(3)
+        ..setButtonPositionNormalY(1)
+        ..setButtonPositionResearchX(3)
+        ..setButtonPositionResearchY(1)
+        ..setIconNormal("ReplaceableTextures\\CommandButtons\\BTNHolyBolt.blp")
+        ..setIconResearch("ReplaceableTextures\\CommandButtons\\BTNHolyBolt.blp")
+        ..setMissileSpeed(99999)
+        ..setHeroAbility(true)
+        ..setHotkeyNormal("T")
+        ..setHotkeyLearn("T")
+        ..setLevels(1)
+        ..setRequiredLevel(23)
+        ..presetArtDuration(lvl -> 0)
+        ..presetBaseOrderID(lvl -> "eattree")
+        ..presetDisableOtherAbilities(lvl -> false)
+        ..presetFollowThroughTime(lvl -> 0)
+        ..presetCastRange(lvl -> 2000)
+        ..presetCooldown(lvl -> 50)
+        ..presetManaCost(lvl -> 70)
+        ..presetTargetsAllowed(lvl -> "enemy,ground,air,neutral")
+        ..presetTooltipNormal(lvl -> "Law")
+        ..presetTooltipNormalExtended(lvl -> GOLD+"Mavis uses law on target, and engulfs nearby enemies hit by it."+"\n\ncooldown: "+BLUE+"50|r")
+        ..setTooltipLearn("Law|r")
+        ..setTooltipLearnExtended(GOLD+"Mavis uses law on target, and engulfs nearby enemies hit by it."+"\n\ncooldown: "+BLUE+"50|r")
+
+function initTrig_MavisT_Orig()
+    CreateTrigger()
+    ..registerAnyUnitEvent(EVENT_PLAYER_UNIT_SPELL_EFFECT)
+    ..addCondition(Condition(function mavisCondition))
+    ..addAction() ->
+        let t=CreateTimer()
+        soundPlay("war3mapImported\\Mavis T.mp3", 0, 0)
+        mavis=GetSpellAbilityUnit()
+        mavisTTarget=GetSpellTargetUnit()
+        let mavisPos2 = mavis.getPos()
+        PauseUnit(mavis,true)
+        SetUnitInvulnerable(mavis,true)
+        PauseUnit(mavisTTarget,true)
+        SetUnitInvulnerable(mavisTTarget,true)
+        let angle = mavis.getPos().angleTo(mavisTTarget.getPos())
+        flashEffect("war3mapImported\\blinknew.mdx", mavisPos2)
+        mavis.setPos(mavis.getPos().polarOffset(angle, (mavis.getPos().distanceTo(mavisTTarget.getPos()) -170)))
+        mavis.setFacing(mavis.getPos().angleTo(mavisPos2))
+        SetUnitAnimation(mavis, "spell slam")
+        effect1 = addEffect("war3mapImported\\VFX_HolyLight.mdx", mavis, "chest")
+        ..setScale(0.10)
+        mavisTInt=0
+        TimerStart(t,.02,true,function mavisTEnd)
+
+function mavisTEnd ()
+    mavisTInt++
+    PauseUnit(mavis,true)
+    SetUnitInvulnerable(mavis,true)
+    PauseUnit(mavisTTarget,true)
+    SetUnitInvulnerable(mavisTTarget,true)
+    if mavisTInt>350
+        DestroyTimer(GetExpiredTimer())
+        effect1.destr()
+        sfx = addEffect("war3mapImported\\MavisLawPillar.mdx", mavisTTarget.getPos())
+        ..setScale(4)
+        CreateTimer()..start(1, function mavisLawEnd)
+        flashEffect("war3mapImported\\dtfairylaw.mdx", mavisTTarget, "chest")
+        mavis.setAnimation(0)
+        PauseUnit(mavis,false)
+        SetUnitInvulnerable(mavis,false)
+        PauseUnit(mavisTTarget,false)
+        SetUnitInvulnerable(mavisTTarget,false)
+        ForGroupBJ(GetUnitsInRangeOfLocMatching(700,GetUnitLoc(mavisTTarget),Condition(function mavisFilter)),function mavisDMG)   
+
+function mavisLawEnd()
+    sfx.setX(-999999)
+    sfx.setY(-999999)
+    sfx.destr()
+
+function mavisCondition() returns boolean
+    return GetSpellAbilityId() == MAVIS_T
+
+function mavisFilter() returns boolean
+    return IsUnitType(GetFilterUnit(),UNIT_TYPE_STRUCTURE)==false and IsUnitType(GetFilterUnit(),UNIT_TYPE_HERO)==true and IsUnitEnemy(GetFilterUnit(),GetOwningPlayer(mavis))==true and IsUnitDeadBJ(GetFilterUnit())==false
+
+function mavisDMG()
+    DamageEvent.setNextDamageId(DAMAGE_ABILITY_T)
+    DamageEvent.setNextDamageFromCode()
+    UnitDamageTargetBJ(mavis,GetEnumUnit(),(15*GetHeroInt(mavis,true)).toReal(),ATTACK_TYPE_MAGIC,DAMAGE_TYPE_MAGIC)
+
+init
+    initTrig_MavisT_Orig()

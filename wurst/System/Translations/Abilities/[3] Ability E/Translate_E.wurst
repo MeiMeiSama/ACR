@@ -243,21 +243,52 @@ public function tooltip_E2 (int pid)
     let hero = udg_PlayHero[id]
     int range
     int cd
-    let skill = SPELL_E2[id] // only Law uses this
+    int dmg
+    int stat = 0
+    int mana
+    let skill = SPELL_E2[id]
+    int spellLvl
+    if BlzGetUnitIntegerField(hero, UNIT_IF_PRIMARY_ATTRIBUTE) == 1 // Strength
+        stat = hero.getStr(true)
+    else if BlzGetUnitIntegerField(hero, UNIT_IF_PRIMARY_ATTRIBUTE) == 2 // Intellect
+        stat = hero.getInt(true)
+    else if BlzGetUnitIntegerField(hero, UNIT_IF_PRIMARY_ATTRIBUTE) == 3 // Agility
+        stat = hero.getAgi(true)
 
-    cd = (22)
-    range = (50000)
+    if skill == 'A0LW' //Law
+        cd = (22)
+        range = (50000)
 
-    skill
-    ..setDescription(id,
-    GOLD+
-    "Law switches positions with his target. This ability can only be used within Room."+
-    "\n\nCast Range: "+PINK+"Global"+GOLD+
-    "\nCooldown: "+PINK+cd.toString()+GOLD)
+        skill
+        ..setDescription(id,
+        GOLD+
+        "Law switches positions with his target. This ability can only be used within Room."+
+        "\n\nCast Range: "+PINK+"Global"+GOLD+
+        "\nCooldown: "+PINK+cd.toString()+GOLD)
 
-    hero.getAbility(skill)
-    ..setField(ABILITY_RLF_CAST_RANGE, hero.getAbilityLevel(skill) - 1, range.toReal())
-    ..setField(ABILITY_RLF_COOLDOWN, hero.getAbilityLevel(skill) - 1, cd.toReal())  
+        hero.getAbility(skill)
+        ..setField(ABILITY_RLF_CAST_RANGE, hero.getAbilityLevel(skill) - 1, range.toReal())
+        ..setField(ABILITY_RLF_COOLDOWN, hero.getAbilityLevel(skill) - 1, cd.toReal())
+
+    else if skill == RUKIA_E2
+        spellLvl = skill.getSkillLvl(id)
+        dmg = (40 * spellLvl) + (0.2 * stat * spellLvl).toInt()
+        cd = (15 + spellLvl)
+        mana = (10 + (5*spellLvl))
+        range = (875)
+
+        skill..setTitle(id, BLUE+"San no Mai, Shirafune"+LEVEL_TOOLTIP+spellLvl.toString()+CR+"]")
+        ..setDescription(id,
+        GOLD+
+        "Deals damage to the target enemy."+
+        "\n\nCast Range: "+PINK+range.toString()+GOLD+
+        "\nCooldown: "+PINK+cd.toString()+GOLD+
+        "\nDamage Output: "+hero.getStatColor()+dmg.toString()+GOLD)
+        
+        hero.getAbility(skill)
+        ..setField(ABILITY_ILF_MANA_COST, hero.getAbilityLevel(skill) - 1, mana)
+        ..setField(ABILITY_RLF_CAST_RANGE, hero.getAbilityLevel(skill) - 1, range.toReal())
+        ..setField(ABILITY_RLF_COOLDOWN, hero.getAbilityLevel(skill) - 1, cd.toReal())
 
 public function tooltip_Damaging_E (int pid)
     let id = pid
@@ -289,6 +320,26 @@ public function tooltip_Damaging_E (int pid)
         "Sting's basic attacks have a 20% chance to deal additional damage and stun their target for a brief duration."+
         "\nStun Duration: "+PINK+duration.toString()+GOLD+
         "\nDamage Output: "+hero.getStatColor()+dmg.toString()+GOLD)
+    
+    // else if skill == RUKIA_E //Rukia
+    //     spellLvl = skill.getSkillLvl(id)
+    //     dmg = (40 * spellLvl) + (0.2 * stat * spellLvl).toInt()
+    //     cd = (15 + spellLvl)
+    //     mana = (10 + (5* spellLvl))
+    //     range = (875)
+
+    //     skill..setTitle(id, BLUE+"Bakudō #61: Rikujōkōrō"+LEVEL_TOOLTIP+spellLvl.toString()+CR+"]")
+    //     ..setDescription(id,
+    //     GOLD+
+    //     "Deals damage to the targeted enemy and marks them. For the next second, Rukia's W deals bonus damage to the marked enemy."+
+    //     "\n\nCast Range: "+PINK+range.toString()+GOLD+
+    //     "\nCooldown: "+PINK+cd.toString()+GOLD+
+    //     "\nDamage Output: "+hero.getStatColor()+dmg.toString()+GOLD)
+        
+    //     hero.getAbility(skill)
+    //     ..setField(ABILITY_ILF_MANA_COST, hero.getAbilityLevel(skill) - 1, mana)
+    //     ..setField(ABILITY_RLF_CAST_RANGE, hero.getAbilityLevel(skill) - 1, range.toReal())
+    //     ..setField(ABILITY_RLF_COOLDOWN, hero.getAbilityLevel(skill) - 1, cd.toReal())
 
     else if skill == 'A014' // Misaka
         dmg = (40 * spellLvl) + (0.2 * stat * spellLvl).toInt()
@@ -477,6 +528,25 @@ public function tooltip_Mode_E (int pid)
         hero.getAbility(skill)
         ..setField(ABILITY_ILF_MANA_COST, hero.getAbilityLevel(skill) - 1, mana)
         ..setField(ABILITY_RLF_COOLDOWN, hero.getAbilityLevel(skill) - 1, cd.toReal())     
+
+    else if skill == ZEREF_TE // ━━━━━━━━━━━━ [Zeref] ━━━━━━━━━━━━ //
+        dmg = (125) + (2.0 * stat).toInt()
+        cd = (22)
+        mana = (35)
+        range = (850)
+
+        skill
+        ..setDescription(id,
+        GOLD+
+        "Zeref instantly blinks to the target area, damaging enemies around."+
+        "\n\nCast Range: "+PINK+range.toString()+GOLD+
+        "\nCooldown: "+PINK+cd.toString()+GOLD+
+        "\nDamage Output: "+hero.getStatColor()+dmg.toString()+GOLD)
+        
+        hero.getAbility(skill)
+        ..setField(ABILITY_ILF_MANA_COST, hero.getAbilityLevel(skill) - 1, mana)
+        ..setField(ABILITY_RLF_COOLDOWN, hero.getAbilityLevel(skill) - 1, cd.toReal()) 
+        ..setField(ABILITY_RLF_CAST_RANGE, hero.getAbilityLevel(skill) - 1, range.toReal())
 
     else if skill.isModeEPoint()
         dmg = (125) + (2.0 * stat).toInt()

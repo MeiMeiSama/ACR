@@ -12,12 +12,12 @@ function bgmResume()
         ResumeMusic()    
 
 public function stopBgm()
-    for i = 0 to 17
+    for i = 0 to 18
         if bgm[i].isPlaying()
             bgm[i].stop(false, false)
 
 function bgmIsPlaying() returns boolean
-    for i = 0 to 17
+    for i = 0 to 18
         if bgm[i].isPlaying()
             return true
     return false                 
@@ -41,6 +41,7 @@ public function bgmList()
     bgm[15] = gg_snd_hibari5
     bgm[16] = gg_snd_Rnatsu5_1
     bgm[17] = gg_snd_MidoriyaTBGM
+    bgm[18] = gg_snd_ZerefForm
 
 public function bgmExceptionList()
     bgmException[0] = gg_snd_SaberRyougiT

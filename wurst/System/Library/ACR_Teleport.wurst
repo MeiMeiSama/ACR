@@ -42,6 +42,9 @@ init
                 caster.issueImmediateOrder("stop")         
             else if gg_rct_TeamBattleArea.contains(loc) == true and gg_rct_TeamBattleArea.contains(casterloc) == false
                 caster.getOwner().print("Can't teleport out/in of arena", 2)
-                caster.issueImmediateOrder("stop")                              
+                caster.issueImmediateOrder("stop")
+            else if gg_rct_New_Bosses_Area.contains(loc) == true and gg_rct_New_Bosses_Area.contains(casterloc) == false
+                caster.getOwner().print("Can't teleport out/in of arena", 2)
+                caster.issueImmediateOrder("stop")                                       
             else
                 DoNothing()    

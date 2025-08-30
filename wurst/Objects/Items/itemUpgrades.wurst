@@ -5,6 +5,15 @@ init
 
     ringsUpgrade ()
     bootsUpgrade ()
+    newUpgrade ()
+    pewpewUpgrade ()
+    comfypillowUpgrade ()
+    cubesipsUpgrade ()
+    umbrellaJokesUpgrade ()
+    statSwitcheroUpgrade ()
+    lollipopManaUpgrade ()
+    hurtNotUpgrade ()
+    chingGpsUpgrade ()
     generalUpgrade ()
     onVongolaUpgradeBuy_init ()
 
@@ -119,6 +128,11 @@ function ringsUpgrade ()
     sunRing5.addItem(SUN_RING_VONGOLA) // Ring X
     sunRing5.addItem(SUN_ARCOBALENO_RECIPE) // Sun Arcobaleno Recipe
 
+    let mareSun = new ItemRecipe(MARE_SUN_RING, 0, false, true, true) // Mare Sun
+    mareSun.addItem(SUN_RING_VONGOLA) // Ring X
+    mareSun.addItem(SUN_RING_VONGOLA) // Ring X
+    mareSun.addItem(MARE_SUN_RECIPE) // Mare Sun Recipe
+
     // ------------------------- Thunder Ring ------------------------- //
     let thunderRing1 = new ItemRecipe(THUNDER_RING_2, 0, false, true, true) // Ring 2
     thunderRing1.addItem(THUNDER_RING_1) // Ring 1
@@ -201,6 +215,105 @@ function bootsUpgrade ()
     let vitalitySight = new ItemRecipe('I071', 0, false, true, true) // Vitality of True Sight
     vitalitySight.addItem('I02G') // Vitality Boots
     vitalitySight.addItem('gemt') // Gem of True Sight
+
+function newUpgrade ()    
+    // ------------------------- Anti-Regen Item ------------------------- //
+    let antiRegenItem = new ItemRecipe(ANTI_REGEN_ITEM, 0, false, true, true) // Boots Lv. 2
+    antiRegenItem.addItem(ANTI_REGEN_ITEM_RECIPE) // anti-regen item recipe   
+    antiRegenItem.addItem(HEALTH_ORB_BIG) //big health orb
+    antiRegenItem.addItem(HEALTH_ORB_BIG) //big health orb
+
+    let mediumHealthOrb = new ItemRecipe(HEALTH_ORB_MEDIUM, 0, false, true, true) // Boots Lv. 2
+    mediumHealthOrb.addItem(HEALTH_ORB_SMALL) // small health orb
+    mediumHealthOrb.addItem('I02U') //lesser upgrade catalyst
+
+    let bigHealthOrb = new ItemRecipe(HEALTH_ORB_BIG, 0, false, true, true) // Boots Lv. 2
+    bigHealthOrb.addItem(HEALTH_ORB_MEDIUM) // medium health orb  
+    bigHealthOrb.addItem(HEALTH_ORB_MEDIUM) // medium health orb  
+    bigHealthOrb.addItem(HEALTH_ORB_MEDIUM) // medium health orb      
+    bigHealthOrb.addItem('I06O') // greater upgrade catalyst
+
+function pewpewUpgrade ()    
+    // ------------------------- Sword of pew pew power Item ------------------------- //
+    let swordOfPewItem = new ItemRecipe(SWORD_OF_PEW, 0, false, true, true) // Boots Lv. 2
+    swordOfPewItem.addItem(SWORD_OF_PEW_ITEM_RECIPE) // sword of pew item recipe   
+    swordOfPewItem.addItem(HEALTH_ORB_SMALL) //small health orb
+    swordOfPewItem.addItem(HEALTH_ORB_SMALL) //small health orb
+    swordOfPewItem.addItem(HEALTH_ORB_SMALL) //small health orb
+    swordOfPewItem.addItem('I06L') //Superior Agility
+
+function comfypillowUpgrade ()    
+    // ------------------------- comfy pillow Item ------------------------- //
+    let comfyPillowItem = new ItemRecipe(COMFY_PILLOW, 0, false, true, true) // Boots Lv. 2
+    comfyPillowItem.addItem(COMFY_PILLOW_ITEM_RECIPE) // comfy pillow item recipe   
+    comfyPillowItem.addItem(HEALTH_ORB_BIG) //big health orb
+    comfyPillowItem.addItem(HEALTH_ORB_BIG) //big health orb
+    comfyPillowItem.addItem('I02R') //Greater Strenght
+
+function cubesipsUpgrade ()    
+    // ------------------------- cube sips Item ------------------------- //
+    let cubeSipsItem = new ItemRecipe(CUBE_SIPS, 0, false, true, true) // Boots Lv. 2
+    cubeSipsItem.addItem(CUBE_SIPS_ITEM_RECIPE) // comfy pillow item recipe   
+    cubeSipsItem.addItem(HEALTH_ORB_SMALL) //small health orb
+    cubeSipsItem.addItem(HEALTH_ORB_SMALL) //small health orb
+    cubeSipsItem.addItem(HEALTH_ORB_SMALL) //small health orb
+    cubeSipsItem.addItem('I06X') //Superior Intelligence
+
+function umbrellaJokesUpgrade ()    
+    // ------------------------- umbrella jokes Item ------------------------- //
+    let umbrellaJokesItem = new ItemRecipe(UMBRELLA_JOKES, 0, false, true, true) // Boots Lv. 2
+    umbrellaJokesItem.addItem(UMBRELLA_JOKES_ITEM_RECIPE) // umbrella of jokes item recipe   
+    umbrellaJokesItem.addItem(HEALTH_ORB_MEDIUM) //medium health orb
+    umbrellaJokesItem.addItem(HEALTH_ORB_BIG) //big health orb
+    umbrellaJokesItem.addItem(HEALTH_ORB_BIG) //big health orb
+
+function statSwitcheroUpgrade ()    
+    // ------------------------- stat switchero Item ------------------------- //
+    let statSwapStrItem = new ItemRecipe(STAT_SWAP_ITEM_STR, 0, false, true, true) // stat swap item str
+    statSwapStrItem.addItem(STAT_SWAP_ITEM_STR_RECIPE) // stat swap item str recipe    
+    statSwapStrItem.addItem('I06M') //superior strength
+
+    let statSwapAgiItem = new ItemRecipe(STAT_SWAP_ITEM_AGI, 0, false, true, true) // stat swap item agi
+    statSwapAgiItem.addItem(STAT_SWAP_ITEM_AGI_RECIPE) // stat swap item agi recipe      
+    statSwapAgiItem.addItem('I06L') //superior agility
+
+    let statSwapIntItem = new ItemRecipe(STAT_SWAP_ITEM_INT, 0, false, true, true) // stat swap item int
+    statSwapIntItem.addItem(STAT_SWAP_ITEM_INT_RECIPE) // stat swap item int recipe  
+    statSwapIntItem.addItem('I06X') //superior intelligence    
+
+function lollipopManaUpgrade ()    
+    // -------------------------  lollipop mana Item ------------------------- //
+    let lollipopManaItem = new ItemRecipe(LOLLIPOP_MANA, 0, false, true, true) // Boots Lv. 2
+    lollipopManaItem.addItem(LOLLIPOP_MANA_ITEM_RECIPE) //lollipop mana item recipe   
+    lollipopManaItem.addItem(MANA_ORB_BIG) //big mana orb
+    lollipopManaItem.addItem(MANA_ORB_BIG) //big mana orb
+
+    let mediumManaOrb = new ItemRecipe(MANA_ORB_MEDIUM, 0, false, true, true) // Boots Lv. 2
+    mediumManaOrb.addItem(MANA_ORB_SMALL) // small mana orb
+    mediumManaOrb.addItem('I02U') //lesser upgrade catalyst
+
+    let bigManaOrb = new ItemRecipe(MANA_ORB_BIG, 0, false, true, true) // Boots Lv. 2
+    bigManaOrb.addItem(MANA_ORB_MEDIUM) // medium mana orb  
+    bigManaOrb.addItem(MANA_ORB_MEDIUM) // medium mana orb  
+    bigManaOrb.addItem(MANA_ORB_MEDIUM) // medium mana orb      
+    bigManaOrb.addItem('I06O') // greater upgrade catalyst
+
+function hurtNotUpgrade ()    
+    // ------------------------- Hurt Not Item ------------------------- //
+    let hurtNotItem = new ItemRecipe(HURT_NOT, 0, false, true, true) // Boots Lv. 2
+    hurtNotItem.addItem(HURT_NOT_ITEM_RECIPE) //hurt not item recipe   
+    hurtNotItem.addItem(RE_MEDUSA) //re-medusa skin
+    hurtNotItem.addItem(HEALTH_ORB_BIG) //big health orb
+    hurtNotItem.addItem(HEALTH_ORB_BIG) //big health orb
+
+function chingGpsUpgrade ()    
+    // ------------------------- ching gps Item ------------------------- //
+    let chingGpsItem = new ItemRecipe(CHING_GPS, 0, false, true, true) // Boots Lv. 2
+    chingGpsItem.addItem(CHING_GPS_ITEM_RECIPE) //ching gps item recipe   
+    chingGpsItem.addItem('I06M') //superior str
+    chingGpsItem.addItem('I06L') //superior agi
+    chingGpsItem.addItem('I06X') //superior int   
+    chingGpsItem.addItem(CHING_WEALTH) //ching chong wealth   
 
 function generalUpgrade ()
     // -------------------------- Greater Strength -------------------------- //

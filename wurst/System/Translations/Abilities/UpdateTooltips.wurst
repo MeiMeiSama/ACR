@@ -219,11 +219,12 @@ public function addAbilities (unit hero)
         SPELL_G[id] = 'S000'  
     else if hero.getTypeId() == DIO_BRANDO // Dio
         SPELL_Q[id] = 'A0KX'
-        SPELL_W[id] = 'A0KZ'
-        SPELL_E[id] = 'A0L2'
-        SPELL_R[id] = 'A0KY'
-        SPELL_T[id] = 'A0L0'
-        SPELL_F[id] = 'A0L1'
+        SPELL_W[id] = DIO_W
+        SPELL_E[id] = DIO_E
+        SPELL_R[id] = DIO_R
+        SPELL_T[id] = DIO_T
+        SPELL_T2[id] = 'A0L1'
+        SPELL_F[id] = DIO_F
         SPELL_G[id] = DIO_BRANDO_ABILITY_G 
     else if hero.getTypeId() == 'H025' // Elizabeth
         SPELL_Q[id] = 'A0L5'
@@ -421,14 +422,16 @@ public function addAbilities (unit hero)
         SPELL_T[id] = 'A0T5'
         SPELL_F[id] = 'A0T8'
         SPELL_G[id] = 'A16L'
-    else if hero.getTypeId() == 'H01F' // Jotaro
-        SPELL_Q[id] = 'A0ES'
-        SPELL_W[id] = 'A0KU'
-        SPELL_E[id] = 'A17K'
-        SPELL_R[id] = 'A0EX'
-        SPELL_T[id] = 'A0AB'
-        SPELL_F[id] = 'A0EZ'
-        SPELL_G[id] = 'A0KV'
+    else if hero.getTypeId() == KUJO_JOTARO // Jotaro
+        SPELL_Q[id] = JOTARO_Q
+        SPELL_W[id] = JOTARO_W
+        SPELL_W2[id] = JOTARO_W2
+        SPELL_E[id] = JOTARO_E
+        SPELL_R[id] = JOTARO_R
+        SPELL_T[id] = JOTARO_T
+        SPELL_T2[id] = JOTARO_T2
+        SPELL_F[id] = JOTARO_F
+        SPELL_G[id] = JOTARO_G
     else if hero.getTypeId() == KAMIJOU_TOUMA // Touma
         SPELL_Q[id] = 'A04R'
         SPELL_W[id] = 'A04Q'
@@ -539,7 +542,7 @@ public function addAbilities (unit hero)
         SPELL_MODO_E[id] = 'A0X6'
         SPELL_MODO_R[id] = 'A0X7'
         SPELL_MODO_T[id] = 'A0X3' 
-        SPELL_MODO_G[id] = ICHIGO_STRENGTH_ABILITY_G
+        SPELL_MODO_G[id] = '____'
     else if hero.getTypeId() == 'H018' // Ichigo Old
         SPELL_Q[id] = 'A0D0'
         SPELL_W[id] = 'A0D1'
@@ -1101,8 +1104,8 @@ public function addAbilities (unit hero)
         SPELL_W[id] = 'A0EM'
         SPELL_W2[id] = 'A0YC'
         SPELL_E[id] = 'A0Y7'
-        SPELL_R[id] = 'A0WQ'
-        SPELL_R2[id] = 'A0YD'
+        SPELL_R[id] = 'A19Q' // was Q0WQ
+        // SPELL_R2[id] = 'A0YD'
         SPELL_T[id] = 'A0HW'
         SPELL_F[id] = 'A0YF'
         SPELL_G[id] = 'A0YJ'
@@ -1168,14 +1171,19 @@ public function addAbilities (unit hero)
         SPELL_T[id] = 'A09M'
         SPELL_F[id] = 'A09N'
         SPELL_G[id] = 'A09P'
-    else if hero.getTypeId() == 'H01U' // Zeref
-        SPELL_Q[id] = 'A0IC'
-        SPELL_W[id] = 'A0IG'
-        SPELL_E[id] = 'A0II'
-        SPELL_R[id] = 'A0IF'
-        SPELL_T[id] = 'A0IH'
-        SPELL_F[id] = 'A0IL'
-        SPELL_G[id] = 'A0IJ'
+    else if hero.getTypeId() == ZEREF //'H01U' // Zeref
+        SPELL_Q[id] = ZEREF_Q //'A0IC'
+        SPELL_W[id] = ZEREF_W //'A0IG'
+        SPELL_E[id] = 'A0IJ' //'A0II'
+        SPELL_R[id] = ZEREF_R //'A0IF'
+        SPELL_T[id] = ZEREF_T //'A0IH'
+        SPELL_F[id] = ZEREF_F //'A0IL'
+        SPELL_G[id] = '_' //'A0IJ'
+        SPELL_G2[id] = ZERVIS_G
+        SPELL_MODO_Q[id] = ZEREF_TQ
+        SPELL_MODO_W[id] = ZEREF_TW
+        SPELL_MODO_E[id] = ZEREF_TE
+        SPELL_MODO_R[id] = ZEREF_TR
     else if hero.getTypeId() == 'H032' // Waver
         SPELL_Q[id] = 'A0RY'
         SPELL_W[id] = 'A0RZ'
@@ -1272,5 +1280,37 @@ public function addAbilities (unit hero)
         SPELL_R[id] = 'A0R3'
         SPELL_T[id] = 'A0R4'
         SPELL_F[id] = 'A0R5'
-        SPELL_G[id] = 'A0R6'        
+        SPELL_G[id] = 'A0R6'
+    else if hero.getTypeId() == MAVIS // Mavis
+        SPELL_Q[id] = MAVIS_Q
+        SPELL_W[id] = MAVIS_W
+        SPELL_E[id] = MAVIS_E
+        SPELL_R[id] = MAVIS_R
+        SPELL_T[id] = MAVIS_T
+        SPELL_F[id] = MAVIS_F
+        SPELL_G[id] = '_' 
+        SPELL_G2[id] = ZERVIS_G
+    else if hero.getTypeId() == RUKIA // Rukia
+        SPELL_Q[id] = RUKIA_Q
+        SPELL_Q2[id] = RUKIA_Q2
+        SPELL_W[id] = RUKIA_W
+        SPELL_W2[id] = RUKIA_W2
+        SPELL_E[id] = RUKIA_E
+        SPELL_E2[id] = RUKIA_E2
+        SPELL_R[id] = RUKIA_R
+        SPELL_T[id] = RUKIA_T
+        SPELL_F[id] = RUKIA_F
+        SPELL_G[id] = RUKIA_G
+    else if hero.getTypeId() == MISAKA_STR // Misaka_STR
+        SPELL_Q[id] = MISAKA_STR_Q
+        SPELL_W[id] = MISAKA_STR_W
+        SPELL_E[id] = MISAKA_STR_E
+        SPELL_R[id] = MISAKA_STR_R
+        SPELL_T[id] = MISAKA_STR_T
+        SPELL_F[id] = MISAKA_STR_F
+        SPELL_G[id] = MISAKA_STR_G
+        SPELL_MODO_Q[id] = MISAKA_STR_TQ
+        SPELL_MODO_W[id] = MISAKA_STR_TW
+        SPELL_MODO_E[id] = MISAKA_STR_TE
+        SPELL_MODO_R[id] = MISAKA_STR_TR                    
     updateTooltipsInit_Base(hero)

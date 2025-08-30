@@ -3,7 +3,7 @@ import main
 import MusicPlaylist
 import ObjectDefinitions
 // import AbilityGlobals
-// import ACR_TagSystem
+import ACR_TagSystem
 import ACR_Transformation
 import TimerUtils
 // import Translate_F
@@ -32,15 +32,18 @@ function ichigoModoT()
             StopMusic(false)
             PlaySoundBJ(gg_snd_IchigoBGM)                
             acrTransformation(caster, 40, ICHIGO_STRENGTH, ICHIGO_STRENGTH_MODO, 850, 4.0)
-            CreateTimer()..startPeriodic(0.01, function rogueModoTEnd).setData(pid)
+            CreateTimer()..startPeriodic(0.01, function ichigoModoTEnd).setData(pid)
 
-function rogueModoTEnd()
+function ichigoModoTEnd()
     let pid = GetExpiredTimer().getData()
     if transformationActive[pid] == false
         ichigoStr.addAbility(ichigoStrE)
         ichigoStr.setAbilityLevel(ichigoStrE, ichigoStrELvl)
         if gg_snd_IchigoBGM.isPlaying()
-            gg_snd_IchigoBGM.stop(false, false) 
+            gg_snd_IchigoBGM.stop(false, false)
+        if ICHIGO_STRENGTH_ABILITY_G.hasTagDisabled() == true
+            ICHIGO_STRENGTH_ABILITY_G.removeTagDisabled()
+            ichigoStr.disableAbility(ICHIGO_STRENGTH_ABILITY_G, false, false)          
         GetExpiredTimer().destr() 
 
 

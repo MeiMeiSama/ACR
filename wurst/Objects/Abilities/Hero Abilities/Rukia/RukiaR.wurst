@@ -1,0 +1,140 @@
+package RukiaR
+
+import ObjectDefinitions
+import ChannelAbilityPreset
+import BuffObjEditing
+import DummyCaster
+import OrderIds
+import main
+import ACR_TagSystem
+import ClosureEvents
+
+effect sfx
+boolean rukiaRon 
+
+@compiletime function createAbility()
+    new ChannelAbilityPreset(RUKIA_R, 3, true)
+        ..presetTargetTypes(Targettype.NONE)
+        ..setAnimationNames("11111")
+        ..setButtonPositionNormalX(3)
+        ..setButtonPositionNormalY(2)
+        ..setButtonPositionResearchX(3)
+        ..setButtonPositionResearchY(0)
+        ..setIconNormal("ReplaceableTextures\\CommandButtons\\BTNEtherealFormOn.blp")
+        ..setIconResearch("ReplaceableTextures\\CommandButtons\\BTNEtherealFormOn.blp")
+        ..setMissileSpeed(99999)
+        ..setHeroAbility(true)
+        ..setHotkeyNormal("R")
+        ..setHotkeyLearn("R")
+        ..setLevels(3)
+        ..setRequiredLevel(8)
+        ..setLevelSkipRequirement(5)
+        ..presetArtDuration(lvl -> 0)
+        ..presetBaseOrderID(lvl -> "submerge")
+        ..presetDisableOtherAbilities(lvl -> false)
+        ..presetFollowThroughTime(lvl -> 0)
+        ..presetCastRange(lvl -> 2000)
+        ..presetCooldown(lvl -> 50)
+        ..presetManaCost(lvl -> 70)
+        ..presetTargetsAllowed(lvl -> "enemy,ground,air,neutral")
+        ..presetTooltipNormal(lvl -> "Shikai: Sode no Shirayuki|r")
+        ..presetTooltipNormalExtended(lvl -> "Rukia R Desc|r")
+        ..setTooltipLearn("Shikai: Sode no Shirayuki|r")
+        ..setTooltipLearnExtended("Learning R|r")
+
+    new BuffDefinition(RUKIA_R_BUFF, AbilityIds.innerFire)
+        ..setName(1, "Shikai Release")
+        ..setTooltipNormal(1, "Shikai Release")
+        ..setTooltipNormalExtended(1, "Empowers Rukia basic abilities")
+        ..setIcon("ReplaceableTextures\\CommandButtons\\BTNRukia.blp")
+        ..setIconNormal(1, "ReplaceableTextures\\CommandButtons\\BTNRukia.blp")
+
+    new AbilityDefinitionSlow(RUKIA_R_DUMMY_ABILITY)
+        ..setLevels(1)
+        ..setManaCost(1, 0)
+        ..setCastRange(1, 99999)
+        ..setCastingTime(1, 0)
+        ..setDurationHero(1, 9999)
+        ..setDurationNormal(1, 9999)
+        ..setMovementSpeedFactor(1, 0)
+        ..setAttackSpeedFactor(1, 0)
+        ..setCooldown(1, 0.01)
+        ..setTargetsAllowed(1, "Friend, Invulnerable, Vulnerable")
+        ..setRequirements("")
+        ..setBuffs(1, commaList(RUKIA_R_BUFF))
+        ..setIconNormal("ReplaceableTextures\\CommandButtons\\BTNRukia.blp")
+        ..setArtTarget("_")
+        ..setTargetAttachmentPoint("chest")
+        ..setTargetAttachmentPoint1("chest")
+        ..setName("Sode no Shirayuki Dummy")
+        ..setTooltipNormal(1, "Sode no Shirayuki Dummy|r")
+        ..setTooltipNormalExtended(1, "Sode no Shirayuki Dummy|r")
+
+init
+
+public function rukiaR()
+    EventListener.add(EVENT_PLAYER_HERO_SKILL) ->
+        if GetLearnedSkill() == RUKIA_Q or GetLearnedSkill() == RUKIA_W or GetLearnedSkill() == RUKIA_E
+            let u = GetTriggerUnit()
+            let a = GetLearnedSkill()
+            let abilvl = GetUnitAbilityLevel(u, a)
+            if a == RUKIA_Q
+                u.setAbilityLevel(RUKIA_Q2, abilvl)
+            if a == RUKIA_W    
+                u.setAbilityLevel(RUKIA_W2, abilvl)
+            if a == RUKIA_E    
+                u.setAbilityLevel(RUKIA_E2, abilvl)
+            
+    EventListener.onCast(RUKIA_R) (unit caster) ->
+        if rukiaRon == false
+            gg_snd_RukiaR.play()
+            new DummyCaster()
+            ..owner(caster.getOwner())
+            ..origin(caster.getPos())
+            ..castTarget(RUKIA_R_DUMMY_ABILITY, 1, OrderIds.slow, caster)
+            sfx = addEffect("war3mapImported\\RukiaAura.mdx", caster, "origin")
+            ..setScale(2)
+            BlzSetAbilityIcon(RUKIA_R, "ReplaceableTextures\\CommandButtonsDisabled\\DISBTNEtherealFormOn.blp")
+            if RUKIA_Q.hasTagHidden() == false
+                caster.hideAbility(RUKIA_Q, true)
+                RUKIA_Q.addTagHidden()
+            if RUKIA_W.hasTagHidden() == false
+                caster.hideAbility(RUKIA_W, true)
+                RUKIA_W.addTagHidden()
+            if RUKIA_E.hasTagHidden() == false
+                caster.hideAbility(RUKIA_E, true)
+                RUKIA_E.addTagHidden()
+            if RUKIA_Q2.hasTagHidden() == true
+                caster.hideAbility(RUKIA_Q2, false)
+                RUKIA_Q2.removeTagHidden()
+            if RUKIA_W2.hasTagHidden() == true
+                caster.hideAbility(RUKIA_W2, false)
+                RUKIA_W2.removeTagHidden()
+            if RUKIA_E2.hasTagHidden() == true
+                caster.hideAbility(RUKIA_E2, false)
+                RUKIA_E2.removeTagHidden()
+            rukiaRon = true    
+        else 
+            caster.removeAbility(RUKIA_R_BUFF)
+            sfx.destr()
+            BlzSetAbilityIcon(RUKIA_R, "ReplaceableTextures\\CommandButtons\\BTNEtherealFormOn.blp")
+            if RUKIA_Q2.hasTagHidden() == false
+                caster.hideAbility(RUKIA_Q2, true)
+                RUKIA_Q2.addTagHidden()
+            if RUKIA_W2.hasTagHidden() == false
+                caster.hideAbility(RUKIA_W2, true)
+                RUKIA_W2.addTagHidden()
+            if RUKIA_E2.hasTagHidden() == false
+                caster.hideAbility(RUKIA_E2, true)
+                RUKIA_E2.addTagHidden()
+            if RUKIA_Q.hasTagHidden() == true
+                caster.hideAbility(RUKIA_Q, false)
+                RUKIA_Q.removeTagHidden()
+            if RUKIA_W.hasTagHidden() == true
+                caster.hideAbility(RUKIA_W, false)
+                RUKIA_W.removeTagHidden()
+            if RUKIA_E.hasTagHidden() == true
+                caster.hideAbility(RUKIA_E, false)
+                RUKIA_E.removeTagHidden()
+            rukiaRon = false       
+ 

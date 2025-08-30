@@ -1,0 +1,120 @@
+package RukiaT
+
+import DamageEvent
+import AbilityGlobals
+import ObjectDefinitions
+import ChannelAbilityPreset
+import main
+import ClosureForGroups
+import ACR_TagSystem
+import ClosureTimers
+
+unit rukia
+integer rukiaTInt
+group rukiaTGroup
+vec2 spellPos
+effect sfx
+effect sfx2
+effect array sfx3
+timer rukiaTTimer
+
+@compiletime function createAbility()
+    new ChannelAbilityPreset(RUKIA_T, 1, true)
+        ..presetTargetTypes(Targettype.NONE)
+        ..setAnimationNames("11111111")
+        ..setButtonPositionNormalX(3)
+        ..setButtonPositionNormalY(1)
+        ..setButtonPositionResearchX(3)
+        ..setButtonPositionResearchY(1)
+        ..setIconNormal("ReplaceableTextures\\CommandButtons\\BTNGlacier.blp")
+        ..setIconResearch("ReplaceableTextures\\CommandButtons\\BTNGlacier.blp")
+        ..setMissileSpeed(99999)
+        ..setHeroAbility(true)
+        ..setHotkeyNormal("T")
+        ..setHotkeyLearn("T")
+        ..setLevels(1)
+        ..setRequiredLevel(23)
+        ..presetArtDuration(lvl -> 0)
+        ..presetBaseOrderID(lvl -> "eattree")
+        ..presetDisableOtherAbilities(lvl -> false)
+        ..presetFollowThroughTime(lvl -> 0)
+        ..presetCastRange(lvl -> 2000)
+        ..presetCooldown(lvl -> 50)
+        ..presetManaCost(lvl -> 70)
+        ..presetTargetsAllowed(lvl -> "enemy,ground,air,neutral, vulnerable")
+        ..presetTooltipNormal(lvl -> "Bankai: Hakka No Togame")
+        ..presetTooltipNormalExtended(lvl -> "Rukia T Desc|r")
+        ..setTooltipLearn("Learn T|r")
+        ..setTooltipLearnExtended("Learning T|r")
+
+init
+    rukiaT()     
+
+function rukiaT()
+    CreateTrigger()
+    ..registerAnyUnitEvent(EVENT_PLAYER_UNIT_SPELL_EFFECT)
+    ..addAction() ->
+        if GetSpellAbilityId() == RUKIA_T
+            rukia = GetTriggerUnit()
+            spellPos = rukia.getPos()
+            rukia.setInvulnerable(true)
+            rukia.pause()
+            gg_snd_RukiaT1.play()      
+            BlzSetUnitSkin(rukia, RUKIAT_SKIN)
+            rukia.setAnimation(5)
+            if rukiaTGroup == null
+                rukiaTGroup = CreateGroup() 
+            rukiaTInt = 0
+            rukiaTTimer = CreateTimer()..startPeriodic(0.02, function rukiaTEnd)
+
+function rukiaTEnd()
+    rukiaTInt++
+    if rukiaTInt >= 2 and rukiaTInt < 180
+        forUnitsInRange(spellPos, 900) (unit u) ->
+            if u.isInvulnerable() == false and u.hasTagPauseEX() == false and rukiaTGroup.has(u) == false and u.isAllyOf(rukia) == false
+                IssueImmediateOrder(u, "stop")
+                rukiaTGroup.add(u)
+                u.pause()
+                u.setInvulnerable(true)
+    if rukiaTInt == 50
+        gg_snd_RukiaT2.play()             
+    if rukiaTInt == 90
+        sfx = addEffect("war3mapImported\\IcePillar88.mdx", spellPos)
+        ..setScale(1)
+    if rukiaTInt == 120
+        rukia.setAnimation(3)
+        sfx2 = addEffect("war3mapImported\\IceAge.mdx", spellPos)
+        ..setScale(1)
+    if rukiaTInt >= 122 and rukiaTInt < 140
+        sfx2.setScale(sfx2.getScale() + 0.06)
+    if rukiaTInt == 250           
+        rukia.setAnimation(0)
+        sfx.setX(-999999)
+        sfx.setY(-999999)
+        sfx.destr()
+        sfx2.setX(-999999)
+        sfx2.setY(-999999)
+        sfx2.destr()
+    if rukiaTInt == 280
+        rukiaTGroup.forEachIn() (unit victim) ->
+            if victim.isType(UNIT_TYPE_HERO)
+                let id = victim.getUserData()
+                sfx3[id] = addEffect("war3mapImported\\SpellEffectIceCoffinV2Fix.mdx", victim.getPos())
+                ..setScale(3)
+                ..playAnimation(ANIM_TYPE_STAND)
+                doAfter(2) ->
+                    sfx3[id].destr()          
+    if rukiaTInt == 400
+        rukia.setInvulnerable(false)
+        rukia.unpause()
+        rukiaTGroup.forEachIn() (unit victim) ->
+            if victim.isInvulnerable()
+                victim.setInvulnerable(false) 
+            DamageEvent.setNextDamageId(DAMAGE_ABILITY_T)
+            DamageEvent.setNextDamageFromCode()
+            rukia.damageTarget(victim, 1, ATTACK_TYPE_MAGIC)
+            if victim.isPaused()
+                victim.unpause()
+        rukiaTGroup.clear()
+        BlzSetUnitSkin(rukia, RUKIA)
+        rukiaTTimer.destr()         

@@ -1,0 +1,59 @@
+package Zeref_TE
+import ObjectDefinitions
+import ChannelAbilityPreset
+import main
+import ClosureForGroups
+import DamageEvent
+import AbilityGlobals
+
+unit zeref
+vec2 spellPos
+
+@compiletime function createAbility()
+    new ChannelAbilityPreset(ZEREF_TE, 1, true)
+        ..presetTargetTypes(Targettype.POINTUNIT)
+        ..setAnimationNames("11111")
+        ..setButtonPositionNormalX(2)
+        ..setButtonPositionNormalY(2)
+        ..setIconNormal("ReplaceableTextures\\CommandButtons\\BTNDarkSummoning.blp")
+        ..setIconResearch("ReplaceableTextures\\CommandButtons\\BTNDarkSummoning.blp")
+        ..setMissileSpeed(99999)
+        ..setHeroAbility(true)
+        ..setHotkeyNormal("E")
+        ..setHotkeyLearn("E")
+        ..setLevels(1)
+        ..presetArtDuration(lvl -> 0)
+        ..presetBaseOrderID(lvl -> "blink")
+        ..presetDisableOtherAbilities(lvl -> false)
+        ..presetFollowThroughTime(lvl -> 0)
+        ..presetCastRange(lvl -> 2000)
+        ..presetCooldown(lvl -> 50)
+        ..presetManaCost(lvl -> 70)
+        ..presetTargetsAllowed(lvl -> "enemy,ground,air,neutral")
+        ..presetTooltipNormal(lvl -> "Time Magic|r")
+        ..presetTooltipNormalExtended(lvl -> "Zeref E Desc|r")
+   
+init
+    initTrig_ZerefTE_Orig()     
+
+function initTrig_ZerefTE_Orig()
+    CreateTrigger()
+    ..registerAnyUnitEvent(EVENT_PLAYER_UNIT_SPELL_EFFECT)
+    ..addAction() ->
+        if GetSpellAbilityId() == ZEREF_TE
+            zeref = GetTriggerUnit()
+            spellPos = vec2(GetSpellTargetX(), GetSpellTargetY())
+            soundPlay("war3mapImported\\Zeref TE.mp3", 0, 0)
+            flashEffect("war3mapImported\\ZerefBlink.mdx", zeref.getPos())
+            zeref.setInvulnerable(true)
+            zeref.pause()
+            zeref.setPos(spellPos)
+            flashEffect("war3mapImported\\ZerefBlink.mdx", zeref.getPos())
+            zeref.setInvulnerable(false)
+            zeref.unpause()
+            forUnitsInRange(spellPos, 500) (unit victim) ->
+                if victim.isType(UNIT_TYPE_STRUCTURE) == false and victim.isEnemyOf(zeref) == true and victim.isAlive() == true and victim.isInvulnerable() == false
+                    DamageEvent.setNextDamageId(DAMAGE_ABILITY_MODE_E)
+                    DamageEvent.setNextDamageFromCode()
+                    zeref.damageTarget(victim, 1, ATTACK_TYPE_MAGIC)
+                   

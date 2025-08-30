@@ -1,3 +1,40 @@
+# ━━━━━━━━━ Anime Carnage Reforged v2.1.0 ━━━━━━━━━ #
+
+### Added
+1. Added a new Terrain Area, reachable through the teleporters in the middle lane.(WIP)
+2. Added brand new items.
+3. Added skin system.
+4. Added new side mini-bosses for team buffs.
+5. Re added attribute drugs.
+6. New hero Mavis Vermillion (FT)
+7. New hero Kuchiki Rukia (Bleach)
+
+### Improved
+1. Slightly adjusted Terrain Layout.
+
+### Changed
+1. Overall rework on items icons.
+2. Vergil R changed to the previous 2nd T (dante T).
+3. Sakuya G now costs mana.
+4. Karna, Mashu (shielder) and Miyuki W now puts them next to their enemy target.
+5. Dio, Jotaro and Zeref Rework.
+
+### Fixed
+1. Madoka and Kiara T cinematic planets fixed.
+2. Melt W doing double damage.
+3. Kizaru R knockback removed.
+4. Kiyohime STR E should now be bug free.
+5. Dante model.
+6. Akame and Jack F now give Max MS for their duration.
+7. Sting, Rogue and Rentaro G fixed.
+8. Saber Ryougi perma w vision fixed.
+9. Levi crash W fixed.
+10. Kiara F ms passive fixed (no longer from lvl 1).
+11. IchigoSTR G disappearing fixed.
+
+### Deleted
+1. MDD removed.
+
 # ━━━━━━━━━ Anime Carnage Reforged v2.0.7 ━━━━━━━━━ #
 
 ### Added
@@ -17,7 +54,7 @@
 5. Hibari's T is now fixed ... but like, actually.
 
 ### Deleted
-Nothing Deleted.
+1. Nothing Deleted.
 
 # ━━━━━━━━━ Anime Carnage Reforged v2.0.6 ━━━━━━━━━ #
 

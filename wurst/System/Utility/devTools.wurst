@@ -1,10 +1,17 @@
 // package devTools
 // import ClosureEvents
 // import Orders
+// import ObjectIds
 // import main
 // import ACR_TagSystem
 // import ACR_ReviveInstant
+// import CreateBuildings
 // import ObjectDefinitions
+// import DummyCaster
+// import CameraFunctions
+// import BossSpell1
+// import BossSpell2
+// import MISAKA_STR_G
 // int acrdevtimer
 // unit selectedUnit
 // timer acrTimer
@@ -13,14 +20,25 @@
 // fogmodifier array acr_MH
 
 // init
-//     udg_PlayHero[4] = createUnit(Player(4), COBRA, vec2(0, 0))..setUserData(4)
+//     udg_PlayHero[0] = createUnit(Player(0), MISAKA_STR, vec2(-8868, -11444))..setUserData(11)
 //     ..setStr(5000)
-//     udg_PlayHero[5] = createUnit(Player(5), 'H01R', vec2(0, 0))..setUserData(5)
+//     udg_PlayHero[1] = createUnit(Player(1), COBRA, vec2(-8868, -11444))..setUserData(1)
 //     ..setStr(5000)
-//     udg_PlayHero[6] = createUnit((Player(6)), ICHIGO_STRENGTH, vec2(0, 0))..setUserData(6)
+//     udg_PlayHero[2] = createUnit(Player(2), ZEREF, vec2(-8868, -11450))..setUserData(2)
+//     ..setStr(5000)
+//     udg_PlayHero[4] = createUnit((Player(4)), ICHIGO_STRENGTH, vec2(-8868, -11456))..setUserData(4)
 //     ..setStr(500)
-//     udg_PlayHero[9] = createUnit((Player(9)), 'H006', vec2(-2000, -2000))..setUserData(9)
+//     udg_PlayHero[5] = createUnit((Player(5)), 'H006', vec2(-10223, -9559))..setUserData(5)
 //     ..setStr(5000)
+//     udg_PlayHero[6] = createUnit((Player(6)), 'H00R', vec2(-10223, -9563))..setUserData(6)
+//     ..setStr(5000)    
+//     udg_PlayHero[8] = createUnit((Player(8)), 'H03G', vec2(-10223, -9572))..setUserData(8)
+//     ..setStr(5000)  
+//     udg_PlayHero[9] = createUnit((Player(9)), 'H01A', vec2(-10223, -9589))..setUserData(9)
+//     ..setStr(5000)  
+//     udg_PlayHero[10] = createUnit((Player(10)), DIO_BRANDO, vec2(-10223, -9596))..setUserData(10)
+//     ..setStr(5000)
+//     misakaSTRG()              
 //     devTools()
 
 // function acrTimerFunc()
@@ -51,7 +69,8 @@
 //             ..setInt(100)
 //             ..setAgi(100)
 //             ..setMaxMana(1000)
-//             ..setMaxHP(1000)
+//             ..setMaxHP(7000)
+//             ..setHP(7000)
 //             devTools[id] = true
 //             activator_Handler(id)
 //             acr_MH[id] = createFogModifier(p, FOG_OF_WAR_VISIBLE, GetWorldBounds(), false, false)
@@ -70,7 +89,24 @@
 //             selectedUnit.addTagPauseEX()       
 //         else if input == "unpause"
 //             selectedUnit.unpauseEx()  
-//             selectedUnit.removeTagPauseEX()                     
+//             selectedUnit.removeTagPauseEX()
+//         else if input == "invuloff"
+//             selectedUnit.setInvulnerable(false)
+//         else if input == "pauseoff"
+//             selectedUnit.unpause()
+//         else if input == "pepe"
+//             pepeTrigger.enable()
+//             pepeTrigger2.enable()
+//             pepeTrigger3.enable()
+//             pepeSkill1()
+//             pepeSkill2()
+//             pepeTimerExpired()
+//             gg_unit_O005_0043.setInvulnerable(false)
+//             gg_unit_O005_0043.unpause()
+//             if gg_unit_O005_0043.getUserData() != (998)
+//                 gg_unit_O005_0043.setUserData(998)
+//         else if input == "pepeult"
+//             pepeTimerExpiredActions()
 //         else if input == "music"
 //             StopMusic(false)
 //         else if input == "gold"
@@ -85,6 +121,8 @@
 //             trig_VsBossBeginActions()
 //         else if input == "ffa"
 //             trig_TournamentFFAActions()
+//         else if input == "cam"
+//             camON = true
 //         else if input == "test"
 //             testTimer = CreateTimer()..start(5, function testFunc)     
 //         else if input == "release"
@@ -97,13 +135,47 @@
 //             acrTimer.destr()
 //         else if input == "revive"
 //             acrRevive(selectedUnit)
+//         else if input == "red"
+//             selectedUnit.addAbility(DUMMY_REDBUFF_ABILITY)
+//         else if input == "nored"
+//             selectedUnit.removeAbility(DUMMY_REDBUFF_ABILITY)
+//         else if input == "blue"
+//             selectedUnit.addAbility(DUMMY_BLUEBUFF_ABILITY)
+//         else if input == "noblue"
+//             selectedUnit.removeAbility(DUMMY_BLUEBUFF_ABILITY)
+//         else if input == "yellow"
+//             new DummyCaster()
+//             ..owner(selectedUnit.getOwner())
+//             ..origin(selectedUnit.getPos())
+//             ..castTarget(DUMMY_YELLOWBUFF_ABILITY, 1, OrderIds.bloodlust, selectedUnit)
+//             selectedUnit.addAbility(DUMMY_YELLOWBUFF_ABILITY)
+//         else if input == "noyellow"
+//             selectedUnit.removeAbility(DUMMY_YELLOWBUFF_ABILITY)
+//         else if input == "green"
+//             selectedUnit.addAbility(DUMMY_GREENBUFF_ABILITY)
+//         else if input == "nogreen"
+//             selectedUnit.removeAbility(DUMMY_GREENBUFF_ABILITY)
+//         else if input == "green2"
+//             selectedUnit.addAbility(DUMMY_GREENBUFF2_ABILITY)
+//         else if input == "nogreen2"
+//             selectedUnit.removeAbility(DUMMY_GREENBUFF2_ABILITY)                       
 
 
 
 //     EventListener.add(EVENT_PLAYER_UNIT_SELECTED) ->
 //         selectedUnit = GetTriggerUnit()
 //         print("Name: "+selectedUnit.getName())
+//         print("Owner "+ selectedUnit.getOwner().getName())
+//         print("Type: "+selectedUnit.getTypeId().toRawCode())
 //         print("ID: "+selectedUnit.getUserData().toString())
+//         print("X: "+selectedUnit.getX().toString())
+//         print("Y: "+selectedUnit.getY().toString())
+//         if selectedUnit == miniboss[0]
+//             print("boss 0 selected")
+//         if selectedUnit == miniboss[1]
+//             print("boss 1 selected")  
+//         if selectedUnit == miniboss[2]
+//             print("boss 1 selected")                        
 //         // let pid = selectedUnit.getHandleId()
 //         // print("original id: "+pid.toString())
 //         // let id = selectedUnit.getHandleId().toString().substring(3, 7).toInt()

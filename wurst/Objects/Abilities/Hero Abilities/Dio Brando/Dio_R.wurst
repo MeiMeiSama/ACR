@@ -1,0 +1,325 @@
+package Dio_R
+
+import DamageEvent
+import AbilityGlobals
+import ObjectDefinitions
+import TerrainUtils
+import ChannelAbilityPreset
+import UnitIds
+import main
+import ClosureForGroups
+import Dio_T
+
+unit dio
+unit dioRTarget
+unit jotaro
+vec2 jotaroPos
+vec2 dioPos
+vec2 abilitydioRPos
+angle angle
+unit zaWarudo
+int dioRTimerInt1
+int dioRTimerInt2
+int dioRTimerInt3
+timer dioRTimer
+effect effect1
+effect effect2
+
+@compiletime function createAbility()
+    new ChannelAbilityPreset(DIO_R, 3, true)
+        ..presetTargetTypes(Targettype.POINTUNIT)
+        ..setAnimationNames("11111111")
+        ..setButtonPositionNormalX(3)
+        ..setButtonPositionNormalY(2)
+        ..setButtonPositionResearchX(3)
+        ..setButtonPositionResearchY(0)
+        ..setIconNormal("ReplaceableTextures\\CommandButtons\\BTNStampede.blp")
+        ..setIconResearch("ReplaceableTextures\\CommandButtons\\BTNStampede.blp")
+        ..setMissileSpeed(99999)
+        ..setHeroAbility(true)
+        ..setHotkeyNormal("R")
+        ..setHotkeyLearn("R")
+        ..setLevels(3)
+        ..setRequiredLevel(8)
+        ..setLevelSkipRequirement(5)
+        ..presetArtDuration(lvl -> 0)
+        ..presetBaseOrderID(lvl -> "submerge")
+        ..presetDisableOtherAbilities(lvl -> false)
+        ..presetFollowThroughTime(lvl -> 0)
+        ..presetCastRange(lvl -> 2000)
+        ..presetCooldown(lvl -> 50)
+        ..presetManaCost(lvl -> 70)
+        ..presetTargetsAllowed(lvl -> "enemy,ground,air,neutral")
+        ..presetTooltipNormal(lvl -> "Supa Dash|r")
+        ..presetTooltipNormalExtended(lvl -> "Mavis R Desc|r")
+        ..setTooltipLearn("Dash|r")
+        ..setTooltipLearnExtended("Learning R|r")
+    new UnitDefinition(DIO_R_DUMMY, UnitIds.wisp)
+        ..setNormalAbilities(commaList('Avul', 'Aloc', 'Amrf'))
+        ..setAnimationCastBackswing(0)
+        ..setDeathTimeseconds(0.1)
+        ..setScalingValue(0.70)
+        ..setUnitClassification("_")
+        ..setArtSpecial("_")
+        ..setHasWaterShadow(false)
+        ..setMaximumPitchAngledegrees(0)
+        ..setMaximumRollAngledegrees(0)
+        ..setModelFile("war3mapImported\\shio_dio_the_world.mdx")
+        ..setScalingValue(1.5)
+        ..setArtSpecial("_")
+        ..setArmorType(ArmorType.Unarmored)
+        ..setPlaceableInEditor(false)
+        ..setMovementHeight(20)
+        ..setSpeedBase(100)
+        ..setTurnRate(3)
+        ..setMovementType(MovementType.Fly)
+        ..setCollisionSize(0)
+        ..setUnitSoundSet("_")
+        ..setCanFlee(false)
+        ..setFoodCost(0)
+        ..setHideMinimapDisplay(true)
+        ..setHitPointsMaximumBase(60)
+        ..setHitPointsRegenerationRate(-1)
+        ..setHitPointsRegenerationType("Always")
+        ..setStockMaximum(1)
+        ..setStockReplenishInterval(1)
+        ..setStructuresBuilt("_")
+        ..setUpgradesUsed("_")
+        ..setHotkey("_")
+        ..setName("effect dummy")
+        ..setTooltipBasic("_")
+        ..setTooltipExtended("_")
+
+init
+    dioR()    
+
+function dioR()
+    CreateTrigger()
+    ..registerAnyUnitEvent(EVENT_PLAYER_UNIT_SPELL_EFFECT)
+    ..addAction() ->
+        if GetSpellAbilityId() == DIO_R
+            abilitydioRPos = vec2(GetSpellTargetX(), GetSpellTargetY())
+            dio = GetTriggerUnit()
+            dioPos = dio.getPos()
+            dioRTimerInt1 = 0
+            if jotaroTOn == true or dioTOn == true            
+                if abilitydioRPos.distanceTo(abilityDioTPos) < 900 and dioPos.distanceTo(abilityDioTPos) < 900
+                    abilitydioRPos = abilityDioTPos
+                    dio.pause()
+                    dio.setInvulnerable(true)   
+                    // gg_snd_dioR6.play()
+                    dioRTimer = CreateTimer()..startPeriodic(0.01, function dioRAoe)
+                else if abilitydioRPos.distanceTo(abilityJotaroTPos) < 900 and dioPos.distanceTo(abilityJotaroTPos) < 900
+                    abilitydioRPos = abilityJotaroTPos
+                    dio.pause()
+                    dio.setInvulnerable(true)   
+                    // gg_snd_dioR6.play()
+                    dioRTimer = CreateTimer()..startPeriodic(0.01, function dioRAoe)                
+            else    
+                if dioPos.distanceTo(abilitydioRPos) < 1250
+                    abilitydioRPos = dioPos.polarOffset(dioPos.angleTo(abilitydioRPos), 1250)
+                dioRDashBool = true
+                dio.pause()
+                dio.setInvulnerable(true)       
+                dio.setPathing(false)
+                dio.setFacing(dioPos.angleTo(abilitydioRPos)) 
+                dio.setAnimation(11)   
+                let rng = GetRandomInt(0, 1)
+                if rng == 0
+                    gg_snd_dioR1_1.play()
+                else 
+                    gg_snd_dioR1_2.play()
+                flashEffect("war3mapImported\\dustwavxfsfsfe.mdx", dio.getPos(), 0.60)        
+                dioRTimer = CreateTimer()..startPeriodic(0.01, function dioRDash)
+
+function dioRDash()
+    dioRTimerInt1++
+    if dioRTimerInt1 > 0 and dioRTimerInt1 < 50
+        if dio.isPaused() == false
+            dio.pause()
+        if dio.isInvulnerable() == false
+            dio.setInvulnerable(true) 
+    if dioRTimerInt1 >= 50 or dioPos.distanceTo(abilitydioRPos) < 25 or jotaroDioRBool == true
+        dio.setAnimation(13)
+        dioDashEnd()
+
+    if dioRTimerInt1 < 50
+        if dioPos.polarOffset(dioPos.angleTo(abilitydioRPos), 25).isTerrainPathable(PATHING_TYPE_WALKABILITY) == true and dioPos.polarOffset(dioPos.angleTo(abilitydioRPos), 25).isTerrainPathable(PATHING_TYPE_FLYABILITY) == true 
+            dioDashEnd()          
+        else
+            dio.setPos(dioPos.polarOffset(dioPos.angleTo(abilitydioRPos), 25))
+            dioPos = dio.getPos()
+            forUnitsInRange(dioPos, 350) (unit u) ->
+                if dio.isAllyOf(u) == false and u.isType(UNIT_TYPE_HERO) and dioRDashBool == true and u.isInvulnerable() == false                           
+                    dioRDashBool = false
+                    dioDashEnd()
+                    dioRTarget = u
+                    dio.pause()
+                    dio.setInvulnerable(true)
+                    dio.setPathing(false)
+                    dioRTarget.pause()
+                    dioRTarget.setInvulnerable(true)
+                    dioRTarget.setPathing(false)
+                    dio.setPos(dioRTarget.getPos().polarOffset(dioRTarget.getPos().angleTo(dioPos), 350))
+                    dio.setFacing(dio.getPos().angleTo(dioRTarget.getPos()))
+                    zaWarudo = createUnit(DIO_R_DUMMY, dioRTarget.getPos().polarOffset(dioRTarget.getPos().angleTo(dioPos), 150))     
+                    //zaWarudo.setAnimation(7)
+                    zaWarudo.setFacing(zaWarudo.getPos().angleTo(dioRTarget.getPos()))
+                    dioRTimerInt2 = 0
+                    dioRTimerInt3 = 0              
+                    dioRTimer = CreateTimer()..startPeriodic(0.03, function dioRAttack1)
+                    CreateTimer()..startPeriodic(0.03, function dioRAttack2)    
+
+
+function dioRAoe()
+    dioRTimerInt1++
+    if dioRTimerInt1 > 0 and dioRTimerInt1 < 20
+        if dio.isPaused() == false
+            dio.pause()
+        if dio.isInvulnerable() == false
+            dio.setInvulnerable(true) 
+    if dioRTimerInt1 == 20
+        zaWarudo = createUnit(DIO_R_DUMMY, abilitydioRPos)  
+        dio.unpause()
+        dio.setInvulnerable(false)        
+    if dioRTimerInt1 == 50    
+        zaWarudo.setAnimation(12)
+        flashEffect("war3mapImported\\dustwavxfsfsfe.mdx", zaWarudo.getPos(), 0.70)  
+        // flashEffect("war3mapImported\\tx.mdx", zaWarudo.getPos(), 4, zaWarudo.getPos().angleTo(dio.getPos()))
+    if dioRTimerInt1 == 75
+        flashEffect("war3mapImported\\white wave.mdx", za_Warudo_dio.getPos(), 4) 
+    if dioRTimerInt1 > 100 and dioRTimerInt1 < 150
+        forUnitsInRange(abilitydioRPos, 900) (unit u) ->
+            if dio.isAllyOf(u) == false and u.isInvulnerable() == false
+                DamageEvent.setNextDamageId(DAMAGE_ABILITY_DIO_R)
+                DamageEvent.setNextDamageFromCode()
+                dio.damageTarget(u, 1, ATTACK_TYPE_MAGIC)    
+    if dioRTimerInt1 >= 170
+        dioRTimer.destr()
+        zaWarudo.kill()
+function dioDashEnd()
+    dioRDashBool = false
+    dioRTimer.destr()
+    dio.setPathing(true)
+    dio.unpause()
+    dio.setInvulnerable(false)    
+
+function dioRAttack1()
+    dioRTimerInt2++
+    if dioRTimerInt2 > 0 and dioRTimerInt2 < 210
+        if dio.isPaused() == false
+            dio.pause()
+        if dio.isInvulnerable() == false
+            dio.setInvulnerable(true) 
+        if dioRTarget.isPaused() == false
+            dioRTarget.pause()
+        if dioRTarget.isInvulnerable() == false
+            dioRTarget.setInvulnerable(true)            
+    if dioRTimerInt2 == 10
+        gg_snd_dioR2.play() 
+        dio.setAnimation(8)
+        zaWarudo.setAnimation(1)
+    //if dioRTimerInt2 == 40
+        //zaWarudo.setAnimation(12)        
+    if dioRTimerInt2 == 70
+        gg_snd_dioR3.play()
+        dio.setAnimation(1)
+        zaWarudo.setAnimation(12) 
+    if dioRTimerInt2 >= 71 and dioRTimerInt2 < 190     
+        dioPos = dio.getPos()
+        if dioPos.polarOffset(dioPos.angleTo(dioRTarget.getPos()), 355).isTerrainPathable(PATHING_TYPE_WALKABILITY) == true and dioPos.polarOffset(dioPos.angleTo(dioRTarget.getPos()), 355).isTerrainPathable(PATHING_TYPE_FLYABILITY) == true
+            DoNothing()
+        else                 
+            dio.setPos(dioPos.polarOffset(dioPos.angleTo(dioRTarget.getPos()), 5)) 
+            dioRTarget.setPos(dioPos.polarOffset(dioPos.angleTo(dioRTarget.getPos()), 355))
+            zaWarudo.setPos(dioPos.polarOffset(dioPos.angleTo(dioRTarget.getPos()), 155))       
+    if dioRTimerInt2 == 170
+        // gg_snd_dioR4.play()
+        zaWarudo.setAnimation(12) 
+        dio.setAnimation(13)
+    if dioRTimerInt2 == 180
+        zaWarudo.setAnimation(13)  
+    if dioRTimerInt2 == 181
+        gg_snd_dioR4.play()         
+    if dioRTimerInt2 == 190     
+        zaWarudo.setAnimation(0) 
+    if dioRTimerInt2 == 210
+        dioRTarget.setInvulnerable(false)
+        zaWarudo.kill()
+        DamageEvent.setNextDamageId(DAMAGE_ABILITY_DELAYED_R)
+        DamageEvent.setNextDamageFromCode()
+        dio.damageTarget(dioRTarget, 1, ATTACK_TYPE_MAGIC)
+        dioDashEnd()
+        dioRTarget.setPathing(true)
+        dioRTarget.unpause()
+
+function dioRAttack2()
+    dioRTimerInt3++
+    if dioRTimerInt3 == 70
+        angle = zaWarudo.getPos().angleTo(dio.getPos())
+        effect1 = addEffect("war3mapImported\\tx.mdx", zaWarudo.getPos())
+        ..setScale(3)
+        ..setYaw(angle)
+        ..destr()
+        effect2 = addEffect("war3mapImported\\dustwavxfsfsfe.mdx", zaWarudo.getPos())
+        ..setScale(0.60)
+        ..destr() 
+    if dioRTimerInt3 == 70
+        effect1 = addEffect("war3mapImported\\tx.mdx", zaWarudo.getPos())
+        ..setScale(3)
+        ..setYaw(angle)
+        ..destr()
+        effect2 = addEffect("war3mapImported\\dustwavxfsfsfe.mdx", zaWarudo.getPos())
+        ..setScale(0.60)
+        ..destr() 
+    if dioRTimerInt3 == 90
+        effect1 = addEffect("war3mapImported\\tx.mdx", zaWarudo.getPos())
+        ..setScale(3)
+        ..setYaw(angle)
+        ..destr()
+        effect2 = addEffect("war3mapImported\\dustwavxfsfsfe.mdx", zaWarudo.getPos())
+        ..setScale(0.60)
+        ..destr() 
+    if dioRTimerInt3 == 110
+        effect1 = addEffect("war3mapImported\\tx.mdx", zaWarudo.getPos())
+        ..setScale(3)
+        ..setYaw(angle)
+        ..destr()
+        effect2 = addEffect("war3mapImported\\dustwavxfsfsfe.mdx", zaWarudo.getPos())
+        ..setScale(0.60)
+        ..destr() 
+    if dioRTimerInt3 == 130
+        effect1 = addEffect("war3mapImported\\tx.mdx", zaWarudo.getPos())
+        ..setScale(3)
+        ..setYaw(angle)
+        ..destr()
+        effect2 = addEffect("war3mapImported\\dustwavxfsfsfe.mdx", zaWarudo.getPos())
+        ..setScale(0.60)
+        ..destr() 
+    if dioRTimerInt3 == 150
+        effect1 = addEffect("war3mapImported\\tx.mdx", zaWarudo.getPos())
+        ..setScale(3)
+        ..setYaw(angle)
+        ..destr()
+        effect2 = addEffect("war3mapImported\\dustwavxfsfsfe.mdx", zaWarudo.getPos())
+        ..setScale(0.60)
+        ..destr()
+    if dioRTimerInt3 == 170
+        effect1 = addEffect("war3mapImported\\tx.mdx", zaWarudo.getPos())
+        ..setScale(3)
+        ..setYaw(angle)
+        ..destr()
+        effect2 = addEffect("war3mapImported\\dustwavxfsfsfe.mdx", zaWarudo.getPos())
+        ..setScale(0.60)
+        ..destr()                                
+    if dioRTimerInt3 == 200
+        effect1 = addEffect("war3mapImported\\tx.mdx", zaWarudo.getPos())
+        ..setScale(3)
+        ..setYaw(angle)
+        ..destr()
+        effect2 = addEffect("war3mapImported\\dustwavxfsfsfe.mdx", zaWarudo.getPos())
+        ..setScale(0.60)
+        ..destr() 
+    if dioRTimerInt3 == 205   
+        GetExpiredTimer().destr()
+

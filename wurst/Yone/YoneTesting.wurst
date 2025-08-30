@@ -1,0 +1,13 @@
+// package YoneTesting
+
+// init
+//     test123()
+
+// function test123()
+//     let nightSong = CreateSound("Nightsong.mp3", false, false, false, 0, 0, "")
+
+//     if Player(0) == GetLocalPlayer()
+//         nightSong.play()
+//         print("Playing Nightsong for player red")
+//     else
+//         print("You are not red, you will not hear Nightsong")

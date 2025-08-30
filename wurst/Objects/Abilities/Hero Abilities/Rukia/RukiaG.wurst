@@ -1,0 +1,40 @@
+package RukiaG
+
+import ClosureEvents
+import ObjectDefinitions
+import AbilityGlobals
+import ChannelAbilityPreset
+import ClosureForGroups
+
+@compiletime function createAbility()
+    new AbilityDefinitionEvasion(RUKIA_G)
+    ..setIconNormal("ReplaceableTextures\\CommandButtons\\BTNFrostArmor.blp")
+    ..setChancetoEvade(1, 0)
+    ..setBuffs(1, "")
+    ..setAreaofEffect(1, 0)
+    ..setButtonPositionNormalX(1)
+    ..setButtonPositionNormalY(1)
+    ..setButtonPositionResearchX(2)
+    ..setButtonPositionResearchY(0)
+    ..setLevels(1)
+    ..setTooltipLearn("Rukia G|r")
+    ..setTooltipLearnExtended("Rukia G|r")
+    ..setTooltipNormal(1, BLUE+"Trail of cold|r")
+    ..setTooltipNormalExtended(1, GOLD+
+            "Everytime Rukia uses an ability there is a chance it will freeze enemy heroes around her briefly.")
+
+public function rukiaG()
+    EventListener.add(EVENT_PLAYER_UNIT_SPELL_EFFECT) ->
+        // if GetSpellAbilityId() == RUKIA_Q or GetSpellAbilityId() == RUKIA_Q2 or GetSpellAbilityId() == RUKIA_W or GetSpellAbilityId() == RUKIA_W2 or GetSpellAbilityId() == RUKIA_E or GetSpellAbilityId() == RUKIA_E2 or GetSpellAbilityId() == RUKIA_R or GetSpellAbilityId() == RUKIA_T or GetSpellAbilityId() == RUKIA_F
+        if GetTriggerUnit().getTypeId() == RUKIA
+            let rukia = GetTriggerUnit()
+            forUnitsInRange(rukia.getPos(), 600) (unit u) ->
+                if u.isEnemyOf(rukia) and u.isAlive() and u.isInvulnerable() == false and u.isType(UNIT_TYPE_HERO)
+                    u.issueImmediateOrder("stop")
+                    flashEffect("war3mapImported\\Icefirst.mdx", u.getPos(), 1)
+                    
+                    
+
+                
+
+            

@@ -4,33 +4,33 @@ import AbilityGlobals
 import main
 import ACR_Stun
 
+unit levi
+
 init
     initTrig_LeviW_Orig()
 
 function trig_LeviWConditions() returns boolean
     return GetSpellAbilityId() == 'A0Q7'
 function trig_LeviWFunc019003003() returns boolean
-    return IsUnitType(GetFilterUnit(), UNIT_TYPE_STRUCTURE) == false and IsUnitDeadBJ(GetFilterUnit()) == false and IsUnitEnemy(GetFilterUnit(), LoadPlayerHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * LoadInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 1045), 603)) == true and GetUnitAbilityLevel(GetFilterUnit(), 'Avul') != 1
+    return IsUnitType(GetFilterUnit(), UNIT_TYPE_STRUCTURE) == false and IsUnitDeadBJ(GetFilterUnit()) == false and IsUnitEnemy(GetFilterUnit(), levi.getOwner()) == true and GetUnitAbilityLevel(GetFilterUnit(), 'Avul') != 1
 function trig_LeviWFunc020A()
+    let victim = GetEnumUnit()
     DamageEvent.setNextDamageId(DAMAGE_ABILITY_W)
     DamageEvent.setNextDamageFromCode()
-    UnitDamageTargetBJ(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * LoadInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 1045), 594), GetEnumUnit(), (I2R(GetUnitAbilityLevel(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * LoadInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 1045), 594), 'A0Q7')) + 1.00) * I2R(GetHeroAgi(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * LoadInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 1045), 594), true)), ATTACK_TYPE_MAGIC, DAMAGE_TYPE_MAGIC)
-    let caster = LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594)
-    let victim = GetEnumUnit()
-    acrStun(caster, victim, 0.7)
-    SaveLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * LoadInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 1045), 1116, GetUnitLoc(GetEnumUnit()))
-    SaveUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * LoadInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 1045), 694, CreateUnitAtLoc(LoadPlayerHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * LoadInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 1045), 603), 'e0HU', LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * LoadInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 1045), 1116), GetRandomDirectionDeg()))
-    UnitApplyTimedLife(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * LoadInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 1045), 694), 'BHwe', 2.00)
-    SaveUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * LoadInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 1045), 678, CreateUnitAtLoc(LoadPlayerHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * LoadInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 1045), 603), 'e0I8', LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * LoadInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 1045), 1116), GetRandomDirectionDeg()))
-    UnitApplyTimedLife(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * LoadInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 1045), 678), 'BHwe', 2.00)
-    SaveUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * LoadInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 1045), 601, CreateUnitAtLoc(LoadPlayerHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * LoadInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 1045), 603), 'e0V4', LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * LoadInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 1045), 1116), GetRandomDirectionDeg()))
-    SetUnitScale(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * LoadInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 1045), 601), 2.00, 2.00, 2.00)
-    UnitApplyTimedLife(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * LoadInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 1045), 601), 'BHwe', 2.00)
-    SaveUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * LoadInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 1045), 386, CreateUnitAtLoc(LoadPlayerHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * LoadInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 1045), 603), 'e0VG', LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * LoadInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 1045), 1116), 270.00))
-    SetUnitTimeScalePercent(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * LoadInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 1045), 386), 140.00)
-    UnitApplyTimedLife(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * LoadInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 1045), 386), 'BHwe', 0.01)
-    RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * LoadInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 1045), 1116))
-    
+    UnitDamageTargetBJ(levi, victim, (I2R(GetUnitAbilityLevel(levi, 'A0Q7')) + 1.00) * I2R(GetHeroAgi(levi, true)), ATTACK_TYPE_MAGIC, DAMAGE_TYPE_MAGIC)    
+    acrStun(levi, victim, 0.7)
+    let loc = GetUnitLoc(victim)
+    let dummy1 = CreateUnitAtLoc(levi.getOwner(), 'e0HU', loc, GetRandomDirectionDeg())
+    let dummy2 = CreateUnitAtLoc(levi.getOwner(), 'e0I8', loc, GetRandomDirectionDeg())
+    let dummy3 = CreateUnitAtLoc(levi.getOwner(), 'e0V4', loc, GetRandomDirectionDeg())
+    let dummy4 = CreateUnitAtLoc(levi.getOwner(), 'e0VG', loc, 270.00)
+    SetUnitTimeScalePercent(dummy4, 140)
+    RemoveLocation(loc)
+    KillUnit(dummy1)
+    KillUnit(dummy2)
+    KillUnit(dummy3)
+    KillUnit(dummy4)
+
 function trig_LeviWFunc025T()
     // CameraClearNoiseForPlayer(LoadPlayerHandle(YDLOC, GetHandleId(GetExpiredTimer()), 603))
     FlushChildHashtable(YDLOC, GetHandleId(GetExpiredTimer()))
@@ -46,6 +46,7 @@ function trig_LeviWActions()
     soundPlay("war3mapImported\\Levi2.mp3", GetUnitX(udg_Unitsound), GetUnitY(udg_Unitsound))
     soundPlay("war3mapImported\\LeviEffect1.mp3", GetUnitX(udg_Unitsound), GetUnitY(udg_Unitsound))
     SaveUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594, GetSpellAbilityUnit())
+    levi = GetSpellAbilityUnit()
     SaveLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1108, GetUnitLoc(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594)))
     SavePlayerHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 603, GetOwningPlayer(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594)))
     SaveReal(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 689, 0.00)

@@ -1,0 +1,172 @@
+package Dio_W
+
+import DamageEvent
+import AbilityGlobals
+import ObjectDefinitions
+import ChannelAbilityPreset
+import UnitIds
+import ClosureForGroups
+import ACR_Knockback
+import ACR_Stun
+import main
+
+unit dio
+unit zaWarudo
+unit dioWTarget
+timer dioWTimer
+int dioWTimerInt
+
+@compiletime function createAbility()
+    new ChannelAbilityPreset(DIO_W, 5, true)
+        ..presetTargetTypes(Targettype.NONE)
+        ..setAnimationNames("11111111")
+        ..setButtonPositionNormalX(1)
+        ..setButtonPositionNormalY(2)
+        ..setButtonPositionResearchX(1)
+        ..setButtonPositionResearchY(0)
+        ..setIconNormal("ReplaceableTextures\\PassiveButtons\\PASBTNFireRocks.blp")
+        ..setIconResearch("ReplaceableTextures\\PassiveButtons\\PASBTNFireRocks.blp")
+        ..setMissileSpeed(99999)
+        ..setHeroAbility(true)
+        ..setHotkeyNormal("W")
+        ..setHotkeyLearn("W")
+        ..setLevels(5)
+        ..setLevelSkipRequirement(2)
+        ..presetArtDuration(lvl -> 0)
+        ..presetBaseOrderID(lvl -> "possession")
+        ..presetDisableOtherAbilities(lvl -> false)
+        ..presetFollowThroughTime(lvl -> 0)
+        ..presetCastRange(lvl -> 2000)
+        ..presetCooldown(lvl -> 50)
+        ..presetManaCost(lvl -> 70)
+        ..presetTargetsAllowed(lvl -> "enemy,ground,air,neutral")
+        ..presetTooltipNormal(lvl -> "Dio's Fury|r")
+        ..presetTooltipNormalExtended(lvl -> "dio W Desc|r")
+        ..setTooltipLearn("Learn W|r")
+        ..setTooltipLearnExtended("Learning W|r")    
+    new UnitDefinition(DIO_W_DUMMY, UnitIds.wisp)
+        ..setNormalAbilities(commaList('Avul', 'Aloc', 'Amrf'))
+        ..setAnimationCastBackswing(0)
+        ..setDeathTimeseconds(0.1)
+        ..setScalingValue(0.70)
+        ..setUnitClassification("_")
+        ..setArtSpecial("_")
+        ..setHasWaterShadow(false)
+        ..setMaximumPitchAngledegrees(0)
+        ..setMaximumRollAngledegrees(0)
+        ..setModelFile("war3mapImported\\Shio_Dio_The_World.mdx")
+        ..setScalingValue(1.5)
+        ..setArtSpecial("_")
+        ..setArmorType(ArmorType.Unarmored)
+        ..setPlaceableInEditor(false)
+        ..setMovementHeight(20)
+        ..setSpeedBase(100)
+        ..setTurnRate(3)
+        ..setMovementType(MovementType.Fly)
+        ..setCollisionSize(0)
+        ..setUnitSoundSet("_")
+        ..setCanFlee(false)
+        ..setFoodCost(0)
+        ..setHideMinimapDisplay(true)
+        ..setHitPointsMaximumBase(60)
+        ..setHitPointsRegenerationRate(-1)
+        ..setHitPointsRegenerationType("Always")
+        ..setStockMaximum(1)
+        ..setStockReplenishInterval(1)
+        ..setStructuresBuilt("_")
+        ..setUpgradesUsed("_")
+        ..setHotkey("_")
+        ..setName("effect dummy")
+        ..setTooltipBasic("_")
+        ..setTooltipExtended("_")
+
+init
+    dioW()    
+
+function dioW()
+    CreateTrigger()
+    ..registerAnyUnitEvent(EVENT_PLAYER_UNIT_SPELL_EFFECT)
+    ..addAction() ->
+        if GetSpellAbilityId() == DIO_W
+            dio = GetTriggerUnit()
+            dio.pause()
+            dio.setInvulnerable(true)                 
+            dioWTimerInt = 0                          
+            dioWTimer = CreateTimer()..startPeriodic(0.01, function dioWStart)   
+
+function dioWStart()
+    dioWTimerInt++
+    if dioWTimerInt == 5
+        forNearestUnit(dio.getPos(), 600, Filter(function dioWFilter)) (unit u) ->
+            if u != null
+                dioWTimer.destr()
+                dioWTarget = u
+                dioWTarget.pause()
+                dioWTarget.setInvulnerable(true)
+                dioWTimerInt = 0
+                dioWTimer = CreateTimer()..startPeriodic(0.01, function dioWSingleTarget)                 
+            else 
+                dioWTimer.destr()         
+                dioWTimerInt = 0
+                dioWTimer = CreateTimer()..startPeriodic(0.01, function dioWAoe)        
+
+function dioWSingleTarget()
+    dioWTimerInt++
+    if dioWTimerInt > 0 and dioWTimerInt < 100
+        if dio.isPaused() == false
+            dio.pause()
+        if dio.isInvulnerable() == false
+            dio.setInvulnerable(true)    
+    if dioWTimerInt == 5
+        zaWarudo = createUnit(DIO_W_DUMMY, dioWTarget.getPos().polarOffset(dioWTarget.getPos().angleTo(dio.getPos()), 170))  
+    if dioWTimerInt == 6  
+        zaWarudo.setAnimation(2)
+        gg_snd_dioW.play()
+    if dioWTimerInt == 80
+        flashEffect("war3mapImported\\dioW2.mdx", zaWarudo.getPos().polarOffset(dioWTarget.getPos().angleTo(zaWarudo.getPos()), 100), 2, zaWarudo.getPos().angleTo(dioWTarget.getPos()))
+    if dioWTimerInt == 100
+        dio.unpause()
+        dio.setInvulnerable(false)        
+        dioWTarget.setInvulnerable(false)        
+        DamageEvent.setNextDamageId(DAMAGE_ABILITY_W)
+        DamageEvent.setNextDamageFromCode()
+        dio.damageTarget(dioWTarget, 1, ATTACK_TYPE_MAGIC)  
+        dioWTarget.unpause()   
+        acrKnockback(dio, dioWTarget, 600)    
+    if dioWTimerInt >= 125
+        dioWTimer.destr()
+        zaWarudo.kill()
+
+function dioWAoe()
+    dioWTimerInt++
+    if dioWTimerInt > 0 and dioWTimerInt < 100
+        if dio.isPaused() == false
+            dio.pause()
+        if dio.isInvulnerable() == false
+            dio.setInvulnerable(true)        
+    if dioWTimerInt == 5
+        zaWarudo = createUnitZ(dio.getOwner(), DIO_W_DUMMY, dio.getPos().withZ(50), DOWN.getAngle())
+        // zaWarudo = createUnitZ(dio.getOwner(), DIO_W_DUMMY, dio.getPos3with(1000), zaWarudo.getPos3with(1000).angleTo2d(zaWarudo.getPos()))
+        // let angle2 = zaWarudo.getPos3with(300).angleTo2d(zaWarudo.getPos())
+        // zaWarudo.setFacing(angle2)
+    if dioWTimerInt == 6  
+        zaWarudo.setAnimation(14)
+        gg_snd_dioW.play()
+    if dioWTimerInt == 80
+        flashEffect("war3mapImported\\dioW.mdx", dio.getPos(), 2)
+    if dioWTimerInt == 100
+        dio.unpause()
+        dio.setInvulnerable(false)        
+        forUnitsInRange(dio.getPos(), 600) (unit u) ->
+            if dio.isAllyOf(u) == false and u.isInvulnerable() == false
+                DamageEvent.setNextDamageId(DAMAGE_ABILITY_W)
+                DamageEvent.setNextDamageFromCode()
+                dio.damageTarget(u, 1, ATTACK_TYPE_MAGIC)     
+                acrStun(dio, u, 0.7)   
+    if dioWTimerInt >= 125
+        dioWTimer.destr()
+        zaWarudo.kill()
+
+function dioWFilter() returns boolean
+    return GetFilterUnit().isType(UNIT_TYPE_HERO)==true and GetFilterUnit().isEnemyOf(dio)==true and GetFilterUnit().isAlive()==true and GetFilterUnit().isInvulnerable()== false  
+

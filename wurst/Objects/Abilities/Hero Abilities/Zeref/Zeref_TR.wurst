@@ -1,0 +1,109 @@
+package Zeref_TR
+import DamageEvent
+import AbilityGlobals
+import ObjectDefinitions
+import ChannelAbilityPreset
+import main
+import ClosureForGroups
+import TerrainUtils
+
+unit zeref
+unit enemy
+integer zerefTRInt
+integer zerefTRInt2
+effect effect1
+effect effect2
+vec2 spellPos
+angle angle
+vec2 zerefPos
+
+@compiletime function createAbility()
+    new ChannelAbilityPreset(ZEREF_TR, 1, true)
+        ..presetTargetTypes(Targettype.UNIT)
+        ..setAnimationNames("11111111")
+        ..setButtonPositionNormalX(3)
+        ..setButtonPositionNormalY(2)
+        ..setIconNormal("ReplaceableTextures\\CommandButtons\\BTNGhost.blp")
+        ..setIconResearch("ReplaceableTextures\\CommandButtons\\BTNGhost.blp")
+        ..setMissileSpeed(99999)
+        ..setHeroAbility(true)
+        ..setHotkeyNormal("R")
+        ..setHotkeyLearn("R")
+        ..setLevels(1)
+        ..setRequiredLevel(8)
+        ..setLevelSkipRequirement(5)
+        ..presetArtDuration(lvl -> 0)
+        ..presetBaseOrderID(lvl -> "preservation")
+        ..presetDisableOtherAbilities(lvl -> false)
+        ..presetFollowThroughTime(lvl -> 0)
+        ..presetCastRange(lvl -> 2000)
+        ..presetCooldown(lvl -> 50)
+        ..presetManaCost(lvl -> 70)
+        ..presetTargetsAllowed(lvl -> "enemy,ground,air,neutral")
+        ..presetTooltipNormal(lvl -> "Dark Blast Inferno|r")
+        ..presetTooltipNormalExtended(lvl -> "Zeref TR Desc|r")
+        
+init
+    initTrig_ZerefTR_Orig()     
+
+function initTrig_ZerefTR_Orig()
+    CreateTrigger()
+    ..registerAnyUnitEvent(EVENT_PLAYER_UNIT_SPELL_EFFECT)
+    ..addAction() ->
+        if GetSpellAbilityId() == ZEREF_TR
+            soundPlay("war3mapImported\\Zeref TR.mp3", 0, 0)
+            zeref=GetTriggerUnit()
+            enemy=GetSpellTargetUnit()
+            spellPos = enemy.getPos()
+            angle = zeref.getPos().angleTo(spellPos)
+            zeref.setInvulnerable(true)
+            zeref.pause()
+            enemy.setInvulnerable(true)
+            enemy.pause()
+            zeref.setPathing(false)
+            zeref.setPos(zeref.getPos().polarOffset(angle, (zeref.getPos().distanceTo(spellPos) -800))) 
+            zerefTRInt = 0
+            CreateTimer()..startPeriodic(0.03, function zerefTREnd)
+
+function zerefTREnd()
+    zerefTRInt++
+    if zerefTRInt == 30
+        zeref.setAnimation(2)
+    if zerefTRInt >= 31 and zerefTRInt < 135
+        zerefPos = zeref.getPos()
+        // if zerefPos.polarOffset(zerefPos.angleTo(spellPos), 250).isTerrainPathable(PATHING_TYPE_WALKABILITY) == true and zerefPos.polarOffset(zerefPos.angleTo(spellPos), 250).isTerrainPathable(PATHING_TYPE_FLYABILITY) == true
+        //     DoNothing()
+        // else                 
+        zeref.setPos(zerefPos.polarOffset(zerefPos.angleTo(spellPos), 4))   
+    if zerefTRInt == 80
+        effect1 = addEffect("war3mapImported\\CeremonyofDarkness.mdx", zeref, "origin")
+    if zerefTRInt == 100
+        effect2 = addEffect("war3mapImported\\ZerefTRBall.mdx", zeref, "left hand")    
+    if zerefTRInt == 140
+        GetExpiredTimer().destr() 
+        zeref.setAnimation("Stand - 1")
+        zerefTRInt2 = 0
+        CreateTimer()..startPeriodic(0.03, function zerefTREnd2)
+    
+function zerefTREnd2()
+    zerefTRInt2++
+    if zerefTRInt2 == 140
+        SetUnitAnimation(zeref, "Stand Ready")   
+    if zerefTRInt2 == 190
+        SetUnitAnimation(zeref, "Attack - 2")
+    if zerefTRInt2 == 211
+        GetExpiredTimer().destr()
+        effect1.destr()
+        flashEffect("war3mapImported\\ZerefTRexp.mdx", spellPos)
+        flashEffect("war3mapImported\\ZerefCone.mdx", spellPos, 2)
+        enemy.setInvulnerable(false)
+        forUnitsInRange(spellPos, 400) (unit victim) ->
+            if victim.isType(UNIT_TYPE_STRUCTURE)==false and victim.isEnemyOf(zeref)==true and victim.isAlive()==true and victim.isInvulnerable() == false
+                DamageEvent.setNextDamageId(DAMAGE_ABILITY_MODE_R)
+                DamageEvent.setNextDamageFromCode()
+                UnitDamageTargetBJ(zeref,victim,(100*GetUnitAbilityLevel(zeref,ZEREF_TR)).toReal(),ATTACK_TYPE_MAGIC,DAMAGE_TYPE_MAGIC)          
+        effect2.destr()
+        zeref.setInvulnerable(false)
+        zeref.unpause()
+        zeref.setPathing(true)
+        enemy.unpause()

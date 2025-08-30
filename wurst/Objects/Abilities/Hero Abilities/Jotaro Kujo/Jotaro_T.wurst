@@ -1,0 +1,393 @@
+package Jotaro_T
+
+import AbilityGlobals
+import ObjectDefinitions
+import ChannelAbilityPreset
+import UnitIds
+import main
+import ClosureForGroups
+import ACR_TagSystem
+import UpdateTooltips
+import TimerUtils
+import TerrainUtils
+import DamageEvent
+
+unit jotaro
+vec2 jotaroPos
+vec2 jotaroTTargetPos
+vec2 starPlatinumPos
+vec2 emptyVector
+unit starPlatinum
+public unit za_Warudo_Jotaro
+unit jotaroTTarget
+group jotaroTGroup
+int jotaroTTimerInt1
+int jotaroT2TimerInt
+int jotaroT2TimerInt3
+timer jotaroTTimer
+timer jotaroT2Timer
+effect effect1
+effect effect2
+angle angle
+angle angle2
+
+@compiletime function createAbility()
+    new ChannelAbilityPreset(JOTARO_T, 1, true)
+        ..presetTargetTypes(Targettype.NONE)
+        ..setAnimationNames("11111111")
+        ..setButtonPositionNormalX(3)
+        ..setButtonPositionNormalY(1)
+        ..setButtonPositionResearchX(3)
+        ..setButtonPositionResearchY(1)
+        ..setIconNormal("ReplaceableTextures\\CommandButtons\\BTNUsedSoulGem.blp")
+        ..setIconResearch("ReplaceableTextures\\CommandButtons\\BTNUsedSoulGem.blp")
+        ..setMissileSpeed(99999)
+        ..setHeroAbility(true)
+        ..setHotkeyNormal("T")
+        ..setHotkeyLearn("T")
+        ..setLevels(1)
+        ..setRequiredLevel(23)
+        ..presetArtDuration(lvl -> 0)
+        ..presetBaseOrderID(lvl -> "eattree")
+        ..presetDisableOtherAbilities(lvl -> false)
+        ..presetFollowThroughTime(lvl -> 0)
+        ..presetCastRange(lvl -> 2000)
+        ..presetCooldown(lvl -> 50)
+        ..presetManaCost(lvl -> 70)
+        ..presetTargetsAllowed(lvl -> "enemy,ground,air,neutral, vulnerable")
+        ..presetTooltipNormal(lvl -> "The World")
+        ..setTooltipLearn("The World|r")
+    new ChannelAbilityPreset(JOTARO_T2, 1, true)
+        ..presetTargetTypes(Targettype.UNIT)
+        ..setAnimationNames("11111111")
+        ..setButtonPositionNormalX(3)
+        ..setButtonPositionNormalY(1)
+        ..setButtonPositionResearchX(3)
+        ..setButtonPositionResearchY(1)
+        ..setIconNormal("ReplaceableTextures\\CommandButtons\\BTNSpellSteal.blp")
+        ..setIconResearch("ReplaceableTextures\\CommandButtons\\BTNSpellSteal.blp")
+        ..setMissileSpeed(99999)
+        ..setHeroAbility(true)
+        ..setHotkeyNormal("T")
+        ..setHotkeyLearn("T")
+        ..setLevels(1)
+        ..setRequiredLevel(23)
+        ..presetArtDuration(lvl -> 0)
+        ..presetBaseOrderID(lvl -> "ambush")
+        ..presetDisableOtherAbilities(lvl -> false)
+        ..presetFollowThroughTime(lvl -> 0)
+        ..presetCastRange(lvl -> 2000)
+        ..presetCooldown(lvl -> 50)
+        ..presetManaCost(lvl -> 70)
+        ..presetTargetsAllowed(lvl -> "enemy,ground,air,neutral, vulnerable")
+        ..presetTooltipNormal(lvl -> "Star Platinum The World Edition")
+    new UnitDefinition(JOTARO_T_DUMMY, UnitIds.wisp)
+        ..setNormalAbilities(commaList('Avul', 'Aloc', 'Amrf'))
+        ..setAnimationCastBackswing(0)
+        ..setDeathTimeseconds(0.1)
+        ..setScalingValue(0.70)
+        ..setUnitClassification("_")
+        ..setArtSpecial("_")
+        ..setHasWaterShadow(false)
+        ..setMaximumPitchAngledegrees(0)
+        ..setMaximumRollAngledegrees(0)
+        ..setModelFile("war3mapImported\\FieldPuRPle.mdl")
+        ..setScalingValue(2.35)
+        ..setArtSpecial("_")
+        ..setArmorType(ArmorType.Unarmored)
+        ..setPlaceableInEditor(false)
+        ..setMovementHeight(20)
+        ..setSpeedBase(100)
+        ..setTurnRate(3)
+        ..setMovementType(MovementType.Fly)
+        ..setCollisionSize(0)
+        ..setUnitSoundSet("_")
+        ..setCanFlee(false)
+        ..setFoodCost(0)
+        ..setHideMinimapDisplay(true)
+        ..setHitPointsMaximumBase(60)
+        ..setHitPointsRegenerationRate(-1)
+        ..setHitPointsRegenerationType("Always")
+        ..setStockMaximum(1)
+        ..setStockReplenishInterval(1)
+        ..setStructuresBuilt("_")
+        ..setUpgradesUsed("_")
+        ..setHotkey("_")
+        ..setName("effect dummy")
+        ..setTooltipBasic("_")
+        ..setTooltipExtended("_")
+    new UnitDefinition(JOTARO_T_DUMMY2, UnitIds.wisp)
+        ..setNormalAbilities(commaList('Avul', 'Aloc', 'Amrf'))
+        ..setAnimationCastBackswing(0)
+        ..setDeathTimeseconds(0.1)
+        ..setScalingValue(0.70)
+        ..setUnitClassification("_")
+        ..setArtSpecial("_")
+        ..setHasWaterShadow(false)
+        ..setMaximumPitchAngledegrees(0)
+        ..setMaximumRollAngledegrees(0)
+        ..setModelFile("war3mapImported\\Star Platinum.mdx")
+        ..setScalingValue(1.5)
+        ..setArtSpecial("_")
+        ..setArmorType(ArmorType.Unarmored)
+        ..setPlaceableInEditor(false)
+        ..setMovementHeight(20)
+        ..setSpeedBase(100)
+        ..setTurnRate(3)
+        ..setMovementType(MovementType.Fly)
+        ..setCollisionSize(0)
+        ..setUnitSoundSet("_")
+        ..setCanFlee(false)
+        ..setFoodCost(0)
+        ..setHideMinimapDisplay(true)
+        ..setHitPointsMaximumBase(60)
+        ..setHitPointsRegenerationRate(-1)
+        ..setHitPointsRegenerationType("Always")
+        ..setStockMaximum(1)
+        ..setStockReplenishInterval(1)
+        ..setStructuresBuilt("_")
+        ..setUpgradesUsed("_")
+        ..setHotkey("_")
+        ..setName("effect dummy")
+        ..setTooltipBasic("_")
+        ..setTooltipExtended("_")  
+init
+    jotaroT()    
+
+function jotaroT()
+    CreateTrigger()
+    ..registerAnyUnitEvent(EVENT_PLAYER_HERO_SKILL)
+    ..addAction() ->
+        if GetLearnedSkill() == JOTARO_T
+            jotaro = GetTriggerUnit()
+            jotaro.addAbility(JOTARO_T2)
+            if JOTARO_T2.hasTagHidden() == false
+                jotaro.hideAbility(JOTARO_T2, true)
+                JOTARO_T2.addTagHidden()
+            CreateTimer()..startPeriodic(0.01, function jotaroTReplaceTimer)    
+    CreateTrigger()
+    ..registerAnyUnitEvent(EVENT_PLAYER_UNIT_SPELL_EFFECT)
+    ..addAction() ->
+        if GetSpellAbilityId() == JOTARO_T
+            jotaro = GetTriggerUnit()
+            abilityJotaroTPos = jotaro.getPos()
+            abilityJotaroTLoc = GetUnitLoc(jotaro)
+            jotaro.pause()
+            jotaro.setInvulnerable(true)
+            if JOTARO_T.hasTagHidden() == false
+                jotaro.hideAbility(JOTARO_T, true)
+                JOTARO_T.addTagHidden()
+            if JOTARO_T2.hasTagHidden() == true
+                jotaro.hideAbility(JOTARO_T2, false)
+                JOTARO_T2.removeTagHidden()
+                let id = jotaro.getOwner().getId()        
+                let tooltipTimer = CreateTimer()
+                tooltipTimer..start(0.02, function updateTooltips)..setData(id)               
+            gg_snd_jotaroT1.play()           
+            jotaro.setAnimation(2)
+            if jotaroTGroup == null
+                jotaroTGroup = CreateGroup()               
+            jotaroTTimerInt1 = 0                          
+            jotaroTTimer = CreateTimer()..startPeriodic(0.02, function jotaroTStart)  
+        else if GetSpellAbilityId() == JOTARO_T2
+            jotaroTTarget = GetSpellTargetUnit()  
+            gg_snd_jotaroT2.play()
+            jotaro.pause()
+            jotaro.setInvulnerable(true)
+            jotaroTTarget.pause()
+            jotaroTTarget.setInvulnerable(true)
+            jotaro.setAnimation(5)            
+            jotaroT2TimerInt = 0
+            jotaroT2TimerInt3 = 0
+            jotaroT2Timer = CreateTimer()..startPeriodic(0.01, function jotaroT2Start)
+            CreateTimer()..startPeriodic(0.01, function jotaroT2Effects)
+
+function jotaroTReplaceTimer()
+    if jotaroTOn == true or dioTOn == true
+        if jotaro.getPos().distanceTo(abilityJotaroTPos) < 900 or jotaro.getPos().distanceTo(abilityDioTPos) < 900
+            if JOTARO_T.hasTagHidden() == false
+                jotaro.hideAbility(JOTARO_T, true)
+                JOTARO_T.addTagHidden()        
+            if JOTARO_T2.hasTagHidden() == true
+                jotaro.hideAbility(JOTARO_T2, false)
+                JOTARO_T2.removeTagHidden()
+                let id = jotaro.getOwner().getId()        
+                let tooltipTimer = CreateTimer()
+                tooltipTimer..start(0.02, function updateTooltips)..setData(id)                     
+    if jotaro.getPos().distanceTo(abilityJotaroTPos) > 900 and jotaro.getPos().distanceTo(abilityDioTPos) > 900
+        if jotaroTOn == false 
+            if JOTARO_T.hasTagHidden() == true
+                jotaro.hideAbility(JOTARO_T, false)
+                JOTARO_T.removeTagHidden()       
+        if JOTARO_T2.hasTagHidden() == false
+            jotaro.hideAbility(JOTARO_T2, true)
+            JOTARO_T2.addTagHidden()
+
+
+function jotaroT2Start()
+    jotaroT2TimerInt++
+    if jotaroT2TimerInt > 0 and jotaroT2TimerInt < 2700
+        if jotaro.isPaused() == false
+            jotaro.pause()
+        if jotaro.isInvulnerable() == false
+            jotaro.setInvulnerable(true) 
+    if jotaroT2TimerInt > 0 and jotaroT2TimerInt < 2751  
+        if jotaroTTarget.isPaused() == false
+            jotaroTTarget.pause()
+        if jotaroTTarget.isInvulnerable() == false
+            jotaroTTarget.setInvulnerable(true)                        
+    if jotaroT2TimerInt == 1
+        jotaro.setPos(jotaroTTarget.getPos().polarOffset(jotaroTTarget.getPos().angleTo(jotaro.getPos()), 600))
+        jotaro.setAnimation(0) 
+    if jotaroT2TimerInt == 100
+        jotaro.setAnimation(21)    
+    if jotaroT2TimerInt > 100 and jotaroT2TimerInt < 401
+        jotaroPos = jotaro.getPos()            
+        jotaro.setPos(jotaroPos.polarOffset(jotaroPos.angleTo(jotaroTTarget.getPos()), 1)) 
+    if jotaroT2TimerInt == 401
+        jotaro.setAnimation(22) 
+    if jotaroT2TimerInt == 600
+        starPlatinum = createUnit(JOTARO_T_DUMMY2, jotaroTTarget.getPos().polarOffset(jotaroTTarget.getPos().angleTo(jotaro.getPos()), 200)) 
+        starPlatinum.setFacing(starPlatinum.getPos().angleTo(jotaroTTarget.getPos()))
+        jotaro.setAnimation(8)
+    if jotaroT2TimerInt == 620        
+        jotaro.setAnimation(5) 
+        starPlatinum.setAnimation(0)
+    if jotaroT2TimerInt == 1750
+        starPlatinum.setAnimation(24)
+    if jotaroT2TimerInt == 1850      
+        starPlatinum.setAnimation(34)  
+    if jotaroT2TimerInt == 2300
+        starPlatinum.setAnimation(12)
+    if jotaroT2TimerInt == 2350
+        starPlatinum.setAnimation(13)        
+    if jotaroT2TimerInt == 2700
+        starPlatinumPos = starPlatinum.getPos()
+        starPlatinum.kill()
+        jotaroTTarget.setPathing(false)       
+        jotaro.unpause()
+        jotaro.setInvulnerable(false)
+    if jotaroT2TimerInt > 2700 and jotaroT2TimerInt < 2751
+        jotaroTTargetPos = jotaroTTarget.getPos()
+        if jotaroTTargetPos.polarOffset(starPlatinumPos.angleTo(jotaroTTargetPos), 25).isTerrainPathable(PATHING_TYPE_WALKABILITY) == true and jotaroTTargetPos.polarOffset(starPlatinumPos.angleTo(jotaroTTargetPos), 25).isTerrainPathable(PATHING_TYPE_FLYABILITY) == true 
+            DoNothing()
+        else    
+            jotaroTTarget.setPos(jotaroTTargetPos.polarOffset(starPlatinumPos.angleTo(jotaroTTargetPos), 25))  
+    if jotaroT2TimerInt >= 2751
+        jotaroT2Timer.destr()
+        jotaroTTarget.setPathing(true)
+        jotaroTTarget.setInvulnerable(false)
+        jotaroTTarget.unpause()
+        DamageEvent.setNextDamageId(DAMAGE_ABILITY_DELAYED_T)
+        DamageEvent.setNextDamageFromCode()
+        jotaro.damageTarget(jotaroTTarget, 1, ATTACK_TYPE_MAGIC)
+
+function jotaroT2Effects()
+    jotaroT2TimerInt3++
+    if jotaroT2TimerInt3 == 670
+        angle = starPlatinum.getPos().angleTo(jotaro.getPos())
+        angle2 = starPlatinum.getPos().angleTo(jotaroTTarget.getPos())
+        flashEffect("war3mapImported\\punchshot.mdx", starPlatinum.getPos(), 1, starPlatinum.getPos().angleTo(jotaroTTarget.getPos()))
+    if jotaroT2TimerInt3 == 1850
+        effect1 = addEffect("war3mapImported\\GODBOY_JNT.mdx", starPlatinum.getPos())
+        ..setScale(0.40)
+        ..setYaw(angle2)
+        ..destr()
+        // effect2 = addEffect("war3mapImported\\tx.mdx", starPlatinum.getPos())
+        // ..setScale(3)
+        // ..setYaw(angle)
+        // ..destr()
+    if jotaroT2TimerInt3 == 1900
+        effect1 = addEffect("war3mapImported\\GODBOY_JNT.mdx", starPlatinum.getPos())
+        ..setScale(0.40)
+        ..setYaw(angle2)
+        ..destr()
+        // effect2 = addEffect("war3mapImported\\tx.mdx", starPlatinum.getPos())
+        // ..setScale(3)
+        // ..setYaw(angle)
+        // ..destr()
+    if jotaroT2TimerInt3 == 2000
+        effect1 = addEffect("war3mapImported\\GODBOY_JNT.mdx", starPlatinum.getPos())
+        ..setScale(0.40)
+        ..setYaw(angle2)
+        ..destr()
+        // effect2 = addEffect("war3mapImported\\tx.mdx", starPlatinum.getPos())
+        // ..setScale(3)
+        // ..setYaw(angle)
+        // ..destr()
+    // if jotaroT2TimerInt3 == 2100
+        //effect1 = addEffect("war3mapImported\\GODBOY_JNT.mdx", jotaroTTarget.getPos())
+        //..setScale(1)
+        //..destr()
+        // effect2 = addEffect("war3mapImported\\tx.mdx", starPlatinum.getPos())
+        // ..setScale(3)
+        // ..setYaw(angle)
+        // ..destr()
+    // if jotaroT2TimerInt3 == 2200
+        //effect1 = addEffect("war3mapImported\\GODBOY_JNT.mdx", jotaroTTarget.getPos())
+        //..setScale(1)
+        //..destr()
+        // effect2 = addEffect("war3mapImported\\tx.mdx", starPlatinum.getPos())
+        // ..setScale(3)
+        // ..setYaw(angle)
+        // ..destr()
+    // if jotaroT2TimerInt3 == 2300
+        //effect1 = addEffect("war3mapImported\\GODBOY_JNT.mdx", jotaroTTarget.getPos())
+        //..setScale(1)
+        //..destr()
+        // effect2 = addEffect("war3mapImported\\tx.mdx", starPlatinum.getPos())
+        // ..setScale(3)
+        // ..setYaw(angle)
+        // ..destr()                  
+    if jotaroT2TimerInt3 == 2680
+        flashEffect("war3mapImported\\punchshot.mdx", starPlatinum.getPos(), 1, starPlatinum.getPos().angleTo(jotaroTTarget.getPos()))
+    if jotaroT2TimerInt3 == 2695
+        GetExpiredTimer().destr()
+        flashEffect("war3mapImported\\tx.mdx", jotaroTTarget.getPos(), 5, starPlatinum.getPos().angleTo(jotaro.getPos()))
+
+function jotaroTStart()
+    jotaroTTimerInt1++
+    if jotaroTTimerInt1 > 0 and jotaroTTimerInt1 < 100
+        if jotaro.isPaused() == false
+            jotaro.pause()
+        if jotaro.isInvulnerable() == false
+            jotaro.setInvulnerable(true)   
+    if jotaroTTimerInt1 == 25
+        starPlatinum = createUnit(JOTARO_T_DUMMY2, jotaro.getPos())     
+        starPlatinum.setFacing(jotaro.getFacingAngle())             
+    if jotaroTTimerInt1 == 65
+        starPlatinum.setAnimation(1)
+    if jotaroTTimerInt1 == 100
+        za_Warudo_Jotaro = createUnit(JOTARO_T_DUMMY, jotaro.getPos())
+        jotaro.unpause()
+        jotaro.setInvulnerable(false) 
+        starPlatinum.kill()
+        jotaroTOn = true
+    if jotaroTTimerInt1 > 100 and jotaroTTimerInt1 < 500    
+        forUnitsInRange(abilityJotaroTPos, 900) (unit u) ->
+            if u.getTypeId() != DIO_BRANDO and u.getTypeId() != KUJO_JOTARO and u.isInvulnerable() == false and u.hasTagPauseEX() == false and jotaroTGroup.has(u) == false
+                IssueImmediateOrder(u, "stop")
+                jotaroTGroup.add(u)
+                u.pauseEx()
+                u.addTagPauseEX()
+        jotaroTGroup.forEachIn() (unit u) ->
+            if u.getPos().distanceTo(abilityJotaroTPos) > 900
+                jotaroTGroup.remove(u)
+                if u.hasTagPauseEX()
+                    u.unpauseEx()
+                    u.removeTagPauseEX()
+    if jotaroTTimerInt1 >= 500
+        jotaroTTimer.destr()
+        jotaroTOn = false
+        RemoveLocation(abilityJotaroTLoc)
+        za_Warudo_Jotaro.kill()
+        jotaroTGroup.forEachIn() (unit u) ->
+            if u.hasTagPauseEX()
+                u.unpauseEx()
+                u.removeTagPauseEX()
+        jotaroTGroup.clear()
+        abilityJotaroTPos = emptyVector
+        jotaro.startAbilityCooldown(JOTARO_T)
+
+
+

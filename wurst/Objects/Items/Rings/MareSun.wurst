@@ -1,0 +1,65 @@
+package MareSun
+/*
+import TimerUtils
+import ACR_TagSystem
+import DummyCaster
+import OrderIds
+import DamageEvent
+import ObjectDefinitions
+
+int array mareSunTrack
+int array mareSunCount
+unit array mareSunUser
+timer array mareSunTimer
+
+init
+    mareSunUse()
+
+function mareSunUse ()
+    CreateTrigger()
+    ..registerAnyUnitEvent(EVENT_PLAYER_UNIT_SPELL_EFFECT)
+    ..addAction() ->
+        if GetSpellAbilityId() == MARE_SUN_ABILITY
+            let caster = GetTriggerUnit()
+            let id = caster.getOwner().getId()
+            mareSunUser[id] = caster
+            mareSunTrack[id] = 0
+            mareSunCount[id] = 0
+            new DummyCaster()
+            ..owner(mareSunUser[id].getOwner())
+            ..origin(mareSunUser[id].getPos())
+            ..castTarget(MARE_SUN_DUMMY_SPELL, 1, OrderIds.bloodlust, mareSunUser[id])            
+            CreateTimer()..startPeriodic(0.01, function mareSunTimerFunc)..setData(id)
+
+    CreateTrigger()
+    ..registerAnyUnitEvent(EVENT_PLAYER_UNIT_DAMAGED)
+    ..addAction() ->
+        if GetTriggerUnit().hasAbility(MARE_SUN_BUFF) and BlzGetEventAttackType() == ATTACK_TYPE_MAGIC
+            let id = GetTriggerUnit().getOwner().getId()
+            mareSunTrack[id] = mareSunTrack[id] + GetEventDamage().toInt()
+        if GetEventDamageSource().hasAbility('DUMMY_ABILITY_2_BUFF_HERE') and BlzGetEventAttackType() == ATTACK_TYPE_MAGIC
+            let id = GetEventDamageSource().getOwner().getId()
+            let bonusDamage = mareSunTrack[id] * 0.25
+            DamageEvent.setNextDamageFromCode()
+            GetEventDamageSource().damageTarget(GetTriggerUnit(), bonusDamage, ATTACK_TYPE_CHAOS) 
+            GetEventDamageSource().addHP(bonusDamage)
+            mareSunTrack[id] = 0
+            GetEventDamageSource().removeAbility('DUMMY_ABILITY_2_BUFF_HERE')
+
+
+ 
+
+
+
+function mareSunTimerFunc()
+    let id = GetExpiredTimer().getData()
+    if mareSunUser[id].isPaused() == false and mareSunUser[id].hasTagPauseEX() == false
+        mareSunCount[id]++
+    if mareSunCount[id] >= 300
+        GetExpiredTimer().destr()
+        mareSunUser[id].removeAbility(MARE_SUN_BUFF)        
+        new DummyCaster()
+        ..owner(mareSunUser[id].getOwner())
+        ..origin(mareSunUser[id].getPos())
+        ..castTarget('DUMMY_ABILITY_2_HERE', 1, OrderIds.bloodlust, mareSunUser[id])          
+*/

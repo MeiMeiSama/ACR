@@ -1,0 +1,157 @@
+package RukiaQ2
+
+import DamageEvent
+import AbilityGlobals
+import ObjectDefinitions
+import ChannelAbilityPreset
+import main
+import ClosureForGroups
+import UnitIds
+import ClosureTimers
+
+unit rukia
+unit array rukiaQ2Dummy
+group rukiaQ2Group
+integer rukiaQ2Int
+integer rukiaQ2Int2
+vec2 spellPos
+effect sfx
+effect array sfx2
+effect sfx3
+timer rukiaQ2Timer
+timer rukiaQ2Timer2
+
+@compiletime function createAbility()
+    new ChannelAbilityPreset(RUKIA_Q2, 5, true)
+        ..presetTargetTypes(Targettype.POINTUNIT)
+        ..setAnimationNames("11111111")
+        ..setButtonPositionNormalX(0)
+        ..setButtonPositionNormalY(2)
+        ..setButtonPositionResearchX(0)
+        ..setButtonPositionResearchY(0)
+        ..setIconNormal("ReplaceableTextures\\CommandButtons\\BTNFrostMourne.blp")
+        ..setIconResearch("ReplaceableTextures\\CommandButtons\\BTNFrostMourne.blp")
+        ..setMissileSpeed(99999)
+        ..setHeroAbility(true)
+        ..setHotkeyNormal("Q")
+        ..setHotkeyLearn("Q")
+        ..setLevels(5)
+        ..setLevelSkipRequirement(2)
+        ..presetArtDuration(lvl -> 0)
+        ..presetBaseOrderID(lvl -> "blizzard")
+        ..presetDisableOtherAbilities(lvl -> false)
+        ..presetFollowThroughTime(lvl -> 0)
+        ..presetCastRange(lvl -> 2000)
+        ..presetCooldown(lvl -> 50)
+        ..presetManaCost(lvl -> 70)
+        ..presetTargetsAllowed(lvl -> "enemy,ground,air,neutral")
+        ..presetTooltipNormal(lvl -> "Tsugi no Mai, Hakuren|r")
+        ..presetTooltipNormalExtended(lvl -> "Rukia Q Desc|r")
+        ..setTooltipLearn("Learn Q|r")
+        ..setTooltipLearnExtended("Learning Q|r")
+    new UnitDefinition(RUKIA_Q2_DUMMY, UnitIds.wisp)
+        ..setNormalAbilities(commaList('Avul', 'Aloc', 'Amrf'))
+        ..setAnimationCastBackswing(0)
+        ..setDeathTimeseconds(0.1)
+        ..setScalingValue(4)
+        ..setUnitClassification("_")
+        ..setArtSpecial("_")
+        ..setHasWaterShadow(false)
+        ..setMaximumPitchAngledegrees(0)
+        ..setMaximumRollAngledegrees(0)
+        ..setModelFile("_")
+        ..setArtSpecial("_")
+        ..setArmorType(ArmorType.Unarmored)
+        ..setPlaceableInEditor(false)
+        ..setMovementHeight(20)
+        ..setSpeedBase(100)
+        ..setTurnRate(3)
+        ..setMovementType(MovementType.Fly)
+        ..setCollisionSize(0)
+        ..setUnitSoundSet("_")
+        ..setCanFlee(false)
+        ..setFoodCost(0)
+        ..setHideMinimapDisplay(true)
+        ..setHitPointsMaximumBase(60)
+        ..setHitPointsRegenerationRate(-1)
+        ..setHitPointsRegenerationType("Always")
+        ..setStockMaximum(1)
+        ..setStockReplenishInterval(1)
+        ..setStructuresBuilt("_")
+        ..setUpgradesUsed("_")
+        ..setHotkey("_")
+        ..setName("effect dummy")
+        ..setTooltipBasic("_")
+        ..setTooltipExtended("_")
+
+init
+    rukiaQ2()     
+
+function rukiaQ2()
+    CreateTrigger()
+    ..registerAnyUnitEvent(EVENT_PLAYER_UNIT_SPELL_EFFECT)
+    ..addAction() ->
+        if GetSpellAbilityId() == RUKIA_Q2
+            rukia = GetTriggerUnit()
+            spellPos = vec2(GetSpellTargetX(), GetSpellTargetY())
+            rukia.setInvulnerable(true)
+            rukia.pause()
+            rukia.setAnimation(4)
+            gg_snd_RukiaQ2.play()
+            if rukia.getPos().distanceTo(spellPos) < 1500
+                spellPos = rukia.getPos().polarOffset(rukia.getPos().angleTo(spellPos), 1500)
+            rukiaQ2Int = 0
+            rukiaQ2Int2 = 0
+            if rukiaQ2Group == null
+                rukiaQ2Group = CreateGroup() 
+            rukiaQ2Timer = CreateTimer()..startPeriodic(0.02, function rukiaQ2End)
+            rukiaQ2Timer2 = CreateTimer()..startPeriodic(0.02, function rukiaQ2End2)
+
+function rukiaQ2End()
+    rukiaQ2Int++
+    if rukiaQ2Int == 10
+        sfx = addEffect("war3mapImported\\HarvestManaRukia.mdx", rukia.getPos())
+        ..setScale(1)
+        ..destr()
+    if rukiaQ2Int == 40
+        gg_snd_RukiaQ22.play()        
+    if rukiaQ2Int >= 46
+        for i = 3 to 12
+            rukiaQ2Dummy[i] = createUnit(rukia.getOwner(), RUKIA_Q2_DUMMY, rukia.getPos().polarOffset(rukia.getPos().angleTo(spellPos), (100.0 * i)))
+            rukiaQ2Dummy[i].setTimedLife(2)
+            forUnitsInRange(rukiaQ2Dummy[i].getPos(), 400) (unit victim) ->
+                if victim.isType(UNIT_TYPE_STRUCTURE) == false and victim.isEnemyOf(rukia) == true and victim.isAlive() == true and rukiaQ2Group.has(victim) == false and victim.isInvulnerable() == false
+                    let id = victim.getUserData()
+                    DamageEvent.setNextDamageId(DAMAGE_ABILITY_RUKIARQ)
+                    DamageEvent.setNextDamageFromCode()
+                    rukia.damageTarget(victim, 1, ATTACK_TYPE_MAGIC)
+                    if victim.isType(UNIT_TYPE_HERO)
+                        sfx2[id] = addEffect("war3mapImported\\RukiaHakurenZone.mdx", victim.getPos())
+                        ..setScale(1)
+                        doAfter(2) ->
+                            sfx2[id].setX(-999999)
+                            sfx2[id].setY(-999999)
+                            sfx2[id].destr()      
+                        rukiaQ2Group.add(victim)
+            rukia.setInvulnerable(false)
+            rukia.unpause()                  
+    if rukiaQ2Int >= 60
+        rukiaQ2Timer.destr()
+        rukiaQ2Group.clear()          
+
+function rukiaQ2End2()
+    rukiaQ2Int2++
+    if rukiaQ2Int2 == 46
+        sfx3 = addEffect("war3mapImported\\RukiaHakuren.mdx", (rukia.getPos().polarOffset(rukia.getPos().angleTo(spellPos), 100)))
+        ..setScale(3)
+        ..setYaw(rukia.getPos().angleTo(spellPos))
+        ..setHeight(130)
+        ..playAnimation(ANIM_TYPE_STAND)
+    if sfx3.getPos().distanceTo(spellPos) <= 40  
+        sfx3.setX(-999999)
+        sfx3.setY(-999999)
+        sfx3.destr()       
+        rukiaQ2Timer2.destr() 
+    else
+        sfx3.setPos(sfx3.getPos().polarOffset(sfx3.getPos().angleTo(spellPos), 60))                
+         

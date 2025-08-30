@@ -1,0 +1,254 @@
+package Zeref_F
+import DamageEvent
+import AbilityGlobals
+import ObjectDefinitions
+import ChannelAbilityPreset
+import UnitIds
+import main
+import ClosureForGroups
+import ClosureTimers
+
+unit zeref
+unit enemy
+integer zerefFInt
+integer zerefFInt2
+vec2 spellPos
+unit dummy
+unit dummy2
+effect effect1
+effect effect2
+effect sfx
+effect sfx2
+effect sfx3
+effect sfx4
+public boolean zerefFKill
+
+@compiletime function createAbility()
+    new ChannelAbilityPreset(ZEREF_F, 1, true)
+        ..presetTargetTypes(Targettype.UNIT)
+        ..setAnimationNames("11111")
+        ..setButtonPositionNormalX(2)
+        ..setButtonPositionNormalY(1)
+        ..setButtonPositionResearchX(1)
+        ..setButtonPositionResearchY(1)
+        ..setIconNormal("ReplaceableTextures\\CommandButtons\\BTNNecromancerAdept.blp")
+        ..setIconResearch("ReplaceableTextures\\CommandButtons\\BTNNecromancerAdept.blp")
+        ..setMissileSpeed(99999)
+        ..setHeroAbility(true)
+        ..setHotkeyNormal("F")
+        ..setHotkeyLearn("F")
+        ..setLevels(1)
+        ..presetArtDuration(lvl -> 0)
+        ..presetBaseOrderID(lvl -> "tranquility")
+        ..presetDisableOtherAbilities(lvl -> false)
+        ..presetFollowThroughTime(lvl -> 0)
+        ..presetCastRange(lvl -> 2000)
+        ..presetCooldown(lvl -> 50)
+        ..presetManaCost(lvl -> 70)
+        ..presetTargetsAllowed(lvl -> "enemy,ground,air,neutral")
+        ..presetTooltipNormal(lvl -> "Mard Geer|r")
+        ..presetTooltipNormalExtended(lvl -> "Zeref F Desc|r")
+        ..setTooltipLearn("Mard Geer|r")
+        ..setTooltipLearnExtended("Learning F|r")
+    new UnitDefinition(ZEREF_F_DUMMY, UnitIds.wisp)
+        ..setNormalAbilities(commaList('Avul', 'Aloc', 'Amrf'))
+        ..setAnimationCastBackswing(0)
+        ..setDeathTimeseconds(0.1)
+        ..setScalingValue(4)
+        ..setUnitClassification("_")
+        ..setArtSpecial("_")
+        ..setHasWaterShadow(false)
+        ..setMaximumPitchAngledegrees(0)
+        ..setMaximumRollAngledegrees(0)
+        ..setModelFile("war3mapImported\\MardGeer.mdl")
+        ..setArtSpecial("_")
+        ..setArmorType(ArmorType.Unarmored)
+        ..setPlaceableInEditor(false)
+        ..setMovementHeight(20)
+        ..setSpeedBase(100)
+        ..setTurnRate(3)
+        ..setMovementType(MovementType.Fly)
+        ..setCollisionSize(0)
+        ..setUnitSoundSet("_")
+        ..setCanFlee(false)
+        ..setFoodCost(0)
+        ..setHideMinimapDisplay(true)
+        ..setHitPointsMaximumBase(60)
+        ..setHitPointsRegenerationRate(-1)
+        ..setHitPointsRegenerationType("Always")
+        ..setStockMaximum(1)
+        ..setStockReplenishInterval(1)
+        ..setStructuresBuilt("_")
+        ..setUpgradesUsed("_")
+        ..setHotkey("_")
+        ..setName("effect dummy")
+        ..setTooltipBasic("_")
+        ..setTooltipExtended("_")
+    new UnitDefinition(ZEREF_F_DUMMY2, UnitIds.wisp)
+        ..setNormalAbilities(commaList('Avul', 'Aloc', 'Amrf'))
+        ..setAnimationCastBackswing(0)
+        ..setDeathTimeseconds(0.1)
+        ..setScalingValue(4)
+        ..setUnitClassification("_")
+        ..setArtSpecial("_")
+        ..setHasWaterShadow(false)
+        ..setMaximumPitchAngledegrees(0)
+        ..setMaximumRollAngledegrees(0)
+        ..setModelFile("war3mapImported\\MardMementoMori.mdl")
+        ..setArtSpecial("_")
+        ..setArmorType(ArmorType.Unarmored)
+        ..setPlaceableInEditor(false)
+        ..setMovementHeight(20)
+        ..setSpeedBase(100)
+        ..setTurnRate(3)
+        ..setMovementType(MovementType.Fly)
+        ..setCollisionSize(0)
+        ..setUnitSoundSet("_")
+        ..setCanFlee(false)
+        ..setFoodCost(0)
+        ..setHideMinimapDisplay(true)
+        ..setHitPointsMaximumBase(60)
+        ..setHitPointsRegenerationRate(-1)
+        ..setHitPointsRegenerationType("Always")
+        ..setStockMaximum(1)
+        ..setStockReplenishInterval(1)
+        ..setStructuresBuilt("_")
+        ..setUpgradesUsed("_")
+        ..setHotkey("_")
+        ..setName("effect dummy")
+        ..setTooltipBasic("_")
+        ..setTooltipExtended("_")
+
+init
+    initTrig_ZerefF_Orig()     
+
+function initTrig_ZerefF_Orig()
+    CreateTrigger()
+    ..registerAnyUnitEvent(EVENT_PLAYER_UNIT_SPELL_EFFECT)
+    ..addAction() ->
+        if GetSpellAbilityId() == ZEREF_F
+            zerefFKill = true
+            zeref=GetTriggerUnit()
+            enemy=GetSpellTargetUnit()
+            spellPos = vec2(GetSpellTargetX(), GetSpellTargetY())
+            let angle = zeref.getPos().angleTo(spellPos)
+            zeref.setInvulnerable(true)
+            zeref.pause()
+            enemy.setInvulnerable(true)
+            enemy.pause()
+            zeref.setPos(zeref.getPos().polarOffset(zeref.getPos().angleTo(enemy.getPos()), (zeref.getPos().distanceTo(enemy.getPos()) -825)))
+            SetUnitAnimation(zeref, "spell")
+            dummy=createUnit(zeref.getOwner(), ZEREF_F_DUMMY, zeref.getPos().polarOffset(zeref.getPos().angleTo(enemy.getPos()), (zeref.getPos().distanceTo(enemy.getPos()) -700)), zeref.getPos().angleTo(enemy.getPos()))
+            ..setScale(2)
+            ..setTimeScale(80)
+            ..setFacing(angle)
+            ..setAnimation("Spell One")
+            ..setTimedLife(5)
+            let rng = GetRandomInt(0, 1)
+            if rng == 0
+                zerefFInt2=0
+                soundPlay("war3mapImported\\Mard_Hana.mp3", 0, 0)
+                CreateTimer()..startPeriodic(0.02, function zerefWEnd2)
+            else    
+                effect2 = addEffect("war3mapImported\\MardAura", dummy, "origin")
+                effect1 = addEffect("war3mapImported\\HorrorSouls", enemy, "chest")
+                ..setScale(1.5)
+                soundPlay("war3mapImported\\Mard_Curse", 0, 0)
+                zerefFInt=0
+                CreateTimer()..startPeriodic(0.03, function zerefFEnd)
+
+function zerefFEnd()
+    zerefFInt++
+    if zerefFInt == 70
+        soundPlay("war3mapImported\\Mard_Deah_Final", 0, 0)
+    if zerefFInt == 130
+        GetExpiredTimer().destr()
+        dummy.setAnimation("Spell Three")
+        dummy2=createUnit(ZEREF_F_DUMMY2, spellPos)
+            ..setScale(1)
+            ..setTimeScale(90)
+            ..setAnimation("stand")
+            ..setTimedLife(2)
+        flashEffect("war3mapImported\\MardMemento2.mdl", spellPos, 4)    
+        flashEffect("war3mapImported\\MardSmoke.mdl", spellPos, 1.5)
+        enemy.setInvulnerable(false)    
+        forUnitsInRange(spellPos, 500) (unit victim) ->
+            if victim.isType(UNIT_TYPE_STRUCTURE)==false and victim.isEnemyOf(zeref)==true and victim.isAlive()==true and victim.isInvulnerable() == false
+                DamageEvent.setNextDamageId(DAMAGE_ABILITY_F)
+                DamageEvent.setNextDamageFromCode()
+                UnitDamageTargetBJ(zeref,victim,(100*GetUnitAbilityLevel(zeref,ZEREF_F)).toReal(),ATTACK_TYPE_MAGIC,DAMAGE_TYPE_MAGIC)    
+        effect1.destr()
+        effect2.destr()
+        zeref.setInvulnerable(false)
+        zeref.unpause()
+        enemy.unpause()
+        zerefFKill = false
+
+function zerefWEnd2()
+    zerefFInt2++
+    if zerefFInt2 == 10
+        sfx = addEffect("war3mapImported\\RoseBush.mdl", zeref.getPos().polarOffset(zeref.getPos().angleTo(enemy.getPos()), (zeref.getPos().distanceTo(enemy.getPos()) -500))) 
+        ..setScale(2.5)
+        ..setYaw(sfx.getPos().angleTo(spellPos))
+    if zerefFInt2 == 140
+        soundPlay("war3mapImported\\Mard Lise.mp3", 0, 0)    
+    if zerefFInt2 >= 141 and zerefFInt2 < 181
+        sfx.setScale(sfx.getScale() + 0.14)
+    if zerefFInt2 == 182
+        sfx2 = addEffect("war3mapImported\\RottenStaff.mdl", zeref.getPos().polarOffset(zeref.getPos().angleTo(enemy.getPos()), (zeref.getPos().distanceTo(enemy.getPos()) -460)))
+        ..setScale(2.5)
+        ..setYaw(zeref.getPos().angleTo(enemy.getPos()))
+    if zerefFInt2 == 210
+        sfx3 = addEffect("war3mapImported\\ulqashar.mdl", sfx2.getPos().polarOffset(sfx2.getPos().angleTo(enemy.getPos()), 110))
+        ..setScale(1)
+        ..setHeight(40)
+        ..setYaw(sfx3.getPos().angleTo(enemy.getPos()))
+    if zerefFInt2 >= 225 or sfx3.getPos().distanceTo(spellPos) <= 20     
+        soundPlay("war3mapImported\\Mard_Hana_Explode.mp3", 0, 0)
+        sfx4 = addEffect("war3mapImported\\Mard_Exp_1.mdl", spellPos)
+        ..setScale(2.5)
+        doAfter(2) ->
+            sfx4.setX(-999999)
+            sfx4.setY(-999999)
+            sfx4.destr()
+        sfx.setX(-999999)
+        sfx.setY(-999999)
+        sfx.destr()
+        sfx2.setX(-999999)
+        sfx2.setY(-999999)
+        sfx2.destr()
+        sfx3.setX(-999999)
+        sfx3.setY(-999999)
+        sfx3.destr()
+        GetExpiredTimer().destr()
+        enemy.setInvulnerable(false) 
+        forUnitsInRange(spellPos, 500) (unit victim) ->
+            if victim.isType(UNIT_TYPE_STRUCTURE)==false and victim.isEnemyOf(zeref)==true and victim.isAlive()==true and victim.isInvulnerable() == false
+                DamageEvent.setNextDamageId(DAMAGE_ABILITY_F)
+                DamageEvent.setNextDamageFromCode()
+                zeref.damageTarget(victim, 1, ATTACK_TYPE_MAGIC)
+        zeref.setInvulnerable(false)
+        zeref.unpause()
+        enemy.unpause() 
+        zerefFKill = false
+    else
+        sfx3.setPos(sfx3.getPos().polarOffset(sfx3.getPos().angleTo(enemy.getPos()), 20))              
+
+public function zerefKillFunc()
+    zerefFKill = false
+
+    CreateTrigger()
+    ..registerAnyUnitEvent(EVENT_PLAYER_UNIT_DEATH)
+    ..addAction() ->
+        if GetKillingUnit().getTypeId() == ZEREF and GetDyingUnit().isType(UNIT_TYPE_HERO)
+            if zerefFKill == true
+                let random = GetRandomInt(0, 1)
+                if random == 0
+                    soundPlay("war3mapImported\\Mard_Pick", 0, 0)
+                else               
+                    soundPlay("war3mapImported\\Mard_Kill", 0, 0)
+
+
+
+
+

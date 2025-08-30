@@ -1,0 +1,64 @@
+package Zeref_T
+import ObjectDefinitions
+import ChannelAbilityPreset
+import ACR_Transformation
+import TimerUtils
+import MusicPlaylist
+import main
+
+@compiletime function createAbility()
+    new ChannelAbilityPreset(ZEREF_T, 1, true)
+        ..presetTargetTypes(Targettype.NONE)
+        ..setAnimationNames("11111")
+        ..setButtonPositionNormalX(3)
+        ..setButtonPositionNormalY(1)
+        ..setButtonPositionResearchX(3)
+        ..setButtonPositionResearchY(1)
+        ..setIconNormal("ReplaceableTextures\\CommandButtons\\BTNEnchantedGemstone.blp")
+        ..setIconResearch("ReplaceableTextures\\CommandButtons\\BTNEnchantedGemstone.blp")
+        ..setMissileSpeed(99999)
+        ..setHeroAbility(true)
+        ..setHotkeyNormal("T")
+        ..setHotkeyLearn("T")
+        ..setLevels(1)
+        ..setRequiredLevel(23)
+        ..presetArtDuration(lvl -> 0)
+        ..presetBaseOrderID(lvl -> "eattree")
+        ..presetDisableOtherAbilities(lvl -> false)
+        ..presetFollowThroughTime(lvl -> 0)
+        ..presetCastRange(lvl -> 2000)
+        ..presetCooldown(lvl -> 50)
+        ..presetManaCost(lvl -> 70)
+        ..presetTargetsAllowed(lvl -> "enemy,ground,air,neutral")
+        ..presetTooltipNormal(lvl -> "Fairy Heart|r")
+        ..presetTooltipNormalExtended(lvl -> "Zeref T Desc|r")
+        ..setTooltipLearn("Fairy Heart|r")
+        ..setTooltipLearnExtended("Learning T|r")
+
+boolean zerefTActive = false
+unit zeref
+
+init
+    zerefModoT()
+
+function zerefModoT()
+
+    CreateTrigger()
+    ..registerAnyUnitEvent(EVENT_PLAYER_UNIT_SPELL_EFFECT)
+    ..addAction() ->
+        if ((GetSpellAbilityId() == ZEREF_T)) 
+            let caster = GetTriggerUnit()
+            zeref = caster
+            let pid = caster.getOwner().getId()             
+            stopBgm()
+            StopMusic(false)
+            gg_snd_ZerefForm.play()          
+            acrTransformation(caster, 40, ZEREF, ZEREF_MODO, 850, 4.0)
+            CreateTimer()..startPeriodic(0.01, function zerefModoTEnd).setData(pid)
+
+function zerefModoTEnd()
+    let pid = GetExpiredTimer().getData()
+    if transformationActive[pid] == false
+        if gg_snd_ZerefForm.isPlaying()
+            gg_snd_ZerefForm.stop(false, false) 
+        GetExpiredTimer().destr()        

@@ -21,6 +21,8 @@ import ACR_SpeedBoost
 import GetFrames
 import TimerUtils
 import BootsStackDisable
+import MbossSpell1
+import MbossSpell2
 
 import Aqua_G
 import Yato_G
@@ -72,6 +74,16 @@ import Sabo_G
 import N_Natsu_G
 import S_Natsu_G
 import Cobra_G
+import Jotaro_G
+import misakaOnKillBLT
+import MavisE_Orig
+import ZervisG_Orig
+import Zeref_F
+import RukiaR
+import RukiaG
+import MISAKA_STR_G
+import Dio_AA
+
 /*
 
     - Iniitalize functions after the game has started, when most data is "valid" such as udg_Playhero
@@ -88,17 +100,18 @@ function heroG_delay2 ()
         udg_PlayHero[i].addAbility('A18V')
         udg_PlayHero[i].makeAbilityPermanent('A18V', true)
     let id = udg_PlayHero[i].getOwner().getId()
-    udg_PlayHero[i].addAbility(SPELL_F[id])
-    udg_PlayHero[i].makeAbilityPermanent(SPELL_F[id], true)
-    if SPELL_F[id].hasTagHidden() == false
-        SPELL_F[id].addTagHidden()
-        udg_PlayHero[i].hideAbility(SPELL_F[id], true)
-    if udg_PlayHero[i].getTypeId() == 'H02M'
-        udg_PlayHero[i].addAbility(SPELL_F2[id])
-        udg_PlayHero[i].makeAbilityPermanent(SPELL_F2[id], true)
-        if SPELL_F2[id].hasTagHidden() == false
-            udg_PlayHero[i].hideAbility(SPELL_F2[id], true)
-            SPELL_F2[id].addTagHidden()
+    if udg_PlayHero[i].getTypeId() != 'H03E'
+        udg_PlayHero[i].addAbility(SPELL_F[id])
+        udg_PlayHero[i].makeAbilityPermanent(SPELL_F[id], true)
+        if SPELL_F[id].hasTagHidden() == false
+            SPELL_F[id].addTagHidden()
+            udg_PlayHero[i].hideAbility(SPELL_F[id], true)
+        if udg_PlayHero[i].getTypeId() == 'H02M'
+            udg_PlayHero[i].addAbility(SPELL_F2[id])
+            udg_PlayHero[i].makeAbilityPermanent(SPELL_F2[id], true)
+            if SPELL_F2[id].hasTagHidden() == false
+                udg_PlayHero[i].hideAbility(SPELL_F2[id], true)
+                SPELL_F2[id].addTagHidden()        
     GetExpiredTimer().destr()
 
 function heroG_delay1 ()
@@ -112,7 +125,7 @@ function updateSelection ()
     GetExpiredTimer().destr()
 
 public function initFunctions ()
-    BlzChangeMinimapTerrainTex("MinimapPreview.blp")
+    BlzChangeMinimapTerrainTex("MinimapPreview2.blp")
     firstWave()
     bountySystemSetup()
     // acrAntiCheat()
@@ -127,6 +140,8 @@ public function initFunctions ()
     scoreboardValues()
     goldIncome()
     goldIncomeShared()
+    miniBoss1()
+    miniBoss2()
     expDistr()
     bgmList()
     killSoundDatabase()
@@ -168,8 +183,11 @@ public function initFunctions ()
         if udg_PlayHero[i].getTypeId() == 'H006'
             wendyE()  
 
+        if udg_PlayHero[i].getTypeId() == 'H008' or udg_PlayHero[i].getTypeId() == 'H00H'
+            misakaKillBLTFunc()        
+
         if udg_PlayHero[i].getTypeId() == 'H00M'
-            minatoE()    
+            minatoE()   
 
         if udg_PlayHero[i].getTypeId() == 'H023'
             byakuranF() 
@@ -204,6 +222,9 @@ public function initFunctions ()
         if udg_PlayHero[i].getTypeId() == ICHIGO_STRENGTH
             ichigoStrE()
 
+        if udg_PlayHero[i].getTypeId() == KUJO_JOTARO
+            jotaroG()
+
         if udg_PlayHero[i].hasAbility('B06D')
             meltyRyougiG()     
 
@@ -215,7 +236,7 @@ public function initFunctions ()
    
         if udg_PlayHero[i].hasAbility('A0MN')
             yamamotoG()
-   
+
         if udg_PlayHero[i].hasAbility('A180')
             grayG()     
   
@@ -269,6 +290,7 @@ public function initFunctions ()
     
         if udg_PlayHero[i].getTypeId() == DIO_BRANDO
             dioG()
+            dioAA()
     
         if udg_PlayHero[i].getTypeId() == ARTURIA_STRENGTH
             saberStrG()
@@ -283,6 +305,50 @@ public function initFunctions ()
         if udg_PlayHero[i].getTypeId() == 'H00Y'
             natsu2Dot()     
         if udg_PlayHero[i].getTypeId() == COBRA
-            cobraDot()                                                         
-
+            cobraDot()
+        if udg_PlayHero[i].getTypeId() == ZEREF
+            zerefKillFunc()   
+        if udg_PlayHero[i].getTypeId() == MAVIS
+            initTrig_MavisE_Orig()            
+            let mavis = udg_PlayHero[i]
+            let mavisG = SPELL_G2[i]
+            for a = 0 to 12 
+                if udg_PlayHero[a].getTypeId() == ZEREF //'H01U' 
+                    let zeref = udg_PlayHero[a]
+                    let zerefG = SPELL_G2[a]
+                    mavis.addAbility(mavisG)
+                    zeref.addAbility(zerefG)
+                    mavis.makeAbilityPermanent(mavisG, true)
+                    zeref.makeAbilityPermanent(zerefG, true)
+                    if mavisG.hasTagHidden() == false
+                        mavis.hideAbility(mavisG, true)
+                        mavisG.addTagHidden()       
+                    if zerefG.hasTagHidden() == false
+                        zeref.hideAbility(zerefG, true)
+                        zerefG.addTagHidden()                           
+                    zervisGAddTimer()
+        if udg_PlayHero[i].getTypeId() == RUKIA
+            let rukia = udg_PlayHero[i]
+            let rukiaQ2 = SPELL_Q2[i]
+            let rukiaW2 = SPELL_W2[i]
+            let rukiaE2 = SPELL_E2[i]
+            rukia.addAbility(rukiaQ2)
+            rukia.makeAbilityPermanent(rukiaQ2, true) 
+            if rukiaQ2.hasTagHidden() == false
+                rukia.hideAbility(rukiaQ2, true)
+                rukiaQ2.addTagHidden()
+            rukia.addAbility(rukiaW2)
+            rukia.makeAbilityPermanent(rukiaW2, true) 
+            if rukiaW2.hasTagHidden() == false
+                rukia.hideAbility(rukiaW2, true)
+                rukiaW2.addTagHidden()
+            rukia.addAbility(rukiaE2)
+            rukia.makeAbilityPermanent(rukiaE2, true) 
+            if rukiaE2.hasTagHidden() == false
+                rukia.hideAbility(rukiaE2, true)
+                rukiaE2.addTagHidden()
+            rukiaR()
+            rukiaG()
+        if udg_PlayHero[i].getTypeId() == MISAKA_STR
+            misakaSTRG()                                
     CreateTimer().start(3, function updateSelection)

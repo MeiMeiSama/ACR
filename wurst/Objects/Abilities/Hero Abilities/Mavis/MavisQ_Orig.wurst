@@ -1,0 +1,115 @@
+package MavisQ_Orig
+import DamageEvent
+import AbilityGlobals
+import ObjectDefinitions
+import ChannelAbilityPreset
+import UnitIds
+import main
+
+unit mavis
+location mavisQLoc
+integer mavisQInt
+
+@compiletime function createAbility()
+    new ChannelAbilityPreset(MAVIS_Q, 5, true)
+        ..presetTargetTypes(Targettype.POINT)
+        ..setAnimationNames("11111111")
+        ..setButtonPositionNormalX(0)
+        ..setButtonPositionNormalY(2)
+        ..setButtonPositionResearchX(0)
+        ..setButtonPositionResearchY(0)
+        ..setIconNormal("ReplaceableTextures\\CommandButtons\\BTNGoldmine.blp")
+        ..setIconResearch("ReplaceableTextures\\CommandButtons\\BTNGoldmine.blp")
+        ..setMissileSpeed(99999)
+        ..setHeroAbility(true)
+        ..setHotkeyNormal("Q")
+        ..setHotkeyLearn("Q")
+        ..setLevels(5)
+        ..setLevelSkipRequirement(2)
+        ..presetArtDuration(lvl -> 0)
+        ..presetBaseOrderID(lvl -> "auravampiric")
+        ..presetDisableOtherAbilities(lvl -> false)
+        ..presetFollowThroughTime(lvl -> 0)
+        ..presetCastRange(lvl -> 2000)
+        ..presetCooldown(lvl -> 50)
+        ..presetManaCost(lvl -> 70)
+        ..presetTargetsAllowed(lvl -> "enemy,ground,air,neutral")
+        ..presetTooltipNormal(lvl -> "Phantom Riches|r")
+        ..presetTooltipNormalExtended(lvl -> "Mavis Q Desc|r")
+        ..setTooltipLearn("Learn Q|r")
+        ..setTooltipLearnExtended("Learning Q|r")
+    new UnitDefinition(MAVIS_Q_DUMMY, UnitIds.wisp)
+        ..setNormalAbilities(commaList('Avul', 'Aloc', 'Amrf'))
+        ..setAnimationCastBackswing(0)
+        ..setDeathTimeseconds(0.1)
+        ..setScalingValue(4)
+        ..setUnitClassification("_")
+        ..setArtSpecial("_")
+        ..setHasWaterShadow(false)
+        ..setMaximumPitchAngledegrees(0)
+        ..setMaximumRollAngledegrees(0)
+        ..setModelFile("war3mapImported\\Gold coin explosion.mdx")
+        ..setArtSpecial("_")
+        ..setArmorType(ArmorType.Unarmored)
+        ..setPlaceableInEditor(false)
+        ..setMovementHeight(20)
+        ..setSpeedBase(100)
+        ..setTurnRate(3)
+        ..setMovementType(MovementType.Fly)
+        ..setCollisionSize(0)
+        ..setUnitSoundSet("_")
+        ..setCanFlee(false)
+        ..setFoodCost(0)
+        ..setHideMinimapDisplay(true)
+        ..setHitPointsMaximumBase(60)
+        ..setHitPointsRegenerationRate(-1)
+        ..setHitPointsRegenerationType("Always")
+        ..setStockMaximum(1)
+        ..setStockReplenishInterval(1)
+        ..setStructuresBuilt("_")
+        ..setUpgradesUsed("_")
+        ..setHotkey("_")
+        ..setName("effect dummy")
+        ..setTooltipBasic("_")
+        ..setTooltipExtended("_")    
+
+function initTrig_MavisQ_Orig()
+    CreateTrigger()
+    ..registerAnyUnitEvent(EVENT_PLAYER_UNIT_SPELL_EFFECT)
+    ..addCondition(Condition(function mavisCondition))
+    ..addAction() ->
+        let t=CreateTimer()
+        mavis=GetSpellAbilityUnit()
+        mavisQLoc=GetSpellTargetLoc()
+        SetUnitAnimation(mavis, "spell")
+        mavisQInt=0
+        TimerStart(t,.02,true,function mavisQEnd)
+
+function mavisQEnd()
+    unit u
+    mavisQInt++
+    if mavisQInt>12
+        DestroyTimer(GetExpiredTimer())
+        ForGroupBJ(GetUnitsInRangeOfLocMatching(650,mavisQLoc,Condition(function mavisFilter)),function mavisDMG)
+        u=CreateUnitAtLoc(GetOwningPlayer(mavis),MAVIS_Q_DUMMY,mavisQLoc,GetRandomDirectionDeg())
+        SetUnitScale(u,2.5,2.5,2.5)
+        SetUnitTimeScalePercent(u,80)
+        UnitApplyTimedLife(u,'BHwe',2)
+        soundPlay("war3mapImported\\Mavis Q.mp3", 0, 0)
+        mavis=null
+        mavisQLoc=null
+        mavisQInt=0        
+
+function mavisCondition() returns boolean
+    return GetSpellAbilityId() == MAVIS_Q 
+
+function mavisFilter() returns boolean
+    return IsUnitType(GetFilterUnit(),UNIT_TYPE_STRUCTURE)==false and IsUnitEnemy(GetFilterUnit(),GetOwningPlayer(mavis))==true and IsUnitDeadBJ(GetFilterUnit())==false and BlzIsUnitInvulnerable(GetFilterUnit()) == false
+
+function mavisDMG()
+    DamageEvent.setNextDamageId(DAMAGE_ABILITY_Q)
+    DamageEvent.setNextDamageFromCode()
+    UnitDamageTargetBJ(mavis,GetEnumUnit(),(100*GetUnitAbilityLevel(mavis,MAVIS_Q)).toReal(),ATTACK_TYPE_MAGIC,DAMAGE_TYPE_MAGIC)
+
+init
+    initTrig_MavisQ_Orig()    

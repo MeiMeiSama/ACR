@@ -17,10 +17,12 @@ function akameFEnd()
     akameFCount++
     if not akame.hasAbility('B033')
         akame.removeAbility(EMPTY_DUMMY_PASSIVE_ABILITY)
+        akame.setMoveSpeed(akame.getDefaultMovespeed())
         GetExpiredTimer().destr()
     if akameFCount >= 100
         akame.removeAbility('B033')
         akame.removeAbility(EMPTY_DUMMY_PASSIVE_ABILITY)
+        akame.setMoveSpeed(akame.getDefaultMovespeed())
         GetExpiredTimer().destr()         
 
 public function akameF ()
@@ -28,6 +30,7 @@ public function akameF ()
     EventListener.onCast('A0IA') (unit caster) ->
         caster.addAbility(EMPTY_DUMMY_PASSIVE_ABILITY)
         akame = caster
+        akame.setMoveSpeed(522)
         akameFCount = 0
         CreateTimer()..startPeriodic(0.05, function akameFEnd)        
 

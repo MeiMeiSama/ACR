@@ -1,0 +1,137 @@
+package RukiaW2
+
+import DamageEvent
+import AbilityGlobals
+import ObjectDefinitions
+import ChannelAbilityPreset
+import main
+import ClosureForGroups
+//import ClosureTimers
+import UnitIds
+import ACR_Stun
+
+unit rukia
+group rukiaW2Group
+integer rukiaW2Int
+vec2 spellPos
+effect sfx
+effect sfx2
+// effect sfx3
+// effect sfx4
+// effect sfx5
+timer rukiaW2Timer
+
+@compiletime function createAbility()
+    new ChannelAbilityPreset(RUKIA_W2, 5, true)
+        ..presetTargetTypes(Targettype.POINTUNIT)
+        ..setAnimationNames("11111111")
+        ..setButtonPositionNormalX(1)
+        ..setButtonPositionNormalY(2)
+        ..setButtonPositionResearchX(1)
+        ..setButtonPositionResearchY(0)
+        ..setIconNormal("ReplaceableTextures\\CommandButtons\\BTNBreathOfFrost.blp")
+        ..setIconResearch("ReplaceableTextures\\CommandButtons\\BTNBreathOfFrost.blp")
+        ..setMissileSpeed(99999)
+        ..setHeroAbility(true)
+        ..setHotkeyNormal("W")
+        ..setHotkeyLearn("W")
+        ..setLevels(5)
+        ..setLevelSkipRequirement(2)
+        ..presetArtDuration(lvl -> 0)
+        ..presetBaseOrderID(lvl -> "renew")
+        ..presetDisableOtherAbilities(lvl -> false)
+        ..presetFollowThroughTime(lvl -> 0)
+        ..presetCastRange(lvl -> 2000)
+        ..presetCooldown(lvl -> 50)
+        ..presetManaCost(lvl -> 70)
+        ..presetTargetsAllowed(lvl -> "enemy,ground,air,neutral")
+        ..presetTooltipNormal(lvl -> "Some no Mai, Tsukishiro|r")
+        ..presetTooltipNormalExtended(lvl -> "Rukia W Desc|r")
+        ..setTooltipLearn("Learn W|r")
+        ..setTooltipLearnExtended("Learning W|r")
+
+    new UnitDefinition(RUKIA_W2_DUMMY, UnitIds.wisp)
+        ..setNormalAbilities(commaList('Avul', 'Aloc', 'Amrf'))
+        ..setAnimationCastBackswing(0)
+        ..setDeathTimeseconds(0.1)
+        ..setScalingValue(4)
+        ..setUnitClassification("_")
+        ..setArtSpecial("_")
+        ..setHasWaterShadow(false)
+        ..setMaximumPitchAngledegrees(0)
+        ..setMaximumRollAngledegrees(0)
+        ..setModelFile("_")
+        ..setArtSpecial("_")
+        ..setArmorType(ArmorType.Unarmored)
+        ..setPlaceableInEditor(false)
+        ..setMovementHeight(20)
+        ..setSpeedBase(100)
+        ..setTurnRate(3)
+        ..setMovementType(MovementType.Fly)
+        ..setCollisionSize(0)
+        ..setUnitSoundSet("_")
+        ..setCanFlee(false)
+        ..setFoodCost(0)
+        ..setHideMinimapDisplay(true)
+        ..setHitPointsMaximumBase(60)
+        ..setHitPointsRegenerationRate(-1)
+        ..setHitPointsRegenerationType("Always")
+        ..setStockMaximum(1)
+        ..setStockReplenishInterval(1)
+        ..setStructuresBuilt("_")
+        ..setUpgradesUsed("_")
+        ..setHotkey("_")
+        ..setName("effect dummy")
+        ..setTooltipBasic("_")
+        ..setTooltipExtended("_")
+
+init
+    rukiaW2()     
+
+function rukiaW2()
+    CreateTrigger()
+    ..registerAnyUnitEvent(EVENT_PLAYER_UNIT_SPELL_EFFECT)
+    ..addAction() ->
+        if GetSpellAbilityId() == RUKIA_W2
+            rukia = GetTriggerUnit()
+            spellPos = vec2(GetSpellTargetX(), GetSpellTargetY())
+            rukia.setInvulnerable(true)
+            rukia.pause()
+            rukia.setAnimation(5)
+            gg_snd_RukiaW2.play()
+            forUnitsInRange(spellPos, 500) (unit u) ->
+                u.pause()  
+            rukiaW2Int = 0
+            rukiaW2Timer = CreateTimer()..startPeriodic(0.02, function rukiaWEnd)
+
+function rukiaWEnd()
+    rukiaW2Int++
+    if rukiaW2Int == 4
+        sfx = addEffect("war3mapImported\\RukiaTsukishiro2.mdx", spellPos)
+        ..setScale(3.5)
+        ..playAnimation(ANIM_TYPE_STAND)
+        ..destr()
+    if rukiaW2Int == 70
+        sfx2 = addEffect("war3mapImported\\RukiaTsukishiro.mdx", spellPos)
+        ..setScale(5)
+        CreateTimer()..start(1.5, function rukiaTsuEnd)
+        let u = createUnit(rukia.getOwner(), RUKIA_W2_DUMMY, spellPos)
+        u.setScale(2)
+        u.setTimedLife(2) 
+    if rukiaW2Int == 80
+        rukia.setInvulnerable(false)
+        rukia.unpause()
+        forUnitsInRange(spellPos, 500) (unit victim) ->
+            if victim.isType(UNIT_TYPE_STRUCTURE) == false and victim.isEnemyOf(rukia) == true and victim.isAlive() == true and victim.isInvulnerable() == false
+                DamageEvent.setNextDamageId(DAMAGE_ABILITY_RUKIARW)
+                DamageEvent.setNextDamageFromCode()
+                rukia.damageTarget(victim, 1, ATTACK_TYPE_MAGIC)
+                acrStun(rukia, victim, 1)
+                if victim.isPaused()
+                    victim.unpause()           
+        rukiaW2Timer.destr() 
+
+function rukiaTsuEnd()
+    sfx2.setX(-999999)
+    sfx2.setY(-999999)
+    sfx2.destr()                 

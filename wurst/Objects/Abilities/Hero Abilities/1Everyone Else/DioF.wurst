@@ -2,9 +2,9 @@ package DioF
 import DamageEvent
 import AbilityGlobals
 import main
-import ACR_PauseArea
 
-vec2 dioTTargetPoint
+vec2 dioT2TargetPoint
+location dioT2Loc
 
 init
     initTrig_DioF()
@@ -24,7 +24,7 @@ function trig_DioFFunc004Func020Func001Func006Func001Func023T()
     else
         SaveInteger(YDLOC, GetHandleId(GetExpiredTimer()), 280, LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 280) + 1)
         SaveLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 609314311, GetUnitLoc(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 449)))
-        SaveGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 361, yDWEGetUnitsInRangeOfLocMatchingNull(800.00, LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 609314311), Condition(function trig_DioFFunc004Func020Func001Func006Func001Func023Func001Func005003003)))
+        SaveGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 361, yDWEGetUnitsInRangeOfLocMatchingNull(900.00, LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 609314311), Condition(function trig_DioFFunc004Func020Func001Func006Func001Func023Func001Func005003003)))
         ForGroupBJ(LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 361), function trig_DioFFunc004Func020Func001Func006Func001Func023Func001Func006A)
         GroupClear(LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 361))
         DestroyGroup(LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 361))
@@ -69,7 +69,7 @@ function trig_DioFFunc004Func020Func001Func006Func001Func024Func023Func001Func01
     return IsUnitType(GetFilterUnit(), UNIT_TYPE_STRUCTURE) == false and IsUnitEnemy(GetFilterUnit(), LoadPlayerHandle(YDLOC, GetHandleId(GetExpiredTimer()), 603)) == true and IsUnitHiddenBJ(GetFilterUnit()) == false and IsUnitDeadBJ(GetFilterUnit()) == false and GetUnitAbilityLevel(GetFilterUnit(), 'Avul') != 1
 function trig_DioFFunc004Func020Func001Func006Func001Func024Func023Func001Func015A()
     GroupAddUnitSimple(GetEnumUnit(), LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 744928215))
-    DamageEvent.setNextDamageId(DAMAGE_ABILITY_DIO_F)
+    DamageEvent.setNextDamageId(DAMAGE_ABILITY_DIO_T2)
     DamageEvent.setNextDamageFromCode()
     UnitDamageTargetBJ(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), GetEnumUnit(), I2R(GetHeroStr(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), true)) / 40.00 * 5.50, ATTACK_TYPE_MAGIC, DAMAGE_TYPE_DIVINE)
 function trig_DioFFunc004Func020Func001Func006Func001Func024Func023T()
@@ -106,7 +106,7 @@ function trig_DioFFunc004Func020Func001Func006Func001Func024Func023T()
         SetUnitInvulnerable(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), true)
         SaveInteger(YDLOC, GetHandleId(GetExpiredTimer()), 943, LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 943) + 1)
         SaveLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 772, GetUnitLoc(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 449)))
-        SaveGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 339273988, yDWEGetUnitsInRangeOfLocMatchingNull(800.00, LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 772), Condition(function trig_DioFFunc004Func020Func001Func006Func001Func024Func023Func001Func014003003)))
+        SaveGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 339273988, yDWEGetUnitsInRangeOfLocMatchingNull(900.00, LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 772), Condition(function trig_DioFFunc004Func020Func001Func006Func001Func024Func023Func001Func014003003)))
         ForGroupBJ(LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 339273988), function trig_DioFFunc004Func020Func001Func006Func001Func024Func023Func001Func015A)
         GroupClear(LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 339273988))
         DestroyGroup(LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 339273988))
@@ -242,8 +242,6 @@ function trig_DioFFunc004Func020Func001Func006T()
         SaveLocationHandle(YDLOC, GetHandleId(_ydl_timer), 609314311, LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 609314311))
         SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 449, LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 449))
         SaveInteger(YDLOC, GetHandleId(_ydl_timer), 280, LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 280))
-        let caster = LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594)
-        acrPauseArea(caster, dioTTargetPoint, 800.00, 3.5)
         TimerStart(_ydl_timer, 0.03, true, function trig_DioFFunc004Func020Func001Func006Func001Func023T)
         _ydl_timer = CreateTimer()
         SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 1138, LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 1138))
@@ -348,17 +346,22 @@ function trig_DioFActions ()
     timer ydl_timer
     integer trigger_ID = LoadInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 865)
     trigger_ID = trigger_ID + 3
-    dioTTargetPoint = vec2(GetSpellTargetX(), GetSpellTargetY())
+    let dio = GetSpellAbilityUnit()
+    if dio.getPos().distanceTo(abilityDioTPos) < dio.getPos().distanceTo(abilityJotaroTPos)
+        // print("1")
+        dioT2TargetPoint = abilityDioTPos
+        SaveLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 549, abilityDioTLoc)        
+    else  
+        // print("2")
+        dioT2TargetPoint = abilityJotaroTPos
+        SaveLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 549, abilityJotaroTLoc)                  
     SaveInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 865, trigger_ID)
     SaveInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 1045, trigger_ID)
     SaveUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594, GetSpellAbilityUnit())
-    SaveLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 549, GetSpellTargetLoc())
     if ((IsTerrainPathableBJ(LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 549), PATHING_TYPE_WALKABILITY) == true) and (IsTerrainPathableBJ(LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 549), PATHING_TYPE_FLYABILITY) == true)) 
         IssueImmediateOrder(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594), "stop")
-        RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 549))
     else
         soundPlay("war3mapImported\\Diospecial5.mp3", GetUnitX(udg_Unitsound), GetUnitY(udg_Unitsound))        
-        SaveLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 549, GetSpellTargetLoc())
         SaveLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1007, GetUnitLoc(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594)))
         SaveInteger(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 280, 0)
         SaveGroupHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 744928215, CreateGroup())

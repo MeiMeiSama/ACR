@@ -1,0 +1,105 @@
+package MbossSpell2
+
+import ACR_SoundCreation
+import TimerUtils
+import CreateBuildings
+import ObjectDefinitions
+import ChannelAbilityPreset
+import UnitIds
+
+constant snd2 = acrCreateSound("war3mapImported\\hina1.mp3")
+int array spellCount
+unit dummyUnit
+unit array spellcaster
+unit array spellvictim
+vec2 array spellcasterpos
+vec2 array spellvictimpos
+
+@compiletime function amanoDummy() 
+    new UnitDefinition(DUMMY_AMANO, UnitIds.wisp)
+        ..setNormalAbilities(commaList('Avul', 'Aloc', 'Amrf'))
+        ..setAnimationCastBackswing(0)
+        ..setDeathTimeseconds(0.1)
+        ..setScalingValue(1)
+        ..setUnitClassification("_")
+        ..setArtSpecial("_")
+        ..setHasWaterShadow(false)
+        ..setMaximumPitchAngledegrees(0)
+        ..setMaximumRollAngledegrees(0)
+        ..setModelFile("war3mapImported\\Water Trumpet.mdl")
+        ..setArtSpecial("_")
+        ..setArmorType(ArmorType.Unarmored)
+        ..setPlaceableInEditor(false)
+        ..setMovementHeight(20)
+        ..setSpeedBase(100)
+        ..setTurnRate(3)
+        ..setMovementType(MovementType.Fly)
+        ..setCollisionSize(0)
+        ..setUnitSoundSet("_")
+        ..setCanFlee(false)
+        ..setFoodCost(0)
+        ..setHideMinimapDisplay(true)
+        ..setHitPointsMaximumBase(60)
+        ..setHitPointsRegenerationRate(-1)
+        ..setHitPointsRegenerationType("Always")
+        ..setStockMaximum(1)
+        ..setStockReplenishInterval(1)
+        ..setStructuresBuilt("_")
+        ..setUpgradesUsed("_")
+        ..setHotkey("_")
+        ..setName("effect dummy")
+        ..setTooltipBasic("_")
+        ..setTooltipExtended("_")
+
+init
+    miniBoss2()
+
+public function miniBoss2()   
+    CreateTrigger()
+    ..registerAnyUnitEvent(EVENT_PLAYER_UNIT_DAMAGED)
+    ..addAction() ->
+        if BlzGetEventDamageTarget() == miniboss[0] or BlzGetEventDamageTarget() == miniboss[1] or BlzGetEventDamageTarget() == miniboss[2]       
+            if BlzGetEventDamageTarget() == miniboss[0]
+                if BlzGetEventDamageTarget().getUserData() != 993
+                    BlzGetEventDamageTarget().setUserData(993)
+            if BlzGetEventDamageTarget() == miniboss[1]
+                if BlzGetEventDamageTarget().getUserData() != 994
+                    BlzGetEventDamageTarget().setUserData(994)
+            if BlzGetEventDamageTarget() == miniboss[2] 
+                if BlzGetEventDamageTarget().getUserData() != 995
+                    BlzGetEventDamageTarget().setUserData(995)
+            let id = BlzGetEventDamageTarget().getUserData()
+            let bossu = BlzGetEventDamageTarget()                                 
+            if GetEventDamageSource().isType(UNIT_TYPE_HERO) and spellCount[id] <= 0
+                spellCount[id] = 100    
+                PlaySoundOnUnitBJ(snd2, 100, GetTriggerUnit())
+                let victim = GetEventDamageSource()
+                spellcaster[id] = bossu
+                spellvictim[id] = victim
+                spellcasterpos[id] = bossu.getPos()
+                spellvictimpos[id] = victim.getPos()
+                SetUnitAnimation(spellcaster[id], "Spell 1-1")
+                dummyUnit = createUnit(DUMMY_AMANO, spellcasterpos[id])
+                SetUnitScale(dummyUnit,2.5,2.5,2.5)
+                SetUnitTimeScalePercent(dummyUnit,80)
+                dummyUnit.setFacing(dummyUnit.getPos().angleTo(spellvictimpos[id]))
+                CreateTimer()..startPeriodic(0.1, function miniBoss2End)..setData(id)
+                CreateTimer()..startPeriodic(0.03, function dummyDashStart)..setData(id)
+
+function dummyDashStart()
+    let id = GetExpiredTimer().getData()
+    spellcasterpos[id] = spellcaster[id].getPos()
+    spellvictimpos[id] = spellvictim[id].getPos()
+    if dummyUnit.getPos().distanceTo(spellvictimpos[id]) <= 100
+        spellcaster[id].damageTarget(spellvictim[id], 800)
+        dummyUnit.remove()
+        GetExpiredTimer().destr()
+    else
+        dummyUnit.setFacing(dummyUnit.getPos().angleTo(spellvictimpos[id]))
+        dummyUnit.setPos(dummyUnit.getPos().polarOffset(spellcasterpos[id].angleTo(spellvictimpos[id]), 80))      
+
+function miniBoss2End()
+    let id = GetExpiredTimer().getData()
+    spellCount[id]--
+    if spellCount[id] <= 0       
+        GetExpiredTimer().destr()             

@@ -3,6 +3,7 @@ package Translate_Q
 import AbilityClassifications
 import AbilityGlobals
 import ACR_StatColors
+import ObjectDefinitions
 
 public function tooltip_Projectile_Q (int pid)
     let id = pid
@@ -168,7 +169,7 @@ public function tooltip_Projectile_Q (int pid)
         hero.getAbility(skill)
         ..setField(ABILITY_ILF_MANA_COST, hero.getAbilityLevel(skill) - 1, mana)
         ..setField(ABILITY_RLF_CAST_RANGE, hero.getAbilityLevel(skill) - 1, castrange.toReal())
-        ..setField(ABILITY_RLF_COOLDOWN, hero.getAbilityLevel(skill) - 1, cd.toReal())  
+        ..setField(ABILITY_RLF_COOLDOWN, hero.getAbilityLevel(skill) - 1, cd.toReal())        
 public function tooltip_Dash_Q (int pid)
     let id = pid
     let hero = udg_PlayHero[id]
@@ -373,6 +374,7 @@ public function tooltip_Q2 (int pid)
     let hero = udg_PlayHero[id]
     int spellLvl
     int range
+    int castrange
     int stat = 0
     int mana
     int dmg
@@ -512,7 +514,28 @@ public function tooltip_Q2 (int pid)
         hero.getAbility(skill)
         ..setField(ABILITY_ILF_MANA_COST, hero.getAbilityLevel(skill) - 1, mana)
         ..setField(ABILITY_RLF_CAST_RANGE, hero.getAbilityLevel(skill) - 1, range.toReal())
-        ..setField(ABILITY_RLF_COOLDOWN, hero.getAbilityLevel(skill) - 1, cd.toReal())     
+        ..setField(ABILITY_RLF_COOLDOWN, hero.getAbilityLevel(skill) - 1, cd.toReal())
+
+    else if skill == RUKIA_Q2 //Rukia
+        spellLvl = skill.getSkillLvl(id)
+        dmg = ((100 + (40.00 * spellLvl)) + ((2 + (0.6 * spellLvl)) * stat)).toInt()
+        mana = (5 + (5*spellLvl))
+        cd = (11 + spellLvl)
+        range = 1500
+        castrange = 5000
+
+        skill..setTitle(id, BLUE+"Tsugi no Mai, Hakuren"+LEVEL_TOOLTIP+spellLvl.toString()+CR+"]")
+        ..setDescription(id, 
+        GOLD+
+        "Deals damage to enemies along the path towards the targeted location."+
+        "\n\nCast Range: "+PINK+range.toString()+GOLD+
+        "\nCooldown: "+PINK+cd.toString()+GOLD+
+        "\nDamage Output: "+hero.getStatColor()+dmg.toString()+GOLD)
+            
+        hero.getAbility(skill)
+        ..setField(ABILITY_ILF_MANA_COST, hero.getAbilityLevel(skill) - 1, mana)
+        ..setField(ABILITY_RLF_CAST_RANGE, hero.getAbilityLevel(skill) - 1, castrange.toReal())
+        ..setField(ABILITY_RLF_COOLDOWN, hero.getAbilityLevel(skill) - 1, cd.toReal())              
 
     else
         spellLvl = skill.getSkillLvl(id)

@@ -4,6 +4,7 @@ import AbilityClassifications
 import AbilityGlobals
 import ObjectDefinitions
 import ACR_StatColors
+import ZervisG_Orig
 
 public function tooltip_G (int pid)
     let id = pid
@@ -289,6 +290,22 @@ public function tooltip_G (int pid)
         GOLD+
         "Whenever Akame uses a basic attack, her next basic attack deals additional damage. This effect stacks and ends when Akame doesn't use a basic attack for 3 consecutive seconds."+
         "\n\nDamage Bonus: "+PINK+"15%"+GOLD)
+    
+    else if skill == RUKIA_G  //  ━━━━━━━━━━━━ [Rukia] ━━━━━━━━━━━━
+        spellLvl = skill.getSkillLvl(id)
+
+        skill..setTitle(id, BLUE+"Trail of cold"+LEVEL_TOOLTIP+spellLvl.toString()+CR+"]")
+        ..setDescription(id,
+        GOLD+
+        "Everytime Rukia uses an ability there is a chance it will freeze enemy heroes around her briefly.")
+
+    else if skill == MISAKA_STR_G  //  ━━━━━━━━━━━━ [Misaka_STR] ━━━━━━━━━━━━
+        spellLvl = skill.getSkillLvl(id)
+
+        skill..setTitle(id, BLUE+"Electromagnetic Veil"+LEVEL_TOOLTIP+spellLvl.toString()+CR+"]")
+        ..setDescription(id,
+        GOLD+
+        "Every 3rd ability the iron sand spreads, making a big dust cloud which gives invisibility to allies inside.")
 
     else if skill == 'A0Y1' // ━━━━━━━━━━━━ [Edo Minato's Kunai Throw] ━━━━━━━━━━━━
         cd = (45)
@@ -363,6 +380,8 @@ public function tooltip_G2 (int pid)
     int mana
     int duration
     int cd
+    int dmg
+
     let skill = SPELL_G2[id]
 
     if skill == 'A00L' // ━━━━━━━━━━━━ [Edo Minato's Kunai Teleport] ━━━━━━━━━━━━
@@ -401,6 +420,25 @@ public function tooltip_G2 (int pid)
         ..setField(ABILITY_ILF_MANA_COST, hero.getAbilityLevel(skill) - 1, mana)
         ..setField(ABILITY_RLF_COOLDOWN, hero.getAbilityLevel(skill) - 1, cd.toReal())
 
+    else if skill == ZERVIS_G
+        spellLvl = skill.getSkillLvl(id)
+        cd = 80
+        range = 800
+        mana = 70
+        dmg = (300 + (4 * mavis.getInt(true)) + (4 * zeref.getInt(true)))
+
+        skill..setTitle(id, BLUE+"Duality"+LEVEL_TOOLTIP+spellLvl.toString()+CR+"]")
+        ..setDescription(id,
+        GOLD+
+        "Mavis and Zeref combine their powers to stike at the target."+
+        "\n\nDamage: "+hero.getStatColor()+dmg.toString()+GOLD+
+        "\n\nCast Range: "+PINK+range.toString()+GOLD+                        
+        "\nCooldown: "+PINK+cd.toString()+GOLD)
+        hero.getAbility(skill)
+
+        ..setField(ABILITY_ILF_MANA_COST, hero.getAbilityLevel(skill) - 1, mana)
+        ..setField(ABILITY_RLF_CAST_RANGE, hero.getAbilityLevel(skill) - 1, range.toReal())
+        ..setField(ABILITY_RLF_COOLDOWN, hero.getAbilityLevel(skill) - 1, cd.toReal())
 
     else
         spellLvl = skill.getSkillLvl(id)

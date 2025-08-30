@@ -16,6 +16,11 @@ function trig_KiyohimeConditions() returns boolean
     return GetSpellAbilityId() == 'A128' or GetSpellAbilityId() == 'A129' or GetSpellAbilityId() == 'A12A' or GetSpellAbilityId() == 'A12B' or GetSpellAbilityId() == 'A12D' or GetSpellAbilityId() == 'A12E'
 function trig_KiyohimeFunc006Func001Func001Func001Func001Func002Func008T()
     SaveInteger(YDLOC, GetHandleId(GetExpiredTimer()), 280, LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 280) + 1)
+    if LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 280) <= 74
+        let caster = LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594)
+        if caster.hasTagPauseEX() == false   
+            caster.pauseEx()
+            caster.addTagPauseEX()
     if LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 280) == 14
         soundPlay("war3mapImported\\LancerKiyohimeEffect1.mp3", GetUnitX(udg_Unitsound), GetUnitY(udg_Unitsound))
         SetUnitTimeScalePercent(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 968215392), 0.00)
@@ -505,8 +510,8 @@ function trig_KiyohimeActions()
         SetUnitAnimationByIndex(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 968215392), 10)
         SetUnitInvulnerable(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594), true)
         let caster = LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594)
+        IssueImmediateOrder(caster, "stop")   
         if caster.hasTagPauseEX() == false
-            IssueImmediateOrder(caster, "stop")     
             caster.pauseEx()
             caster.addTagPauseEX()
         SaveInteger(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 280, 0)

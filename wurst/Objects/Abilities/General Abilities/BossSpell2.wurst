@@ -1,0 +1,66 @@
+package BossSpell2
+
+import ACR_SoundCreation
+import TerrainUtils
+import DamageEvent
+import AbilityGlobals
+import ClosureForGroups
+
+constant sndpepe4 = acrCreateSound("war3mapImported\\100350_chr0350_ActSE#30 (0350_713_sp_rush_demo_ot).mp3")
+unit pepe
+boolean pepeSkillCD2ON
+public trigger pepeTrigger2
+vec2 barrier
+boolean allyInRange
+timer skill2Buff
+effect sfx3
+effect sfx4
+
+public function pepeSkill2()   
+    pepeTrigger2 = CreateTrigger()
+    ..registerAnyUnitEvent(EVENT_PLAYER_UNIT_DAMAGED)
+    ..addAction() ->
+        if BlzGetEventDamageTarget() == gg_unit_O005_0043 and GetWidgetLife(BlzGetEventDamageTarget()) <= BlzGetUnitMaxHP(BlzGetEventDamageTarget()) * 0.5
+            if BlzGetEventDamageTarget().getUserData() != (998)
+                BlzGetEventDamageTarget().setUserData(998) 
+            if pepeSkillCD2ON == false
+                pepe = BlzGetEventDamageTarget()
+                pepe.setInvulnerable(true)
+                pepe.pause()
+                sfx3 = addEffect("war3mapImported\\WaterChargeUp.mdx", pepe.getPos())
+                ..setScale(1)
+                barrier = gg_rct_BossArea.randomPoint()
+                sfx4 = addEffect("war3mapImported\\WaterBarrierUlt.mdx", barrier)
+                ..setScale(2)
+                CreateTimer()..start(10, function pepeSkill2End)
+                pepeSkillCD2ON = true
+                skill2Buff = CreateTimer()..startPeriodic(0.03, function pepeSkill2Buff)
+
+function pepeSkill2Buff()                    
+    forUnitsInRange(barrier.toTileCenter(), 500) (unit ally) ->
+        if allyInRange == false and ally.getPos().distanceTo(barrier.toTileCenter()) <= 200
+            allyInRange = true
+            if ally.isInvulnerable() == false
+                ally.setInvulnerable(true)
+        else if allyInRange == true and ally.getPos().distanceTo(barrier.toTileCenter()) > 200
+            allyInRange = false
+            if ally.isInvulnerable() == true
+                ally.setInvulnerable(false)        
+         
+function pepeSkill2End()
+    sndpepe4.play()
+    sfx3.destr()
+    sfx4.destr()
+    flashEffect("war3mapImported\\PepeExp2.mdx", gg_rct_BossArea.getCenter(), 10)
+    forUnitsInRect(gg_rct_BossArea) (unit victim) ->
+        if victim.isType(UNIT_TYPE_STRUCTURE) == false and victim.isEnemyOf(pepe) == true and victim.isAlive() == true and victim.isInvulnerable() == false
+            DamageEvent.setNextDamageId(DAMAGE_ABILITY_BOSS_3)
+            DamageEvent.setNextDamageFromCode()
+            pepe.damageTarget(victim, 1, ATTACK_TYPE_MAGIC)
+    pepe.setInvulnerable(false)
+    pepe.unpause()              
+    skill2Buff.destr()
+
+init 
+    pepeSkill2()
+    pepeTrigger2.disable()   

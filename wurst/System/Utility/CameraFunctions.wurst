@@ -3,6 +3,7 @@ package CameraFunctions
 import TimerUtils
 
 unit array acrCameraUnit
+public boolean camON
 
 public function acrCamera(unit u)
     let p = u.getOwner()
@@ -11,8 +12,9 @@ public function acrCamera(unit u)
     CreateTimer()..startPeriodic(0.1, function acrCameraUpdate).setData(id)
 
 function acrCameraUpdate()
-    let id = GetExpiredTimer().getData()
-    if acrCameraUnit[id].isPaused() == false
-        let p = acrCameraUnit[id].getOwner()
-        SetCameraFieldForPlayer(p, CAMERA_FIELD_TARGET_DISTANCE, 4000, 0)
-        SetCameraFieldForPlayer(p, CAMERA_FIELD_ANGLE_OF_ATTACK, 300, 0)
+    if camON == false 
+        let id = GetExpiredTimer().getData()
+        if acrCameraUnit[id].isPaused() == false
+            let p = acrCameraUnit[id].getOwner()
+            SetCameraFieldForPlayer(p, CAMERA_FIELD_TARGET_DISTANCE, 4000, 0)
+            SetCameraFieldForPlayer(p, CAMERA_FIELD_ANGLE_OF_ATTACK, 300, 0)

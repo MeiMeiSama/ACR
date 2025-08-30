@@ -1,0 +1,109 @@
+package ACR_Variables
+
+// Coordinates for each team revivePoint, startPoint, spawnPoint, etc.
+
+public vec2 team1Pos = vec2(-12119, 10611)
+public vec2 team2Pos = vec2(3905, 2786)
+public vec2 team3Pos = vec2(-5040, -5853) 
+
+// Coordinates for each team's jungle camps
+
+public vec2 team1Neutrals = vec2(-9228, -827)
+public vec2 team2Neutrals = vec2(-2057, 6927)
+public vec2 team3Neutrals = vec2(-453, -3247)
+
+// Coordinates for each team's Colorfullbuffs
+
+public vec2 colorfullBuffMonsterLeft = vec2(-8202, 2444)
+public vec2 colorfullBuffMonsterRight = vec2(-820, -1151)
+public vec2 colorfullBuffMonsterTop = vec2(-4079, 7394) 
+
+// Coordinates for Kiara boss and Sistine Dummy Hero
+
+public vec2 kiaraPos = vec2(-4723, -10018)
+public vec2 sistinePos = vec2(9755, 794)
+
+// Coordinates for Team 1 Shops
+
+public vec2 team1Shop1Pos = vec2(-12480, 10911) //fountain ++
+public vec2 team1Shop2Pos = vec2(-12480, 10325) //pots scrolls ++
+public vec2 team1Shop3Pos = vec2(-12191, 10911) //rings ++
+public vec2 team1Shop4Pos = vec2(-12480, 10025) //boots upr
+
+public vec2 team1Shop5Pos = vec2(-12480, 10645) //accessory shop ++
+public vec2 team1Shop6Pos = vec2(-11525, 10911) //arcobalenos ++
+public vec2 team1Shop7Pos = vec2(-11824, 10911) //new items ++
+public vec2 team1Shop8Pos = vec2(-12480, 10377) //not used it seems
+
+// Coordinates for Team 1 Base & Towers
+
+public vec2 team1BasePos = vec2(-10592, 8761)
+
+public vec2 team1BaseTowerTop = vec2(-9192, 9871)
+public vec2 team1BaseTowerMid = vec2(-10760, 9098)
+public vec2 team1BaseTowerBot = vec2(-11414, 7424)
+
+public vec2 team1TopTowerInner = vec2(-10972, 8917)
+public vec2 team1MidTowerInner = vec2(-9262, 7492)
+public vec2 team1BotTowerInner = vec2(-10228, 8802)
+
+public vec2 team1TopTowerOuter = vec2(-6913, 9737)
+public vec2 team1MidTowerOuter = vec2(-7939, 5898)
+public vec2 team1BotTowerOuter = vec2(-11394, 3981)
+
+
+// Coordinates for Team 2 Shops
+
+public vec2 team2Shop1Pos = vec2(4220, 2823) //fountain ++
+public vec2 team2Shop2Pos = vec2(3875, 3080) //pots scrolls ++
+public vec2 team2Shop3Pos = vec2(4082, 2474) //rings ++
+public vec2 team2Shop4Pos = vec2(3625, 3080) //boots upr ++
+
+public vec2 team2Shop5Pos = vec2(4095, 3080) //accessory shop ++
+public vec2 team2Shop6Pos = vec2(3625, 2474) //arcobalenos ++
+public vec2 team2Shop7Pos = vec2(3825, 2474) //new items ++
+public vec2 team2Shop8Pos = vec2(3835, 2692)
+
+// Coordinates for Team 2 Base & Towers
+
+public vec2 team2BasePos = vec2(2875, 2765)
+
+public vec2 team2BaseTowerTop = vec2(3449, 4354)
+public vec2 team2BaseTowerMid = vec2(3231, 2735)
+public vec2 team2BaseTowerBot = vec2(3326, 1154)
+
+public vec2 team2TopTowerInner = vec2(2864, 3164)
+public vec2 team2MidTowerInner = vec2(1287, 2847)
+public vec2 team2BotTowerInner = vec2(2864, 2408)
+
+public vec2 team2TopTowerOuter = vec2(2047, 9739)
+public vec2 team2MidTowerOuter = vec2(-1283, 2829)
+public vec2 team2BotTowerOuter = vec2(3322, -2895)
+
+// Coordinates for Team 3 Shops
+
+public vec2 team3Shop1Pos = vec2(-5050, -6142) //fountain ++
+public vec2 team3Shop2Pos = vec2(-4734, -5900) //pots scrolls ++
+public vec2 team3Shop3Pos = vec2(-5335, -6136) //rings ++
+public vec2 team3Shop4Pos = vec2(-4734, -5755) //boots upr ++
+
+public vec2 team3Shop5Pos = vec2(-4734, -6136) //accessory shop ++
+public vec2 team3Shop6Pos = vec2(-5335, -5755) //arcobalenos ++
+public vec2 team3Shop7Pos = vec2(-5335, -5995) //new items ++
+public vec2 team3Shop8Pos = vec2(-5248, -5752)
+
+// Coordinates for Team 3 Base & Towers
+
+public vec2 team3BasePos = vec2(-4932, -4657)
+
+public vec2 team3BaseTowerTop = vec2(-3589, -5273)
+public vec2 team3BaseTowerMid = vec2(-4947, -4976)
+public vec2 team3BaseTowerBot = vec2(-6466, -4915)
+
+public vec2 team3TopTowerInner = vec2(-4546, -4616)
+public vec2 team3MidTowerInner = vec2(-4859, -3387)
+public vec2 team3BotTowerInner = vec2(-5351, -4666)
+
+public vec2 team3TopTowerOuter = vec2(-384, -5235)
+public vec2 team3MidTowerOuter = vec2(-4808, -580)
+public vec2 team3BotTowerOuter = vec2(-11297, -4754)    

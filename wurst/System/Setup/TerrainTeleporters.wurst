@@ -1,0 +1,76 @@
+package TerrainTeleporters
+
+/*
+So we want a function that will play Doodad animations. You know how initialization works, so simply call a function you want to use, and write your code in there.
+
+In the function, for example now we want to play a certain Doodad (D029) animation.
+In the function, simply write "Doodad", it's gonna bring up all API starting with Doodad (might take time if java has not loaded properly yet) 
+When writing Doodad, it brought up an API called "SetDoodadAnimationRect":
+
+    SetDoodadAnimationRect(theRegion, doodadType, animName, idkThisJustSetAsFalse)
+
+You can use this to set the animation for all doodads of type X in this region.
+
+So using this API with the following code:
+
+    SetDoodadAnimationRect(gg_rct_TeleportBossesLeft, 'D029', "stand", false)
+
+Will set all Doodads of type D029 as "stand" in the region gg_rct_TeleportBossesLeft.
+
+Remember, that you can also make triggers in GUI in the World Editor, and when you done what you want, convert it to JASS:
+(Edit -> Convert to Custom Text)
+You can use this converted JASS to use as inspiration and code it in Wurst, it is almost similar, same API.
+*/
+/*
+region tpright
+region tpleft
+region tpbottom
+region tpmain
+*/
+region T1
+region T2
+region T3
+
+init
+    teleporterAnimations()
+    regionTeams()
+    /*teleporterTp()
+    regions()
+    */ 
+function teleporterAnimations ()
+    SetDoodadAnimationRect(gg_rct_TeleportBossesLeft, 'D029', "stand", false)
+    SetDoodadAnimationRect(gg_rct_TeleportBossesRight, 'D029', "stand", false)
+    SetDoodadAnimationRect(gg_rct_TeleportBossesBottom, 'D029', "stand", false)
+    SetDoodadAnimationRect(gg_rct_TeleportBossesMain, 'D029', "stand", false)
+    SetDoodadAnimationRect(gg_rct_TeleportBossesMainOut, 'D029', "stand", false)
+
+function regionTeams()
+    RegionAddRect(T1, gg_rct_T1)
+    RegionAddRect(T2, gg_rct_T2)
+    RegionAddRect(T3, gg_rct_T3)
+
+/*
+function teleporterTp()
+    CreateTrigger()
+    ..registerGameEvent(EVENT_GAME_ENTER_REGION)
+    ..addAction() ->
+        if GetTriggeringRegion() == tpleft and GetEnteringUnit().isType(UNIT_TYPE_HERO)
+            let u = GetEnteringUnit()
+            u.setPos(GetRectCenterX(gg_rct_TeleportBossesMain), GetRectCenterY(gg_rct_TeleportBossesMain))
+        if GetTriggeringRegion() == tpright and GetEnteringUnit().isType(UNIT_TYPE_HERO)
+            let u = GetEnteringUnit()
+            u.setPos(GetRectCenterX(gg_rct_TeleportBossesMain), GetRectCenterY(gg_rct_TeleportBossesMain))    
+        if GetTriggeringRegion() == tpbottom and GetEnteringUnit().isType(UNIT_TYPE_HERO)
+            let u = GetEnteringUnit()
+            u.setPos(GetRectCenterX(gg_rct_TeleportBossesMain), GetRectCenterY(gg_rct_TeleportBossesMain))
+        if GetTriggeringRegion() == tpmainout and GetEnteringUnit().isType(UNIT_TYPE_HERO)
+            let u = GetEnteringUnit()
+            u.setPos(GetRectCenterX(gg_rct_CenterOfMap), GetRectCenterY(gg_rct_CenterOfMap))
+
+function regions()
+    RegionAddRect(tpleft, gg_rct_TeleportBossesLeft)
+    RegionAddRect(tpright, gg_rct_TeleportBossesRight)
+    RegionAddRect(tpbottom, gg_rct_TeleportBossesBottom) 
+    RegionAddRect(tpmain, gg_rct_TeleportBossesMain)
+    RegionAddRect(tpmainout, gg_rct_TeleportBossesMainOut)
+*/              

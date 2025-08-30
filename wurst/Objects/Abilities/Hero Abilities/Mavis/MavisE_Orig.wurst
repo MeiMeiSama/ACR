@@ -1,0 +1,47 @@
+package MavisE_Orig
+import ObjectDefinitions
+import ChannelAbilityPreset
+import ClosureEvents
+import AbilityGlobals     
+
+unit mavis
+timer mavisETimer
+player mavisOwner
+
+@compiletime function createAbility()
+    new AbilityDefinitionEvasion(MAVIS_E)
+        ..setIconNormal("ReplaceableTextures\\CommandButtonsDisabled\\DISBTNUltravision.blp")
+        ..setIconResearch("ReplaceableTextures\\CommandButtonsDisabled\\DISBTNUltravision.blp")
+        ..setChancetoEvade(1, 0)
+        ..setBuffs(1, "")
+        ..setAreaofEffect(1, 0)
+        ..setButtonPositionNormalX(2)
+        ..setButtonPositionNormalY(2)
+        ..setButtonPositionResearchX(2)
+        ..setButtonPositionResearchY(0)
+        ..setHotkeyLearn("E")
+        ..setLevels(5)
+        ..setLevelSkipRequirement(2)
+        ..presetTooltipNormal(lvl -> "Strategic Insight|r")
+        ..presetTooltipNormalExtended(lvl -> GOLD+"Mavis pings all enemies in the map for herself and her allies."+"\n\ncooldown: "+BLUE+"70/60/50/40/30|r")
+        ..setTooltipLearn("Strategic Insight|r")
+        ..setTooltipLearnExtended(GOLD+"Mavis pings all enemies in the map for herself and her allies."+"\n\ncooldown: "+BLUE+"70/60/50/40/30|r")
+
+public function initTrig_MavisE_Orig()
+    EventListener.add(EVENT_PLAYER_HERO_SKILL) ->
+        if GetLearnedSkill() == MAVIS_E
+            mavis = GetTriggerUnit()
+            mavisOwner = mavis.getOwner()
+            let a = GetLearnedSkill()
+            let abilvl = GetUnitAbilityLevel(mavis, a)
+            let interval = I2R(80 - abilvl * 10)
+            if mavisETimer != null
+                mavisETimer.destr()
+            mavisETimer = CreateTimer()..startPeriodic(interval, function ping)
+                 
+function ping()
+    for i = 0 to 12
+        if udg_PlayHero[i].isAllyOf(mavis) or udg_PlayHero[i] == mavis
+            for a = 0 to 12
+                if udg_PlayHero[a].isAllyOf(mavis) == false and udg_PlayHero[a].isAlive()
+                    PingMinimapForPlayer(udg_PlayHero[i].getOwner(), udg_PlayHero[a].getX(), udg_PlayHero[a].getY(), 4)

@@ -1,133 +1,167 @@
 package CreateBuildings
 import ObjectDefinitions
+import ACR_Variables
 
 int forestCreepID = 900
+public unit array miniboss
 
 init
     createCameras()
-    // createAllDestructables()
     createAllUnits()
 
 function createBuildingsForPlayer3()
     let p = Player(3)
-    gg_unit_o002_0002 = CreateUnit(p, 'o002', -9088.0, 8704.0, 270.000)..setInvulnerable(true)
-    CreateUnit(p, 'o000', -9792.0, 6912.0, 270.000)..setInvulnerable(true)
-    CreateUnit(p, 'o000', -7744.0, 7104.0, 270.000)..setInvulnerable(true)
-    CreateUnit(p, 'o000', -7680.0, 9344.0, 270.000)..setInvulnerable(true)
-    gg_unit_o000_0010 = CreateUnit(p, 'o000', -6336.0, 5504.0, 270.000)..setInvulnerable(true)
-    gg_unit_o000_0011 = CreateUnit(p, 'o000', -4352.0, 9472.0, 270.000)..setInvulnerable(true)
-    gg_unit_o000_0034 = CreateUnit(p, 'o000', -9792.0, 2368.0, 270.000)..setInvulnerable(true)
-    CreateUnit(p, 'o000', -9408.0, 8256.0, 270.000)..setInvulnerable(true)
-    CreateUnit(p, 'o000', -8832.0, 9024.0, 270.000)..setInvulnerable(true)
-    CreateUnit(p, 'o001', -8640.0, 8256.0, 270.000)..setInvulnerable(true)
-    CreateUnit(p, 'n004', -10816.0, 10048.0, 270.000)..setInvulnerable(true)
-    CreateUnit(p, 'n000', -10816.0, 10368.0, 270.000)..setInvulnerable(true)
-    CreateUnit(p, 'n005', -10816.0, 10176.0, 270.000)..setInvulnerable(true)
-    gg_unit_n003_0051 = CreateUnit(p, VONGOLA_SHOP, -10624.0, 10432.0, 270.000)..setInvulnerable(true)
-    CreateUnit(p, 'n006', -10816.0, 9856.0, 270.000)..setInvulnerable(true)
-    CreateUnit(p, ARCOBALENO_SHOP, -10816.0, 9600.0, 270.000)..setInvulnerable(true)
+    gg_unit_o002_0002 = createUnit(p, 'o002', team1BasePos)
+
+    createUnit(p, 'o000', team1BaseTowerTop)..setInvulnerable(true)
+    createUnit(p, 'o001', team1BaseTowerMid)..setInvulnerable(true) // Transmission Tower, the useless one
+    createUnit(p, 'o000', team1BaseTowerBot)..setInvulnerable(true)
+
+    gg_unit_o000_0010 = createUnit(p, 'o000', team1TopTowerInner)..setInvulnerable(true)
+    gg_unit_o000_0011 = createUnit(p, 'o000', team1MidTowerInner)..setInvulnerable(true)
+    gg_unit_o000_0034 = createUnit(p, 'o000', team1BotTowerInner)..setInvulnerable(true)
+
+    createUnit(p, 'o000', team1TopTowerOuter)..setInvulnerable(true)
+    createUnit(p, 'o000', team1MidTowerOuter)..setInvulnerable(true)
+    createUnit(p, 'o000', team1BotTowerOuter)..setInvulnerable(true)
+
+    createUnit(p, 'n000', team1Shop1Pos)..setInvulnerable(true)
+    createUnit(p, 'n004', team1Shop2Pos)..setInvulnerable(true)
+    createUnit(p, VONGOLA_SHOP, team1Shop3Pos)..setInvulnerable(true)
+    createUnit(p, 'n005', team1Shop4Pos)..setInvulnerable(true)
+    createUnit(p, ACCESSORY_SHOP, team1Shop5Pos)..setInvulnerable(true)
+    createUnit(p, ARCOBALENO_SHOP, team1Shop6Pos)..setInvulnerable(true)
+    createUnit(p, NEW_ITEM_SHOP, team1Shop7Pos)..setInvulnerable(true)
+    // createUnit(p, SHOP 8 ID HERE, team1Shop8Pos)..setInvulnerable(true)
 
 function createBuildingsForPlayer7()
     let p = Player(7)
-    gg_unit_o003_0003 = CreateUnit(p, 'o003', 4416.0, 2240.0, 270.000)..setInvulnerable(true)
-    gg_unit_o000_0012 = CreateUnit(p, 'o000', 3648.0, 9408.0, 270.000)..setInvulnerable(true)
-    CreateUnit(p, 'o000', 4992.0, 3904.0, 270.000)..setInvulnerable(true)
-    CreateUnit(p, 'o000', 2880.0, 2176.0, 270.000)..setInvulnerable(true)
-    CreateUnit(p, 'o000', 4416.0, 2688.0, 270.000)..setInvulnerable(true)
-    CreateUnit(p, 'o000', 4416.0, 1792.0, 270.000)..setInvulnerable(true)
-    CreateUnit(p, 'o000', 4864.0, 640.0, 270.000)..setInvulnerable(true)
-    gg_unit_o000_0025 = CreateUnit(p, 'o000', 4864.0, -3072.0, 270.000)..setInvulnerable(true)
-    gg_unit_o000_0027 = CreateUnit(p, 'o000', 320.0, 2240.0, 270.000)..setInvulnerable(true)
-    CreateUnit(p, 'o001', 3968.0, 2240.0, 270.000)..setInvulnerable(true)
-    CreateUnit(p, 'n000', 5760.0, 2240.0, 270.000)..setInvulnerable(true)
-    CreateUnit(p, 'n004', 5184.0, 2688.0, 270.000)..setInvulnerable(true)
-    CreateUnit(p, VONGOLA_SHOP, 5760.0, 2688.0, 270.000)..setInvulnerable(true)
-    CreateUnit(p, 'n006', 5568.0, 2688.0, 270.000)..setInvulnerable(true)
-    CreateUnit(p, 'n005', 5376.0, 2688.0, 270.000)..setInvulnerable(true)
-    CreateUnit(p, ARCOBALENO_SHOP, 5760.0, 2112.0, 270.000)..setInvulnerable(true)
+    gg_unit_o003_0003 = createUnit(p, 'o003', team2BasePos)
+
+    createUnit(p, 'o000', team2BaseTowerTop)..setInvulnerable(true)
+    createUnit(p, 'o001', team2BaseTowerMid)..setInvulnerable(true) // Transmission Tower, the useless one
+    createUnit(p, 'o000', team2BaseTowerBot)..setInvulnerable(true)
+
+    gg_unit_o000_0012 = createUnit(p, 'o000', team2TopTowerInner)..setInvulnerable(true)
+    gg_unit_o000_0025 = createUnit(p, 'o000', team2MidTowerInner)..setInvulnerable(true)
+    gg_unit_o000_0027 = createUnit(p, 'o000', team2BotTowerInner)..setInvulnerable(true)
+
+    createUnit(p, 'o000', team2TopTowerOuter)..setInvulnerable(true)
+    createUnit(p, 'o000', team2MidTowerOuter)..setInvulnerable(true)
+    createUnit(p, 'o000', team2BotTowerOuter)..setInvulnerable(true)
+
+    createUnit(p, 'n000', team2Shop1Pos)..setInvulnerable(true)
+    createUnit(p, 'n004', team2Shop2Pos)..setInvulnerable(true)
+    createUnit(p, VONGOLA_SHOP, team2Shop3Pos)..setInvulnerable(true)
+    createUnit(p, 'n005', team2Shop5Pos)..setInvulnerable(true)
+    createUnit(p, ACCESSORY_SHOP, team2Shop4Pos)..setInvulnerable(true)
+    createUnit(p, ARCOBALENO_SHOP, team2Shop6Pos)..setInvulnerable(true)
+    createUnit(p, NEW_ITEM_SHOP, team2Shop7Pos)..setInvulnerable(true)
+    // createUnit(p, SHOP 8 ID HERE, team2Shop8Pos)..setInvulnerable(true)
 
 function createBuildingsForPlayer11()
     let p = Player(11)
-    gg_unit_o004_0004 = CreateUnit(p, 'o004', -3392.0, -5184.0, 270.000)..setInvulnerable(true)
-    CreateUnit(p, 'o000', -1984.0, -5696.0, 270.000)..setInvulnerable(true)
-    CreateUnit(p, 'o000', -3264.0, -3712.0, 270.000)..setInvulnerable(true)
-    gg_unit_o000_0030 = CreateUnit(p, 'o000', -3264.0, -960.0, 270.000)..setInvulnerable(true)
-    CreateUnit(p, 'o000', -4864.0, -5504.0, 270.000)..setInvulnerable(true)
-    gg_unit_o000_0032 = CreateUnit(p, 'o000', -9536.0, -5504.0, 270.000)..setInvulnerable(true)
-    gg_unit_o000_0033 = CreateUnit(p, 'o000', 896.0, -5760.0, 270.000)..setInvulnerable(true)
-    CreateUnit(p, 'o000', -3840.0, -5184.0, 270.000)..setInvulnerable(true)
-    CreateUnit(p, 'o000', -2944.0, -5184.0, 270.000)..setInvulnerable(true)
-    CreateUnit(p, 'o001', -3392.0, -4736.0, 270.000)..setInvulnerable(true)
-    CreateUnit(p, 'n000', -3456.0, -6528.0, 270.000)..setInvulnerable(true)
-    CreateUnit(p, VONGOLA_SHOP, -3712.0, -6528.0, 270.000)..setInvulnerable(true)
-    CreateUnit(p, 'n004', -3008.0, -6528.0, 270.000)..setInvulnerable(true)
-    CreateUnit(p, 'n006', -3264.0, -6528.0, 270.000)..setInvulnerable(true)
-    CreateUnit(p, 'n005', -3008.0, -5888.0, 270.000)..setInvulnerable(true)
-    CreateUnit(p, ARCOBALENO_SHOP, -3904.0, -6528.0, 270.000)..setInvulnerable(true)
+    gg_unit_o004_0004 = createUnit(p, 'o004', team3BasePos)
+
+    createUnit(p, 'o000', team3BaseTowerTop)..setInvulnerable(true)
+    createUnit(p, 'o001', team3BaseTowerMid)..setInvulnerable(true) // Transmission Tower, the useless one
+    createUnit(p, 'o000', team3BaseTowerBot)..setInvulnerable(true)
+
+    gg_unit_o000_0030 = createUnit(p, 'o000', team3TopTowerInner)..setInvulnerable(true)
+    gg_unit_o000_0032 = createUnit(p, 'o000', team3MidTowerInner)..setInvulnerable(true)
+    gg_unit_o000_0033 = createUnit(p, 'o000', team3BotTowerInner)..setInvulnerable(true)
+
+    createUnit(p, 'o000', team3TopTowerOuter)..setInvulnerable(true)
+    createUnit(p, 'o000', team3MidTowerOuter)..setInvulnerable(true)
+    createUnit(p, 'o000', team3BotTowerOuter)..setInvulnerable(true)
+
+    createUnit(p, 'n000', team3Shop1Pos)..setInvulnerable(true)
+    createUnit(p, 'n004', team3Shop2Pos)..setInvulnerable(true)
+    createUnit(p, VONGOLA_SHOP, team3Shop3Pos)..setInvulnerable(true)
+    createUnit(p, 'n005', team3Shop4Pos)..setInvulnerable(true)
+    createUnit(p, ACCESSORY_SHOP, team3Shop5Pos)..setInvulnerable(true)
+    createUnit(p, ARCOBALENO_SHOP, team3Shop6Pos)..setInvulnerable(true)
+    createUnit(p, NEW_ITEM_SHOP, team3Shop7Pos)..setInvulnerable(true)
+    // createUnit(p, SHOP 8 ID HERE, team3Shop8Pos)..setInvulnerable(true)
 
 function createNeutralHostile()
     let p = Player(PLAYER_NEUTRAL_AGGRESSIVE)
-    gg_unit_O005_0043 = CreateUnit(p, 'O005', -4632.6, -10182.6, 270.000)
-    SetHeroLevel(gg_unit_O005_0043, 45, false)
-    SetUnitState(gg_unit_O005_0043, UNIT_STATE_MANA, 225)
-    UnitAddItemToSlotById(gg_unit_O005_0043, 'I035', 0)
-    UnitAddItemToSlotById(gg_unit_O005_0043, 'I028', 1)
-    UnitAddItemToSlotById(gg_unit_O005_0043, 'I02G', 2)
-    gg_unit_O007_0139 = CreateUnit(p, 'O007', 9806.9, 842.5, 270.000)
-    SetHeroLevel(gg_unit_O007_0139, 35, false)
-    SetHeroStr(gg_unit_O007_0139, 80, true)
-    SetHeroAgi(gg_unit_O007_0139, 200, true)
-    SetHeroInt(gg_unit_O007_0139, 50, true)
-    SetUnitState(gg_unit_O007_0139, UNIT_STATE_MANA, 750)
-    CreateUnit(p, 'e0PB', -588.4, 6418.6, 99.800)..setUserData(forestCreepID)
+
+    gg_unit_O005_0043 = createUnit(p, 'O005', kiaraPos)..setInvulnerable(true)
+    gg_unit_O005_0043
+    ..setLevel(45, false)
+    ..setState(UNIT_STATE_MANA, 225)
+    ..addItemToSlot('I035', 0)
+    ..addItemToSlot('I028', 1)
+    ..addItemToSlot('I02G', 2)
+    ..addItemToSlot(LOLLIPOP_MANA, 3)
+    
+    gg_unit_O007_0139 = createUnit(p, 'O007', sistinePos)
+    gg_unit_O007_0139
+    ..setLevel(35, false)
+    ..setStr(80)
+    ..setAgi(200)
+    ..setInt(50)
+    ..setState(UNIT_STATE_MANA, 750)
+
+    createUnit(p, 'e0PB', team1Neutrals)..setUserData(forestCreepID)
     if forestCreepID < 950
         forestCreepID++
     else 
         forestCreepID = 900    
-    CreateUnit(p, 'e0PB', -275.5, 6435.1, 64.560)..setUserData(forestCreepID)
+    createUnit(p, 'e0PB', team1Neutrals)..setUserData(forestCreepID)
     if forestCreepID < 950
         forestCreepID++
     else 
         forestCreepID = 900     
-    CreateUnit(p, 'e0PB', -442.4, 6103.3, 225.620)..setUserData(forestCreepID)
+    createUnit(p, 'e0PB', team1Neutrals)..setUserData(forestCreepID)
     if forestCreepID < 950
         forestCreepID++
     else 
         forestCreepID = 900     
-    CreateUnit(p, 'e0PC', -7055.0, -1384.5, 174.240)..setUserData(forestCreepID)
+    createUnit(p, 'e0PC', team2Neutrals)..setUserData(forestCreepID)
     if forestCreepID < 950
         forestCreepID++
     else 
         forestCreepID = 900     
-    CreateUnit(p, 'e0PC', -7195.7, -1204.7, 175.690)..setUserData(forestCreepID)
+    createUnit(p, 'e0PC', team2Neutrals)..setUserData(forestCreepID)
     if forestCreepID < 950
         forestCreepID++
     else 
         forestCreepID = 900     
-    CreateUnit(p, 'e0PC', -6970.3, -1200.2, 77.340)..setUserData(forestCreepID)
+    createUnit(p, 'e0PC', team2Neutrals)..setUserData(forestCreepID)
     if forestCreepID < 950
         forestCreepID++
     else 
         forestCreepID = 900     
-    CreateUnit(p, 'e0PD', 682.3, -2541.6, 261.120)..setUserData(forestCreepID)
+    createUnit(p, 'e0PD', team3Neutrals)..setUserData(forestCreepID)
     if forestCreepID < 950
         forestCreepID++
     else 
         forestCreepID = 900     
-    CreateUnit(p, 'e0PD', 555.4, -2851.3, 155.820)..setUserData(forestCreepID)
+    createUnit(p, 'e0PD', team3Neutrals)..setUserData(forestCreepID)
     if forestCreepID < 950
         forestCreepID++
     else 
         forestCreepID = 900     
-    CreateUnit(p, 'e0PD', 787.6, -2851.0, 317.200)..setUserData(forestCreepID)
+    createUnit(p, 'e0PD', team3Neutrals)..setUserData(forestCreepID)
     if forestCreepID < 950
         forestCreepID++
     else 
         forestCreepID = 900     
+    miniboss[0] = createUnit(p, 'O008', colorfullBuffMonsterLeft)..setUserData(993)
+    miniboss[1] = createUnit(p, 'O009', colorfullBuffMonsterRight)..setUserData(994)
+    miniboss[2] = createUnit(p, 'O00A', colorfullBuffMonsterTop)..setUserData(995)
+    CreateTimer()..start(3, function stupidAssPieceOfShitBuggedGarbage)
+
+function stupidAssPieceOfShitBuggedGarbage()
+    KillUnit(miniboss[0])
+    KillUnit(miniboss[1])
+    KillUnit(miniboss[2])    
+
 
 function createNeutralPassive()
-    let p = Player(PLAYER_NEUTRAL_PASSIVE)
-    CreateUnit(p, 'h00T', 7776.6, -3450.8, 0.000)
+    DoNothing()
 
 function createPlayerBuildings()
     createBuildingsForPlayer3()

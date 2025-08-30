@@ -137,7 +137,7 @@ public constant DAMAGE_ABILITY_ELIZABETH_T = 16200
 public constant DAMAGE_ABILITY_EDO_MADARA_R = 16300
 public constant DAMAGE_ABILITY_EDO_MADARA_R_Q = 16350
 public constant DAMAGE_ABILITY_EDMOND_T = 16400
-public constant DAMAGE_ABILITY_DIO_F = 16500
+public constant DAMAGE_ABILITY_DIO_T2 = 16500
 public constant DAMAGE_ABILITY_DANTE_T = 16600
 public constant DAMAGE_ABILITY_BYAKURAN_T = 16700
 public constant DAMAGE_ABILITY_BYAKURAN_Q = 16800
@@ -190,6 +190,12 @@ public constant DAMAGE_ABILITY_LUFFY_F = 21400
 public constant DAMAGE_ABILITY_BYAKURAN_F = 21500
 public constant DAMAGE_ABILITY_MELIODAS_F = 21600
 public constant DAMAGE_ABILITY_TSUNA_NATSU = 21700
+public constant DAMAGE_ABILITY_ZERVIS_G = 21800
+public constant DAMAGE_ABILITY_JOTARO_R = 21900
+public constant DAMAGE_ABILITY_DIO_R = 22000
+public constant DAMAGE_ABILITY_RUKIARQ = 22100
+public constant DAMAGE_ABILITY_RUKIARW = 22200
+public constant DAMAGE_ABILITY_RUKIARE = 22300
 
 
 
@@ -199,3 +205,21 @@ public constant DAMAGE_ABILITY_STORM_RING = 50200
 public constant DAMAGE_ABILITY_STORM_ARCO = 50300
 public constant DAMAGE_ABILITY_RAIN_RING = 50400
 public constant DAMAGE_ABILITY_RAIN_ARCO = 50500
+
+
+
+public constant DAMAGE_ABILITY_BOSS_1 = 75000
+public constant DAMAGE_ABILITY_BOSS_2 = 75100
+public constant DAMAGE_ABILITY_BOSS_3 = 75200
+
+
+
+public boolean jotaroRDashBool
+public boolean dioRDashBool
+public boolean jotaroDioRBool
+public boolean jotaroTOn
+public boolean dioTOn
+public location abilityJotaroTLoc
+public location abilityDioTLoc
+public vec2 abilityJotaroTPos
+public vec2 abilityDioTPos

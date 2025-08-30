@@ -78,13 +78,14 @@ public function moonUI ()
     // let map = BlzGetFrameByName("MiniMapFrame", 0)
     // let commandButtons = BlzFrameGetChild(BlzGetFrameByName("ConsoleUI", 0), 0)
     let map = getFrameACR("MiniMapFrame", 0)
-    let commandButtons = BlzFrameGetChild(getFrameACR("ConsoleUI", 0), 0)
+    let commandButtons = getFrameACR("CommandBarFrame", 0)
     BlzFrameSetParent(map, parent)
     BlzFrameSetParent(commandButtons, parent)
     BlzFrameSetAbsPoint(map, FRAMEPOINT_BOTTOMLEFT, 0.034, 0.001)
     BlzFrameSetAbsPoint(map, FRAMEPOINT_TOPRIGHT, 0.175, 0.1415)
-    BlzFrameSetAbsPoint(commandButtons, FRAMEPOINT_BOTTOMLEFT, 0.62615, 0.00005)
-    BlzFrameSetAbsPoint(commandButtons, FRAMEPOINT_TOPRIGHT, 0.17265, 0.14005)
+    BlzFrameSetAbsPoint(commandButtons, FRAMEPOINT_BOTTOMLEFT, 0.62615, 0.00005) // these values u gotta edit to match the UI 
+    BlzFrameSetAbsPoint(commandButtons, FRAMEPOINT_TOPRIGHT, 0.17265, 0.14005) // these values u gotta edit to match the UI
+    
 
     // Portrait
     let frame = BlzGetOriginFrame(ORIGIN_FRAME_PORTRAIT, 0)..setScale(1)

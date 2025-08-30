@@ -2,6 +2,11 @@ package NanayaSQ
 import DamageEvent
 import AbilityGlobals
 import main
+import ObjectDefinitions
+import SkinSystem
+
+unit nanaya 
+
 init
     initTrig_NanayaSQ()
 
@@ -22,60 +27,65 @@ function trig_NanayaSQFunc009Func015T()
     //unit _ydl_unit
     SaveInteger(YDLOC, GetHandleId(GetExpiredTimer()), 280, LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 280) + 1)
     if LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 280) <= 41
-        PauseUnitBJ(true, LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594))
+        PauseUnitBJ(true, nanaya)
         PauseUnitBJ(true, LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 549))
     if LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 280) == 1
         if GetRandomInt(1, 2) == 1
             soundPlay("war3mapImported\\BlueNanaya6-1.wav", GetUnitX(udg_Unitsound), GetUnitY(udg_Unitsound))
         else
             soundPlay("war3mapImported\\BlueNanaya6-2.wav", GetUnitX(udg_Unitsound), GetUnitY(udg_Unitsound))
-        SetUnitVertexColorBJ(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), 100, 100, 100, 100.00)
+        SetUnitVertexColorBJ(nanaya, 100, 100, 100, 100.00)
         SaveLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 1108, GetUnitLoc(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 549)))
         SaveLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 683, PolarProjectionBJ(LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 1108), 150.00, GetUnitFacing(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 549)) + 180.00))
-        SetUnitPositionLocFacingBJ(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 683), AngleBetweenPoints(LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 683), LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 1108)))
-        SaveUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 944545158, CreateUnitAtLoc(LoadPlayerHandle(YDLOC, GetHandleId(GetExpiredTimer()), 603), 'e0JX', LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 683), yDWEAngleBetweenUnits(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 549))))
+        SetUnitPositionLocFacingBJ(nanaya, LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 683), AngleBetweenPoints(LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 683), LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 1108)))
+        let caster = nanaya
+        let pid = caster.getOwner().getId()
+        if skinEquipped[pid] == true
+            SaveUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 944545158, CreateUnitAtLoc(LoadPlayerHandle(YDLOC, GetHandleId(GetExpiredTimer()), 603), NANAYAWRTF_SKIN, LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 683), yDWEAngleBetweenUnits(nanaya, LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 549))))
+        else
+            SaveUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 944545158, CreateUnitAtLoc(LoadPlayerHandle(YDLOC, GetHandleId(GetExpiredTimer()), 603), 'e0JX', LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 683), yDWEAngleBetweenUnits(nanaya, LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 549))))
         GroupAddUnit(LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 993), LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 944545158))
         SetUnitAnimationByIndex(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 944545158), 12)
-        SetUnitAnimationByIndex(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), 12)
+        SetUnitAnimationByIndex(nanaya, 12)
         RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 1108))
         RemoveLocation(LoadLocationHandle(YDLOC, GetHandleId(GetExpiredTimer()), 683))
     if LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 280) == 26
         // CameraSetEQNoiseForPlayer(LoadPlayerHandle(YDLOC, GetHandleId(GetExpiredTimer()), 603), 10.00)
         // CameraSetEQNoiseForPlayer(LoadPlayerHandle(YDLOC, GetHandleId(GetExpiredTimer()), 636889825), 10.00)
         soundPlay("war3mapImported\\TatsuyaSE2.mp3", GetUnitX(udg_Unitsound), GetUnitY(udg_Unitsound))
-        SaveUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 94460517, CreateUnit(LoadPlayerHandle(YDLOC, GetHandleId(GetExpiredTimer()), 603), 'e10D', GetUnitX(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 549)), GetUnitY(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 549)), yDWEAngleBetweenUnits(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 549)) + 35.00))
+        SaveUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 94460517, CreateUnit(LoadPlayerHandle(YDLOC, GetHandleId(GetExpiredTimer()), 603), 'e10D', GetUnitX(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 549)), GetUnitY(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 549)), yDWEAngleBetweenUnits(nanaya, LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 549)) + 35.00))
         SetUnitFlyHeight(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 94460517), 100.00, 0.00)
         SetUnitScale(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 94460517), 1.10, 1.10, 1.10)
-        SaveUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 571, CreateUnit(LoadPlayerHandle(YDLOC, GetHandleId(GetExpiredTimer()), 603), 'e10D', GetUnitX(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 549)), GetUnitY(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 549)), yDWEAngleBetweenUnits(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 549)) - 35.00))
+        SaveUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 571, CreateUnit(LoadPlayerHandle(YDLOC, GetHandleId(GetExpiredTimer()), 603), 'e10D', GetUnitX(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 549)), GetUnitY(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 549)), yDWEAngleBetweenUnits(nanaya, LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 549)) - 35.00))
         SetUnitFlyHeight(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 571), 100.00, 0.00)
         SetUnitScale(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 571), 1.10, 1.10, 1.10)
         GroupAddUnit(LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 993), LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 94460517))
         GroupAddUnit(LoadGroupHandle(YDLOC, GetHandleId(GetExpiredTimer()), 993), LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 571))
-        SaveUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 437, CreateUnit(LoadPlayerHandle(YDLOC, GetHandleId(GetExpiredTimer()), 603), 'e028', GetUnitX(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 549)), GetUnitY(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 549)), yDWEAngleBetweenUnits(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 549)) + 45.00))
+        SaveUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 437, CreateUnit(LoadPlayerHandle(YDLOC, GetHandleId(GetExpiredTimer()), 603), 'e028', GetUnitX(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 549)), GetUnitY(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 549)), yDWEAngleBetweenUnits(nanaya, LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 549)) + 45.00))
         SetUnitTimeScale(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 437), 100.00)
         SetUnitAnimationByIndex(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 437), 45)
         SetUnitScale(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 437), 0.50, 0.50, 0.50)
         SetUnitFlyHeight(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 437), 150.00, 0.00)
         SaveEffectHandle(YDLOC, GetHandleId(GetExpiredTimer()), 1137, AddSpecialEffectTarget("war3mapImported\\shikislash.mdl", LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 437), "origin"))
-        SaveUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 318, CreateUnit(LoadPlayerHandle(YDLOC, GetHandleId(GetExpiredTimer()), 603), 'e028', GetUnitX(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 549)), GetUnitY(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 549)), yDWEAngleBetweenUnits(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 549)) - 45.00))
+        SaveUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 318, CreateUnit(LoadPlayerHandle(YDLOC, GetHandleId(GetExpiredTimer()), 603), 'e028', GetUnitX(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 549)), GetUnitY(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 549)), yDWEAngleBetweenUnits(nanaya, LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 549)) - 45.00))
         SetUnitTimeScale(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 318), 100.00)
         SetUnitAnimationByIndex(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 318), 45)
         SetUnitScale(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 318), 0.50, 0.50, 0.50)
         SetUnitFlyHeight(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 318), 150.00, 0.00)
         SaveEffectHandle(YDLOC, GetHandleId(GetExpiredTimer()), 239, AddSpecialEffectTarget("war3mapImported\\shikislash.mdl", LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 318), "origin"))
-        SaveUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 1101, CreateUnit(LoadPlayerHandle(YDLOC, GetHandleId(GetExpiredTimer()), 603), 'e018', GetUnitX(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594)), GetUnitY(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594)), yDWEAngleBetweenUnits(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 549))))
+        SaveUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 1101, CreateUnit(LoadPlayerHandle(YDLOC, GetHandleId(GetExpiredTimer()), 603), 'e018', GetUnitX(nanaya), GetUnitY(nanaya), yDWEAngleBetweenUnits(nanaya, LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 549))))
         SetUnitFlyHeight(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 1101), 100.00, 0.00)
         SetUnitScale(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 1101), 4.00, 4.00, 4.00)
         UnitApplyTimedLife(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 1101), 'BHwe', 3.50)
-        SaveUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 8208884, CreateUnit(LoadPlayerHandle(YDLOC, GetHandleId(GetExpiredTimer()), 603), 'e0QH', GetUnitX(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594)), GetUnitY(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594)), yDWEAngleBetweenUnits(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 549)) + 35.00))
+        SaveUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 8208884, CreateUnit(LoadPlayerHandle(YDLOC, GetHandleId(GetExpiredTimer()), 603), 'e0QH', GetUnitX(nanaya), GetUnitY(nanaya), yDWEAngleBetweenUnits(nanaya, LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 549)) + 35.00))
         SetUnitFlyHeight(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 8208884), 100.00, 0.00)
         SetUnitScale(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 8208884), 1.50, 1.50, 1.50)
         UnitApplyTimedLife(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 8208884), 'BHwe', 3.50)
-        SaveUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 761264576, CreateUnit(LoadPlayerHandle(YDLOC, GetHandleId(GetExpiredTimer()), 603), 'e0QH', GetUnitX(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594)), GetUnitY(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594)), yDWEAngleBetweenUnits(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 549)) - 35.00))
+        SaveUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 761264576, CreateUnit(LoadPlayerHandle(YDLOC, GetHandleId(GetExpiredTimer()), 603), 'e0QH', GetUnitX(nanaya), GetUnitY(nanaya), yDWEAngleBetweenUnits(nanaya, LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 549)) - 35.00))
         SetUnitFlyHeight(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 761264576), 100.00, 0.00)
         SetUnitScale(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 761264576), 1.50, 1.50, 1.50)
         UnitApplyTimedLife(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 761264576), 'BHwe', 3.50)
-        SaveUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 63, CreateUnit(LoadPlayerHandle(YDLOC, GetHandleId(GetExpiredTimer()), 603), 'e0QK', GetUnitX(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594)), GetUnitY(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594)), GetRandomDirectionDeg()))
+        SaveUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 63, CreateUnit(LoadPlayerHandle(YDLOC, GetHandleId(GetExpiredTimer()), 603), 'e0QK', GetUnitX(nanaya), GetUnitY(nanaya), GetRandomDirectionDeg()))
         SetUnitFlyHeight(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 63), 100.00, 0.00)
         SetUnitScale(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 63), 1.50, 1.50, 1.50)
         SetUnitTimeScalePercent(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 63), 70.00)
@@ -86,7 +96,7 @@ function trig_NanayaSQFunc009Func015T()
         while true
             if bj_forLoopAIndex > bj_forLoopAIndexEnd
                 break
-            SaveUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 520, CreateUnit(LoadPlayerHandle(YDLOC, GetHandleId(GetExpiredTimer()), 603), 'e028', GetUnitX(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594)), GetUnitY(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594)), GetRandomDirectionDeg()))
+            SaveUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 520, CreateUnit(LoadPlayerHandle(YDLOC, GetHandleId(GetExpiredTimer()), 603), 'e028', GetUnitX(nanaya), GetUnitY(nanaya), GetRandomDirectionDeg()))
             SetUnitTimeScale(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 520), 100.00)
             SetUnitAnimationByIndex(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 520), 1)
             SetUnitScale(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 520), 2.50, 2.50, 2.50)
@@ -103,14 +113,14 @@ function trig_NanayaSQFunc009Func015T()
     if LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 280) == 42
         // CameraClearNoiseForPlayer(LoadPlayerHandle(YDLOC, GetHandleId(GetExpiredTimer()), 603))
         // CameraClearNoiseForPlayer(LoadPlayerHandle(YDLOC, GetHandleId(GetExpiredTimer()), 636889825))
-        SetUnitVertexColorBJ(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), 100, 100, 100, 0.00)
-        PauseUnit(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), false)
-        SetUnitInvulnerable(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), false)
+        SetUnitVertexColorBJ(nanaya, 100, 100, 100, 0.00)
+        PauseUnit(nanaya, false)
+        SetUnitInvulnerable(nanaya, false)
         SetUnitInvulnerable(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 549), false)
 
         DamageEvent.setNextDamageId(DAMAGE_ABILITY_F)
         DamageEvent.setNextDamageFromCode()
-        UnitDamageTargetBJ(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 549), 12.00 * I2R(GetHeroAgi(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 594), true)), ATTACK_TYPE_MAGIC, DAMAGE_TYPE_MAGIC)
+        UnitDamageTargetBJ(nanaya, LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 549), 12.00 * I2R(GetHeroAgi(nanaya, true)), ATTACK_TYPE_MAGIC, DAMAGE_TYPE_MAGIC)
         // DisplayTextToForce(GetPlayersAll(), GetUnitName(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 549)) + "|cffa800ffDo you understand? This is killing|r")
         PauseUnit(LoadUnitHandle(YDLOC, GetHandleId(GetExpiredTimer()), 549), false)
     if LoadInteger(YDLOC, GetHandleId(GetExpiredTimer()), 280) >= 36
@@ -129,30 +139,31 @@ function trig_NanayaSQActions()
     timer _ydl_timer
     integer trigger_ID = LoadInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 865)
     trigger_ID += 3
+    nanaya = GetTriggerUnit()
     SaveInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 865, trigger_ID)
     SaveInteger(YDLOC, GetHandleId(GetTriggeringTrigger()), 1045, trigger_ID)
     SaveUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594, GetTriggerUnit())
     SaveUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 549, GetEventDamageSource())
-    SavePlayerHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 603, GetOwningPlayer(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594)))
+    SavePlayerHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 603, GetOwningPlayer(nanaya))
     SavePlayerHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 636889825, GetOwningPlayer(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 549)))
     SaveReal(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 248, GetEventDamage())
-    SaveReal(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1163, GetUnitState(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594), UNIT_STATE_LIFE))
-    SaveLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 596788346, GetUnitLoc(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594)))
+    SaveReal(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1163, GetUnitState(nanaya, UNIT_STATE_LIFE))
+    SaveLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 596788346, GetUnitLoc(nanaya))
     SaveLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 24, GetUnitLoc(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 549)))
     DisableTrigger(GetTriggeringTrigger())
     udg_NanayaFJ[GetConvertedPlayerId(LoadPlayerHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 603))] = 0
     if LoadReal(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 248) >= LoadReal(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1163)
-        SetUnitLifeBJ(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594), 100.00)
+        SetUnitLifeBJ(nanaya, 100.00)
     else
-        SetUnitLifeBJ(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594), LoadReal(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1163))
+        SetUnitLifeBJ(nanaya, LoadReal(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1163))
     SaveGroupHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 993, CreateGroup())
     SaveInteger(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 280, 0)
     SaveReal(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1079, 0.00)
-    PauseUnitBJ(true, LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594))
-    SetUnitInvulnerable(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594), true)
+    PauseUnitBJ(true, nanaya)
+    SetUnitInvulnerable(nanaya, true)
     PauseUnitBJ(true, LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 549))
     SetUnitInvulnerable(LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 549), true)
-    UnitRemoveBuffBJ('B05J', LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594))
+    UnitRemoveBuffBJ('B05J', nanaya)
     DestroyTimer(LoadTimerHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 947400700))
     bj_forLoopBIndex = 1
     bj_forLoopBIndexEnd = 3
@@ -164,7 +175,7 @@ function trig_NanayaSQActions()
         bj_forLoopBIndex++
     _ydl_timer = CreateTimer()
     SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 1164, LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1164))
-    SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 594, LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 594))
+    SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 594, nanaya)
     SaveUnitHandle(YDLOC, GetHandleId(_ydl_timer), 549, LoadUnitHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 549))
     SavePlayerHandle(YDLOC, GetHandleId(_ydl_timer), 603, LoadPlayerHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 603))
     SaveLocationHandle(YDLOC, GetHandleId(_ydl_timer), 1108, LoadLocationHandle(YDLOC, GetHandleId(GetTriggeringTrigger()) * trigger_ID, 1108))

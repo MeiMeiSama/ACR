@@ -1,0 +1,172 @@
+package Jotaro_Q
+
+import DamageEvent
+import AbilityGlobals
+import ObjectDefinitions
+import ChannelAbilityPreset
+import UnitIds
+import ClosureForGroups
+import main
+
+unit jotaro
+unit starPlatinum
+unit array jotaroQDummy
+group jotaroQGroup
+timer jotaroQTimer
+int jotaroQTimerInt
+vec2 abilityJotaroQPos
+vec2 jotaroPos
+effect sfx
+
+@compiletime function createAbility()
+    new ChannelAbilityPreset(JOTARO_Q, 5, true)
+        ..presetTargetTypes(Targettype.POINTUNIT)
+        ..setAnimationNames("11111111")
+        ..setButtonPositionNormalX(0)
+        ..setButtonPositionNormalY(2)
+        ..setButtonPositionResearchX(0)
+        ..setButtonPositionResearchY(0)
+        ..setIconNormal("ReplaceableTextures\\CommandButtons\\BTNGolemThunderclap.blp")
+        ..setIconResearch("ReplaceableTextures\\CommandButtons\\BTNGolemThunderclap.blp")
+        ..setMissileSpeed(99999)
+        ..setHeroAbility(true)
+        ..setHotkeyNormal("Q")
+        ..setHotkeyLearn("Q")
+        ..setLevels(5)
+        ..setLevelSkipRequirement(2)
+        ..presetArtDuration(lvl -> 0)
+        ..presetBaseOrderID(lvl -> "auravampiric")
+        ..presetDisableOtherAbilities(lvl -> false)
+        ..presetFollowThroughTime(lvl -> 0)
+        ..presetCastRange(lvl -> 2000)
+        ..presetCooldown(lvl -> 50)
+        ..presetManaCost(lvl -> 70)
+        ..presetTargetsAllowed(lvl -> "enemy,ground,air,neutral")
+        ..presetTooltipNormal(lvl -> "Star Finger|r")
+        ..presetTooltipNormalExtended(lvl -> "Jotaro Q Desc|r")
+        ..setTooltipLearn("Learn Q|r")
+        ..setTooltipLearnExtended("Learning Q|r")           
+    new UnitDefinition(JOTARO_Q_DUMMY, UnitIds.wisp)
+        ..setNormalAbilities(commaList('Avul', 'Aloc', 'Amrf'))
+        ..setAnimationCastBackswing(0)
+        ..setDeathTimeseconds(0.1)
+        ..setScalingValue(0.70)
+        ..setUnitClassification("_")
+        ..setArtSpecial("_")
+        ..setHasWaterShadow(false)
+        ..setMaximumPitchAngledegrees(0)
+        ..setMaximumRollAngledegrees(0)
+        ..setModelFile("_")
+        ..setScalingValue(1.0)
+        ..setArtSpecial("_")
+        ..setArmorType(ArmorType.Unarmored)
+        ..setPlaceableInEditor(false)
+        ..setMovementHeight(20)
+        ..setSpeedBase(522)
+        ..setTurnRate(3)
+        ..setMovementType(MovementType.Fly)
+        ..setCollisionSize(0)
+        ..setUnitSoundSet("_")
+        ..setCanFlee(false)
+        ..setFoodCost(0)
+        ..setHideMinimapDisplay(true)
+        ..setHitPointsMaximumBase(60)
+        ..setHitPointsRegenerationRate(-1)
+        ..setHitPointsRegenerationType("Always")
+        ..setStockMaximum(1)
+        ..setStockReplenishInterval(1)
+        ..setStructuresBuilt("_")
+        ..setUpgradesUsed("_")
+        ..setHotkey("_")
+        ..setName("effect dummy")
+        ..setTooltipBasic("_")
+        ..setTooltipExtended("_")
+
+    new UnitDefinition(JOTARO_Q_DUMMY2, UnitIds.wisp)
+        ..setNormalAbilities(commaList('Avul', 'Aloc', 'Amrf'))
+        ..setAnimationCastBackswing(0)
+        ..setDeathTimeseconds(0.1)
+        ..setScalingValue(0.70)
+        ..setUnitClassification("_")
+        ..setArtSpecial("_")
+        ..setHasWaterShadow(false)
+        ..setMaximumPitchAngledegrees(0)
+        ..setMaximumRollAngledegrees(0)
+        ..setModelFile("war3mapImported\\Star Platinum.mdx")
+        ..setScalingValue(1.5)
+        ..setArtSpecial("_")
+        ..setArmorType(ArmorType.Unarmored)
+        ..setPlaceableInEditor(false)
+        ..setMovementHeight(20)
+        ..setSpeedBase(100)
+        ..setTurnRate(3)
+        ..setMovementType(MovementType.Fly)
+        ..setCollisionSize(0)
+        ..setUnitSoundSet("_")
+        ..setCanFlee(false)
+        ..setFoodCost(0)
+        ..setHideMinimapDisplay(true)
+        ..setHitPointsMaximumBase(60)
+        ..setHitPointsRegenerationRate(-1)
+        ..setHitPointsRegenerationType("Always")
+        ..setStockMaximum(1)
+        ..setStockReplenishInterval(1)
+        ..setStructuresBuilt("_")
+        ..setUpgradesUsed("_")
+        ..setHotkey("_")
+        ..setName("effect dummy")
+        ..setTooltipBasic("_")
+        ..setTooltipExtended("_")   
+
+init
+    jotaroQ()    
+
+function jotaroQ()
+    CreateTrigger()
+    ..registerAnyUnitEvent(EVENT_PLAYER_UNIT_SPELL_EFFECT)
+    ..addAction() ->
+        if GetSpellAbilityId() == JOTARO_Q
+            gg_snd_jotaroQ.play()
+            abilityJotaroQPos = vec2(GetSpellTargetX(), GetSpellTargetY())
+            jotaro = GetTriggerUnit()
+            jotaroPos = jotaro.getPos()
+            if jotaro.getPos().distanceTo(abilityJotaroQPos) < 1500
+                abilityJotaroQPos = jotaro.getPos().polarOffset(jotaro.getPos().angleTo(abilityJotaroQPos), 1500)
+            starPlatinum = createUnit(jotaro.getOwner(), JOTARO_Q_DUMMY2, jotaroPos.polarOffset(jotaroPos.angleTo(abilityJotaroQPos), 150), jotaro.getPos().angleTo(abilityJotaroQPos))
+            starPlatinum.setTimeScale(3.5)
+            starPlatinum.setAnimation(2)
+            jotaroQTimerInt = 0
+            if jotaroQGroup == null
+                jotaroQGroup = CreateGroup()            
+            jotaroQTimer = CreateTimer()..startPeriodic(0.01, function jotaroQStart)
+
+function jotaroQStart()
+    jotaroQTimerInt++
+    if jotaroQTimerInt == 10
+        sfx = addEffect("war3mapImported\\SlashBlueKojiro.mdx", starPlatinum.getPos().polarOffset(starPlatinum.getPos().angleTo(abilityJotaroQPos), 800))
+        ..setYaw(starPlatinum.getPos().angleTo(abilityJotaroQPos))
+        ..setScale(vec3(2, 2, 2))
+        ..setColor(60, 0, 180)  
+    if jotaroQTimerInt == 12
+        for i = 3 to 12
+            jotaroQDummy[i] = createUnit(jotaro.getOwner(), JOTARO_Q_DUMMY, jotaroPos.polarOffset(jotaroPos.angleTo(abilityJotaroQPos), (100.0 * i)) , jotaroPos.angleTo(abilityJotaroQPos))  
+            SetUnitScale(jotaroQDummy[i], 10.0, 3.0, 1.0)
+            jotaroQDummy[i].setFlyHeight(300, 0)
+            forUnitsInRange(jotaroQDummy[i].getPos(), 300) (unit u) ->
+                if jotaro.isAllyOf(u) == false and u.isInvulnerable() == false and jotaroQGroup.has(u) == false
+                    DamageEvent.setNextDamageId(DAMAGE_ABILITY_Q)
+                    DamageEvent.setNextDamageFromCode()
+                    jotaro.damageTarget(u, 1, ATTACK_TYPE_MAGIC) 
+                    jotaroQGroup.add(u)                      
+    if jotaroQTimerInt >= 40
+        sfx.setX(-999999)
+        sfx.setY(-999999)
+        sfx.destr()
+        starPlatinum.kill()
+        jotaroQTimer.destr()
+        jotaroQGroup.clear()
+        CreateTimer()..start(1.7, function dummyVisionKill)
+
+function dummyVisionKill()
+    for i = 3 to 12
+        jotaroQDummy[i].kill()

@@ -8,6 +8,7 @@ import TimerUtils
 import InitializeFunctions
 import MusicPlaylist
 import GoldIncome
+import ACR_Variables
 
 public var heroList_STR = new HashSet<int>
 public var canPick_Icon_STR = new HashSet<int>
@@ -41,9 +42,6 @@ unit array selectedUnit
 bool array playerPicked
 bool array canDoubleClick
 real allPlayersPickedCount
-vec2 team1Pos
-vec2 team2Pos
-vec2 team3Pos
 timer array canDoubleClick_Timer
 framehandle selected_icon
 framehandle selected_icon1
@@ -82,7 +80,7 @@ function dataList()
     // ━━━━━━━━━━━━ [STRENGTH HEROES] ━━━━━━━━━━━━
     heroList_STR.add(
     'H001','H00Y',GAJEEL_REDFOX,'H00L',COBRA,'H009','H00G','H005',MONKEYD_LUFFY,RORONOA_ZORO,PORTGASD_ACE,SABO,'H027',                                // Row 1
-    KIYOHIME_STRENGTH,'H021',OKITA_STRENGTH,'H03V',ARTURIA_STRENGTH,'H02V','H030',ICHIGO_STRENGTH,'H01Q','H01F',DIO_BRANDO,'H023',KAMIJOU_TOUMA)                 // Row 2
+    KIYOHIME_STRENGTH,'H021',OKITA_STRENGTH,'H03V',ARTURIA_STRENGTH,'H02V','H030',ICHIGO_STRENGTH,'H01Q',KUJO_JOTARO,DIO_BRANDO,'H023',KAMIJOU_TOUMA)                 // Row 2
     heroList_STR.add(
     'H00W','H01M','H03Z','H04A','H00F','H007','H03X')                                                                                                 // Row 3   
 
@@ -137,16 +135,16 @@ function dataList()
 
     // ━━━━━━━━━━━━ [INTELLIGENCE HEROES] ━━━━━━━━━━━━
     heroList_INT.add(
-    'H006','H017','H01U',ITACHI_EDO,MADARA_EDO,'H00D','H02E','H02W','H032','H02T','H00R','H01O','H03D',                                               // Row 11
-    'H008','H02J','H03H','H03F','H03E','H043',ENMA_AI,'H02Y')                                                                                          // Row 12
+    'H006','H017',ZEREF,MAVIS,ITACHI_EDO,MADARA_EDO,'H00D','H02E','H02W','H032','H02T','H00R','H01O','H03D',                                               // Row 11
+    'H008','H02J','H03H','H03F','H03E','H043',ENMA_AI,'H02Y', RUKIA)                                                                                          // Row 12
 
     canPick_Icon_INT.add(
-    'B00Z','B02Q','B042','B03K','B08F','B01O','B05Q','B06O','B06Y','B07C','B011','B03S','B07S',                                                       // Row 11
-    'B013','B05Y','B080','B07W','B07U','B08V','B092','B06U')                                                                                          // Row 12
+    'B00Z','B02Q','B042','B07K','B03K','B08F','B01O','B05Q','B06O','B06Y','B07C','B011','B03S','B07S',                                                       // Row 11
+    'B013','B05Y','B080','B07W','B07U','B08V','B092','B06U', RUKIA_BUTTON)                                                                                          // Row 12
 
     cannotPick_Icon_INT.add(
-    'B021','B02R','B043','B03L','B08G','B015','B05R','B06P','B06Z','B07D','B01T','B03T','B07T',                                                       // Ro1 11
-    'B01S','B05Z','B081','B07X','B07V','B08W','B093','B06V')                                                                                          // Row 12
+    'B021','B02R','B043','B09P','B03L','B08G','B015','B05R','B06P','B06Z','B07D','B01T','B03T','B07T',                                                       // Ro1 11
+    'B01S','B05Z','B081','B07X','B07V','B08W','B093','B06V', RUKIA_BUTTON_DARK)                                                                                          // Row 12
     
     // ━━━━━━━━━━━━ [ADD ALL HEROES TOGETHER INTO ONE LIST] ━━━━━━━━━━━━
     for i = 0 to heroList_STR.size() - 1
@@ -387,9 +385,6 @@ function createHero (player p)
         BlzFrameAddText(textArea, "|cff00a9ff["+p.getColor().toColor().toColorString()+p.getName()+"|cff00a9ff] |cffffd700Selected |cff5ccf58"+GetObjectName(draftHero[pid])+"|r")
         if p == GetLocalPlayer()
             selected_icon.setTexture(BlzGetAbilityIcon(draftHero[pid]), 0, false)       
-    team1Pos = vec2(-10384, 9980)
-    team2Pos = vec2(5389, 2246)
-    team3Pos = vec2(-3436, -6244)
     createHeroTimer[pid] = CreateTimer()..start(delayAfterCountdown, function createHero2)..setData(pid)
 
 function draftTime_End2()

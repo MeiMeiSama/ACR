@@ -1,0 +1,67 @@
+package MbossSpell1
+
+import ACR_SoundCreation
+import ClosureForGroups
+import TimerUtils
+import CreateBuildings
+import ClosureTimers
+
+constant snd1 = acrCreateSound("war3mapImported\\hina2.mp3")
+int array spellCount
+effect array effect1
+effect array effect2
+    
+init
+    miniBoss1()
+
+public function miniBoss1()   
+    CreateTrigger()
+    ..registerAnyUnitEvent(EVENT_PLAYER_UNIT_DAMAGED)
+    ..addAction() ->
+        if BlzGetEventDamageTarget() == miniboss[0] or BlzGetEventDamageTarget() == miniboss[1] or BlzGetEventDamageTarget() == miniboss[2]          
+            if BlzGetEventDamageTarget() == miniboss[0]
+                if BlzGetEventDamageTarget().getUserData() != 993
+                    BlzGetEventDamageTarget().setUserData(993)
+            if BlzGetEventDamageTarget() == miniboss[1] 
+                if BlzGetEventDamageTarget().getUserData() != 994
+                    BlzGetEventDamageTarget().setUserData(994)
+            if BlzGetEventDamageTarget() == miniboss[2] 
+                if BlzGetEventDamageTarget().getUserData() != 995
+                    BlzGetEventDamageTarget().setUserData(995)
+            let id = BlzGetEventDamageTarget().getUserData()
+            if BlzGetEventDamageTarget().getHP() <= 2000 and spellCount[id] <= 0
+                let bossu = BlzGetEventDamageTarget()
+                bossu.setInvulnerable(true)
+                bossu.pause()
+                PlaySoundOnUnitBJ(snd1, 100, bossu)
+                SetUnitAnimation(bossu, "Spell 2-1")
+                effect1[id] = addEffect("war3mapImported\\shuimian1.mdx", bossu.getPos())
+                ..setScale(0.50)
+                spellCount[id] = 200
+                CreateTimer()..startPeriodic(0.1, function miniBoss1End)..setData(id)  
+                CreateTimer()..start(1.2, function miniBossFlush)..setData(id)              
+                forUnitsInRange(bossu.getPos(), 600) (unit victim) ->
+                    if victim.isAlive() and victim.isEnemyOf(bossu)
+                        let pid = victim.getUserData()
+                        bossu.damageTarget(victim, 1000, ATTACK_TYPE_MAGIC)
+                        effect2[pid] = addEffect("war3mapImported\\Water Spout.mdx", victim.getPos())
+                        ..setScale(0.70)
+                        CreateTimer()..start(1.2, function miniBossFlush2)..setData(pid)
+                doAfter(2) -> 
+                    if bossu.isInvulnerable()
+                        bossu.setInvulnerable(false)
+                        bossu.unpause()         
+
+function miniBoss1End()
+    let id = GetExpiredTimer().getData()
+    spellCount[id]--
+    if spellCount[id] <= 0       
+        GetExpiredTimer().destr()             
+
+function miniBossFlush()
+    let id = GetExpiredTimer().getData()
+    effect1[id].destr()
+
+function miniBossFlush2()
+    let pid = GetExpiredTimer().getData()
+    effect2[pid].destr()   

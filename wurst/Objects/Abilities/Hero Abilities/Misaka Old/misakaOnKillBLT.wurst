@@ -1,0 +1,48 @@
+package misakaOnKillBLT
+
+import SkinSystem
+
+public boolean misakaTKill
+public boolean misakaRKill
+public boolean misakaFKill
+public boolean madokaTKill
+
+public function misakaKillBLTFunc()
+    misakaTKill = false
+    misakaFKill = false
+    misakaRKill = false
+    madokaTKill = false
+
+    CreateTrigger()
+    ..registerAnyUnitEvent(EVENT_PLAYER_UNIT_DEATH)
+    ..addAction() ->
+        if GetKillingUnit().getTypeId() == 'H008'
+            let pid = GetKillingUnit().getOwner().getId()
+            if skinEquipped[pid] == true
+                if misakaRKill == true
+                    if GetLocalPlayer() == GetDyingUnit().getOwner()
+                        CinematicFilterGenericBJ(5., BLEND_MODE_BLEND, "war3mapImported\\xpjfst.blp", 100, 100., 100, 30., 100., 100., 100., 30.)
+                    CreateTimer()..start(2, function misakaKillFlush)
+                else if misakaTKill == true  
+                    if GetLocalPlayer() == GetDyingUnit().getOwner()   
+                        CinematicFilterGenericBJ(5., BLEND_MODE_BLEND, "war3mapImported\\xpjtst.blp", 100, 100., 100, 30., 100., 100., 100., 30.)    
+                    CreateTimer()..start(2, function misakaKillFlush)
+                else if misakaFKill == true  
+                    if GetLocalPlayer() == GetDyingUnit().getOwner()   
+                        CinematicFilterGenericBJ(5., BLEND_MODE_BLEND, "war3mapImported\\pjswst.blp", 100, 100., 100, 30., 100., 100., 100., 30.)   
+                    CreateTimer()..start(2, function misakaKillFlush)    
+        if GetKillingUnit().getTypeId() == 'H00H'
+            let pid = GetKillingUnit().getOwner().getId()
+            if skinEquipped[pid] == true
+                if madokaTKill == true
+                    if GetLocalPlayer() == GetDyingUnit().getOwner()
+                        CinematicFilterGenericBJ(5., BLEND_MODE_BLEND, "war3mapImported\\dokadokat2.blp", 100, 100., 100, 30., 100., 100., 100., 30.)
+                    CreateTimer()..start(2, function madokaKillFlush)
+                         
+
+
+function misakaKillFlush()
+    DisplayCineFilter(false)
+
+function madokaKillFlush()
+    DisplayCineFilter(false)      

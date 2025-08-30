@@ -1,6 +1,7 @@
 ---
-projectName: ACR_v2.0.7
+projectName: ACR_v2.1.0Gajeel
 dependencies:
 - https://github.com/wurstscript/wurstStdlib2
 - https://github.com/null15/InventoryUtils
 - https://github.com/Frotty/wurst-table-layout
+- https://github.com/Frotty/wurst-bonus-handler

@@ -1,0 +1,26 @@
+package Quick
+
+import TimerUtils
+import ObjectDefinitions
+
+unit array user
+
+init
+    quick() 
+
+function quick()
+    CreateTrigger()
+    ..registerAnyUnitEvent(EVENT_PLAYER_UNIT_SPELL_EFFECT)
+    ..addAction() ->
+        if GetSpellAbilityId() == 'A0UH'
+            let caster = GetTriggerUnit()
+            let id = caster.getOwner().getId()
+            user[id] = caster
+            user[id].addAbility(AGILITY_ABILITY_10)
+            CreateTimer()..start(30, function removeQuick)..setData(id)
+
+function removeQuick()
+    let id = GetExpiredTimer().getData()
+    if user[id].hasAbility(AGILITY_ABILITY_10)
+        user[id].removeAbility(AGILITY_ABILITY_10)
+    GetExpiredTimer().destr()

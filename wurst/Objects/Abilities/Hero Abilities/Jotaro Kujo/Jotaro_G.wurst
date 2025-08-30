@@ -1,0 +1,96 @@
+package Jotaro_G
+
+import ClosureEvents
+import ObjectDefinitions
+import AbilityGlobals
+import ChannelAbilityPreset
+import UnitIds
+
+unit starPlatinum
+int jotaroGInt
+timer jotaroGTimer
+boolean jotaroGActive
+
+@compiletime function createAbility()
+    new AbilityDefinitionEvasion(JOTARO_G)
+    ..setIconNormal("ReplaceableTextures\\CommandButtons\\BTNYuuki.blp")
+    ..setChancetoEvade(1, 0)
+    ..setBuffs(1, "")
+    ..setAreaofEffect(1, 0)
+    ..setButtonPositionNormalX(1)
+    ..setButtonPositionNormalY(1)
+    ..setButtonPositionResearchX(2)
+    ..setButtonPositionResearchY(0)
+    ..setLevels(1)
+    ..setTooltipLearn("Jotaro G|r")
+    ..setTooltipLearnExtended("Jotaro G|r")
+    ..setTooltipNormal(1, BLUE+"Star Platinum|r")
+    ..setTooltipNormalExtended(1, GOLD+
+            "Whenever Jotaro deals damage with a basic attack, Star platinum also strikes the same target for 50% of that damage. This effect can only happen once every 0.5 seconds.")
+
+    new UnitDefinition(JOTARO_G_DUMMY, UnitIds.wisp)
+        ..setNormalAbilities(commaList('Avul', 'Aloc', 'Amrf'))
+        ..setAnimationCastBackswing(0)
+        ..setDeathTimeseconds(0.1)
+        ..setScalingValue(0.70)
+        ..setUnitClassification("_")
+        ..setArtSpecial("_")
+        ..setHasWaterShadow(false)
+        ..setMaximumPitchAngledegrees(0)
+        ..setMaximumRollAngledegrees(0)
+        ..setModelFile("war3mapImported\\Star Platinum.mdx")
+        ..setScalingValue(1.5)
+        ..setArtSpecial("_")
+        ..setArmorType(ArmorType.Unarmored)
+        ..setPlaceableInEditor(false)
+        ..setMovementHeight(20)
+        ..setSpeedBase(100)
+        ..setTurnRate(3)
+        ..setMovementType(MovementType.Fly)
+        ..setCollisionSize(0)
+        ..setUnitSoundSet("_")
+        ..setCanFlee(false)
+        ..setFoodCost(0)
+        ..setHideMinimapDisplay(true)
+        ..setHitPointsMaximumBase(60)
+        ..setHitPointsRegenerationRate(-1)
+        ..setHitPointsRegenerationType("Always")
+        ..setStockMaximum(1)
+        ..setStockReplenishInterval(1)
+        ..setStructuresBuilt("_")
+        ..setUpgradesUsed("_")
+        ..setHotkey("_")
+        ..setName("effect dummy")
+        ..setTooltipBasic("_")
+        ..setTooltipExtended("_")   
+
+public function jotaroG()
+    EventListener.add(EVENT_PLAYER_UNIT_DAMAGED) -> 
+        if GetEventDamageSource().hasAbility(JOTARO_G) and BlzGetEventAttackType() == ATTACK_TYPE_HERO and jotaroGActive == false
+            jotaroGActive = true
+            let jotaro = GetEventDamageSource()
+            let victim = BlzGetEventDamageTarget()
+            let dmg = GetEventDamage() * 0.5
+            starPlatinum = createUnit(JOTARO_G_DUMMY, victim.getPos().polarOffset(victim.getPos().angleTo(jotaro.getPos()), -150))
+            starPlatinum.setFacing(starPlatinum.getPos().angleTo(victim.getPos()))
+            jotaro.damageTarget(victim, dmg, ATTACK_TYPE_CHAOS)  
+            jotaroGInt = 0  
+            CreateTimer()..startPeriodic(0.01, function jotaroGTimerFunc)    
+
+function jotaroGTimerFunc()
+    jotaroGInt++
+    if jotaroGInt == 3
+        let rng = GetRandomInt(0, 1)
+        if rng  == 0
+            starPlatinum.setTimeScale(2.5)
+            starPlatinum.setAnimation(3)
+        else   
+            starPlatinum.setTimeScale(2.5) 
+            starPlatinum.setAnimation(25)        
+
+    if jotaroGInt == 49
+        starPlatinum.kill()
+    if jotaroGInt >= 50
+        GetExpiredTimer().destr()
+        jotaroGActive = false
+

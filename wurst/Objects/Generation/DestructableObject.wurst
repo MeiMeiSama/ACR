@@ -1,5 +1,7 @@
 package DestructableObject
 import ObjEditingNatives
+import ObjectDefinitions
+import DestructableObjEditing
 
 @compiletime function create_w3b_B900()
 	createObjectDefinition("w3b", 'B900', 'YTlb')
@@ -19,3 +21,31 @@ import ObjEditingNatives
 	..setString("btxf", "ReplaceableTextures\\CommandButtons\\MisogiReal.blp")
 	..setInt("btxi", 31)
 	..setInt("buch", 0)
+
+	new DestructableDefinition(RUKIA_BUTTON, 'YTlb')
+	..setModel("war3mapImported\\button.mdl")
+	..setName("Rukia")
+	..setPath("")
+	..setTexture("ReplaceableTextures\\CommandButtons\\BTNRukia.blp")
+	..setTextureId(31)
+
+	new DestructableDefinition(RUKIA_BUTTON_DARK, 'YTlb')
+	..setModel("war3mapImported\\button.mdl")
+	..setName("Rukia (Dark)")
+	..setPath("")
+	..setTexture("ReplaceableTextures\\CommandButtonsDisabled\\DISBTNRukia.blp")
+	..setTextureId(31)
+
+	new DestructableDefinition(MISAKA_STR_BUTTON, 'YTlb')
+	..setModel("war3mapImported\\button.mdl")
+	..setName("Misaka_STR")
+	..setPath("")
+	..setTexture("ReplaceableTextures\\CommandButtons\\BTNMisakaSTR.blp")
+	..setTextureId(31)
+
+	new DestructableDefinition(MISAKA_STR_BUTTON_DARK, 'YTlb')
+	..setModel("war3mapImported\\button.mdl")
+	..setName("Misaka_STR (Dark)")
+	..setPath("")
+	..setTexture("ReplaceableTextures\\CommandButtonsDisabled\\DISBTNMisakaSTR.blp")
+	..setTextureId(31)

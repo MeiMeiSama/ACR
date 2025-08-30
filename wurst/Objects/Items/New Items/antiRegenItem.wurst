@@ -1,0 +1,49 @@
+package antiRegenItem
+
+import ObjectDefinitions
+import TimerUtils
+import ACR_TagSystem
+// import DummyCaster
+// import OrderIds
+// import ObjectIds
+
+int array antiRegenCount
+unit array antiRegenCaster
+unit array antiRegenVictim
+real array antiRegenVictimHealth
+timer array antiRegenTimer
+
+init
+    antiRegenItemUse()
+function antiRegenItemUse ()
+    CreateTrigger()
+    ..registerAnyUnitEvent(EVENT_PLAYER_UNIT_SPELL_EFFECT)
+    ..addAction() ->
+        if GetSpellAbilityId() == ANTI_REGEN_ABILITY
+            let victim = GetSpellTargetUnit()
+            let id = victim.getOwner().getId()
+            antiRegenCount[id] = 0
+            antiRegenCaster[id] = GetTriggerUnit()
+            antiRegenVictim[id] = victim
+            antiRegenVictimHealth[id] = victim.getHP()
+            if antiRegenTimer[id] == null
+                antiRegenTimer[id] = CreateTimer()..startPeriodic(0.01, function antiRegenItemUseEnd)..setData(id)
+
+function antiRegenItemUseEnd()
+    let id = GetExpiredTimer().getData()
+    if antiRegenVictim[id].isPaused() == false and antiRegenVictim[id].hasTagPauseEX() == false
+        antiRegenCount[id]++
+        // print(antiRegenVictim[id].getName())
+        // print(antiRegenCaster[id].getName())
+        // print(antiRegenCount[id])
+    if antiRegenVictim[id].getHP() > antiRegenVictimHealth[id]
+        let heal = antiRegenVictim[id].getHP() - antiRegenVictimHealth[id]
+        antiRegenCaster[id].addHP(heal)
+        antiRegenVictim[id].setHP(antiRegenVictimHealth[id])
+    if antiRegenCount[id] >= 300 or antiRegenVictim[id].isAlive() == false
+        antiRegenTimer[id].destr()
+        antiRegenTimer[id] = null
+
+
+
+
