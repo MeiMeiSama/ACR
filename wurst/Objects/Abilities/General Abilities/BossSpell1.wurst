@@ -119,10 +119,11 @@ function pepeInstaKill()
 
 function pantiesfall()
     pepe2INT++
-    for i = 3 to 20
-        sfx6[i] = addEffect("war3mapImported\\bearpants.mdx", gg_rct_BossArea.randomPoint())
-        ..setScale(1)
-        ..setHeight(800)
+    if pepe2INT == 1
+        for i = 3 to 20
+            sfx6[i] = addEffect("war3mapImported\\bearpants.mdx", gg_rct_BossArea.randomPoint())
+            ..setScale(1)
+            ..setHeight(800)
     if pepe2INT >= 3 and pepe2INT <= 30
         for i = 3 to 20
             sfx6[i].setHeight(-20)

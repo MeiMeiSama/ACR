@@ -10,7 +10,6 @@ import main
 
 unit jotaro
 unit starPlatinum
-unit laser
 unit array jotaroQDummy
 group jotaroQGroup
 timer jotaroQTimer
@@ -57,7 +56,7 @@ effect sfx
         ..setHasWaterShadow(false)
         ..setMaximumPitchAngledegrees(0)
         ..setMaximumRollAngledegrees(0)
-        ..setModelFile("_") //Star Platinum //DioLaser //starfinger
+        ..setModelFile("_")
         ..setScalingValue(1.0)
         ..setArtSpecial("_")
         ..setArmorType(ArmorType.Unarmored)
@@ -117,42 +116,7 @@ effect sfx
         ..setHotkey("_")
         ..setName("effect dummy")
         ..setTooltipBasic("_")
-        ..setTooltipExtended("_")
-    new UnitDefinition(JOTARO_Q_DUMMY3, UnitIds.wisp)
-        ..setNormalAbilities(commaList('Avul', 'Aloc', 'Amrf'))
-        ..setAnimationCastBackswing(0)
-        ..setDeathTimeseconds(0.1)
-        ..setScalingValue(0.70)
-        ..setUnitClassification("_")
-        ..setArtSpecial("_")
-        ..setHasWaterShadow(false)
-        ..setMaximumPitchAngledegrees(0)
-        ..setMaximumRollAngledegrees(0)
-        ..setModelFile("war3mapImported\\starfinger.mdx")
-        ..setScalingValue(1.5)
-        ..setArtSpecial("_")
-        ..setArmorType(ArmorType.Unarmored)
-        ..setPlaceableInEditor(false)
-        ..setMovementHeight(20)
-        ..setSpeedBase(100)
-        ..setTurnRate(3)
-        ..setMovementType(MovementType.Fly)
-        ..setCollisionSize(0)
-        ..setUnitSoundSet("_")
-        ..setCanFlee(false)
-        ..setFoodCost(0)
-        ..setHideMinimapDisplay(true)
-        ..setHitPointsMaximumBase(60)
-        ..setHitPointsRegenerationRate(-1)
-        ..setHitPointsRegenerationType("Always")
-        ..setStockMaximum(1)
-        ..setStockReplenishInterval(1)
-        ..setStructuresBuilt("_")
-        ..setUpgradesUsed("_")
-        ..setHotkey("_")
-        ..setName("effect dummy")
-        ..setTooltipBasic("_")
-        ..setTooltipExtended("_")    
+        ..setTooltipExtended("_")   
 
 init
     jotaroQ()    
@@ -179,9 +143,10 @@ function jotaroQ()
 function jotaroQStart()
     jotaroQTimerInt++
     if jotaroQTimerInt == 10
-        sfx = addEffect("war3mapImported\\starfinger.mdx", starPlatinum.getPos().polarOffset(starPlatinum.getPos().angleTo(abilityJotaroQPos), 800))
+        sfx = addEffect("war3mapImported\\SlashBlueKojiro.mdx", starPlatinum.getPos().polarOffset(starPlatinum.getPos().angleTo(abilityJotaroQPos), 800))
         ..setYaw(starPlatinum.getPos().angleTo(abilityJotaroQPos))
-        ..setScale(vec3(30, 70, 10))    
+        ..setScale(vec3(2, 2, 2))
+        ..setColor(60, 0, 180)  
     if jotaroQTimerInt == 12
         for i = 3 to 12
             jotaroQDummy[i] = createUnit(jotaro.getOwner(), JOTARO_Q_DUMMY, jotaroPos.polarOffset(jotaroPos.angleTo(abilityJotaroQPos), (100.0 * i)) , jotaroPos.angleTo(abilityJotaroQPos))  
